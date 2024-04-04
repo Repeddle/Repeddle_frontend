@@ -17,27 +17,30 @@
   --light-ev4: #dedede;
 }
 
+.scrollbar-hide {
+  -ms-overflow-style: none;
+
+  /* IE and Edge */
+  scrollbar-width: none;
+}
+
 .scrollbar-hide::-webkit-scrollbar {
   @apply hidden;
 }
 
-@keyframes slideh {
-  /* (D0) THE IDEA - USE KEYFRAMES TO SHIFT SLIDES *
-    0% {
-      right: 0;
-    }
-    33% {
-      right: 100%;
-    }
-    66% {
-      right: 200%;
-    }
-    100% {
-      right: 0;
-    }
+.animation-pause:hover {
+  animation-play-state: paused;
+}
 
-    /* (D1) BUT THE ABOVE WILL SHIFT NON-STOP */
-  /* SO WE ADD PAUSES BETWEEN EACH SLIDE */
+.text-shadow {
+  text-shadow: #000 1px 0 10px;
+}
+
+.text-shadow1 {
+  text-shadow: rgb(255, 255, 255) 1px 0px 10px;
+}
+
+@keyframes slideh {
   0% {
     right: 0;
   }
@@ -61,6 +64,14 @@
   }
 }
 
-.animation-pause:hover {
-  animation-play-state: paused;
+@keyframes skeletonPulse {
+  0% {
+    background-color: #f0f0f0;
+  }
+  50% {
+    background-color: #e0e0e0;
+  }
+  100% {
+    background-color: #f0f0f0;
+  }
 }
