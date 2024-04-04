@@ -1,0 +1,59 @@
+@font-face {
+    font-family: "AbsentiaSans";
+    src: url(../public/fonts/AbsentiaSansBold.ttf) format("truetype");
+    font-weight: bold;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "AbsentiaSans";
+    src: url(../public/fonts/AbsentiaSansMedium.ttf) format("truetype");
+    font-weight: 500;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "AbsentiaSans";
+    src: url(../public/fonts/AbsentiaSansRegular.ttf) format("truetype");
+    font-weight: 400;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "AbsentiaSans";
+    src: url(../public/fonts/AbsentiaSansLight.ttf) format("truetype");
+    font-weight: 300;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: "ChronicleText";
+    src: url(../public/fonts/ChronicleText.otf) format("opentype");
+    font-style: normal;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "ChronicleText", "AbsentiaSans", sans-serif;
+    font-weight: 500;
+  }
+  
+  body {
+    font-size: 16px;
+  }
+  h2,
+  h1,
+  h3,
+  h4 {
+    font-family: "Absentiasans";
+  }
+
+  .responsive {
+    margin-top: -25px;
+  }
+
+  /* CSS for mobile devices */
+@media (max-width: 768px) {
+  .responsive {
+     font-size: 1.5rem; /* Adjust the font size for mobile devices */
+  }
+ }
+ 
