@@ -19,7 +19,7 @@ const CategoryListing = ({ bottom, image, link, title }: Props) => {
           alt="img"
         />
         <Link to={link}>
-          <p className="border border-malon-color text-malon-color cursor-pointer flex justify-center absolute capitalize w-[170px] rounded-[5px] border-solid right-0 bottom-0">
+          <p className="border bg-white hover:bg-malon-color hover:text-white border-malon-color text-malon-color cursor-pointer flex justify-center absolute capitalize w-[170px] rounded-[5px] border-solid right-0 bottom-0">
             {title}
           </p>
         </Link>

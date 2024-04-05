@@ -191,7 +191,7 @@ function Navbar() {
               soldNotification={soldNotification}
             />
           ) : (
-            <div className="text-sm cursor-pointer ml-5 hover:text-orange-color hidden lg:block">
+            <div className="text-sm cursor-pointer ml-5 dark:text-white hover:text-orange-color hidden lg:block">
               <Link to="signin">SIGN IN / SIGN UP</Link>
             </div>
           )}

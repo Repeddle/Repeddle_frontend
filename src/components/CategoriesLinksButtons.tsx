@@ -17,22 +17,25 @@ const CategoriesLinksButtons = () => {
   ]
 
   return (
-    <div
-      className={`flex scrollbar-hide lg:hidden overflow-x-auto px-0 py-2.5 ${
-        theme?.isDarkMode ? "bg-dark-ev1" : "bg-light-ev1"
-      }`}
-    >
-      {categories?.map((cat) => (
-        <div
-          className={`border hover:border-orange-color hover:text-white hover:bg-orange-color
+    <section>
+      <div
+        className={`flex scrollbar-hide lg:hidden overflow-x-auto px-0 py-2.5 ${
+          theme?.isDarkMode ? "bg-dark-ev1" : "bg-light-ev1"
+        }`}
+      >
+        {categories?.map((cat) => (
+          <div
+            key={cat.name}
+            className={`border hover:border-orange-color hover:text-white hover:bg-orange-color
         font-bold whitespace-nowrap uppercase m-2.5 px-2.5 py-[5px] rounded-[0.2rem] border-solid
         lg:hover:text-inherit lg:hover:border-transparent lg:hover:bg-transparent`}
-          onClick={() => navigate(cat.path || `/search?category=${cat.name}`)}
-        >
-          {cat.name}
-        </div>
-      ))}
-    </div>
+            onClick={() => navigate(cat.path || `/search?category=${cat.name}`)}
+          >
+            {cat.name}
+          </div>
+        ))}
+      </div>
+    </section>
   )
 }
 
