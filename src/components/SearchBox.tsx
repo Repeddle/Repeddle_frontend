@@ -24,7 +24,7 @@ const SearchBox = () => {
           className="flex-auto min-w-0 relative w-[1%] text-black-color appearance-none block text-base font-normal leading-normal -outline-offset-2 -ml-px px-3 py-1.5 rounded-[50rem] bg-transparent focus:shadow-[0_0_0_0.25rem_rgba(247,154,35,0.1)] focus:outline-none"
           style={{
             transition:
-              "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;",
+              "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out",
           }}
         />
       </div>
