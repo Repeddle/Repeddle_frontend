@@ -4,27 +4,26 @@ import { Link } from "react-router-dom";
 const About = () => {
   return (
     <div className="container mx-auto px-8">
-      <header className="font-bold text-4xl text-center mb-8">OUR STORY</header>
+      <h1 className="font-bold text-4xl text-center mb-8 lg:text-5xl">
+        OUR STORY
+      </h1>
       <section className="mb-8">
-        {/* Commented out H1 element */}
-        {/* <h1 className="font-bold text-5xl text-center my-8 sm:text-base">
- OUR STORY
-</h1> */}
         <div className="text-center text-lg lg:text-2xl">
           <b>INSPIRING A GENERATION:</b> Crafting our story of a sustainable
-          circular fashion in Africa, one garment at a time, <br /> one person
-          at a time, and one loving home at a time.
+          circular fashion in Africa, one garment at a time, one person at a
+          time, and one loving home at a time.
         </div>
-        <div className="relative my-8 mx-auto">
+        <div className="relative mx-auto">
           <img
             src="https://res.cloudinary.com/emirace/image/upload/v1666946911/20221028_104228_0000_hnjzz1.webp"
             alt="img"
-            className="w-full mx-auto sm:w-10/12 md:w-10/12 mb-4"
+            className="w-full  mb-4 sm:w-full"
           />
+
           <Link to="/signup">
             <div
-              className="bg-orange-400 absolute z-10 bottom-4 left-1/2 transform -translate-x-1/2 lg:py-5 lg:px-20 
-            md:py-6 md:px-10 sm:py-10 sm:px-12 sm:p-18 sm:ml-18 rounded text-white font-bold text-sm md:text-xl"
+              className="bg-orange-400 absolute lg:text-4xl z-10 bottom-4 left-1/2 transform -translate-x-1/2 lg:py-4 lg:px-6
+             rounded text-white font-bold px-1 py-2 sm:-mr-10 text-base lg:mb-8"
             >
               JOIN US
             </div>
@@ -137,19 +136,139 @@ const About = () => {
             />
           </div>
         </div>
-        <a href="https://repeddle.com/sell">
-          <div className="cursor-pointer hover:underline hover:text-orange-300 font-bold text-center lg:text-2xl text-1xl text-red-700 -mt-14">
+        <p className="text-center -mt-8">
+          <a
+            href="https://repeddle.com/sell"
+            className="font-bold lg:text-2xl text-1xl text-red-700 -mt-14 cursor-pointer hover:underline hover:text-orange-300"
+          >
             THINK THE PLANET, THINK THE ENVIRONMENT, THINK REPEDDLE; GO PEDDLE
-          </div>
-        </a>
-      </section>
-      <div>
-        <div>
-          <section>
+          </a>
+        </p>
 
-          </section>
+      </section>
+      <section className="mb-8">
+        <div className="flex flex-col md:flex-row items-center justify-between">
+          {/* Image icon on the left side */}
+          <div className="md:w-1/3 mb-8 md:mb-0">
+          <img src="img.png" alt="img" />
+          </div>
+          {/* Text on the right side */}
+          <div className="md:w-2/3">
+            <div className="flex flex-col justify-center items-center">
+              <h4 className="p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+                REUSE &amp; SECOND-HAND
+              </h4>
+              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+                POSITIVE IMPACT OF USING PRE-LOVED GARMENT
+              </h4>
+              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+                SECOND-HAND = SECOND-CHANCE
+              </h4>
+            </div>
+            <p className="font-medium text-lg text-left lg:text-xl lg:leading-8 lg:font-medium">
+              By buying and selling second-hand item on Repeddle, you’re not
+              only reducing carbon footprint and saving the planet, but you are
+              giving an African Child a better hope for tomorrow. Learn more on
+              our sustainability take <a href="/sustainability">here</a>
+            </p>
+            <ul className="box-border font-medium m-0 p-0 list-disc text-lg lg:text-xl lg:leading-8 lg:font-medium">
+              <li>
+                <b>98%</b> Chance of clothes ending up in landfills avoided.
+              </li>
+              <li>
+                <b>2,700L</b> of water saved for one person to drink for 900
+                days. “sustainablecampus.fsu.edu”
+              </li>
+              <li>
+                <b>10%</b> Co2 of global carbon emissions avoided.
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
+      </section>
+      <section className="mb-8">
+        <div className="flex flex-col md:flex-row items-center justify-between">
+          {/* Image icon on the left side */}
+          <div className="md:w-1/3 mb-8 md:mb-0">
+          <img src="img.png" alt="img" />
+          </div>
+          {/* Text on the right side */}
+          <div className="md:w-2/3">
+            <div className="flex flex-col justify-center items-center">
+              <h4 className="p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+                IT STARTS WITH LESS -
+              </h4>
+              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+                MAKING IT BETTER FOR AFRICA
+              </h4>
+              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+               +THE PLANET
+              </h4>
+            </div>
+            {/*<p className="font-medium text-lg text-left">
+              By buying and selling second-hand item on Repeddle, you’re not
+              only reducing carbon footprint and saving the planet, but you are
+              giving an African Child a better hope for tomorrow. Learn more on
+              our sustainability take <a href="/sustainability">here</a>
+            </p>*/}
+            <ul className="box-border font-medium m-0 p-0 list-disc text-lg lg:text-xl lg:leading-8 lg:font-medium">
+              <li>
+               Think before you buy.
+              </li>
+              <li>
+              Buy second-hand clothing from thrift stores, local markets, your family and friends or online like Repeddle.
+              </li>
+              <li>
+              Discourage throw away culture, repair your damaged clothes instead of throwing them away. 
+              You can resale them on Repeddle App and Website.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section className="mb-8">
+        <div className="flex flex-col md:flex-row items-center justify-between">
+          {/* Image icon on the left side */}
+          <div className="md:w-1/3 mb-8 md:mb-0">
+           <img src="img.png" alt="img" />
+          </div>
+          {/* Text on the right side */}
+          <div className="md:w-2/3">
+            <div className="flex flex-col justify-center items-center">
+              <h4 className="p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+                UPCYLE. RECYCLE. REUSE. RESELL
+              </h4>
+              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+                MAKING SUSTAINABILITY MORE IMPACTFUL IN THREE EASY WAYS
+              </h4>
+              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+               THE REPEDDLE VIP SHIELD
+              </h4>
+            </div>
+            {/*<p className="font-medium text-lg text-left">
+              By buying and selling second-hand item on Repeddle, you’re not
+              only reducing carbon footprint and saving the planet, but you are
+              giving an African Child a better hope for tomorrow. Learn more on
+              our sustainability take <a href="/sustainability">here</a>
+            </p>*/}
+            <ul className="box-border font-medium m-0 p-0 list-disc text-lg lg:text-xl lg:leading-8 lg:font-medium">
+              <li>
+              First, we advance the conversation of secondhand fashion as part of the solution for sustainable fashion,
+              to address the footprint and impact of fashion in Africa, our environment and the planet.
+              </li>
+              <li>
+              Second we strive to take fashion waste off our environment by encouraging people to upcycle, recycle, 
+              rework, reuse and resell fashion by making fashion affordable and sustainable to avoid waste,
+              landfills and carbon emission.
+              </li>
+              <li>
+              Third, we offer the best and quality rare finds to Africa’s Pre-love fashion lovers and community on Repeddle, 
+              helping them to always think secondhand first. <a href="/sustainability" className="cursor-pointer hover:underline hover:text-orange-300">REPEDDLE VIP SHIELD</a> 
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
