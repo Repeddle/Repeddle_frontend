@@ -263,7 +263,7 @@ const About = () => {
               </li>
               <li>
               Third, we offer the best and quality rare finds to Africa’s Pre-love fashion lovers and community on Repeddle, 
-              helping them to always think secondhand first. <a href="/sustainability" className="cursor-pointer hover:underline hover:text-orange-300">REPEDDLE VIP SHIELD</a> 
+              helping them to always think secondhand first. <a href="/sustainability" className="cursor-pointer font-extrabold hover:underline hover:text-orange-300">REPEDDLE VIP SHIELD</a> 
               </li>
             </ul>
           </div>
