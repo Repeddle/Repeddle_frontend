@@ -51,9 +51,14 @@ const TheThrill = () => {
   }
 
   return (
-    <div style={{ marginTop: "20px", position: "relative" }}>
-      <div className="product-title">
-        <h2 className="product-category1">Shop The Thrill</h2>
+    <div className="mt-5 relative">
+      <div>
+        <h2
+          className={`lg:text-[50px] text-[30px] mb-[10px] capitalize relative lg:mb-5 px-[5vw] py-0 leading-[1.2]
+        after:absolute after:content-[''] after:h-0.5 after:w-[70px] after:bg-orange-color after:left-[10vw] after:-bottom-1`}
+        >
+          Shop The Thrill
+        </h2>
       </div>
 
       <button onClick={() => sliderHandler("left")} className="pre-btn1">

@@ -9,12 +9,12 @@ const Wears = () => {
             <div className="">
               <div className="items-center flex h-[325px] relative py-3">
                 <img
-                  src="/images/vonecia-carswell-D3HSYAUjVrM-unsplash.webp"
+                  src="/images/wears/vonecia-carswell-D3HSYAUjVrM-unsplash.webp"
                   alt=""
                   className="h-full object-cover w-full rounded-[10px]"
                 />
                 <div className="max-w-[150px] left-[10px] absolute lg:left-[50px] bg-none">
-                  <h4 className="text-white font-bold text-shadow text-[calc(1.275rem_+_0.3vw)] xl:text-2xl">
+                  <h4 className="text-white leading-[1.2] mb-2 font-bold text-shadow text-[calc(1.275rem_+_0.3vw)] xl:text-2xl">
                     Classic Men Wears
                   </h4>
                   <Link
@@ -30,12 +30,12 @@ const Wears = () => {
             <div className="">
               <div className="items-center flex h-[325px] relative py-3">
                 <img
-                  src="/images/For-kids.webp"
+                  src="/images/wears/For-kids.webp"
                   alt=""
                   className="h-full object-cover object-left lg:object-center w-full rounded-[10px]"
                 />
                 <div className="max-w-[150px] left-[10px] absolute lg:left-[50px] bg-none">
-                  <h4 className="text-white font-bold text-shadow text-[calc(1.275rem_+_0.3vw)] xl:text-2xl">
+                  <h4 className="text-white leading-[1.2] mb-2 font-bold text-shadow text-[calc(1.275rem_+_0.3vw)] xl:text-2xl">
                     Smart Kid's Wears
                   </h4>
                   <Link
@@ -52,12 +52,12 @@ const Wears = () => {
           <div className="flex-[7] order-1 md:order-none">
             <div className="items-center flex h-[325px] lg:h-[650px] relative py-3">
               <img
-                src="/images/tamara-bellis-uN1m9Ca0aqo-unsplash.webp"
+                src="/images/wears/tamara-bellis-uN1m9Ca0aqo-unsplash.webp"
                 alt=""
                 className="h-full object-cover object-left lg:object-center w-full rounded-[10px]"
               ></img>
-              <div className="max-w-[40%] absolute mb-[15px] left-[10] lg:left-[30px]">
-                <h1 className="text-white font-bold text-shadow text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem]">
+              <div className="max-w-[40%] absolute mb-[15px] left-[10px] lg:left-[30px]">
+                <h1 className="text-black font-extrabold mb-[5px] leading-[1.2] text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem]">
                   High Taste Women Wears
                 </h1>
                 <div>

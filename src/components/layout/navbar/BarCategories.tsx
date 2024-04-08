@@ -8,7 +8,7 @@ const BarCategories = () => {
       {categories.length > 0 &&
         categories.map((c) => (
           <div className="mx-5 my-2.5 group-hover:flex">
-            <li className="font-medium text-[15px] uppercase cursor-pointer hover:text-orange-color">
+            <li className="font-medium text-[15px] uppercase cursor-pointer hover:text-orange-color text-black dark:text-white dark:hover:text-orange-color">
               <Link to={c.path || `/search?category=${c.name}`}>{c.name}</Link>
               {/* <Link to={`/category/${c.name}`}>{c.name}</Link>  */}
             </li>
@@ -51,14 +51,14 @@ const BarCategories = () => {
         ))}
       <div className="mx-5 my-2.5 group-hover:flex">
         <Link to="/brand">
-          <li className="font-medium text-[15px] uppercase cursor-pointer hover:text-orange-color">
+          <li className="font-medium text-[15px] uppercase cursor-pointer hover:text-orange-color text-black dark:text-white dark:hover:text-orange-color">
             SHOP BY BRAND
           </li>
         </Link>
       </div>
       <div className="mx-5 my-2.5 group-hover:flex">
         <Link to="/recurated">
-          <li className="font-medium text-[15px] uppercase cursor-pointer hover:text-orange-color">
+          <li className="font-medium text-[15px] uppercase cursor-pointer hover:text-orange-color text-black dark:text-white dark:hover:text-orange-color">
             RE:CURATED
           </li>
         </Link>

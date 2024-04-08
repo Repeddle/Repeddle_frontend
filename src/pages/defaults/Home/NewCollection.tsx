@@ -6,18 +6,18 @@ const NewCollection = () => {
   const navigate = useNavigate()
 
   return (
-    <section className="flex-col my-2.5 lg:my-auto lg:flex-row flex">
+    <section className="flex-col my-2.5 lg:flex-row flex">
       <div className="flex flex-[2_1] flex-col">
-        <h2 className="text-[50px] capitalize relative mb-[30px] pl-[5vw] pr-[3vw] py-0 after:absolute after:content-[''] after:h-0.5 after:w-[70px] after:bg-malon-color after:left-[10vw] after:-bottom-1">
+        <h2 className="lg:text-[50px] leading-[1.2] capitalize relative text-[30px] mb-[10px] lg:mb-[30px] pl-[5vw] pr-[3vw] py-0 after:absolute after:content-[''] after:h-0.5 after:w-[70px] after:bg-malon-color after:left-[10vw] after:-bottom-1">
           New Collections
         </h2>
-        <p className="max-w-[450px] text-justify lg:max-w-[400px] px-[5vw] py-0">
+        <p className="lg:max-w-[450px] mb-4 text-justify max-w-[400px] px-[5vw] py-0">
           Discover new shops launching on our App and Website daily. Shop Hot
           deals, New Arrivals & New style drops from your favorite shops and
           influencers.
         </p>
       </div>
-      <div className="flex flex-[4_1] scrollbar-hide h-[250px] overflow-x-auto ml-5 lg:ml-0">
+      <div className="flex flex-[4_1] pb-[10px] scrollbar-hide h-[250px] overflow-x-auto ml-5 lg:ml-0">
         <CategoryListing
           image="/images/categories/engin-akyurt-xbFtknoQG_Y-unsplash.webp"
           title="STYLE UP"

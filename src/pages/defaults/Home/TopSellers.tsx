@@ -13,7 +13,7 @@ const TopSellers = ({ sellers, loadingUser, error }: Props) => {
     <section id="top_seller_carousel">
       <div>
         <h2
-          className={`lg:text-[50px] relative capitalize text-3xl lg:mb-5 mb-2.5 px-[5vw] py-0
+          className={`lg:text-[50px] leading-[1.2] relative capitalize text-3xl lg:mb-5 mb-2.5 px-[5vw] py-0
     after:bg-orange-color after:content-[""] after:h-0.5 after:absolute after:w-[70px] after:left-[10vw] after:-bottom-1`}
         >
           Top Sellers

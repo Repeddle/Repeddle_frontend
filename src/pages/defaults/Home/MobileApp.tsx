@@ -13,12 +13,12 @@ const MobileApp = () => {
           </div>
           <div className="flex justify-start lg:justify-between">
             <img
-              src="/images/as.png"
+              src="/images/mobile/as.png"
               className="w-[140px] mr-2.5 cursor-pointer lg:w-[20vw] lg:mr-[5px]"
               alt="playstore"
             />
             <img
-              src="/images/gp.png"
+              src="/images/mobile/gp.png"
               className="w-[140px] mr-2.5 cursor-pointer lg:w-[20vw] lg:mr-[5px]"
               alt="playstore"
             />
@@ -26,13 +26,13 @@ const MobileApp = () => {
         </div>
         <div className="items-center flex flex-1 justify-center relative">
           <img
-            src="/images/phonescreen.png"
+            src="/images/mobile/phonescreen.png"
             className="w-[150px] lg:w-auto"
             alt="app"
           />
           <img
             className="w-[150px] absolute lg:w-[200px] right-[50px] top-[50px]"
-            src="/images/phonescreen.png"
+            src="/images/mobile/phonescreen.png"
             alt="app"
           />
           <h3 className="text-3xl text-shadow1 -translate-x-2/4 translate-y-[-80%] absolute font-bold text-black lg:text-[50px] lg:-translate-x-2/4 lg:-translate-y-2/4 text-center whitespace-nowrap left-2/4 top-2/4">
