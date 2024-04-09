@@ -10,7 +10,7 @@ const ReserveAndCopyright = () => {
         endorsement or endorses any trademark displayed on it online or physical
         platforms.
       </div>
-      <div className="flex justify-center mb-[55px] lg:mb-0 dark:text-white bg-white dark:bg-black text-black h-[50px] items-center text-sm font-[bold]">
+      <div className="flex justify-center mb-[55px] lg:mb-0 dark:text-black bg-black dark:bg-white font-bold text-white h-[50px] items-center text-sm">
         <FaCopyright className="text-xl mr-2.5" /> 2023 Repeddle. All Right
         Reserved.
       </div>

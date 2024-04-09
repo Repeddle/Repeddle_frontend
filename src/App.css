@@ -40,6 +40,31 @@
   text-shadow: rgb(255, 255, 255) 1px 0px 10px;
 }
 
+.owl-theme .owl-dots .owl-dot.active span,
+.owl-theme .owl-dots .owl-dot:hover span {
+  background: #b1b0b0 !important;
+}
+
+.owl-theme .owl-dots .owl-dot span {
+  width: 20px;
+  height: 20px;
+  background: var(--orange-color) !important;
+}
+
+.maroon-filter {
+  filter: invert(9%) sepia(46%) saturate(7278%) hue-rotate(350deg)
+    brightness(103%) contrast(91%);
+}
+
+.active .orange-filter {
+  filter: invert(86%) sepia(44%) saturate(3168%) hue-rotate(328deg)
+    brightness(97%) contrast(90%);
+}
+
+.filter-inherit {
+  filter: inherit;
+}
+
 @keyframes slideh {
   0% {
     right: 0;

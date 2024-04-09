@@ -4,7 +4,7 @@ const FooterNewsLetter = () => {
   return (
     <div className="flex flex-col">
       <img
-        className="w-full -mt-px bg_black"
+        className="w-full -mt-px bg-black"
         src="https://res.cloudinary.com/emirace/image/upload/v1656370086/wave_p4ujhx.png"
         alt=""
       ></img>

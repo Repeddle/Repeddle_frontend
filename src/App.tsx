@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div className={isDarkMode ? "dark" : ""}>
-      <div className="dark:bg-black-color dark:text-white-color text-sm  transition-colors duration-300 ease-in-out">
+      <div className="dark:bg-black-color dark:text-white-color text-sm md:text-base transition-colors duration-300 ease-in-out">
         <Outlet />
       </div>
     </div>

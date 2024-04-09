@@ -1,6 +1,6 @@
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa"
-import Product from "../../../components/Product"
-import { IProduct } from "../../../types/product"
+import Product from "../../components/Product"
+import { IProduct } from "../../types/product"
 
 type Props = {
   products: IProduct[]

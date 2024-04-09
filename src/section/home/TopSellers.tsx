@@ -1,5 +1,5 @@
-import LoadingBox from "../../../components/LoadingBox"
-import MessageBox from "../../../components/MessageBox"
+import LoadingBox from "../../components/LoadingBox"
+import MessageBox from "../../components/MessageBox"
 import { Link } from "react-router-dom"
 
 type Props = {
