@@ -9,6 +9,8 @@ import Login from './pages/auth/login';
 import Auth from './pages/auth';
 import Register from './pages/auth/register';
 import Dashboard from './pages/protected/dashboard';
+import About from './pages/defaults/info/About';
+import Returns from './pages/defaults/info/Returns';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +32,8 @@ const router = createBrowserRouter([
         children: [
           { path: '', element: <Home /> },
           { path: 'cart', element: <Cart /> },
+          { path: 'about', element: <About /> },
+          { path: 'returns', element: <Returns /> },
         ],
       },
       {
