@@ -1,0 +1,105 @@
+:root {
+  --malon-color: #8a1719;
+  --orange-color: #eb9f40;
+  --black-color: black;
+  --white-color: white;
+  --green-color: #00c028;
+  --red-color: #d50000;
+  --yellow-color: yellow;
+  --border-color: rgba(99, 91, 91, 0.4);
+  --dark-ev1: #121212;
+  --dark-ev2: #2c2824;
+  --dark-ev3: #231d16;
+  --dark-ev4: #2a2117;
+  --light-ev1: #f3f3f3;
+  --light-ev2: #ececec;
+  --light-ev3: #e5e5e5;
+  --light-ev4: #dedede;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+
+  /* IE and Edge */
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  @apply hidden;
+}
+
+.animation-pause:hover {
+  animation-play-state: paused;
+}
+
+.text-shadow {
+  text-shadow: #000 1px 0 10px;
+}
+
+.text-shadow1 {
+  text-shadow: rgb(255, 255, 255) 1px 0px 10px;
+}
+
+@keyframes slideh {
+  0% {
+    right: 0;
+  }
+  30% {
+    right: 0;
+  }
+  33% {
+    right: 100%;
+  }
+  63% {
+    right: 100%;
+  }
+  66% {
+    right: 200%;
+  }
+  97% {
+    right: 200%;
+  }
+  100% {
+    right: 0;
+  }
+}
+
+@keyframes skeletonPulse {
+  0% {
+    background-color: #f0f0f0;
+  }
+  50% {
+    background-color: #e0e0e0;
+  }
+  100% {
+    background-color: #f0f0f0;
+  }
+}
+
+.bs-container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  width: 100%;
+
+  @media (min-width: 576px) {
+    max-width: 540px;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 720px;
+  }
+
+  @media (min-width: 992px) {
+    max-width: 960px;
+  }
+
+  @media (min-width: 1200px) {
+    max-width: 1140px;
+  }
+
+  @media (min-width: 1400px) {
+    max-width: 1320px;
+  }
+}
