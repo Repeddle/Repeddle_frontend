@@ -3,12 +3,12 @@ import { Link } from "react-router-dom";
 
 const About = () => {
   return (
-    <div className="container mx-auto px-8">
+    <div className="container mx-auto max-w-7xl px-8">
       <h1 className="font-bold text-4xl text-center mb-8 lg:text-5xl">
         OUR STORY
       </h1>
       <section className="mb-8">
-        <div className="text-center text-lg lg:text-2xl">
+        <div className="text-center">
           <b>INSPIRING A GENERATION:</b> Crafting our story of a sustainable
           circular fashion in Africa, one garment at a time, one person at a
           time, and one loving home at a time.
@@ -32,14 +32,14 @@ const About = () => {
       </section>
       <section className="mb-8">
         <h4 className="font-bold text-2xl text-center mb-4">WHO WE ARE</h4>
-        <div className="text-lg lg:text-2xl mb-4">
+        <div className="text-justify mb-4">
           Repeddle is Africa’s leading social marketplace for Pre-loved fashion,
           Gen-Z, Millennials, the Environment, and your Budget. By fostering a
           creative generation of conscious fashion consumers to better the
           planet and our environment, we approach solving Africa’s fashion waste
           crisis.
         </div>
-        <div className="text-lg lg:text-2xl mb-8 text-center">
+        <div className="mb-8 text-center">
           Become Part of Our Community Member; Click the JOIN US button above.
         </div>
       </section>
@@ -63,13 +63,13 @@ const About = () => {
             />
           </div>
         </div>
-        <p className="text-lg lg:text-2xl mb-4">
+        <p className="text-justify mb-4">
           <b>THE MEANING:</b> Our name <b>REPEDDLE</b> is derived from two words
           “Re & Peddle” <b>Re</b>- Meaning: “Once more; afresh; anew” and{" "}
           <b>Peddle</b>- Meaning: “Try to sell (something, especially small
           goods) by going from place to place”.
         </p>
-        <p className="text-lg lg:text-2xl mb-4">
+        <p className="text-justify mb-4">
           <b>OUR SYMBOL:</b> Our symbol represents a handshake in a circular
           form, meaning; people agreeing to join forces to achieve a beneficial
           common goal, these goal is to better both humanity and the planet. The
@@ -78,13 +78,13 @@ const About = () => {
           together to form community that solves environmental crisis through
           fashion Re-use and Recycling”
         </p>
-        <p className="text-lg lg:text-2xl mb-4">
+        <p className="text-justify mb-4">
           <b>THE GOAL:</b> Our goal is to help address part of global
           environmental crisis, “Carbon emissions, Landfills and Waste”, which
           has led to a global warming state of emergency, and fashion industry
           being the 2nd largest contributor to these global problems.
         </p>
-        <p className="text-lg lg:text-2xl mb-4">
+        <p className="text-justify mb-4">
           <b>THE HOW:</b> By providing a platform for a likeminded community
           that believes in a common goal, we address these challenges and
           encourage our community to “once more, refresh and make anew” fashion
@@ -165,13 +165,13 @@ const About = () => {
                 SECOND-HAND = SECOND-CHANCE
               </h4>
             </div>
-            <p className="font-medium text-lg text-left lg:text-xl lg:leading-8 lg:font-medium">
+            <p className="text-justify lg:leading-8">
               By buying and selling second-hand item on Repeddle, you’re not
               only reducing carbon footprint and saving the planet, but you are
               giving an African Child a better hope for tomorrow. Learn more on
               our sustainability take <a href="/sustainability">here</a>
             </p>
-            <ul className="box-border font-medium m-0 p-0 list-disc text-lg lg:text-xl lg:leading-8 lg:font-medium">
+            <ul className="box-border m-0 p-0 list-disc text-justify">
               <li>
                 <b>98%</b> Chance of clothes ending up in landfills avoided.
               </li>
@@ -211,7 +211,7 @@ const About = () => {
               giving an African Child a better hope for tomorrow. Learn more on
               our sustainability take <a href="/sustainability">here</a>
             </p>*/}
-            <ul className="box-border font-medium m-0 p-0 list-disc text-lg lg:text-xl lg:leading-8 lg:font-medium">
+            <ul className="box-border m-0 p-0 list-disc lg:leading-8 text-justify">
               <li>
                Think before you buy.
               </li>
@@ -251,7 +251,7 @@ const About = () => {
               giving an African Child a better hope for tomorrow. Learn more on
               our sustainability take <a href="/sustainability">here</a>
             </p>*/}
-            <ul className="box-border font-medium m-0 p-0 list-disc text-lg lg:text-xl lg:leading-8 lg:font-medium">
+            <ul className="box-border m-0 p-0 list-disc text-justify lg:leading-8">
               <li>
               First, we advance the conversation of secondhand fashion as part of the solution for sustainable fashion,
               to address the footprint and impact of fashion in Africa, our environment and the planet.

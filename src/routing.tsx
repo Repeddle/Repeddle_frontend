@@ -11,6 +11,8 @@ import Register from './pages/auth/register';
 import Dashboard from './pages/protected/dashboard';
 import About from './pages/defaults/info/About';
 import Returns from './pages/defaults/info/Returns';
+import PrivacyPolicy from './pages/defaults/info/PrivacyPolicy';
+import Terms from './pages/defaults/info/Terms';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +36,9 @@ const router = createBrowserRouter([
           { path: 'cart', element: <Cart /> },
           { path: 'about', element: <About /> },
           { path: 'returns', element: <Returns /> },
+          { path: 'privacypolicy', element: <PrivacyPolicy /> },
+          { path: 'terms', element: <Terms /> },
+
         ],
       },
       {
