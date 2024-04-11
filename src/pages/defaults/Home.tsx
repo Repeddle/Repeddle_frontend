@@ -1,5 +1,5 @@
 import CategoriesLinksButtons from "../../components/CategoriesLinksButtons"
-import TheThrill from "../../components/TheThrill"
+import TheThrill from "../../section/home/TheThrill"
 import { IProduct } from "../../types/product"
 import { Helmet } from "react-helmet-async"
 import HomeCarousel from "../../section/home/HomeCarousel"

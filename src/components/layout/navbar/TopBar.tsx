@@ -1,4 +1,4 @@
-import Switch from "../../switch"
+import Switch from "./switch"
 import { Link } from "react-router-dom"
 import useAuth from "../../../hooks/useAuth"
 

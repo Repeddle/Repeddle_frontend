@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { BsFillMoonStarsFill, BsFillSunFill } from "react-icons/bs"
-import ThemeContext from "../context/ThemeContext"
+import ThemeContext from "../../../context/ThemeContext"
 
 const Switch = () => {
   const theme = useContext(ThemeContext)
