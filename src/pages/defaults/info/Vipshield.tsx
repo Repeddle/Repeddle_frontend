@@ -89,7 +89,7 @@ const Vipshield = () => {
           </p>
         </div>
 
-        <p className="text-center mt-12">SPREAD THE WORD. START SELLING. ADD MORE ITEMS TO KEEP EARNING <b className="text-red-600"> TODAY </b> </p>
+        <p className="text-center mt-12">SPREAD THE WORD. START SELLING. ADD MORE ITEMS TO KEEP EARNING <b className="text-red-500"> TODAY </b> </p>
       </section>
     </div>
   );
