@@ -22,7 +22,7 @@ const Returns = () => {
         YOUR RIGHT!
       </h2>
       <section className="mb-8">
-        <div className="text-justify -mt-5">
+        <p className="text-justify -mt-5">
           If your purchase is eligible for returns, it’s within your right to
           log a return within 72hours (3 days) after receiving your order and
           you will be fully refunded. Firstly, within 72hrs of receiving the
@@ -33,12 +33,12 @@ const Returns = () => {
           for seller’s preferred return information/address and log the product
           before 72hours (3 days) from the date and time order was delivered
           elapse.
-          <p className="pt-5">
+          </p>
+          <p className="mt-4">
             The return should be sent to the seller’s provided delivery address
             information using the same shipping method the buyer received the
             order, unless otherwise agreed between seller and buyer.
           </p>
-        </div>
       </section>
       <h2 className="font-medium text-xl text-center text-red-600 mb-8 lg:text-2xl">
         RETURN ELIGIBILITY:

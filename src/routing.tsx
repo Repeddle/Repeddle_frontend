@@ -13,6 +13,7 @@ import About from './pages/defaults/info/About';
 import Returns from './pages/defaults/info/Returns';
 import PrivacyPolicy from './pages/defaults/info/PrivacyPolicy';
 import Terms from './pages/defaults/info/Terms';
+import Vipshield from './pages/defaults/info/Vipshield';
 
 const router = createBrowserRouter([
   {
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
           { path: 'returns', element: <Returns /> },
           { path: 'privacypolicy', element: <PrivacyPolicy /> },
           { path: 'terms', element: <Terms /> },
-
+          { path: 'vipshield', element: <Vipshield /> },
         ],
       },
       {
