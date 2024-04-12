@@ -1,19 +1,18 @@
 import { useState } from "react"
 import Slider from "rc-slider"
 import "rc-slider/assets/index.css"
-import { useNavigate } from "react-router-dom"
-import { SearchOptionsObject } from "../../../types/search"
+import { SearchOptionsKey } from "../../../types/search"
 
 type Props = {
   currency: string
-  getFilterUrl: (val: SearchOptionsObject) => string
+  changeParam: (key: SearchOptionsKey, val: number) => void
+  minPrice: number
+  maxPrice: number
 }
 
-const SearchPrice = ({ currency, getFilterUrl }: Props) => {
+const SearchPrice = ({ currency, changeParam, maxPrice, minPrice }: Props) => {
   const [open, setOpen] = useState(true)
-  const [priceRange, setPriceRange] = useState([0, 8000])
-
-  const navigate = useNavigate()
+  const [priceRange, setPriceRange] = useState([minPrice, maxPrice])
 
   const handlePriceChange = (values: number[]) => {
     setPriceRange(values)
@@ -23,11 +22,11 @@ const SearchPrice = ({ currency, getFilterUrl }: Props) => {
     const [minValue, maxValue] = priceRange
     const [newMinValue, newMaxValue] = values
     if (minValue !== newMinValue) {
-      navigate(getFilterUrl({ minPrice: newMinValue }))
+      changeParam("minPrice", newMinValue)
     }
 
     if (maxValue !== newMaxValue) {
-      navigate(getFilterUrl({ maxPrice: newMaxValue }))
+      changeParam("maxPrice", newMaxValue)
     }
   }
 

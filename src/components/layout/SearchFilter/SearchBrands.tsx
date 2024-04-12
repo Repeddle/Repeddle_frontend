@@ -1,33 +1,25 @@
 import { ChangeEvent, useState } from "react"
 import { FaCircleDot } from "react-icons/fa6"
-import { Link } from "react-router-dom"
-import { SearchOptionsObject } from "../../../types/search"
 
 type Props = {
-  getFilterUrl: (val: SearchOptionsObject) => string
+  changeParam: (val: string) => void
   searchBrand: { name: string; _id: string }[]
   queryBrand: string
-  setQueryBrand: (val: string) => void
   selectedBrand: string
-  setSelectedBrand: (val: string) => void
   brand: string
 }
 
 const SearchBrands = ({
   searchBrand,
-  getFilterUrl,
+  changeParam,
   queryBrand,
-  setQueryBrand,
   selectedBrand,
-  setSelectedBrand,
-  brand,
 }: Props) => {
   const [open, setOpen] = useState(true)
 
   const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
-    setSelectedBrand("")
-    setQueryBrand(e.target.value)
+    changeParam(e.target.value)
   }
 
   return (
@@ -54,39 +46,33 @@ const SearchBrands = ({
           onChange={handleInput}
           value={queryBrand || selectedBrand}
         />
-        <Link
-          className={"all" === brand ? "text-bold" : ""}
-          to={getFilterUrl({ brand: "all" })}
-          onClick={() => setQueryBrand("")}
+
+        <div
+          onClick={() => {
+            changeParam("all")
+          }}
+          className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
+            dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3
+            ${"all" === selectedBrand ? "text-orange-color" : ""}`}
         >
-          <div
-            className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
-            dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3`}
-          >
-            <FaCircleDot size={8} className="text-malon-color mr-[5px]" />
-            All
-          </div>
-        </Link>
+          <FaCircleDot size={8} className="text-malon-color mr-[5px]" />
+          All
+        </div>
         {queryBrand &&
           searchBrand &&
           searchBrand.map((p) => (
-            <div key={p._id}>
-              <Link
-                className={p.name === brand ? "text-bold" : ""}
-                to={getFilterUrl({ brand: p.name })}
-                onClick={() => {
-                  setQueryBrand("")
-                  setSelectedBrand(p.name)
-                }}
-              >
-                <div
-                  className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
-            dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3`}
-                >
-                  <FaCircleDot size={8} className="text-malon-color mr-[5px]" />
-                  {p.name}
-                </div>
-              </Link>
+            <div
+              key={p._id}
+              onClick={() => {
+                changeParam(p.name)
+              }}
+              // {/* TODO: setQueryBrand("") */}
+              className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
+            dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3
+            ${p.name === selectedBrand ? "text-orange-color" : ""}`}
+            >
+              <FaCircleDot size={8} className="text-malon-color mr-[5px]" />
+              {p.name}
             </div>
           ))}
       </div>

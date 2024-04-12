@@ -1,10 +1,9 @@
 import { useState } from "react"
 import { FaCircleDot } from "react-icons/fa6"
-import { Link } from "react-router-dom"
 import { SearchOptionsObject } from "../../../types/search"
 
 type Props = {
-  getFilterUrl: (val: SearchOptionsObject) => string
+  changeParam: (val: string) => void
   title: string
   selectedItem: string
   all: SearchOptionsObject
@@ -13,10 +12,9 @@ type Props = {
 }
 
 const SearchDropDown = ({
-  getFilterUrl,
+  changeParam,
   title,
   selectedItem,
-  all,
   allText,
   list,
 }: Props) => {
@@ -39,32 +37,27 @@ const SearchDropDown = ({
           open ? "after:content-[''] after:rotate-[135deg] h-full" : ""
         }`}
       >
-        <Link
-          className={"all" === selectedItem ? "text-bold" : ""}
-          to={getFilterUrl(all)}
+        <div
+          onClick={() => changeParam("all")}
+          className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
+            dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3
+            ${"all" === selectedItem ? "text-orange-color" : ""}`}
         >
-          <div
-            className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
-            dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3`}
-          >
-            <FaCircleDot size={8} className="text-malon-color mr-[5px]" />
-            {allText}
-          </div>
-        </Link>
+          <FaCircleDot size={8} className="text-malon-color mr-[5px]" />
+          {allText}
+        </div>
         {list.length > 0 &&
           list.map((c) => (
-            <Link
-              className={c.name === selectedItem ? "text-orange-color" : ""}
-              to={getFilterUrl({ category: c.name })}
+            <div
+              key={c.id}
+              onClick={() => changeParam(c.name)}
+              className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
+            dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3
+            ${c.name === selectedItem ? "text-orange-color" : ""}`}
             >
-              <div
-                className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
-            dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3`}
-              >
-                <FaCircleDot size={8} className="text-malon-color mr-[5px]" />
-                {c.name}
-              </div>
-            </Link>
+              <FaCircleDot size={8} className="text-malon-color mr-[5px]" />
+              {c.name}
+            </div>
           ))}
       </div>
     </div>

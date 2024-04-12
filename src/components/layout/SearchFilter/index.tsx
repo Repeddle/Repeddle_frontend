@@ -3,63 +3,60 @@ import SearchBrands from "./SearchBrands"
 import SearchPrice from "./SearchPrice"
 import SearchDeals from "./SearchDeals"
 import SearchDropDown from "./SearchDropDown"
-import { SearchOptionsObject } from "../../../types/search"
+import { SearchOptionsKey } from "../../../types/search"
 import SearchRatings from "./SearchRatings"
 import SearchColor from "./SearchColor"
 import SearchSizes from "./SearchSizes"
+import { useSearchParams } from "react-router-dom"
 
 type Props = {
   setShowFilter: (val: boolean) => void
   showFilter: boolean
-  setQueryBrand: (val: string) => void
   queryBrand: string
+  categories: { name: string; id: string }[]
+  rating: { rating: number; id: string }[]
+  sizes: { rating: number; id: string }[]
+  colors: { rating: number; id: string }[]
+  shipping: { name: string; id: string }[]
+  condition: { name: string; id: string }[]
+  availability: { name: string; id: string }[]
+  type: { name: string; id: string }[]
+  pattern: { name: string; id: string }[]
+  brands: { name: string; _id: string }[]
+  deals: any[]
+  minPrice: number
+  maxPrice: number
 }
 
 const SearchFilter = ({
   setShowFilter,
   showFilter,
-  setQueryBrand,
   queryBrand,
+  availability,
+  brands,
+  categories,
+  colors,
+  condition,
+  deals,
+  pattern,
+  rating,
+  shipping,
+  sizes,
+  type,
+  maxPrice,
+  minPrice,
 }: Props) => {
-  const categories: { name: string; id: string }[] = []
-  const selectedCategory = ""
-
-  const rating: { rating: number; id: string }[] = []
-  const selectedRating = ""
-
-  const sizes: { rating: number; id: string }[] = []
-  const selectedSize = ""
-
-  const colors: { rating: number; id: string }[] = []
-  const selectedColor = ""
-
-  const shipping: { name: string; id: string }[] = []
-  const selectedShipping = ""
-
-  const condition: { name: string; id: string }[] = []
-  const selectedCondition = ""
-
-  const availability: { name: string; id: string }[] = []
-  const selectedAvailability = ""
-
-  const type: { name: string; id: string }[] = []
-  const selectedType = ""
-
-  const pattern: { name: string; id: string }[] = []
-  const selectedPattern = ""
-
-  const brands: { name: string; _id: string }[] = []
-
-  const getFilterUrl = (val: SearchOptionsObject) => {
-    console.log(val)
-    return ""
-  }
-  const deals: any[] = []
-
   const countProducts = 0
 
-  const setSelectedBrand = (val: string) => {
-    console.log(val)
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const getParam = (key: SearchOptionsKey) => searchParams.get(key) ?? "all"
+
+  const changeParam = (key: SearchOptionsKey, val: string | number) => {
+    setSearchParams((prev) => {
+      prev.set(key, val.toString())
+      return prev
+    })
   }
 
   return (
@@ -93,44 +90,50 @@ const SearchFilter = ({
           title="Categories"
           all={{ category: "all" }}
           allText="All"
-          getFilterUrl={getFilterUrl}
+          changeParam={(val: string) => changeParam("category", val)}
           list={categories}
-          selectedItem={selectedCategory}
+          selectedItem={getParam("category")}
         />
 
         <SearchBrands
           brand="all"
-          getFilterUrl={getFilterUrl}
+          changeParam={(val: string) => changeParam("brand", val)}
           queryBrand={queryBrand}
           searchBrand={brands}
-          selectedBrand=""
-          setQueryBrand={setQueryBrand}
-          setSelectedBrand={setSelectedBrand}
+          selectedBrand={getParam("brand")}
         />
 
-        <SearchPrice currency="N" getFilterUrl={getFilterUrl} />
+        <SearchPrice
+          maxPrice={maxPrice}
+          minPrice={minPrice}
+          currency="N"
+          changeParam={changeParam}
+        />
 
-        <SearchDeals deal="all" deals={deals} getFilterUrl={getFilterUrl} />
+        <SearchDeals
+          selectedDeal={getParam("deal")}
+          deals={deals}
+          changeParam={(val: string) => changeParam("deal", val)}
+        />
 
         <SearchRatings
           title="Rating"
           all={{ rating: "all" }}
           allText="& up"
-          getFilterUrl={getFilterUrl}
+          changeParam={(val: string) => changeParam("rating", val)}
           list={rating}
-          selectedItem={selectedRating}
+          selectedRating={getParam("rating")}
         />
 
         <SearchColor
-          getFilterUrl={getFilterUrl}
+          changeParam={(val: string) => changeParam("color", val)}
           colors={colors}
-          selectedColor={selectedColor}
+          selectedColor={getParam("color")}
         />
 
-        {/* color  */}
         <SearchSizes
-          getFilterUrl={getFilterUrl}
-          selectedSize={selectedSize}
+          changeParam={(val: string) => changeParam("size", val)}
+          selectedSize={getParam("size")}
           sizes={sizes}
         />
 
@@ -138,54 +141,45 @@ const SearchFilter = ({
           title="Shipping"
           all={{ shipping: "all" }}
           allText="All Product"
-          getFilterUrl={getFilterUrl}
+          changeParam={(val: string) => changeParam("shipping", val)}
           list={shipping}
-          selectedItem={selectedShipping}
+          selectedItem={getParam("shipping")}
         />
 
         <SearchDropDown
           title="Condition"
           all={{ condition: "all" }}
           allText="All Condition"
-          getFilterUrl={getFilterUrl}
+          changeParam={(val: string) => changeParam("condition", val)}
           list={condition}
-          selectedItem={selectedCondition}
-        />
-
-        <SearchDropDown
-          title="Condition"
-          all={{ condition: "all" }}
-          allText="All Condition"
-          getFilterUrl={getFilterUrl}
-          list={condition}
-          selectedItem={selectedCondition}
+          selectedItem={getParam("condition")}
         />
 
         <SearchDropDown
           title="Availability"
           all={{ availability: "all" }}
           allText="All"
-          getFilterUrl={getFilterUrl}
+          changeParam={(val: string) => changeParam("availability", val)}
           list={availability}
-          selectedItem={selectedAvailability}
+          selectedItem={getParam("availability")}
         />
 
         <SearchDropDown
           title="Type"
           all={{ type: "all" }}
           allText="All"
-          getFilterUrl={getFilterUrl}
+          changeParam={(val: string) => changeParam("type", val)}
           list={type}
-          selectedItem={selectedType}
+          selectedItem={getParam("type")}
         />
 
         <SearchDropDown
           title="Pattern & Printed"
           all={{ pattern: "all" }}
           allText="All"
-          getFilterUrl={getFilterUrl}
+          changeParam={(val: string) => changeParam("pattern", val)}
           list={pattern}
-          selectedItem={selectedPattern}
+          selectedItem={getParam("pattern")}
         />
       </div>
     </div>

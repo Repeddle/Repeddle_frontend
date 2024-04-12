@@ -1,12 +1,11 @@
 import { useState } from "react"
 import { SearchOptionsObject } from "../../../types/search"
-import { Link } from "react-router-dom"
 import Rating from "../../Rating"
 
 type Props = {
-  getFilterUrl: (val: SearchOptionsObject) => string
+  changeParam: (val: string) => void
   title: string
-  selectedItem: string | number
+  selectedRating: string | number
   all: SearchOptionsObject
   allText: string
   list: { rating: number; id: string }[]
@@ -14,13 +13,13 @@ type Props = {
 
 const SearchRatings = ({
   list,
-  getFilterUrl,
-  selectedItem,
+  changeParam,
+  selectedRating,
   title,
-  all,
   allText,
 }: Props) => {
   const [open, setOpen] = useState(true)
+
   return (
     <div className="mb-2.5">
       <h4
@@ -39,33 +38,27 @@ const SearchRatings = ({
         }`}
       >
         {list.map((r) => (
-          <div key={r.rating}>
-            <Link
-              className={
-                `${r.rating}` === `${selectedItem}` ? "text-orange-color" : ""
-              }
-              to={getFilterUrl({ rating: r.rating })}
-            >
-              <div
-                className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
-        dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3`}
-              >
-                <Rating caption={` ${allText}`} rating={r.rating} />
-              </div>
-            </Link>
+          <div
+            key={r.rating}
+            onClick={() => changeParam("all")}
+            className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
+        dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3
+        ${r.rating === +selectedRating ? "text-orange-color" : ""}`}
+          >
+            <Rating caption={` ${allText}`} rating={r.rating} />
           </div>
         ))}
-        <Link
-          className={selectedItem === "all" ? "text-orange-color" : ""}
-          to={getFilterUrl(all)}
+
+        <div
+          onClick={() => {
+            changeParam("all")
+          }}
+          className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
+        dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3
+        ${selectedRating === "all" ? "text-orange-color" : ""}`}
         >
-          <div
-            className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
-        dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3`}
-          >
-            <Rating caption={` ${allText}`} rating={0} />
-          </div>
-        </Link>
+          <Rating caption={` ${allText}`} rating={0} />
+        </div>
       </div>
     </div>
   )

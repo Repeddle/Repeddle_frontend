@@ -1,14 +1,12 @@
 import { useState } from "react"
-import { SearchOptionsObject } from "../../../types/search"
-import { Link } from "react-router-dom"
 
 type Props = {
-  getFilterUrl: (val: SearchOptionsObject) => string
+  changeParam: (val: string) => void
   selectedSize: string
   sizes: any[]
 }
 
-const SearchSizes = ({ getFilterUrl, selectedSize, sizes }: Props) => {
+const SearchSizes = ({ changeParam, selectedSize, sizes }: Props) => {
   const [open, setOpen] = useState(true)
   return (
     <div className="mb-2.5">
@@ -27,33 +25,31 @@ const SearchSizes = ({ getFilterUrl, selectedSize, sizes }: Props) => {
           open ? "after:content-[''] after:rotate-[135deg] h-full" : ""
         }`}
       >
-        <Link
-          className={"all" === selectedSize ? "text-bold" : ""}
-          to={getFilterUrl({ size: "all" })}
+        <div
+          onClick={() => {
+            changeParam("all")
+          }}
+          className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
+            dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3
+            ${"all" === selectedSize ? "text-orange-color" : ""}`}
         >
-          <div
-            className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
-            dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3`}
-          >
-            All
-          </div>
-        </Link>
+          All
+        </div>
         <div className="flex flex-wrap">
           {sizes.map((c) => (
-            <Link
+            <div
+              onClick={() => {
+                changeParam(c.name)
+              }}
               key={c.id}
-              className={c.name === selectedSize ? "text-bold" : ""}
-              to={getFilterUrl({ size: c.name })}
+              className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
+            dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3
+            ${c.name === selectedSize ? "text-orange-color" : ""}`}
             >
-              <div
-                className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
-            dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3`}
-              >
-                <div className="justify-center uppercase border w-[30px] h-5 rounded-[0.2rem]">
-                  {c.name}
-                </div>
+              <div className="justify-center uppercase border w-[30px] h-5 rounded-[0.2rem]">
+                {c.name}
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>

@@ -1,14 +1,12 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
-import { SearchOptionsObject } from "../../../types/search"
 
 type Props = {
-  getFilterUrl: (val: SearchOptionsObject) => string
+  changeParam: (val: string) => void
   selectedColor: string
   colors: any[]
 }
 
-const SearchColor = ({ getFilterUrl, selectedColor, colors }: Props) => {
+const SearchColor = ({ changeParam, selectedColor, colors }: Props) => {
   const [open, setOpen] = useState(true)
   return (
     <div className="mb-2.5">
@@ -27,47 +25,43 @@ const SearchColor = ({ getFilterUrl, selectedColor, colors }: Props) => {
           open ? "after:content-[''] after:rotate-[135deg] h-full" : ""
         }`}
       >
-        <Link
-          className={"all" === selectedColor ? "text-bold" : ""}
-          to={getFilterUrl({ color: "all" })}
+        <div
+          onClick={() => {
+            changeParam("all")
+          }}
+          className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
+            dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3
+            ${"all" === selectedColor ? "text-orange-color" : ""}`}
         >
-          <div
-            className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
-            dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3`}
-          >
-            All
-          </div>
-        </Link>
+          All
+        </div>
         <div className="flex flex-wrap">
           {colors.map((c) => (
-            <Link
-              key={c.id}
-              className={c.name === selectedColor ? "text-bold" : ""}
-              style={{
-                border:
-                  c.name === selectedColor
-                    ? "2px solid var(--orange-color)"
-                    : "",
+            <div
+              onClick={() => {
+                changeParam(c.name)
               }}
-              to={getFilterUrl({ color: c.name })}
+              key={c.id}
+              className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
+            dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3
+            ${
+              c.name === selectedColor
+                ? "text-orange-color border-2 border-orange-color"
+                : ""
+            }`}
             >
-              <div
-                className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
-            dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3`}
-              >
-                {c.name === "multiculour" ? (
-                  <img
-                    src="https://res.cloudinary.com/emirace/image/upload/v1668595263/multi-color_s2zd1o.jpg"
-                    alt="multiculour"
-                    className="w-[30px] h-5 rounded-[0.2rem]"
-                  />
-                ) : (
-                  <div
-                    className={`bg-[${c.name}] w-[30px] h-5 rounded-[0.2rem]`}
-                  />
-                )}
-              </div>
-            </Link>
+              {c.name === "multiculour" ? (
+                <img
+                  src="https://res.cloudinary.com/emirace/image/upload/v1668595263/multi-color_s2zd1o.jpg"
+                  alt="multiculour"
+                  className="w-[30px] h-5 rounded-[0.2rem]"
+                />
+              ) : (
+                <div
+                  className={`bg-[${c.name}] w-[30px] h-5 rounded-[0.2rem]`}
+                />
+              )}
+            </div>
           ))}
         </div>
       </div>
