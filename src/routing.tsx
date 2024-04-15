@@ -15,6 +15,7 @@ import PrivacyPolicy from './pages/defaults/info/PrivacyPolicy';
 import Terms from './pages/defaults/info/Terms';
 import Vipshield from './pages/defaults/info/Vipshield';
 import Rebundle from './pages/defaults/info/rebundle';
+import Sustainability from './pages/defaults/info/sustainability';
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
           { path: 'terms', element: <Terms /> },
           { path: 'vipshield', element: <Vipshield /> },
           { path: 'rebundle', element: <Rebundle /> },
+          { path: 'sustainability', element: <Sustainability /> },
         ],
       },
       {

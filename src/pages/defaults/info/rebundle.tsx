@@ -134,9 +134,9 @@ const rebundle = () => {
         </div>
       </section>
       <section className="mb-8">
-        <p className="text-center cursor-pointer hover:text-red-800 underline">
+        <h1 className="text-center cursor-pointer hover:text-red-800 underline font-medium text-xl lg:text-2xl">
           Happy Thrifting!
-        </p>
+        </h1>
         <div className="flex flex-row items-center justify-center gap-5">
           <p className="text-left float-left lg:mr-52">BUYING GUILD</p>
           <p className="text-right float-right lg:ml-64 lg:-mr-12">
