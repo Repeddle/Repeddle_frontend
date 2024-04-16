@@ -8,7 +8,7 @@ type Props = {
   product: IProduct
 }
 
-const Product = ({ product }: Props) => {
+const ProductItem = ({ product }: Props) => {
   const [showModel, setShowModel] = useState(false)
 
   const discount = useMemo(() => {
@@ -110,4 +110,4 @@ const Product = ({ product }: Props) => {
   )
 }
 
-export default Product
+export default ProductItem

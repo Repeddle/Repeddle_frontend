@@ -22,8 +22,13 @@ import ProtectionRight from "../../section/product/ProtectionRight"
 import ProductDetails from "../../section/product/ProductDetails"
 import ProductSustain from "../../section/product/ProductSustain"
 import ProductTab from "../../section/product/ProductTab"
-import ProductItem from "../../components/Product"
+import ProductItem from "../../components/ProductItem"
 import SizeChart from "../../section/product/SizeChart"
+import RebundleLabel from "../../section/product/RebundleLabel"
+import ModelLogin from "../../components/ModelLogin"
+import ReviewLists from "../../components/ReviewLists"
+import RebundlePoster from "../../components/RebundlePoster"
+import ShareModal from "../../section/product/ShareModal"
 
 const Product = () => {
   const loading = false
@@ -33,6 +38,7 @@ const Product = () => {
   const { addToCart } = useCart()
 
   const [selectedImage, setSelectedImage] = useState("")
+  const [showLoginModel, setShowLoginModel] = useState(false)
   const [showModel, setShowModel] = useState(false)
   const [size, setSize] = useState("")
   const [selectSize, setSelectSize] = useState("")
@@ -117,10 +123,11 @@ const Product = () => {
       <Helmet>
         <title>{product.name}</title>
       </Helmet>
-      {/* <RebundleLabel
-        userId={product.seller._id}
-        active={product.seller.rebundle.status}
-      /> */}
+
+      {product.seller.rebundle.status && (
+        <RebundleLabel userId={product.seller._id} />
+      )}
+
       <div className="flex px-[5vw] py-[30px] flex-col lg:flex-row">
         <div className="lg:flex flex-1 flex-col items-center hidden">
           {product.images.map(
@@ -264,12 +271,9 @@ const Product = () => {
                   numReviews={product.seller.numReviews}
                 />
               </div>
-              {/* <ModelLogin showModel={showModel} setShowModel={setShowModel}>
-                <ReviewLists
-                  userId={product.seller._id}
-                  setShowModel={setShowModel}
-                />
-              </ModelLogin> */}
+              <ModelLogin showModel={showModel} setShowModel={setShowModel}>
+                <ReviewLists setShowModel={setShowModel} />
+              </ModelLogin>
 
               <div
                 className="text-white-color text-center cursor-pointer mt-[5px] px-2.5 py-0 rounded-[10px] bg-orange-color"
@@ -301,9 +305,7 @@ const Product = () => {
               </div>
             )}
           </div>
-          {/* {product.seller.rebundle.status && (
-            <RebundlePoster style={{ marginTop: "5px" }} />
-          )} */}
+          {product.seller.rebundle.status && <RebundlePoster />}
 
           <div className="items-center flex relative mt-[30px] mb-2.5 justify-between px-[10vw] py-0 lg:p-0">
             <div className="relative mr-[30px] group">
@@ -317,11 +319,7 @@ const Product = () => {
                 tips="Like Product "
               />
             </div>
-            {/* <ShareModal
-              url={window.location.href}
-              product={product}
-              dispatch={dispatch}
-            /> */}
+            <ShareModal url={window.location.href} product={product} />
             <div className="relative mr-[30px] group">
               <FaHeart
                 className={saved ? "text-orange-color" : ""}
@@ -333,12 +331,12 @@ const Product = () => {
               />
             </div>
 
-            {/* <ModelLogin
+            <ModelLogin
               showModel={showLoginModel}
               setShowModel={setShowLoginModel}
             >
               <Signin />
-            </ModelLogin> */}
+            </ModelLogin>
             <div className="relative mr-[30px] group">
               <FaMessage onClick={addConversation} />
               <IconsTooltips

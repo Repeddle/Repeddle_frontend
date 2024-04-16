@@ -2,7 +2,7 @@ import { useSearchParams } from "react-router-dom"
 import MessageBox from "../../components/MessageBox"
 import LoadingBox from "../../components/LoadingBox"
 import { Helmet } from "react-helmet-async"
-import Product from "../../components/Product"
+import ProductItem from "../../components/ProductItem"
 import { IProduct } from "../../types/product"
 import SearchBox from "../../components/SearchBox"
 import { BiFilter } from "react-icons/bi"
@@ -203,7 +203,7 @@ const Search = () => {
                           className="w-1/2 lg:w-1/4 flex justify-center"
                           key={product._id}
                         >
-                          <Product product={product}></Product>
+                          <ProductItem product={product}></ProductItem>
                         </div>
                       ))}
                     </div>
@@ -216,7 +216,7 @@ const Search = () => {
                     className="w-1/2 lg:w-1/4 flex justify-center"
                     key={product._id}
                   >
-                    <Product product={product}></Product>
+                    <ProductItem product={product}></ProductItem>
                   </div>
                 ))}
               </div>

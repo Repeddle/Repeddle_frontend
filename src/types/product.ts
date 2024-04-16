@@ -1,5 +1,8 @@
+import { IUser } from "./user"
+
 export interface Review {
-  user: string
+  // user: string
+  user: IUser
   comment: string
   rating: number
   like?: string

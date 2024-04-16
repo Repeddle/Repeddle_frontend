@@ -1,5 +1,5 @@
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa"
-import Product from "../../components/Product"
+import ProductItem from "../../components/ProductItem"
 import { IProduct } from "../../types/product"
 
 type Props = {
@@ -36,7 +36,7 @@ const NewDeals = ({ products }: Props) => {
         {products.length > 0
           ? products.map((product) => (
               <div key={product._id} className="smooth1">
-                <Product product={product} />
+                <ProductItem product={product} />
               </div>
             ))
           : "No Product Found"}
