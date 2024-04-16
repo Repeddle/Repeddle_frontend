@@ -53,7 +53,7 @@ const NewCollection = () => {
         />
       </div>
       <div
-        className="flex lg:hidden items-center text-orange-color cursor-pointer text-[15px] font-[bold] self-end mx-5 hover:text-malon-color"
+        className="flex lg:hidden items-center text-orange-color cursor-pointer text-[15px] font-bold self-end mx-5 hover:text-malon-color"
         onClick={() => navigate("/categories")}
       >
         <span>Search All Categories</span>

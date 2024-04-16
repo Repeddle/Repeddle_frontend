@@ -3,6 +3,7 @@ import MessageBox from "../../components/MessageBox"
 import { Helmet } from "react-helmet-async"
 import { productDetails as product } from "../../utils/data"
 import { useMemo, useState } from "react"
+import ReactImageMagnify from "react-image-magnify"
 import {
   FaEye,
   FaFlag,
@@ -29,6 +30,8 @@ import ModelLogin from "../../components/ModelLogin"
 import ReviewLists from "../../components/ReviewLists"
 import RebundlePoster from "../../components/RebundlePoster"
 import ShareModal from "../../section/product/ShareModal"
+import CustomCarousel from "../../section/product/CustomCarousel"
+import ProductSignin from "../../section/product/ProductSignin"
 
 const Product = () => {
   const loading = false
@@ -103,6 +106,18 @@ const Product = () => {
 
   const toggleLikes = () => {}
 
+  const checkFileTypeByExtension = (fileUrl: string) => {
+    const extension = fileUrl.split(".").pop()?.toLowerCase() ?? ""
+
+    if (["jpg", "jpeg", "png", "gif", "bmp"].includes(extension)) {
+      return "image"
+    } else if (["mp4", "avi", "mov", "mkv"].includes(extension)) {
+      return "video"
+    } else {
+      return "unknown"
+    }
+  }
+
   const sizeHandler = (item: string) => {
     const current = product.sizes.filter((s) => s.size === item)
     if (current.length > 0) {
@@ -171,8 +186,10 @@ const Product = () => {
         </div>
 
         <div className="d-md-none mb-4">
-          {/* <CustomCarousel>
-            {[product.image, ...product.images, product.video]
+          <CustomCarousel>
+            {/* TODO: no first image */}
+            {/* {[product.image, ...product.images, product.video] */}
+            {[...product.images, product.video]
               .filter((image) => image)
               .map(
                 (image) =>
@@ -203,7 +220,7 @@ const Product = () => {
                     </div>
                   )
               )}
-          </CustomCarousel> */}
+          </CustomCarousel>
         </div>
         <div className="flex-[3] z-[9] hidden lg:block">
           {selectedImage === "video" ? (
@@ -211,22 +228,20 @@ const Product = () => {
               <source src={product.video} type="video/mp4" />
             </video>
           ) : (
-            <></>
-            // <ReactImageMagnify
-            //   {...{
-            //     smallImage: {
-            //       alt: "Wristwatch by Ted Baker London",
-            //       isFluidWidth: true,
-            //       src: selectedImage || product.image,
-            //     },
-            //     largeImage: {
-            //       src: selectedImage || product.image,
-            //       width: 1200,
-            //       height: 1800,
-            //     },
-            //     // enlargedImagePosition: "over",
-            //   }}
-            // />
+            <ReactImageMagnify
+              {...{
+                smallImage: {
+                  alt: "Wristwatch by Ted Baker London",
+                  isFluidWidth: true,
+                  src: selectedImage || product.images[0],
+                },
+                largeImage: {
+                  src: selectedImage || product.images[0],
+                  width: 1200,
+                  height: 1800,
+                },
+              }}
+            />
           )}
         </div>
 
@@ -331,11 +346,12 @@ const Product = () => {
               />
             </div>
 
+            {/* TODO: don't see a way to open this */}
             <ModelLogin
               showModel={showLoginModel}
               setShowModel={setShowLoginModel}
             >
-              <Signin />
+              <ProductSignin />
             </ModelLogin>
             <div className="relative mr-[30px] group">
               <FaMessage onClick={addConversation} />
@@ -421,18 +437,18 @@ const Product = () => {
             )}
             <div className="my-5 mx-0">
               {!product.isAvailable ? (
-                <button className="w-full text-white-color text-lg font-[bold] uppercase mb-5 p-2.5 rounded-[5px] border-0 bg-gray-500 cursor-not-allowed">
+                <button className="w-full text-white-color text-lg font-bold uppercase mb-5 p-2.5 rounded-[5px] border-0 bg-gray-500 cursor-not-allowed">
                   Not Available
                 </button>
               ) : product.countInStock > 0 ? (
                 <button
                   onClick={addToCartHandler}
-                  className="w-full text-white-color text-lg font-[bold] uppercase mb-5 p-2.5 rounded-[5px] border-0 bg-orange-color hover:bg-malon-color"
+                  className="w-full text-white-color text-lg font-bold uppercase mb-5 p-2.5 rounded-[5px] border-0 bg-orange-color hover:bg-malon-color"
                 >
                   add to cart
                 </button>
               ) : (
-                <button className="w-full text-white-color text-lg font-[bold] uppercase mb-5 p-2.5 rounded-[5px] border-0 bg-gray-500 cursor-not-allowed">
+                <button className="w-full text-white-color text-lg font-bold uppercase mb-5 p-2.5 rounded-[5px] border-0 bg-gray-500 cursor-not-allowed">
                   sold out
                 </button>
               )}
