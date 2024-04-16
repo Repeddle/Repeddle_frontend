@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 
 const Returns = () => {
   return (
-    <div className="container mx-auto px-8">
+    <div className="container mx-auto max-w-7xl px-8">
       <h2 className="font-medium text-xl text-center text-red-600 mb-8 lg:text-2xl">
         RETURN POLICY
       </h2>
       <section className="mb-8">
-        <div className="text-lg lg:text-xl -mt-5">
+        <div className="-mt-5 text-justify">
           We are fully aware certain things may not always go our way or
           according to our plans and we are here to fully support you every step
           of the way to ensure you have the very best experience using our
@@ -22,7 +22,7 @@ const Returns = () => {
         YOUR RIGHT!
       </h2>
       <section className="mb-8">
-        <div className="text-lg lg:text-xl -mt-5">
+        <p className="text-justify -mt-5">
           If your purchase is eligible for returns, it’s within your right to
           log a return within 72hours (3 days) after receiving your order and
           you will be fully refunded. Firstly, within 72hrs of receiving the
@@ -33,18 +33,18 @@ const Returns = () => {
           for seller’s preferred return information/address and log the product
           before 72hours (3 days) from the date and time order was delivered
           elapse.
-          <p className="pt-5">
+          </p>
+          <p className="mt-4">
             The return should be sent to the seller’s provided delivery address
             information using the same shipping method the buyer received the
             order, unless otherwise agreed between seller and buyer.
           </p>
-        </div>
       </section>
       <h2 className="font-medium text-xl text-center text-red-600 mb-8 lg:text-2xl">
         RETURN ELIGIBILITY:
       </h2>
       <section className="mb-8">
-        <div className="text-lg lg:text-xl -mt-5">
+        <div className="text-justify -mt-5">
           Your purchase is eligible for return if any of the below issue is
           associated with you order. Please be sure to report this on Repeddle
           App or Website within 72hours (3 days) of receipt.
@@ -66,7 +66,7 @@ const Returns = () => {
         NOT ELIGIBILE:
       </h2>
       <section className="mb-8">
-        <div className="text-lg lg:text-xl -mt-5">
+        <div className="text-justify -mt-5">
           <ol className="mb-4 mt-4 pl-8 list-decimal list-inside">
             <li>You changed your mind.</li>
             <li>Fit issues.</li>
@@ -83,7 +83,7 @@ const Returns = () => {
        LOGGING A RETURN?
       </h2>
       <section className="mb-8">
-        <div className="text-lg lg:text-xl -mt-5">
+        <div className="text-justify -mt-5">
           <p> <b>How to Log a Return: -</b>
           Ensure to upload pictures that clearly show your reason and include a detailed description of the reason for the return.
           </p>  
@@ -113,7 +113,7 @@ const Returns = () => {
        REFUND POLICY
       </h2>
       <section className="mb-8">
-        <div className="text-lg lg:text-xl -mt-5">
+        <div className=" -mt-5 text-justify">
           <p className="mb-5"> When you make a purchase on Repeddle, we hold the payment of your purchase until we know you have received your order as described. 
             We allow you 72hours (3 days) after delivery to notify us if the product is significantly not as described or has been misrepresented 
             by logging a return with description and clear image to support your claim on Repeddle App or Website. For Refund, remember to use the 
@@ -136,7 +136,7 @@ const Returns = () => {
        WHO COVERS THE RETURN SHIPPING COST?
       </h2>
       <section className="mb-8">
-        <div className="text-lg lg:text-xl -mt-5">
+        <div className=" -mt-5 text-justify">
           <p className="mb-5"> We advise that all returns must be a valid reason caused by a seller. As a result, the seller covers the cost of shipment. Should you wish to return for any other reasons not 
           started under Return Eligibility, we are unfortunately not able to process such return. However, you can Re-list the product for sale on Repeddle App or Website. To avoid a problem with a sale or 
           paying for return cost, we advise sellers to be as descriptive, transparent and well detailed as possible when adding a product. We encourage buyers to review the listing photos, description, 

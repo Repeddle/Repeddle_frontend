@@ -1,9 +1,9 @@
-import { useContext } from "react"
-import { BsFillMoonStarsFill, BsFillSunFill } from "react-icons/bs"
-import ThemeContext from "../../../context/ThemeContext"
+import { useContext } from 'react';
+import { BsFillMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
+import ThemeContext from '../../../context/ThemeContext';
 
 const Switch = () => {
-  const theme = useContext(ThemeContext)
+  const theme = useContext(ThemeContext);
 
   return (
     <div className="flex items-center px-0 py-2.5 justify-end">
@@ -23,7 +23,7 @@ const Switch = () => {
 
       <BsFillMoonStarsFill color="white" />
     </div>
-  )
-}
+  );
+};
 
-export default Switch
+export default Switch;
