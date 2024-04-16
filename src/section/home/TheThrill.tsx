@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import { IProduct } from "../types/product"
+import { IProduct } from "../../types/product"
 
 const SkeletonProduct = () => (
   <div className="flex-[0_0_calc(33%_-_10px)] bg-[#f0f0f0] p-2.5 md:max-w-[240px]">

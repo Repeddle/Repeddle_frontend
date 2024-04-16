@@ -99,7 +99,7 @@ const LoggedInBar = ({
               <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color dark:bg-dark-ev1 bg-light-ev1">
                 <Link to="/cart?wishlist=true">
                   Wishlist{" "}
-                  <span style={{ color: "var(--orange-color)" }}>
+                  <span className="text-orange-color">
                     ({user.saved?.length})
                   </span>
                 </Link>

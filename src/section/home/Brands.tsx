@@ -1,5 +1,5 @@
 import { FaArrowRight } from "react-icons/fa"
-import CategoryListing from "../../../components/CategoryListing"
+import CategoryListing from "../../components/CategoryListing"
 import { useNavigate } from "react-router-dom"
 
 const Brands = () => {

@@ -1,4 +1,4 @@
-import Switch from "../../switch"
+import Switch from "./switch"
 import { Link } from "react-router-dom"
 import useAuth from "../../../hooks/useAuth"
 
@@ -28,7 +28,7 @@ const TopBar = () => {
             <div className="text-orange-color group underline relative cursor-pointer mx-[5px] my-0">
               DETAILS
               <p
-                className={`hidden fixed w-[250px] left-1/4 top-5 z-[9] lg:w-[300px] p-2.5 group-hover:block rounded-[0.2rem] lg:left-2/4 lg:top-10 dark:text-white-color dark:bg-black-color text-black-color bg-white-color`}
+                className={`hidden fixed w-[250px] left-1/4 top-5 z-[9] lg:w-[300px] p-2.5 group-hover:block rounded-[0.2rem] lg:left-2/4 lg:top-10 text-white-color bg-black-color`}
               >
                 Sell more than 10,400 brand names you love. Listing is just a
                 few steps away!
