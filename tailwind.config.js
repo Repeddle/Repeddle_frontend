@@ -2,7 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {
+
+     extend: {
+       fontFamily: {
+         'sans': ['Absentiasans', 'sans-serif'],
+       },
+     
       colors: {
         "malon-color": "#8a1719",
         "orange-color": "#eb9f40",
@@ -25,4 +30,5 @@ export default {
   },
   darkMode: "class",
   plugins: [],
-}
+
+ };
