@@ -1,4 +1,5 @@
 import { IProduct } from "../types/product"
+import { IUser } from "../types/user"
 
 export const productDetails: IProduct = {
   name: "Summer Shirt",
@@ -110,56 +111,247 @@ export const productDetails: IProduct = {
   ],
 }
 
-//   {
-//     "name": "Summer Shirt",
-//     "sellerName": "KendoMash",
-//
-//
-//     "image": "https://res.cloudinary.com/emirace/image/upload/v1699445121/qj8seibsqnj4csvridcp.jpg",
-//
-//     ,
-//     ,
-//     ,
-//     ,
-//
-//     "product": "men",
-//
-//
-//
-//
-//     "userBuy": [
-//         "63c9cde6b677973f8c09dec8"
-//     ],
-//     "deliveryOption": [
-//         {
-//             "name": "Pick up from Seller",
-//             "value": 0
-//         },
-//         {
-//             "name": "GIG Logistics",
-//             "value": 0
-//         }
-//     ],
-//     "condition": "Fair Condition",
-//     "shippingLocation": "Nigeria",
-//     "keyFeatures": "",
-//
-//     "rating": 0,
-//     "currency": "N ",
-//     "numReviews": 0,
-//
-//
-//     "soldAll": true,
-//
-//
-//
-//     "region": "NGN",
-//
-//
-//
-//
-//     "createdAt": "2023-11-08T12:09:30.492Z",
-//     "updatedAt": "2024-04-12T20:10:34.844Z",
-//     "__v": 10,
-//     "productId": "654b7a7a8698d309f6f768bc"
-// }
+export const user: IUser = {
+  address: {
+    street: "1 Fagba Street",
+    state: "Lagos",
+    zipcode: 1234,
+  },
+  earnings: 0,
+  isVerifiedEmail: true,
+  _id: "63cf9a386f44b86e44e3b31e",
+  username: "KendoMash",
+  firstName: "Repeddle",
+  lastName: "Nigeria",
+  image:
+    "https://res.cloudinary.com/emirace/image/upload/v1692275468/mcph4bdajocqwg4dnxmz.jpg",
+  email: "repeddleng@gmail.com",
+  isAdmin: true,
+  isSeller: true,
+  followers: ["63cfcd166f44b86e44e3b7e2"],
+  following: [
+    "63f2164fc1128baf474cd433",
+    "63c9cde6b677973f8c09dec8",
+    "64b262e93861c827cbd5c822",
+    "63cfcd166f44b86e44e3b7e2",
+  ],
+  likes: [
+    {
+      _id: "63f22367c1128baf474cd52c",
+      name: "Massumi gloss heels",
+      seller: {
+        _id: "63f2164fc1128baf474cd433",
+        username: "Lee Thrift Store",
+        image:
+          "https://res.cloudinary.com/emirace/image/upload/v1687333136/gynti5xuzyw6tngdbwbt.jpg",
+        address: {
+          street: "",
+          state: "",
+          zipcode: 0,
+        },
+        rebundle: {
+          status: false,
+          count: 0,
+        },
+        firstName: "lee",
+        lastName: "atores",
+        email: "tshepimabanga@gmail.com",
+        followers: [],
+        sold: [],
+        numReviews: 0,
+        badge: false,
+      },
+      slug: "massumi-gloss-heels",
+      images: [
+        "https://res.cloudinary.com/emirace/image/upload/v1676812564/elo89ykn0c0asdmmkcj0.jpg",
+        "https://res.cloudinary.com/emirace/image/upload/v1676812596/xx1st8hhomtaiu9htj06.jpg",
+        "https://res.cloudinary.com/emirace/image/upload/v1676812631/vyqohcxlgvqhuqwvci5e.jpg",
+        "https://res.cloudinary.com/emirace/image/upload/v1676812693/lmuyatsvsmpquhm7byyb.jpg",
+      ],
+      tags: ["Heels", "Court", "Black girls magic "],
+      video: "",
+      brand: "massimo",
+      color: "black",
+      category: "shoes",
+      mainCategory: "Women",
+      subCategory: "ankle boots & booties",
+      material: "Synthetic",
+      description: "Massumi synthetic court heel",
+      sizes: [],
+      // userBuy: [],
+      // deliveryOption: [
+      //   {
+      //     name: "Paxi PEP store",
+      //     value: "59.95",
+      //   },
+      //   {
+      //     name: "Aramex Store-to-Door",
+      //     value: "99.99",
+      //   },
+      // ],
+      condition: "Excellent Condition",
+      // shippingLocation: "South Africa",
+      keyFeatures: "Plain",
+      costPrice: 150,
+      sellingPrice: 75,
+      rating: 0,
+      // currency: "R ",
+      // numReviews: 0,
+      likes: [
+        "63c9207a9ab6a6a276a9a073",
+        "63cfcd166f44b86e44e3b7e2",
+        "648336edf4dbd670b26ce5a2",
+      ],
+      shares: [],
+      sold: true,
+      active: true,
+      countInStock: 0,
+      region: "ZAR",
+      reviews: [],
+      createdAt: "2023-02-19T13:25:59.641Z",
+      updatedAt: "2023-09-15T21:13:45.394Z",
+      // productId: "63f22367c1128baf474cd52c",
+      // soldAll: true,
+      meta: {},
+      viewcount: [
+        {
+          hashed: "d70563106f6b2b11962751cb7e5fe9d8",
+          time: "2023-07-08T11:32:39.613Z",
+        },
+        {
+          hashed: "ed7fcc2c7a7f0a0bc16364b84e06b51c",
+          time: "2023-07-08T16:03:13.920Z",
+        },
+      ],
+      isAvailable: true,
+      badge: false,
+    },
+    {
+      _id: "648d662e1829a921a1e15310",
+      name: "Quality Stone-Black Jeans For Men",
+      seller: {
+        _id: "63c9cde6b677973f8c09dec8",
+        username: "Emirace",
+        image:
+          "https://res.cloudinary.com/emirace/image/upload/v1675795105/ndksunuy8k2xdsc6wr56.webp",
+        address: {
+          street: "",
+          state: "",
+          zipcode: 0,
+        },
+        rebundle: {
+          status: false,
+          count: 0,
+        },
+        firstName: "Emirace",
+        lastName: "Bob",
+        email: "example@email.com",
+        followers: [],
+        sold: [],
+        numReviews: 0,
+        badge: false,
+      },
+      slug: "quality-stone-black-jeans-for-men",
+
+      images: [
+        "https://res.cloudinary.com/emirace/image/upload/v1694097530/axf9pt7clzollrr8vkci.jpg",
+        "https://res.cloudinary.com/emirace/image/upload/v1694097583/amlyyk1tjdb4mdliiw5f.jpg",
+        "https://res.cloudinary.com/emirace/image/upload/v1694097643/v2fvrhsofnuahcylpuna.jpg",
+      ],
+      tags: ["stock ", "guys", "black "],
+      video: "",
+      brand: "S.P.C.C",
+      color: "black",
+      category: "clothing",
+      mainCategory: "men",
+      meta: {},
+      subCategory: "jeans",
+      material: "Wool",
+      description:
+        "Classy and soft to the touch, this Men's fitted denim jeans Trouser is suitable to keep you cool throughout the day, you can pair along with a T-shirt, polo shirt or formal shirt. Never get lost in the crowd, dictate your style and express it at your preferred pace with fashion pieces that let you rock your occasions and also stay in with the newest trends.Buy denim Jeans, a brand that will put you in the elite class. ",
+      sizes: [],
+      // userBuy: [
+      //   "63e777adc1128baf474ccb25",
+      //   "645d4146c465815c478febe0",
+      //   "645d4146c465815c478febe0",
+      // ],
+      // deliveryOption: [
+      //   {
+      //     name: "Pick up from Seller",
+      //     value: 0,
+      //   },
+      // ],
+      condition: "New with Tags",
+      // shippingLocation: "Nigeria",
+      keyFeatures: "Color Block",
+      specification:
+        "SKU: FA203MW2ZLSESNAFAMZ\nProduct Line: A-class Couture\nWeight (kg): 0.2\nColor: Black\nMain Material: Jeans",
+      costPrice: 2500,
+      sellingPrice: 2500,
+      rating: 0,
+      // currency: "N ",
+      // numReviews: 0,
+      likes: [
+        "63cf9a386f44b86e44e3b31e",
+        "64bfa37b61009463a7b8e9af",
+        "645d4146c465815c478febe0",
+      ],
+      shares: [
+        {
+          user: "645d4146c465815c478febe0",
+          hashed: "f8b0f8fc826a20af27c9a20a8ab83408",
+          time: new Date(),
+        },
+        {
+          user: "645d4146c465815c478febe0",
+          hashed: "7016f4335fec7d92dc753779032a4dac",
+          time: new Date(),
+        },
+      ],
+      sold: false,
+      // soldAll: false,
+      active: true,
+      countInStock: 8,
+      region: "NGN",
+      reviews: [],
+      createdAt: "2023-06-17T07:52:14.557Z",
+      updatedAt: "2024-02-18T17:15:41.624Z",
+      // productId: "648d662e1829a921a1e15310",
+      badge: false,
+      viewcount: [
+        {
+          hashed: "a3dca43a070590f61e0e0cc610863a85",
+          time: "2023-07-08T05:57:25.088Z",
+        },
+        {
+          hashed: "69a9b04a916658c8d19ea57d9d40d2a5",
+          time: "2023-07-08T08:15:39.820Z",
+        },
+      ],
+      isAvailable: true,
+    },
+  ],
+  rebundle: {
+    status: true,
+    count: 1,
+  },
+  saved: [],
+  sold: ["654b7a7a8698d309f6f768bc", "654b76048698d309f6f767fd"],
+  activeLastUpdate: new Date("2023-01-24T09:48:48.167Z"),
+  rating: 0,
+  phone: "0815133377",
+  numReviews: 0,
+  badge: false,
+  active: true,
+  influencer: false,
+  region: "NGN",
+  buyers: [],
+  createdAt: "2023-01-24T08:43:36.887Z",
+  // usernameUpdate: "2023-08-17T12:16:20.418Z",
+  newsletter: true,
+  accountName: "Repeddle Ng",
+  accountNumber: 1234567,
+  bankName: "Union Bank",
+  about:
+    "You will find beautiful rear finds in my store from ladies, men, kids wear, shoes and accessories. Happy Exploring and thank you for checking my store out🤗\n\nMy products ships fast within 2-4 days😍",
+}

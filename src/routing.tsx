@@ -14,6 +14,7 @@ import About from "./pages/defaults/info/About"
 import Returns from "./pages/defaults/info/Returns"
 import Sell from "./pages/defaults/Sell"
 import Product from "./pages/defaults/Product"
+import Seller from "./pages/defaults/Seller"
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
           { path: "returns", element: <Returns /> },
           { path: "sell", element: <Sell /> },
           { path: "product/:id", element: <Product /> },
+          { path: "seller/:id", element: <Seller /> },
         ],
       },
       {
