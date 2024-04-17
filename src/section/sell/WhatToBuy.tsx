@@ -11,7 +11,7 @@ const WhatToBuy = () => {
         //   backgroundPosition: "center center",
       }}
     >
-      <div className="flex lg:flex-row items-center justify-around w-full z-[9] lg:p-2.5 rounded-[0.2rem] flex-col p-[5px]">
+      <div className="flex items-center justify-around w-full z-[9] lg:p-2.5 rounded-[0.2rem] flex-col p-[5px]">
         <h3 className="text-[13px] text-white-color lg:text-[25px] font-bold">
           WONDERING WHAT TO BUY?
         </h3>

@@ -6,12 +6,14 @@ import { FaMoneyBill } from "react-icons/fa"
 const WhatYouGetSell = () => {
   return (
     <section className="flex flex-col items-center mx-0 lg:my-10 my-5">
-      <h2 className="flex text-center justify-center font-bold lg:text-base text-[15px] mx-[5px] my-0">
+      <h2 className="flex text-center justify-center font-bold lg:text-[calc(1.325rem_+_0.9vw)] text-[15px] mx-[5px] my-0">
         WHAT YOU WILL GET
       </h2>
       <div className="flex w-[80vw] justify-center flex-col lg:flex-row items-center">
         <div className="mx-5 my-2.5 flex-1 flex flex-col items-center h-[220px] m-5 lg:m-[10px] justify-start dark:bg-dark-ev2 bg-light-ev2 p-2.5 rounded-[0.2rem]">
-          <FaMessage size={64} className="text-orange-color" />
+          <div className="h-[64px]">
+            <FaMessage size={64} className="text-orange-color h-[64px]" />
+          </div>
           <p className="text-sm text-center sm:text-base mb-2.5">
             Real-time notification on transactions, Repeddle community
             engagements with{" "}
@@ -22,7 +24,9 @@ const WhatYouGetSell = () => {
           </p>
         </div>
         <div className="mx-5 my-2.5 flex-1 flex flex-col items-center h-[220px] m-5 lg:m-[10px] justify-start dark:bg-dark-ev2 bg-light-ev2 p-2.5 rounded-[0.2rem]">
-          <FaShield size={64} className="text-orange-color" />
+          <div className="h-[64px]">
+            <FaShield size={64} className="text-orange-color h-[64px]" />
+          </div>
           <p className="text-sm text-center sm:text-base mb-2.5">
             Protected transactions for sellers and buyers with (
             <b className="font-bold text-malon-color">
@@ -32,7 +36,9 @@ const WhatYouGetSell = () => {
           </p>
         </div>
         <div className="mx-5 my-2.5 flex-1 flex flex-col items-center h-[220px] m-5 lg:m-[20px] justify-start dark:bg-dark-ev2 bg-light-ev2 p-2.5 rounded-[0.2rem]">
-          <FaMoneyBill size={64} className="text-orange-color" />
+          <div className="h-[64px]">
+            <FaMoneyBill size={64} className="text-orange-color h-[64px]" />
+          </div>
           <p className="text-sm text-center sm:text-base mb-2.5">
             Coupons and campaigns:{" "}
             <b className="font-bold text-malon-color">
@@ -42,7 +48,9 @@ const WhatYouGetSell = () => {
           </p>
         </div>
         <div className="mx-5 my-2.5 flex-1 flex flex-col items-center h-[220px] m-5 lg:m-10 justify-start dark:bg-dark-ev2 bg-light-ev2 p-2.5 rounded-[0.2rem]">
-          <FaChartColumn size={64} className="text-orange-color" />
+          <div className="h-[64px]">
+            <FaChartColumn size={64} className="text-orange-color h-[64px]" />
+          </div>
           <p className="text-sm text-center sm:text-base mb-2.5">
             Customized marketing tools and algorithm to help your listing get
             the popularity it needs and sell fast, including{" "}
@@ -54,7 +62,7 @@ const WhatYouGetSell = () => {
       </div>
       <Link to="/newproduct">
         <OrangeButton>
-          <h2 className="flex text-center justify-center font-bold lg:text-base text-[15px] mx-[5px] my-0">
+          <h2 className="flex text-center justify-center font-bold lg:text-[calc(1.325rem_+_0.9vw)] leading-tight text-[15px] mx-[5px] my-0">
             SELL NOW
           </h2>
         </OrangeButton>

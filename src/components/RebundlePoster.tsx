@@ -3,8 +3,8 @@ import { Link } from "react-router-dom"
 
 const RebundlePoster = () => {
   return (
-    <div className="p-[5px] flex items-center bg-light-ev2 dark:bg-dark-ev2">
-      <FaTruck className="my-0 mx-2.5" />
+    <div className="p-[5px] flex items-center">
+      <FaTruck className="my-0 mx-2.5 text-xl" />
       <div>
         Free delivery with{" "}
         <Link className="cursor-pointer text-orange-color" to="/rebundle">

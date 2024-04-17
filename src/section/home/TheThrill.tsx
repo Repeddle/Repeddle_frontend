@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { IProduct } from "../../types/product"
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa"
 
 const SkeletonProduct = () => (
   <div className="flex-[0_0_calc(33%_-_10px)] bg-[#f0f0f0] p-2.5 md:max-w-[240px]">
@@ -61,11 +62,18 @@ const TheThrill = () => {
         </h2>
       </div>
 
-      <button onClick={() => sliderHandler("left")} className="pre-btn1">
-        <i className="fa fa-angle-left"></i>
+      <button
+        onClick={() => sliderHandler("left")}
+        className="w-[5vw] h-full absolute flex justify-center opacity-50 items-center cursor-pointer z-[8] border-none top-0 left-0"
+      >
+        <FaAngleLeft size={40} opacity={0.2} />
       </button>
-      <button onClick={() => sliderHandler("right")} className="next-btn1">
-        <i className="fa fa-angle-right"></i>
+
+      <button
+        onClick={() => sliderHandler("right")}
+        className="w-[5vw] h-full absolute flex justify-center opacity-50 items-center cursor-pointer z-[8] border-none top-0 right-0"
+      >
+        <FaAngleRight size={40} opacity={0.2} />
       </button>
       {loading ? (
         <div className="flex scrollbar-hide flex-wrap w-full gap-2.5 p-2.5 md:flex-nowrap md:overflow-x-auto md:px-[5vw] md:py-2.5">

@@ -166,15 +166,15 @@ const ShareModal = ({ product, url: shareUrl }: Props) => {
 
   return (
     <div className="relative">
-      <div className="relative mr-[30px] group">
-        <div
-          className="flex items-center"
-          style={{ display: "flex", alignItems: "center" }}
-        >
+      <div className="relative mr-[30px]">
+        <div className="flex items-center peer">
           {product.shares.length}
-          <FaShareNodes onClick={toggleDropdown} className="ml-[5px]" />
+          <FaShareNodes
+            onClick={toggleDropdown}
+            className="ml-[5px] hover:text-orange-color"
+          />
         </div>
-        <IconsTooltips classNames="group-hover:opacity-100" tips="Share " />
+        <IconsTooltips classNames="peer-hover:opacity-100" tips="Share " />
       </div>
       {isDropdownOpen && (
         <div className="fixed inset-0" onClick={toggleDropdown} />

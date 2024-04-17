@@ -18,7 +18,7 @@ const SellRebatch = () => {
           WANTS TO CONSIGN WITH US?
         </h4>
         <img
-          className=" w-[200px] mx-0 my-2.5 flex-1 h-[500px] ml-0 lg:mr-5 lg:my-5"
+          className=" w-[200px] lg:w-auto mx-0 my-2.5 flex-1 h-[500px] ml-0 lg:mr-5 lg:my-5"
           src="https://res.cloudinary.com/emirace/image/upload/v1661221991/derick-anies-hDJT_ERrB-w-unsplash_tty8rb.webp"
           alt="img"
         />
@@ -46,7 +46,7 @@ const SellRebatch = () => {
 
           <div className="border h-10 w-full items-center flex px-[5px] py-0 rounded-[0.2rem] border-solid">
             <input
-              className="flex-[10] h-full border-0 focus-visible:outline-none dark:bg-white-color bg-black-color text-black-color dark:text-white-color"
+              className="flex-[10] h-full border-0 focus-visible:outline-none dark:bg-black-color bg-white-color text-black-color dark:text-white-color"
               value={input}
               placeholder="Email:"
               onChange={(e) => setInput(e.target.value)}

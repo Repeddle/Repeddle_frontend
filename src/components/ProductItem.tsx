@@ -39,15 +39,15 @@ const ProductItem = ({ product }: Props) => {
         </div>
       </Model>
 
-      <div className="h-[270px] lg:h-[400px] overflow-hidden relative w-full">
+      <div className="h-[270px] lg:h-[400px] overflow-hidden relative w-full group">
         <Link to={`/product/${product.slug}`}>
           {product.sold ? (
-            <div className="absolute text-[white] uppercase p-[5px] rounded-[5px] right-2.5 top-2.5">
+            <div className="absolute text-white bg-[#808080] uppercase p-[5px] rounded-[5px] right-2.5 top-2.5">
               sold
             </div>
           ) : (
             discount && (
-              <span className="absolute text-[13px] lg:text-base text-orange-color capitalize p-[5px] rounded-[5px] right-2.5 top-2.5">
+              <span className="absolute text-[13px] bg-white lg:text-base text-orange-color capitalize p-[5px] rounded-[5px] right-2.5 top-2.5">
                 {discount.toFixed(0)}% off
               </span>
             )
@@ -61,46 +61,48 @@ const ProductItem = ({ product }: Props) => {
         </Link>
 
         <ul className="absolute text-center w-full z-[3] left-0 bottom-[30px]">
-          <li className="inline-block opacity-0 relative mr-2.5 top-[100px] list-none transition-all duration-[0.4s] ease-[ease] delay-[0.15s]">
+          <li className="inline-block opacity-0 group-hover:opacity-100 relative mr-2.5 top-[100px] group-hover:top-0 justify-center items-center list-none transition-all duration-[0.4s] ease-[ease] delay-[0.15s]">
             <span
-              className="bg-white shadow-[0_0_25px_hsla(0,0%,9%,0.4)] text-black block text-lg h-[45px] leading-[45px] transition-all duration-500 w-[45px] rounded-[50px]"
+              className="cursor-pointer bg-white shadow-[0_0_25px_hsla(0,0%,9%,0.4)] text-black block text-lg h-[45px] leading-[45px] transition-all duration-500 w-[45px] rounded-[50px]"
               onClick={() => setShowModel(!showModel)}
             >
-              <FaArrowsAlt className="text-orange-color inline-block relative rotate-[0] transition-all duration-[0.3s]" />
+              <FaArrowsAlt className="text-lg text-orange-color inline-block relative rotate-[0] transition-all duration-[0.3s]" />
             </span>
           </li>
-          <li className="inline-block opacity-0 relative mr-2.5 top-[100px] list-none transition-all duration-[0.4s] ease-[ease] delay-[0.15s]">
+          <li className="inline-block opacity-0 group-hover:opacity-100 relative mr-2.5 top-[100px] group-hover:top-0 justify-center items-center list-none transition-all duration-[0.4s] ease-[ease] delay-[0.15s]">
             <span
-              className="bg-white shadow-[0_0_25px_hsla(0,0%,9%,0.4)] text-black block text-lg h-[45px] leading-[45px] transition-all duration-500 w-[45px] rounded-[50px]"
+              className="cursor-pointer bg-white shadow-[0_0_25px_hsla(0,0%,9%,0.4)] text-black block text-lg h-[45px] leading-[45px] transition-all duration-500 w-[45px] rounded-[50px]"
               // onClick={toggleLikes}
             >
-              <FaThumbsUp className="text-orange-color inline-block relative rotate-[0] transition-all duration-[0.3s]" />
+              <FaThumbsUp className="text-lg text-orange-color inline-block relative rotate-[0] transition-all duration-[0.3s]" />
             </span>
           </li>
-          <li className="inline-block opacity-0 relative top-[100px] list-none transition-all duration-[0.4s] ease-[ease] delay-[0.2s] mr-0">
+          <li className="inline-block opacity-0 group-hover:opacity-100 relative top-[100px] group-hover:top-0 justify-center items-center list-none transition-all duration-[0.4s] ease-[ease] delay-[0.2s] mr-0">
             <span
-              className="bg-white shadow-[0_0_25px_hsla(0,0%,9%,0.4)] text-black block text-lg h-[45px] leading-[45px] transition-all duration-500 w-[45px] rounded-[50px]"
+              className="cursor-pointer bg-white shadow-[0_0_25px_hsla(0,0%,9%,0.4)] text-black block text-lg h-[45px] leading-[45px] transition-all duration-500 w-[45px] rounded-[50px]"
               // onClick={() => saveItem()}
             >
-              <FaHeart className="text-orange-color inline-block relative rotate-[0] transition-all duration-[0.3s]" />
+              <FaHeart className="text-lg text-orange-color inline-block relative rotate-[0] transition-all duration-[0.3s]" />
             </span>
           </li>
         </ul>
       </div>
       <div className="max-h-[100px] w-full pt-2.5">
-        <h2 className="text-xl capitalize font-bold overflow-hidden text-ellipsis whitespace-nowrap w-full mb-0">
+        <h2 className="uppercase text-xl font-bold whitespace-nowrap w-full overflow-hidden text-ellipsis mb-0">
           <Link to={`/product/${product.slug}`}>{product.name}</Link>
         </h2>
-        <p className="text-xs h-4 leading-5 opacity-50 overflow-hidden capitalize w-full lg:text-base mb-[5px]">
+        <p className="text-xs h-4 !leading-5 opacity-50 overflow-hidden capitalize w-full lg:text-base mb-[5px]">
           {product.brand}
         </p>
         <span className="text-base lg:text-xl font-black">
+          {/* TODO:  */}
           {/* {product.currency} */}
           {product.sellingPrice}
         </span>
         {product.costPrice &&
           (product.costPrice > product.sellingPrice ? (
             <span className="text-base ml-5 line-through text-orange-color">
+              {/* TODO:  */}
               {/* {product.currency} */}
               {product.costPrice}
             </span>
