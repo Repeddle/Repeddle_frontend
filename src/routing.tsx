@@ -41,7 +41,7 @@ const router = createBrowserRouter([
           { path: "returns", element: <Returns /> },
           { path: "sell", element: <Sell /> },
           { path: "product/:id", element: <Product /> },
-          { path: "seller/:id", element: <Seller /> },
+          { path: "seller/:slug", element: <Seller /> },
         ],
       },
       {

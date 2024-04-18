@@ -25,7 +25,8 @@ export interface IUser {
   following: string[]
   // likes: string[];
   likes: IProduct[]
-  saved: string[]
+  // saved: string[]
+  saved: IProduct[]
   sold: string[]
   about?: string
   dob?: Date
@@ -47,8 +48,8 @@ export interface IUser {
   isVerifiedEmail: boolean
   region: "NGN" | "ZAR"
   rebundle: IRebundle
-  createdAt?:string|Date
-  updatedAt?:string|Date
+  createdAt?: string | Date
+  updatedAt?: string | Date
 }
 
 export interface UpdateFields {

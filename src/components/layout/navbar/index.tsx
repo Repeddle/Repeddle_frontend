@@ -11,6 +11,7 @@ import useTheme from "../../../hooks/useTheme"
 import BarCategories from "./BarCategories"
 import NotificationList from "./NotificationList"
 import LoggedInBar from "./LoggedInBar"
+import useCart from "../../../hooks/useCart"
 
 function Navbar() {
   const modelRef2 = useRef(null)
@@ -21,6 +22,7 @@ function Navbar() {
 
   const { isDarkMode } = useTheme()
   const { user } = useAuth()
+  const { cart } = useCart()
 
   const navigate = useNavigate()
 
@@ -65,8 +67,6 @@ function Navbar() {
   const menu = false
 
   const showNotification = false
-
-  const cart = { cartItems: [] }
 
   return (
     <>
@@ -159,9 +159,9 @@ function Navbar() {
                   tips="Cart"
                 />
 
-                {cart.cartItems.length > 0 && (
+                {cart.length > 0 && (
                   <span className="w-3 h-3 flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-0 top-0 bg-orange-color">
-                    <span>{cart.cartItems.length}</span>
+                    <span>{cart.length}</span>
                   </span>
                 )}
               </Link>
