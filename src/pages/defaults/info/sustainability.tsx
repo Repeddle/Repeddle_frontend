@@ -169,6 +169,7 @@ const sustainability = () => {
             src="https://res.cloudinary.com/emirace/image/upload/v1661221992/cherie-birkner-J6MJPuJiDPo-unsplash_cclo31.webp"
             alt="img"
             className="mx-auto lg:max-w-xl"
+            style={{ width: "100%", maxWidth: "460px" }}
           />
           <h2 className="text-center text-4xl font-extrabold">
             {" "}
@@ -244,7 +245,7 @@ const sustainability = () => {
               src="https://res.cloudinary.com/emirace/image/upload/v1661221988/utopia-by-cho-LRqBE1z5kfE-unsplash_hnfa5j.webp"
               alt="image"
               className="mb-5 mt-6"
-              style={{ width: "100%", maxWidth: "500px" }}
+              style={{ width: "100%", maxWidth: "460px" }}
             />
           </div>
 
@@ -253,7 +254,7 @@ const sustainability = () => {
               src="https://res.cloudinary.com/emirace/image/upload/v1661221989/utopia-by-cho-SZzAEl8fpGQ-unsplash_i0cgwy.webp"
               alt="image"
               className="mb-5 mt-6"
-              style={{ width: "100%", maxWidth: "500px" }}
+              style={{ width: "100%", maxWidth: "460px" }}
             />
           </div>
         </div>
@@ -266,7 +267,7 @@ const sustainability = () => {
               src="https://res.cloudinary.com/emirace/image/upload/v1661221992/ravin-rau-eNOlrYUx5ZQ-unsplash_aeg1i9.webp"
               alt="image"
               className="mb-5 mt-6"
-              style={{ width: "100%", maxWidth: "500px" }}
+              style={{ width: "100%", maxWidth: "460px" }}
             />
           </div>
           <div className="flex flex-col items-center">
@@ -274,7 +275,7 @@ const sustainability = () => {
               src="https://res.cloudinary.com/emirace/image/upload/v1661221992/utopia-by-cho-lSGhDJK_XKc-unsplash_l29iy2.webp"
               alt="image"
               className="mb-5 mt-6"
-              style={{ width: "100%", maxWidth: "500px", height: "693px" }}
+              style={{ width: "100%", maxWidth: "460px", height: "646px" }}
             />
           </div>
         </div>
@@ -288,6 +289,7 @@ const sustainability = () => {
             src="https://res.cloudinary.com/emirace/image/upload/v1661221988/utopia-by-cho-rgC0lhKbr5o-unsplash_2_sckict.webp"
             alt="img"
             className="mx-auto lg:max-w-xl"
+            style={{ width: "100%", maxWidth: "460px" }}
           />
         </div>
       </section>
