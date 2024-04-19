@@ -119,6 +119,7 @@ function Cart() {
                 ) : (
                   user.saved &&
                   user.saved.map((product, index) => {
+                    // TODO: check approach
                     const existItem = cart.find((x) => x._id === product._id)
                     return (
                       !existItem && (
