@@ -1,3 +1,4 @@
+import { Order } from "../types/order"
 import { IProduct } from "../types/product"
 import { IUser } from "../types/user"
 
@@ -354,4 +355,26 @@ export const user: IUser = {
   bankName: "Union Bank",
   about:
     "You will find beautiful rear finds in my store from ladies, men, kids wear, shoes and accessories. Happy Exploring and thank you for checking my store out🤗\n\nMy products ships fast within 2-4 days😍",
+}
+
+export const orderData: Order = {
+  orderItems: [
+    {
+      ...productDetails,
+      quantity: 2,
+      onHold: false,
+      deliveredAt: "2023-01-24T08:43:36.887Z",
+      deliveryStatus: "Delivered",
+      deliverySelect: { cost: 100 },
+    },
+  ],
+  isPaid: true,
+  itemsPrice: 500,
+  paymentMethod: "paypal",
+  shippingPrice: 100,
+  totalPrice: 600,
+  user: user,
+  deliveryMethod: "gig",
+  createdAt: "2023-01-24T08:43:36.887Z",
+  deliveredAt: "2023-01-24T08:43:36.887Z",
 }
