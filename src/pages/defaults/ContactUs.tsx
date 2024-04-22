@@ -7,15 +7,15 @@ const ContactUs = () => {
       <form className="space-y-6 mt-5">
         <div>
           <label htmlFor="name" className="block mb-2 font-medium">Your Name</label>
-          <input type="text" id="name" name="name" className="block w-full px-4 py-2 border rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none" />
+          <input type="text" id="name" name="name" className="block w-full px-4 py-4 border rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none" />
         </div>
         <div>
           <label htmlFor="email" className="block mb-2 font-medium">Your Email</label>
-          <input type="email" id="email" name="email" className="block w-full px-4 py-2 border rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none" />
+          <input type="email" id="email" name="email" className="block w-full px-4 py-4 border rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none" />
         </div>
         <div>
           <label htmlFor="category" className="block mb-2 font-medium">Select Category</label>
-          <select id="category" name="category" className="block w-full px-4 py-2 border rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none">
+          <select id="category" name="category" className="block w-full px-4 py-4 border rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none">
             <option value="">Select a category</option>
             <option value="General Inquiry">General Inquiry</option>
             <option value="Support">Support</option>
@@ -25,11 +25,11 @@ const ContactUs = () => {
         </div>
         <div>
           <label htmlFor="subject" className="block mb-2 font-medium">Subject</label>
-          <input type="text" id="subject" name="subject" className="block w-full px-4 py-2 border rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none" />
+          <input type="text" id="subject" name="subject" className="block w-full px-4 py-4 border rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none" />
         </div>
         <div>
           <label htmlFor="message" className="block mb-2 font-medium">Message</label>
-          <textarea id="message" name="message" className="block w-full px-4 py-2 border rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none" rows={4}></textarea>
+          <textarea id="message" name="message" className="block w-full px-4 py-4 border rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none" rows={4}></textarea>
         </div>
         <div>
           <label htmlFor="file" className="block mb-2 font-medium cursor-pointer">Attach Image</label>
