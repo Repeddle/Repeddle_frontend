@@ -77,7 +77,7 @@ const ContactUs = () => {
         <div className="flex justify-center items-center w-full">
           <button
             type="submit"
-            className="block justify-center align-middle items-center w-full lg:w-5/12 px-4 py-2 mt-4 font-medium text-white bg-orange-400 border border-transparent 
+            className="block justify-center align-middle items-center w-full px-4 py-3 mt-4 font-medium text-white bg-orange-400 border border-transparent 
             rounded-md hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 mb-10">
             Submit
           </button>
