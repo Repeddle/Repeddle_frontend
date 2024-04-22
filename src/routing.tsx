@@ -19,6 +19,7 @@ import Vipshield from './pages/defaults/info/Vipshield';
 import Rebundle from './pages/defaults/info/rebundle';
 import Sustainability from './pages/defaults/info/sustainability';
 import SupportArticles from './pages/defaults/info/index.tsx';
+import ContactUs from "./pages/defaults/ContactUs.tsx";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,7 @@ const router = createBrowserRouter([
           { path: 'rebundle', element: <Rebundle /> },
           { path: 'sustainability', element: <Sustainability /> },
           { path: 'Support-Articles', element: <SupportArticles /> },
+          { path: 'Contact-Us', element: <ContactUs /> },
         ],
       },
       {
