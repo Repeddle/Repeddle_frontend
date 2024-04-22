@@ -56,7 +56,7 @@ const PaymentMethod = () => {
           </div>
           {balance <= total && (
             <div className="text-[red] text-[13px]">
-              Insufficiant balance{" "}
+              Insufficient balance{" "}
               <Link to="/dashboard/wallet">Fund Wallet Now</Link>
             </div>
           )}

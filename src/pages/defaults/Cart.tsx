@@ -43,7 +43,7 @@ function Cart() {
         <title>Shopping Cart</title>
       </Helmet>
       <div className="m-[5px] lg:m-5">
-        <h1 className="text-[calc(1.375rem_+_1.5vw)] font-medium leading-tight mt-0 mb-2">
+        <h1 className="text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] font-medium leading-tight mt-0 mb-2">
           Shopping Cart
         </h1>
 
@@ -148,7 +148,11 @@ function Cart() {
                             <div className="flex-[4] col-4">
                               <button
                                 onClick={() =>
-                                  addToCart({ ...product, quantity: 1 })
+                                  addToCart({
+                                    ...product,
+                                    quantity: 1,
+                                    deliverySelect: {},
+                                  })
                                 }
                               >
                                 Add to Cart
@@ -219,17 +223,18 @@ function Cart() {
                     <div className="flex-1">
                       <b>
                         {/* TODO: */}
-                        {/* {currency} */}N {total}
+                        {/* {currency} */}N {total}.00
                       </b>
                     </div>
                   </div>
                 </div>
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)]">
-                  <div className="d-grid" style={{ marginTop: "30px" }}>
+                  <div className="mt-[30px] grid">
                     <Button
                       type="button"
                       text="Proceed to Checkout"
                       onClick={checkoutHandler}
+                      className="!px-[30px] !py-2.5"
                     />
                   </div>
                 </div>

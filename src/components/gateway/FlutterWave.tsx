@@ -1,19 +1,16 @@
 import { useState } from "react"
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3"
 import useAuth from "../../hooks/useAuth"
-import {
-  FlutterWaveResponse,
-  FlutterwaveConfig,
-} from "flutterwave-react-v3/dist/types"
+import { FlutterwaveConfig } from "flutterwave-react-v3/dist/types"
 
 type Props = {
   amount: number
   currency: string
-  onApprove: (val: FlutterWaveResponse & { type: string }) => void
+  onApprove: (val: { transaction_id: string; type: string }) => void
 }
 
 const FlutterWave = ({ amount, currency, onApprove }: Props) => {
-  const [baseKey, setBaseKey] = useState("")
+  const [baseKey] = useState("")
 
   const { user } = useAuth()
 
@@ -46,7 +43,10 @@ const FlutterWave = ({ amount, currency, onApprove }: Props) => {
         onClick={() => {
           handleFlutterPayment({
             callback: async (response) => {
-              onApprove({ ...response, type: "flutterwave" })
+              onApprove({
+                transaction_id: response.transaction_id.toString(),
+                type: "flutterwave",
+              })
               closePaymentModal() // this will close the modal programmatically
             },
             onClose: () => {},

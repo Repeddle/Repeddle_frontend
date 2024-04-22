@@ -13,7 +13,7 @@ import PayFund from "../../components/gateway/PayFund"
 
 const OrderPreview = () => {
   const [code, setCode] = useState("")
-  const [coupon, setCoupon] = useState(null)
+  const [coupon, setCoupon] = useState({ code: "" })
   const [showModel, setShowModel] = useState(false)
 
   const { cart, total, subtotal } = useCart()
@@ -21,7 +21,7 @@ const OrderPreview = () => {
   const loadingPay = false
 
   const removeCoupon = () => {
-    setCoupon(null)
+    setCoupon({ code: "" })
   }
 
   const couponDiscount = (coupon: any, total: number) => {
@@ -131,7 +131,11 @@ const OrderPreview = () => {
               <p>
                 <div className="ml-2.5 flex">
                   <div className="flex-[2] lg:flex-1">Method</div>
-                  <div className="flex-[5]">{cart.paymentMethod}</div>
+                  <div className="flex-[5]">
+                    paypal
+                    {/* TODO: */}
+                    {/* {cart.paymentMethod} */}
+                  </div>
                 </div>
               </p>
               <Link
@@ -255,7 +259,10 @@ const OrderPreview = () => {
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">
                   {loadingPay ? (
                     <LoadingBox />
-                  ) : cart.paymentMethod === "Wallet" ? (
+                  ) : // eslint-disable-next-line no-constant-condition
+                  true ? (
+                    // TODO:
+                    // ) : cart.paymentMethod === "Wallet" ? (
                     <div
                       className="cursor-pointer text-white-color bg-orange-color w-full uppercase flex items-center justify-center h-10 rounded-[0.2rem]"
                       onClick={() => setShowModel(true)}

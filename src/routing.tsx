@@ -15,6 +15,9 @@ import Returns from "./pages/defaults/info/Returns"
 import Sell from "./pages/defaults/Sell"
 import Product from "./pages/defaults/Product"
 import Seller from "./pages/defaults/Seller"
+import PaymentMethod from "./pages/protected/PaymentMethod"
+import OrderPreview from "./pages/protected/OrderPreview"
+import Order from "./pages/protected/Order"
 
 const router = createBrowserRouter([
   {
@@ -47,7 +50,12 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Protected />,
-        children: [{ path: "dashboard", element: <Dashboard /> }],
+        children: [
+          { path: "dashboard", element: <Dashboard /> },
+          { path: "payment", element: <PaymentMethod /> },
+          { path: "placeorder", element: <OrderPreview /> },
+          { path: "order/:id", element: <Order /> },
+        ],
       },
     ],
   },
