@@ -1,7 +1,7 @@
-import { Outlet } from "react-router-dom"
-import Navbar from "../../components/layout/navbar"
-import Footer from "../../components/layout/footer"
-import StickyNav from "../../components/layout/StickyNav"
+import { Outlet } from 'react-router-dom';
+import Navbar from '../../components/layout/navbar';
+import Footer from '../../components/layout/footer';
+import StickyNav from '../../components/layout/StickyNav';
 
 function Default() {
   return (
@@ -11,7 +11,7 @@ function Default() {
       <Footer />
       <StickyNav />
     </main>
-  )
+  );
 }
 
-export default Default
+export default Default;

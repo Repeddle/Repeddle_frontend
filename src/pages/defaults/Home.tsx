@@ -1,3 +1,4 @@
+
 import CategoriesLinksButtons from "../../components/CategoriesLinksButtons"
 import TheThrill from "../../section/home/TheThrill"
 import { IProduct } from "../../types/product"
@@ -52,7 +53,7 @@ function Home() {
         <TopSellers loadingUser={loadingUser} sellers={sellers} error={error} />
       </div>
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
