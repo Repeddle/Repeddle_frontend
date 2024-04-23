@@ -3,27 +3,28 @@ import MessageBox from "../../components/MessageBox"
 import { Helmet } from "react-helmet-async"
 import { productDetails as product } from "../../utils/data"
 import { useMemo, useState } from "react"
-import {
-  FaEye,
-  FaFlag,
-  FaHeart,
-  FaPlay,
-  FaTag,
-  FaThumbsUp,
-} from "react-icons/fa"
+import ReactImageMagnify from "react-image-magnify"
+import { FaEye, FaFlag, FaHeart, FaPlay, FaTag } from "react-icons/fa"
 import { Link } from "react-router-dom"
 import Rating from "../../components/Rating"
 import useAuth from "../../hooks/useAuth"
 import IconsTooltips from "../../components/IconsTooltips"
 import useCart from "../../hooks/useCart"
-import { FaMessage } from "react-icons/fa6"
+import { FaMessage, FaThumbsUp } from "react-icons/fa6"
 import Report from "../../section/product/Report"
 import ProtectionRight from "../../section/product/ProtectionRight"
 import ProductDetails from "../../section/product/ProductDetails"
 import ProductSustain from "../../section/product/ProductSustain"
 import ProductTab from "../../section/product/ProductTab"
-import ProductItem from "../../components/Product"
 import SizeChart from "../../section/product/SizeChart"
+import RebundleLabel from "../../section/product/RebundleLabel"
+import ModelLogin from "../../components/ModelLogin"
+import ReviewLists from "../../components/ReviewLists"
+import RebundlePoster from "../../components/RebundlePoster"
+import ShareModal from "../../section/product/ShareModal"
+import CustomCarousel from "../../section/product/CustomCarousel"
+import ProductSignin from "../../section/product/ProductSignin"
+import RecentlyViewedProducts from "../../section/product/RecentlyViewedProducts"
 
 const Product = () => {
   const loading = false
@@ -33,6 +34,7 @@ const Product = () => {
   const { addToCart } = useCart()
 
   const [selectedImage, setSelectedImage] = useState("")
+  const [showLoginModel, setShowLoginModel] = useState(false)
   const [showModel, setShowModel] = useState(false)
   const [size, setSize] = useState("")
   const [selectSize, setSelectSize] = useState("")
@@ -97,6 +99,18 @@ const Product = () => {
 
   const toggleLikes = () => {}
 
+  const checkFileTypeByExtension = (fileUrl: string) => {
+    const extension = fileUrl.split(".").pop()?.toLowerCase() ?? ""
+
+    if (["jpg", "jpeg", "png", "gif", "bmp"].includes(extension)) {
+      return "image"
+    } else if (["mp4", "avi", "mov", "mkv"].includes(extension)) {
+      return "video"
+    } else {
+      return "unknown"
+    }
+  }
+
   const sizeHandler = (item: string) => {
     const current = product.sizes.filter((s) => s.size === item)
     if (current.length > 0) {
@@ -117,10 +131,11 @@ const Product = () => {
       <Helmet>
         <title>{product.name}</title>
       </Helmet>
-      {/* <RebundleLabel
-        userId={product.seller._id}
-        active={product.seller.rebundle.status}
-      /> */}
+
+      {product.seller.rebundle.status && (
+        <RebundleLabel userId={product.seller._id} />
+      )}
+
       <div className="flex px-[5vw] py-[30px] flex-col lg:flex-row">
         <div className="lg:flex flex-1 flex-col items-center hidden">
           {product.images.map(
@@ -128,7 +143,7 @@ const Product = () => {
               x && (
                 <div
                   key={index}
-                  className={`w-full p-[5px] ${
+                  className={`w-[100px] p-[5px] ${
                     selectedImage === x
                       ? "border-[0.1rem] border-orange-color"
                       : ""
@@ -139,7 +154,7 @@ const Product = () => {
                     src={x}
                     alt=""
                     className={`w-full object-cover ${
-                      selectedImage === x ? "active1" : ""
+                      selectedImage === x ? "opacity-50" : ""
                     }`}
                   />
                 </div>
@@ -147,7 +162,7 @@ const Product = () => {
           )}
           {product.video && (
             <div
-              className="w-full p-[5px]"
+              className="w-[100px] p-[5px]"
               onClick={() => setSelectedImage("video")}
             >
               <div
@@ -163,28 +178,19 @@ const Product = () => {
           )}
         </div>
 
-        <div className="d-md-none mb-4">
-          {/* <CustomCarousel>
-            {[product.image, ...product.images, product.video]
+        <div className="md:hidden mb-6">
+          <CustomCarousel>
+            {/* TODO: no first image */}
+            {/* {[product.image, ...product.images, product.video] */}
+            {[...product.images, product.video]
               .filter((image) => image)
               .map(
                 (image) =>
                   image && (
-                    <div
-                      key={image}
-                      style={{
-                        width: "100vw",
-                        marginLeft: "-20px",
-                        height: "500px",
-                      }}
-                    >
+                    <div key={image} className="w-screen -ml-5 h-[500px]">
                       {checkFileTypeByExtension(image) === "image" ? (
                         <img
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "contain",
-                          }}
+                          className="h-full w-full object-contain"
                           src={image}
                           alt="product"
                         />
@@ -196,7 +202,7 @@ const Product = () => {
                     </div>
                   )
               )}
-          </CustomCarousel> */}
+          </CustomCarousel>
         </div>
         <div className="flex-[3] z-[9] hidden lg:block">
           {selectedImage === "video" ? (
@@ -204,22 +210,20 @@ const Product = () => {
               <source src={product.video} type="video/mp4" />
             </video>
           ) : (
-            <></>
-            // <ReactImageMagnify
-            //   {...{
-            //     smallImage: {
-            //       alt: "Wristwatch by Ted Baker London",
-            //       isFluidWidth: true,
-            //       src: selectedImage || product.image,
-            //     },
-            //     largeImage: {
-            //       src: selectedImage || product.image,
-            //       width: 1200,
-            //       height: 1800,
-            //     },
-            //     // enlargedImagePosition: "over",
-            //   }}
-            // />
+            <ReactImageMagnify
+              {...{
+                smallImage: {
+                  alt: "Wristwatch by Ted Baker London",
+                  isFluidWidth: true,
+                  src: selectedImage || product.images[0],
+                },
+                largeImage: {
+                  src: selectedImage || product.images[0],
+                  width: 1200,
+                  height: 1800,
+                },
+              }}
+            />
           )}
         </div>
 
@@ -252,6 +256,7 @@ const Product = () => {
               <div>
                 {product.seller?.address?.state}, {/* TODO:  */}
                 {/* {product.seller.region === "NGN" ? "Nigeria" : "South Africa"} */}
+                Nigeria
               </div>
               <div
                 className="cursor-pointer"
@@ -264,12 +269,9 @@ const Product = () => {
                   numReviews={product.seller.numReviews}
                 />
               </div>
-              {/* <ModelLogin showModel={showModel} setShowModel={setShowModel}>
-                <ReviewLists
-                  userId={product.seller._id}
-                  setShowModel={setShowModel}
-                />
-              </ModelLogin> */}
+              <ModelLogin showModel={showModel} setShowModel={setShowModel}>
+                <ReviewLists setShowModel={setShowModel} />
+              </ModelLogin>
 
               <div
                 className="text-white-color text-center cursor-pointer mt-[5px] px-2.5 py-0 rounded-[10px] bg-orange-color"
@@ -280,14 +282,14 @@ const Product = () => {
             </div>
           </div>
           <div className="flex mt-[15px] justify-between lg:justify-normal">
-            <div className="mr-[50px]">
-              <FaTag />
+            <div className="mr-[50px] flex items-center">
+              <FaTag className="mr-[5px] text-orange-color" />
               {product.seller.sold.length < 5
                 ? "< 5"
                 : product.seller.sold.length}{" "}
               sold
-              <span>
-                <FaEye className="ml-2.5" />
+              <span className="flex items-center">
+                <FaEye className="ml-2.5 mr-[5px] text-orange-color" />
                 {product.viewcount.length}
               </span>
             </div>
@@ -301,48 +303,50 @@ const Product = () => {
               </div>
             )}
           </div>
-          {/* {product.seller.rebundle.status && (
-            <RebundlePoster style={{ marginTop: "5px" }} />
-          )} */}
+          {product.seller.rebundle.status && <RebundlePoster />}
 
-          <div className="items-center flex relative mt-[30px] mb-2.5 justify-between px-[10vw] py-0 lg:p-0">
-            <div className="relative mr-[30px] group">
+          <div className="items-center flex relative mt-[30px] mb-2.5 justify-between lg:justify-normal px-[10vw] py-0 lg:p-0">
+            <div className="relative mr-[30px] flex cursor-pointer text-lg items-center">
               {product.likes.length}
               <FaThumbsUp
-                className={`ml-[5px] ${liked ? "text-orange-color" : ""}`}
+                className={`ml-[5px] peer hover:text-orange-color ${
+                  liked ? "text-orange-color" : ""
+                }`}
                 onClick={toggleLikes}
               />
               <IconsTooltips
-                classNames="group-hover:opacity-100"
+                classNames="peer-hover:opacity-100"
                 tips="Like Product "
               />
             </div>
-            {/* <ShareModal
-              url={window.location.href}
-              product={product}
-              dispatch={dispatch}
-            /> */}
-            <div className="relative mr-[30px] group">
+            <ShareModal url={window.location.href} product={product} />
+            <div className="relative mr-[30px] flex cursor-pointer text-lg group items-center">
               <FaHeart
-                className={saved ? "text-orange-color" : ""}
+                className={`peer hover:text-orange-color ${
+                  saved ? "text-orange-color" : ""
+                }`}
                 onClick={saveItem}
               />
               <IconsTooltips
-                classNames="group-hover:opacity-100"
+                classNames="peer-hover:opacity-100"
                 tips="Add to wishlist "
               />
             </div>
 
-            {/* <ModelLogin
+            {/* TODO: don't see a way to open this */}
+            <ModelLogin
               showModel={showLoginModel}
               setShowModel={setShowLoginModel}
             >
-              <Signin />
-            </ModelLogin> */}
-            <div className="relative mr-[30px] group">
-              <FaMessage onClick={addConversation} />
+              <ProductSignin />
+            </ModelLogin>
+            <div className="relative mr-[30px] flex cursor-pointer text-lg group items-center">
+              <FaMessage
+                className="peer hover:text-orange-color"
+                onClick={addConversation}
+              />
               <IconsTooltips
-                classNames="group-hover:opacity-100"
+                classNames="peer-hover:opacity-100"
                 tips="Message Seller "
               />
             </div>
@@ -384,7 +388,7 @@ const Product = () => {
               <div className="flex flex-wrap">
                 {product.tags.map((t) => (
                   <Link to={`/search?query=${t}`}>
-                    <div className="border m-0.5 px-2.5 py-0 rounded-[10px] border-solid">
+                    <div className="border m-0.5 px-2.5 py-0 rounded-[10px] border-black">
                       {t}
                     </div>
                   </Link>
@@ -423,23 +427,26 @@ const Product = () => {
             )}
             <div className="my-5 mx-0">
               {!product.isAvailable ? (
-                <button className="w-full text-white-color text-lg font-[bold] uppercase mb-5 p-2.5 rounded-[5px] border-0 bg-gray-500 cursor-not-allowed">
+                <button className="w-full text-white-color text-lg font-bold uppercase mb-5 p-2.5 rounded-[5px] border-0 bg-gray-500 cursor-not-allowed">
                   Not Available
                 </button>
               ) : product.countInStock > 0 ? (
                 <button
                   onClick={addToCartHandler}
-                  className="w-full text-white-color text-lg font-[bold] uppercase mb-5 p-2.5 rounded-[5px] border-0 bg-orange-color hover:bg-malon-color"
+                  className="w-full text-white-color text-lg font-bold uppercase mb-5 p-2.5 rounded-[5px] border-0 bg-orange-color hover:bg-malon-color"
                 >
                   add to cart
                 </button>
               ) : (
-                <button className="w-full text-white-color text-lg font-[bold] uppercase mb-5 p-2.5 rounded-[5px] border-0 bg-gray-500 cursor-not-allowed">
+                <button className="w-full text-white-color text-lg font-bold uppercase mb-5 p-2.5 rounded-[5px] border-0 bg-gray-500 cursor-not-allowed">
                   sold out
                 </button>
               )}
 
-              <button className="sp_wishlist_btn " onClick={saveItem}>
+              <button
+                className="w-full font-[bold] text-lg text-orange-color border-orange-color hover:text-malon-color  hover:border-malon-color uppercase p-[5px] rounded-[10px] border-[0.1rem]"
+                onClick={saveItem}
+              >
                 wishlist
               </button>
             </div>
@@ -458,7 +465,7 @@ const Product = () => {
                 </div>
               )}
               <div
-                className="pointer text-malon-color text-right"
+                className="cursor-pointer text-malon-color text-right"
                 // TODO:
                 // onClick={() => handlereport(product.seller._id, product._id)}
               >
@@ -474,40 +481,7 @@ const Product = () => {
         </div>
       </div>
 
-      <section className="product1">
-        <div className="product-title">
-          <h2 className="product-category1">Recently Viewed</h2>
-        </div>
-        <button
-          // TODO:
-          // onClick={() => sliderHandler("left")}
-          className="pre-btn1"
-        >
-          <i className="fa fa-angle-left"></i>
-        </button>
-        <button
-          // TODO:
-          // onClick={() => sliderHandler("right")}
-          className="next-btn1"
-        >
-          <i className="fa fa-angle-right"></i>
-        </button>
-        <div
-          id="slider"
-          className="product-container1 scroll_snap"
-          // style={{
-          //   transform: sliderstyle,
-          // }}
-        >
-          {JSON.parse(localStorage.getItem("recentlyView") || "[]").map(
-            (product) => (
-              <div key={product.productId} className="smooth1">
-                <ProductItem product={product.product} />
-              </div>
-            )
-          )}
-        </div>
-      </section>
+      <RecentlyViewedProducts />
 
       <ProductTab product={product} />
     </div>

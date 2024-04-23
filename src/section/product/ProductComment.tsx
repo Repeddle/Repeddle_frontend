@@ -3,7 +3,8 @@ import MessageBox from "../../components/MessageBox"
 import useAuth from "../../hooks/useAuth"
 import LoadingBox from "../../components/LoadingBox"
 import { IProduct } from "../../types/product"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
+import Comment from "./Comment"
 
 type Props = {
   comments: any[]
@@ -14,6 +15,9 @@ const ProductComment = ({ comments, product }: Props) => {
   const [comment, setComment] = useState("")
 
   const { user } = useAuth()
+
+  const params = useParams()
+  const { slug } = params
 
   const reviewRef = useRef(null)
 
@@ -35,14 +39,10 @@ const ProductComment = ({ comments, product }: Props) => {
             <MessageBox>There is no comments</MessageBox>
           )}
         </div>
-        {/* {comments.length > 0 &&
-      comments.map((comment) => (
-        <Comment
-          key={comment._id}
-          product={slug}
-          commentC={comment}
-        />
-      ))} */}
+        {comments.length > 0 &&
+          comments.map((comment) => (
+            <Comment key={comment._id} slug={slug ?? ""} commentC={comment} />
+          ))}
         <div className="my-3">
           {user ? (
             <form onSubmit={submitCommentHandler}>
