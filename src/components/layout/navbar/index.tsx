@@ -196,7 +196,7 @@ function Navbar() {
               />
             ) : (
               <div className="text-sm cursor-pointer ml-5 dark:text-white hover:text-orange-color hidden lg:block">
-                <Link to="signin">SIGN IN / SIGN UP</Link>
+                <Link to="auth/login">SIGN IN / SIGN UP</Link>
               </div>
             )}
           </div>

@@ -18,6 +18,14 @@ import Seller from "./pages/defaults/Seller"
 import PaymentMethod from "./pages/protected/PaymentMethod"
 import OrderPreview from "./pages/protected/OrderPreview"
 import Order from "./pages/protected/Order"
+import PrivacyPolicy from "./pages/defaults/info/PrivacyPolicy"
+import Terms from "./pages/defaults/info/Terms"
+import Vipshield from "./pages/defaults/info/Vipshield"
+import SupportArticles from "./pages/defaults/info"
+import ContactUs from "./pages/defaults/ContactUs"
+import Sustainability from "./pages/defaults/info/sustainability"
+import Rebundle from "./pages/defaults/info/rebundle"
+import ForgetPassword from "./pages/auth/login/forgetPassword"
 
 const router = createBrowserRouter([
   {
@@ -31,6 +39,7 @@ const router = createBrowserRouter([
         children: [
           { path: "login", element: <Login /> },
           { path: "register", element: <Register /> },
+          { path: "forget-password", element: <ForgetPassword /> },
         ],
       },
       {
@@ -42,16 +51,16 @@ const router = createBrowserRouter([
           { path: "sell", element: <Sell /> },
           { path: "product/:id", element: <Product /> },
           { path: "seller/:slug", element: <Seller /> },
-          { path: "cart", element: <Cart />},
-          { path: 'about', element: <About /> },
-          { path: 'returns', element: <Returns /> },
-          { path: 'privacypolicy', element: <PrivacyPolicy /> },
-          { path: 'terms', element: <Terms /> },
-          { path: 'vipshield', element: <Vipshield /> },
-          { path: 'rebundle', element: <Rebundle /> },
-          { path: 'sustainability', element: <Sustainability /> },
-          { path: 'Support-Articles', element: <SupportArticles /> },
-          { path: 'Contact-Us', element: <ContactUs /> },
+          { path: "cart", element: <Cart /> },
+          { path: "about", element: <About /> },
+          { path: "returns", element: <Returns /> },
+          { path: "privacypolicy", element: <PrivacyPolicy /> },
+          { path: "terms", element: <Terms /> },
+          { path: "vipshield", element: <Vipshield /> },
+          { path: "rebundle", element: <Rebundle /> },
+          { path: "sustainability", element: <Sustainability /> },
+          { path: "Support-Articles", element: <SupportArticles /> },
+          { path: "Contact-Us", element: <ContactUs /> },
         ],
       },
       {
