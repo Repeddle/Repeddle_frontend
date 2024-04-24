@@ -8,17 +8,17 @@ const ProductSustain = () => {
         REPEDDLE SUSTAINABILITY IMPACT
       </div>
       <div className="text-sm">
-        <p>
+        <p className="mb-4">
           Save our environment (AFRICA) and planet from Landfill, Water
           pollution and Carbon Emission.
         </p>{" "}
-        <p>
+        <p className="mb-4">
           We advocate for <b className="font-bold">clean air</b>,{" "}
           <b className="font-bold">clean water</b> and a{" "}
           <b className="font-bold">clean environment</b>. These are not too much
           to ask; these are common basic living condition!!!
         </p>
-        <p>
+        <p className="mb-4">
           {" "}
           By buying and{" "}
           <Link className="underline text-malon-color" to="/sell">
@@ -40,7 +40,7 @@ const ProductSustain = () => {
           <FaWater className="text-base" />
         </div>
         <div className="flex-[9]">
-          <div className="text-base font-bold">2,700L</div> of water saved for
+          <span className="text-base font-bold">2,700L</span> of water saved for
           one person to drink for 900 days.
         </div>
       </div>
@@ -49,7 +49,7 @@ const ProductSustain = () => {
           <FaCloud className="text-base" />
         </div>
         <div className="flex-[9]">
-          <div className="text-base font-bold">10%</div> co2 of global carbon
+          <span className="text-base font-bold">10%</span> co2 of global carbon
           emissions avoided.
         </div>
       </div>
@@ -58,7 +58,7 @@ const ProductSustain = () => {
           <FaLightbulb className="text-base" />
         </div>
         <div className="flex-[9]">
-          <div className="text-base font-bold">98%</div> Chance of clothes
+          <span className="text-base font-bold">98%</span> Chance of clothes
           ending up in landfills avoided.
         </div>
       </div>

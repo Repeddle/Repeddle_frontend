@@ -4,7 +4,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from 'axios';
 
-export const baseURL = 'http://172.20.10.3:5000';
+export const baseURL = 'https://repeddle-backend.onrender.com';
 
 const api = axios.create({
   baseURL: baseURL + '/api',

@@ -9,7 +9,7 @@ const SellSteps = () => {
         <h4 className="font-bold text-xs lg:text-base text-center mx-[5px] my-0">
           <FaArrowLeft />
         </h4>
-        <h2 className="flex text-center justify-center font-bold lg:text-base text-[15px] mx-[5px] my-0">
+        <h2 className="flex lg:text-[calc(1.325rem_+_0.9vw)] text-center justify-center font-bold lg:text-base text-[15px] mx-[5px] my-0">
           THREE EASY STEPS
         </h2>
         <h4 className="font-bold text-xs lg:text-base text-center mx-[5px] my-0">
@@ -17,16 +17,13 @@ const SellSteps = () => {
         </h4>
       </div>
       <div className="flex w-full justify-center items-center">
-        <h4 className="font-bold text-xs lg:text-base text-malon-color mx-[5px] my-0">
+        <h4 className="font-bold text-xs lg:text-[calc(1.275rem_+_0.3vw)] lg:text-base text-malon-color mx-[5px] my-0">
           SNAP
         </h4>
-        <h4
-          className="font-bold text-xs lg:text-base text-center mx-[5px] my-0"
-          style={{ fontSize: "1.5rem", margin: "0px" }}
-        >
+        <h4 className="font-bold text-xs lg:text-2xl text-center m-0">
           - LIST -
         </h4>
-        <h4 className="font-bold text-xs lg:text-base text-orange-color mx-[5px] my-0">
+        <h4 className="font-bold text-xs lg:text-[calc(1.275rem_+_0.3vw)] lg:text-base text-orange-color mx-[5px] my-0">
           CASH-OUT.
         </h4>
       </div>
@@ -43,7 +40,7 @@ const SellSteps = () => {
             <h4 className="font-bold text-xs lg:text-base text-center mx-[5px] my-0">
               1. TAKE A PICS
             </h4>
-            <p className="text-sm text-center sm:text-base mb-2.5">
+            <p className="text-sm text-center lg:text-base mb-2.5">
               Your wardrobe getting cluttered or Storage keeps pilling up? Don't
               panic, we got you! Just take <b className="font-bold">nice</b>{" "}
               pics using a good source of natural lighting. Always remember
@@ -54,7 +51,7 @@ const SellSteps = () => {
             <h4 className="font-bold text-xs lg:text-base text-center mx-[5px] my-0">
               2. LIST & SHARE
             </h4>
-            <p className="text-sm text-center sm:text-base mb-2.5">
+            <p className="text-sm text-center lg:text-base mb-2.5">
               Listing is easier than you think. With{" "}
               <b className="font-bold">10,400 brand</b> names to choose from our
               database, it's just a click away! List and describe your item with
@@ -66,7 +63,7 @@ const SellSteps = () => {
             <h4 className="font-bold text-xs lg:text-base text-center mx-[5px] my-0">
               3. CASH-OUT
             </h4>
-            <p className="text-sm text-center sm:text-base mb-2.5">
+            <p className="text-sm text-center lg:text-base mb-2.5">
               When your item is sold, ship your item with the preferred selected
               delivery method, once the buyer receives your item, you cash-out.
             </p>
@@ -82,18 +79,18 @@ const SellSteps = () => {
       </div>
 
       <div>
-        <h4 className="font-bold text-xs lg:text-base text-center mx-[5px] my-0">
+        <h4 className="font-bold text-xs lg:text-[calc(1.275rem_+_0.3vw)] leading-tight text-center mx-[5px] my-0">
           THRIFT - BUY - SELL - CHAT - CASHOUT - REPEAT
         </h4>
         <div className="flex w-full justify-center items-center">
           <FaCircle />
-          <h2 className="flex text-center justify-center text-malon-color font-bold lg:text-base text-[15px] mx-[5px] my-0">
+          <h2 className="flex lg:text-[calc(1.325rem_+_0.9vw)] leading-tight text-center justify-center text-malon-color font-bold text-[15px] mx-[5px] my-0">
             ALL IN
           </h2>
-          <h2 className="flex text-center justify-center font-bold lg:text-base text-[15px] mx-[5px] my-0">
+          <h2 className="flex lg:text-[calc(1.325rem_+_0.9vw)] leading-tight text-center justify-center font-bold text-[15px] mx-[5px] my-0">
             ONE
           </h2>
-          <h2 className="flex text-center justify-center text-orange-color font-bold lg:text-base text-[15px] mx-[5px] my-0">
+          <h2 className="flex lg:text-[calc(1.325rem_+_0.9vw)] leading-tight text-center justify-center text-orange-color font-bold text-[15px] mx-[5px] my-0">
             PLACE
           </h2>
           <FaCircle />

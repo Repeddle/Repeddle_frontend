@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 const BuyersPro = () => {
   return (
     <div className="overflow-auto px-[10vw] lg:py-[30px] py-[35px]">
-      <div className="text-[25px] font-[bold] uppercase text-center">
+      <div className="text-[25px] font-bold uppercase text-center">
         BUYER'S PROTECTION
       </div>
 
@@ -25,7 +25,7 @@ const BuyersPro = () => {
         repeddle App or Website using the add to cart button and checkout.
       </div>
 
-      <div className="text-[25px] font-[bold] uppercase text-center">
+      <div className="text-[25px] font-bold uppercase text-center">
         {" "}
         SELLER'S PROTECTION{" "}
       </div>

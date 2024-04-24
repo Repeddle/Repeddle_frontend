@@ -1,5 +1,8 @@
+import { IUser } from "./user"
+
 export interface Review {
-  user: string
+  // user: string
+  user: IUser
   comment: string
   rating: number
   like?: string
@@ -61,6 +64,8 @@ export interface IProduct {
   countInStock: number
   region: "NGN" | "ZAR"
   isAvailable: boolean
+  createdAt?: string | Date
+  updatedAt?: string | Date
 }
 
 // temporary
@@ -84,4 +89,6 @@ export interface Seller {
   sold: string[]
   numReviews: number
   badge: boolean
+  createdAt?: string | Date
+  updatedAt?: string | Date
 }

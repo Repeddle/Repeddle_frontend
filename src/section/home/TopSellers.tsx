@@ -1,9 +1,10 @@
 import LoadingBox from "../../components/LoadingBox"
 import MessageBox from "../../components/MessageBox"
 import { Link } from "react-router-dom"
+import { IUser } from "../../types/user"
 
 type Props = {
-  sellers: any[]
+  sellers: IUser[]
   loadingUser: boolean
   error?: string
 }
@@ -31,15 +32,15 @@ const TopSellers = ({ sellers, loadingUser, error }: Props) => {
               {sellers &&
                 sellers.length > 0 &&
                 sellers.map((seller, index) => (
-                  <Link to={`/seller/${seller.userId._id}`} key={index}>
+                  <Link to={`/seller/${seller._id}`} key={index}>
                     <div className="items-center flex flex-col mr-[30px]">
                       <div className="relative">
                         <img
-                          src={seller.userId.image}
-                          alt={seller.userId.username}
+                          src={seller.image}
+                          alt={seller.username}
                           className="lg:h-[200px] object-cover object-top lg:w-[200px] rounded-[50%] h-[150px] w-[150px]"
                         ></img>
-                        {seller.userId.badge && (
+                        {seller.badge && (
                           <div className="seller_profile_badge">
                             <img
                               className="w-5 object-cover"
@@ -48,7 +49,7 @@ const TopSellers = ({ sellers, loadingUser, error }: Props) => {
                           </div>
                         )}
                       </div>
-                      <p className="mt-0 mb-4">@{seller.userId.username}</p>
+                      <p className="mt-0 mb-4">@{seller.username}</p>
                     </div>
                   </Link>
                 ))}

@@ -7,7 +7,7 @@ const SellBulkAndSlot = () => {
 
   return (
     <div className="flex flex-col items-center mx-0 lg:my-10 my-5 mb-2.5">
-      <h2 className="flex text-center justify-center font-bold lg:text-base text-[15px] mx-[5px] my-0">
+      <h2 className="flex text-center justify-center font-bold lg:text-[calc(1.325rem_+_0.9vw)] leading-normal text-[15px] mx-[5px] my-0">
         BULK n SLOT
       </h2>
       <div className="relative">
@@ -42,7 +42,7 @@ const SellBulkAndSlot = () => {
         prefer to sell your BALES online, this service is also tailored made for
         you.
       </p>
-      <h4 className="font-bold text-xs lg:text-base text-center mx-[5px] my-0">
+      <h4 className="font-bold text-xs lg:text-[calc(1.275rem_+_0.3vw)] text-center mx-[5px] my-0">
         THREE EASY STEPS TO USE BULK n SLOT
       </h4>
       <div className="flex w-full justify-center mt-[10px] items-start">
@@ -85,7 +85,7 @@ const SellBulkAndSlot = () => {
         </p>
       </div>
       <OrangeButton>
-        <h2 className="flex text-center justify-center font-bold lg:text-base text-[15px] mx-[5px] my-0">
+        <h2 className="flex text-center justify-center font-bold lg:text-[calc(1.325rem_+_0.9vw)] leading-tight text-[15px] mx-[5px] my-0">
           GET STARTED
         </h2>
       </OrangeButton>

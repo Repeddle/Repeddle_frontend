@@ -7,7 +7,7 @@ import { FaPlane } from "react-icons/fa"
 
 type Props = {
   reportedUser: string
-  productName: string
+  productName?: string
 }
 
 const Report = ({ productName }: Props) => {

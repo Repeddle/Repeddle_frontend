@@ -1,6 +1,6 @@
+import React from 'react';
 
-
-const ContactUs = () => {
+function ContactUs() {
   return (
     <div className="container mx-auto max-w-4xl px-8 mt-24 lg:mt-14">
       <h2 className="text-xl lg:text-4xl font-medium">Contact Us</h2>
@@ -78,13 +78,14 @@ const ContactUs = () => {
           <button
             type="submit"
             className="block justify-center align-middle items-center w-full px-4 py-3 mt-4 font-medium text-white bg-orange-400 border border-transparent 
-            rounded-md hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 mb-10">
+            rounded-md hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:ring-offset-2 mb-10"
+          >
             Submit
           </button>
         </div>
       </form>
     </div>
   );
-};
+}
 
 export default ContactUs;

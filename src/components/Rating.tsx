@@ -17,11 +17,11 @@ const Rating = (props: Props) => {
       <div className="flex">
         {Array.from({ length: 5 }).map((_, i) =>
           props.rating >= i + 1 ? (
-            <FaStar key={i} className="text-orange-color" />
+            <FaStar key={i} className="text-orange-color text-lg" />
           ) : props.rating >= i + 0.5 ? (
-            <FaStarHalfAlt key={i} className="text-orange-color" />
+            <FaStarHalfAlt key={i} className="text-orange-color text-lg" />
           ) : (
-            <FaRegStar key={i} className="text-orange-color" />
+            <FaRegStar key={i} className="text-orange-color text-lg" />
           )
         )}
       </div>

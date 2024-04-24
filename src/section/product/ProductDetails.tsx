@@ -29,7 +29,7 @@ const ProductDetails = ({ product }: Props) => {
 
   return (
     <div className="flex flex-col p-[15px]">
-      <div className={`w-full ${openOverview ? "active" : ""} flex`}>
+      <div className={`w-full ${openOverview ? "active" : ""} flex flex-col`}>
         <div
           className={`cursor-pointer relative uppercase mb-[5px] before:content-['_'] before:w-2.5 before:h-2.5
           before:-translate-y-2/4 before:absolute before:border-b before:border-solid before:border-l before:right-5
@@ -75,7 +75,7 @@ const ProductDetails = ({ product }: Props) => {
           </div>
         </div>
       </div>
-      <div className={`w-full ${openItemDetail ? "active" : ""} flex`}>
+      <div className={`w-full ${openItemDetail ? "active" : ""} flex flex-col`}>
         <div
           className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
           before:-translate-y-2/4 before:absolute before:border-b before:border-solid before:border-l before:right-5
@@ -124,7 +124,7 @@ const ProductDetails = ({ product }: Props) => {
           </div>
         </div>
       </div>
-      <div className={`w-full ${openShipping ? "active" : ""} flex`}>
+      <div className={`w-full ${openShipping ? "active" : ""} flex flex-col`}>
         <div
           className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
           before:-translate-y-2/4 before:absolute before:border-b before:border-solid before:border-l before:right-5
@@ -146,7 +146,7 @@ const ProductDetails = ({ product }: Props) => {
         </div>
       </div>
       {product.keyFeatures && product.keyFeatures !== "Other" && (
-        <div className={`w-full ${openFeatures ? "active" : ""} flex`}>
+        <div className={`w-full ${openFeatures ? "active" : ""} flex flex-col`}>
           <div
             className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
             before:-translate-y-2/4 before:absolute before:border-b before:border-solid before:border-l before:right-5
@@ -167,7 +167,11 @@ const ProductDetails = ({ product }: Props) => {
         </div>
       )}
       {product.specification && (
-        <div className={`w-full ${openSpecifications ? "active" : ""} flex`}>
+        <div
+          className={`w-full ${
+            openSpecifications ? "active" : ""
+          } flex flex-col`}
+        >
           <div
             className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
             before:-translate-y-2/4 before:absolute before:border-b before:border-solid before:border-l before:right-5
@@ -176,7 +180,7 @@ const ProductDetails = ({ product }: Props) => {
                 ? "before:rotate-[134deg]"
                 : "before:-rotate-45"
             }`}
-            onClick={() => setOpenSpecifications(openSpecifications)}
+            onClick={() => setOpenSpecifications(!openSpecifications)}
           >
             Specification
           </div>

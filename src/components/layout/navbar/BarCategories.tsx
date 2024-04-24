@@ -30,7 +30,7 @@ const BarCategories = () => {
                   } else {
                     return (
                       <div className="mb-2.5 self-start">
-                        <li className="uppercase font-[bold] whitespace-nowrap text-xs self-start">
+                        <li className="uppercase font-bold whitespace-nowrap text-xs self-start">
                           {s.name}
                         </li>
                         <ul className="flex flex-col">
