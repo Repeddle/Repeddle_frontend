@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 interface Article {
   title: string;
@@ -6,20 +6,20 @@ interface Article {
 }
 
 const SupportArticles = () => {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [filteredData, setFilteredData] = useState<Article[]>([]);
 
   const data: Article[] = [
-    { title: "Buyers Guide", link: "/buyersguide" },
-    { title: "Re:Bundle", link: "/rebundle" },
-    { title: "Re:Bundle Simplified", link: "/RebundleSimplify" },
-    { title: "How To Log A Return", link: "/howtologreturn" },
-    { title: "Product Condition", link: "/condition" },
-    { title: "Buyers & Sellers Protection", link: "/buyerprotection" },
-    { title: "Terms Of Use", link: "/terms" },
-    { title: "Privacy Policy", link: "/privacypolicy" },
-    { title: "Cookies Policy", link: "/privacypolicy?cookies" },
-    { title: "Return & Refund", link: "/returns" },
+    { title: 'Buyers Guide', link: '/buyersguide' },
+    { title: 'Re:Bundle', link: '/rebundle' },
+    { title: 'Re:Bundle Simplified', link: '/RebundleSimplify' },
+    { title: 'How To Log A Return', link: '/howtologreturn' },
+    { title: 'Product Condition', link: '/condition' },
+    { title: 'Buyers & Sellers Protection', link: '/buyerprotection' },
+    { title: 'Terms Of Use', link: '/terms' },
+    { title: 'Privacy Policy', link: '/privacypolicy' },
+    { title: 'Cookies Policy', link: '/privacypolicy?cookies' },
+    { title: 'Return & Refund', link: '/returns' },
     // Add all your list items here
   ];
 
@@ -27,7 +27,7 @@ const SupportArticles = () => {
     target: { value: React.SetStateAction<string> };
   }) => {
     setSearch(event.target.value);
-    if (event.target.value === "") {
+    if (event.target.value === '') {
       setFilteredData([]);
     } else {
       const results = data.filter((item) =>
@@ -40,9 +40,9 @@ const SupportArticles = () => {
   return (
     <div className="w-full lg:mt-5 mt-20">
       <section className="mb-8 bg-gray-100 px-12 py-12 mt-8">
-        <h2 className="text-2xl text-center mb-10 font-medium -mt-6">
+        <h1 className="text-2xl text-center mb-10 font-medium -mt-6">
           Support Articles
-        </h2>
+        </h1>
         <div className="lg:w-6/12 mx-auto relative justify-center items-center -mt-5">
           <input
             type="text"
