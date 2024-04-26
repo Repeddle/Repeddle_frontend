@@ -7,17 +7,20 @@ import { CartProvider } from "./context/CartContext.tsx"
 import router from "./routing.tsx"
 import { RouterProvider } from "react-router-dom"
 import { HelmetProvider } from "react-helmet-async"
+import { ToastNotificationProvider } from "./context/ToastNotificationContext.tsx"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <HelmetProvider>
-      <ThemeProvider>
-        <AuthProvider>
-          <CartProvider>
-            <RouterProvider router={router} />
-          </CartProvider>
-        </AuthProvider>
-      </ThemeProvider>
+      <ToastNotificationProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <CartProvider>
+              <RouterProvider router={router} />
+            </CartProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </ToastNotificationProvider>
     </HelmetProvider>
   </React.StrictMode>
 )

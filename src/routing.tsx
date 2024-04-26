@@ -26,6 +26,7 @@ import ContactUs from "./pages/defaults/ContactUs"
 import Sustainability from "./pages/defaults/info/sustainability"
 import Rebundle from "./pages/defaults/info/rebundle"
 import ForgetPassword from "./pages/auth/login/forgetPassword"
+import Verify from "./pages/auth/register/verify"
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
         children: [
           { path: "login", element: <Login /> },
           { path: "register", element: <Register /> },
+          { path: "verify", element: <Verify /> },
           { path: "forget-password", element: <ForgetPassword /> },
         ],
       },

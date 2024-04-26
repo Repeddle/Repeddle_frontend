@@ -13,7 +13,7 @@ type Props = {
 const Button = ({
   text,
   onClick,
-  type,
+  type = "button",
   className,
   disabled,
   isLoading,

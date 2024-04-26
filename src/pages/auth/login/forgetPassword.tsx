@@ -1,10 +1,48 @@
+import { FormEvent, useState } from "react"
 import InputWithLabel from "../../../components/ui/InputWithLabel"
 import Button from "../../../components/ui/Button"
 import { Link, useNavigate } from "react-router-dom"
 import { FaArrowLeftLong } from "react-icons/fa6"
+import useAuth from "../../../hooks/useAuth"
+import useToastNotification from "../../../hooks/useToastNotification"
+import { emailRegex } from "../../../utils/constants"
 
 const ForgetPassword = () => {
   const navigate = useNavigate()
+
+  const [email, setEmail] = useState("")
+  const [formError, setFormError] = useState("")
+  const { sendForgetPasswordEmail, loading, error } = useAuth()
+  const { addNotification } = useToastNotification()
+
+  const validateEmail = () => {
+    if (email.length === 0) {
+      setFormError("Email field must not be empty")
+      return false
+    }
+
+    if (!email.toLocaleLowerCase().match(emailRegex)) {
+      setFormError("Please enter a valid email")
+      return false
+    }
+
+    setFormError("")
+    return true
+  }
+
+  const submitHandler = async (e: FormEvent) => {
+    e.preventDefault()
+
+    if (validateEmail()) {
+      const value = await sendForgetPasswordEmail({ email })
+
+      if (value) {
+        // Show modal
+      } else {
+        addNotification(error ?? "An error occurred")
+      }
+    }
+  }
 
   return (
     <div className="flex relative flex-col lg:flex-row bg-white-color dark:bg-black-color h-screen">
@@ -28,15 +66,23 @@ const ForgetPassword = () => {
         <div className="flex h-full w-full mt-24 lg:mt-0 lg:justify-center items-center flex-col">
           <div className="w-full max-w-lg flex flex-col gap-6">
             <h2 className="text-2xl font-semibold">Forget Password</h2>
-            <form className="flex flex-col gap-6">
+            <form className="flex flex-col gap-6" onSubmit={submitHandler}>
               <InputWithLabel
                 label="Enter Recovery Email"
                 type="email"
                 id="email"
                 placeholder="Email"
+                value={email}
+                onChange={setEmail}
+                error={formError}
               />
 
-              <Button type="submit" text="Reset Password" />
+              <Button
+                type="submit"
+                text="Reset Password"
+                isLoading={loading}
+                disabled={loading}
+              />
 
               <div className="flex items-center justify-center gap-4">
                 <p className="text-center text-sm space-x-0.5">

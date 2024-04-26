@@ -2,20 +2,41 @@ import InputWithLabel from "../../components/ui/InputWithLabel"
 import Button from "../../components/ui/Button"
 import { FaFacebookF, FaGoogle } from "react-icons/fa"
 import { Link } from "react-router-dom"
+import { FormEvent, useState } from "react"
+import useAuth from "../../hooks/useAuth"
+import useToastNotification from "../../hooks/useToastNotification"
 
 const LoginComp = () => {
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const { login, getUser, loading, error } = useAuth()
+  const { addNotification } = useToastNotification()
+
+  const submitHandler = async (e: FormEvent) => {
+    e.preventDefault()
+
+    const value = await login({ email, password })
+    if (value) {
+      await getUser()
+    } else {
+      addNotification(error ?? "An error occurred")
+    }
+  }
+
   return (
     <div className="flex h-full bg-white dark:bg-black w-full justify-center items-center flex-col">
       <div className="w-full max-w-lg flex flex-col gap-6">
         <h2 className="text-2xl text-black dark:text-white font-semibold">
           Sign In
         </h2>
-        <form className="flex flex-col gap-4">
+        <form className="flex flex-col gap-4" onSubmit={submitHandler}>
           <InputWithLabel
             label="Email"
             type="email"
             id="email"
             placeholder="Email"
+            value={email}
+            onChange={setEmail}
           />
 
           <InputWithLabel
@@ -23,6 +44,8 @@ const LoginComp = () => {
             type="password"
             id="password"
             placeholder="Password"
+            value={password}
+            onChange={setPassword}
           />
 
           <Link
@@ -32,7 +55,12 @@ const LoginComp = () => {
             Forget password
           </Link>
 
-          <Button text="Register" />
+          <Button
+            text="Register"
+            type="submit"
+            isLoading={loading}
+            disabled={loading}
+          />
 
           <div className="flex items-center justify-center gap-4">
             <p className="text-center text-black dark:text-white text-sm space-x-0.5">

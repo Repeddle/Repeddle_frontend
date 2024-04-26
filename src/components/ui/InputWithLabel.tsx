@@ -10,6 +10,8 @@ type Props = {
   name?: string
   placeholder?: string
   required?: boolean
+  error?: string
+  onBlur?: () => void
 }
 
 const InputWithLabel = ({
@@ -21,6 +23,8 @@ const InputWithLabel = ({
   type = "text",
   value,
   required,
+  error,
+  onBlur,
 }: Props) => {
   const [switchType, setSwitchType] = useState(type)
 
@@ -51,6 +55,7 @@ const InputWithLabel = ({
           value={value}
           required={required}
           onChange={(e) => onChange && onChange(e.target.value)}
+          onBlur={onBlur}
         />
         {type === "password" &&
           (switchType === "password" ? (
@@ -65,6 +70,7 @@ const InputWithLabel = ({
             />
           ))}
       </div>
+      {error && <span className="text-sm text-[red]">{error}</span>}
     </div>
   )
 }

@@ -1,21 +1,72 @@
 import InputWithLabel from "../../components/ui/InputWithLabel"
 import Button from "../../components/ui/Button"
 import { FaFacebookF, FaGoogle } from "react-icons/fa"
+import { FormEvent, useState } from "react"
+import useAuth from "../../hooks/useAuth"
+import { emailRegex } from "../../utils/constants"
+import useToastNotification from "../../hooks/useToastNotification"
 
-const RegisterComp = () => {
+type Props = {
+  showModal?: () => void
+}
+
+const RegisterComp = ({ showModal }: Props) => {
+  const [email, setEmail] = useState("")
+  const [formError, setFormError] = useState("")
+  const { sendVerifyEmail, loading, error } = useAuth()
+  const { addNotification } = useToastNotification()
+
+  const validateEmail = () => {
+    if (email.length === 0) {
+      setFormError("Email field must not be empty")
+      return false
+    }
+
+    if (!email.toLocaleLowerCase().match(emailRegex)) {
+      setFormError("Please enter a valid email")
+      return false
+    }
+
+    setFormError("")
+    return true
+  }
+
+  const submitHandler = async (e: FormEvent) => {
+    e.preventDefault()
+
+    if (validateEmail()) {
+      const value = await sendVerifyEmail({ email })
+
+      if (value) {
+        showModal?.()
+      } else {
+        addNotification(error ?? "An error occurred")
+      }
+    }
+  }
+
   return (
     <div className="flex h-full w-full justify-center items-center flex-col">
       <div className="w-full max-w-lg flex flex-col gap-6">
         <h2 className="text-2xl font-semibold">Create an Account</h2>
-        <form className="flex flex-col gap-4">
+        <form className="flex flex-col gap-4" onSubmit={submitHandler}>
           <InputWithLabel
             label="Email"
             type="email"
             id="email"
             placeholder="Email"
+            value={email}
+            onChange={setEmail}
+            error={formError}
+            onBlur={validateEmail}
           />
 
-          <Button text="Register" />
+          <Button
+            text="Register"
+            type="submit"
+            isLoading={loading}
+            disabled={loading}
+          />
 
           <div className="flex items-center justify-center gap-4">
             <p className="text-center text-sm space-x-0.5">
