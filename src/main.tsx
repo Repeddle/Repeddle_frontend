@@ -10,8 +10,11 @@ import { HelmetProvider } from "react-helmet-async"
 import { ToastNotificationProvider } from "./context/ToastNotificationContext.tsx"
 import { CategoryProvider } from "./context/CategoryContext.tsx"
 import { ProductProvider } from "./context/ProductContext.tsx"
+import { HelmetProvider } from 'react-helmet-async';
+import ArticleProvider from './context/ArticleContext.tsx';
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <HelmetProvider>
       <ToastNotificationProvider>
@@ -20,7 +23,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <CategoryProvider>
               <ProductProvider>
                 <CartProvider>
+                  <ArticleProvider>
                   <RouterProvider router={router} />
+                    </ArticleProvider>
                 </CartProvider>
               </ProductProvider>
             </CategoryProvider>
@@ -29,4 +34,4 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       </ToastNotificationProvider>
     </HelmetProvider>
   </React.StrictMode>
-)
+);

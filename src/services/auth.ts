@@ -7,7 +7,8 @@ export async function sendVerifyEmailService(userData: {
   email: string
 }): Promise<any> {
   try {
-    const data = await api.post("/users/send-verify-email", userData)
+
+    const data = await api.post('/users/send-verificaton-email', userData);
 
     if (!data.status) {
       const errorMessage = getBackendErrorMessage(data.data)

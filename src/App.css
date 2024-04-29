@@ -1,13 +1,12 @@
 @font-face {
-  font-family: "AbsentiaSans";
-  src: url(/fonts/AbsentiaSansBold.ttf) format("truetype");
+  font-family: 'AbsentiaSans';
+  src: url(/fonts/AbsentiaSansBold.ttf) format('truetype');
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
   font-family: "AbsentiaSans";
   src: url(/fonts/AbsentiaSansMedium.ttf) format("truetype");
-
   font-weight: 500;
   font-style: normal;
 }
@@ -18,14 +17,14 @@
   font-style: normal;
 }
 @font-face {
-  font-family: "AbsentiaSans";
-  src: url(/fonts/AbsentiaSansLight.ttf) format("truetype");
+  font-family: 'AbsentiaSans';
+  src: url(/fonts/AbsentiaSansLight.ttf) format('truetype');
   font-weight: 300;
   font-style: normal;
 }
 @font-face {
-  font-family: "ChronicleText";
-  src: url(/fonts/ChronicleText.otf) format("opentype");
+  font-family: 'ChronicleText';
+  src: url(/fonts/ChronicleText.otf) format('opentype');
   font-style: normal;
 }
 

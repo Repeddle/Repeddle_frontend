@@ -1,3 +1,4 @@
+
 import Search from "./pages/defaults/Search"
 import { createBrowserRouter } from "react-router-dom"
 import App from "./App"
@@ -27,15 +28,17 @@ import Sustainability from "./pages/defaults/info/sustainability"
 import Rebundle from "./pages/defaults/info/rebundle"
 import ForgetPassword from "./pages/auth/login/forgetPassword"
 import Verify from "./pages/auth/register/verify"
+import Articles from './pages/defaults/articles';
+import ArticleContent from './pages/defaults/articles/articleContent';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "/auth/",
+        path: '/auth/',
         element: <Auth />,
         children: [
           { path: "login", element: <Login /> },
@@ -45,38 +48,40 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "/",
+        path: '/',
         element: <Default />,
         children: [
-          { path: "", element: <Home /> },
-          { path: "search", element: <Search /> },
-          { path: "sell", element: <Sell /> },
-          { path: "product/:id", element: <Product /> },
-          { path: "seller/:slug", element: <Seller /> },
-          { path: "cart", element: <Cart /> },
-          { path: "about", element: <About /> },
-          { path: "returns", element: <Returns /> },
-          { path: "privacypolicy", element: <PrivacyPolicy /> },
-          { path: "terms", element: <Terms /> },
-          { path: "vipshield", element: <Vipshield /> },
-          { path: "rebundle", element: <Rebundle /> },
-          { path: "sustainability", element: <Sustainability /> },
-          { path: "Support-Articles", element: <SupportArticles /> },
-          { path: "Contact-Us", element: <ContactUs /> },
+          { path: '', element: <Home /> },
+          { path: 'search', element: <Search /> },
+          { path: 'sell', element: <Sell /> },
+          { path: 'product/:id', element: <Product /> },
+          { path: 'seller/:slug', element: <Seller /> },
+          { path: 'cart', element: <Cart /> },
+          { path: 'about', element: <About /> },
+          { path: 'returns', element: <Returns /> },
+          { path: 'privacypolicy', element: <PrivacyPolicy /> },
+          { path: 'terms', element: <Terms /> },
+          { path: 'vipshield', element: <Vipshield /> },
+          { path: 'rebundle', element: <Rebundle /> },
+          { path: 'sustainability', element: <Sustainability /> },
+          { path: 'Support-Articles', element: <SupportArticles /> },
+          { path: 'articles', element: <Articles /> },
+          { path: 'articles/:id', element: <ArticleContent /> },
+          { path: 'Contact-Us', element: <ContactUs /> },
         ],
       },
       {
-        path: "/",
+        path: '/',
         element: <Protected />,
         children: [
-          { path: "dashboard", element: <Dashboard /> },
-          { path: "payment", element: <PaymentMethod /> },
-          { path: "placeorder", element: <OrderPreview /> },
-          { path: "order/:id", element: <Order /> },
+          { path: 'dashboard', element: <Dashboard /> },
+          { path: 'payment', element: <PaymentMethod /> },
+          { path: 'placeorder', element: <OrderPreview /> },
+          { path: 'order/:id', element: <Order /> },
         ],
       },
     ],
   },
-])
+]);
 
-export default router
+export default router;
