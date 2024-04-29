@@ -8,20 +8,21 @@ import SearchRatings from "./SearchRatings"
 import SearchColor from "./SearchColor"
 import SearchSizes from "./SearchSizes"
 import { useSearchParams } from "react-router-dom"
+import { ICategory } from "../../../types/category"
 
 type Props = {
   setShowFilter: (val: boolean) => void
   showFilter: boolean
   queryBrand: string
-  categories: { name: string; id: string }[]
+  categories: ICategory[]
   rating: { rating: number; id: string }[]
   sizes: { rating: number; id: string }[]
   colors: { rating: number; id: string }[]
-  shipping: { name: string; id: string }[]
-  condition: { name: string; id: string }[]
-  availability: { name: string; id: string }[]
-  type: { name: string; id: string }[]
-  pattern: { name: string; id: string }[]
+  shipping: { name: string; _id: string }[]
+  condition: { name: string; _id: string }[]
+  availability: { name: string; _id: string }[]
+  type: { name: string; _id: string }[]
+  pattern: { name: string; _id: string }[]
   brands: { name: string; _id: string }[]
   deals: any[]
   minPrice: number
@@ -59,6 +60,13 @@ const SearchFilter = ({
     })
   }
 
+  const removeParam = (key: SearchOptionsKey) => {
+    setSearchParams((prev) => {
+      prev.delete(key)
+      return prev
+    })
+  }
+
   return (
     <div
       className={`flex-1 lg:block lg:z-0 lg:transition-none lg:sticky mb-5 rounded-[0.2rem] lg:top-[168px] lg:h-auto 
@@ -90,14 +98,20 @@ const SearchFilter = ({
           title="Categories"
           all={{ category: "all" }}
           allText="All"
-          changeParam={(val: string) => changeParam("category", val)}
+          changeParam={(val: string) =>
+            val === "all"
+              ? removeParam("category")
+              : changeParam("category", val)
+          }
           list={categories}
           selectedItem={getParam("category")}
         />
 
         <SearchBrands
           brand="all"
-          changeParam={(val: string) => changeParam("brand", val)}
+          changeParam={(val: string) =>
+            val === "all" ? removeParam("brand") : changeParam("brand", val)
+          }
           queryBrand={queryBrand}
           searchBrand={brands}
           selectedBrand={getParam("brand")}
@@ -120,7 +134,9 @@ const SearchFilter = ({
           title="Rating"
           all={{ rating: "all" }}
           allText="& up"
-          changeParam={(val: string) => changeParam("rating", val)}
+          changeParam={(val: string) =>
+            val === "all" ? removeParam("rating") : changeParam("rating", val)
+          }
           list={rating}
           selectedRating={getParam("rating")}
         />
@@ -141,7 +157,11 @@ const SearchFilter = ({
           title="Shipping"
           all={{ shipping: "all" }}
           allText="All Product"
-          changeParam={(val: string) => changeParam("shipping", val)}
+          changeParam={(val: string) =>
+            val === "all"
+              ? removeParam("shipping")
+              : changeParam("shipping", val)
+          }
           list={shipping}
           selectedItem={getParam("shipping")}
         />
@@ -150,7 +170,11 @@ const SearchFilter = ({
           title="Condition"
           all={{ condition: "all" }}
           allText="All Condition"
-          changeParam={(val: string) => changeParam("condition", val)}
+          changeParam={(val: string) =>
+            val === "all"
+              ? removeParam("condition")
+              : changeParam("condition", val)
+          }
           list={condition}
           selectedItem={getParam("condition")}
         />
@@ -159,7 +183,11 @@ const SearchFilter = ({
           title="Availability"
           all={{ availability: "all" }}
           allText="All"
-          changeParam={(val: string) => changeParam("availability", val)}
+          changeParam={(val: string) =>
+            val === "all"
+              ? removeParam("availability")
+              : changeParam("availability", val)
+          }
           list={availability}
           selectedItem={getParam("availability")}
         />
@@ -168,7 +196,9 @@ const SearchFilter = ({
           title="Type"
           all={{ type: "all" }}
           allText="All"
-          changeParam={(val: string) => changeParam("type", val)}
+          changeParam={(val: string) =>
+            val === "all" ? removeParam("type") : changeParam("type", val)
+          }
           list={type}
           selectedItem={getParam("type")}
         />
@@ -177,7 +207,9 @@ const SearchFilter = ({
           title="Pattern & Printed"
           all={{ pattern: "all" }}
           allText="All"
-          changeParam={(val: string) => changeParam("pattern", val)}
+          changeParam={(val: string) =>
+            val === "all" ? removeParam("pattern") : changeParam("pattern", val)
+          }
           list={pattern}
           selectedItem={getParam("pattern")}
         />

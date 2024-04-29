@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom"
+import useCategory from "../../../hooks/useCategory"
+import { useEffect } from "react"
 
 const BarCategories = () => {
-  const categories: any[] = []
+  const { categories, fetchCategories } = useCategory()
+
+  useEffect(() => {
+    fetchCategories()
+  }, [])
 
   return (
     <ul className="relative hidden group lg:flex justify-center items-center">
@@ -10,7 +16,7 @@ const BarCategories = () => {
           <div className="mx-5 my-2.5 group-hover:flex">
             <li className="font-medium text-[15px] uppercase cursor-pointer hover:text-orange-color text-black dark:text-white dark:hover:text-orange-color">
               <Link to={c.path || `/search?category=${c.name}`}>{c.name}</Link>
-              {/* <Link to={`/category/${c.name}`}>{c.name}</Link>  */}
+              <Link to={`/category/${c.name}`}>{c.name}</Link>
             </li>
 
             <ul

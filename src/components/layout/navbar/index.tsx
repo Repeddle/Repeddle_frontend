@@ -124,15 +124,8 @@ function Navbar() {
                 <FaBell className="pointer text-malon-color" size={25} />
                 <div
                   ref={modelRef2}
-                  style={{
-                    position: "absolute",
-                    left: "0",
-                    top: "0",
-                    right: "0",
-                    bottom: "0",
-                    cursor: "pointer",
-                  }}
-                ></div>
+                  className="absolute inset-0 cursor-pointer"
+                />
               </div>
 
               <IconsTooltips
@@ -167,10 +160,6 @@ function Navbar() {
               </Link>
             </div>
 
-            {/* <Link to={auth?.user?.isSeller ? "/newproduct" : "/sell"}>
-      <SellButton>Sell</SellButton>
-    </Link> */}
-
             {user && (
               <div className="text-xl relative hidden px-2.5 py-0 hover:text-orange-color">
                 <FaBell
@@ -196,7 +185,7 @@ function Navbar() {
               />
             ) : (
               <div className="text-sm cursor-pointer ml-5 dark:text-white hover:text-orange-color hidden lg:block">
-                <Link to="signin">SIGN IN / SIGN UP</Link>
+                <Link to="auth/login">SIGN IN / SIGN UP</Link>
               </div>
             )}
           </div>

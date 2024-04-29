@@ -8,6 +8,8 @@ export type DeliverStatus =
   | "Return Logged"
   | "Received"
   | "Delivered"
+  | "Rejected"
+  | "Hold"
 
 export type OrderItem = CartItem & {
   onHold: boolean

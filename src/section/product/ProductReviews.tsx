@@ -133,7 +133,7 @@ const ProductReviews = ({ product }: Props) => {
                 Please{" "}
                 <Link
                   className="font-bold text-orange-color hover:text-malon-color text-[15px]"
-                  to={`/signin?redirect=/product/${product.slug}`}
+                  to={`/auth/login?redirect=/product/${product.slug}`}
                 >
                   Sign In
                 </Link>{" "}
