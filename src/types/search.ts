@@ -15,6 +15,7 @@ export type SearchOptions = {
   minPrice?: string
   order?: string
   page?: number
+  query?: number
 }
 
 export type SearchOptionsKey = keyof SearchOptions
