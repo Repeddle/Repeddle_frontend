@@ -3,11 +3,16 @@ import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 function ContactUs() {
   return (
     <div className="container mx-auto max-w-7xl w-full flex-col lg:flex-row mt-5 lg:mt-14 flex bg-gray-100 p-8 lg:rounded-xl mb-10">
-       <div className="lg:w-1/2 w-full lg:mt-4">
+       <div className="lg:w-1/2 w-full p-5 bg-gray-200 rounded-lg shadow-xl lg:mr-2 mb-4 lg:mb-0"
+       style={{
+        boxShadow:
+          "0 4px 6px rgba(0, 0, 0, 0.1), -4px 0 6px rgba(0, 0, 0, 0.1), 4px 0 6px rgba(0, 0, 0, 0.1)",
+      }}
+       >
         <div className="w-full">
         <h3 className="text-xl lg:text-2xl lg:mt-4 font-medium mb-4" >Contact Us</h3>
        <h2 className="text-xl lg:text-4xl lg:mt-12 font-medium">Get In Touch With Us</h2>
-       <p className="text-base text-justify lg:mr-48 mt-7 lg:mt-3">
+       <p className="text-base text-justify lg:mr-40 mt-7 lg:mt-3">
        Welcome to Repeddle.com 🎉, your go-to platform for connecting with sellers. We're here to make your shopping experience seamless and enjoyable 😊. 
        Whether you're looking for unique items 🛍️, seeking advice on products 💡, or have questions about our services ❓, we're ready to assist 🤝.
        </p>
@@ -41,7 +46,12 @@ function ContactUs() {
         </div>
        </div>
       
-      <div className='lg:w-1/2 w-full '>
+      <div className='lg:w-1/2 w-full p-5 bg-gray-200 rounded-lg shadow-xl lg:ml-2'
+       style={{
+        boxShadow:
+          "0 4px 6px rgba(0, 0, 0, 0.1), -4px 0 6px rgba(0, 0, 0, 0.1), 4px 0 6px rgba(0, 0, 0, 0.1)",
+      }}
+      >
       <form className="space-y-6 mt-5 w-full">
         <div>
           <label htmlFor="name" className="block mb-2 font-medium">
