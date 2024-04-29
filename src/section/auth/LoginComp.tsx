@@ -56,7 +56,7 @@ const LoginComp = () => {
           </Link>
 
           <Button
-            text="Register"
+            text="Login"
             type="submit"
             isLoading={loading}
             disabled={loading}

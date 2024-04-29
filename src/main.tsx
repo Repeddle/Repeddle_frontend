@@ -8,6 +8,8 @@ import router from "./routing.tsx"
 import { RouterProvider } from "react-router-dom"
 import { HelmetProvider } from "react-helmet-async"
 import { ToastNotificationProvider } from "./context/ToastNotificationContext.tsx"
+import { CategoryProvider } from "./context/CategoryContext.tsx"
+import { ProductProvider } from "./context/ProductContext.tsx"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -15,9 +17,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <ToastNotificationProvider>
         <ThemeProvider>
           <AuthProvider>
-            <CartProvider>
-              <RouterProvider router={router} />
-            </CartProvider>
+            <CategoryProvider>
+              <ProductProvider>
+                <CartProvider>
+                  <RouterProvider router={router} />
+                </CartProvider>
+              </ProductProvider>
+            </CategoryProvider>
           </AuthProvider>
         </ThemeProvider>
       </ToastNotificationProvider>

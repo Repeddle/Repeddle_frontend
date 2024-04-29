@@ -6,12 +6,18 @@ import ProductItem from "../../components/ProductItem"
 import { IProduct } from "../../types/product"
 import SearchBox from "../../components/SearchBox"
 import { BiFilter } from "react-icons/bi"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import SearchFilter from "../../components/layout/SearchFilter"
 import { SearchOptionsKey } from "../../types/search"
+import useCategory from "../../hooks/useCategory"
+import useProducts from "../../hooks/useProducts"
+import { FaTimes } from "react-icons/fa"
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams()
+
+  const { categories } = useCategory()
+  const { products, fetchProducts, loading, error } = useProducts()
 
   const changeParam = (key: SearchOptionsKey, val: string | number) => {
     setSearchParams((prev) => {
@@ -20,35 +26,55 @@ const Search = () => {
     })
   }
 
-  useEffect(() => {
-    console.log(searchParams)
+  const removeParam = (key: SearchOptionsKey) => {
+    setSearchParams((prev) => {
+      prev.delete(key)
+      return prev
+    })
+  }
+
+  const allSearchParams = useMemo(() => {
+    const all: { key: SearchOptionsKey; value: string }[] = []
+    searchParams.forEach((value, key) =>
+      all.push({ key: key as SearchOptionsKey, value })
+    )
+    return all
   }, [searchParams])
 
-  const loading = false
-  const rLoading = false
-  const error = false
-  const products: IProduct[] = []
-  const rProducts: IProduct[] = []
-  const pages = 0
+  useEffect(() => {
+    const fetch = async () => {
+      const params: string[][] = []
 
-  const page = 0
+      searchParams.forEach((val, key) => params.push([key, val]))
+
+      const string = new URLSearchParams(params).toString()
+
+      await fetchProducts(string)
+    }
+
+    fetch()
+  }, [searchParams])
+
+  console.log(loading)
+
+  const rLoading = false
+  const rProducts: IProduct[] = []
 
   const [showFilter, setShowFilter] = useState(false)
   const [queryBrand] = useState("")
   const [order] = useState("")
 
-  const categories: { name: string; id: string }[] = []
   const rating: { rating: number; id: string }[] = []
   const sizes: { rating: number; id: string }[] = []
   const colors: { rating: number; id: string }[] = []
-  const shipping: { name: string; id: string }[] = []
-  const condition: { name: string; id: string }[] = []
-  const availability: { name: string; id: string }[] = []
-  const type: { name: string; id: string }[] = []
-  const pattern: { name: string; id: string }[] = []
+  const shipping: { name: string; _id: string }[] = []
+  const condition: { name: string; _id: string }[] = []
+  const availability: { name: string; _id: string }[] = []
+  const type: { name: string; _id: string }[] = []
+  const pattern: { name: string; _id: string }[] = []
   const brands: { name: string; _id: string }[] = []
   const deals: any[] = []
-  const maxPrice = 50000
+  const maxPrice = 500000
   const minPrice = 0
 
   return (
@@ -98,32 +124,11 @@ const Search = () => {
                 >
                   <BiFilter /> Filters
                 </div>
-                <div className="hidden lg:flex mb-[5px]">
-                  {/* {countProducts === 0 ? "No" : countProducts} Results
-                  {query !== "all" && " : " + query}
-                  {category !== "all" && " : " + category}
-                  {brand !== "all" && "  Brand: " + brand}
-                  {color !== "all" && "  Brand: " + color}
-                  {condition !== "all" && "  Brand: " + condition}
-                  {availability !== "all" && "  Brand: " + availability}
-                  {pattern !== "all" && "  Brand: " + pattern}
-                  {size !== "all" && "  Brand: " + size}
-                  {shipping !== "all" && "  Brand: " + shipping}
-                  {rating !== "all" && "  Rating:" + rating + " & up"}
-                  {query !== "all" ||
-                  category !== "all" ||
-                  rating !== "all" ||
-                  brand !== "all" ||
-                  color !== "all" ||
-                  condition !== "all" ||
-                  availability !== "all" ||
-                  pattern !== "all" ||
-                  shipping !== "all" ||
-                  size !== "all" ? (
-                    <Button variant="none" onClick={() => navigate("/search")}>
-                      <i className="fas fa-times-circle"></i>
-                    </Button>
-                  ) : null} */}
+                <div className="hidden lg:flex mb-[5px] flex-col">
+                  <span>
+                    {products.totalCount === 0 ? "No" : products.totalCount}{" "}
+                    Results
+                  </span>
                 </div>
                 <div>
                   Sort by{"  "}
@@ -152,9 +157,7 @@ const Search = () => {
                     >
                       Likes
                     </option>
-                    {/* <option className="bg-white text-black-color dark:bg-black-color dark:text-white-color" value="prices">
-                      Recent Prices Drop
-                    </option> */}
+
                     <option
                       className="bg-white text-black-color dark:bg-black-color dark:text-white-color"
                       value="relevance"
@@ -182,7 +185,25 @@ const Search = () => {
                   </select>
                 </div>
               </div>
-              {products.length === 0 && (
+
+              <div className="hidden lg:flex gap-2 mt-2">
+                {allSearchParams.map((val) => (
+                  <span
+                    key={val.key}
+                    className="flex gap-2 items-center bg-orange-color hover:bg-malon-color text-white dark:text-black px-2.5 py-1.5 rounded-lg"
+                  >
+                    <FaTimes
+                      className="cursor-pointer"
+                      onClick={() => removeParam(val.key)}
+                    />
+                    <span className="first-letter:capitalize">
+                      {val.key} : {val.value}
+                    </span>
+                  </span>
+                ))}
+              </div>
+
+              {products.products.length === 0 && (
                 <>
                   <MessageBox>
                     <div
@@ -211,7 +232,7 @@ const Search = () => {
                 </>
               )}
               <div className="flex flex-1 flex-wrap mt-2.5">
-                {products.map((product) => (
+                {products.products.map((product) => (
                   <div
                     className="w-1/2 lg:w-1/4 flex justify-center"
                     key={product._id}
@@ -221,7 +242,7 @@ const Search = () => {
                 ))}
               </div>
               <div className="flex gap-2.5 justify-center items-center mt-5">
-                {page > 1 && (
+                {products.currentPage > 1 && (
                   <p
                     className="border w-[100px] text-center font-medium p-1 rounded-[0.2rem] border-solid hover:bg-light-ev3 dark:hover:bg-dark-ev2"
                     onClick={() =>
@@ -231,7 +252,7 @@ const Search = () => {
                     Previous
                   </p>
                 )}
-                {pages > 1 && products.length === 40 && (
+                {products.totalPages > 1 && products.products.length === 40 && (
                   <p
                     className="border w-[100px] text-center font-medium p-1 rounded-[0.2rem] border-solid hover:bg-light-ev3 dark:hover:bg-dark-ev2"
                     onClick={() =>
