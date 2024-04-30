@@ -1,15 +1,16 @@
-import { useEffect, useState } from 'react';
-import useArticle from '../../../hooks/useArticle';
-import { Article } from '../../../types/article';
-import { Link } from 'react-router-dom';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
+import useArticle from "../../../hooks/useArticle";
+import { Article } from "../../../types/article";
+import { Link } from "react-router-dom";
 
 function Articles() {
   const { articles, categories, loading, fetchArticles } = useArticle();
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
 
   useEffect(() => {
-    if (searchQuery.trim() === '') {
+    if (searchQuery.trim() === "") {
       setFilteredArticles([]);
       return;
     }
@@ -17,10 +18,10 @@ function Articles() {
     const searchArticles = async () => {
       try {
         const filteredArticles = await fetchArticles(searchQuery);
-        console.log('art', filteredArticles);
+        console.log("art", filteredArticles);
         setFilteredArticles(filteredArticles);
       } catch (error) {
-        console.log('Error searching articles');
+        console.log("Error searching articles");
       }
     };
 
@@ -91,7 +92,7 @@ function Articles() {
                   <div
                     className=""
                     dangerouslySetInnerHTML={{
-                      __html: article.content.slice(0, 100) + '...',
+                      __html: article.content.slice(0, 100) + "...",
                     }}
                   />
                 </Link>
@@ -115,13 +116,32 @@ function Articles() {
               {categories.map((category) => (
                 <h3
                   key={category}
-                  className="text-xl font-medium border-gray-300 p-4 rounded-lg shadow-md text-center"
+                  className="text-xl font-medium border-gray-300 p-4 rounded-lg shadow-md text-center cursor-pointer hover:text-orange-400"
+                  style={{
+                    boxShadow:
+                      "0 4px 6px rgba(0, 0, 0, 0.1), -4px 0 6px rgba(0, 0, 0, 0.1), 4px 0 6px rgba(0, 0, 0, 0.1)",
+                  }}
                 >
                   {category}
                 </h3>
               ))}
             </div>
           )}
+        </div>
+
+        <div className="flex flex-col items-center justify-center pt-10 pb-7 text-center">
+          <p className="mb-4 text-lg mr-1">
+            More Questions? Go to{" "}
+            <a href="/support-articles" className="text-orange-400 font-black">
+              <b>Support Articles</b>
+            </a>
+          </p>
+          <a
+            href="/contact-us"
+            className="inline-block px-6 py-3 text-lg text-white bg-orange-400 rounded hover:bg-red-800"
+          >
+            Contact Us
+          </a>
         </div>
       </section>
     </div>

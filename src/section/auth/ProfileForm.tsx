@@ -5,8 +5,8 @@ import useAuth from "../../hooks/useAuth"
 import useToastNotification from "../../hooks/useToastNotification"
 
 type Props = {
-  token?: string | null
-}
+  token?: string | null;
+};
 
 const ProfileForm = ({ token }: Props) => {
   const { registerUser, getUser, error, loading, getSuggestUsername } =
@@ -17,37 +17,37 @@ const ProfileForm = ({ token }: Props) => {
   const [usernameSuggest, setUsernameSuggest] = useState<string[]>([])
 
   const [firstInput, setFirstInput] = useState({
-    firstName: "",
-    lastName: "",
-    phone: "",
-  })
+    firstName: '',
+    lastName: '',
+    phone: '',
+  });
   const [secondInput, setSecondInput] = useState({
-    username: "",
-    password: "",
-    confirmPassword: "",
-  })
+    username: '',
+    password: '',
+    confirmPassword: '',
+  });
 
   const [formError, setFormError] = useState({
-    firstName: "",
-    lastName: "",
-    phone: "",
-    username: "",
-    password: "",
-    confirmPassword: "",
-  })
+    firstName: '',
+    lastName: '',
+    phone: '',
+    username: '',
+    password: '',
+    confirmPassword: '',
+  });
 
   const firstValueChange = (key: keyof typeof firstInput, val: string) => {
-    setFirstInput({ ...firstInput, [key]: val })
-  }
+    setFirstInput({ ...firstInput, [key]: val });
+  };
 
   const secondValueChange = (key: keyof typeof secondInput, val: string) => {
-    setSecondInput({ ...secondInput, [key]: val })
-  }
+    setSecondInput({ ...secondInput, [key]: val });
+  };
 
   const validateFirstForm = (val: keyof typeof firstInput) => {
     if (firstInput[val].length === 0) {
-      setFormError({ ...formError, [val]: `${val} is required` })
-      return false
+      setFormError({ ...formError, [val]: `${val} is required` });
+      return false;
     }
 
     if (
@@ -57,70 +57,70 @@ const ProfileForm = ({ token }: Props) => {
       setFormError({
         ...formError,
         [val]: `${val} must be at least 3 characters`,
-      })
-      return false
+      });
+      return false;
     }
 
-    setFormError({ ...formError, [val]: "" })
-    return true
-  }
+    setFormError({ ...formError, [val]: '' });
+    return true;
+  };
 
   const validateSecondForm = (val: keyof typeof secondInput) => {
-    if (val === "username" && secondInput.username.length < 3) {
+    if (val === 'username' && secondInput.username.length < 3) {
       setFormError({
         ...formError,
         username: `username must be at least 3 characters`,
-      })
-      return false
+      });
+      return false;
     }
 
-    if (val === "password" && secondInput.password.length < 6) {
+    if (val === 'password' && secondInput.password.length < 6) {
       setFormError({
         ...formError,
-        password: "password must be at least 6 characters",
-      })
-      return false
+        password: 'password must be at least 6 characters',
+      });
+      return false;
     }
 
     if (
-      val === "confirmPassword" &&
+      val === 'confirmPassword' &&
       secondInput.password !== secondInput.confirmPassword
     ) {
       setFormError({
         ...formError,
-        confirmPassword: "confirm password must equal password",
-      })
-      return false
+        confirmPassword: 'confirm password must equal password',
+      });
+      return false;
     }
 
-    setFormError({ ...formError, [val]: "" })
-    return true
-  }
+    setFormError({ ...formError, [val]: '' });
+    return true;
+  };
 
   const changeForm = (val: 1 | 2) => {
     if (val === 2) {
       // validate first form
       const valid = Object.keys(firstInput).every((input) =>
         validateFirstForm(input as keyof typeof firstInput)
-      )
-      if (valid) setFormNumber(val)
+      );
+      if (valid) setFormNumber(val);
 
-      return
+      return;
     }
-    setFormNumber(1)
-  }
+    setFormNumber(1);
+  };
 
   const submitHandler = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    if (!token) return addNotification("token not found")
+    if (!token) return addNotification('token not found');
 
-    const res = await registerUser({ ...firstInput, ...secondInput, token })
+    const res = await registerUser({ ...firstInput, ...secondInput, token });
     if (res) {
-      await getUser()
+      await getUser();
     }
-    if (error) addNotification(error)
-  }
+    if (error) addNotification(error);
+  };
 
   const fetchSuggest = useCallback(async () => {
     const response = await getSuggestUsername({
@@ -154,9 +154,9 @@ const ProfileForm = ({ token }: Props) => {
                 id="first_name"
                 placeholder="First name"
                 value={firstInput.firstName}
-                onChange={(val: string) => firstValueChange("firstName", val)}
+                onChange={(val: string) => firstValueChange('firstName', val)}
                 error={formError.firstName}
-                onBlur={() => validateFirstForm("firstName")}
+                onBlur={() => validateFirstForm('firstName')}
               />
 
               <InputWithLabel
@@ -164,9 +164,9 @@ const ProfileForm = ({ token }: Props) => {
                 id="last_name"
                 placeholder="Last Name"
                 value={firstInput.lastName}
-                onChange={(val: string) => firstValueChange("lastName", val)}
+                onChange={(val: string) => firstValueChange('lastName', val)}
                 error={formError.lastName}
-                onBlur={() => validateFirstForm("lastName")}
+                onBlur={() => validateFirstForm('lastName')}
               />
 
               <InputWithLabel
@@ -175,9 +175,9 @@ const ProfileForm = ({ token }: Props) => {
                 id="phone"
                 placeholder="Phone Number"
                 value={firstInput.phone}
-                onChange={(val: string) => firstValueChange("phone", val)}
+                onChange={(val: string) => firstValueChange('phone', val)}
                 error={formError.phone}
-                onBlur={() => validateFirstForm("phone")}
+                onBlur={() => validateFirstForm('phone')}
               />
             </>
           )}
@@ -189,7 +189,7 @@ const ProfileForm = ({ token }: Props) => {
                 id="username"
                 placeholder="username"
                 value={secondInput.username}
-                onChange={(val: string) => secondValueChange("username", val)}
+                onChange={(val: string) => secondValueChange('username', val)}
                 error={formError.username}
                 onBlur={() => validateSecondForm("username")}
                 suggest={usernameSuggest}
@@ -203,9 +203,9 @@ const ProfileForm = ({ token }: Props) => {
                 id="password"
                 type="password"
                 value={secondInput.password}
-                onChange={(val: string) => secondValueChange("password", val)}
+                onChange={(val: string) => secondValueChange('password', val)}
                 error={formError.password}
-                onBlur={() => validateSecondForm("username")}
+                onBlur={() => validateSecondForm('username')}
               />
 
               <InputWithLabel
@@ -214,10 +214,10 @@ const ProfileForm = ({ token }: Props) => {
                 id="confirm_password"
                 value={secondInput.confirmPassword}
                 onChange={(val: string) =>
-                  secondValueChange("confirmPassword", val)
+                  secondValueChange('confirmPassword', val)
                 }
                 error={formError.confirmPassword}
-                onBlur={() => validateSecondForm("username")}
+                onBlur={() => validateSecondForm('username')}
               />
             </>
           )}
@@ -233,8 +233,8 @@ const ProfileForm = ({ token }: Props) => {
               />
             )}
             <Button
-              text={formNumber === 1 ? "Next" : "Register"}
-              type={formNumber === 1 ? "button" : "submit"}
+              text={formNumber === 1 ? 'Next' : 'Register'}
+              type={formNumber === 1 ? 'button' : 'submit'}
               onClick={() => formNumber === 1 && changeForm(2)}
               isLoading={loading}
               disabled={loading}
@@ -243,7 +243,7 @@ const ProfileForm = ({ token }: Props) => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProfileForm
+export default ProfileForm;

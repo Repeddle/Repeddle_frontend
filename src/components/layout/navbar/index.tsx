@@ -1,78 +1,78 @@
-import { useEffect, useRef, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { FaBell } from "react-icons/fa"
-import IconsTooltips from "../../IconsTooltips"
-import SearchBox from "../../SearchBox"
-import MessageIcon from "../../../assets/icons/MessageIcon.svg"
-import CartIcon from "../../../assets/icons/CartIcon.svg"
-import TopBar from "./TopBar"
-import useAuth from "../../../hooks/useAuth"
-import useTheme from "../../../hooks/useTheme"
-import BarCategories from "./BarCategories"
-import NotificationList from "./NotificationList"
-import LoggedInBar from "./LoggedInBar"
-import useCart from "../../../hooks/useCart"
+import { useEffect, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { FaBell } from 'react-icons/fa';
+import IconsTooltips from '../../IconsTooltips';
+import SearchBox from '../../SearchBox';
+import MessageIcon from '../../../assets/icons/MessageIcon.svg';
+import CartIcon from '../../../assets/icons/CartIcon.svg';
+import TopBar from './TopBar';
+import useAuth from '../../../hooks/useAuth';
+import useTheme from '../../../hooks/useTheme';
+import BarCategories from './BarCategories';
+import NotificationList from './NotificationList';
+import LoggedInBar from './LoggedInBar';
+import useCart from '../../../hooks/useCart';
 
 function Navbar() {
-  const modelRef2 = useRef(null)
+  const modelRef2 = useRef(null);
   // useEffect(() => {
   //   setmodelRef1(modelRef.current);
   //   setmodelRef2(modelRef2.current);
   // }, []);
 
-  const { isDarkMode } = useTheme()
-  const { user } = useAuth()
-  const { cart } = useCart()
+  const { isDarkMode } = useTheme();
+  const { user } = useAuth();
+  const { cart } = useCart();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const [isVisible, setIsVisible] = useState(true)
-  const [prevScrollPos, setPrevScrollPos] = useState(0)
+  const [isVisible, setIsVisible] = useState(true);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollPos = window.scrollY
-      const isScrollingUp = currentScrollPos < prevScrollPos
+      const currentScrollPos = window.scrollY;
+      const isScrollingUp = currentScrollPos < prevScrollPos;
 
       // Adjust the scroll threshold (72px) as needed
-      const scrollThreshold = 72
+      const scrollThreshold = 72;
 
       if (
         isScrollingUp ||
         currentScrollPos <= scrollThreshold ||
         currentScrollPos === 0
       ) {
-        setIsVisible(true)
+        setIsVisible(true);
       } else {
-        setIsVisible(false)
+        setIsVisible(false);
       }
 
-      setPrevScrollPos(currentScrollPos)
-    }
+      setPrevScrollPos(currentScrollPos);
+    };
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [prevScrollPos])
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [prevScrollPos]);
 
-  const notifications: unknown[] = []
-  const allNotification: unknown[] = []
-  const messageNotification: unknown[] = []
+  const notifications: unknown[] = [];
+  const allNotification: unknown[] = [];
+  const messageNotification: unknown[] = [];
 
-  const purchaseNotification: unknown[] = []
-  const productNotification: unknown[] = []
-  const soldNotification: unknown[] = []
-  const menu = false
+  const purchaseNotification: unknown[] = [];
+  const productNotification: unknown[] = [];
+  const soldNotification: unknown[] = [];
+  const menu = false;
 
-  const showNotification = false
+  const showNotification = false;
 
   return (
     <>
       <div
         className={`fixed lg:relative transition-transform duration-[0.3s] ease-[ease-in-out] z-50 mb-0 left-0 top-0 w-full lg:mb-5 dark:bg-dark-ev1 bg-light-ev1
-       ${isVisible ? "translate-y-0" : "-translate-y-full"}`}
+       ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}
       >
         <TopBar />
 
@@ -83,8 +83,8 @@ function Navbar() {
                 className="w-4/5"
                 src={
                   isDarkMode
-                    ? "https://res.cloudinary.com/emirace/image/upload/v1661147636/Logo_White_3_ii3edm.gif"
-                    : "https://res.cloudinary.com/emirace/image/upload/v1661147778/Logo_Black_1_ampttc.gif"
+                    ? 'https://res.cloudinary.com/emirace/image/upload/v1661147636/Logo_White_3_ii3edm.gif'
+                    : 'https://res.cloudinary.com/emirace/image/upload/v1661147778/Logo_Black_1_ampttc.gif'
                 }
               />
             </Link>
@@ -113,7 +113,6 @@ function Navbar() {
                 )}
               </Link>
             </div>
-
             <div className="text-xl relative mx-2.5 my-0 hover:text-orange-color hidden lg:block group">
               <div
                 onClick={() => {
@@ -143,7 +142,6 @@ function Navbar() {
                 <NotificationList notifications={notifications} />
               )}
             </div>
-
             <div className="text-xl group relative px-2.5 py-0 hover:text-orange-color">
               <Link to="/cart">
                 <img src={CartIcon} alt="cart" className="h-[25px] w-[25px]" />
@@ -159,13 +157,12 @@ function Navbar() {
                 )}
               </Link>
             </div>
-
             {user && (
               <div className="text-xl relative hidden px-2.5 py-0 hover:text-orange-color">
                 <FaBell
                   className="text-malon-color cursor-pointer mt-[10px]"
                   size={20}
-                  onClick={() => navigate("/notifications")}
+                  onClick={() => navigate('/notifications')}
                 />
                 {allNotification.length > 0 && (
                   <span className="w-3 h-3 flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-0 top-0 bg-orange-color">
@@ -174,7 +171,7 @@ function Navbar() {
                 )}
               </div>
             )}
-
+            fFaArrowLeftLong
             {user ? (
               <LoggedInBar
                 user={user}
@@ -185,7 +182,9 @@ function Navbar() {
               />
             ) : (
               <div className="text-sm cursor-pointer ml-5 dark:text-white hover:text-orange-color hidden lg:block">
-                <Link to="auth/login">SIGN IN / SIGN UP</Link>
+                <Link to="auth/login" className="whitespace-nowrap">
+                  SIGN IN / SIGN UP
+                </Link>
               </div>
             )}
           </div>
@@ -195,7 +194,7 @@ function Navbar() {
       </div>
       <div className="block lg:hidden h-[72px]" />
     </>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

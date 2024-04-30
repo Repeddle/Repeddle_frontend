@@ -1,40 +1,57 @@
-import { FaArrowLeftLong } from "react-icons/fa6"
-import { Link, useNavigate, useSearchParams } from "react-router-dom"
-import LoadingPage from "../../../components/ui/LoadingPage"
-import useAuth from "../../../hooks/useAuth"
-import useToastNotification from "../../../hooks/useToastNotification"
-import { useEffect, useMemo, useState } from "react"
-import ProfileForm from "../../../section/auth/ProfileForm"
+import { FaArrowLeftLong } from 'react-icons/fa6';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import LoadingPage from '../../../components/ui/LoadingPage';
+import useAuth from '../../../hooks/useAuth';
+import useToastNotification from '../../../hooks/useToastNotification';
+import { useEffect, useMemo, useState } from 'react';
+import ProfileForm from '../../../section/auth/ProfileForm';
 
 function Verify() {
-  const navigate = useNavigate()
-  const { loading, error, verifyEmail } = useAuth()
-  const { addNotification } = useToastNotification()
+  const navigate = useNavigate();
+  const { error, verifyEmail } = useAuth();
+  const { addNotification } = useToastNotification();
+  const [loading, setLoading] = useState(true);
+  const [verifyError, setVerifyError] = useState('');
 
-  const [searchParam] = useSearchParams()
-  const token = useMemo(() => searchParam.get("token"), [searchParam])
+  const [searchParam] = useSearchParams();
+  const token = useMemo(() => searchParam.get('token'), [searchParam]);
 
-  const [tokenValidated, setTokenValidated] = useState(true)
+  const [tokenValidated, setTokenValidated] = useState(true);
 
   useEffect(() => {
     const verifyToken = async () => {
+      setLoading(true);
       if (token) {
-        const val = await verifyEmail({ token })
+        const val = await verifyEmail({ token });
         if (val) {
-          setTokenValidated(true)
+          setTokenValidated(true);
+          setLoading(true);
         } else {
-          addNotification(error ?? "An error occurred")
+          setVerifyError(error ?? 'An error occurred');
         }
+        setLoading(false);
       }
-    }
+    };
     if (!tokenValidated) {
-      verifyToken()
+      verifyToken();
     }
-  }, [addNotification, error, token, tokenValidated, verifyEmail])
+  }, [addNotification, error, token, tokenValidated, verifyEmail]);
+
+  if (!loading && !token) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        No token
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>;
+  }
 
   return (
     <>
-      {!tokenValidated && loading && <LoadingPage />}
+      {!tokenValidated && <LoadingPage />}
 
       {tokenValidated && (
         <div className="flex relative flex-col lg:flex-row bg-white-color dark:bg-black-color h-screen">
@@ -43,7 +60,7 @@ function Verify() {
               onClick={() => navigate(-1)}
               className="text-black lg:text-white text-base lg:text-xl cursor-pointer"
             />
-            <Link to={"/"} className="h-8 sm:h-10 cursor-pointer">
+            <Link to={'/'} className="h-8 sm:h-10 cursor-pointer">
               <img src="/images/logo/logo.png" alt="logo" className="h-full" />
             </Link>
           </div>
@@ -55,12 +72,12 @@ function Verify() {
             />
           </div>
           <div className="flex-[3] lg:flex-1 p-4 lg:p-8">
-            {token && <ProfileForm token={token} />}
+            {<ProfileForm token={token} />}
           </div>
         </div>
       )}
     </>
-  )
+  );
 }
 
-export default Verify
+export default Verify;

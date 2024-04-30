@@ -1,8 +1,8 @@
-import { Link, useNavigate } from "react-router-dom"
-import { FaArrowLeftLong } from "react-icons/fa6"
-import RegisterComp from "../../../section/auth/RegisterComp"
-import { useState } from "react"
-import SmallModel from "../../../components/SmallModel"
+import { Link, useNavigate } from 'react-router-dom';
+import { FaArrowLeftLong } from 'react-icons/fa6';
+import RegisterComp from '../../../section/auth/RegisterComp';
+import { useState } from 'react';
+import Modal from '../../../components/ui/Modal';
 
 function Register() {
   const navigate = useNavigate()
@@ -16,7 +16,7 @@ function Register() {
             onClick={() => navigate(-1)}
             className="text-black lg:text-white text-base lg:text-xl cursor-pointer"
           />
-          <Link to={"/"} className="h-8 sm:h-10 cursor-pointer">
+          <Link to={'/'} className="h-8 sm:h-10 cursor-pointer">
             <img src="/images/logo/logo.png" alt="logo" className="h-full" />
           </Link>
         </div>
@@ -31,18 +31,18 @@ function Register() {
           <RegisterComp showModal={setShowModal} />
         </div>
       </div>
-
-      <SmallModel setShowModel={setShowModal} showModel={showModal}>
-        <div className="bg-white h-full pt-4 px-8 py-6 rounded-lg flex flex-col gap-2">
+      {/* TODO: modal  */}
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+         <div className="bg-white h-full pt-4 px-8 py-6 rounded-lg flex flex-col gap-2">
           <h1 className="text-3xl">Verification Sent</h1>
           <div className="max-w-md">
             A verification email has been sent to your email. Use it to complete
             your registration
           </div>
         </div>
-      </SmallModel>
+      </Modal>
     </>
-  )
+  );
 }
 
-export default Register
+export default Register;
