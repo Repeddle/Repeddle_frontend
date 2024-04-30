@@ -8,7 +8,7 @@ type Props = {
   selectedItem: string
   all: SearchOptionsObject
   allText: string
-  list: { name: string; id: string }[]
+  list: { name: string; _id: string }[]
 }
 
 const SearchDropDown = ({
@@ -49,7 +49,7 @@ const SearchDropDown = ({
         {list.length > 0 &&
           list.map((c) => (
             <div
-              key={c.id}
+              key={c._id}
               onClick={() => changeParam(c.name)}
               className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
             dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3

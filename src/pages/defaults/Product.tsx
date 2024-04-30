@@ -72,6 +72,7 @@ const Product = () => {
       ...product,
       quantity: 1,
       selectedSize: selectSize,
+      deliverySelect: {},
       // selectedColor?: string;
     })
   }
@@ -80,9 +81,7 @@ const Product = () => {
     return !!(
       user &&
       user.saved &&
-      // TODO:
-      // user.saved.find((x) => x._id === product._id))
-      user.saved.find((x) => x === product._id)
+      user.saved.find((x) => x._id === product._id)
     )
   }, [user])
 

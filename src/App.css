@@ -5,15 +5,14 @@
   font-style: normal;
 }
 @font-face {
-  font-family: 'AbsentiaSans';
-  src: url(/fonts/AbsentiaSansMedium.ttf) format('truetype');
-
+  font-family: "AbsentiaSans";
+  src: url(/fonts/AbsentiaSansMedium.ttf) format("truetype");
   font-weight: 500;
   font-style: normal;
 }
 @font-face {
-  font-family: 'AbsentiaSans';
-  src: url(/fonts/AbsentiaSansRegular.ttf) format('truetype');
+  font-family: "AbsentiaSans";
+  src: url(/fonts/AbsentiaSansRegular.ttf) format("truetype");
   font-weight: 400;
   font-style: normal;
 }
@@ -34,7 +33,7 @@
   padding: 0;
   box-sizing: border-box;
 
-  font-family: 'ChronicleText', 'AbsentiaSans', sans-serif;
+  font-family: "ChronicleText", "AbsentiaSans", sans-serif;
 }
 
 body {
@@ -44,7 +43,7 @@ h2,
 h1,
 h3,
 h4 {
-  font-family: 'Absentiasans';
+  font-family: "Absentiasans";
 }
 
 .responsive {
@@ -123,6 +122,15 @@ h4 {
 
 .filter-inherit {
   filter: inherit;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes slideh {
