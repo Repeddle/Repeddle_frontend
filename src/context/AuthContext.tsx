@@ -14,6 +14,7 @@ import {
   updateUserService,
   verifyEmailService,
   resetUserPasswordService,
+  getSuggestUsernameService,
 } from "../services/auth"
 import { IUser, UpdateFields } from "../types/user"
 
@@ -47,6 +48,11 @@ export const AuthContext = createContext<{
   logout: () => void
   deleteUser: (id: string) => Promise<boolean | null>
   resetPassword: (password: string, token: string) => Promise<boolean>
+  getSuggestUsername: (body: {
+    firstName: string
+    lastName: string
+    otherText?: string
+  }) => Promise<string[]>
 } | null>(null)
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
@@ -141,6 +147,21 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     } catch (error) {
       handleError(error)
       return false
+    }
+  }
+
+  const getSuggestUsername = async (body: {
+    firstName: string
+    lastName: string
+    otherText?: string
+  }) => {
+    try {
+      const response = await getSuggestUsernameService(body)
+
+      return response
+    } catch (error) {
+      console.error(error)
+      return []
     }
   }
 
@@ -294,6 +315,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         resetPassword,
         logout,
         deleteUser,
+        getSuggestUsername,
       }}
     >
       {children}

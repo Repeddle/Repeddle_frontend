@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react"
+import { FormEvent, useCallback, useEffect, useState } from "react"
 import Button from "../../components/ui/Button"
 import InputWithLabel from "../../components/ui/InputWithLabel"
 import useAuth from "../../hooks/useAuth"
@@ -9,10 +9,12 @@ type Props = {
 }
 
 const ProfileForm = ({ token }: Props) => {
-  const { registerUser, getUser, error, loading } = useAuth()
+  const { registerUser, getUser, error, loading, getSuggestUsername } =
+    useAuth()
   const { addNotification } = useToastNotification()
 
   const [formNumber, setFormNumber] = useState<1 | 2>(1)
+  const [usernameSuggest, setUsernameSuggest] = useState<string[]>([])
 
   const [firstInput, setFirstInput] = useState({
     firstName: "",
@@ -49,8 +51,8 @@ const ProfileForm = ({ token }: Props) => {
     }
 
     if (
-      val === "firstName" ||
-      (val === "lastName" && firstInput[val].length < 3)
+      (val === "firstName" || val === "lastName") &&
+      firstInput[val].length < 3
     ) {
       setFormError({
         ...formError,
@@ -120,6 +122,26 @@ const ProfileForm = ({ token }: Props) => {
     if (error) addNotification(error)
   }
 
+  const fetchSuggest = useCallback(async () => {
+    const response = await getSuggestUsername({
+      firstName: firstInput.firstName,
+      lastName: firstInput.lastName,
+      otherText: secondInput.username,
+    })
+    setUsernameSuggest(response)
+  }, [
+    firstInput.firstName,
+    firstInput.lastName,
+    getSuggestUsername,
+    secondInput.username,
+  ])
+
+  useEffect(() => {
+    if (formNumber === 2) {
+      fetchSuggest()
+    }
+  }, [fetchSuggest, formNumber])
+
   return (
     <div className="flex h-full w-full justify-center items-center flex-col">
       <div className="w-full max-w-lg flex flex-col gap-6">
@@ -170,6 +192,10 @@ const ProfileForm = ({ token }: Props) => {
                 onChange={(val: string) => secondValueChange("username", val)}
                 error={formError.username}
                 onBlur={() => validateSecondForm("username")}
+                suggest={usernameSuggest}
+                onSuggestClick={(val: string) =>
+                  secondValueChange("username", val)
+                }
               />
 
               <InputWithLabel

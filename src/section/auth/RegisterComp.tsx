@@ -7,7 +7,7 @@ import { emailRegex } from "../../utils/constants"
 import useToastNotification from "../../hooks/useToastNotification"
 
 type Props = {
-  showModal?: () => void
+  showModal?: (val: boolean) => void
 }
 
 const RegisterComp = ({ showModal }: Props) => {
@@ -38,7 +38,8 @@ const RegisterComp = ({ showModal }: Props) => {
       const value = await sendVerifyEmail({ email })
 
       if (value) {
-        showModal?.()
+        showModal?.(true)
+        setEmail("")
       } else {
         addNotification(error ?? "An error occurred")
       }

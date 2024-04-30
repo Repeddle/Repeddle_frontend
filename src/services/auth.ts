@@ -7,9 +7,9 @@ export async function sendVerifyEmailService(userData: {
   email: string
 }): Promise<any> {
   try {
+    const data = await api.post("/users/send-verification-email", userData)
 
-    const data = await api.post('/users/send-verificaton-email', userData);
-
+    console.log(data)
     if (!data.status) {
       const errorMessage = getBackendErrorMessage(data.data)
       throw new Error(errorMessage)
@@ -90,14 +90,14 @@ export async function registerUserService(credentials: {
 
     if (!data.status) {
       const errorMessage = getBackendErrorMessage(data.data)
-      throw new Error("Login failed: " + errorMessage)
+      throw new Error("Registration failed: " + errorMessage)
     }
 
     return data.status
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions
-    console.error("Login error:", error)
+    console.error("Registration error:", error)
 
     const errorMessage = getBackendErrorMessage(error)
 
@@ -144,6 +144,35 @@ export async function getUserService(): Promise<IUser> {
     localStorage.setItem("email", data.user.email)
     localStorage.setItem("username", data.user.username)
     return data.user
+  } catch (error) {
+    // Handle network errors or other exceptions
+    // You can log the error or perform other error-handling actions
+    console.error("Get user error:", getBackendErrorMessage(error))
+
+    // Re-throw the error to propagate it up the call stack if needed
+    throw getBackendErrorMessage(error)
+  }
+}
+
+export async function getSuggestUsernameService(body: {
+  firstName: string
+  lastName: string
+  otherText?: string
+}): Promise<string[]> {
+  try {
+    const data: { status: true; suggestedUsernames: string[] } = await api.post(
+      "/users/suggested-username",
+      body
+    )
+
+    if (!data.status) {
+      // Handle suggests error, e.g., display an error message to the user
+      throw new Error(
+        "Suggest username failed: " + getBackendErrorMessage(data)
+      )
+    }
+
+    return data.suggestedUsernames
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions

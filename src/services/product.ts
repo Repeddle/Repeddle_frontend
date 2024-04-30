@@ -16,9 +16,9 @@ export const fetchProductsService = async (
       url = url + `?${params}`
     }
 
-    const { data, status } = await api.get(url)
+    const data: ProductWithPagination & { status: boolean } = await api.get(url)
 
-    if (!status) {
+    if (!data.status) {
       // Handle Fetch products error, e.g., display an error message to the user
       throw new Error("Fetch products failed: " + getBackendErrorMessage(data))
     }
@@ -38,14 +38,17 @@ export const createProductService = async (
   product: ICreateProduct
 ): Promise<IProduct> => {
   try {
-    const { data, status } = await api.post<IProduct>("/products", product)
+    const data: {
+      status: boolean
+      product: IProduct
+    } = await api.post("/products", product)
 
-    if (!status) {
+    if (!data.status) {
       // Handle Create product error, e.g., display an error message to the user
       throw new Error("Create product failed: " + getBackendErrorMessage(data))
     }
 
-    return data
+    return data.product
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions
@@ -60,14 +63,17 @@ export const fetchProductBySlugService = async (
   slug: string
 ): Promise<IProduct> => {
   try {
-    const { data, status } = await api.get<IProduct>(`/products/${slug}`)
+    const data: {
+      status: boolean
+      product: IProduct
+    } = await api.get(`/products/${slug}`)
 
-    if (!status) {
+    if (!data.status) {
       // Handle Fetch product error, e.g., display an error message to the user
       throw new Error("Fetch product failed: " + getBackendErrorMessage(data))
     }
 
-    return data
+    return data.product
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions
@@ -83,14 +89,17 @@ export const updateProductService = async (
   product: ICreateProduct
 ): Promise<IProduct> => {
   try {
-    const { data, status } = await api.put<IProduct>(`/products/${id}`, product)
+    const data: {
+      status: boolean
+      product: IProduct
+    } = await api.put(`/products/${id}`, product)
 
-    if (!status) {
+    if (!data.status) {
       // Handle Update product error, e.g., display an error message to the user
       throw new Error("Update product failed: " + getBackendErrorMessage(data))
     }
 
-    return data
+    return data.product
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions
@@ -103,9 +112,9 @@ export const updateProductService = async (
 
 export const deleteProductService = async (id: string): Promise<boolean> => {
   try {
-    const { status, data } = await api.delete<IProduct>(`/products/${id}`)
+    const data = await api.delete(`/products/${id}`)
 
-    if (!status) {
+    if (!data.status) {
       // Handle Delete product error, e.g., display an error message to the user
       throw new Error("Delete product failed: " + getBackendErrorMessage(data))
     }
