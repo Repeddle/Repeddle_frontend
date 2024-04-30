@@ -12,6 +12,8 @@ type Props = {
   required?: boolean
   error?: string
   onBlur?: () => void
+  suggest?: string[]
+  onSuggestClick?: (val: string) => void
 }
 
 const InputWithLabel = ({
@@ -25,6 +27,8 @@ const InputWithLabel = ({
   required,
   error,
   onBlur,
+  onSuggestClick,
+  suggest,
 }: Props) => {
   const [switchType, setSwitchType] = useState(type)
 
@@ -57,6 +61,7 @@ const InputWithLabel = ({
           onChange={(e) => onChange && onChange(e.target.value)}
           onBlur={onBlur}
         />
+
         {type === "password" &&
           (switchType === "password" ? (
             <FaEye
@@ -71,6 +76,21 @@ const InputWithLabel = ({
           ))}
       </div>
       {error && <span className="text-sm text-[red]">{error}</span>}
+
+      {suggest?.length && (
+        <div className="flex gap-2 text-sm">
+          <span>Suggestions:</span>
+          {suggest.map((sugg) => (
+            <span
+              className="cursor-pointer hover:text-orange-color hover:underline"
+              key={sugg}
+              onClick={() => onSuggestClick?.(sugg)}
+            >
+              {sugg}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
