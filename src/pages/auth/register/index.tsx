@@ -1,12 +1,12 @@
-import { Link, useNavigate } from "react-router-dom"
-import { FaArrowLeftLong } from "react-icons/fa6"
-import RegisterComp from "../../../section/auth/RegisterComp"
-import { useState } from "react"
-import SmallModel from "../../../components/SmallModel"
+import { Link, useNavigate } from 'react-router-dom';
+import { FaArrowLeftLong } from 'react-icons/fa6';
+import RegisterComp from '../../../section/auth/RegisterComp';
+import { useState } from 'react';
+import Modal from '../../../components/ui/Modal';
 
 function Register() {
-  const navigate = useNavigate()
-  const [showModal, setShowModal] = useState(true)
+  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(true);
 
   return (
     <>
@@ -16,7 +16,7 @@ function Register() {
             onClick={() => navigate(-1)}
             className="text-black lg:text-white text-base lg:text-xl cursor-pointer"
           />
-          <Link to={"/"} className="h-8 sm:h-10 cursor-pointer">
+          <Link to={'/'} className="h-8 sm:h-10 cursor-pointer">
             <img src="/images/logo/logo.png" alt="logo" className="h-full" />
           </Link>
         </div>
@@ -32,11 +32,11 @@ function Register() {
         </div>
       </div>
       {/* TODO: modal  */}
-      <SmallModel setShowModel={setShowModal} showModel={showModal}>
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <div className="bg-white h-full">This is the modal</div>
-      </SmallModel>
+      </Modal>
     </>
-  )
+  );
 }
 
-export default Register
+export default Register;

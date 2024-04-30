@@ -1,27 +1,27 @@
-import InputWithLabel from "../../components/ui/InputWithLabel"
-import Button from "../../components/ui/Button"
-import { FaFacebookF, FaGoogle } from "react-icons/fa"
-import { Link } from "react-router-dom"
-import { FormEvent, useState } from "react"
-import useAuth from "../../hooks/useAuth"
-import useToastNotification from "../../hooks/useToastNotification"
+import InputWithLabel from '../../components/ui/InputWithLabel';
+import Button from '../../components/ui/Button';
+import { FaFacebookF, FaGoogle } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { FormEvent, useState } from 'react';
+import useAuth from '../../hooks/useAuth';
+import useToastNotification from '../../hooks/useToastNotification';
 
 const LoginComp = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const { login, getUser, loading, error } = useAuth()
-  const { addNotification } = useToastNotification()
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { login, getUser, loading, error } = useAuth();
+  const { addNotification } = useToastNotification();
 
   const submitHandler = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const value = await login({ email, password })
+    const value = await login({ email, password });
     if (value) {
-      await getUser()
+      await getUser();
     } else {
-      addNotification(error ?? "An error occurred")
+      addNotification(error ?? 'An error occurred');
     }
-  }
+  };
 
   return (
     <div className="flex h-full bg-white dark:bg-black w-full justify-center items-center flex-col">
@@ -65,12 +65,12 @@ const LoginComp = () => {
           <div className="flex items-center justify-center gap-4">
             <p className="text-center text-black dark:text-white text-sm space-x-0.5">
               <span>New Customer? </span>
-              <a
+              <Link
                 className="text-orange-color active:underline hover:underline"
-                href="/auth/register"
+                to="/auth/register"
               >
                 Create an account
-              </a>
+              </Link>
             </p>
           </div>
         </form>
@@ -86,7 +86,7 @@ const LoginComp = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginComp
+export default LoginComp;
