@@ -5,142 +5,169 @@ import useAuth from "../../hooks/useAuth"
 import useToastNotification from "../../hooks/useToastNotification"
 
 type Props = {
-  token?: string | null;
-};
+  token?: string | null
+}
 
 const ProfileForm = ({ token }: Props) => {
   const { registerUser, getUser, error, loading, getSuggestUsername } =
     useAuth()
   const { addNotification } = useToastNotification()
 
-  const [formNumber, setFormNumber] = useState<1 | 2>(1)
+  const [formNumber, setFormNumber] = useState<1 | 2 | 3>(1)
   const [usernameSuggest, setUsernameSuggest] = useState<string[]>([])
+  // when a user picks a suggested name no need to show suggest
+  const [allowSuggest, setAllowSuggest] = useState(true)
 
   const [firstInput, setFirstInput] = useState({
-    firstName: '',
-    lastName: '',
-    phone: '',
-  });
-  const [secondInput, setSecondInput] = useState({
-    username: '',
-    password: '',
-    confirmPassword: '',
-  });
+    firstName: "",
+    lastName: "",
+    phone: "",
+  })
+  const [username, setUsername] = useState("")
+
+  const [thirdInput, setThirdInput] = useState({
+    password: "",
+    confirmPassword: "",
+  })
 
   const [formError, setFormError] = useState({
-    firstName: '',
-    lastName: '',
-    phone: '',
-    username: '',
-    password: '',
-    confirmPassword: '',
-  });
+    firstName: "",
+    lastName: "",
+    phone: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+  })
 
   const firstValueChange = (key: keyof typeof firstInput, val: string) => {
-    setFirstInput({ ...firstInput, [key]: val });
-  };
+    setFirstInput({ ...firstInput, [key]: val })
+  }
 
-  const secondValueChange = (key: keyof typeof secondInput, val: string) => {
-    setSecondInput({ ...secondInput, [key]: val });
-  };
+  const thirdValueChange = (key: keyof typeof thirdInput, val: string) => {
+    setThirdInput({ ...thirdInput, [key]: val })
+  }
 
   const validateFirstForm = (val: keyof typeof firstInput) => {
-    if (firstInput[val].length === 0) {
-      setFormError({ ...formError, [val]: `${val} is required` });
-      return false;
+    if (val === "firstName" && firstInput["firstName"].length < 3) {
+      setFormError({
+        ...formError,
+        [val]: `First name must be at least 3 characters`,
+      })
+      return false
+    }
+
+    if (val === "lastName" && firstInput["lastName"].length < 3) {
+      setFormError({
+        ...formError,
+        [val]: `Last name must be at least 3 characters`,
+      })
+      return false
+    }
+
+    setFormError({ ...formError, [val]: "" })
+    return true
+  }
+
+  const validateUsername = () => {
+    if (username.length < 3) {
+      setFormError({
+        ...formError,
+        username: `Username must be at least 3 characters`,
+      })
+      return false
+    }
+    setFormError({ ...formError, username: `` })
+    return true
+  }
+
+  const validateSecondForm = (val: keyof typeof thirdInput) => {
+    if (val === "password" && thirdInput.password.length < 6) {
+      setFormError({
+        ...formError,
+        password: "Password must be at least 6 characters",
+      })
+      return false
     }
 
     if (
-      (val === "firstName" || val === "lastName") &&
-      firstInput[val].length < 3
+      val === "confirmPassword" &&
+      thirdInput.password !== thirdInput.confirmPassword
     ) {
       setFormError({
         ...formError,
-        [val]: `${val} must be at least 3 characters`,
-      });
-      return false;
+        confirmPassword: "Confirm password must equal password",
+      })
+      return false
     }
 
-    setFormError({ ...formError, [val]: '' });
-    return true;
-  };
+    setFormError({ ...formError, [val]: "" })
+    return true
+  }
 
-  const validateSecondForm = (val: keyof typeof secondInput) => {
-    if (val === 'username' && secondInput.username.length < 3) {
-      setFormError({
-        ...formError,
-        username: `username must be at least 3 characters`,
-      });
-      return false;
-    }
-
-    if (val === 'password' && secondInput.password.length < 6) {
-      setFormError({
-        ...formError,
-        password: 'password must be at least 6 characters',
-      });
-      return false;
-    }
-
-    if (
-      val === 'confirmPassword' &&
-      secondInput.password !== secondInput.confirmPassword
-    ) {
-      setFormError({
-        ...formError,
-        confirmPassword: 'confirm password must equal password',
-      });
-      return false;
-    }
-
-    setFormError({ ...formError, [val]: '' });
-    return true;
-  };
-
-  const changeForm = (val: 1 | 2) => {
-    if (val === 2) {
+  const nextForm = () => {
+    if (formNumber === 1) {
       // validate first form
       const valid = Object.keys(firstInput).every((input) =>
         validateFirstForm(input as keyof typeof firstInput)
-      );
-      if (valid) setFormNumber(val);
+      )
+      if (valid) setFormNumber((formNumber + 1) as 2 | 1 | 3)
 
-      return;
+      return
     }
-    setFormNumber(1);
-  };
+
+    if (formNumber === 2) {
+      // validate first form
+      const valid = validateUsername()
+      if (valid) setFormNumber((formNumber + 1) as 2 | 1 | 3)
+
+      return
+    }
+  }
+
+  const previousForm = () => {
+    if (formNumber !== 1) {
+      setFormNumber((formNumber - 1) as 2 | 1 | 3)
+    }
+  }
 
   const submitHandler = async (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    if (!token) return addNotification('token not found');
+    // validate password form
+    const valid = Object.keys(thirdInput).every((input) =>
+      validateSecondForm(input as keyof typeof thirdInput)
+    )
 
-    const res = await registerUser({ ...firstInput, ...secondInput, token });
+    if (!valid) return
+
+    if (!token) return addNotification("token not found")
+
+    const res = await registerUser({
+      ...firstInput,
+      ...thirdInput,
+      username,
+      token,
+    })
     if (res) {
-      await getUser();
+      await getUser()
     }
-    if (error) addNotification(error);
-  };
+    if (error) addNotification(error)
+  }
 
   const fetchSuggest = useCallback(async () => {
     const response = await getSuggestUsername({
       firstName: firstInput.firstName,
       lastName: firstInput.lastName,
-      otherText: secondInput.username,
+      otherText: username,
     })
     setUsernameSuggest(response)
-  }, [
-    firstInput.firstName,
-    firstInput.lastName,
-    getSuggestUsername,
-    secondInput.username,
-  ])
+  }, [firstInput.firstName, firstInput.lastName, getSuggestUsername, username])
 
   useEffect(() => {
-    if (formNumber === 2) {
+    if (formNumber === 2 && allowSuggest) {
       fetchSuggest()
     }
-  }, [fetchSuggest, formNumber])
+  }, [allowSuggest, fetchSuggest, formNumber])
 
   return (
     <div className="flex h-full w-full justify-center items-center flex-col">
@@ -154,9 +181,9 @@ const ProfileForm = ({ token }: Props) => {
                 id="first_name"
                 placeholder="First name"
                 value={firstInput.firstName}
-                onChange={(val: string) => firstValueChange('firstName', val)}
+                onChange={(val: string) => firstValueChange("firstName", val)}
                 error={formError.firstName}
-                onBlur={() => validateFirstForm('firstName')}
+                onBlur={() => validateFirstForm("firstName")}
               />
 
               <InputWithLabel
@@ -164,9 +191,9 @@ const ProfileForm = ({ token }: Props) => {
                 id="last_name"
                 placeholder="Last Name"
                 value={firstInput.lastName}
-                onChange={(val: string) => firstValueChange('lastName', val)}
+                onChange={(val: string) => firstValueChange("lastName", val)}
                 error={formError.lastName}
-                onBlur={() => validateFirstForm('lastName')}
+                onBlur={() => validateFirstForm("lastName")}
               />
 
               <InputWithLabel
@@ -175,75 +202,92 @@ const ProfileForm = ({ token }: Props) => {
                 id="phone"
                 placeholder="Phone Number"
                 value={firstInput.phone}
-                onChange={(val: string) => firstValueChange('phone', val)}
+                onChange={(val: string) => firstValueChange("phone", val)}
                 error={formError.phone}
-                onBlur={() => validateFirstForm('phone')}
+                onBlur={() => validateFirstForm("phone")}
               />
             </>
           )}
 
           {formNumber === 2 && (
-            <>
-              <InputWithLabel
-                label="Username"
-                id="username"
-                placeholder="username"
-                value={secondInput.username}
-                onChange={(val: string) => secondValueChange('username', val)}
-                error={formError.username}
-                onBlur={() => validateSecondForm("username")}
-                suggest={usernameSuggest}
-                onSuggestClick={(val: string) =>
-                  secondValueChange("username", val)
-                }
-              />
+            <InputWithLabel
+              label="Username"
+              id="username"
+              placeholder="username"
+              value={username}
+              onChange={(val: string) => {
+                setUsername(val)
+                !allowSuggest && setAllowSuggest(true)
+              }}
+              error={formError.username}
+              // onBlur={validateUsername}
+              suggest={allowSuggest ? usernameSuggest : undefined}
+              onSuggestClick={(val: string) => {
+                setUsername(val)
+                setAllowSuggest(false)
+              }}
+            />
+          )}
 
+          {formNumber === 3 && (
+            <>
               <InputWithLabel
                 label="Password"
                 id="password"
                 type="password"
-                value={secondInput.password}
-                onChange={(val: string) => secondValueChange('password', val)}
+                value={thirdInput.password}
+                onChange={(val: string) => thirdValueChange("password", val)}
                 error={formError.password}
-                onBlur={() => validateSecondForm('username')}
+                onBlur={() => validateSecondForm("password")}
               />
 
               <InputWithLabel
                 label="Confirm Password"
                 type="password"
                 id="confirm_password"
-                value={secondInput.confirmPassword}
+                value={thirdInput.confirmPassword}
                 onChange={(val: string) =>
-                  secondValueChange('confirmPassword', val)
+                  thirdValueChange("confirmPassword", val)
                 }
                 error={formError.confirmPassword}
-                onBlur={() => validateSecondForm('username')}
+                onBlur={() => validateSecondForm("confirmPassword")}
               />
             </>
           )}
 
           <div className="mt-5 flex justify-between">
-            {formNumber === 2 && (
+            {formNumber !== 1 && (
               <Button
                 text="Previous"
                 type="button"
-                onClick={() => changeForm(1)}
+                onClick={() => previousForm()}
+                disabled={loading}
+              />
+            )}
+
+            {formNumber !== 3 && (
+              <Button
+                text={"Next"}
+                type={"button"}
+                onClick={nextForm}
                 isLoading={loading}
                 disabled={loading}
               />
             )}
-            <Button
-              text={formNumber === 1 ? 'Next' : 'Register'}
-              type={formNumber === 1 ? 'button' : 'submit'}
-              onClick={() => formNumber === 1 && changeForm(2)}
-              isLoading={loading}
-              disabled={loading}
-            />
+
+            {formNumber === 3 && (
+              <Button
+                text="Register"
+                type="submit"
+                isLoading={loading}
+                disabled={loading}
+              />
+            )}
           </div>
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProfileForm;
+export default ProfileForm

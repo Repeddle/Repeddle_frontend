@@ -1,18 +1,19 @@
-import { FormEvent, useEffect, useMemo, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
 import InputWithLabel from "../../../components/ui/InputWithLabel"
-import { Link, useSearchParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import Button from "../../../components/ui/Button"
 import useAuth from "../../../hooks/useAuth"
 import useToastNotification from "../../../hooks/useToastNotification"
 import LoadingPage from "../../../components/ui/LoadingPage"
 
 const ResetPassword = () => {
-  const { loading, error, resetPassword, verifyEmail } = useAuth()
+  const { error, resetPassword, verifyEmail } = useAuth()
   const { addNotification } = useToastNotification()
 
-  const [searchParam] = useSearchParams()
-  const token = useMemo(() => searchParam.get("token"), [searchParam])
+  const { token } = useParams()
+  const navigate = useNavigate()
 
+  const [loading, setLoading] = useState(true)
   const [password, setPassword] = useState("")
   const [tokenValidated, setTokenValidated] = useState(true)
   const [confirmPassword, setConfirmPassword] = useState("")
@@ -23,19 +24,19 @@ const ResetPassword = () => {
 
   useEffect(() => {
     const verifyToken = async () => {
+      setLoading(true)
       if (token) {
         const val = await verifyEmail({ token })
         if (val) {
           setTokenValidated(true)
-        } else {
-          addNotification(error ?? "An error occurred")
         }
       }
+      setLoading(false)
     }
     if (!tokenValidated) {
       verifyToken()
     }
-  }, [addNotification, error, token, tokenValidated, verifyEmail])
+  }, [token, tokenValidated])
 
   const validatePassword = () => {
     if (password.length < 6) {
@@ -70,16 +71,29 @@ const ResetPassword = () => {
       const value = await resetPassword(password, token)
 
       if (value) {
-        // Show modal
+        addNotification("Password has been changed")
+        navigate("/auth/login")
       } else {
         addNotification(error ?? "An error occurred")
       }
     }
   }
 
+  if (!loading && !token) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        No token
+      </div>
+    )
+  }
+
+  if (error) {
+    return <div className="text-red-500 text-center mt-[20vh]">{error}</div>
+  }
+
   return (
     <>
-      {!tokenValidated && loading && <LoadingPage />}
+      {!tokenValidated && <LoadingPage />}
 
       {tokenValidated && (
         <div className="flex relative flex-col lg:flex-row bg-white-color dark:bg-black-color h-screen">

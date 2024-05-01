@@ -1,17 +1,14 @@
-import { useSearchParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import LoadingPage from "../../../components/ui/LoadingPage"
 import useAuth from "../../../hooks/useAuth"
-import useToastNotification from "../../../hooks/useToastNotification"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import ProfileForm from "../../../section/auth/ProfileForm"
 
 function Verify() {
   const { error, verifyEmail } = useAuth()
-  const { addNotification } = useToastNotification()
   const [loading, setLoading] = useState(true)
 
-  const [searchParam] = useSearchParams()
-  const token = useMemo(() => searchParam.get("token"), [searchParam])
+  const { token } = useParams()
 
   const [tokenValidated, setTokenValidated] = useState(false)
 
@@ -30,7 +27,7 @@ function Verify() {
     if (!tokenValidated) {
       verifyToken()
     }
-  }, [addNotification, error, token, tokenValidated, verifyEmail])
+  }, [token, tokenValidated])
 
   if (!loading && !token) {
     return (
@@ -41,7 +38,7 @@ function Verify() {
   }
 
   if (error) {
-    return <div className="text-red-500">{error}</div>
+    return <div className="text-red-500 text-center mt-[20vh]">{error}</div>
   }
 
   return (

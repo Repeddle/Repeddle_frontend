@@ -41,6 +41,7 @@ const RegisterComp = ({ showModal }: Props) => {
       if (value) {
         showModal?.(true)
         setEmail("")
+        setFormError("")
       } else {
         addNotification(error ?? "An error occurred")
       }
@@ -60,7 +61,7 @@ const RegisterComp = ({ showModal }: Props) => {
             value={email}
             onChange={setEmail}
             error={formError}
-            onBlur={validateEmail}
+            // onBlur={validateEmail}
           />
 
           <div className="text-center">

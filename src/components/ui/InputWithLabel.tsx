@@ -28,7 +28,7 @@ const InputWithLabel = ({
   error,
   onBlur,
   onSuggestClick,
-  suggest,
+  suggest = [],
 }: Props) => {
   const [switchType, setSwitchType] = useState(type)
 
@@ -77,7 +77,7 @@ const InputWithLabel = ({
       </div>
       {error && <span className="text-sm text-[red]">{error}</span>}
 
-      {suggest?.length && (
+      {suggest.length > 0 && (
         <div className="flex gap-2 text-sm">
           <span>Suggestions:</span>
           {suggest.map((sugg) => (
