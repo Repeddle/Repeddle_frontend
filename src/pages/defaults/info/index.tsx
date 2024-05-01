@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface Article {
   title: string;
@@ -6,20 +7,20 @@ interface Article {
 }
 
 const SupportArticles = () => {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [filteredData, setFilteredData] = useState<Article[]>([]);
 
   const data: Article[] = [
-    { title: 'Buyers Guide', link: '/buyersguide' },
-    { title: 'Re:Bundle', link: '/rebundle' },
-    { title: 'Re:Bundle Simplified', link: '/RebundleSimplify' },
-    { title: 'How To Log A Return', link: '/howtologreturn' },
-    { title: 'Product Condition', link: '/condition' },
-    { title: 'Buyers & Sellers Protection', link: '/buyerprotection' },
-    { title: 'Terms Of Use', link: '/terms' },
-    { title: 'Privacy Policy', link: '/privacypolicy' },
-    { title: 'Cookies Policy', link: '/privacypolicy?cookies' },
-    { title: 'Return & Refund', link: '/returns' },
+    { title: "Buyers Guide", link: "/buyersguide" },
+    { title: "Re:Bundle", link: "/rebundle" },
+    { title: "Re:Bundle Simplified", link: "/RebundleSimplify" },
+    { title: "How To Log A Return", link: "/howtologreturn" },
+    { title: "Product Condition", link: "/condition" },
+    { title: "Buyers & Sellers Protection", link: "/buyerprotection" },
+    { title: "Terms Of Use", link: "/terms" },
+    { title: "Privacy Policy", link: "/privacypolicy" },
+    { title: "Cookies Policy", link: "/privacypolicy?cookies" },
+    { title: "Return & Refund", link: "/returns" },
     // Add all your list items here
   ];
 
@@ -27,7 +28,7 @@ const SupportArticles = () => {
     target: { value: React.SetStateAction<string> };
   }) => {
     setSearch(event.target.value);
-    if (event.target.value === '') {
+    if (event.target.value === "") {
       setFilteredData([]);
     } else {
       const results = data.filter((item) =>
@@ -55,13 +56,13 @@ const SupportArticles = () => {
           {filteredData.length !== 0 && (
             <div className="absolute z-10 bg-gray-100 mt-2 w-full border border-gray-300 rounded-lg overflow-auto max-h-60">
               {filteredData.map((item, idx) => (
-                <a
+                <Link
                   key={idx}
-                  href={item.link}
+                  to={item.link}
                   className="block p-4 hover:bg-gray-200"
                 >
                   {item.title}
-                </a>
+                </Link>
               ))}
             </div>
           )}
@@ -73,19 +74,19 @@ const SupportArticles = () => {
             <h2 className="text-2xl font-medium">BUYER'S KITS</h2>
             <ul className="text-lg">
               <li className="hover:text-orange-300 cursor-pointer text-gray-500">
-                <a href="/buyersguide">Buyers Guide</a>
+                <Link to="/buyersguide">Buyers Guide</Link>
               </li>
               <li className="hover:text-orange-300 cursor-pointer text-gray-500">
-                <a href="/rebundle">Re:Bundle</a>
+                <Link to="/rebundle">Re:Bundle</Link>
               </li>
               <li className="hover:text-orange-300 cursor-pointer text-gray-500">
-                <a href="/RebundleSimplify">Re:Bundle Simplified</a>
+                <Link to="/RebundleSimplify">Re:Bundle Simplified</Link>
               </li>
               <li className="hover:text-orange-300 cursor-pointer text-gray-500">
-                <a href="/howtologreturn">How To Log A Return</a>
+                <Link to="/howtologreturn">How To Log A Return</Link>
               </li>
               <li className="hover:text-orange-300 cursor-pointer text-gray-500">
-                <a href="/condition">Product Condition</a>
+                <Link to="/condition">Product Condition</Link>
               </li>
             </ul>
           </div>
@@ -93,10 +94,10 @@ const SupportArticles = () => {
             <h2 className="text-2xl font-medium">SELLER'S KIT</h2>
             <ul className="text-lg">
               <li className="hover:text-orange-300 cursor-pointer text-gray-500">
-                <a href="/feestructure">Commission Fee Structure</a>
+                <Link to="/feestructure">Commission Fee Structure</Link>
               </li>
               <li className="hover:text-orange-300 cursor-pointer text-gray-500">
-                <a href="/condition">Product Condition</a>
+                <Link to="/condition">Product Condition</Link>
               </li>
             </ul>
           </div>
@@ -104,7 +105,7 @@ const SupportArticles = () => {
             <h2 className="text-2xl font-medium">SAFETY KITS</h2>
             <ul className="text-lg">
               <li className="hover:text-orange-300 cursor-pointer text-slate-500">
-                <a href="/buyerprotection">Buyers & Sellers Protection</a>
+                <Link to="/buyerprotection">Buyers & Sellers Protection</Link>
               </li>
             </ul>
           </div>
@@ -112,16 +113,16 @@ const SupportArticles = () => {
             <h2 className="text-2xl font-medium">LEGAL STUFF</h2>
             <ul className="text-lg">
               <li className="hover:text-orange-300 cursor-pointer text-gray-500">
-                <a href="/terms">Terms Of Use</a>
+                <Link to="/terms">Terms Of Use</Link>
               </li>
               <li className="hover:text-orange-300 cursor-pointer text-gray-500">
-                <a href="/privacypolicy">Privacy Policy</a>
+                <Link to="/privacypolicy">Privacy Policy</Link>
               </li>
               <li className="hover:text-orange-300 cursor-pointer text-gray-500 ">
-                <a href="/privacypolicy?cookies">Cookies Policy</a>
+                <Link to="/privacypolicy?cookies">Cookies Policy</Link>
               </li>
               <li className="hover:text-orange-300 cursor-pointer text-gray-500">
-                <a href="/returns">Return & Refund</a>
+                <Link to="/returns">Return & Refund</Link>
               </li>
             </ul>
           </div>
