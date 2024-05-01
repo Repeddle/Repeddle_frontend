@@ -2,10 +2,10 @@ import moment from "moment"
 import { Link } from "react-router-dom"
 import useAuth from "../../hooks/useAuth"
 import { OrderItem } from "../../types/order"
-import ModelLogin from "../../components/ModelLogin"
 import { useState } from "react"
 import { IUser } from "../../types/user"
 import { daydiff, deliveryNumber } from "../../utils/common"
+import Modal from "../../components/ui/Modal"
 
 type Props = {
   orderItem: OrderItem
@@ -79,7 +79,7 @@ const IsUser = ({
               >
                 Comfirm you have recieved order
               </div>
-              <ModelLogin setShowModel={setAfterAction} showModel={afterAction}>
+              <Modal isOpen={afterAction} onClose={() => setAfterAction(false)}>
                 <div className="flex flex-col justify-center items-center h-full p-2.5">
                   <div className="flex">
                     <div
@@ -108,7 +108,7 @@ const IsUser = ({
                     at this point
                   </div>
                 </div>
-              </ModelLogin>
+              </Modal>
             </>
           )}
         {orderItem.trackingNumber && (

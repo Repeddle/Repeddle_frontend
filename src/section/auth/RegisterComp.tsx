@@ -5,6 +5,7 @@ import { FormEvent, useState } from "react"
 import useAuth from "../../hooks/useAuth"
 import { emailRegex } from "../../utils/constants"
 import useToastNotification from "../../hooks/useToastNotification"
+import { Link } from "react-router-dom"
 
 type Props = {
   showModal?: (val: boolean) => void
@@ -62,6 +63,18 @@ const RegisterComp = ({ showModal }: Props) => {
             onBlur={validateEmail}
           />
 
+          <div className="text-center">
+            By signing up, you are agreeing to our{" "}
+            <Link className="text-orange-color" to="/privacypolicy">
+              privacy policy
+            </Link>{" "}
+            and{" "}
+            <Link className="text-orange-color" to="/terms">
+              terms of use
+            </Link>{" "}
+            .
+          </div>
+
           <Button
             text="Register"
             type="submit"
@@ -72,12 +85,12 @@ const RegisterComp = ({ showModal }: Props) => {
           <div className="flex items-center justify-center gap-4">
             <p className="text-center text-sm space-x-0.5">
               <span>Already have an account?</span>
-              <a
+              <Link
                 className="text-orange-color hover:underline active:underline"
-                href="/auth/login"
+                to="/auth/login"
               >
                 Login
-              </a>
+              </Link>
             </p>
           </div>
         </form>

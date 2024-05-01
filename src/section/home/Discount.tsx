@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 const Discount = () => {
   return (
     <section className="px-0 py-2.5 lg:pt-5 lg:pb-2.5">
@@ -64,14 +66,14 @@ const Discount = () => {
                   </p>
                 </div>
               </div>
-              <a
-                href="/"
+              <Link
+                to="/"
                 className={`text-malon-color inline-block text-sm font-bold relative uppercase ml-[45%] pt-0 pb-[3px] px-0
                 after:content-[""] after:h-0.5 after:absolute after:w-full after:left-0 after:bottom-0 after:bg-orange-color
                 `}
               >
                 Buy Now
-              </a>
+              </Link>
             </div>
           </div>
         </div>

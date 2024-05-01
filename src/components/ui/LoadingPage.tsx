@@ -2,6 +2,7 @@ import useTheme from "../../hooks/useTheme"
 
 const LoadingPage = () => {
   const { isDarkMode } = useTheme()
+
   return (
     <div className="w-screen h-[50vh] flex justify-center items-center z-10">
       <div className="w-full h-full relative z-10 flex justify-center items-center">

@@ -1,7 +1,5 @@
 import { FormEvent, useEffect, useMemo, useState } from "react"
 import InputWithLabel from "../../../components/ui/InputWithLabel"
-import { FaArrowLeftLong } from "react-icons/fa6"
-import { useNavigate } from "react-router"
 import { Link, useSearchParams } from "react-router-dom"
 import Button from "../../../components/ui/Button"
 import useAuth from "../../../hooks/useAuth"
@@ -9,7 +7,6 @@ import useToastNotification from "../../../hooks/useToastNotification"
 import LoadingPage from "../../../components/ui/LoadingPage"
 
 const ResetPassword = () => {
-  const navigate = useNavigate()
   const { loading, error, resetPassword, verifyEmail } = useAuth()
   const { addNotification } = useToastNotification()
 
@@ -86,15 +83,6 @@ const ResetPassword = () => {
 
       {tokenValidated && (
         <div className="flex relative flex-col lg:flex-row bg-white-color dark:bg-black-color h-screen">
-          <div className="absolute flex inset-x-0 top-8 px-6 sm:px-14 sm:top-8 justify-between items-center">
-            <FaArrowLeftLong
-              onClick={() => navigate(-1)}
-              className="text-black lg:text-white text-base lg:text-xl cursor-pointer"
-            />
-            <Link to={"/"} className="h-8 sm:h-10 cursor-pointer">
-              <img src="/images/logo/logo.png" alt="logo" className="h-full" />
-            </Link>
-          </div>
           <div className="flex-1 hidden lg:block overflow-x-hidden">
             <img
               src="/images/auth/jakub-zerdzicki-VfZj-4H5D48-unsplash.jpg"
@@ -137,12 +125,12 @@ const ResetPassword = () => {
                   <div className="flex items-center justify-center gap-4">
                     <p className="text-center text-sm space-x-0.5">
                       <span>Already have an account?</span>
-                      <a
+                      <Link
                         className="text-orange-color hover:underline active:underline"
-                        href="/auth/login"
+                        to="/auth/login"
                       >
                         Login
-                      </a>
+                      </Link>
                     </p>
                   </div>
                 </form>
