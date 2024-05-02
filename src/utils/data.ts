@@ -1,6 +1,6 @@
 import { Order } from "../types/order"
 import { IProduct } from "../types/product"
-import { IUser } from "../types/user"
+import { IUser, UserBalance } from "../types/user"
 
 export const productDetails: IProduct = {
   name: "Summer Shirt",
@@ -400,4 +400,10 @@ export const orderData: Order = {
   deliveryMethod: "gig",
   createdAt: "2023-01-24T08:43:36.887Z",
   deliveredAt: "2023-01-24T08:43:36.887Z",
+}
+
+export const balanceData: UserBalance = {
+  balance: 1234567,
+  currency: "N",
+  userId: user._id,
 }

@@ -443,7 +443,7 @@ const Product = () => {
               )}
 
               <button
-                className="w-full font-[bold] text-lg text-orange-color border-orange-color hover:text-malon-color  hover:border-malon-color uppercase p-[5px] rounded-[10px] border-[0.1rem]"
+                className="w-full font-bold text-lg text-orange-color border-orange-color hover:text-malon-color  hover:border-malon-color uppercase p-[5px] rounded-[10px] border-[0.1rem]"
                 onClick={saveItem}
               >
                 wishlist

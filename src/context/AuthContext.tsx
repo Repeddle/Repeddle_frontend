@@ -17,6 +17,7 @@ import {
   getSuggestUsernameService,
 } from "../services/auth"
 import { IUser, UpdateFields } from "../types/user"
+import { user as userData } from "../utils/data"
 
 interface Props {
   children?: ReactNode
@@ -56,7 +57,7 @@ export const AuthContext = createContext<{
 } | null>(null)
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
-  const [user, setUser] = useState<IUser | null>(null)
+  const [user, setUser] = useState<IUser | null>(userData)
   const [authToken, setAuthToken] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)

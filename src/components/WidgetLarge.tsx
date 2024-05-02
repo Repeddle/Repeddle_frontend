@@ -6,7 +6,7 @@ type Props = {
   refresh?: boolean
 }
 
-const WidgetLarge = (props: Props) => {
+const WidgetLarge = ({}: Props) => {
   const loadingTrans = false
   const transactions: any[] = []
 
