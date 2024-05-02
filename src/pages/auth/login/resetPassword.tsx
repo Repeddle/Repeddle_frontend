@@ -15,7 +15,7 @@ const ResetPassword = () => {
 
   const [loading, setLoading] = useState(true)
   const [password, setPassword] = useState("")
-  const [tokenValidated, setTokenValidated] = useState(true)
+  const [tokenValidated, setTokenValidated] = useState(false)
   const [confirmPassword, setConfirmPassword] = useState("")
   const [formError, setFormError] = useState({
     password: "",
@@ -42,7 +42,7 @@ const ResetPassword = () => {
     if (password.length < 6) {
       setFormError({
         ...formError,
-        password: "password must be at least 6 characters",
+        password: "Password must be at least 6 characters",
       })
       return false
     }
@@ -55,7 +55,7 @@ const ResetPassword = () => {
     if (password !== confirmPassword) {
       setFormError({
         ...formError,
-        confirmPassword: "confirm password must equal password",
+        confirmPassword: "Confirm password must equal password",
       })
       return false
     }
@@ -73,8 +73,6 @@ const ResetPassword = () => {
       if (value) {
         addNotification("Password has been changed")
         navigate("/auth/login")
-      } else {
-        addNotification(error ?? "An error occurred")
       }
     }
   }

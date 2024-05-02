@@ -30,6 +30,7 @@ import Verify from "./pages/auth/register/verify"
 import Articles from "./pages/defaults/articles"
 import ArticleContent from "./pages/defaults/articles/articleContent"
 import ResetPassword from "./pages/auth/login/resetPassword"
+import Wallet from "./pages/protected/Wallet"
 
 const router = createBrowserRouter([
   {
@@ -75,10 +76,17 @@ const router = createBrowserRouter([
         path: "/",
         element: <Protected />,
         children: [
-          { path: "dashboard", element: <Dashboard /> },
           { path: "payment", element: <PaymentMethod /> },
           { path: "placeorder", element: <OrderPreview /> },
           { path: "order/:id", element: <Order /> },
+        ],
+      },
+      {
+        path: "dashboard",
+        element: <Protected />,
+        children: [
+          { path: "", element: <Dashboard /> },
+          { path: "wallet", element: <Wallet /> },
         ],
       },
     ],

@@ -13,6 +13,12 @@ export const productDetails: IProduct = {
     "https://res.cloudinary.com/emirace/image/upload/v1699445220/k6ycrmabw1fgztkmyaai.jpg",
     "https://res.cloudinary.com/emirace/image/upload/v1699445251/ok8e4k7uv97obqkhtmdf.jpg",
   ],
+  buyers: [],
+  costPriceHistory: [],
+  deliveryOption: [],
+  sellingPriceHistory: [],
+  createdAt: "2023-02-19T13:25:59.641Z",
+  updatedAt: "2023-09-15T21:13:45.394Z",
   isAvailable: true,
   likes: [],
   category: "clothing",
@@ -50,6 +56,8 @@ export const productDetails: IProduct = {
     sold: ["654b7a7a8698d309f6f768bc", "654b76048698d309f6f767fd"],
     numReviews: 0,
     badge: false,
+    createdAt: "2023-02-19T13:25:59.641Z",
+    updatedAt: "2023-09-15T21:13:45.394Z",
   },
   sellingPrice: 900,
   costPrice: 900,
@@ -118,6 +126,7 @@ export const user: IUser = {
     state: "Lagos",
     zipcode: 1234,
   },
+  role: "user",
   earnings: 0,
   isVerifiedEmail: true,
   _id: "63cf9a386f44b86e44e3b31e",
@@ -161,6 +170,8 @@ export const user: IUser = {
         sold: [],
         numReviews: 0,
         badge: false,
+        createdAt: "2023-02-19T13:25:59.641Z",
+        updatedAt: "2023-09-15T21:13:45.394Z",
       },
       slug: "massumi-gloss-heels",
       images: [
@@ -226,6 +237,10 @@ export const user: IUser = {
       ],
       isAvailable: true,
       badge: false,
+      buyers: [],
+      costPriceHistory: [],
+      deliveryOption: [],
+      sellingPriceHistory: [],
     },
     {
       _id: "648d662e1829a921a1e15310",
@@ -251,6 +266,8 @@ export const user: IUser = {
         sold: [],
         numReviews: 0,
         badge: false,
+        createdAt: "2023-02-19T13:25:59.641Z",
+        updatedAt: "2023-09-15T21:13:45.394Z",
       },
       slug: "quality-stone-black-jeans-for-men",
 
@@ -319,6 +336,10 @@ export const user: IUser = {
       updatedAt: "2024-02-18T17:15:41.624Z",
       // productId: "648d662e1829a921a1e15310",
       badge: false,
+      buyers: [],
+      costPriceHistory: [],
+      deliveryOption: [],
+      sellingPriceHistory: [],
       viewcount: [
         {
           hashed: "a3dca43a070590f61e0e0cc610863a85",
@@ -365,6 +386,8 @@ export const orderData: Order = {
       onHold: false,
       deliveredAt: "2023-01-24T08:43:36.887Z",
       deliveryStatus: "Delivered",
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       deliverySelect: { cost: 100 },
     },
   ],

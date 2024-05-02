@@ -40,3 +40,10 @@ export const deliveryNumber = (status: string) => {
 
   return deliveryStatusMap[status as keyof typeof deliveryStatusMap] ?? 0
 }
+
+export function getMonday(d: Date) {
+  d = new Date(d)
+  const day = d.getDay(),
+    diff = d.getDate() - day + (day == 0 ? -6 : 1) // adjust when day is sunday
+  return new Date(d.setDate(diff))
+}
