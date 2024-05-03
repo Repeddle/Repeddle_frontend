@@ -1,6 +1,32 @@
+import { BestSeller, Summary, ViewedProducts } from "../types/dashboard"
 import { Order } from "../types/order"
-import { IProduct } from "../types/product"
+import { IProduct, Seller } from "../types/product"
 import { IUser, UserBalance } from "../types/user"
+
+export const seller: Seller = {
+  address: {
+    street: "1 Fagba Street",
+    state: "Lagos",
+    zipcode: 1234,
+  },
+  rebundle: {
+    status: true,
+    count: 1,
+  },
+  _id: "63cf9a386f44b86e44e3b31e",
+  username: "KendoMash",
+  firstName: "Repeddle",
+  lastName: "Nigeria",
+  image:
+    "https://res.cloudinary.com/emirace/image/upload/v1692275468/mcph4bdajocqwg4dnxmz.jpg",
+  email: "repeddleng@gmail.com",
+  followers: ["63cfcd166f44b86e44e3b7e2"],
+  sold: ["654b7a7a8698d309f6f768bc", "654b76048698d309f6f767fd"],
+  numReviews: 0,
+  badge: false,
+  createdAt: "2023-02-19T13:25:59.641Z",
+  updatedAt: "2023-09-15T21:13:45.394Z",
+}
 
 export const productDetails: IProduct = {
   name: "Summer Shirt",
@@ -35,30 +61,7 @@ export const productDetails: IProduct = {
   rating: 0,
   region: "NGN",
   reviews: [],
-  seller: {
-    address: {
-      street: "1 Fagba Street",
-      state: "Lagos",
-      zipcode: 1234,
-    },
-    rebundle: {
-      status: true,
-      count: 1,
-    },
-    _id: "63cf9a386f44b86e44e3b31e",
-    username: "KendoMash",
-    firstName: "Repeddle",
-    lastName: "Nigeria",
-    image:
-      "https://res.cloudinary.com/emirace/image/upload/v1692275468/mcph4bdajocqwg4dnxmz.jpg",
-    email: "repeddleng@gmail.com",
-    followers: ["63cfcd166f44b86e44e3b7e2"],
-    sold: ["654b7a7a8698d309f6f768bc", "654b76048698d309f6f767fd"],
-    numReviews: 0,
-    badge: false,
-    createdAt: "2023-02-19T13:25:59.641Z",
-    updatedAt: "2023-09-15T21:13:45.394Z",
-  },
+  seller: seller,
   sellingPrice: 900,
   costPrice: 900,
   shares: [],
@@ -406,4 +409,99 @@ export const balanceData: UserBalance = {
   balance: 1234567,
   currency: "N",
   userId: user._id,
+}
+
+export const summary: Summary = {
+  users: [
+    {
+      _id: null,
+      numUsers: 25,
+    },
+  ],
+  orders: [
+    {
+      _id: null,
+      numOrders: 81,
+      numSales: 230113,
+    },
+  ],
+  dailyOrders: [],
+  products: [
+    {
+      _id: null,
+      numProducts: 19,
+    },
+  ],
+  productCategories: [
+    {
+      _id: "gifts",
+      count: 1,
+    },
+    {
+      _id: "clothing",
+      count: 11,
+    },
+    {
+      _id: "shoe",
+      count: 1,
+    },
+    {
+      _id: "handbags",
+      count: 1,
+    },
+    {
+      _id: "accessories ",
+      count: 2,
+    },
+    {
+      _id: "shoes ",
+      count: 3,
+    },
+  ],
+  earnings: [
+    {
+      _id: null,
+      numOrders: 63,
+      numSales: 181859,
+    },
+  ],
+}
+
+export const bestSeller: BestSeller = {
+  _id: "640711c93b06321587636b30",
+  score: 1.0603647632639912,
+  numViews: 51,
+  userId: {
+    _id: "63c9cde6b677973f8c09dec8",
+    username: "Emirace",
+    image:
+      "https://res.cloudinary.com/emirace/image/upload/v1675795105/ndksunuy8k2xdsc6wr56.webp",
+    email: "emmanuelakwuba57@gmail.com",
+    sold: [
+      "63e3879fc1128baf474cbe53",
+      "63e3879fc1128baf474cbe53",
+      "63e3879fc1128baf474cbe53",
+    ],
+    earnings: 155240,
+    badge: false,
+  },
+  region: "NGN",
+  createdAt: "2023-03-07T10:28:25.205Z",
+  updatedAt: "2024-02-07T05:31:19.358Z",
+}
+
+export const viewedProduct: ViewedProducts = {
+  _id: "655c6a59a797a1b7439a5066",
+  score: 2.617853113374955,
+  numViews: 19,
+  productId: {
+    _id: "654b77f88698d309f6f7685d",
+    name: "ChocBlack Wristwatch",
+    slug: "chocblack-wristwatch",
+    image:
+      "https://res.cloudinary.com/emirace/image/upload/v1699444464/dexgkghivhgamufbhoow.jpg",
+  },
+  region: "NGN",
+  createdAt: "2023-11-21T08:29:13.055Z",
+  updatedAt: "2024-05-02T20:11:52.030Z",
 }

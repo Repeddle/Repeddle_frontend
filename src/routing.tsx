@@ -31,6 +31,7 @@ import Articles from "./pages/defaults/articles"
 import ArticleContent from "./pages/defaults/articles/articleContent"
 import ResetPassword from "./pages/auth/login/resetPassword"
 import Wallet from "./pages/protected/Wallet"
+import Analytics from "./pages/protected/Analytics"
 
 const router = createBrowserRouter([
   {
@@ -87,6 +88,7 @@ const router = createBrowserRouter([
         children: [
           { path: "", element: <Dashboard /> },
           { path: "wallet", element: <Wallet /> },
+          { path: "analytics", element: <Analytics /> },
         ],
       },
     ],
