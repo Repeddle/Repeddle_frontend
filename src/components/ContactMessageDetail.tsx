@@ -1,8 +1,8 @@
 import MessageImage from "./ui/MessageImage"
-import { IMessage } from "../types/message"
+import { IContactMessage } from "../types/message"
 
 type Props = {
-  message: IMessage
+  message: IContactMessage
   handleClick: (val: string) => void
 }
 

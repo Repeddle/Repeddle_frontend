@@ -11,7 +11,8 @@ import {
 import { PayStackCallback } from "../../types/gateway"
 
 // TODO: ask about this, fetching in one part and in env in another part
-const BASE_KEY = process.env.REACT_APP_FLUTTERWAVE_KEY
+// const BASE_KEY = process.env.REACT_APP_FLUTTERWAVE_KEY
+const BASE_KEY = ""
 
 type Props = {
   setShowModel: (val: boolean) => void

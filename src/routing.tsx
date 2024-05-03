@@ -33,6 +33,7 @@ import ResetPassword from "./pages/auth/login/resetPassword"
 import Wallet from "./pages/protected/Wallet"
 import Analytics from "./pages/protected/Analytics"
 import Contact from "./pages/protected/Contact"
+import NewsletterList from "./pages/protected/NewsletterList"
 
 const router = createBrowserRouter([
   {
@@ -91,6 +92,7 @@ const router = createBrowserRouter([
           { path: "wallet", element: <Wallet /> },
           { path: "analytics", element: <Analytics /> },
           { path: "contact", element: <Contact /> },
+          { path: "newsletter", element: <NewsletterList /> },
         ],
       },
     ],

@@ -3,16 +3,17 @@ import LoadingBox from "../../components/LoadingBox"
 import { FaDotCircle, FaEye } from "react-icons/fa"
 import Modal from "../../components/ui/Modal"
 import ContactMessageDetail from "../../components/ContactMessageDetail"
-import { IMessage } from "../../types/message"
+import { IContactMessage } from "../../types/message"
+import { contactMessage } from "../../utils/data"
 
 const Contact = () => {
   const loading = false
+  const messages = useMemo(() => [contactMessage], [])
 
   const [showModel, setShowModel] = useState(false)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [messages, setMessages] = useState<IMessage[]>([])
   const [currentPage, setCurrentPage] = useState(1)
-  const [selectedMessage, setSelectedMessage] = useState<IMessage | null>(null)
+  const [selectedMessage, setSelectedMessage] =
+    useState<IContactMessage | null>(null)
 
   const messagesPerPage = 20 // You can adjust this number according to your preference.
   const canGoPrev = currentPage > 1
@@ -25,7 +26,7 @@ const Contact = () => {
     return messages.slice(indexOfFirstMessage, indexOfLastMessage)
   }, [currentPage, messages])
 
-  const handleViewDetails = (message: IMessage) => {
+  const handleViewDetails = (message: IContactMessage) => {
     setSelectedMessage(message)
     setShowModel(true)
   }
@@ -86,7 +87,11 @@ const Contact = () => {
             </button>
           </div>
           {selectedMessage && (
-            <Modal onClose={() => setShowModel(false)} isOpen={showModel}>
+            <Modal
+              size="lg"
+              onClose={() => setShowModel(false)}
+              isOpen={showModel}
+            >
               <ContactMessageDetail
                 message={selectedMessage}
                 handleClick={handleClick}

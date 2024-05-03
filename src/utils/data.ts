@@ -1,4 +1,5 @@
 import { BestSeller, Summary, ViewedProducts } from "../types/dashboard"
+import { IContactMessage, IEmailList, INewsletter } from "../types/message"
 import { Order } from "../types/order"
 import { IProduct, Seller } from "../types/product"
 import { IUser, UserBalance } from "../types/user"
@@ -504,4 +505,41 @@ export const viewedProduct: ViewedProducts = {
   region: "NGN",
   createdAt: "2023-11-21T08:29:13.055Z",
   updatedAt: "2024-05-02T20:11:52.030Z",
+}
+
+export const contactMessage: IContactMessage = {
+  _id: "64d779b2af2d96983b4ab467",
+  name: "Jay Cee",
+  email: "justinacomeyi@gmail.com",
+  category: "Feedback",
+  subject: "Test",
+  message: "Another test ",
+  file: "https://res.cloudinary.com/emirace/image/upload/v1691842986/wdpa7xaxwvmlicz4wi2t.jpg",
+  assignTo: "RepeddleZa",
+  createdAt: "2023-08-12T12:23:14.524Z",
+  updatedAt: "2023-08-12T12:24:11.281Z",
+}
+
+export const newsLetterData: INewsletter = {
+  _id: "65d9cf6e08a7136c2a7ef5e0",
+  emailType: "Newsletter",
+  email: "amusatako@gmail.com",
+  isDeleted: false,
+  url: "com",
+  sent: [
+    {
+      emailName: "Congratulation",
+      _id: "65eb00b208a7136c2a7f867c",
+      updatedAt: "2024-03-08T12:12:34.321Z",
+      createdAt: "2024-03-08T12:12:34.321Z",
+    },
+  ],
+  createdAt: "2024-02-24T11:13:50.301Z",
+  updatedAt: "2024-03-08T12:12:34.321Z",
+}
+
+export const emailList: IEmailList = {
+  name: "Hacks on How to Make Your First Repeddle Sale",
+  subject: "Hacks on How to Make Your First Repeddle Sale!",
+  template: "hack",
 }
