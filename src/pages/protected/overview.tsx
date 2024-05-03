@@ -69,7 +69,7 @@ function Overview() {
 
           <div className="hidden items-center px-5 py-0 justify-end">
             <div
-              className="font-medium cursor-pointer border border-malon-color px-2 py-px border-solid hover:bg-malon-color hover:text-white-color"
+              className="font-medium cursor-pointer border border-malon-color px-2 py-px  hover:bg-malon-color hover:text-white-color"
               onClick={() => {
                 setFrom(today.toDate().toString())
                 setTo(moment(today).endOf("day").toDate())
@@ -78,7 +78,7 @@ function Overview() {
               Today
             </div>
             <div
-              className="font-medium cursor-pointer border border-malon-color px-2 py-px border-solid hover:bg-malon-color hover:text-white-color"
+              className="font-medium cursor-pointer border border-malon-color px-2 py-px  hover:bg-malon-color hover:text-white-color"
               onClick={() => {
                 setFrom(getMonday(today.toDate()).toString())
                 setTo(moment(today).endOf("day").toDate())
@@ -87,7 +87,7 @@ function Overview() {
               This Week
             </div>
             <div
-              className="font-medium cursor-pointer border border-malon-color px-2 py-px border-solid hover:bg-malon-color hover:text-white-color"
+              className="font-medium cursor-pointer border border-malon-color px-2 py-px  hover:bg-malon-color hover:text-white-color"
               onClick={() => {
                 setFrom(firstDay.toString())
                 setTo(moment(today).endOf("day").toDate())

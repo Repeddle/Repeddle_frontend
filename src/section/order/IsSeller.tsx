@@ -99,7 +99,7 @@ const IsSeller = ({
               ) : (
                 <div className="flex items-center">
                   <input
-                    className={`border h-10 ml-5 p-2.5 rounded-[0.2rem] border-solid border-[grey] text-black-color
+                    className={`border h-10 ml-5 p-2.5 rounded-[0.2rem]  border-[grey] text-black-color
                     dark:text-white-color focus-visible:outline focus-visible:outline-orange-color`}
                     placeholder="Enter Tracking number"
                     value={waybillNumber}

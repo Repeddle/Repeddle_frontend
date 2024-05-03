@@ -52,7 +52,7 @@ const ProductComment = ({ comments, product }: Props) => {
               <div className="relative my-4">
                 <textarea
                   className={`w-full block text-base font-normal rounded border text-black-color dark:text-white-color
-              min-h-[calc(1.5em_+_0.75rem_+_2px)] h-[calc(3.5rem_+_2px)] leading-tight px-3 py-4 border-solid border-[#a2a3a5]
+              min-h-[calc(1.5em_+_0.75rem_+_2px)] h-[calc(3.5rem_+_2px)] leading-tight px-3 py-4  border-[#a2a3a5]
               bg-none`}
                   style={{
                     transition:

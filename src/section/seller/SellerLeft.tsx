@@ -73,11 +73,11 @@ const SellerLeft = ({ loadingUser, error, user }: Props) => {
               )}
             </Link>
             {isOnlineCon(user._id) ? (
-              <div className="border-orange-color text-orange-color absolute capitalize px-2.5 py-0 rounded-[15px] border-[0.1rem] border-solid right-[30px] top-[30px]">
+              <div className="border-orange-color text-orange-color absolute capitalize px-2.5 py-0 rounded-[15px] border-[0.1rem]  right-[30px] top-[30px]">
                 online
               </div>
             ) : (
-              <div className="border-gray-500 text-gray-500 absolute capitalize px-2.5 py-0 rounded-[15px] border-[0.1rem] border-solid right-[30px] top-[30px]">
+              <div className="border-gray-500 text-gray-500 absolute capitalize px-2.5 py-0 rounded-[15px] border-[0.1rem]  right-[30px] top-[30px]">
                 offline
               </div>
             )}
@@ -152,7 +152,7 @@ const SellerLeft = ({ loadingUser, error, user }: Props) => {
               Message Me
             </button>
             {user.rebundle.status && <RebundlePoster />}
-            <div className="border-t-border-color w-full mt-[5px] px-0 py-[15px] border-t border-solid">
+            <div className="border-t-border-color w-full mt-[5px] px-0 py-[15px] border-t ">
               <div className="flex justify-between mb-2.5">
                 <div className="flex items-center">
                   <FaTag className="mr-2.5 text-[15px]" /> Sold

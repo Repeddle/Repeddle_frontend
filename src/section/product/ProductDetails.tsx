@@ -32,7 +32,7 @@ const ProductDetails = ({ product }: Props) => {
       <div className={`w-full ${openOverview ? "active" : ""} flex flex-col`}>
         <div
           className={`cursor-pointer relative uppercase mb-[5px] before:content-['_'] before:w-2.5 before:h-2.5
-          before:-translate-y-2/4 before:absolute before:border-b before:border-solid before:border-l before:right-5
+          before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
           before:top-2/4  sp_condition_cont ${
             openOverview ? "before:rotate-[134deg]" : "before:-rotate-45"
           }`}
@@ -78,7 +78,7 @@ const ProductDetails = ({ product }: Props) => {
       <div className={`w-full ${openItemDetail ? "active" : ""} flex flex-col`}>
         <div
           className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
-          before:-translate-y-2/4 before:absolute before:border-b before:border-solid before:border-l before:right-5
+          before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
           before:top-2/4  sp_condition_cont ${
             openItemDetail ? "before:rotate-[134deg]" : "before:-rotate-45"
           }`}
@@ -98,7 +98,7 @@ const ProductDetails = ({ product }: Props) => {
         <div className="">
           <div
             className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
-            before:-translate-y-2/4 before:absolute before:border-b before:border-solid before:border-l before:right-5
+            before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
             before:top-2/4 sp_condition_cont ${
               openCondition ? "before:rotate-[134deg]" : "before:-rotate-45"
             }`}
@@ -127,7 +127,7 @@ const ProductDetails = ({ product }: Props) => {
       <div className={`w-full ${openShipping ? "active" : ""} flex flex-col`}>
         <div
           className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
-          before:-translate-y-2/4 before:absolute before:border-b before:border-solid before:border-l before:right-5
+          before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
           before:top-2/4  ${
             openShipping ? "before:rotate-[134deg]" : "before:-rotate-45"
           }`}
@@ -149,7 +149,7 @@ const ProductDetails = ({ product }: Props) => {
         <div className={`w-full ${openFeatures ? "active" : ""} flex flex-col`}>
           <div
             className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
-            before:-translate-y-2/4 before:absolute before:border-b before:border-solid before:border-l before:right-5
+            before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
             before:top-2/4  ${
               openFeatures ? "before:rotate-[134deg]" : "before:-rotate-45"
             }`}
@@ -174,7 +174,7 @@ const ProductDetails = ({ product }: Props) => {
         >
           <div
             className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
-            before:-translate-y-2/4 before:absolute before:border-b before:border-solid before:border-l before:right-5
+            before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
             before:top-2/4  ${
               openSpecifications
                 ? "before:rotate-[134deg]"
