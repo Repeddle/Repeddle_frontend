@@ -1,5 +1,10 @@
 import { BestSeller, Summary, ViewedProducts } from "../types/dashboard"
-import { IContactMessage, IEmailList, INewsletter } from "../types/message"
+import {
+  IBrand,
+  IContactMessage,
+  IEmailList,
+  INewsletter,
+} from "../types/message"
 import { Order } from "../types/order"
 import { IProduct, Seller } from "../types/product"
 import { IUser, UserBalance } from "../types/user"
@@ -543,3 +548,27 @@ export const emailList: IEmailList = {
   subject: "Hacks on How to Make Your First Repeddle Sale!",
   template: "hack",
 }
+
+export const brandsData: IBrand[] = [
+  {
+    _id: "646f2ff52d336ee07ca54b1b",
+    name: "PowerUp",
+    createdAt: "2023-05-25T09:52:53.850Z",
+    updatedAt: "2023-05-30T14:32:55.871Z",
+    isAdded: true,
+  },
+  {
+    _id: "6471c0fe004aaa7f69b38ed9",
+    name: "Zebronics",
+    createdAt: "2023-05-27T08:36:14.006Z",
+    updatedAt: "2023-05-30T14:34:49.583Z",
+    isAdded: true,
+  },
+  {
+    _id: "6472947a004aaa7f69b39aa7",
+    name: "DVF",
+    createdAt: "2023-05-27T23:38:34.255Z",
+    updatedAt: "2023-05-30T14:36:22.875Z",
+    isAdded: true,
+  },
+]

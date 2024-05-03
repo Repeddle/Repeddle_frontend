@@ -34,6 +34,7 @@ import Wallet from "./pages/protected/Wallet"
 import Analytics from "./pages/protected/Analytics"
 import Contact from "./pages/protected/Contact"
 import NewsletterList from "./pages/protected/NewsletterList"
+import OtherBrand from "./pages/protected/OtherBrand"
 
 const router = createBrowserRouter([
   {
@@ -93,6 +94,7 @@ const router = createBrowserRouter([
           { path: "analytics", element: <Analytics /> },
           { path: "contact", element: <Contact /> },
           { path: "newsletter", element: <NewsletterList /> },
+          { path: "otherbrand", element: <OtherBrand /> },
         ],
       },
     ],

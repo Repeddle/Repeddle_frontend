@@ -33,7 +33,10 @@ export type IEmailList = {
   template: string
 }
 
-export type Root = {
-  newsletters: INewsletter[]
-  emailLists: IEmailList[]
+export type IBrand = {
+  _id: string
+  name: string
+  createdAt: string
+  updatedAt: string
+  isAdded: boolean
 }
