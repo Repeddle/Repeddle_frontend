@@ -24,9 +24,16 @@ import Terms from './pages/defaults/info/Terms';
 import Vipshield from './pages/defaults/info/Vipshield';
 import Rebundle from './pages/defaults/info/rebundle';
 import Sustainability from './pages/defaults/info/sustainability';
+import Buyersguide from './pages/defaults/info/Buyersguide';
+import Rebundlesimplified from './pages/defaults/info/Rebundlesimplified';
+import HowToLogAreturn from './pages/defaults/info/HowToLogAreturn';
 import ContactUs from './pages/defaults/ContactUs';
 import Articles from './pages/defaults/articles';
 import ArticleContent from './pages/defaults/articles/articleContent';
+import Condition from './pages/defaults/info/Condition';
+import FeeStructure from './pages/defaults/info/FeeStructure';
+import BuyersProtection from './pages/defaults/info/BuyersProtection';
+import Brand from './pages/defaults/brands/Brand';
 
 const router = createBrowserRouter([
   {
@@ -60,9 +67,16 @@ const router = createBrowserRouter([
           { path: 'rebundle', element: <Rebundle /> },
           { path: 'sustainability', element: <Sustainability /> },
           { path: 'Support-Articles', element: <SupportArticles /> },
+          { path: 'buyersguide', element: <Buyersguide /> },
+          { path: 'condition', element: <Condition /> },
+          { path: 'rebundle-simplified', element: <Rebundlesimplified /> },
+          { path: 'howtologreturn', element: <HowToLogAreturn /> },
           { path: 'articles', element: <Articles /> },
           { path: 'articles/:id', element: <ArticleContent /> },
           { path: 'Contact-Us', element: <ContactUs /> },
+          { path: 'feestructure', element: <FeeStructure /> },
+          { path: 'buyerprotection', element: <BuyersProtection /> },
+          { path: 'brands', element: <Brand /> },
         ],
       },
       {

@@ -12,7 +12,7 @@ const SupportArticles = () => {
   const data: Article[] = [
     { title: 'Buyers Guide', link: '/buyersguide' },
     { title: 'Re:Bundle', link: '/rebundle' },
-    { title: 'Re:Bundle Simplified', link: '/RebundleSimplify' },
+    { title: 'Re:Bundle Simplified', link: '/rebundle-simplified' },
     { title: 'How To Log A Return', link: '/howtologreturn' },
     { title: 'Product Condition', link: '/condition' },
     { title: 'Buyers & Sellers Protection', link: '/buyerprotection' },
@@ -79,7 +79,7 @@ const SupportArticles = () => {
                 <a href="/rebundle">Re:Bundle</a>
               </li>
               <li className="hover:text-orange-300 cursor-pointer text-gray-500">
-                <a href="/RebundleSimplify">Re:Bundle Simplified</a>
+                <a href="/rebundle-simplified">Re:Bundle Simplified</a>
               </li>
               <li className="hover:text-orange-300 cursor-pointer text-gray-500">
                 <a href="/howtologreturn">How To Log A Return</a>
