@@ -1,7 +1,6 @@
 import { IUser } from "./user"
 
-export interface Review {
-  // user: string
+export interface IReview {
   user: IUser
   comment: string
   rating: number
@@ -41,8 +40,8 @@ export interface IProduct {
   material?: string
   description: string
   sizes: ISize[]
-  //   userBuy: any[];
-  //   deliveryOption?: any[];
+  buyers: string[]
+  deliveryOption: DeliveryOption[]
   condition: string
   keyFeatures?: string
   specification?: string
@@ -56,7 +55,7 @@ export interface IProduct {
   reviews: Review[]
   sold?: boolean
   badge?: boolean
-  meta: object
+  meta: Meta
   active?: boolean
   vintage?: boolean
   luxury?: boolean
@@ -64,11 +63,14 @@ export interface IProduct {
   countInStock: number
   region: "NGN" | "ZAR"
   isAvailable: boolean
-  createdAt?: string | Date
-  updatedAt?: string | Date
+  sellingPriceHistory: SellingPriceHistory[]
+  costPriceHistory: CostPriceHistory[]
+  createdAt: string
+  updatedAt: string
 }
 
-// temporary
+export type ProductWithPagination = Pagination & { products: IProduct[] }
+
 export interface Seller {
   address: {
     street: string
@@ -89,6 +91,55 @@ export interface Seller {
   sold: string[]
   numReviews: number
   badge: boolean
-  createdAt?: string | Date
-  updatedAt?: string | Date
+  createdAt: string
+  updatedAt: string
 }
+
+export interface Pagination {
+  totalCount: number
+  currentPage: number
+  totalPages: number
+}
+
+export interface DeliveryOption {}
+
+export interface Review {
+  user: string
+  comment: string
+  rating: number
+  like: string
+}
+
+export interface Meta {}
+
+export interface SellingPriceHistory {
+  value: number
+  updatedAt: string
+}
+
+export interface CostPriceHistory {
+  value: number
+  updatedAt: string
+}
+
+export type ICreateProduct = Omit<
+  IProduct,
+  | "_id"
+  | "seller"
+  | "slug"
+  | "buyers"
+  | "deliveryOption"
+  | "rating"
+  | "likes"
+  | "shares"
+  | "viewcount"
+  | "sold"
+  | "badge"
+  | "active"
+  | "region"
+  | "isAvailable"
+  | "sellingPriceHistory"
+  | "costPriceHistory"
+  | "createdAt"
+  | "updatedAt"
+>

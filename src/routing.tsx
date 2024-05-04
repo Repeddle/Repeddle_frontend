@@ -24,9 +24,6 @@ import Terms from './pages/defaults/info/Terms';
 import Vipshield from './pages/defaults/info/Vipshield';
 import Rebundle from './pages/defaults/info/rebundle';
 import Sustainability from './pages/defaults/info/sustainability';
-import Buyersguide from './pages/defaults/info/Buyersguide';
-import Rebundlesimplified from './pages/defaults/info/Rebundlesimplified';
-import HowToLogAreturn from './pages/defaults/info/HowToLogAreturn';
 import ContactUs from './pages/defaults/ContactUs';
 import Articles from './pages/defaults/articles';
 import ArticleContent from './pages/defaults/articles/articleContent';
@@ -34,6 +31,11 @@ import Condition from './pages/defaults/info/Condition';
 import FeeStructure from './pages/defaults/info/FeeStructure';
 import BuyersProtection from './pages/defaults/info/BuyersProtection';
 import Brand from './pages/defaults/brands/Brand';
+import Verify from './pages/auth/register/verify';
+import ForgetPassword from './pages/auth/login/forgetPassword';
+import HowToLogAreturn from './pages/defaults/info/HowToLogAreturn';
+import Rebundlesimplified from './pages/defaults/info/Rebundlesimplified';
+import Buyersguide from './pages/defaults/info/Buyersguide';
 
 const router = createBrowserRouter([
   {
@@ -45,8 +47,10 @@ const router = createBrowserRouter([
         path: '/auth/',
         element: <Auth />,
         children: [
-          { path: 'login', element: <Login /> },
-          { path: 'register', element: <Register /> },
+          { path: "login", element: <Login /> },
+          { path: "register", element: <Register /> },
+          { path: "verify", element: <Verify /> },
+          { path: "forget-password", element: <ForgetPassword /> },
         ],
       },
       {
