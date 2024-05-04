@@ -105,9 +105,9 @@ const Brand = () => {
 
   return (
     <div className="container mx-auto max-w-7xl px-6 mb-10">
-      <h1 className="font-black text-xl lg:text-5xl text-center">Brands</h1>
+      <h1 className="font-black text-3xl -mb-3 mt-5 lg:text-5xl lg:mt-12 lg:mb-6 text-center">Brands</h1>
 
-      <section className="mt-8 text-center text-xl lg:text-3xl font-extrabold flex flex-wrap justify-center space-x-4 lg:space-x-5">
+      <section className="mt-8 text-center text-xl lg:text-3xl font-extrabold flex flex-wrap justify-center space-x-4 lg:space-x-5 lg:mb-6">
         {[
           "#",
           "A",
@@ -147,7 +147,7 @@ const Brand = () => {
         ))}
       </section>
 
-      <div className="mt-4 flex items-center bg-malon-color rounded-xl p-2 lg:w-9/12 mx-auto">
+      <div className="mt-4 flex items-center bg-malon-color rounded-xl p-2 lg:w-9/12 mx-auto lg:mb-7">
         <FaSearch
           className="text-yellow-400 mr-3 ml-1 cursor-pointer hover:text-black"
           size={25}
