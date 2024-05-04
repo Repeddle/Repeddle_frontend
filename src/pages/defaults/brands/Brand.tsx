@@ -68,6 +68,16 @@ const brands: Brands = {
   brandnumbers,
 };
 
+async function fetchProduct(brandName: string) {
+  // Replace with your actual API endpoint
+  const response = await fetch(`/api/products/${brandName}`);
+  if (!response.ok) {
+    throw new Error(`Error: ${response.statusText}`);
+  }
+  const product = await response.json();
+  return product;
+}
+
 const Brand = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
 
@@ -154,7 +164,9 @@ const Brand = () => {
         <div
           key={brandKey}
           id={
-            brandKey === "brandnumbers" ? "#" : brandKey.charAt(5).toUpperCase()
+            brandKey === "brandnumbers"
+              ? "brandnumbers"
+              : brandKey.charAt(5).toUpperCase()
           }
         >
           <h2 className="font-black text-xl lg:text-3xl bg-gray-300 mb-3 mt-8 p-1 text-center w-60 mx-auto lg:ml-36 items-center justify-center rounded-xl">
@@ -166,7 +178,26 @@ const Brand = () => {
                 key={brandName}
                 className="border border-gray-300 md:border-0 p-2 md:p-0 cursor-pointer hover:text-yellow-500"
               >
-                {brandName}
+                <Link
+                  to={`/product/${brandName}`}
+                  onClick={async (e) => {
+                    try {
+                      const product = await fetchProduct(brandName);
+                      if (!product) {
+                        e.preventDefault();
+                        alert(
+                          "The product you're searching for is not available"
+                        );
+                      }
+                    } catch (error) {
+                      console.error(error);
+                      e.preventDefault();
+                      alert("An error occurred while fetching the product");
+                    }
+                  }}
+                >
+                  {brandName}
+                </Link>
               </div>
             ))}
           </div>
