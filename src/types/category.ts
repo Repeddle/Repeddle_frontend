@@ -11,13 +11,13 @@ export type ICategory = {
 
 export type ISubCategory = {
   name: string
-  items: Item[]
+  items: ISubCategoryItem[]
   isCategory: boolean
   path: string
   _id: string
 }
 
-export type Item = {
+export type ISubCategoryItem = {
   name: string
   isCategory: boolean
   path: string
@@ -29,6 +29,6 @@ export type ICreateCategory = Omit<
   "_id" | "createdAt" | "updatedAt"
 > & {
   subCategories: (Omit<ISubCategory, "_id"> & {
-    items: Omit<Item, "_id">[]
+    items: Omit<ISubCategoryItem, "_id">[]
   })[]
 }

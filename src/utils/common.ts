@@ -1,3 +1,5 @@
+import { saveImageService } from "../services/image"
+
 export const region = () => {
   const add =
     window.location.hostname === "www.repeddle.co.za" ||
@@ -48,14 +50,19 @@ export function getMonday(d: Date) {
   return new Date(d.setDate(diff))
 }
 
-export const compressImageUpload = async (file, maxSize, token, image = "") => {
+export const compressImageUpload = async (
+  file: File,
+  maxSize: number,
+  image = ""
+) => {
   // Create an HTMLImageElement to get the original dimensions of the image
+
   const img = new Image()
   img.src = URL.createObjectURL(file)
   await new Promise((resolve, reject) => {
     img.onload = () => {
       URL.revokeObjectURL(img.src)
-      resolve()
+      resolve(null)
     }
     img.onerror = reject
   })
@@ -76,8 +83,9 @@ export const compressImageUpload = async (file, maxSize, token, image = "") => {
     canvas.width = newWidth
     canvas.height = newHeight
     const ctx = canvas.getContext("2d")
+    if (!ctx) throw new Error("No canvas found")
     ctx.drawImage(img, 0, 0, newWidth, newHeight)
-    const resizedBlob = await new Promise((resolve, reject) => {
+    const resizedBlob: BlobPart = await new Promise((resolve, reject) => {
       canvas.toBlob(
         (blob) => {
           if (blob !== null) {
@@ -98,15 +106,12 @@ export const compressImageUpload = async (file, maxSize, token, image = "") => {
   const formData = new FormData()
   formData.append("file", file)
   image && formData.append("deleteImage", image)
+
   try {
-    const response = await axios.post("/api/upload", formData, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    const data = response.data
-    return data.secure_url
+    const url = await saveImageService(formData)
+    return url
   } catch (error) {
-    // Handle error if the request fails
-    console.error("Error uploading image:", error)
-    throw error
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    throw new Error(error as any)
   }
 }

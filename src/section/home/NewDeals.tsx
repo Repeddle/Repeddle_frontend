@@ -19,13 +19,13 @@ const NewDeals = ({ products }: Props) => {
       </div>
       <button
         // onClick={() => sliderHandler("left")}
-        className="items-center hidden cursor-pointer lg:flex h-full justify-center opacity-50 absolute w-[5vw] z-[8] border-[none] left-0 top-0 bg-transparent"
+        className="items-center hidden cursor-pointer lg:flex h-full justify-center opacity-50 absolute w-[5vw] z-[8] border-none left-0 top-0 bg-transparent"
       >
         <FaAngleLeft size={40} opacity={0.2} />
       </button>
       <button
         // onClick={() => sliderHandler("right")}
-        className="items-center hidden cursor-pointer lg:flex h-full justify-center opacity-50 absolute w-[5vw] z-[8] border-[none] right-0 top-0 bg-transparent"
+        className="items-center hidden cursor-pointer lg:flex h-full justify-center opacity-50 absolute w-[5vw] z-[8] border-none right-0 top-0 bg-transparent"
       >
         <FaAngleRight size={40} opacity={0.2} />
       </button>
