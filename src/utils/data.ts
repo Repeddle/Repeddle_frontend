@@ -1,3 +1,8 @@
+import {
+  ConversationMessage,
+  IConversation,
+  SearchResult,
+} from "../types/conversation"
 import { BestSeller, Summary, ViewedProducts } from "../types/dashboard"
 import {
   IBrand,
@@ -570,5 +575,74 @@ export const brandsData: IBrand[] = [
     createdAt: "2023-05-27T23:38:34.255Z",
     updatedAt: "2023-05-30T14:36:22.875Z",
     isAdded: true,
+  },
+]
+
+export const conversationData: IConversation[] = [
+  {
+    _id: "661f88d708a7136c2a8087e3",
+    members: ["6617e76c08a7136c2a8068be", "63cf9a386f44b86e44e3b31e"],
+    conversationType: "user",
+    needRespond: true,
+    guest: false,
+    canReply: true,
+    createdAt: "2024-04-17T08:31:19.961Z",
+    updatedAt: "2024-04-17T08:31:19.961Z",
+  },
+  {
+    _id: "65d1f47a08a7136c2a7e670b",
+    members: ["63cfcd166f44b86e44e3b7e2", "65c3484c2283460e11345c2f"],
+    conversationType: "product",
+    needRespond: true,
+    productId: "65c7cad12283460e1134fb74",
+    guest: false,
+    canReply: true,
+    createdAt: "2024-02-18T12:13:46.055Z",
+    updatedAt: "2024-03-19T23:23:32.047Z",
+  },
+  {
+    _id: "65f9eb6808a7136c2a7fe50e",
+    members: ["63cfcd166f44b86e44e3b7e2", "63f2164fc1128baf474cd433"],
+    conversationType: "product",
+    needRespond: true,
+    productId: "65bf8cc62283460e1133b94e",
+    guest: false,
+    canReply: true,
+    createdAt: "2024-03-19T19:45:44.165Z",
+    updatedAt: "2024-03-19T19:50:47.792Z",
+  },
+]
+
+export const searchResultData: SearchResult[] = [
+  {
+    image:
+      "https://lh3.googleusercontent.com/a/ACg8ocLAFmHvKz6qAHCL_9XdxO_mwxyTL1Mft1gp0ZmP4GVsSQkZIg=s96-c",
+    username: "anthony_813515",
+    _id: "6617e76c08a7136c2a8068be",
+  },
+]
+
+export const conversationMessageData: ConversationMessage[] = [
+  {
+    _id: "65da1bfc08a7136c2a7f021d",
+    conversationId: "65da1a7508a7136c2a7f014f",
+    sender: "63cf9a386f44b86e44e3b31e",
+    text: "Good day Adamu,\n\nPlease kindly know that o have deleted the Test product you listed as its just a random image which it wouldn't be good image for real users to see. Please should you want to test the site as discussed. Kindly upload a real product. Thanks.",
+    image: "",
+    type: "message",
+    emailMessages: [],
+    createdAt: "2024-02-24T16:40:28.902Z",
+    updatedAt: "2024-02-24T16:40:28.902Z",
+  },
+  {
+    _id: "65da1c2708a7136c2a7f0266",
+    conversationId: "65da1a7508a7136c2a7f014f",
+    sender: "63cf9a386f44b86e44e3b31e",
+    text: "I*",
+    image: "",
+    type: "message",
+    emailMessages: [],
+    createdAt: "2024-02-24T16:41:11.485Z",
+    updatedAt: "2024-02-24T16:41:11.485Z",
   },
 ]

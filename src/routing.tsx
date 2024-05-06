@@ -35,6 +35,7 @@ import Analytics from "./pages/protected/Analytics"
 import Contact from "./pages/protected/Contact"
 import NewsletterList from "./pages/protected/NewsletterList"
 import OtherBrand from "./pages/protected/OtherBrand"
+import Message from "./pages/protected/message"
 
 const router = createBrowserRouter([
   {
@@ -95,6 +96,7 @@ const router = createBrowserRouter([
           { path: "contact", element: <Contact /> },
           { path: "newsletter", element: <NewsletterList /> },
           { path: "otherbrand", element: <OtherBrand /> },
+          { path: "messages", element: <Message /> },
         ],
       },
     ],

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom"
 import MessageImage from "./MessageImage"
 import moment from "moment"
+import { ConversationMessage } from "../../types/conversation"
 
 type Props = {
-  // TODO:
-  message: any
+  message: ConversationMessage
   own: boolean
   support?: boolean
 }
@@ -14,7 +14,7 @@ const createHtmlFromObjects = (objectArray: any[]) => {
     objectArray.map((item, index) => {
       if (item.type === "div") {
         return (
-          <div style={{ marginBottom: "10px" }} key={index}>
+          <div className="mb-2.5" key={index}>
             {item.content}
           </div>
         )
