@@ -1,6 +1,43 @@
+import {
+  ConversationMessage,
+  IConversation,
+  SearchResult,
+} from "../types/conversation"
+import { BestSeller, Summary, ViewedProducts } from "../types/dashboard"
+import {
+  IBrand,
+  IContactMessage,
+  IEmailList,
+  INewsletter,
+} from "../types/message"
 import { Order } from "../types/order"
-import { IProduct } from "../types/product"
-import { IUser } from "../types/user"
+import { IProduct, Seller } from "../types/product"
+import { IUser, UserBalance } from "../types/user"
+
+export const seller: Seller = {
+  address: {
+    street: "1 Fagba Street",
+    state: "Lagos",
+    zipcode: 1234,
+  },
+  rebundle: {
+    status: true,
+    count: 1,
+  },
+  _id: "63cf9a386f44b86e44e3b31e",
+  username: "KendoMash",
+  firstName: "Repeddle",
+  lastName: "Nigeria",
+  image:
+    "https://res.cloudinary.com/emirace/image/upload/v1692275468/mcph4bdajocqwg4dnxmz.jpg",
+  email: "repeddleng@gmail.com",
+  followers: ["63cfcd166f44b86e44e3b7e2"],
+  sold: ["654b7a7a8698d309f6f768bc", "654b76048698d309f6f767fd"],
+  numReviews: 0,
+  badge: false,
+  createdAt: "2023-02-19T13:25:59.641Z",
+  updatedAt: "2023-09-15T21:13:45.394Z",
+}
 
 export const productDetails: IProduct = {
   name: "Summer Shirt",
@@ -13,6 +50,12 @@ export const productDetails: IProduct = {
     "https://res.cloudinary.com/emirace/image/upload/v1699445220/k6ycrmabw1fgztkmyaai.jpg",
     "https://res.cloudinary.com/emirace/image/upload/v1699445251/ok8e4k7uv97obqkhtmdf.jpg",
   ],
+  buyers: [],
+  costPriceHistory: [],
+  deliveryOption: [],
+  sellingPriceHistory: [],
+  createdAt: "2023-02-19T13:25:59.641Z",
+  updatedAt: "2023-09-15T21:13:45.394Z",
   isAvailable: true,
   likes: [],
   category: "clothing",
@@ -29,28 +72,7 @@ export const productDetails: IProduct = {
   rating: 0,
   region: "NGN",
   reviews: [],
-  seller: {
-    address: {
-      street: "1 Fagba Street",
-      state: "Lagos",
-      zipcode: 1234,
-    },
-    rebundle: {
-      status: true,
-      count: 1,
-    },
-    _id: "63cf9a386f44b86e44e3b31e",
-    username: "KendoMash",
-    firstName: "Repeddle",
-    lastName: "Nigeria",
-    image:
-      "https://res.cloudinary.com/emirace/image/upload/v1692275468/mcph4bdajocqwg4dnxmz.jpg",
-    email: "repeddleng@gmail.com",
-    followers: ["63cfcd166f44b86e44e3b7e2"],
-    sold: ["654b7a7a8698d309f6f768bc", "654b76048698d309f6f767fd"],
-    numReviews: 0,
-    badge: false,
-  },
+  seller: seller,
   sellingPrice: 900,
   costPrice: 900,
   shares: [],
@@ -118,6 +140,7 @@ export const user: IUser = {
     state: "Lagos",
     zipcode: 1234,
   },
+  role: "user",
   earnings: 0,
   isVerifiedEmail: true,
   _id: "63cf9a386f44b86e44e3b31e",
@@ -161,6 +184,8 @@ export const user: IUser = {
         sold: [],
         numReviews: 0,
         badge: false,
+        createdAt: "2023-02-19T13:25:59.641Z",
+        updatedAt: "2023-09-15T21:13:45.394Z",
       },
       slug: "massumi-gloss-heels",
       images: [
@@ -226,6 +251,10 @@ export const user: IUser = {
       ],
       isAvailable: true,
       badge: false,
+      buyers: [],
+      costPriceHistory: [],
+      deliveryOption: [],
+      sellingPriceHistory: [],
     },
     {
       _id: "648d662e1829a921a1e15310",
@@ -251,6 +280,8 @@ export const user: IUser = {
         sold: [],
         numReviews: 0,
         badge: false,
+        createdAt: "2023-02-19T13:25:59.641Z",
+        updatedAt: "2023-09-15T21:13:45.394Z",
       },
       slug: "quality-stone-black-jeans-for-men",
 
@@ -319,6 +350,10 @@ export const user: IUser = {
       updatedAt: "2024-02-18T17:15:41.624Z",
       // productId: "648d662e1829a921a1e15310",
       badge: false,
+      buyers: [],
+      costPriceHistory: [],
+      deliveryOption: [],
+      sellingPriceHistory: [],
       viewcount: [
         {
           hashed: "a3dca43a070590f61e0e0cc610863a85",
@@ -365,6 +400,8 @@ export const orderData: Order = {
       onHold: false,
       deliveredAt: "2023-01-24T08:43:36.887Z",
       deliveryStatus: "Delivered",
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
       deliverySelect: { cost: 100 },
     },
   ],
@@ -378,3 +415,234 @@ export const orderData: Order = {
   createdAt: "2023-01-24T08:43:36.887Z",
   deliveredAt: "2023-01-24T08:43:36.887Z",
 }
+
+export const balanceData: UserBalance = {
+  balance: 1234567,
+  currency: "N",
+  userId: user._id,
+}
+
+export const summary: Summary = {
+  users: [
+    {
+      _id: null,
+      numUsers: 25,
+    },
+  ],
+  orders: [
+    {
+      _id: null,
+      numOrders: 81,
+      numSales: 230113,
+    },
+  ],
+  dailyOrders: [],
+  products: [
+    {
+      _id: null,
+      numProducts: 19,
+    },
+  ],
+  productCategories: [
+    {
+      _id: "gifts",
+      count: 1,
+    },
+    {
+      _id: "clothing",
+      count: 11,
+    },
+    {
+      _id: "shoe",
+      count: 1,
+    },
+    {
+      _id: "handbags",
+      count: 1,
+    },
+    {
+      _id: "accessories ",
+      count: 2,
+    },
+    {
+      _id: "shoes ",
+      count: 3,
+    },
+  ],
+  earnings: [
+    {
+      _id: null,
+      numOrders: 63,
+      numSales: 181859,
+    },
+  ],
+}
+
+export const bestSeller: BestSeller = {
+  _id: "640711c93b06321587636b30",
+  score: 1.0603647632639912,
+  numViews: 51,
+  userId: {
+    _id: "63c9cde6b677973f8c09dec8",
+    username: "Emirace",
+    image:
+      "https://res.cloudinary.com/emirace/image/upload/v1675795105/ndksunuy8k2xdsc6wr56.webp",
+    email: "emmanuelakwuba57@gmail.com",
+    sold: [
+      "63e3879fc1128baf474cbe53",
+      "63e3879fc1128baf474cbe53",
+      "63e3879fc1128baf474cbe53",
+    ],
+    earnings: 155240,
+    badge: false,
+  },
+  region: "NGN",
+  createdAt: "2023-03-07T10:28:25.205Z",
+  updatedAt: "2024-02-07T05:31:19.358Z",
+}
+
+export const viewedProduct: ViewedProducts = {
+  _id: "655c6a59a797a1b7439a5066",
+  score: 2.617853113374955,
+  numViews: 19,
+  productId: {
+    _id: "654b77f88698d309f6f7685d",
+    name: "ChocBlack Wristwatch",
+    slug: "chocblack-wristwatch",
+    image:
+      "https://res.cloudinary.com/emirace/image/upload/v1699444464/dexgkghivhgamufbhoow.jpg",
+  },
+  region: "NGN",
+  createdAt: "2023-11-21T08:29:13.055Z",
+  updatedAt: "2024-05-02T20:11:52.030Z",
+}
+
+export const contactMessage: IContactMessage = {
+  _id: "64d779b2af2d96983b4ab467",
+  name: "Jay Cee",
+  email: "justinacomeyi@gmail.com",
+  category: "Feedback",
+  subject: "Test",
+  message: "Another test ",
+  file: "https://res.cloudinary.com/emirace/image/upload/v1691842986/wdpa7xaxwvmlicz4wi2t.jpg",
+  assignTo: "RepeddleZa",
+  createdAt: "2023-08-12T12:23:14.524Z",
+  updatedAt: "2023-08-12T12:24:11.281Z",
+}
+
+export const newsLetterData: INewsletter = {
+  _id: "65d9cf6e08a7136c2a7ef5e0",
+  emailType: "Newsletter",
+  email: "amusatako@gmail.com",
+  isDeleted: false,
+  url: "com",
+  sent: [
+    {
+      emailName: "Congratulation",
+      _id: "65eb00b208a7136c2a7f867c",
+      updatedAt: "2024-03-08T12:12:34.321Z",
+      createdAt: "2024-03-08T12:12:34.321Z",
+    },
+  ],
+  createdAt: "2024-02-24T11:13:50.301Z",
+  updatedAt: "2024-03-08T12:12:34.321Z",
+}
+
+export const emailList: IEmailList = {
+  name: "Hacks on How to Make Your First Repeddle Sale",
+  subject: "Hacks on How to Make Your First Repeddle Sale!",
+  template: "hack",
+}
+
+export const brandsData: IBrand[] = [
+  {
+    _id: "646f2ff52d336ee07ca54b1b",
+    name: "PowerUp",
+    createdAt: "2023-05-25T09:52:53.850Z",
+    updatedAt: "2023-05-30T14:32:55.871Z",
+    isAdded: true,
+  },
+  {
+    _id: "6471c0fe004aaa7f69b38ed9",
+    name: "Zebronics",
+    createdAt: "2023-05-27T08:36:14.006Z",
+    updatedAt: "2023-05-30T14:34:49.583Z",
+    isAdded: true,
+  },
+  {
+    _id: "6472947a004aaa7f69b39aa7",
+    name: "DVF",
+    createdAt: "2023-05-27T23:38:34.255Z",
+    updatedAt: "2023-05-30T14:36:22.875Z",
+    isAdded: true,
+  },
+]
+
+export const conversationData: IConversation[] = [
+  {
+    _id: "661f88d708a7136c2a8087e3",
+    members: ["6617e76c08a7136c2a8068be", "63cf9a386f44b86e44e3b31e"],
+    conversationType: "user",
+    needRespond: true,
+    guest: false,
+    canReply: true,
+    createdAt: "2024-04-17T08:31:19.961Z",
+    updatedAt: "2024-04-17T08:31:19.961Z",
+  },
+  {
+    _id: "65d1f47a08a7136c2a7e670b",
+    members: ["63cfcd166f44b86e44e3b7e2", "65c3484c2283460e11345c2f"],
+    conversationType: "product",
+    needRespond: true,
+    productId: "65c7cad12283460e1134fb74",
+    guest: false,
+    canReply: true,
+    createdAt: "2024-02-18T12:13:46.055Z",
+    updatedAt: "2024-03-19T23:23:32.047Z",
+  },
+  {
+    _id: "65f9eb6808a7136c2a7fe50e",
+    members: ["63cfcd166f44b86e44e3b7e2", "63f2164fc1128baf474cd433"],
+    conversationType: "product",
+    needRespond: true,
+    productId: "65bf8cc62283460e1133b94e",
+    guest: false,
+    canReply: true,
+    createdAt: "2024-03-19T19:45:44.165Z",
+    updatedAt: "2024-03-19T19:50:47.792Z",
+  },
+]
+
+export const searchResultData: SearchResult[] = [
+  {
+    image:
+      "https://lh3.googleusercontent.com/a/ACg8ocLAFmHvKz6qAHCL_9XdxO_mwxyTL1Mft1gp0ZmP4GVsSQkZIg=s96-c",
+    username: "anthony_813515",
+    _id: "6617e76c08a7136c2a8068be",
+  },
+]
+
+export const conversationMessageData: ConversationMessage[] = [
+  {
+    _id: "65da1bfc08a7136c2a7f021d",
+    conversationId: "65da1a7508a7136c2a7f014f",
+    sender: "63cf9a386f44b86e44e3b31e",
+    text: "Good day Adamu,\n\nPlease kindly know that o have deleted the Test product you listed as its just a random image which it wouldn't be good image for real users to see. Please should you want to test the site as discussed. Kindly upload a real product. Thanks.",
+    image: "",
+    type: "message",
+    emailMessages: [],
+    createdAt: "2024-02-24T16:40:28.902Z",
+    updatedAt: "2024-02-24T16:40:28.902Z",
+  },
+  {
+    _id: "65da1c2708a7136c2a7f0266",
+    conversationId: "65da1a7508a7136c2a7f014f",
+    sender: "63cf9a386f44b86e44e3b31e",
+    text: "I*",
+    image: "",
+    type: "message",
+    emailMessages: [],
+    createdAt: "2024-02-24T16:41:11.485Z",
+    updatedAt: "2024-02-24T16:41:11.485Z",
+  },
+]

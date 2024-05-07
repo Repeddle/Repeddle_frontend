@@ -1,34 +1,42 @@
-import Search from './pages/defaults/Search';
-import { createBrowserRouter } from 'react-router-dom';
-import App from './App';
-import ErrorPage from './pages/ErrorPage';
-import Default from './pages/defaults';
-import Home from './pages/defaults/Home';
-import Protected from './pages/protected';
-import Cart from './pages/defaults/Cart';
-import Login from './pages/auth/login';
-import Auth from './pages/auth';
-import Register from './pages/auth/register';
-import Dashboard from './pages/protected/dashboard';
-import About from './pages/defaults/info/About';
-import Returns from './pages/defaults/info/Returns';
-import Sell from './pages/defaults/Sell';
-import Product from './pages/defaults/Product';
-import Seller from './pages/defaults/Seller';
-import PaymentMethod from './pages/protected/PaymentMethod';
-import OrderPreview from './pages/protected/OrderPreview';
-import Order from './pages/protected/Order';
-import PrivacyPolicy from './pages/defaults/info/PrivacyPolicy';
-import Terms from './pages/defaults/info/Terms';
-import Vipshield from './pages/defaults/info/Vipshield';
-import SupportArticles from './pages/defaults/info';
-import ContactUs from './pages/defaults/ContactUs';
-import Sustainability from './pages/defaults/info/sustainability';
-import Rebundle from './pages/defaults/info/rebundle';
-import ForgetPassword from './pages/auth/login/forgetPassword';
-import Verify from './pages/auth/register/verify';
-import Articles from './pages/defaults/articles';
-import ArticleContent from './pages/defaults/articles/articleContent';
+
+import Search from "./pages/defaults/Search"
+import { createBrowserRouter } from "react-router-dom"
+import App from "./App"
+import ErrorPage from "./pages/ErrorPage"
+import Default from "./pages/defaults"
+import Home from "./pages/defaults/Home"
+import Protected from "./pages/protected"
+import Cart from "./pages/defaults/Cart"
+import Login from "./pages/auth/login"
+import Auth from "./pages/auth"
+import Register from "./pages/auth/register"
+import Dashboard from "./pages/protected/overview"
+import About from "./pages/defaults/info/About"
+import Returns from "./pages/defaults/info/Returns"
+import Sell from "./pages/defaults/Sell"
+import Product from "./pages/defaults/Product"
+import Seller from "./pages/defaults/Seller"
+import PaymentMethod from "./pages/protected/PaymentMethod"
+import OrderPreview from "./pages/protected/OrderPreview"
+import Order from "./pages/protected/Order"
+import PrivacyPolicy from "./pages/defaults/info/PrivacyPolicy"
+import Terms from "./pages/defaults/info/Terms"
+import Vipshield from "./pages/defaults/info/Vipshield"
+import SupportArticles from "./pages/defaults/info"
+import ContactUs from "./pages/defaults/ContactUs"
+import Sustainability from "./pages/defaults/info/sustainability"
+import Rebundle from "./pages/defaults/info/rebundle"
+import ForgetPassword from "./pages/auth/login/forgetPassword"
+import Verify from "./pages/auth/register/verify"
+import Articles from "./pages/defaults/articles"
+import ArticleContent from "./pages/defaults/articles/articleContent"
+import ResetPassword from "./pages/auth/login/resetPassword"
+import Wallet from "./pages/protected/Wallet"
+import Analytics from "./pages/protected/Analytics"
+import Contact from "./pages/protected/Contact"
+import NewsletterList from "./pages/protected/NewsletterList"
+import OtherBrand from "./pages/protected/OtherBrand"
+import Message from "./pages/protected/message"
 import Condition from './pages/defaults/info/Condition';
 import FeeStructure from './pages/defaults/info/FeeStructure';
 import BuyersProtection from './pages/defaults/info/BuyersProtection';
@@ -41,22 +49,23 @@ import Buyersguide from './pages/defaults/info/Buyersguide';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: '/auth/',
+        path: "/auth/",
         element: <Auth />,
         children: [
-          { path: 'login', element: <Login /> },
-          { path: 'register', element: <Register /> },
-          { path: 'verify', element: <Verify /> },
-          { path: 'forget-password', element: <ForgetPassword /> },
+          { path: "login", element: <Login /> },
+          { path: "register", element: <Register /> },
+          { path: "verify/:token", element: <Verify /> },
+          { path: "forget-password", element: <ForgetPassword /> },
+          { path: "reset-password/:token", element: <ResetPassword /> },
         ],
       },
       {
-        path: '/',
+        path: "/",
         element: <Default />,
         children: [
           { path: '', element: <Home /> },
@@ -86,17 +95,29 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: '/',
+        path: "/",
         element: <Protected />,
         children: [
-          { path: 'dashboard', element: <Dashboard /> },
-          { path: 'payment', element: <PaymentMethod /> },
-          { path: 'placeorder', element: <OrderPreview /> },
-          { path: 'order/:id', element: <Order /> },
+          { path: "payment", element: <PaymentMethod /> },
+          { path: "placeorder", element: <OrderPreview /> },
+          { path: "order/:id", element: <Order /> },
+        ],
+      },
+      {
+        path: "dashboard",
+        element: <Protected />,
+        children: [
+          { path: "", element: <Dashboard /> },
+          { path: "wallet", element: <Wallet /> },
+          { path: "analytics", element: <Analytics /> },
+          { path: "contact", element: <Contact /> },
+          { path: "newsletter", element: <NewsletterList /> },
+          { path: "otherbrand", element: <OtherBrand /> },
+          { path: "messages", element: <Message /> },
         ],
       },
     ],
   },
-]);
+])
 
-export default router;
+export default router

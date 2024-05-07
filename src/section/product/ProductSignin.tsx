@@ -45,7 +45,7 @@ const ProductSignin = () => {
           Facebook
         </div>
         <div className="w-full relative flex justify-center">
-          <div className="relative uppercase border-orange-color w-[50px] h-[50px] flex justify-center items-center z-[2] m-[15px] rounded-[50%] border-2 border-solid">
+          <div className="relative uppercase border-orange-color w-[50px] h-[50px] flex justify-center items-center z-[2] m-[15px] rounded-[50%] border-2 ">
             or
           </div>
           <div className="absolute w-[500px] h-0.5 z-[1] top-2/4 bg-orange-color" />

@@ -16,14 +16,15 @@ export const fetchProductsService = async (
       url = url + `?${params}`
     }
 
-    const data: ProductWithPagination & { status: boolean } = await api.get(url)
+    const resp: { data: ProductWithPagination; status: boolean } =
+      await api.get(url)
 
-    if (!data.status) {
+    if (!resp.status) {
       // Handle Fetch products error, e.g., display an error message to the user
-      throw new Error("Fetch products failed: " + getBackendErrorMessage(data))
+      throw new Error("Fetch products failed: " + getBackendErrorMessage(resp))
     }
 
-    return data
+    return resp.data
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions

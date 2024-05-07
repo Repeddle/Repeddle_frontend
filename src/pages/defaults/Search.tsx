@@ -244,7 +244,7 @@ const Search = () => {
               <div className="flex gap-2.5 justify-center items-center mt-5">
                 {products.currentPage > 1 && (
                   <p
-                    className="border w-[100px] text-center font-medium p-1 rounded-[0.2rem] border-solid hover:bg-light-ev3 dark:hover:bg-dark-ev2"
+                    className="border w-[100px] text-center font-medium p-1 rounded-[0.2rem]  hover:bg-light-ev3 dark:hover:bg-dark-ev2"
                     onClick={() =>
                       changeParam("page", +(searchParams.get("page") ?? 1) - 1)
                     }
@@ -254,7 +254,7 @@ const Search = () => {
                 )}
                 {products.totalPages > 1 && products.products.length === 40 && (
                   <p
-                    className="border w-[100px] text-center font-medium p-1 rounded-[0.2rem] border-solid hover:bg-light-ev3 dark:hover:bg-dark-ev2"
+                    className="border w-[100px] text-center font-medium p-1 rounded-[0.2rem]  hover:bg-light-ev3 dark:hover:bg-dark-ev2"
                     onClick={() =>
                       changeParam("page", +(searchParams.get("page") ?? 1) + 1)
                     }

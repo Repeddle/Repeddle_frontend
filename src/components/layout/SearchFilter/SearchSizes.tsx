@@ -12,7 +12,7 @@ const SearchSizes = ({ changeParam, selectedSize, sizes }: Props) => {
     <div className="mb-2.5">
       <h4
         className={`text-sm cursor-pointer relative z-[1] after:content-["_"] after:w-2 after:h-2
-        after:-translate-y-2/4 after:absolute after:border-b mb-2 after:border-solid
+        after:-translate-y-2/4 after:absolute after:border-b mb-2 
         after:border-l after:right-5 after:top-2/4 ${
           open ? "after:-rotate-45" : "after:rotate-[135deg]"
         }`}

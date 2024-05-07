@@ -44,7 +44,7 @@ const SellRebatch = () => {
             consignment
           </p>
 
-          <div className="border h-10 w-full items-center flex px-[5px] py-0 rounded-[0.2rem] border-solid">
+          <div className="border h-10 w-full items-center flex px-[5px] py-0 rounded-[0.2rem] ">
             <input
               className="flex-[10] h-full border-0 focus-visible:outline-none dark:bg-black-color bg-white-color text-black-color dark:text-white-color"
               value={input}

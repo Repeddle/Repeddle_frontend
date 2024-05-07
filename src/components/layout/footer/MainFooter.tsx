@@ -86,7 +86,7 @@ const MainFooter = () => {
           <span className="uppercase font-extrabold">Connect with us: </span>
           <span> We're Social, Let's Make It Media:</span>
         </div>
-        <div className="flex justify-center lg:justify-normal p-2.5 lg:p-0 border-y-[grey] lg:border-none border-y border-solid">
+        <div className="flex justify-center lg:justify-normal p-2.5 lg:p-0 border-y-[grey] lg:border-none border-y ">
           <div className="items-center text-white flex h-10 justify-center w-10 mr-5 rounded-[50%]">
             <a href="https://www.facebook.com/Repeddle?mibextid=ZbWKwL">
               <img

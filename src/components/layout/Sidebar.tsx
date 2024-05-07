@@ -1,46 +1,51 @@
 // Sidebar.tsx
-import React from 'react';
+import React from "react"
 import {
   AiOutlineHome,
   AiOutlineArrowRight,
   AiOutlineShopping,
   AiOutlineWallet,
-} from 'react-icons/ai';
-import { NavLink } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
-import useTheme from '../../hooks/useTheme';
-import { BiTransfer } from 'react-icons/bi';
+} from "react-icons/ai"
+import { NavLink } from "react-router-dom"
+import { Link } from "react-router-dom"
+import useAuth from "../../hooks/useAuth"
+import useTheme from "../../hooks/useTheme"
+import { BiTransfer } from "react-icons/bi"
 
 const sidebarLinks = [
-  { path: '/dashboard', text: 'Overview', icon: <AiOutlineHome /> },
   {
-    path: '/dashboard/order',
-    text: 'My Orders',
+    path: "/dashboard",
+    text: "Overview",
+    icon: <AiOutlineHome />,
+    end: true,
+  },
+  {
+    path: "/dashboard/order",
+    text: "My Orders",
     icon: <AiOutlineShopping />,
   },
-  { path: '/dashboard/wallet', text: 'Wallet', icon: <AiOutlineWallet /> },
+  { path: "/dashboard/wallet", text: "Wallet", icon: <AiOutlineWallet /> },
   {
-    path: '/dashboard/transactions',
-    text: 'Transactions',
+    path: "/dashboard/transactions",
+    text: "Transactions",
     icon: <BiTransfer />,
   },
-];
+]
 
 interface SideBarProps {
-  isOpen: boolean;
-  setSidebarOpen: (value: boolean) => void;
+  isOpen: boolean
+  setSidebarOpen: (value: boolean) => void
 }
 
 const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
-  const { user } = useAuth();
-  const { isDarkMode } = useTheme();
+  const { user } = useAuth()
+  const { isDarkMode } = useTheme()
   const sidebarClasses = `fixed inset-y-0 left-0 z-[80] bg-orange-color bg-opacity-10 text-white w-64 h-screen transition-transform transform ${
-    isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
-  }`;
+    isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+  }`
 
   const listItemClasses =
-    'mb-4 text-base hover:bg-orange-color hover:bg-opacity-10 text-malon-color transition-colors duration-300 px-4';
+    "mb-4 text-base hover:bg-orange-color hover:bg-opacity-10 text-malon-color transition-colors duration-300 px-4"
 
   return (
     <div className={sidebarClasses}>
@@ -50,8 +55,8 @@ const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
           <img
             src={
               isDarkMode
-                ? 'https://res.cloudinary.com/emirace/image/upload/v1661147636/Logo_White_3_ii3edm.gif'
-                : 'https://res.cloudinary.com/emirace/image/upload/v1661147778/Logo_Black_1_ampttc.gif'
+                ? "https://res.cloudinary.com/emirace/image/upload/v1661147636/Logo_White_3_ii3edm.gif"
+                : "https://res.cloudinary.com/emirace/image/upload/v1661147778/Logo_Black_1_ampttc.gif"
             }
             alt="logo"
             className="w-3/4"
@@ -72,22 +77,23 @@ const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
                 to={link.path}
                 className={({ isActive }) =>
                   `flex items-center p-2 ${
-                    isActive ? 'text-white bg-orange-color rounded-md' : ''
+                    isActive ? "text-white bg-orange-color rounded-md" : ""
                   }`
                 }
+                end={link.end}
               >
                 {link.icon && <span className="mr-2 text-xl">{link.icon}</span>}
                 {link.text}
               </NavLink>
             </li>
           ))}
-          {user?.role === 'Admin' && (
+          {user?.role === "Admin" && (
             <li
               className={listItemClasses}
               onClick={() => setSidebarOpen(false)}
             >
               <NavLink
-                to={'/admin/dashboard'}
+                to={"/admin/dashboard"}
                 className={`flex items-center justify-center gap-4 font-bold p-2`}
               >
                 Admin Dashboard <AiOutlineArrowRight />
@@ -102,7 +108,7 @@ const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
         <p className="text-xs text-white">© 2024 Repeddle</p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar

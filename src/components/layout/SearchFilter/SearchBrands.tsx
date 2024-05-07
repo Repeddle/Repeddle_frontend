@@ -26,7 +26,7 @@ const SearchBrands = ({
     <div className="mb-2.5">
       <h4
         className={`text-sm cursor-pointer relative z-[1] after:content-["_"] after:w-2 after:h-2
-        after:-translate-y-2/4 after:absolute after:border-b mb-2 after:border-solid
+        after:-translate-y-2/4 after:absolute after:border-b mb-2 
         after:border-l after:right-5 after:top-2/4 ${
           open ? "after:-rotate-45" : "after:rotate-[135deg]"
         }`}
@@ -40,7 +40,7 @@ const SearchBrands = ({
         }`}
       >
         <input
-          className="bg-transparent border border-solid border-malon-color py-[5px] px-[10px] rounded-[0.4rem] mt-[5px] text-black-color dark:text-white-color"
+          className="bg-transparent border  border-malon-color py-[5px] px-[10px] rounded-[0.4rem] mt-[5px] text-black-color dark:text-white-color"
           type="text"
           placeholder="Search brands"
           onChange={handleInput}

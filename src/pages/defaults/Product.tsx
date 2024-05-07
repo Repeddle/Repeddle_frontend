@@ -18,13 +18,13 @@ import ProductSustain from "../../section/product/ProductSustain"
 import ProductTab from "../../section/product/ProductTab"
 import SizeChart from "../../section/product/SizeChart"
 import RebundleLabel from "../../section/product/RebundleLabel"
-import ModelLogin from "../../components/ModelLogin"
 import ReviewLists from "../../components/ReviewLists"
 import RebundlePoster from "../../components/RebundlePoster"
 import ShareModal from "../../section/product/ShareModal"
 import CustomCarousel from "../../section/product/CustomCarousel"
 import ProductSignin from "../../section/product/ProductSignin"
 import RecentlyViewedProducts from "../../section/product/RecentlyViewedProducts"
+import Modal from "../../components/ui/Modal"
 
 const Product = () => {
   const loading = false
@@ -268,9 +268,9 @@ const Product = () => {
                   numReviews={product.seller.numReviews}
                 />
               </div>
-              <ModelLogin showModel={showModel} setShowModel={setShowModel}>
+              <Modal isOpen={showModel} onClose={() => setShowModel(false)}>
                 <ReviewLists setShowModel={setShowModel} />
-              </ModelLogin>
+              </Modal>
 
               <div
                 className="text-white-color text-center cursor-pointer mt-[5px] px-2.5 py-0 rounded-[10px] bg-orange-color"
@@ -333,12 +333,12 @@ const Product = () => {
             </div>
 
             {/* TODO: don't see a way to open this */}
-            <ModelLogin
-              showModel={showLoginModel}
-              setShowModel={setShowLoginModel}
+            <Modal
+              isOpen={showLoginModel}
+              onClose={() => setShowLoginModel(false)}
             >
               <ProductSignin />
-            </ModelLogin>
+            </Modal>
             <div className="relative mr-[30px] flex cursor-pointer text-lg group items-center">
               <FaMessage
                 className="peer hover:text-orange-color"
@@ -443,7 +443,7 @@ const Product = () => {
               )}
 
               <button
-                className="w-full font-[bold] text-lg text-orange-color border-orange-color hover:text-malon-color  hover:border-malon-color uppercase p-[5px] rounded-[10px] border-[0.1rem]"
+                className="w-full font-bold text-lg text-orange-color border-orange-color hover:text-malon-color  hover:border-malon-color uppercase p-[5px] rounded-[10px] border-[0.1rem]"
                 onClick={saveItem}
               >
                 wishlist

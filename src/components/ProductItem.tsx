@@ -2,7 +2,7 @@ import { useMemo, useState } from "react"
 import { IProduct } from "../types/product"
 import { Link } from "react-router-dom"
 import { FaArrowsAlt, FaHeart, FaThumbsUp } from "react-icons/fa"
-import Model from "./Model"
+import Modal from "./ui/Modal"
 
 type Props = {
   product: IProduct
@@ -29,7 +29,7 @@ const ProductItem = ({ product }: Props) => {
       {/* {showNotification && (
         <Notification text="Item added to Cart" buttonText={"Checkout"} />
       )} */}
-      <Model showModel={showModel} setShowModel={setShowModel}>
+      <Modal isOpen={showModel} onClose={() => setShowModel(false)}>
         <div className="flex justify-center h-full">
           <img
             className="w-auto h-full"
@@ -37,7 +37,7 @@ const ProductItem = ({ product }: Props) => {
             alt={product.name}
           />
         </div>
-      </Model>
+      </Modal>
 
       <div className="h-[270px] lg:h-[400px] overflow-hidden relative w-full group">
         <Link to={`/product/${product.slug}`}>

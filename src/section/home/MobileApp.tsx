@@ -1,7 +1,7 @@
 const MobileApp = () => {
   return (
     <div className="rounded-[0.2rem] dark:bg-dark-ev1 bg-light-ev1">
-      <div className="border-b-malon-color lg:border-none lg:flex-row flex-col lg:h-auto h-[400px] overflow-hidden m-0 p-2.5 flex lg:px-20 lg:py-2.5 border-b-[5px] border-solid">
+      <div className="border-b-malon-color lg:border-none lg:flex-row flex-col lg:h-auto h-[400px] overflow-hidden m-0 p-2.5 flex lg:px-20 lg:py-2.5 border-b-[5px] ">
         <div className="flex flex-1 flex-col justify-center lg:p-[5vw] p-2.5">
           <div className="lg:pb-[30px] pb-[15px]">
             <h2 className="text-3xl leading-10 pb-2.5 lg:text-[50px] capitalize lg:pb-5">
