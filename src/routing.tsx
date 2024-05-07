@@ -9,7 +9,7 @@ import Cart from './pages/defaults/Cart';
 import Login from './pages/auth/login';
 import Auth from './pages/auth';
 import Register from './pages/auth/register';
-import Dashboard from './pages/protected/overview';
+import Dashboard from './pages/protected/dashboard';
 import About from './pages/defaults/info/About';
 import Returns from './pages/defaults/info/Returns';
 import Sell from './pages/defaults/Sell';
@@ -29,6 +29,15 @@ import ForgetPassword from './pages/auth/login/forgetPassword';
 import Verify from './pages/auth/register/verify';
 import Articles from './pages/defaults/articles';
 import ArticleContent from './pages/defaults/articles/articleContent';
+import Condition from './pages/defaults/info/Condition';
+import FeeStructure from './pages/defaults/info/FeeStructure';
+import BuyersProtection from './pages/defaults/info/BuyersProtection';
+import Brand from './pages/defaults/brands/Brand';
+import Verify from './pages/auth/register/verify';
+import ForgetPassword from './pages/auth/login/forgetPassword';
+import HowToLogAreturn from './pages/defaults/info/HowToLogAreturn';
+import Rebundlesimplified from './pages/defaults/info/Rebundlesimplified';
+import Buyersguide from './pages/defaults/info/Buyersguide';
 
 const router = createBrowserRouter([
   {
@@ -64,9 +73,16 @@ const router = createBrowserRouter([
           { path: 'rebundle', element: <Rebundle /> },
           { path: 'sustainability', element: <Sustainability /> },
           { path: 'Support-Articles', element: <SupportArticles /> },
+          { path: 'buyersguide', element: <Buyersguide /> },
+          { path: 'condition', element: <Condition /> },
+          { path: 'rebundle-simplified', element: <Rebundlesimplified /> },
+          { path: 'howtologreturn', element: <HowToLogAreturn /> },
           { path: 'articles', element: <Articles /> },
           { path: 'articles/:id', element: <ArticleContent /> },
           { path: 'Contact-Us', element: <ContactUs /> },
+          { path: 'feestructure', element: <FeeStructure /> },
+          { path: 'buyerprotection', element: <BuyersProtection /> },
+          { path: 'brands', element: <Brand /> },
         ],
       },
       {

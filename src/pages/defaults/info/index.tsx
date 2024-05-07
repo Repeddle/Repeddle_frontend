@@ -11,16 +11,16 @@ const SupportArticles = () => {
   const [filteredData, setFilteredData] = useState<Article[]>([]);
 
   const data: Article[] = [
-    { title: "Buyers Guide", link: "/buyersguide" },
-    { title: "Re:Bundle", link: "/rebundle" },
-    { title: "Re:Bundle Simplified", link: "/RebundleSimplify" },
-    { title: "How To Log A Return", link: "/howtologreturn" },
-    { title: "Product Condition", link: "/condition" },
-    { title: "Buyers & Sellers Protection", link: "/buyerprotection" },
-    { title: "Terms Of Use", link: "/terms" },
-    { title: "Privacy Policy", link: "/privacypolicy" },
-    { title: "Cookies Policy", link: "/privacypolicy?cookies" },
-    { title: "Return & Refund", link: "/returns" },
+    { title: 'Buyers Guide', link: '/buyersguide' },
+    { title: 'Re:Bundle', link: '/rebundle' },
+    { title: 'Re:Bundle Simplified', link: '/rebundle-simplified' },
+    { title: 'How To Log A Return', link: '/howtologreturn' },
+    { title: 'Product Condition', link: '/condition' },
+    { title: 'Buyers & Sellers Protection', link: '/buyerprotection' },
+    { title: 'Terms Of Use', link: '/terms' },
+    { title: 'Privacy Policy', link: '/privacypolicy' },
+    { title: 'Cookies Policy', link: '/privacypolicy?cookies' },
+    { title: 'Return & Refund', link: '/returns' },
     // Add all your list items here
   ];
 
@@ -80,7 +80,7 @@ const SupportArticles = () => {
                 <Link to="/rebundle">Re:Bundle</Link>
               </li>
               <li className="hover:text-orange-300 cursor-pointer text-gray-500">
-                <Link to="/RebundleSimplify">Re:Bundle Simplified</Link>
+                <Link to="/rebundle-simplified">Re:Bundle Simplified</Link>
               </li>
               <li className="hover:text-orange-300 cursor-pointer text-gray-500">
                 <Link to="/howtologreturn">How To Log A Return</Link>
