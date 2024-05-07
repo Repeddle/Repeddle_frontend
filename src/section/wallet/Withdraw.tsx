@@ -70,7 +70,7 @@ const Withdraw = ({ balance }: Props) => {
       </div>
       {errormsg && <div className="text-[red] text-[11px]">{errormsg}</div>}
       {amount && (
-        <div className="text-[11px]">
+        <div className="text-[11px] flex items-center gap-2">
           <FaQuestionCircle /> You will be charged {balance.currency}
           {fee} for payment gateway withdrawal processing fee
         </div>

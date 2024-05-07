@@ -64,7 +64,7 @@ const Contact = () => {
                   <div className="w-3 h-3 flex items-center justify-center text-white text-[10px] cursor-default rounded-[50%] bg-orange-color" />
                 )}
                 <FaEye
-                  className="text-base text-orange-color"
+                  className="text-base text-orange-color cursor-pointer"
                   onClick={() => handleViewDetails(message)}
                 />
               </div>
