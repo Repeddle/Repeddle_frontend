@@ -1,4 +1,4 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
 const rebundle = () => {
   return (
@@ -138,10 +138,13 @@ const rebundle = () => {
           Happy Thrifting!
         </h1>
         <div className="flex flex-row items-center justify-center gap-5">
-          <p className="text-left float-left lg:mr-52">BUYING GUILD</p>
-          <p className="text-right float-right lg:ml-64 lg:-mr-12">
+            <Link to="/buyersguide" className="text-left float-left lg:mr-52 text-red-700 cursor-pointer hover:text-orange-400">
+            BUYING GUIDE
+            </Link>
+      
+            <Link to="/buyersguide" className="text-right float-right lg:ml-64 lg:-mr-12 text-red-700 cursor-pointer hover:text-orange-400">
             CASH-OUT WITH FREE DELIVERY
-          </p>
+            </Link>
         </div>
       </section>
     </div>

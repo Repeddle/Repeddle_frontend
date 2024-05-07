@@ -1,3 +1,4 @@
+
 import Search from "./pages/defaults/Search"
 import { createBrowserRouter } from "react-router-dom"
 import App from "./App"
@@ -36,6 +37,15 @@ import Contact from "./pages/protected/Contact"
 import NewsletterList from "./pages/protected/NewsletterList"
 import OtherBrand from "./pages/protected/OtherBrand"
 import Message from "./pages/protected/message"
+import Condition from './pages/defaults/info/Condition';
+import FeeStructure from './pages/defaults/info/FeeStructure';
+import BuyersProtection from './pages/defaults/info/BuyersProtection';
+import Brand from './pages/defaults/brands/Brand';
+import Verify from './pages/auth/register/verify';
+import ForgetPassword from './pages/auth/login/forgetPassword';
+import HowToLogAreturn from './pages/defaults/info/HowToLogAreturn';
+import Rebundlesimplified from './pages/defaults/info/Rebundlesimplified';
+import Buyersguide from './pages/defaults/info/Buyersguide';
 
 const router = createBrowserRouter([
   {
@@ -58,23 +68,30 @@ const router = createBrowserRouter([
         path: "/",
         element: <Default />,
         children: [
-          { path: "", element: <Home /> },
-          { path: "search", element: <Search /> },
-          { path: "sell", element: <Sell /> },
-          { path: "product/:id", element: <Product /> },
-          { path: "seller/:slug", element: <Seller /> },
-          { path: "cart", element: <Cart /> },
-          { path: "about", element: <About /> },
-          { path: "returns", element: <Returns /> },
-          { path: "privacypolicy", element: <PrivacyPolicy /> },
-          { path: "terms", element: <Terms /> },
-          { path: "vipshield", element: <Vipshield /> },
-          { path: "rebundle", element: <Rebundle /> },
-          { path: "sustainability", element: <Sustainability /> },
-          { path: "Support-Articles", element: <SupportArticles /> },
-          { path: "articles", element: <Articles /> },
-          { path: "articles/:id", element: <ArticleContent /> },
-          { path: "Contact-Us", element: <ContactUs /> },
+          { path: '', element: <Home /> },
+          { path: 'search', element: <Search /> },
+          { path: 'sell', element: <Sell /> },
+          { path: 'product/:id', element: <Product /> },
+          { path: 'seller/:slug', element: <Seller /> },
+          { path: 'cart', element: <Cart /> },
+          { path: 'about', element: <About /> },
+          { path: 'returns', element: <Returns /> },
+          { path: 'privacypolicy', element: <PrivacyPolicy /> },
+          { path: 'terms', element: <Terms /> },
+          { path: 'vipshield', element: <Vipshield /> },
+          { path: 'rebundle', element: <Rebundle /> },
+          { path: 'sustainability', element: <Sustainability /> },
+          { path: 'Support-Articles', element: <SupportArticles /> },
+          { path: 'buyersguide', element: <Buyersguide /> },
+          { path: 'condition', element: <Condition /> },
+          { path: 'rebundle-simplified', element: <Rebundlesimplified /> },
+          { path: 'howtologreturn', element: <HowToLogAreturn /> },
+          { path: 'articles', element: <Articles /> },
+          { path: 'articles/:id', element: <ArticleContent /> },
+          { path: 'Contact-Us', element: <ContactUs /> },
+          { path: 'feestructure', element: <FeeStructure /> },
+          { path: 'buyerprotection', element: <BuyersProtection /> },
+          { path: 'brands', element: <Brand /> },
         ],
       },
       {
