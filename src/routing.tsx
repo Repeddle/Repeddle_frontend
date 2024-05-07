@@ -19,12 +19,14 @@ import PaymentMethod from './pages/protected/PaymentMethod';
 import OrderPreview from './pages/protected/OrderPreview';
 import Order from './pages/protected/Order';
 import PrivacyPolicy from './pages/defaults/info/PrivacyPolicy';
-import SupportArticles from './pages/defaults/info';
 import Terms from './pages/defaults/info/Terms';
 import Vipshield from './pages/defaults/info/Vipshield';
-import Rebundle from './pages/defaults/info/rebundle';
-import Sustainability from './pages/defaults/info/sustainability';
+import SupportArticles from './pages/defaults/info';
 import ContactUs from './pages/defaults/ContactUs';
+import Sustainability from './pages/defaults/info/sustainability';
+import Rebundle from './pages/defaults/info/rebundle';
+import ForgetPassword from './pages/auth/login/forgetPassword';
+import Verify from './pages/auth/register/verify';
 import Articles from './pages/defaults/articles';
 import ArticleContent from './pages/defaults/articles/articleContent';
 import Condition from './pages/defaults/info/Condition';
@@ -47,10 +49,10 @@ const router = createBrowserRouter([
         path: '/auth/',
         element: <Auth />,
         children: [
-          { path: "login", element: <Login /> },
-          { path: "register", element: <Register /> },
-          { path: "verify", element: <Verify /> },
-          { path: "forget-password", element: <ForgetPassword /> },
+          { path: 'login', element: <Login /> },
+          { path: 'register', element: <Register /> },
+          { path: 'verify', element: <Verify /> },
+          { path: 'forget-password', element: <ForgetPassword /> },
         ],
       },
       {

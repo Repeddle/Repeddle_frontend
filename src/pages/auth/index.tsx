@@ -9,10 +9,6 @@ export default function Auth() {
   const [searchParam] = useSearchParams();
   const redirectUrl = useMemo(() => searchParam.get('redirect'), [searchParam]);
 
-  if (loading) {
-    return <LoadingModal />;
-  }
-
   if (user) {
     return <Navigate to={redirectUrl ? redirectUrl : '/dashboard'} />;
   }
@@ -21,6 +17,7 @@ export default function Auth() {
     <div>
       <AuthNav />
       <Outlet />
+      {loading && <LoadingModal />}
     </div>
   );
 }
