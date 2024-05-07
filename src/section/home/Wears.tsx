@@ -65,7 +65,7 @@ const Wears = () => {
                     to="/search?query=women"
                     className="text-white inline-block text-sm font-semibold relative no-underline uppercase pt-0 pb-[3px] px-0"
                   >
-                    <button className="bg-orange-color text-white cursor-pointer text-[13px] font-medium capitalize px-[30px] py-2.5 rounded-[25px] border-[none]">
+                    <button className="bg-orange-color text-white cursor-pointer text-[13px] font-medium capitalize px-[30px] py-2.5 rounded-[25px] border-none">
                       Shop Now
                     </button>
                   </Link>

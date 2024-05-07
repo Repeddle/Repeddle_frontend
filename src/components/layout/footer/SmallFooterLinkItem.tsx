@@ -13,7 +13,7 @@ const SmallFooterLinkItem = ({ heading, linkItems }: Props) => {
     <div className="flex-1">
       <div
         className={`text-[13px] uppercase tracking-[2px] leading-[1.83] mb-[15px] before:content-["_"]
-        before:w-2.5 before:h-2.5 before:-translate-y-2/4 before:absolute before:border-b before:border-solid 
+        before:w-2.5 before:h-2.5 before:-translate-y-2/4 before:absolute before:border-b  
         before:border-l before:right-5 ${
           isOpen ? "before:-rotate-45" : "before:rotate-[135deg]"
         }`}

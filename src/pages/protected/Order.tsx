@@ -7,13 +7,13 @@ import { useParams } from "react-router-dom"
 import { useReactToPrint } from "react-to-print"
 import moment from "moment"
 import { orderData as order } from "../../utils/data"
-import ModelLogin from "../../components/ModelLogin"
 import IsSeller from "../../section/order/IsSeller"
 import IsUser from "../../section/order/IsUser"
 import PaymentDelivery from "../../section/order/PaymentDelivery"
 import Return from "../../section/order/Return"
 import DeliveryHistory from "../../components/DeliveryHistory"
 import { OrderItem } from "../../types/order"
+import Modal from "../../components/ui/Modal"
 
 const Order = () => {
   const loading = false
@@ -101,7 +101,7 @@ const Order = () => {
             Items in your order
           </div>
 
-          <ModelLogin setShowModel={setShowReturn} showModel={showReturn}>
+          <Modal isOpen={showReturn} onClose={() => setShowReturn(false)}>
             {orderId && (
               <Return
                 // deliverOrderHandler={deliverOrderHandler}
@@ -111,7 +111,7 @@ const Order = () => {
                 orderId={orderId}
               />
             )}
-          </ModelLogin>
+          </Modal>
         </div>
         {order.orderItems.map((orderItem) =>
           isSeller ? (
@@ -143,14 +143,14 @@ const Order = () => {
             />
           )
         )}
-        <ModelLogin
-          showModel={showDeliveryHistory}
-          setShowModel={setShowDeliveryHistory}
+        <Modal
+          isOpen={showDeliveryHistory}
+          onClose={() => setShowDeliveryHistory(false)}
         >
           <div className="flex items-center justify-center h-full">
             <DeliveryHistory status={currentDeliveryHistory} />
           </div>
-        </ModelLogin>
+        </Modal>
         <PaymentDelivery
           isSeller={isSeller}
           shippingPrice={shippingPrice}

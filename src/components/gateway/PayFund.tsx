@@ -28,7 +28,7 @@ const PayFund = ({ amount }: Props) => {
         }
       />
       <div className="flex flex-col items-center">
-        <FaWallet size="4x" className="text-orange-color " />
+        <FaWallet size={64} className="text-orange-color " />
         <div className="font-bold mt-2.5">
           Make payment from your Repeddle Wallet
         </div>

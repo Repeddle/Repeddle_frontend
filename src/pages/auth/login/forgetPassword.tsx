@@ -1,16 +1,13 @@
 import { FormEvent, useState } from "react"
 import InputWithLabel from "../../../components/ui/InputWithLabel"
 import Button from "../../../components/ui/Button"
-import { Link, useNavigate } from "react-router-dom"
-import { FaArrowLeftLong } from "react-icons/fa6"
+import { Link } from "react-router-dom"
 import useAuth from "../../../hooks/useAuth"
 import useToastNotification from "../../../hooks/useToastNotification"
 import { emailRegex } from "../../../utils/constants"
-import SmallModel from "../../../components/SmallModel"
+import Modal from "../../../components/ui/Modal"
 
 const ForgetPassword = () => {
-  const navigate = useNavigate()
-
   const [showModal, setShowModal] = useState(false)
   const [email, setEmail] = useState("")
   const [formError, setFormError] = useState("")
@@ -49,15 +46,6 @@ const ForgetPassword = () => {
   return (
     <>
       <div className="flex relative flex-col lg:flex-row bg-white-color dark:bg-black-color h-screen">
-        <div className="absolute flex inset-x-0 top-8 px-6 sm:px-14 sm:top-8 justify-between items-center">
-          <FaArrowLeftLong
-            onClick={() => navigate(-1)}
-            className="text-black lg:text-white text-base lg:text-xl cursor-pointer"
-          />
-          <Link to={"/"} className="h-8 sm:h-10 cursor-pointer">
-            <img src="/images/logo/logo.png" alt="logo" className="h-full" />
-          </Link>
-        </div>
         <div className="flex-1 hidden lg:block overflow-x-hidden">
           <img
             src="/images/auth/jakub-zerdzicki-VfZj-4H5D48-unsplash.jpg"
@@ -90,12 +78,12 @@ const ForgetPassword = () => {
                 <div className="flex items-center justify-center gap-4">
                   <p className="text-center text-sm space-x-0.5">
                     <span>Already have an account?</span>
-                    <a
+                    <Link
                       className="text-orange-color hover:underline active:underline"
-                      href="/auth/login"
+                      to="/auth/login"
                     >
                       Login
-                    </a>
+                    </Link>
                   </p>
                 </div>
               </form>
@@ -103,14 +91,14 @@ const ForgetPassword = () => {
           </div>
         </div>
       </div>
-      <SmallModel setShowModel={setShowModal} showModel={showModal}>
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="sm">
         <div className="bg-white h-full pt-4 px-8 py-6 rounded-lg flex flex-col gap-2">
-          <h1 className="text-3xl">Verification Sent</h1>
+          <h1 className="text-3xl">Reset Link Sent</h1>
           <div className="max-w-md">
             A password reset link has been sent to your email
           </div>
         </div>
-      </SmallModel>
+      </Modal>
     </>
   )
 }

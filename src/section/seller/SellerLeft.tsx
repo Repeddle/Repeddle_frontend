@@ -3,7 +3,6 @@ import LoadingBox from "../../components/LoadingBox"
 import MessageBox from "../../components/MessageBox"
 import { Link } from "react-router-dom"
 import { FaGlobe, FaLink, FaPen, FaTag, FaUser } from "react-icons/fa"
-import ModelLogin from "../../components/ModelLogin"
 import ReviewLists from "../../components/ReviewLists"
 import WriteReview from "./WriteReview"
 import RebundlePoster from "../../components/RebundlePoster"
@@ -12,6 +11,7 @@ import Report from "../product/Report"
 import Rating from "../../components/Rating"
 import useAuth from "../../hooks/useAuth"
 import { IUser } from "../../types/user"
+import Modal from "../../components/ui/Modal"
 
 type Props = {
   loadingUser: boolean
@@ -73,11 +73,11 @@ const SellerLeft = ({ loadingUser, error, user }: Props) => {
               )}
             </Link>
             {isOnlineCon(user._id) ? (
-              <div className="border-orange-color text-orange-color absolute capitalize px-2.5 py-0 rounded-[15px] border-[0.1rem] border-solid right-[30px] top-[30px]">
+              <div className="border-orange-color text-orange-color absolute capitalize px-2.5 py-0 rounded-[15px] border-[0.1rem]  right-[30px] top-[30px]">
                 online
               </div>
             ) : (
-              <div className="border-gray-500 text-gray-500 absolute capitalize px-2.5 py-0 rounded-[15px] border-[0.1rem] border-solid right-[30px] top-[30px]">
+              <div className="border-gray-500 text-gray-500 absolute capitalize px-2.5 py-0 rounded-[15px] border-[0.1rem]  right-[30px] top-[30px]">
                 offline
               </div>
             )}
@@ -121,18 +121,18 @@ const SellerLeft = ({ loadingUser, error, user }: Props) => {
               </div>
             )}
 
-            <ModelLogin showModel={showModel} setShowModel={setShowModel}>
+            <Modal isOpen={showModel} onClose={() => setShowModel(false)}>
               <ReviewLists setShowModel={setShowModel} />
-            </ModelLogin>
-            <ModelLogin
-              showModel={showWriteReview}
-              setShowModel={setShowWriteReview}
+            </Modal>
+            <Modal
+              isOpen={showWriteReview}
+              onClose={() => setShowWriteReview(false)}
             >
               <WriteReview
                 userId={user._id}
                 setShowModel={setShowWriteReview}
               />
-            </ModelLogin>
+            </Modal>
             <button
               className="flex items-center border-none my-2.5 mx-0 bg-none"
               onClick={handleShare}
@@ -152,7 +152,7 @@ const SellerLeft = ({ loadingUser, error, user }: Props) => {
               Message Me
             </button>
             {user.rebundle.status && <RebundlePoster />}
-            <div className="border-t-border-color w-full mt-[5px] px-0 py-[15px] border-t border-solid">
+            <div className="border-t-border-color w-full mt-[5px] px-0 py-[15px] border-t ">
               <div className="flex justify-between mb-2.5">
                 <div className="flex items-center">
                   <FaTag className="mr-2.5 text-[15px]" /> Sold
@@ -201,12 +201,12 @@ const SellerLeft = ({ loadingUser, error, user }: Props) => {
           >
             Report Seller
           </button>
-          <ModelLogin
-            showModel={showLoginModel}
-            setShowModel={setShowLoginModel}
+          <Modal
+            isOpen={showLoginModel}
+            onClose={() => setShowLoginModel(false)}
           >
             <Report reportedUser={user._id} />
-          </ModelLogin>
+          </Modal>
         </div>
       )}
     </div>

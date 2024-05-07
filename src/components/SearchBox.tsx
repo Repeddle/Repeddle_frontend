@@ -2,7 +2,7 @@ import { FaSearch } from "react-icons/fa"
 
 const SearchBox = () => {
   return (
-    <form className="w-full flex mr-auto rounded-[50px] border-2 border-solid border-[#dfdfdf]">
+    <form className="w-full flex mr-auto rounded-[50px] border-2  border-[#dfdfdf]">
       <div className="items-center shadow-[0_0.125rem_0.25rem_rgba(0,0,0,0.075)] flex flex-wrap relative w-full rounded-[50rem] border-0">
         <div className="border-0 ml-4">
           <button

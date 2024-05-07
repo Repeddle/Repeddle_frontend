@@ -1,23 +1,21 @@
-import { FormEvent, useEffect, useMemo, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
 import InputWithLabel from "../../../components/ui/InputWithLabel"
-import { FaArrowLeftLong } from "react-icons/fa6"
-import { useNavigate } from "react-router"
-import { Link, useSearchParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import Button from "../../../components/ui/Button"
 import useAuth from "../../../hooks/useAuth"
 import useToastNotification from "../../../hooks/useToastNotification"
 import LoadingPage from "../../../components/ui/LoadingPage"
 
 const ResetPassword = () => {
-  const navigate = useNavigate()
-  const { loading, error, resetPassword, verifyEmail } = useAuth()
+  const { error, resetPassword, verifyEmail } = useAuth()
   const { addNotification } = useToastNotification()
 
-  const [searchParam] = useSearchParams()
-  const token = useMemo(() => searchParam.get("token"), [searchParam])
+  const { token } = useParams()
+  const navigate = useNavigate()
 
+  const [loading, setLoading] = useState(true)
   const [password, setPassword] = useState("")
-  const [tokenValidated, setTokenValidated] = useState(true)
+  const [tokenValidated, setTokenValidated] = useState(false)
   const [confirmPassword, setConfirmPassword] = useState("")
   const [formError, setFormError] = useState({
     password: "",
@@ -26,25 +24,25 @@ const ResetPassword = () => {
 
   useEffect(() => {
     const verifyToken = async () => {
+      setLoading(true)
       if (token) {
         const val = await verifyEmail({ token })
         if (val) {
           setTokenValidated(true)
-        } else {
-          addNotification(error ?? "An error occurred")
         }
       }
+      setLoading(false)
     }
     if (!tokenValidated) {
       verifyToken()
     }
-  }, [addNotification, error, token, tokenValidated, verifyEmail])
+  }, [token, tokenValidated])
 
   const validatePassword = () => {
     if (password.length < 6) {
       setFormError({
         ...formError,
-        password: "password must be at least 6 characters",
+        password: "Password must be at least 6 characters",
       })
       return false
     }
@@ -57,7 +55,7 @@ const ResetPassword = () => {
     if (password !== confirmPassword) {
       setFormError({
         ...formError,
-        confirmPassword: "confirm password must equal password",
+        confirmPassword: "Confirm password must equal password",
       })
       return false
     }
@@ -73,28 +71,30 @@ const ResetPassword = () => {
       const value = await resetPassword(password, token)
 
       if (value) {
-        // Show modal
-      } else {
-        addNotification(error ?? "An error occurred")
+        addNotification("Password has been changed")
+        navigate("/auth/login")
       }
     }
   }
 
+  if (!loading && !token) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        No token
+      </div>
+    )
+  }
+
+  if (error) {
+    return <div className="text-red-500 text-center mt-[20vh]">{error}</div>
+  }
+
   return (
     <>
-      {!tokenValidated && loading && <LoadingPage />}
+      {!tokenValidated && <LoadingPage />}
 
       {tokenValidated && (
         <div className="flex relative flex-col lg:flex-row bg-white-color dark:bg-black-color h-screen">
-          <div className="absolute flex inset-x-0 top-8 px-6 sm:px-14 sm:top-8 justify-between items-center">
-            <FaArrowLeftLong
-              onClick={() => navigate(-1)}
-              className="text-black lg:text-white text-base lg:text-xl cursor-pointer"
-            />
-            <Link to={"/"} className="h-8 sm:h-10 cursor-pointer">
-              <img src="/images/logo/logo.png" alt="logo" className="h-full" />
-            </Link>
-          </div>
           <div className="flex-1 hidden lg:block overflow-x-hidden">
             <img
               src="/images/auth/jakub-zerdzicki-VfZj-4H5D48-unsplash.jpg"
@@ -137,12 +137,12 @@ const ResetPassword = () => {
                   <div className="flex items-center justify-center gap-4">
                     <p className="text-center text-sm space-x-0.5">
                       <span>Already have an account?</span>
-                      <a
+                      <Link
                         className="text-orange-color hover:underline active:underline"
-                        href="/auth/login"
+                        to="/auth/login"
                       >
                         Login
-                      </a>
+                      </Link>
                     </p>
                   </div>
                 </form>

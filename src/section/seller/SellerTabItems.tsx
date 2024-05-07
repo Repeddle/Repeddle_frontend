@@ -104,7 +104,7 @@ const SellerTabItems = ({
                           {product.sold && (
                             <Link to={`/product/${product.slug}`}>
                               <div className="overlay">
-                                <div className="absolute translate-x-2/4 -translate-y-2/4 text-2xl font-[bold] text-orange-color right-2/4 top-2/4">
+                                <div className="absolute translate-x-2/4 -translate-y-2/4 text-2xl font-bold text-orange-color right-2/4 top-2/4">
                                   SOLD
                                 </div>
                               </div>

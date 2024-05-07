@@ -1,9 +1,9 @@
 import { useRef, useState } from "react"
-import ModelLogin from "../../components/ModelLogin"
 import LoadingBox from "../../components/LoadingBox"
 import MessageItem from "../../components/ui/MessageItem"
 import useAuth from "../../hooks/useAuth"
 import { FaPlane } from "react-icons/fa"
+import Modal from "../../components/ui/Modal"
 
 type Props = {
   reportedUser: string
@@ -24,7 +24,7 @@ const Report = ({ productName }: Props) => {
   const handleSubmit = () => {}
 
   return (
-    <ModelLogin showModel={showModel} setShowModel={setShowModel}>
+    <Modal isOpen={showModel} onClose={() => setShowModel(false)}>
       <div className="h-full w-full p-5 dark:bg-dark-ev1 bg-light-ev1">
         <div className="h-[calc(100%_-_40px)] w-full mt-5 rounded-[0.2rem] relative dark:bg-dark-ev2 bg-light-ev2">
           <div className="h-[calc(100%_-_66px)] overflow-y-auto pt-10 pb-0 px-10 scrollbar-hide">
@@ -82,7 +82,7 @@ const Report = ({ productName }: Props) => {
           </div>
         </div>
       </div>
-    </ModelLogin>
+    </Modal>
   )
 }
 

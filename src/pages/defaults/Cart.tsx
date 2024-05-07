@@ -4,14 +4,13 @@ import { Helmet } from "react-helmet-async"
 import useCart from "../../hooks/useCart"
 import MessageBox from "../../components/MessageBox"
 import { Link, useNavigate } from "react-router-dom"
-import ModelLogin from "../../components/ModelLogin"
 import useAuth from "../../hooks/useAuth"
 import Button from "../../components/ui/Button"
 import { IProduct } from "../../types/product"
 import CartItems from "../../section/cart/CartItems"
 import { CartItem } from "../../context/CartContext"
-import SmallModel from "../../components/SmallModel"
 import AlertComponent from "../../section/cart/AlertComponent"
+import Modal from "../../components/ui/Modal"
 
 function Cart() {
   const loading = false
@@ -90,7 +89,7 @@ function Cart() {
                   </MessageBox>
                 </>
               )}
-              <SmallModel setShowModel={setRemove} showModel={remove}>
+              <Modal isOpen={remove} onClose={() => setRemove(false)}>
                 <AlertComponent
                   message="Are you sure you want to remove item from cart?"
                   onConfirm={() =>
@@ -98,15 +97,16 @@ function Cart() {
                   }
                   onWishlist={() => currentItem && saveItem(currentItem)}
                 />
-              </SmallModel>
+              </Modal>
 
-              <ModelLogin setShowModel={setShowModel} showModel={showModel}>
+              <Modal isOpen={showModel} onClose={() => setShowModel(false)}>
+                <></>
                 {/* TODO: uncomment when this page is done  */}
                 {/* <DeliveryOptionScreen
                   setShowModel={setShowModel}
                   item={currentItem}
                 /> */}
-              </ModelLogin>
+              </Modal>
             </div>
             {user && (
               <div

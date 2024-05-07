@@ -1,7 +1,7 @@
 import { useState } from "react"
-import ModelLogin from "../../components/ModelLogin"
 import { FaKey } from "react-icons/fa"
 import BuyersPro from "../../components/BuyersPro"
+import Modal from "../../components/ui/Modal"
 
 const ProtectionRight = () => {
   const [showModel, setShowModel] = useState(false)
@@ -15,9 +15,9 @@ const ProtectionRight = () => {
         <FaKey size={25} className="text-orange-color mr-2.5" /> Buyer's &
         Seller's Protection !
       </div>
-      <ModelLogin showModel={showModel} setShowModel={setShowModel}>
+      <Modal isOpen={showModel} onClose={() => setShowModel(false)}>
         <BuyersPro />
-      </ModelLogin>
+      </Modal>
     </div>
   )
 }

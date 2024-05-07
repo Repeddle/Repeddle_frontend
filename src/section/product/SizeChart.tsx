@@ -1,5 +1,5 @@
 import { useState } from "react"
-import ModelLogin from "../../components/ModelLogin"
+import Modal from "../../components/ui/Modal"
 
 const SizeChart = () => {
   const [show, setShow] = useState(false)
@@ -9,7 +9,7 @@ const SizeChart = () => {
         size chart{" "}
       </span>
 
-      <ModelLogin showModel={show} setShowModel={setShow}>
+      <Modal isOpen={show} onClose={() => setShow(false)}>
         <div className="h-full overflow-hidden">
           <img
             className="w-full"
@@ -27,7 +27,7 @@ const SizeChart = () => {
             alt="sizeChart"
           />
         </div>
-      </ModelLogin>
+      </Modal>
     </>
   )
 }

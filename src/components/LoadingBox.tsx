@@ -13,7 +13,7 @@ const LoadingBox = ({ size = "md", color }: Props) => {
 
   return (
     <div
-      className={`animate-spin rounded-full border-t-2  border-solid ${sizeClass} ${colorClass}`}
+      className={`animate-spin rounded-full border-t-2   ${sizeClass} ${colorClass}`}
     />
   )
 }
