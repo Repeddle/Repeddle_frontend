@@ -36,7 +36,7 @@ const Modal: React.FC<{
         }`}
       >
         <div
-          className={`drop-shadow-primary bg-background-light dark:bg-background-dark rounded-lg p-6 w-[95%] ${
+          className={`relative drop-shadow-primary bg-white-color dark:bg-black-color rounded-lg p-6 w-[95%] ${
             size === "lg" ? "md:w-3/5" : "md:w-[28rem]"
           } transform transition-transform duration-500 ease-in-out ${
             modalOpen
