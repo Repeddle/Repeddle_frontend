@@ -123,8 +123,8 @@ function ContactUs() {
           <div className="flex justify-center items-center w-full">
             <button
               type="submit"
-              className="block justify-center align-middle items-center w-full px-4 py-3  font-medium text-white bg-orange-400 
-            rounded-md  uppercase focus:outline-none focus:ring-2 focus:ring-orange-400  "
+              className="block justify-center align-middle items-center w-full px-4 py-3  font-medium text-white bg-orange-color 
+            rounded-md  uppercase focus:outline-none focus:ring-2 focus:ring-orange-color  "
             >
               Send Message
             </button>

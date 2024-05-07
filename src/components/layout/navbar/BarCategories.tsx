@@ -1,13 +1,13 @@
-import { Link } from "react-router-dom"
-import useCategory from "../../../hooks/useCategory"
-import { useEffect } from "react"
+import { Link } from "react-router-dom";
+import useCategory from "../../../hooks/useCategory";
+import { useEffect } from "react";
 
 const BarCategories = () => {
-  const { categories, fetchCategories } = useCategory()
+  const { categories, fetchCategories } = useCategory();
 
   useEffect(() => {
-    fetchCategories()
-  }, [])
+    fetchCategories();
+  }, []);
 
   return (
     <ul className="relative hidden group lg:flex justify-center items-center">
@@ -32,7 +32,7 @@ const BarCategories = () => {
                           {s.name}
                         </Link>
                       </li>
-                    )
+                    );
                   } else {
                     return (
                       <div className="mb-2.5 self-start">
@@ -49,14 +49,14 @@ const BarCategories = () => {
                           ))}
                         </ul>
                       </div>
-                    )
+                    );
                   }
                 })}
             </ul>
           </div>
         ))}
       <div className="mx-5 my-2.5 group-hover:flex">
-        <Link to="/brand">
+        <Link to="/brands">
           <li className="font-medium text-[15px] uppercase cursor-pointer hover:text-orange-color text-black dark:text-white dark:hover:text-orange-color">
             SHOP BY BRAND
           </li>
@@ -70,7 +70,7 @@ const BarCategories = () => {
         </Link>
       </div>
     </ul>
-  )
-}
+  );
+};
 
-export default BarCategories
+export default BarCategories;

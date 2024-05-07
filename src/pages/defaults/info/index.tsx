@@ -11,16 +11,16 @@ const SupportArticles = () => {
   const [filteredData, setFilteredData] = useState<Article[]>([]);
 
   const data: Article[] = [
-    { title: 'Buyers Guide', link: '/buyersguide' },
-    { title: 'Re:Bundle', link: '/rebundle' },
-    { title: 'Re:Bundle Simplified', link: '/rebundle-simplified' },
-    { title: 'How To Log A Return', link: '/howtologreturn' },
-    { title: 'Product Condition', link: '/condition' },
-    { title: 'Buyers & Sellers Protection', link: '/buyerprotection' },
-    { title: 'Terms Of Use', link: '/terms' },
-    { title: 'Privacy Policy', link: '/privacypolicy' },
-    { title: 'Cookies Policy', link: '/privacypolicy?cookies' },
-    { title: 'Return & Refund', link: '/returns' },
+    { title: "Buyers Guide", link: "/buyersguide" },
+    { title: "Re:Bundle", link: "/rebundle" },
+    { title: "Re:Bundle Simplified", link: "/rebundle-simplified" },
+    { title: "How To Log A Return", link: "/howtologreturn" },
+    { title: "Product Condition", link: "/condition" },
+    { title: "Buyers & Sellers Protection", link: "/buyerprotection" },
+    { title: "Terms Of Use", link: "/terms" },
+    { title: "Privacy Policy", link: "/privacypolicy" },
+    { title: "Cookies Policy", link: "/privacypolicy?cookies" },
+    { title: "Return & Refund", link: "/returns" },
     // Add all your list items here
   ];
 
@@ -69,10 +69,10 @@ const SupportArticles = () => {
         </div>
       </section>
       <section className="mb-8">
-        <div className="max-w-[1350px] mx-auto grid lg:grid-cols-4 gap-5 px-5">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-4 gap-5 px-5">
           <div>
-            <h2 className="text-2xl font-medium">BUYER'S KITS</h2>
-            <ul className="text-lg">
+            <h2 className="text-xl mb-2 font-medium">BUYER'S KITS</h2>
+            <ul className="">
               <li className="hover:text-orange-300 cursor-pointer text-gray-500">
                 <Link to="/buyersguide">Buyers Guide</Link>
               </li>
@@ -91,8 +91,8 @@ const SupportArticles = () => {
             </ul>
           </div>
           <div>
-            <h2 className="text-2xl font-medium">SELLER'S KIT</h2>
-            <ul className="text-lg">
+            <h2 className="text-xl mb-2 font-medium">SELLER'S KIT</h2>
+            <ul className="">
               <li className="hover:text-orange-300 cursor-pointer text-gray-500">
                 <Link to="/feestructure">Commission Fee Structure</Link>
               </li>
@@ -102,7 +102,7 @@ const SupportArticles = () => {
             </ul>
           </div>
           <div>
-            <h2 className="text-2xl font-medium">SAFETY KITS</h2>
+            <h2 className="text-xl mb-2 font-medium">SAFETY KITS</h2>
             <ul className="text-lg">
               <li className="hover:text-orange-300 cursor-pointer text-slate-500">
                 <Link to="/buyerprotection">Buyers & Sellers Protection</Link>
@@ -110,8 +110,8 @@ const SupportArticles = () => {
             </ul>
           </div>
           <div>
-            <h2 className="text-2xl font-medium">LEGAL STUFF</h2>
-            <ul className="text-lg">
+            <h2 className="text-xl mb-2 font-medium">LEGAL STUFF</h2>
+            <ul className="">
               <li className="hover:text-orange-300 cursor-pointer text-gray-500">
                 <Link to="/terms">Terms Of Use</Link>
               </li>
