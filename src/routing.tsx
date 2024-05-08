@@ -46,6 +46,16 @@ import Buyersguide from "./pages/defaults/info/Buyersguide"
 import Categories from "./pages/protected/Categories"
 import OrderList from "./pages/protected/OrderList"
 import Transaction from "./pages/protected/Transaction"
+import AddressBook from "./pages/protected/AddressBook"
+import UserList from "./pages/protected/UserList"
+import ProductList from "./pages/protected/ProductList"
+import TransactionList from "./pages/protected/TransactionList"
+import Payments from "./pages/protected/Payments"
+import AllReturnsLog from "./pages/protected/AllReturnsLog"
+import AllReturns from "./pages/protected/AllReturns"
+import SoldReturns from "./pages/protected/SoldReturn"
+import PurchaseReturn from "./pages/protected/PurchaseReturn"
+import TransactionListUser from "./pages/protected/TransactionListUser"
 
 const router = createBrowserRouter([
   {
@@ -117,6 +127,16 @@ const router = createBrowserRouter([
           { path: "otherbrand", element: <OtherBrand /> },
           { path: "messages", element: <Message /> },
           { path: "order", element: <OrderList /> },
+          { path: "address", element: <AddressBook /> },
+          { path: "userlist", element: <UserList /> },
+          { path: "productlist", element: <ProductList /> },
+          { path: "transactionlist", element: <TransactionList /> },
+          { path: "alltransaction", element: <TransactionListUser /> },
+          { path: "payments", element: <Payments /> },
+          { path: "logreturns", element: <AllReturnsLog /> },
+          { path: "allreturns", element: <AllReturns /> },
+          { path: "sellerreturns", element: <SoldReturns /> },
+          { path: "buyerreturns", element: <PurchaseReturn /> },
         ],
       },
     ],
