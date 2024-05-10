@@ -16,13 +16,13 @@ const Wallet = () => {
 
   return (
     <div className="flex-[4] lg:ml-5 lg:p-5 rounded-[0.2rem] mb-2.5 m-0 p-2.5 bg-light-ev1 dark:bg-dark-ev1">
-      <div className="flex items-center justify-between p-5 rounded-lg bg-[#fcf0e0] dark:bg-dark-ev3">
+      <div className="flex items-center justify-between p-5 rounded-lg bg-[#fcf0e0] dark:bg-dark-ev3 mb-5">
         <div>
           {loading ? (
             <LoadingBox />
           ) : (
             <div className="font-bold leading-tight text-xl font-sans lg:text-[50px] text-orange-color">
-              {`${balance.currency}${Math.floor(balance.balance * 100) / 100}`}
+              {`${balance.currency} ${Math.floor(balance.balance * 100) / 100}`}
             </div>
           )}
           <div className="font-bold text-orange-color text-[11px] lg:text-base">

@@ -24,7 +24,7 @@ const CategoryComp = ({
       <label className="text-sm font-semibold mb-2.5">Category Name</label>
       <div className="flex items-center justify-between">
         <input
-          className="h-10 p-2.5 rounded-[0.2rem] bg-none text-black-color dark:text-white-color border border-light-ev3 dark:border-dark-ev3 focus-visible:outline focus-visible:outline-orange-color"
+          className="h-10 p-2.5 rounded-[0.2rem] bg-none text-black-color bg-transparent dark:text-white-color border border-light-ev3 dark:border-dark-ev3 focus-visible:outline focus-visible:outline-orange-color"
           onChange={(e) => handleCategoryNameChange("name", e.target.value)}
           type="text"
           value={category.name}

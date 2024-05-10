@@ -29,9 +29,9 @@ export interface IUser {
   saved: IProduct[]
   sold: string[]
   about?: string
-  dob?: Date
-  activeLastUpdate: Date
-  usernameLastUpdate?: Date
+  dob?: string | Date
+  activeLastUpdate: string | Date
+  usernameLastUpdate?: string | Date
   buyers: string[]
   rating: number
   accountNumber?: number
@@ -48,7 +48,7 @@ export interface IUser {
   isVerifiedEmail: boolean
   region: "NGN" | "ZAR"
   rebundle: IRebundle
-  createdAt?: string | Date
+  createdAt: string
   updatedAt?: string | Date
   role: string
 }

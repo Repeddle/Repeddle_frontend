@@ -18,6 +18,14 @@ function Overview() {
   const [to, setTo] = useState<string | Date>(now)
 
   const loading = false
+  // const orderData: unknown[] = []
+  // const totalProducts = 5000
+  // const totalPurchase = 5000
+  // const totalOrders = 5000
+  // const productData: unknown[] = []
+  // const purchaseData: unknown[] = []
+  // const totalSales = 5000
+  // const currency = "N"
   const error = ""
   const orders = { todayPurchases: [], todayProducts: [], todayOrders: [] }
 
@@ -119,12 +127,12 @@ function Overview() {
             <div className="flex-1 flex flex-col gap-5">
               {/* <Chart
                 title="Earning"
-                total={`${currency}${totalSales.toFixed(2)}`}
+                total={`${currency} ${totalSales.toFixed(2)}`}
                 data={orderData}
                 dataKey="earning"
                 grid
-              /> */}
-              {/* <Chart
+              />
+              <Chart
                 title="Sold Orders"
                 total={totalOrders}
                 data={orderData}
@@ -139,8 +147,8 @@ function Overview() {
                 data={productData}
                 dataKey="products"
                 grid
-              /> */}
-              {/* <Chart
+              />
+              <Chart
                 title="Purchase Order"
                 data={purchaseData}
                 dataKey="order"

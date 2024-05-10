@@ -14,7 +14,9 @@ const featureTypes = {
     link: "See all users",
     to: "/dashboard/userlist",
     icon: (
-      <FaUser className="text-lg p-[5px] self-end rounded-[0.2rem] text-malon-color bg-[#ecdada] dark:bg-[#332021]" />
+      <div className="bg-[#ecdada] dark:bg-[#332021] self-end p-[5px] rounded-[0.2rem]">
+        <FaUser className="text-lg text-malon-color" />
+      </div>
     ),
   },
   order: {
@@ -23,7 +25,9 @@ const featureTypes = {
     to: "/admin/allOrderList/",
     link: "view all orders",
     icon: (
-      <FaBagShopping className="text-lg p-[5px] self-end rounded-[0.2rem] text-orange-color bg-[#fcf0e0] dark:bg-[#473527]" />
+      <div className="bg-[#fcf0e0] dark:bg-[#473527] self-end p-[5px] rounded-[0.2rem]">
+        <FaBagShopping className="text-lg text-orange-color" />
+      </div>
     ),
   },
   earning: {
@@ -32,7 +36,9 @@ const featureTypes = {
     to: "/dashboard/earning",
     link: "view all net earning",
     icon: (
-      <FaMoneyBill className="text-lg p-[5px] self-end rounded-[0.2rem] text-green-color bg-[#d6f5dc] dark:bg-[#1d3b23]" />
+      <div className="bg-[#d6f5dc] dark:bg-[#1d3b23] self-end p-[5px] rounded-[0.2rem]">
+        <FaMoneyBill className="text-lg text-green-color" />
+      </div>
     ),
   },
   today: {
@@ -41,7 +47,9 @@ const featureTypes = {
     to: "",
     link: "view all net earning",
     icon: (
-      <FaMoneyBill className="text-lg p-[5px] self-end rounded-[0.2rem] text-green-color bg-[#d6f5dc] dark:bg-[#1d3b23]" />
+      <div className="bg-[#d6f5dc] dark:bg-[#1d3b23] self-end p-[5px] rounded-[0.2rem]">
+        <FaMoneyBill className="text-lg text-green-color" />
+      </div>
     ),
   },
   product: {
@@ -50,7 +58,9 @@ const featureTypes = {
     to: "/admin/allProductList/",
     link: "View product list",
     icon: (
-      <FaShoppingBasket className="text-lg p-[5px] self-end rounded-[0.2rem] text-white bg-[#d9d9d9] dark:bg-[#464646]" />
+      <div className="bg-[#d9d9d9] dark:bg-[#464646] self-end p-[5px] rounded-[0.2rem]">
+        <FaShoppingBasket className="text-lg text-white" />
+      </div>
     ),
   },
 }
