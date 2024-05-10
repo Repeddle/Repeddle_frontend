@@ -1,4 +1,5 @@
 import { saveImageService } from "../services/image"
+import { IProduct } from "../types/product"
 
 export const region = () => {
   const add =
@@ -9,7 +10,12 @@ export const region = () => {
   return add
 }
 
-export const daydiff = (start: Date | string, end: number) => {
+export const currency = (region: IProduct["region"]) => {
+  if (region === "NGN") return "₦"
+  return "R"
+}
+
+export const daydiff = (start: Date | string | number, end: number) => {
   if (!start) return 0
   const startNum = timeDifference(new window.Date(start), new window.Date())
   console.log("startNum", start, end - startNum)

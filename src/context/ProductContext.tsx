@@ -10,6 +10,7 @@ import {
   deleteProductService,
   fetchProductBySlugService,
   fetchProductsService,
+  fetchUserProductsService,
   updateProductService,
 } from "../services/product"
 
@@ -18,10 +19,11 @@ type ContextType = {
   loading: boolean
   error: string
   fetchProducts: (params?: string) => Promise<boolean>
+  fetchUserProducts: (params?: string) => Promise<boolean>
   fetchProductBySlug: (slug: string) => Promise<IProduct | null>
   createProduct: (product: ICreateProduct) => Promise<boolean>
   updateProduct: (id: string, product: ICreateProduct) => Promise<boolean>
-  deleteProduct: (id: string) => Promise<boolean>
+  deleteProduct: (id: string) => Promise<{ message?: string }>
 }
 
 // Create product context
@@ -57,6 +59,21 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
     try {
       setLoading(true)
       const result = await fetchProductsService(params)
+      setProducts(result)
+      setLoading(false)
+      return true
+    } catch (error) {
+      handleError(error as string)
+      setLoading(false)
+      return false
+    }
+  }
+
+  // Function to fetch products
+  const fetchUserProducts = async (params?: string) => {
+    try {
+      setLoading(true)
+      const result = await fetchUserProductsService(params)
       setProducts(result)
       setLoading(false)
       return true
@@ -126,7 +143,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
   const deleteProduct = async (id: string) => {
     try {
       setLoading(true)
-      await deleteProductService(id)
+      const data = await deleteProductService(id)
       setProducts((prevProducts) => {
         const updatedProducts = prevProducts.products.filter(
           (Product) => Product._id !== id
@@ -139,11 +156,11 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         return newProd
       })
       setLoading(false)
-      return true
+      return { message: data.message }
     } catch (error) {
       handleError(error as string)
       setLoading(false)
-      return false
+      return {}
     }
   }
 
@@ -151,6 +168,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
     <ProductContext.Provider
       value={{
         fetchProducts,
+        fetchUserProducts,
         products,
         loading,
         error,

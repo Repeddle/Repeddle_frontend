@@ -16,7 +16,7 @@ const DeliveryHistory = ({ status }: Props) => {
                   status >= 1 ? "bg-[green]" : ""
                 }`}
               >
-                <FaCheck color="white" className="-rotate-4" />
+                <FaCheck color="white" className="-rotate-45" />
               </div>
               <div className="absolute -translate-x-2/4 text-center font-medium text-[13px] leading-[1em] lg:left-2/4 lg:top-[35px] left-[100px] top-0">
                 Not yet Dispatched
@@ -38,7 +38,7 @@ const DeliveryHistory = ({ status }: Props) => {
                   status >= 2 ? "bg-[green]" : ""
                 }`}
               >
-                <FaCheck color="white" className="-rotate-4" />
+                <FaCheck color="white" className="-rotate-45" />
               </div>
               <div className="absolute -translate-x-2/4 text-center font-medium text-[13px] leading-[1em] lg:left-2/4 lg:top-[35px] left-[100px] top-0">
                 Dispatch
@@ -60,7 +60,7 @@ const DeliveryHistory = ({ status }: Props) => {
                   status >= 3 ? "bg-[green]" : ""
                 }`}
               >
-                <FaCheck color="white" className="-rotate-4" />
+                <FaCheck color="white" className="-rotate-45" />
               </div>
               <div className="absolute -translate-x-2/4 text-center font-medium text-[13px] leading-[1em] lg:left-2/4 lg:top-[35px] left-[100px] top-0">
                 In Transit
@@ -82,7 +82,7 @@ const DeliveryHistory = ({ status }: Props) => {
                   status >= 4 ? "bg-[green]" : ""
                 }`}
               >
-                <FaCheck color="white" className="-rotate-4" />
+                <FaCheck color="white" className="-rotate-45" />
               </div>
               <div className="absolute -translate-x-2/4 text-center font-medium text-[13px] leading-[1em] lg:left-2/4 lg:top-[35px] left-[100px] top-0">
                 Delivered
@@ -104,7 +104,7 @@ const DeliveryHistory = ({ status }: Props) => {
                   status >= 5 ? "bg-[green]" : ""
                 }`}
               >
-                <FaCheck color="white" className="-rotate-4" />
+                <FaCheck color="white" className="-rotate-45" />
               </div>
               <div className="absolute -translate-x-2/4 text-center font-medium text-[13px] leading-[1em] lg:left-2/4 lg:top-[35px] left-[100px] top-0">
                 Received
@@ -124,7 +124,7 @@ const DeliveryHistory = ({ status }: Props) => {
                   status >= 6 ? "bg-[green]" : ""
                 }`}
               >
-                <FaCheck color="white" className="-rotate-4" />
+                <FaCheck color="white" className="-rotate-45" />
               </div>
               <div className="absolute -translate-x-2/4 text-center font-medium text-[13px] leading-[1em] lg:left-2/4 lg:top-[35px] left-[100px] top-0">
                 Return Logged
@@ -148,7 +148,7 @@ const DeliveryHistory = ({ status }: Props) => {
                       status >= 8 ? "bg-[green]" : ""
                     }`}
                   >
-                    <FaCheck color="white" className="-rotate-4" />
+                    <FaCheck color="white" className="-rotate-45" />
                   </div>
                   <div className="absolute -translate-x-2/4 text-center font-medium text-[13px] leading-[1em] lg:left-2/4 lg:top-[35px] left-[100px] top-0">
                     Return Approved
@@ -173,7 +173,7 @@ const DeliveryHistory = ({ status }: Props) => {
                       status >= 7 ? "bg-[red]" : ""
                     }`}
                   >
-                    <FaCheck color="white" />
+                    <FaCheck color="white" className="-rotate-45" />
                   </div>
                   <div className="absolute -translate-x-2/4 text-center font-medium text-[13px] leading-[1em] lg:left-2/4 lg:top-[35px] left-[100px] top-0">
                     Return Declined
@@ -194,7 +194,7 @@ const DeliveryHistory = ({ status }: Props) => {
                   status >= 9 ? "bg-[green]" : ""
                 }`}
               >
-                <FaCheck color="white" className="-rotate-4" />
+                <FaCheck color="white" className="-rotate-45" />
               </div>
               <div className="absolute -translate-x-2/4 text-center font-medium text-[13px] leading-[1em] lg:left-2/4 lg:top-[35px] left-[100px] top-0">
                 Return Dispatched
@@ -216,7 +216,7 @@ const DeliveryHistory = ({ status }: Props) => {
                   status >= 10 ? "bg-[green]" : ""
                 }`}
               >
-                <FaCheck color="white" className="-rotate-4" />
+                <FaCheck color="white" className="-rotate-45" />
               </div>
               <div className="absolute -translate-x-2/4 text-center font-medium text-[13px] leading-[1em] lg:left-2/4 lg:top-[35px] left-[100px] top-0">
                 Return Delivered
@@ -238,7 +238,7 @@ const DeliveryHistory = ({ status }: Props) => {
                   status >= 11 ? "bg-[green]" : ""
                 }`}
               >
-                <FaCheck color="white" className="-rotate-4" />
+                <FaCheck color="white" className="-rotate-45" />
               </div>
               <div className="absolute -translate-x-2/4 text-center font-medium text-[13px] leading-[1em] lg:left-2/4 lg:top-[35px] left-[100px] top-0">
                 Return Received
@@ -258,7 +258,7 @@ const DeliveryHistory = ({ status }: Props) => {
                   status >= 13 ? "bg-[green]" : ""
                 }`}
               >
-                <FaCheck color="white" className="-rotate-4" />
+                <FaCheck color="white" className="-rotate-45" />
               </div>
               <div className="absolute -translate-x-2/4 text-center font-medium text-[13px] leading-[1em] lg:left-2/4 lg:top-[35px] left-[100px] top-0">
                 Pay Seller
@@ -283,7 +283,7 @@ const DeliveryHistory = ({ status }: Props) => {
                   status >= 12 ? "bg-[red]" : ""
                 }`}
               >
-                <FaCheck color="white" />
+                <FaCheck color="white" className="-rotate-45" />
               </div>
               <div className="absolute -translate-x-2/4 text-center font-medium text-[13px] leading-[1em] lg:left-2/4 lg:top-[35px] left-[100px] top-0">
                 Buyer Refund

@@ -32,6 +32,9 @@ const ReturnTable = ({ returns }: Props) => {
   }
 
   const sortedReturns = useMemo(() => {
+    // TODO: remove this
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     if (sortKey && returns[sortKey.key as RetKey]) {
       return returns.sort((a, b) => {
         const aVal = a[sortKey.key as RetKey] ?? ""

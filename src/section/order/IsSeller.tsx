@@ -259,11 +259,7 @@ const IsSeller = ({
             deliveryNumber(orderItem.deliveryStatus) < 4 && (
               <button
                 onClick={() => refund(orderItem)}
-                className="btn btn-primary w-100"
-                style={{
-                  background: "var(--malon-color)",
-                  marginTop: "10px",
-                }}
+                className="inline-block bg-malon-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
               >
                 Refund
               </button>
@@ -286,11 +282,7 @@ const IsSeller = ({
                   paySeller(orderItem)
                   deliverOrderHandler("Payment To Seller Initiated", orderItem)
                 }}
-                className="btn btn-primary w-100"
-                style={{
-                  background: "var(--malon-color)",
-                  marginTop: "10px",
-                }}
+                className="inline-block bg-malon-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
               >
                 Pay Seller
               </button>
