@@ -171,10 +171,10 @@ const Brand = () => {
               : brandKey.charAt(5).toUpperCase()
           }
         >
-          <h2 className="font-black text-xl lg:text-3xl bg-gray-300 mb-3 mt-8 p-1 text-center w-60 mx-auto lg:ml-36 items-center justify-center rounded-xl">
+          <h2 className="font-black text-xl lg:text-3xl bg-gray-300 mb-3 mt-8 lg:w-8/12 text-center lg:text-left mx-auto lg:pl-3 lg:ml-36 p-1 rounded-xl">
             {brandKey}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 md:gap-4 mx-auto max-w-6xl ">
+          <div className="grid grid-cols-1 md:grid-cols-3 md:gap-4 mx-auto max-w-4xl">
             {brandNames.map((brandName: string) => (
               <div
                 key={brandName}
