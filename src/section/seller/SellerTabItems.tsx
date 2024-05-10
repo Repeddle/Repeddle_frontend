@@ -1,22 +1,22 @@
-import useAuth from "../../hooks/useAuth"
-import { IProduct } from "../../types/product"
-import ProductItem from "../../components/ProductItem"
-import { Link } from "react-router-dom"
-import MessageBox from "../../components/MessageBox"
-import LoadingBox from "../../components/LoadingBox"
-import { FaCirclePlus } from "react-icons/fa6"
-import { IUser } from "../../types/user"
+import useAuth from "../../hooks/useAuth";
+import { IProduct } from "../../types/product";
+import ProductItem from "../../components/ProductItem";
+import { Link } from "react-router-dom";
+import MessageBox from "../../components/MessageBox";
+import LoadingBox from "../../components/LoadingBox";
+import { FaCirclePlus } from "react-icons/fa6";
+import { IUser } from "../../types/user";
 
-const tabs = ["all", "selling", "sold", "liked"] as const
-type DisplayTab = (typeof tabs)[number] | "saved"
+const tabs = ["all", "selling", "sold", "liked"] as const;
+type DisplayTab = (typeof tabs)[number] | "saved";
 
 type Props = {
-  displayTab: DisplayTab
-  loading: boolean
-  error?: string | null
-  products: IProduct[]
-  user: IUser
-}
+  displayTab: DisplayTab;
+  loading: boolean;
+  error?: string | null;
+  products: IProduct[];
+  user: IUser;
+};
 
 const SellerTabItems = ({
   displayTab,
@@ -25,7 +25,7 @@ const SellerTabItems = ({
   products,
   user,
 }: Props) => {
-  const { user: userInfo } = useAuth()
+  const { user: userInfo } = useAuth();
 
   return (
     <div className="grid grid-cols-[repeat(2,1fr)] bg-light-ev1 dark:bg-dark-ev1 p-0 lg:grid-cols-[repeat(4,1fr)] gap-2 lg:p-2.5 rounded-[0.2rem]">
@@ -148,7 +148,7 @@ const SellerTabItems = ({
                   <div
                     className="relative flex justify-center w-[162px] h-[342px] mx-[3px] my-[5px] lg:w-auto lg:h-auto m-0"
                     // key={product._id}
-                    key={product}
+                    key={product._id}
                   >
                     {/* TODO: type fix */}
                     {/* <ProductItem product={product} /> */}
@@ -160,7 +160,7 @@ const SellerTabItems = ({
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default SellerTabItems
+export default SellerTabItems;
