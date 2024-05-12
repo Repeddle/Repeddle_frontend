@@ -43,6 +43,8 @@ import Brand from "./pages/defaults/brands/Brand";
 import HowToLogAreturn from "./pages/defaults/info/HowToLogAreturn";
 import Rebundlesimplified from "./pages/defaults/info/Rebundlesimplified";
 import Buyersguide from "./pages/defaults/info/Buyersguide";
+import ArticleList from "./pages/protected/articles";
+import CreateArticle from "./pages/protected/articles/CreateArticles";
 
 const router = createBrowserRouter([
   {
@@ -111,6 +113,8 @@ const router = createBrowserRouter([
           { path: "newsletter", element: <NewsletterList /> },
           { path: "otherbrand", element: <OtherBrand /> },
           { path: "messages", element: <Message /> },
+          { path: "articlelist", element: <ArticleList /> },
+          { path: "createarticle", element: <CreateArticle onCancel={() => {}} /> },
         ],
       },
     ],
