@@ -23,15 +23,22 @@ type ProdKey = keyof IProduct
 
 const ProductList = () => {
   const { user } = useAuth()
-  const { fetchUserProducts, loading, error, products, deleteProduct } =
-    useProducts()
+  const {
+    fetchUserProducts,
+    fetchProducts,
+    loading,
+    error,
+    products,
+    deleteProduct,
+  } = useProducts()
   const { addNotification } = useToastNotification()
 
   const [productQuery, setProductQuery] = useState("")
 
   useEffect(() => {
-    fetchUserProducts()
-  }, [])
+    if (user?.isAdmin) fetchProducts()
+    else fetchUserProducts()
+  }, [user?.isAdmin])
 
   console.log(products)
 

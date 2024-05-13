@@ -57,6 +57,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
   // Function to fetch products
   const fetchProducts = async (params?: string) => {
     try {
+      setError("")
       setLoading(true)
       const result = await fetchProductsService(params)
       setProducts(result)
@@ -72,6 +73,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
   // Function to fetch products
   const fetchUserProducts = async (params?: string) => {
     try {
+      setError("")
       setLoading(true)
       const result = await fetchUserProductsService(params)
       setProducts(result)
@@ -87,6 +89,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
   // Function to fetch product by slug
   const fetchProductBySlug = async (slug: string) => {
     try {
+      setError("")
       setLoading(true)
       const result = await fetchProductBySlugService(slug)
       setLoading(false)
@@ -100,6 +103,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
 
   const createProduct = async (product: ICreateProduct) => {
     try {
+      setError("")
       setLoading(true)
       const result = await createProductService(product)
       setProducts((prevProducts) => {
@@ -121,6 +125,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
 
   const updateProduct = async (id: string, product: ICreateProduct) => {
     try {
+      setError("")
       setLoading(true)
       const result = await updateProductService(id, product)
       setProducts((prevProducts) => {
@@ -142,6 +147,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
 
   const deleteProduct = async (id: string) => {
     try {
+      setError("")
       setLoading(true)
       const data = await deleteProductService(id)
       setProducts((prevProducts) => {

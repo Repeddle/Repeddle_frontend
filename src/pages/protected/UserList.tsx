@@ -1,8 +1,11 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { FaSortDown, FaSortUp, FaTrash } from "react-icons/fa"
 import { manyUsers } from "../../utils/data"
 import moment from "moment"
 import { Link } from "react-router-dom"
+import useAuth from "../../hooks/useAuth"
+import { IUser } from "../../types/user"
+import { currency, region } from "../../utils/common"
 
 const headers = [
   { title: "ID", key: "_id", hide: true },
@@ -14,11 +17,21 @@ const headers = [
 ] as const
 type headerKey = (typeof headers)[number]["key"]
 
-//   TODO:
-const currency = "N"
-
 const UserList = () => {
   const [userQuery, setUserQuery] = useState("")
+  const [users, setUsers] = useState<IUser[]>([])
+
+  const { getAllUser } = useAuth()
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const allUsers = await getAllUser()
+
+      if (allUsers) setUsers(allUsers)
+    }
+
+    fetchUsers()
+  }, [])
 
   const [sortKey, setSortKey] = useState<{
     key: headerKey
@@ -39,7 +52,7 @@ const UserList = () => {
 
   const sortedUsers = useMemo(() => {
     if (sortKey) {
-      return manyUsers.sort((a, b) => {
+      return users.sort((a, b) => {
         const aVal = a[sortKey.key]
         const bVal = b[sortKey.key]
         if (typeof aVal === "number" && typeof bVal === "number") {
@@ -51,9 +64,8 @@ const UserList = () => {
           : bVal.toString().localeCompare(aVal.toString())
       })
     }
-    console.log("here")
     return [...manyUsers]
-  }, [sortKey])
+  }, [sortKey, users])
 
   return (
     <div className="flex-[4] overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
@@ -137,7 +149,7 @@ const UserList = () => {
                     </td>
 
                     <td className="px-3 h-[52px] whitespace-nowrap w-auto overflow-hidden text-ellipsis">
-                      {currency} {user.earnings}
+                      {currency(region())} {user.earnings}
                     </td>
 
                     <td className="px-3 flex items-center h-[52px] whitespace-nowrap w-auto overflow-hidden text-ellipsis">

@@ -85,7 +85,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                     <div className="border m-[5px] p-2.5 rounded-[0.2rem] border-light-ev3 dark:border-dark-ev3">
                       <div className="flex items-center justify-between mx-0 my-[15px]">
                         <input
-                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b border-solid focus:border-b-orange-color focus:border-b"
+                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b   focus:border-b-orange-color focus:border-b"
                           type="text"
                           onClick={() => setShowMap(true)}
                           placeholder="Choose the closest pick up point"
@@ -102,7 +102,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                       )}
                       <div className="flex items-center justify-between mx-0 my-[15px]">
                         <input
-                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b border-solid focus:border-b-orange-color focus:border-b"
+                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b   focus:border-b-orange-color focus:border-b"
                           type="text"
                           onChange={(e) =>
                             setMeta({ ...meta, phone: e.target.value })
@@ -172,7 +172,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                       </div>
                       <div className="flex items-center justify-between mx-0 my-[15px]">
                         <input
-                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b border-solid focus:border-b-orange-color focus:border-b"
+                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b   focus:border-b-orange-color focus:border-b"
                           type="text"
                           onChange={(e) =>
                             setMeta({ ...meta, phone: e.target.value })
@@ -251,7 +251,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                       </div>
                       <div className="flex items-center justify-between mx-0 my-[15px]">
                         <input
-                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b border-solid focus:border-b-orange-color focus:border-b"
+                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b   focus:border-b-orange-color focus:border-b"
                           type="text"
                           onChange={(e) =>
                             setMeta({ ...meta, phone: e.target.value })
@@ -273,7 +273,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                     <div className="border m-[5px] p-2.5 rounded-[0.2rem] border-light-ev3 dark:border-dark-ev3">
                       <div className="flex items-center justify-between mx-0 my-[15px]">
                         <input
-                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b border-solid focus:border-b-orange-color focus:border-b"
+                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b   focus:border-b-orange-color focus:border-b"
                           type="text"
                           onChange={(e) =>
                             setMeta({ ...meta, name: e.target.value })
@@ -285,7 +285,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
 
                       <div className="flex items-center justify-between mx-0 my-[15px]">
                         <input
-                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b border-solid focus:border-b-orange-color focus:border-b"
+                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b   focus:border-b-orange-color focus:border-b"
                           type="text"
                           onChange={(e) =>
                             setMeta({ ...meta, phone: e.target.value })
@@ -296,7 +296,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                       </div>
                       <div className="flex items-center justify-between mx-0 my-[15px]">
                         <input
-                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b border-solid focus:border-b-orange-color focus:border-b"
+                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b   focus:border-b-orange-color focus:border-b"
                           type="text"
                           onChange={(e) =>
                             setMeta({ ...meta, email: e.target.value })
@@ -307,7 +307,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                       </div>
                       <div className="flex items-center justify-between mx-0 my-[15px]">
                         <input
-                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b border-solid focus:border-b-orange-color focus:border-b"
+                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b   focus:border-b-orange-color focus:border-b"
                           type="text"
                           onChange={(e) =>
                             setMeta({ ...meta, company: e.target.value })
@@ -318,7 +318,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                       </div>
                       <div className="flex items-center justify-between mx-0 my-[15px]">
                         <input
-                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b border-solid focus:border-b-orange-color focus:border-b"
+                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b   focus:border-b-orange-color focus:border-b"
                           type="text"
                           onChange={(e) =>
                             setMeta({ ...meta, address: e.target.value })
@@ -329,7 +329,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                       </div>
                       <div className="flex items-center justify-between mx-0 my-[15px]">
                         <input
-                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b border-solid focus:border-b-orange-color focus:border-b"
+                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b   focus:border-b-orange-color focus:border-b"
                           type="text"
                           onChange={(e) =>
                             setMeta({ ...meta, suburb: e.target.value })
@@ -340,7 +340,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                       </div>
                       <div className="flex items-center justify-between mx-0 my-[15px]">
                         <input
-                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b border-solid focus:border-b-orange-color focus:border-b"
+                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b   focus:border-b-orange-color focus:border-b"
                           type="text"
                           onChange={(e) =>
                             setMeta({ ...meta, city: e.target.value })
@@ -351,7 +351,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                       </div>
                       <div className="flex items-center justify-between mx-0 my-[15px]">
                         <input
-                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b border-solid focus:border-b-orange-color focus:border-b"
+                          className="w-full h-[30px] pl-2.5 border-b-light-ev3 dark:border-b-light-ev3 border-b   focus:border-b-orange-color focus:border-b"
                           type="text"
                           onChange={(e) =>
                             setMeta({ ...meta, postalcode: e.target.value })

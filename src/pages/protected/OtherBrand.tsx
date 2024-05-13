@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { brandsData } from "../../utils/data"
-import { IBrand } from "../../types/message"
 import { FaCheck, FaDotCircle, FaTimes } from "react-icons/fa"
+import { IBrand } from "../../types/product"
 
 const OtherBrand = () => {
   const [refresh, setRefresh] = useState(true)
@@ -55,7 +55,7 @@ const OtherBrandRow = ({ brand }: Props) => {
       {isEdit ? (
         <>
           <input
-            className="w-[250px] h-[30px] border pl-2.5 focus:outline-none placeholder:text-xs border-light-ev3 dark:border-dark-ev3 text-black-color dark:text-white-color border-solid focus:border focus:border-orange-color"
+            className="w-[250px] h-[30px] border pl-2.5 focus:outline-none placeholder:text-xs border-light-ev3 dark:border-dark-ev3 text-black-color dark:text-white-color   focus:border focus:border-orange-color"
             name="brand"
             type="text"
             onChange={(e) => setNewName(e.target.value)}
@@ -75,7 +75,7 @@ const OtherBrandRow = ({ brand }: Props) => {
           <div className="flex items-center">
             <FaDotCircle className="text-[8px] mr-2.5" />
             <div
-              className={`${brand.isAdded ? "line-through text-[gray]" : ""}`}
+              className={`${brand.published ? "line-through text-[gray]" : ""}`}
             >
               {brand.name}
             </div>

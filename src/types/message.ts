@@ -11,9 +11,17 @@ export type IContactMessage = {
   updatedAt: string
 }
 
+export type ICreateContactMessage = {
+  name: string
+  email: string
+  category: string
+  subject: string
+  message: string
+  file: string[]
+}
+
 export type INewsletter = {
   _id: string
-  emailType: string
   email: string
   isDeleted: boolean
   url: string
@@ -31,12 +39,4 @@ export type IEmailList = {
   name: string
   subject: string
   template: string
-}
-
-export type IBrand = {
-  _id: string
-  name: string
-  createdAt: string
-  updatedAt: string
-  isAdded: boolean
 }

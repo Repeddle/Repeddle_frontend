@@ -57,6 +57,8 @@ import PurchaseReturn from "./pages/protected/PurchaseReturn"
 import TransactionListUser from "./pages/protected/TransactionListUser"
 import ReturnPage from "./pages/protected/ReturnPage"
 import User from "./pages/protected/User"
+import Transaction from "./pages/protected/Transaction"
+import EditProduct from "./pages/protected/EditProduct"
 
 const router = createBrowserRouter([
   {
@@ -140,6 +142,8 @@ const router = createBrowserRouter([
           { path: "buyerreturns", element: <PurchaseReturn /> },
           { path: "return/:id", element: <ReturnPage /> },
           { path: "user/:id", element: <User /> },
+          { path: "transaction/:id", element: <Transaction /> },
+          { path: "product/:id", element: <EditProduct /> },
         ],
       },
     ],
