@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -5,6 +6,8 @@ import useArticle from "../../../hooks/useArticle";
 import { FaEdit, FaTrash } from "react-icons/fa"; 
 import { Article } from "../../../types/article";
 import CreateArticle from "./CreateArticles";
+import deleteArticleService from '../../../context/ArticleContext';
+
 
 const SkeletonLoader = () => (
   <div className="animate-pulse bg-gray-200 rounded-lg p-4">
@@ -15,7 +18,7 @@ const SkeletonLoader = () => (
 );
 
 const ArticleList = () => {
-  const { articles, loading } = useArticle();
+  const { articles, loading, setArticles } = useArticle();
   const [activeComponent, setActiveComponent] = useState('list');
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 
@@ -29,15 +32,25 @@ const ArticleList = () => {
     setActiveComponent('editArticle');
   };
 
-  const handleDeleteClick = (article: Article) => {
+  const handleDeleteClick = async (article: Article) => {
     const confirmDelete = window.confirm('Do you really want to delete this article?');
     if (confirmDelete) {
-      // Delete the article here
-      console.log(`Deleting article with id: ${article._id}`);
+      deleteArticleService({ id: article._id.toString() } as any);
+
+      setArticles(articles.filter((a) => a._id!== article._id));
     }
-  };
+  }
 
   const handleCancelCreateArticle = () => {
+    setActiveComponent('list');
+  };
+
+  const handleArticleCreated = (article: Article) => {
+    if (selectedArticle) {
+      setArticles(articles.map((a) => a._id === article._id ? article : a));
+    } else {
+      setArticles([...articles, article]);
+    }
     setActiveComponent('list');
   };
 
@@ -98,7 +111,7 @@ const ArticleList = () => {
         </>
       )}
 
-      {(activeComponent === 'createArticle' || activeComponent === 'editArticle') && <CreateArticle onCancel={handleCancelCreateArticle} article={selectedArticle} />}
+      {(activeComponent === 'createArticle' || activeComponent === 'editArticle') && <CreateArticle onCancel={handleCancelCreateArticle} onArticleCreated={handleArticleCreated} article={selectedArticle} />}
     </div>
   );
 };

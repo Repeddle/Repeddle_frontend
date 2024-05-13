@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, ReactNode, createContext } from 'react';
 import {
   fetchArticles,
@@ -30,11 +31,9 @@ interface ArticleContextData {
 }
 
 // Create the ArticleContext
-export const ArticleContext = createContext<ArticleContextData | undefined>(
-  undefined
-);
+export const ArticleContext = createContext<ArticleContextData | undefined>(undefined);
 
-// CartProvider component
+// ArticleProvider component
 const ArticleProvider: React.FC<Props> = ({ children }) => {
   const { setAuthErrorModalOpen } = useAuth();
   const [articles, setArticles] = useState<Article[]>([]);
@@ -42,14 +41,10 @@ const ArticleProvider: React.FC<Props> = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleError = (error: any) => {
     setLoading(false);
-
-    // Check if the error indicates an invalid or expired token
     if (error === 'Token expired' || error === 'Invalid token') {
       setError('');
-      // Set the state to open the auth error modal
       setAuthErrorModalOpen(true);
     } else {
       setError(error || 'An error occurred.');
@@ -93,7 +88,7 @@ const ArticleProvider: React.FC<Props> = ({ children }) => {
     try {
       await updateArticleService(_id, articleData);
       const updatedArticles = articles.map((article) =>
-        article._id === _id ? { ...article, ...articleData } : article
+        article._id === _id? {...article,...articleData } : article
       );
       setArticles(updatedArticles);
       return true;
@@ -107,7 +102,7 @@ const ArticleProvider: React.FC<Props> = ({ children }) => {
   const deleteArticle = async (_id: number): Promise<boolean> => {
     try {
       await deleteArticleService(_id);
-      setArticles(articles.filter((article) => article._id !== _id));
+      setArticles(articles.filter((article) => article._id!== _id));
       return true;
     } catch (error) {
       console.error('Error deleting article:', error);

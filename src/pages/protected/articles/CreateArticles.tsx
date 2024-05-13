@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Article } from "../../../types/article";
+import { ArticleContext } from '../../../context/ArticleContext';
 
-const CreateArticle = ({ onCancel, article }: { onCancel: () => void, article: Article | null }) => {
+  const CreateArticle = ({ onCancel, onArticleCreated, article }: { onCancel: () => void, onArticleCreated: (article: Article) => void, article: Article | null }) => {
+  const { createArticle, updateArticle } = useContext(ArticleContext);
   const [value, setValue] = useState('');
   const [category, setCategory] = useState('');
 
@@ -14,14 +16,14 @@ const CreateArticle = ({ onCancel, article }: { onCancel: () => void, article: A
     }
   }, [article]);
 
-  const createArticle = async (category: string, content: string) => {
-    // Make an API request to your backend server to create the article
-    // This is just a placeholder and should be replaced with your actual API request
-    console.log(`Creating article with category: ${category} and content: ${content}`);
-  };
-
-  const handleContinueClick = () => {
-    createArticle(category, value);
+  const handleContinueClick = async () => {
+    let newArticle;
+    if (article) {
+      newArticle = await updateArticle(article._id, { topic: category, content: value });
+    } else {
+      newArticle = await createArticle({ topic: category, content: value });
+    }
+    onArticleCreated(newArticle);
   };
 
   const handleCancelClick = () => {
@@ -64,4 +66,4 @@ const CreateArticle = ({ onCancel, article }: { onCancel: () => void, article: A
   )
 }
 
-export default CreateArticle
+export default CreateArticle;
