@@ -1,18 +1,18 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
-import Rating from "./Rating"
-import moment from "moment"
-import { FaThumbsDown, FaThumbsUp } from "react-icons/fa"
-import useAuth from "../hooks/useAuth"
-import { Review } from "../types/product"
-import MessageBox from "./MessageBox"
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import Rating from "./Rating";
+import useAuth from "../hooks/useAuth";
+import { Review } from "../types/product";
+import MessageBox from "./MessageBox";
+import { FaThumbsDown, FaThumbsUp } from "react-icons/fa";
+import moment from "moment";
 
 type Props = {
-  setShowModel: (val: boolean) => void
-}
+  setShowModel: (val: boolean) => void;
+};
 
 const ReviewLists = ({ setShowModel }: Props) => {
-  const [reviews] = useState<Review[]>([])
+  const [reviews] = useState<Review[]>([]);
 
   return (
     <div className="p-[30px]">
@@ -24,26 +24,26 @@ const ReviewLists = ({ setShowModel }: Props) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 type ReviewItemProps = {
-  setShowModel: (val: boolean) => void
-  item: Review
-}
+  setShowModel: (val: boolean) => void;
+  item: Review;
+};
 
 const ReviewItem = ({ setShowModel, item }: ReviewItemProps) => {
-  const [replyText, setReplyText] = useState("")
-  const [replyVisible, setReplyVisible] = useState(false)
-  const [currentReview] = useState(item)
+  const [replyText, setReplyText] = useState("");
+  const [replyVisible, setReplyVisible] = useState(false);
+  const [currentReview] = useState(item);
 
-  const { user } = useAuth()
+  const { user } = useAuth();
 
   const handleReply = () => {
-    setReplyVisible(true)
-  }
+    setReplyVisible(true);
+  };
 
-  const handleReplySubmit = () => {}
+  const handleReplySubmit = () => {};
 
   return (
     <div className="flex items-start mb-5 p-4">
@@ -149,7 +149,7 @@ const ReviewItem = ({ setShowModel, item }: ReviewItemProps) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ReviewLists
+export default ReviewLists;

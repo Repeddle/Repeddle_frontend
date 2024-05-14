@@ -33,7 +33,7 @@ const SubCategories = ({
             openModal("addNameLink2")
           }}
         >
-          <FaPlus className="text-orange-color" />
+          <FaPlus className="text-orange-color m-auto" />
         </button>
       </div>
       {subCategories.map((subcategory, subcategoryIndex) => (

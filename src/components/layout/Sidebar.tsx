@@ -12,6 +12,14 @@ import { Link } from "react-router-dom"
 import useAuth from "../../hooks/useAuth"
 import useTheme from "../../hooks/useTheme"
 import { BiTransfer } from "react-icons/bi"
+import {
+  FaChartLine,
+  FaComment,
+  FaEnvelope,
+  FaMoneyBill,
+  FaQuestionCircle,
+} from "react-icons/fa"
+import { FaListCheck } from "react-icons/fa6"
 
 const sidebarLinks = [
   {
@@ -37,6 +45,36 @@ const sidebarLinks = [
     path: "/dashboard/transactions",
     text: "Transactions",
     icon: <BiTransfer />,
+  },
+  {
+    path: "/dashboard/analytics",
+    text: "Analytics",
+    icon: <FaChartLine />,
+  },
+  {
+    path: "/dashboard/categories",
+    text: "Categories",
+    icon: <FaListCheck />,
+  },
+  {
+    path: "/dashboard/contact",
+    text: "Contact",
+    icon: <FaEnvelope />,
+  },
+  {
+    path: "/dashboard/newsletter",
+    text: "Collected Email",
+    icon: <FaMoneyBill />,
+  },
+  {
+    path: "/dashboard/otherbrand",
+    text: "Other Brands",
+    icon: <FaQuestionCircle />,
+  },
+  {
+    path: "/dashboard/messages",
+    text: "Messages",
+    icon: <FaComment />,
   },
 ]
 

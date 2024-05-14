@@ -1,25 +1,33 @@
-import { useState } from "react"
-import LoadingBox from "../../components/LoadingBox"
-import MessageBox from "../../components/MessageBox"
-import moment from "moment"
-import { getMonday } from "../../utils/common"
-import WidgetSmallProduct from "../../section/overview/WidgetSmallProduct"
-import { productDetails } from "../../utils/data"
-import WidgetLarge from "../../components/WidgetLarge"
-import FeaturedInfoOverview from "../../section/overview/FeaturedInfoOverview"
+import { useState } from "react";
+import LoadingBox from "../../components/LoadingBox";
+import MessageBox from "../../components/MessageBox";
+import moment from "moment";
+import { getMonday } from "../../utils/common";
+import WidgetSmallProduct from "../../section/overview/WidgetSmallProduct";
+import { productDetails } from "../../utils/data";
+import WidgetLarge from "../../components/WidgetLarge";
+import FeaturedInfoOverview from "../../section/overview/FeaturedInfoOverview";
 
-const today = moment().startOf("day")
+const today = moment().startOf("day");
 
 function Overview() {
-  const now = new window.Date()
-  const firstDay = new window.Date(now.getFullYear(), now.getMonth(), 1)
+  const now = new window.Date();
+  const firstDay = new window.Date(now.getFullYear(), now.getMonth(), 1);
 
-  const [from, setFrom] = useState("2022-04-24")
-  const [to, setTo] = useState<string | Date>(now)
+  const [from, setFrom] = useState("2022-04-24");
+  const [to, setTo] = useState<string | Date>(now);
 
-  const loading = false
-  const error = ""
-  const orders = { todayPurchases: [], todayProducts: [], todayOrders: [] }
+  const loading = false;
+  // const orderData: unknown[] = []
+  // const totalProducts = 5000
+  // const totalPurchase = 5000
+  // const totalOrders = 5000
+  // const productData: unknown[] = []
+  // const purchaseData: unknown[] = []
+  // const totalSales = 5000
+  // const currency = "N"
+  const error = "";
+  // const orders = { todayPurchases: [], todayProducts: [], todayOrders: [] }
 
   return (
     <div className="flex-[4]">
@@ -35,33 +43,37 @@ function Overview() {
               <FeaturedInfoOverview
                 type="earning"
                 number={
-                  orders && orders.todayOrders.length
-                    ? orders.todayOrders[0].sales
-                    : 0
+                  0
+                  // orders && orders.todayOrders.length
+                  //   ? orders.todayOrders[0].sales
+                  //   : 0
                 }
               />
               <FeaturedInfoOverview
                 type="order"
                 number={
-                  orders && orders.todayOrders.length
-                    ? orders.todayOrders[0].orders
-                    : 0
+                  0
+                  // orders && orders.todayOrders.length
+                  //   ? orders.todayOrders[0].orders
+                  //   : 0
                 }
               />
               <FeaturedInfoOverview
                 type="product"
                 number={
-                  orders && orders.todayProducts.length
-                    ? orders.todayProducts[0].numProducts
-                    : 0
+                  0
+                  // orders && orders.todayProducts.length
+                  //   ? orders.todayProducts[0].numProducts
+                  //   : 0
                 }
               />
               <FeaturedInfoOverview
                 type="purchase"
                 number={
-                  orders && orders.todayPurchases.length
-                    ? orders.todayPurchases[0].orders
-                    : 0
+                  0
+                  // orders && orders.todayPurchases.length
+                  //   ? orders.todayPurchases[0].orders
+                  //   : 0
                 }
               />
             </div>
@@ -71,8 +83,8 @@ function Overview() {
             <div
               className="font-medium cursor-pointer border border-malon-color px-2 py-px  hover:bg-malon-color hover:text-white-color"
               onClick={() => {
-                setFrom(today.toDate().toString())
-                setTo(moment(today).endOf("day").toDate())
+                setFrom(today.toDate().toString());
+                setTo(moment(today).endOf("day").toDate());
               }}
             >
               Today
@@ -80,8 +92,8 @@ function Overview() {
             <div
               className="font-medium cursor-pointer border border-malon-color px-2 py-px  hover:bg-malon-color hover:text-white-color"
               onClick={() => {
-                setFrom(getMonday(today.toDate()).toString())
-                setTo(moment(today).endOf("day").toDate())
+                setFrom(getMonday(today.toDate()).toString());
+                setTo(moment(today).endOf("day").toDate());
               }}
             >
               This Week
@@ -89,8 +101,8 @@ function Overview() {
             <div
               className="font-medium cursor-pointer border border-malon-color px-2 py-px  hover:bg-malon-color hover:text-white-color"
               onClick={() => {
-                setFrom(firstDay.toString())
-                setTo(moment(today).endOf("day").toDate())
+                setFrom(firstDay.toString());
+                setTo(moment(today).endOf("day").toDate());
               }}
             >
               This Month
@@ -119,12 +131,12 @@ function Overview() {
             <div className="flex-1 flex flex-col gap-5">
               {/* <Chart
                 title="Earning"
-                total={`${currency}${totalSales.toFixed(2)}`}
+                total={`${currency} ${totalSales.toFixed(2)}`}
                 data={orderData}
                 dataKey="earning"
                 grid
-              /> */}
-              {/* <Chart
+              />
+              <Chart
                 title="Sold Orders"
                 total={totalOrders}
                 data={orderData}
@@ -139,8 +151,8 @@ function Overview() {
                 data={productData}
                 dataKey="products"
                 grid
-              /> */}
-              {/* <Chart
+              />
+              <Chart
                 title="Purchase Order"
                 data={purchaseData}
                 dataKey="order"
@@ -157,7 +169,7 @@ function Overview() {
         </>
       )}
     </div>
-  )
+  );
 }
 
-export default Overview
+export default Overview;

@@ -1,5 +1,3 @@
-
-
 const Buyersguide = () => {
   return (
     <div className="container mx-auto max-w-7xl px-8">
@@ -97,20 +95,34 @@ const Buyersguide = () => {
       </h2>
       <section className="mb-6">
         <p className="text-justify">
-          We please ask that you give the seller <b>3 days</b> to process and dispatch your order. When your order is dispatched, it should arrive between <b>3-7</b> business days according to the delivery window
-          of your chosen delivery method. When it arrives at your pick- up point or address, ensure to pick them up and inspect your order for your satisfaction. Please do not forget to <b>mark</b> your
-          order as <b>received</b> so the seller can get paid. To mark order as received, go to your <b>profile {'>'} Purchased order {'>'} View {'>'} Confirm You Have Received Order.</b> You can also mark order as received
-          by clicking the order notification from the notification bell of the App/Website. <b>NOTE:</b> You have <b>3 days</b> to mark order as received. We’ll automatically pay the seller after <b>3 days</b>
-          your order has been delivered to your pick-up point or address if you did not mark your order as received.
+          We please ask that you give the seller <b>3 days</b> to process and
+          dispatch your order. When your order is dispatched, it should arrive
+          between <b>3-7</b> business days according to the delivery window of
+          your chosen delivery method. When it arrives at your pick- up point or
+          address, ensure to pick them up and inspect your order for your
+          satisfaction. Please do not forget to <b>mark</b> your order as{" "}
+          <b>received</b> so the seller can get paid. To mark order as received,
+          go to your <b>profile</b>&gt;{" "}
+          <b>
+            Purchased order &gt; <b>View </b>&gt; Confirm You Have Received
+            Order.
+          </b>{" "}
+          You can also mark order as received by clicking the order notification
+          from the notification bell of the App/Website. <b>NOTE:</b> You have{" "}
+          <b>3 days</b> to mark order as received. We’ll automatically pay the
+          seller after <b>3 days</b>
+          your order has been delivered to your pick-up point or address if you
+          did not mark your order as received.
         </p>
       </section>
-      <h2 className="font-medium text-xl lg:text-2xl">
-        10. Item Not Sent?
-      </h2>
+      <h2 className="font-medium text-xl lg:text-2xl">10. Item Not Sent?</h2>
       <section className="mb-6">
         <p className="text-justify">
-          After 5 business days of making a purchase, if you did not received any communication or delivery update regarding your order, please ensure to message the seller through the provided message system on Repeddle.
-          At this time, you may also contact a support team through the <b>support icon</b> on the righthand side to get assistance.
+          After 5 business days of making a purchase, if you did not received
+          any communication or delivery update regarding your order, please
+          ensure to message the seller through the provided message system on
+          Repeddle. At this time, you may also contact a support team through
+          the <b>support icon</b> on the righthand side to get assistance.
         </p>
       </section>
     </div>

@@ -2,7 +2,8 @@ import { FormEvent, useState } from "react"
 import useToastNotification from "../hooks/useToastNotification"
 
 type Props = {
-  onSubmit: () => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onSubmit: any
   index: number | null
   onClose: () => void
   category: {
@@ -39,12 +40,13 @@ const FormModal = ({
 
     if (index !== null && index >= 0) {
       if (itemIndex !== null && itemIndex >= 0) {
-        onSubmit(index, itemIndex, name, isCategory, link)
+        // onSubmit(index, itemIndex, name, isCategory, link)
+        onSubmit()
       } else {
-        onSubmit(index, name, isCategory, link)
+        // onSubmit(index, name, isCategory, link)
       }
     } else {
-      onSubmit(name, isCategory, link)
+      // onSubmit(name, isCategory, link)
     }
     onClose()
   }

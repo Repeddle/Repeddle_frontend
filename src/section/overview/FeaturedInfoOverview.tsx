@@ -8,7 +8,9 @@ const featureType = {
     link: "See all users",
     to: "/dashboard/userlist",
     icon: (
-      <FaUser className="text-malon-color dark:bg-[#332021] bg-[#ecdada] text-lg self-end p-[5px] rounded-[0.2rem]" />
+      <div className="dark:bg-[#332021] bg-[#ecdada] self-end p-[5px] rounded-[0.2rem]">
+        <FaUser className="text-malon-color text-lg" />
+      </div>
     ),
   },
   order: {
@@ -17,7 +19,9 @@ const featureType = {
     to: "/dashboard/orderlist",
     link: "view all orders",
     icon: (
-      <FaBagShopping className="text-malon-color dark:bg-[#473527] bg-[#fcf0e0] text-lg self-end p-[5px] rounded-[0.2rem]" />
+      <div className="dark:bg-[#473527] bg-[#fcf0e0] self-end p-[5px] rounded-[0.2rem]">
+        <FaBagShopping className="text-malon-color text-lg" />
+      </div>
     ),
   },
 
@@ -27,7 +31,9 @@ const featureType = {
     to: "/dashboard/earning",
     link: "view all net earning",
     icon: (
-      <FaMoneyBill className="text-malon-color dark:bg-[#1d3b23] bg-[#d6f5dc] text-lg self-end p-[5px] rounded-[0.2rem]" />
+      <div className="dark:bg-[#1d3b23] bg-[#d6f5dc] self-end p-[5px] rounded-[0.2rem]">
+        <FaMoneyBill className="text-malon-color text-lg" />
+      </div>
     ),
   },
   product: {
@@ -36,7 +42,9 @@ const featureType = {
     to: "/dashboard/productlist",
     link: "View product list",
     icon: (
-      <FaBasketShopping className="text-malon-color dark:bg-[#464646] bg-[#d9d9d9] text-lg self-end p-[5px] rounded-[0.2rem]" />
+      <div className="dark:bg-[#464646] bg-[#d9d9d9] self-end p-[5px] rounded-[0.2rem]">
+        <FaBasketShopping className="text-malon-color text-lg" />
+      </div>
     ),
   },
   purchase: {
@@ -45,7 +53,9 @@ const featureType = {
     to: "/dashboard/productlist",
     link: "View product list",
     icon: (
-      <FaBagShopping className="text-malon-color dark:bg-[#473527] bg-[#fcf0e0] text-lg self-end p-[5px] rounded-[0.2rem]" />
+      <div className="dark:bg-[#473527] bg-[#fcf0e0] self-end p-[5px] rounded-[0.2rem]">
+        <FaBagShopping className="text-malon-color text-lg" />
+      </div>
     ),
   },
 }

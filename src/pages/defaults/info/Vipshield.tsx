@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-//import React from 'react'
-import { Link } from "react-router-dom";
-
 const Vipshield = () => {
   return (
     <div className="container mx-auto max-w-7xl px-8">
@@ -70,26 +66,43 @@ const Vipshield = () => {
         <div className="text-justify -mt-5">
           <ul className="list-disc">
             <li>
-              Profiles with VIP shield display will get priority visibility on our App and website including social media platforms.
-            </li>
-            <li>Getting priority visibility means you get boosted display of your contents and profile across all our Platforms, 
-                Articles and Mentions. This translate to more items/profile views, engagements and selling. More sale means more earnings.
+              Profiles with VIP shield display will get priority visibility on
+              our App and website including social media platforms.
             </li>
             <li>
-              If your earning remains positively higher than other sellers, you can then become our ambassador after due processes checks. 
-              Our aim is to convert many of our platform users to community influencers and ambassadors. Our influencers and ambassador may 
-              have access to benefits, including incentives.
+              Getting priority visibility means you get boosted display of your
+              contents and profile across all our Platforms, Articles and
+              Mentions. This translate to more items/profile views, engagements
+              and selling. More sale means more earnings.
+            </li>
+            <li>
+              If your earning remains positively higher than other sellers, you
+              can then become our ambassador after due processes checks. Our aim
+              is to convert many of our platform users to community influencers
+              and ambassadors. Our influencers and ambassador may have access to
+              benefits, including incentives.
             </li>
           </ul>
-          <p className="mt-4 text-justify"> <b className="text-yellow-500"> WE NEED EACH OTHER </b> This is a journey we are on. With you, 
-          we can achieve more for Africa and make our environment a better, cleaner planet to live.
+          <p className="mt-4 text-justify">
+            {" "}
+            <b className="text-yellow-500"> WE NEED EACH OTHER </b> This is a
+            journey we are on. With you, we can achieve more for Africa and make
+            our environment a better, cleaner planet to live.
           </p>
-          <p className="mt-4 text-justify"> <b className="text-yellow-500">JOIN US TODAY!</b>Together, we can make <b> SUSTAINABLE IMPACT </b> 
-          and change the way people think and use fashion one person at a time. This is the best gift we can give our generation, our planet and our future unborn.
+          <p className="mt-4 text-justify">
+            {" "}
+            <b className="text-yellow-500">JOIN US TODAY!</b>Together, we can
+            make <b> SUSTAINABLE IMPACT </b>
+            and change the way people think and use fashion one person at a
+            time. This is the best gift we can give our generation, our planet
+            and our future unborn.
           </p>
         </div>
 
-        <p className="text-center mt-12">SPREAD THE WORD. START SELLING. ADD MORE ITEMS TO KEEP EARNING <b className="text-red-500"> TODAY </b> </p>
+        <p className="text-center mt-12">
+          SPREAD THE WORD. START SELLING. ADD MORE ITEMS TO KEEP EARNING{" "}
+          <b className="text-red-500"> TODAY </b>{" "}
+        </p>
       </section>
     </div>
   );
