@@ -7,7 +7,8 @@ import useToastNotification from "../../hooks/useToastNotification"
 const TransactionListUser = () => {
   const [query, setQuery] = useState("")
 
-  const { error, fetchUserTransactions, transactions } = useTransactions()
+  const { error, fetchUserTransactions, loading, transactions } =
+    useTransactions()
   const { addNotification } = useToastNotification()
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const TransactionListUser = () => {
         />
       </div>
 
-      <TransactionTable transactions={transactions} />
+      <TransactionTable transactions={transactions} loading={loading} />
     </div>
   )
 }

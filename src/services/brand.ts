@@ -113,7 +113,9 @@ export const deleteBrandService = async (
   id: string
 ): Promise<{ status: boolean; message: string }> => {
   try {
-    const { data } = await api.delete(`/brands/${id}`)
+    const data: { message: string; status: boolean } = await api.delete(
+      `/brands/${id}`
+    )
 
     if (!data.status) {
       // Handle Delete brand error, e.g., display an error message to the user

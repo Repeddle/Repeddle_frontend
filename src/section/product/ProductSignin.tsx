@@ -2,6 +2,7 @@ import { FormEvent } from "react"
 import { Helmet } from "react-helmet-async"
 import { FaArrowRight } from "react-icons/fa"
 import { Link, useLocation } from "react-router-dom"
+import Button from "../../components/ui/Button"
 
 const ProductSignin = () => {
   //   const [email, setEmail] = useState("")
@@ -72,9 +73,7 @@ const ProductSignin = () => {
           />
         </Form.Group> */}
         <div className="mb-4">
-          <button type="submit" className="search-btn1">
-            Sign In
-          </button>
+          <Button text="Sign In" type="submit" />
         </div>
         <div className="mb-3">
           New customer?{"  "}

@@ -144,7 +144,7 @@ export const deleteProductService = async (
   id: string
 ): Promise<{ status: boolean; message: string }> => {
   try {
-    const { data } = await api.delete(`/products/${id}`)
+    const  data:{message:string;status:boolean}  = await api.delete(`/products/${id}`)
 
     if (!data.status) {
       // Handle Delete product error, e.g., display an error message to the user

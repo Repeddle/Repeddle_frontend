@@ -1,12 +1,15 @@
-import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import { ITransaction } from "../../types/transactions";
-import { FaSortDown, FaSortUp } from "react-icons/fa";
-import moment from "moment";
+
+import { useMemo, useState } from "react"
+import { Link } from "react-router-dom"
+import { ITransaction } from "../../types/transactions"
+import { FaSortDown, FaSortUp } from "react-icons/fa"
+import moment from "moment"
+import { currency, region } from "../../utils/common"
 
 type Props = {
-  transactions: ITransaction[];
-};
+  transactions: ITransaction[]
+  loading?: boolean
+}
 
 const headers = [
   { title: "ID", key: "_id" },
@@ -19,10 +22,7 @@ const headers = [
 
 type tranKey = keyof ITransaction;
 
-//   TODO:
-const currency = "N";
-
-const TransactionTable = ({ transactions }: Props) => {
+const TransactionTable = ({ transactions, loading }: Props) => {
   const [sortKey, setSortKey] = useState<{
     key: string;
     sort: "asc" | "desc";
@@ -99,7 +99,8 @@ const TransactionTable = ({ transactions }: Props) => {
                   </td>
 
                   <td className="px-3 hidden lg:table-cell h-[52px] whitespace-nowrap w-auto overflow-hidden text-ellipsis">
-                    {tran.meta.purpose}
+                    {tran.description}
+
                   </td>
 
                   <td className="px-3 h-[52px] whitespace-nowrap w-auto overflow-hidden text-ellipsis">
@@ -111,7 +112,7 @@ const TransactionTable = ({ transactions }: Props) => {
                   </td>
 
                   <td className="px-3 h-[52px] hidden lg:table-cell whitespace-nowrap w-auto overflow-hidden text-ellipsis">
-                    {currency} {tran.amount}
+                    {currency(region())} {tran.amount}
                   </td>
 
                   <td className="px-3 h-[52px] whitespace-nowrap w-auto overflow-hidden text-ellipsis">
@@ -129,6 +130,10 @@ const TransactionTable = ({ transactions }: Props) => {
               ))}
             </tbody>
           </table>
+
+          {!loading && transactions.length === 0 && (
+            <div className="text-center my-10">No Transaction done yet</div>
+          )}
         </div>
       </div>
     </div>

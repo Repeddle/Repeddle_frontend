@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react"
 import { FaSortDown, FaSortUp, FaTrash } from "react-icons/fa"
-import { manyUsers } from "../../utils/data"
 import moment from "moment"
 import { Link } from "react-router-dom"
 import useAuth from "../../hooks/useAuth"
 import { IUser } from "../../types/user"
 import { currency, region } from "../../utils/common"
+import useToastNotification from "../../hooks/useToastNotification"
 
 const headers = [
   { title: "ID", key: "_id", hide: true },
@@ -21,7 +21,8 @@ const UserList = () => {
   const [userQuery, setUserQuery] = useState("")
   const [users, setUsers] = useState<IUser[]>([])
 
-  const { getAllUser } = useAuth()
+  const { getAllUser, error } = useAuth()
+  const { addNotification } = useToastNotification()
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -32,6 +33,10 @@ const UserList = () => {
 
     fetchUsers()
   }, [])
+
+  useEffect(() => {
+    if (error) addNotification(error)
+  }, [error])
 
   const [sortKey, setSortKey] = useState<{
     key: headerKey
@@ -64,7 +69,7 @@ const UserList = () => {
           : bVal.toString().localeCompare(aVal.toString())
       })
     }
-    return [...manyUsers]
+    return users
   }, [sortKey, users])
 
   return (

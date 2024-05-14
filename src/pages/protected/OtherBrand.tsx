@@ -1,12 +1,23 @@
-import { useState } from "react"
-import { brandsData } from "../../utils/data"
+import { useEffect, useState } from "react"
 import { FaCheck, FaDotCircle, FaTimes } from "react-icons/fa"
 import { IBrand } from "../../types/product"
+import useBrands from "../../hooks/useBrand"
+import useToastNotification from "../../hooks/useToastNotification"
+import useAuth from "../../hooks/useAuth"
 
 const OtherBrand = () => {
   const [refresh, setRefresh] = useState(true)
 
-  const brands = brandsData
+  const { addNotification } = useToastNotification()
+  const { brands, error, fetchAdminBrands } = useBrands()
+
+  useEffect(() => {
+    fetchAdminBrands()
+  }, [])
+
+  useEffect(() => {
+    if (error) addNotification(error)
+  }, [error])
 
   return (
     <div className="flex-[4] mb-5 px-5 py-0">
@@ -33,9 +44,13 @@ type Props = {
   setRefresh: (val: boolean) => void
 }
 
-const OtherBrandRow = ({ brand }: Props) => {
+const OtherBrandRow = ({ brand, refresh, setRefresh }: Props) => {
   const [newName, setNewName] = useState(brand.name)
   const [isEdit, setIsEdit] = useState(false)
+
+  const { deleteBrand, updateBrand } = useBrands()
+  const { addNotification } = useToastNotification()
+  const { user } = useAuth()
 
   const handleEdit = () => {
     setIsEdit(true)
@@ -44,11 +59,31 @@ const OtherBrandRow = ({ brand }: Props) => {
     setIsEdit(false)
   }
 
+  // TODO:
   const handleSave = async () => {}
 
-  const deleteHandler = async () => {}
+  const deleteHandler = async () => {
+    const confirm = window.confirm(
+      `Are you sure you want to delete ${brand.name} brand, this cannot be undo`
+    )
+    if (!confirm) {
+      return
+    }
 
-  const handleSubmit = async () => {}
+    const data = await deleteBrand(brand._id)
+
+    if (data.message) addNotification(data.message)
+  }
+
+  const handleSubmit = async () => {
+    const data = await updateBrand(brand._id, {
+      name: newName,
+      published: user?.isAdmin ?? false,
+    })
+    if (data) addNotification("Brand added to list")
+    setRefresh(!refresh)
+    setIsEdit(false)
+  }
 
   return (
     <div className="max-w-[300px] flex items-center justify-between text-sm capitalize mb-[5px] m-0">
