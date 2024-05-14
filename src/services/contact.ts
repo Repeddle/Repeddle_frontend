@@ -4,7 +4,7 @@ import api from "./api"
 
 export const fetchContactsService = async (): Promise<IContactMessage[]> => {
   try {
-    const url = "/contactsus"
+    const url = "/contactus"
 
     const resp: { contactUsRequests: IContactMessage[]; status: boolean } =
       await api.get(url)
@@ -32,7 +32,7 @@ export const createContactService = async (
     const data: {
       status: boolean
       contactUs: IContactMessage
-    } = await api.post("/contactsus", contact)
+    } = await api.post("/contactus", contact)
 
     if (!data.status) {
       // Handle Create contact error, e.g., display an error message to the user
@@ -79,7 +79,9 @@ export const deleteContactService = async (
   id: string
 ): Promise<{ status: boolean; message: string }> => {
   try {
-    const { data } = await api.delete(`/contactsus/${id}`)
+    const data: { message: string; status: boolean } = await api.delete(
+      `/contactus/${id}`
+    )
 
     if (!data.status) {
       // Handle Delete contact error, e.g., display an error message to the user

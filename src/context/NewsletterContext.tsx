@@ -8,7 +8,7 @@ import {
 } from "../services/newsletter"
 
 type ContextType = {
-  newsletter: INewsletter[]
+  newsletters: INewsletter[]
   loading: boolean
   error: string
   fetchNewsletter: (params?: string) => Promise<boolean>
@@ -25,7 +25,7 @@ export const NewsletterContext = createContext<ContextType | undefined>(
 
 export const NewsletterProvider = ({ children }: PropsWithChildren) => {
   const { setAuthErrorModalOpen } = useAuth()
-  const [newsletter, setNewsletter] = useState<INewsletter[]>([])
+  const [newsletters, setNewsletters] = useState<INewsletter[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
@@ -49,7 +49,7 @@ export const NewsletterProvider = ({ children }: PropsWithChildren) => {
       setError("")
       setLoading(true)
       const result = await fetchNewsletterService(params)
-      setNewsletter(result)
+      setNewsletters(result)
       setLoading(false)
       return true
     } catch (error) {
@@ -64,7 +64,7 @@ export const NewsletterProvider = ({ children }: PropsWithChildren) => {
       setError("")
       setLoading(true)
       const result = await createNewsLetterService(email)
-      setNewsletter((prevNewsletter) => [result, ...prevNewsletter])
+      setNewsletters((prevNewsletter) => [result, ...prevNewsletter])
       setLoading(false)
       return true
     } catch (error) {
@@ -79,7 +79,7 @@ export const NewsletterProvider = ({ children }: PropsWithChildren) => {
       setError("")
       setLoading(true)
       const data = await deleteNewsLetterService(id)
-      setNewsletter((prevNewsletter) =>
+      setNewsletters((prevNewsletter) =>
         prevNewsletter.filter((Newsletter) => Newsletter._id !== id)
       )
       setLoading(false)
@@ -99,7 +99,7 @@ export const NewsletterProvider = ({ children }: PropsWithChildren) => {
         error,
         createNewsletter,
         deleteNewsletter,
-        newsletter,
+        newsletters,
       }}
     >
       {children}

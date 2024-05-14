@@ -186,7 +186,8 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const getAllUser = async () => {
     try {
       setError("")
-      setLoading(true)
+      // makes the userlist page to keep refreshing
+      // setLoading(true)
       const allUser = await getAllUserService()
       if (allUser) {
         return allUser

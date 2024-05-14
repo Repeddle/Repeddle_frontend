@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import { FaSortDown, FaSortUp, FaTrash } from "react-icons/fa"
+import { FaPlus, FaSortDown, FaSortUp, FaTrash } from "react-icons/fa"
 import moment from "moment"
 import { Link } from "react-router-dom"
 import useAuth from "../../hooks/useAuth"
@@ -83,9 +83,19 @@ const ProductList = () => {
 
   return (
     <div className="flex-[4] overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
-      <h1 className="pt-5 pb-0 px-5 text-[calc(1.375rem_+_1.5vw)] font-medium leading-tight mb-2">
-        My Products
-      </h1>
+      <div className="pt-5 pb-0 px-5 mb-3 flex flex-col items-center md:flex-row gap-4 md:justify-between">
+        <h1 className="text-[calc(1.375rem_+_1.5vw)] font-medium leading-tight">
+          My Products
+        </h1>
+
+        <div
+          className="flex px-2 py-[5px] items-center cursor-pointer font-bold bg-orange-color text-white-color lg:px-4 lg:py-2.5 rounded-[0.2rem]"
+          // onClick={() => setShowModel(true)}
+        >
+          <FaPlus className="mr-2.5" />
+          Add Product
+        </div>
+      </div>
       <div className="flex mr-2.5 mb-2.5 justify-end">
         <input
           className={`w-2/5 h-[45px] border border-malon-color focus-visible:outline focus-visible:outline-orange-color p-[15px] rounded-[5px]

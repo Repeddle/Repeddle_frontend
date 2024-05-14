@@ -11,6 +11,7 @@ import { Link } from "react-router-dom"
 import useAuth from "../../hooks/useAuth"
 import useTheme from "../../hooks/useTheme"
 import {
+  FaChartBar,
   FaChartLine,
   FaComment,
   FaEnvelope,
@@ -112,6 +113,11 @@ const sidebarLinks = [
     text: "Purchase Returns",
     icon: <FaArrowRotateRight />,
   },
+  {
+    path: "/dashboard/orderlist",
+    text: "Purchase Orders",
+    icon: <FaChartBar />,
+  },
 ]
 
 interface SideBarProps {
@@ -122,7 +128,7 @@ interface SideBarProps {
 const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
   const { user } = useAuth()
   const { isDarkMode } = useTheme()
-  const sidebarClasses = `fixed inset-y-0 left-0 z-[80] bg-orange-color bg-opacity-10 text-white w-64 h-screen transition-transform transform ${
+  const sidebarClasses = `fixed inset-y-0 left-0 z-[80] bg-orange-color scrollbar-hide bg-opacity-10 text-white w-64 h-screen transition-transform transform ${
     isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
   }`
 

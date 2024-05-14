@@ -15,6 +15,7 @@ import { BrandProvider } from "./context/BrandContext.tsx"
 import { NewsletterProvider } from "./context/NewsletterContext.tsx"
 import { TransactionProvider } from "./context/TransactionContext.tsx"
 import { ContactProvider } from "./context/ContactContext.tsx"
+import { OrderProvider } from "./context/OrderContext.tsx"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -29,11 +30,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                     <NewsletterProvider>
                       <TransactionProvider>
                         <ContactProvider>
-                          <CartProvider>
-                            <ArticleProvider>
-                              <RouterProvider router={router} />
-                            </ArticleProvider>
-                          </CartProvider>
+                          <OrderProvider>
+                            <CartProvider>
+                              <ArticleProvider>
+                                <RouterProvider router={router} />
+                              </ArticleProvider>
+                            </CartProvider>
+                          </OrderProvider>
                         </ContactProvider>
                       </TransactionProvider>
                     </NewsletterProvider>

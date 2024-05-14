@@ -1,9 +1,11 @@
 import moment from "moment"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import { FaCheckCircle, FaTrash } from "react-icons/fa"
 import { INewsletter } from "../../types/message"
-import { emailList as emailListData, newsLetterData } from "../../utils/data"
+import { emailList as emailListData } from "../../utils/data"
+import useNewsletter from "../../hooks/useNewsletter"
+import useToastNotification from "../../hooks/useToastNotification"
 
 const NewsletterList = () => {
   const [inputEmail, setInputEmail] = useState("")
@@ -11,17 +13,46 @@ const NewsletterList = () => {
   const [selectAll, setSelectAll] = useState(false)
   const [selectedEmails, setSelectedEmails] = useState<string[]>([])
 
-  const loadingSend = false
-  const loadingAdd = false
-  const loadingRebatch = false
-  const loadingNewsletters = false
+  const [loadingSend] = useState(false)
+  const [loadingAdd, setLoadingAdd] = useState(false)
+  const [loadingRebatch] = useState(false)
+  const [loadingNewsletters, setLoadingNewsletters] = useState(false)
 
-  const newsletters = [newsLetterData]
+  const {
+    newsletters,
+    fetchNewsletter,
+    error,
+    createNewsletter,
+    deleteNewsletter,
+  } = useNewsletter()
+  const { addNotification } = useToastNotification()
+
+  useEffect(() => {
+    const fetchLetter = async () => {
+      setLoadingNewsletters(true)
+      await fetchNewsletter()
+      setLoadingNewsletters(false)
+    }
+
+    fetchLetter()
+  }, [])
+
+  useEffect(() => {
+    if (error) addNotification(error)
+  }, [error])
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const rebatchs: any[] = []
   const emailLists = [emailListData]
 
   const deleteHandler = async (id: string) => {
-    console.log(id)
+    if (window.confirm("Are you sure to delete")) {
+      const data = await deleteNewsletter(id)
+
+      if (data.success) {
+        addNotification(data.message ?? "Email deleted Successfully")
+      }
+    }
   }
 
   const hasMatchingEmailName = (newsletter: INewsletter) => {
@@ -49,7 +80,13 @@ const NewsletterList = () => {
 
   const sendEmails = async () => {}
 
-  const handleAddEmail = async () => {}
+  const handleAddEmail = async () => {
+    setLoadingAdd(true)
+    const data = await createNewsletter(inputEmail)
+    if (data) addNotification("Emails added successfully")
+
+    setLoadingAdd(false)
+  }
 
   return (
     <div className="flex-[4] mb-5 px-5 py-0 min-h-[85vh] bg-light-ev1 dark:bg-dark-ev1">
@@ -114,6 +151,7 @@ const NewsletterList = () => {
 
         <ul>
           {loadingNewsletters && <LoadingBox />}
+          {!loadingNewsletters && <LoadingBox />}
           {newsletters.map((newsletter, index) => (
             <li
               className="block lg:flex items-center justify-between text-base px-0 py-2.5 border-b-[#ccc] border-b"
