@@ -35,6 +35,35 @@ export const fetchProductsService = async (
   }
 }
 
+export const fetchUserProductsService = async (
+  params?: string
+): Promise<ProductWithPagination> => {
+  try {
+    let url = "/products/user"
+
+    if (params && params.length) {
+      url = url + `?${params}`
+    }
+
+    const resp: { data: ProductWithPagination; status: boolean } =
+      await api.get(url)
+
+    if (!resp.status) {
+      // Handle Fetch products error, e.g., display an error message to the user
+      throw new Error("Fetch products failed: " + getBackendErrorMessage(resp))
+    }
+
+    return resp.data
+  } catch (error) {
+    // Handle network errors or other exceptions
+    // You can log the error or perform other error-handling actions
+    console.error("Fetch products error:", getBackendErrorMessage(error))
+
+    // Re-throw the error to propagate it up the call stack if needed
+    throw getBackendErrorMessage(error)
+  }
+}
+
 export const createProductService = async (
   product: ICreateProduct
 ): Promise<IProduct> => {
@@ -111,16 +140,18 @@ export const updateProductService = async (
   }
 }
 
-export const deleteProductService = async (id: string): Promise<boolean> => {
+export const deleteProductService = async (
+  id: string
+): Promise<{ status: boolean; message: string }> => {
   try {
-    const data = await api.delete(`/products/${id}`)
+    const { data } = await api.delete(`/products/${id}`)
 
     if (!data.status) {
       // Handle Delete product error, e.g., display an error message to the user
       throw new Error("Delete product failed: " + getBackendErrorMessage(data))
     }
 
-    return true
+    return { status: true, message: data.message }
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions

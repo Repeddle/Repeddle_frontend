@@ -1,19 +1,18 @@
 export type ITransaction = {
-  _id: string
-  txnType: string
-  purpose: string
+  walletId: string
+  userId: string
   amount: number
-  accountId: string
-  reference: string
-  balanceBefore: number
-  balanceAfter: number
-  metadata: {
+  type: string
+  description: string
+  status: string
+  paymentTransactionId: string
+  meta: {
     senderId?: string
     purpose: string
     recipientId?: string
     transaction_id?: string | number
   }
-  transactionId?: string
+  _id: string
   createdAt: string
   updatedAt: string
 }

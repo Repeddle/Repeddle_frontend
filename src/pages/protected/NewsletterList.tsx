@@ -52,7 +52,7 @@ const NewsletterList = () => {
   const handleAddEmail = async () => {}
 
   return (
-    <div className="flex-[4] mb-5 px-5 py-0 bg-light-ev1 dark:bg-dark-ev1">
+    <div className="flex-[4] mb-5 px-5 py-0 min-h-[85vh] bg-light-ev1 dark:bg-dark-ev1">
       <div className="max-w-[600px] p-5">
         <h2 className="text-2xl mb-5">Newsletter Emails</h2>
         <div className="block lg:flex items-center justify-between px-0 py-2.5">
@@ -68,7 +68,7 @@ const NewsletterList = () => {
               onChange={handleSelectAll}
             />
             <label htmlFor="select-all">Select All</label>
-            <div className=" block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
+            <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
               <select
                 value={emailName}
                 onChange={(e) => setEmailName(e.target.value)}

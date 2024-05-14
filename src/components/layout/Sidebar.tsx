@@ -10,15 +10,21 @@ import { NavLink } from "react-router-dom"
 import { Link } from "react-router-dom"
 import useAuth from "../../hooks/useAuth"
 import useTheme from "../../hooks/useTheme"
-import { BiTransfer } from "react-icons/bi"
 import {
   FaChartLine,
   FaComment,
   FaEnvelope,
+  FaHome,
   FaMoneyBill,
   FaQuestionCircle,
+  FaUser,
 } from "react-icons/fa"
-import { FaListCheck } from "react-icons/fa6"
+import {
+  FaArrowRotateLeft,
+  FaArrowRotateRight,
+  FaBasketShopping,
+  FaListCheck,
+} from "react-icons/fa6"
 
 const sidebarLinks = [
   {
@@ -28,16 +34,22 @@ const sidebarLinks = [
     end: true,
   },
   {
+    path: "/dashboard/productlist",
+    text: "My Products",
+    icon: <FaBasketShopping />,
+  },
+  {
     path: "/dashboard/order",
     text: "My Orders",
     icon: <AiOutlineShopping />,
   },
-  { path: "/dashboard/wallet", text: "Wallet", icon: <AiOutlineWallet /> },
   {
-    path: "/dashboard/transactions",
-    text: "Transactions",
-    icon: <BiTransfer />,
+    path: "/dashboard/alltransaction",
+    text: "All Transactions",
+    icon: <FaMoneyBill />,
   },
+  { path: "/dashboard/wallet", text: "Wallet", icon: <AiOutlineWallet /> },
+
   {
     path: "/dashboard/analytics",
     text: "Analytics",
@@ -54,6 +66,11 @@ const sidebarLinks = [
     icon: <FaEnvelope />,
   },
   {
+    path: "/dashboard/address",
+    text: "Address Book",
+    icon: <FaHome />,
+  },
+  {
     path: "/dashboard/newsletter",
     text: "Collected Email",
     icon: <FaMoneyBill />,
@@ -67,6 +84,33 @@ const sidebarLinks = [
     path: "/dashboard/messages",
     text: "Messages",
     icon: <FaComment />,
+  },
+  { path: "/dashboard/userlist", text: "Users", icon: <FaUser /> },
+  {
+    path: "/dashboard/transactionlist",
+    text: "All Transactions",
+    icon: <FaMoneyBill />,
+  },
+  { path: "/dashboard/payments", text: "Payments", icon: <FaMoneyBill /> },
+  {
+    path: "/dashboard/logreturns",
+    text: "All Logged Returns",
+    icon: <FaArrowRotateLeft />,
+  },
+  {
+    path: "/dashboard/allreturns",
+    text: "Return Queries",
+    icon: <FaArrowRotateLeft />,
+  },
+  {
+    path: "/dashboard/sellerreturns",
+    text: " Sold Returns",
+    icon: <FaArrowRotateLeft />,
+  },
+  {
+    path: "/dashboard/buyerreturns",
+    text: "Purchase Returns",
+    icon: <FaArrowRotateRight />,
   },
 ]
 

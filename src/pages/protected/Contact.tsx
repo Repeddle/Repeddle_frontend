@@ -1,14 +1,30 @@
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import { FaDotCircle, FaEye } from "react-icons/fa"
 import Modal from "../../components/ui/Modal"
 import ContactMessageDetail from "../../components/ContactMessageDetail"
 import { IContactMessage } from "../../types/message"
-import { contactMessage } from "../../utils/data"
+import useContact from "../../hooks/useContact"
+import useToastNotification from "../../hooks/useToastNotification"
 
 const Contact = () => {
-  const loading = false
-  const messages = useMemo(() => [contactMessage], [])
+  const { contacts, fetchContacts, error, loading, assignContact } =
+    useContact()
+  const { addNotification } = useToastNotification()
+
+  const [refresh, setRefresh] = useState(false)
+
+  useEffect(() => {
+    fetchContacts()
+  }, [refresh])
+
+  useEffect(() => {
+    if (error) {
+      addNotification(error)
+    }
+  }, [error])
+
+  const messages = useMemo(() => contacts, [contacts])
 
   const [showModel, setShowModel] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
@@ -40,7 +56,9 @@ const Contact = () => {
   }
 
   const handleClick = async (id: string) => {
-    console.log(id)
+    const res = await assignContact(id)
+    if (res) addNotification(res)
+    setRefresh(!refresh)
   }
 
   return (

@@ -10,7 +10,7 @@ import useTheme from "../hooks/useTheme"
 
 type Props = {
   title: string
-  total: string | number
+  total?: string | number
   dataKey: string
   grid?: boolean
   data: unknown[]

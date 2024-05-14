@@ -35,6 +35,7 @@ import Analytics from "./pages/protected/Analytics";
 import Contact from "./pages/protected/Contact";
 import NewsletterList from "./pages/protected/NewsletterList";
 import OtherBrand from "./pages/protected/OtherBrand";
+import Message from "./pages/protected/message";
 import Condition from "./pages/defaults/info/Condition";
 import FeeStructure from "./pages/defaults/info/FeeStructure";
 import BuyersProtection from "./pages/defaults/info/BuyersProtection";
@@ -44,7 +45,6 @@ import Rebundlesimplified from "./pages/defaults/info/Rebundlesimplified";
 import Buyersguide from "./pages/defaults/info/Buyersguide";
 import Categories from "./pages/protected/Categories";
 import OrderList from "./pages/protected/OrderList";
-import Transaction from "./pages/protected/Transaction";
 import AddressBook from "./pages/protected/AddressBook";
 import UserList from "./pages/protected/UserList";
 import ProductList from "./pages/protected/ProductList";
@@ -55,8 +55,10 @@ import AllReturns from "./pages/protected/AllReturns";
 import SoldReturns from "./pages/protected/SoldReturn";
 import PurchaseReturn from "./pages/protected/PurchaseReturn";
 import TransactionListUser from "./pages/protected/TransactionListUser";
+import ReturnPage from "./pages/protected/ReturnPage";
+import User from "./pages/protected/User";
+import Transaction from "./pages/protected/Transaction";
 import AllMessage from "./pages/protected/admin/message";
-import Message from "./pages/protected/message";
 
 const router = createBrowserRouter([
   {
@@ -113,6 +115,7 @@ const router = createBrowserRouter([
           { path: "payment", element: <PaymentMethod /> },
           { path: "placeorder", element: <OrderPreview /> },
           { path: "order/:id", element: <Order /> },
+          { path: "/return/:id", element: <ReturnPage /> },
         ],
       },
       {
@@ -121,7 +124,6 @@ const router = createBrowserRouter([
         children: [
           { path: "", element: <Dashboard /> },
           { path: "wallet", element: <Wallet /> },
-          { path: "transactions", element: <Transaction /> },
           { path: "categories", element: <Categories /> },
           { path: "analytics", element: <Analytics /> },
           { path: "contact", element: <Contact /> },
@@ -139,6 +141,10 @@ const router = createBrowserRouter([
           { path: "allreturns", element: <AllReturns /> },
           { path: "sellerreturns", element: <SoldReturns /> },
           { path: "buyerreturns", element: <PurchaseReturn /> },
+          { path: "return/:id", element: <ReturnPage /> },
+          { path: "user/:id", element: <User /> },
+          { path: "transaction/:id", element: <Transaction /> },
+          { path: "product/:id", element: <EditProduct /> },
         ],
       },
     ],
