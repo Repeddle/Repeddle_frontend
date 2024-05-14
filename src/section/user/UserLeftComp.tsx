@@ -1,4 +1,4 @@
-import { IUser } from "../../types/user"
+import { IUser } from "../../types/user";
 import {
   FaBolt,
   FaDotCircle,
@@ -8,27 +8,27 @@ import {
   FaPlus,
   FaQuestionCircle,
   FaUser,
-} from "react-icons/fa"
-import { currency, region } from "../../utils/common"
-import { FaCalendarDays, FaLocationDot } from "react-icons/fa6"
-import useAuth from "../../hooks/useAuth"
-import Modal from "../../components/ui/Modal"
-import { banks, states } from "../../utils/constants"
-import { MouseEvent, useState } from "react"
-import { InputType } from "../../pages/protected/User"
+} from "react-icons/fa";
+import { currency, region } from "../../utils/common";
+import { FaCalendarDays, FaLocationDot } from "react-icons/fa6";
+import useAuth from "../../hooks/useAuth";
+import Modal from "../../components/ui/Modal";
+import { banks, states } from "../../utils/constants";
+import { MouseEvent, useState } from "react";
+import { InputType } from "../../pages/protected/User";
 
 type Props = {
-  user: IUser
+  user: IUser;
   balance?: {
-    balance: number
-  }
-  input: InputType
-  handleOnChange: (val: string, key: keyof InputType) => void
-  errorInput: InputType
-  handleError: (val: string, key: keyof InputType) => void
-  addressValidate: (e: MouseEvent) => void
-  accountValidate: (e: MouseEvent) => void
-}
+    balance: number;
+  };
+  input: InputType;
+  handleOnChange: (val: string, key: keyof InputType) => void;
+  errorInput: InputType;
+  handleError: (val: string, key: keyof InputType) => void;
+  addressValidate: (e: MouseEvent) => void;
+  accountValidate: (e: MouseEvent) => void;
+};
 
 const UserLeftComp = ({
   user,
@@ -40,10 +40,10 @@ const UserLeftComp = ({
   addressValidate,
   accountValidate,
 }: Props) => {
-  const { user: userInfo } = useAuth()
+  const { user: userInfo } = useAuth();
 
-  const [showModel, setShowModel] = useState(false)
-  const [showModelAddress, setShowModelAddress] = useState(false)
+  const [showModel, setShowModel] = useState(false);
+  const [showModelAddress, setShowModelAddress] = useState(false);
 
   return (
     <div className="flex-1 p-5 rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1">
@@ -123,7 +123,7 @@ const UserLeftComp = ({
           <div
             className="cursor-pointer ml-[5px] p-[5px] rounded-[0.2rem] hover:bg-malon-color"
             onClick={() => {
-              setShowModelAddress(!showModelAddress)
+              setShowModelAddress(!showModelAddress);
             }}
           >
             <FaPlus />
@@ -222,14 +222,10 @@ const UserLeftComp = ({
                   >
                     {region() === "NGN"
                       ? banks.Nigeria.map((x) => (
-                          <option value={{ name: x.name, code: x.code }}>
-                            {x.name}
-                          </option>
+                          <option value={x.name}>{x.name}</option>
                         ))
                       : banks.SouthAfrica.map((x) => (
-                          <option value={{ name: x.name, code: x.code }}>
-                            {x.name}
-                          </option>
+                          <option value={x.name}>{x.name}</option>
                         ))}
                   </select>
                 </div>
@@ -351,7 +347,7 @@ const UserLeftComp = ({
         </Modal>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserLeftComp
+export default UserLeftComp;

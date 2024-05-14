@@ -2,18 +2,13 @@ import {
   ConversationMessage,
   IConversation,
   SearchResult,
-} from "../types/conversation"
-import { BestSeller, Summary, ViewedProducts } from "../types/dashboard"
-import {
-  IBrand,
-  IContactMessage,
-  IEmailList,
-  INewsletter,
-} from "../types/message"
-import { IReturn, Order } from "../types/order"
-import { IProduct, Seller } from "../types/product"
-import { IPayment, ITransaction } from "../types/transactions"
-import { IUser, UserBalance } from "../types/user"
+} from "../types/conversation";
+import { BestSeller, Summary, ViewedProducts } from "../types/dashboard";
+import { IContactMessage, IEmailList, INewsletter } from "../types/message";
+import { IReturn, Order } from "../types/order";
+import { IBrand, IProduct, Seller } from "../types/product";
+import { IPayment, ITransaction } from "../types/transactions";
+import { IUser, UserBalance } from "../types/user";
 
 export const seller: Seller = {
   address: {
@@ -38,7 +33,7 @@ export const seller: Seller = {
   badge: false,
   createdAt: "2023-02-19T13:25:59.641Z",
   updatedAt: "2023-09-15T21:13:45.394Z",
-}
+};
 
 export const productDetails: IProduct = {
   name: "Summer Shirt",
@@ -133,7 +128,7 @@ export const productDetails: IProduct = {
       time: "2024-04-12T20:10:34.842Z",
     },
   ],
-}
+};
 
 export const user: IUser = {
   address: {
@@ -391,7 +386,7 @@ export const user: IUser = {
   bankName: "Union Bank",
   about:
     "You will find beautiful rear finds in my store from ladies, men, kids wear, shoes and accessories. Happy Exploring and thank you for checking my store out🤗\n\nMy products ships fast within 2-4 days😍",
-}
+};
 
 export const orderData: Order = {
   orderItems: [
@@ -415,13 +410,13 @@ export const orderData: Order = {
   deliveryMethod: "gig",
   createdAt: "2023-01-24T08:43:36.887Z",
   deliveredAt: "2023-01-24T08:43:36.887Z",
-}
+};
 
 export const balanceData: UserBalance = {
   balance: 1234567,
   currency: "N",
   userId: user._id,
-}
+};
 
 export const summary: Summary = {
   users: [
@@ -477,7 +472,7 @@ export const summary: Summary = {
       numSales: 181859,
     },
   ],
-}
+};
 
 export const bestSeller: BestSeller = {
   _id: "640711c93b06321587636b30",
@@ -500,7 +495,7 @@ export const bestSeller: BestSeller = {
   region: "NGN",
   createdAt: "2023-03-07T10:28:25.205Z",
   updatedAt: "2024-02-07T05:31:19.358Z",
-}
+};
 
 export const viewedProduct: ViewedProducts = {
   _id: "655c6a59a797a1b7439a5066",
@@ -516,7 +511,7 @@ export const viewedProduct: ViewedProducts = {
   region: "NGN",
   createdAt: "2023-11-21T08:29:13.055Z",
   updatedAt: "2024-05-02T20:11:52.030Z",
-}
+};
 
 export const contactMessage: IContactMessage = {
   _id: "64d779b2af2d96983b4ab467",
@@ -529,11 +524,11 @@ export const contactMessage: IContactMessage = {
   assignTo: "RepeddleZa",
   createdAt: "2023-08-12T12:23:14.524Z",
   updatedAt: "2023-08-12T12:24:11.281Z",
-}
+};
 
 export const newsLetterData: INewsletter = {
   _id: "65d9cf6e08a7136c2a7ef5e0",
-  emailType: "Newsletter",
+  // emailType: "Newsletter",
   email: "amusatako@gmail.com",
   isDeleted: false,
   url: "com",
@@ -547,13 +542,13 @@ export const newsLetterData: INewsletter = {
   ],
   createdAt: "2024-02-24T11:13:50.301Z",
   updatedAt: "2024-03-08T12:12:34.321Z",
-}
+};
 
 export const emailList: IEmailList = {
   name: "Hacks on How to Make Your First Repeddle Sale",
   subject: "Hacks on How to Make Your First Repeddle Sale!",
   template: "hack",
-}
+};
 
 export const brandsData: IBrand[] = [
   {
@@ -561,23 +556,29 @@ export const brandsData: IBrand[] = [
     name: "PowerUp",
     createdAt: "2023-05-25T09:52:53.850Z",
     updatedAt: "2023-05-30T14:32:55.871Z",
-    isAdded: true,
+    published: true,
+    alpha: "P",
+    type: "SYSTEM",
   },
   {
     _id: "6471c0fe004aaa7f69b38ed9",
     name: "Zebronics",
     createdAt: "2023-05-27T08:36:14.006Z",
     updatedAt: "2023-05-30T14:34:49.583Z",
-    isAdded: true,
+    published: true,
+    alpha: "Z",
+    type: "SYSTEM",
   },
   {
     _id: "6472947a004aaa7f69b39aa7",
     name: "DVF",
     createdAt: "2023-05-27T23:38:34.255Z",
     updatedAt: "2023-05-30T14:36:22.875Z",
-    isAdded: true,
+    published: true,
+    alpha: "D",
+    type: "SYSTEM",
   },
-]
+];
 
 export const conversationData: IConversation[] = [
   {
@@ -612,7 +613,7 @@ export const conversationData: IConversation[] = [
     createdAt: "2024-03-19T19:45:44.165Z",
     updatedAt: "2024-03-19T19:50:47.792Z",
   },
-]
+];
 
 export const searchResultData: SearchResult[] = [
   {
@@ -621,7 +622,7 @@ export const searchResultData: SearchResult[] = [
     username: "anthony_813515",
     _id: "6617e76c08a7136c2a8068be",
   },
-]
+];
 
 export const conversationMessageData: ConversationMessage[] = [
   {
@@ -646,7 +647,7 @@ export const conversationMessageData: ConversationMessage[] = [
     createdAt: "2024-02-24T16:41:11.485Z",
     updatedAt: "2024-02-24T16:41:11.485Z",
   },
-]
+];
 
 export const manyUsers: IUser[] = [
   {
@@ -800,79 +801,79 @@ export const manyUsers: IUser[] = [
     createdAt: "2024-02-11T09:06:48.828Z",
     updatedAt: "2024-02-11T09:07:17.764Z",
   },
-]
+];
 
 export const transactions: ITransaction[] = [
   {
     _id: "65d2de0508a7136c2a7e8566",
-    txnType: "credit",
-    purpose: "transfer",
+    type: "credit",
+    description: "transfer",
     amount: 193.36,
-    accountId: "63c9207a9ab6a6a276a9a075",
-    reference: "63eb624e-2289-47b2-ad3a-975191d163a2",
-    balanceBefore: 68969.90999999997,
-    balanceAfter: 69163.26999999997,
-    metadata: {
+    walletId: "63c9207a9ab6a6a276a9a075",
+    // reference: "63eb624e-2289-47b2-ad3a-975191d163a2",
+    // balanceBefore: 68969.90999999997,
+    // balanceAfter: 69163.26999999997,
+    meta: {
       senderId: "6564a078e24a3d31d7a88735",
-      purpose: "Withdrawal Request",
+      // description: "Withdrawal Request",
     },
-    transactionId: "65d2de0508a7136c2a7e8566",
+    paymentTransactionId: "65d2de0508a7136c2a7e8566",
     createdAt: "2024-02-19T04:50:13.786Z",
     updatedAt: "2024-02-19T04:50:13.786Z",
   },
   {
     _id: "65d2de0508a7136c2a7e8562",
-    txnType: "debit",
-    purpose: "transfer",
+    type: "debit",
+    description: "transfer",
     amount: 193.36,
-    accountId: "6564a078e24a3d31d7a88735",
-    reference: "0fb5fed8-880f-41ce-a650-ee53e93bba37",
-    balanceBefore: 0,
-    balanceAfter: -193.36,
-    metadata: {
+    walletId: "6564a078e24a3d31d7a88735",
+    // reference: "0fb5fed8-880f-41ce-a650-ee53e93bba37",
+    // balanceBefore: 0,
+    // balanceAfter: -193.36,
+    meta: {
       recipientId: "63c9207a9ab6a6a276a9a075",
       transaction_id: "6c21fade-0321-4fdd-9304-07fb303ff9fb",
-      purpose: "Withdrawal Request",
+      // description: "Withdrawal Request",
     },
-    transactionId: "65d2de0508a7136c2a7e8562",
+    paymentTransactionId: "65d2de0508a7136c2a7e8562",
     createdAt: "2024-02-19T04:50:13.606Z",
     updatedAt: "2024-02-19T04:50:13.606Z",
   },
   {
     _id: "65d1befe08a7136c2a7e5ba6",
-    txnType: "credit",
-    purpose: "deposit",
+    type: "credit",
+    description: "deposit",
     amount: 193.36,
-    accountId: "6564a078e24a3d31d7a88735",
-    reference: "b3889535-330a-4773-a425-c12709eff690",
-    balanceBefore: 193.36,
-    balanceAfter: 386.72,
-    metadata: {
+    walletId: "6564a078e24a3d31d7a88735",
+    // reference: "b3889535-330a-4773-a425-c12709eff690",
+    // balanceBefore: 193.36,
+    // balanceAfter: 386.72,
+    meta: {
       transaction_id: "47d027ad-ea48-46c1-b159-31dfacfbf152",
-      purpose: "Order Completed",
+      // description: "Order Completed",
     },
-    transactionId: "65d1befe08a7136c2a7e5ba6",
+    paymentTransactionId: "65d1befe08a7136c2a7e5ba6",
     createdAt: "2024-02-18T08:25:34.065Z",
     updatedAt: "2024-02-18T08:25:34.065Z",
   },
   {
     _id: "65d1befc08a7136c2a7e5ba1",
-    txnType: "debit",
-    purpose: "withdrawal",
+    type: "debit",
+    description: "withdrawal",
     amount: 193.36,
-    accountId: "63c9207a9ab6a6a276a9a075",
-    reference: "49430b9d-de75-4802-b7ab-7fb836c3960c",
-    balanceBefore: 68776.54999999997,
-    balanceAfter: 68583.18999999997,
-    metadata: {
+    walletId: "63c9207a9ab6a6a276a9a075",
+    // reference: "49430b9d-de75-4802-b7ab-7fb836c3960c",
+    // balanceBefore: 68776.54999999997,
+    // balanceAfter: 68583.18999999997,
+    meta: {
       transaction_id: "24779a34-3f56-4e7b-aaa4-283932827e09",
-      purpose: "Order Completed",
+      // description: "Order Completed",
     },
-    transactionId: "65d1befc08a7136c2a7e5ba1",
+    paymentTransactionId: "65d1befc08a7136c2a7e5ba1",
     createdAt: "2024-02-18T08:25:32.991Z",
     updatedAt: "2024-02-18T08:25:32.991Z",
   },
-]
+];
 
 export const payments: IPayment[] = [
   {
@@ -958,7 +959,7 @@ export const payments: IPayment[] = [
     createdAt: "2024-02-19T04:50:14.393Z",
     updatedAt: "2024-02-19T04:50:14.393Z",
   },
-]
+];
 
 export const returns: IReturn[] = [
   {
@@ -1193,4 +1194,4 @@ export const returns: IReturn[] = [
 
     adminReason: "Return testing ",
   },
-]
+];
