@@ -1,9 +1,9 @@
-import React from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { FaArrowLeftLong } from "react-icons/fa6"
+import { FaArrowLeftLong } from "react-icons/fa6";
+import { Link, useNavigate } from "react-router-dom";
+// import { FaArrowLeftLong } from "react-icons/fa6"
 
 function AuthNav() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <div className="fixed z-30 flex inset-x-0 top-8 px-6 sm:px-14 sm:top-8 justify-between items-center">
       <div className="bg-white p-2 rounded-full dark:bg-dark-ev1">
@@ -16,7 +16,7 @@ function AuthNav() {
         <img src="/images/logo/logo.png" alt="logo" className="h-full" />
       </Link>
     </div>
-  )
+  );
 }
 
-export default AuthNav
+export default AuthNav;

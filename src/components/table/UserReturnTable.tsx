@@ -1,12 +1,12 @@
-import { useMemo, useState } from "react"
-import { Link } from "react-router-dom"
-import { FaSortDown, FaSortUp } from "react-icons/fa"
-import moment from "moment"
-import { IReturn } from "../../types/order"
+import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import { FaSortDown, FaSortUp } from "react-icons/fa";
+import moment from "moment";
+import { IReturn } from "../../types/order";
 
 type Props = {
-  returns: IReturn[]
-}
+  returns: IReturn[];
+};
 
 const headers = [
   { title: "ID", key: "_id", hide: true },
@@ -14,41 +14,40 @@ const headers = [
   { title: "Buyer", key: "username", hide: true },
   { title: "Order", key: "orderId", hide: true },
   { title: "Date", key: "createdAt" },
-]
+];
 
-type RetKey = keyof IReturn
+type RetKey = keyof IReturn;
 
 const UserReturnTable = ({ returns }: Props) => {
   const [sortKey, setSortKey] = useState<{
-    key: string
-    sort: "asc" | "desc"
-  }>()
+    key: string;
+    sort: "asc" | "desc";
+  }>();
 
   const updateSort = (key: string) => {
-    if (sortKey?.key === key && sortKey.sort === "desc") setSortKey(undefined)
-    else if (sortKey?.key === key) setSortKey({ key, sort: "desc" })
-    else setSortKey({ key, sort: "asc" })
-  }
+    if (sortKey?.key === key && sortKey.sort === "desc") setSortKey(undefined);
+    else if (sortKey?.key === key) setSortKey({ key, sort: "desc" });
+    else setSortKey({ key, sort: "asc" });
+  };
 
   const sortedReturns = useMemo(() => {
-    // TODO: remove this
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
+    // @ts-expect-error
     if (sortKey && returns[sortKey.key as RetKey]) {
       return returns.sort((a, b) => {
-        const aVal = a[sortKey.key as RetKey] ?? ""
-        const bVal = b[sortKey.key as RetKey] ?? ""
+        const aVal = a[sortKey.key as RetKey] ?? "";
+        const bVal = b[sortKey.key as RetKey] ?? "";
         if (typeof aVal === "number" && typeof bVal === "number") {
-          return sortKey.sort === "asc" ? aVal - bVal : bVal - aVal
+          return sortKey.sort === "asc" ? aVal - bVal : bVal - aVal;
         }
 
         return sortKey.sort === "asc"
           ? aVal.toString().localeCompare(bVal.toString())
-          : bVal.toString().localeCompare(aVal.toString())
-      })
+          : bVal.toString().localeCompare(aVal.toString());
+      });
     }
-    return returns
-  }, [returns, sortKey])
+    return returns;
+  }, [returns, sortKey]);
 
   // TODO: table reduce width
 
@@ -136,7 +135,7 @@ const UserReturnTable = ({ returns }: Props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserReturnTable
+export default UserReturnTable;

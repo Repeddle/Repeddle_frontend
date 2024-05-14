@@ -8,7 +8,8 @@ export default function ErrorPage() {
   let errorMessage: string;
 
   if (isRouteErrorResponse(error)) {
-    // error is type `ErrorResponse`
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     errorMessage = error.error?.message || error.statusText;
   } else if (error instanceof Error) {
     errorMessage = error.message;

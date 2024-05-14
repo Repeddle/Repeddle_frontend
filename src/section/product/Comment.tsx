@@ -1,35 +1,43 @@
-import { FormEvent, useState } from "react"
-import { FaHeart, FaTrash } from "react-icons/fa"
-import useAuth from "../../hooks/useAuth"
-import moment from "moment"
-import MessageImage from "../../components/ui/MessageImage"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  FormEvent,
+  JSXElementConstructor,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+  useState,
+} from "react";
+import { FaHeart, FaTrash } from "react-icons/fa";
+import useAuth from "../../hooks/useAuth";
+import moment from "moment";
+import MessageImage from "../../components/ui/MessageImage";
 
 type Props = {
-  slug: string
-  commentC: any
-}
+  slug: string;
+  commentC: any;
+};
 
 const Comment = ({ commentC }: Props) => {
-  const [reply, setReply] = useState("")
-  const [replyArea, setReplyArea] = useState(false)
+  const [reply, setReply] = useState("");
+  const [replyArea, setReplyArea] = useState(false);
 
-  const comment = commentC
+  const comment = commentC;
 
-  const { user } = useAuth()
+  const { user } = useAuth();
 
   const likeComment = async (id: string) => {
-    console.log(id)
-  }
+    console.log(id);
+  };
 
   const likeReplyHandler = async (reply: any) => {
-    console.log(reply)
-  }
+    console.log(reply);
+  };
 
   const submitReplyHandler = (e: FormEvent) => {
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
 
-  const deleteComment = () => {}
+  const deleteComment = () => {};
 
   return (
     <>
@@ -66,7 +74,7 @@ const Comment = ({ commentC }: Props) => {
               <div className="text-[13px]">{comment.likes.length} like</div>
               <FaHeart
                 className={
-                  user && comment.likes.find((x) => x === user._id)
+                  user && comment.likes.find((x: string) => x === user._id)
                     ? "text-orange-color"
                     : ""
                 }
@@ -82,26 +90,52 @@ const Comment = ({ commentC }: Props) => {
       </div>
       {replyArea && (
         <>
-          {comment.replies.map((r) => (
-            <div className="ml-[25px] mr-0 my-[5px] p-2.5 dark:bg-dark-ev1 bg-light-ev1 flex lg:ml-[90px] lg:mr-0 lg:my-[5px] lg:p-5 rounded-[0.2rem]">
-              <img
-                className="w-[30px] h-[30px] object-cover rounded-[50%]"
-                src={r.userImage}
-                alt="pimage"
-              />
-              <div className="ml-5">
-                <div className="flex items-center">
-                  <div className="font-bold mr-2.5">{r.name}</div>
-                  <div className="text-xs">{moment(r.createdAt).fromNow()}</div>
-                </div>
-                <div className="m-2.5">{r.comment}</div>
-                <div className="flex justify-between items-center w-20">
-                  <div className="text-[13px]">{r.likes.length} like</div>
-                  <FaHeart onClick={() => likeReplyHandler(r)} />
+          {comment.replies.map(
+            (r: {
+              userImage: string | undefined;
+              name:
+                | string
+                | number
+                | boolean
+                | ReactElement<any, string | JSXElementConstructor<any>>
+                | Iterable<ReactNode>
+                | ReactPortal
+                | null
+                | undefined;
+              createdAt: moment.MomentInput;
+              comment:
+                | string
+                | number
+                | boolean
+                | ReactElement<any, string | JSXElementConstructor<any>>
+                | Iterable<ReactNode>
+                | ReactPortal
+                | null
+                | undefined;
+              likes: string | any[];
+            }) => (
+              <div className="ml-[25px] mr-0 my-[5px] p-2.5 dark:bg-dark-ev1 bg-light-ev1 flex lg:ml-[90px] lg:mr-0 lg:my-[5px] lg:p-5 rounded-[0.2rem]">
+                <img
+                  className="w-[30px] h-[30px] object-cover rounded-[50%]"
+                  src={r.userImage}
+                  alt="pimage"
+                />
+                <div className="ml-5">
+                  <div className="flex items-center">
+                    <div className="font-bold mr-2.5">{r.name}</div>
+                    <div className="text-xs">
+                      {moment(r.createdAt).fromNow()}
+                    </div>
+                  </div>
+                  <div className="m-2.5">{r.comment}</div>
+                  <div className="flex justify-between items-center w-20">
+                    <div className="text-[13px]">{r.likes.length} like</div>
+                    <FaHeart onClick={() => likeReplyHandler(r)} />
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            )
+          )}
           <form onSubmit={submitReplyHandler}>
             <textarea
               className={`w-full m-0 lg:w-4/5 lg:ml-[90px] lg:mr-0 lg:mt-2.5 lg:mb-0 p-2.5 rounded-[0.2rem] focus-visible:border
@@ -123,7 +157,7 @@ const Comment = ({ commentC }: Props) => {
         </>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Comment
+export default Comment;

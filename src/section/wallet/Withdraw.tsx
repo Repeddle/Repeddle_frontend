@@ -1,35 +1,35 @@
-import { ChangeEvent, useState } from "react"
-import LoadingBox from "../../components/LoadingBox"
-import useAuth from "../../hooks/useAuth"
-import { FaQuestionCircle, FaWallet } from "react-icons/fa"
-import MessageBox from "../../components/MessageBox"
-import { UserBalance } from "../../types/user"
+import { ChangeEvent, useState } from "react";
+import LoadingBox from "../../components/LoadingBox";
+import useAuth from "../../hooks/useAuth";
+import { FaQuestionCircle, FaWallet } from "react-icons/fa";
+import MessageBox from "../../components/MessageBox";
+import { UserBalance } from "../../types/user";
 
 type Props = {
-  setShowModel: (val: boolean) => void
-  setRefresh: (val: boolean) => void
-  refresh: boolean
-  balance: UserBalance
-}
+  setShowModel: (val: boolean) => void;
+  setRefresh: (val: boolean) => void;
+  refresh: boolean;
+  balance: UserBalance;
+};
 
 const Withdraw = ({ balance }: Props) => {
-  const loading = false
-  const error = ""
+  const loading = false;
+  const error = "";
 
-  const { user } = useAuth()
+  const { user } = useAuth();
 
-  const [amount, setAmount] = useState(0)
+  const [amount, setAmount] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [fee, setFee] = useState("")
+  const [fee] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [errormsg, setErrormsg] = useState("")
+  const [errormsg] = useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setAmount(+e.target.value)
+    setAmount(+e.target.value);
     // dispatch({ type: "FETCH_FAIL", payload: "" });
-  }
+  };
 
-  const handleWithdraw = () => {}
+  const handleWithdraw = () => {};
 
   return loading ? (
     <LoadingBox />
@@ -82,7 +82,7 @@ const Withdraw = ({ balance }: Props) => {
         Withdraw
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Withdraw
+export default Withdraw;

@@ -104,7 +104,7 @@ export interface Pagination {
 export interface DeliveryOption {}
 
 export interface Review {
-  user: string
+  user: IUser
   comment: string
   rating: number
   like: string

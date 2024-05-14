@@ -1,5 +1,4 @@
 import { ChangeEvent, useEffect, useState } from "react"
-import { FaTimes } from "react-icons/fa"
 import useCategory from "../../hooks/useCategory"
 import { ICategory, ISubCategory, ISubCategoryItem } from "../../types/category"
 import useToastNotification from "../../hooks/useToastNotification"
@@ -12,6 +11,7 @@ import CategoriesImageUpload from "../../section/categories/CategoriesImageUploa
 import CategoryComp from "../../section/categories/CategoryComp"
 import { compressImageUpload } from "../../utils/common"
 import { getBackendErrorMessage } from "../../utils/error"
+import { FaTimes } from "react-icons/fa"
 
 export type categoriesModal = "addNameLink" | "addLink" | "addNameLink2"
 

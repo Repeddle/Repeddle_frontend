@@ -1,3 +1,4 @@
+
 import LoadingBox from "../../components/LoadingBox"
 import MessageBox from "../../components/MessageBox"
 import { useParams } from "react-router-dom"
@@ -123,4 +124,4 @@ const Transaction = () => {
   )
 }
 
-export default Transaction
+export default Transaction;
