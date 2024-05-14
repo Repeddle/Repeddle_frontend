@@ -1,10 +1,22 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import TransactionTable from "../../components/table/TransactionTable"
-import { transactions } from "../../utils/data"
+import useTransactions from "../../hooks/useTransaction"
+import useToastNotification from "../../hooks/useToastNotification"
 
 const TransactionList = () => {
   const [salesQuery, setSalesQuery] = useState("")
+
+  const { error, fetchTransactions, transactions, loading } = useTransactions()
+  const { addNotification } = useToastNotification()
+
+  useEffect(() => {
+    fetchTransactions()
+  }, [])
+
+  useEffect(() => {
+    if (error) addNotification(error)
+  }, [error])
 
   return (
     <div className="flex-[4] overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
@@ -22,7 +34,7 @@ const TransactionList = () => {
         />
       </div>
 
-      <TransactionTable transactions={transactions} />
+      <TransactionTable transactions={transactions} loading={loading} />
     </div>
   )
 }

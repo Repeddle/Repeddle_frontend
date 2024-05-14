@@ -22,6 +22,76 @@ export type OrderItem = CartItem & {
   deliverySelect: { cost: number }
 }
 
+export type IOrder = {
+  buyer: string
+  items: {
+    product: string
+    seller: string
+    quantity: number
+    price: number
+    selectedSize: string
+    selectedColor: string
+    deliveryOption: {
+      fee: number
+      method: string
+      _id: string
+    }
+    deliveryTracking: {
+      currentStatus: {
+        status: string
+        timestamp: string
+        _id: string
+      }
+      history: {
+        status: string
+        timestamp: string
+        _id: string
+      }[]
+    }
+    _id: string
+  }[]
+  totalAmount: number
+  paymentMethod: string
+  transactionId: string
+  _id: string
+  createdAt: string
+  updatedAt: string
+}
+
+export type ICreateOrder = {
+  items: {
+    _id: string
+    quantity: number
+    selectedSize: string
+    selectedColor: string
+    deliveryOption: string
+  }[]
+  totalAmount: number
+  paymentMethod: string
+  transactionId: string
+}
+
+export type IOrderSummary = {
+  purchaseOrders: {
+    numOrders: number
+    numSales: number
+  }
+  soldOrders: {
+    numOrders: number
+    numSales: number
+  }
+  dailyPurchasedOrders: {
+    date: string
+    orders: number
+    sales: number
+  }[]
+  dailySoldOrders: {
+    date: string
+    orders: number
+    sales: number
+  }[]
+}
+
 export type Order = {
   orderItems: OrderItem[]
   user: IUser

@@ -143,3 +143,18 @@ export type ICreateProduct = Omit<
   | "createdAt"
   | "updatedAt"
 >
+
+export type IBrand = {
+  name: string
+  alpha: string
+  type: "SYSTEM" | "USER"
+  published: boolean
+  _id: string
+  createdAt: string
+  updatedAt: string
+}
+
+export type ICreateBrand = {
+  published: boolean
+  name: string
+}

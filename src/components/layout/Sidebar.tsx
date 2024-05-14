@@ -11,15 +11,22 @@ import { NavLink } from "react-router-dom"
 import { Link } from "react-router-dom"
 import useAuth from "../../hooks/useAuth"
 import useTheme from "../../hooks/useTheme"
-import { BiTransfer } from "react-icons/bi"
 import {
+  FaChartBar,
   FaChartLine,
   FaComment,
   FaEnvelope,
+  FaHome,
   FaMoneyBill,
   FaQuestionCircle,
+  FaUser,
 } from "react-icons/fa"
-import { FaListCheck } from "react-icons/fa6"
+import {
+  FaArrowRotateLeft,
+  FaArrowRotateRight,
+  FaBasketShopping,
+  FaListCheck,
+} from "react-icons/fa6"
 
 const sidebarLinks = [
   {
@@ -29,10 +36,16 @@ const sidebarLinks = [
     end: true,
   },
   {
+    path: "/dashboard/productlist",
+    text: "My Products",
+    icon: <FaBasketShopping />,
+  },
+  {
     path: "/dashboard/order",
     text: "My Orders",
     icon: <AiOutlineShopping />,
   },
+<<<<<<< Victor
   { path: "/dashboard/wallet", 
     text: "Wallet", 
     icon: <AiOutlineWallet /> 
@@ -41,11 +54,15 @@ const sidebarLinks = [
     text: "Articles", 
     icon: <AiOutlineQuestionCircle /> 
  },
+=======
+>>>>>>> main
   {
-    path: "/dashboard/transactions",
-    text: "Transactions",
-    icon: <BiTransfer />,
+    path: "/dashboard/alltransaction",
+    text: "All Transactions",
+    icon: <FaMoneyBill />,
   },
+  { path: "/dashboard/wallet", text: "Wallet", icon: <AiOutlineWallet /> },
+
   {
     path: "/dashboard/analytics",
     text: "Analytics",
@@ -62,6 +79,11 @@ const sidebarLinks = [
     icon: <FaEnvelope />,
   },
   {
+    path: "/dashboard/address",
+    text: "Address Book",
+    icon: <FaHome />,
+  },
+  {
     path: "/dashboard/newsletter",
     text: "Collected Email",
     icon: <FaMoneyBill />,
@@ -76,6 +98,38 @@ const sidebarLinks = [
     text: "Messages",
     icon: <FaComment />,
   },
+  { path: "/dashboard/userlist", text: "Users", icon: <FaUser /> },
+  {
+    path: "/dashboard/transactionlist",
+    text: "All Transactions",
+    icon: <FaMoneyBill />,
+  },
+  { path: "/dashboard/payments", text: "Payments", icon: <FaMoneyBill /> },
+  {
+    path: "/dashboard/logreturns",
+    text: "All Logged Returns",
+    icon: <FaArrowRotateLeft />,
+  },
+  {
+    path: "/dashboard/allreturns",
+    text: "Return Queries",
+    icon: <FaArrowRotateLeft />,
+  },
+  {
+    path: "/dashboard/sellerreturns",
+    text: " Sold Returns",
+    icon: <FaArrowRotateLeft />,
+  },
+  {
+    path: "/dashboard/buyerreturns",
+    text: "Purchase Returns",
+    icon: <FaArrowRotateRight />,
+  },
+  {
+    path: "/dashboard/orderlist",
+    text: "Purchase Orders",
+    icon: <FaChartBar />,
+  },
 ]
 
 interface SideBarProps {
@@ -86,7 +140,7 @@ interface SideBarProps {
 const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
   const { user } = useAuth()
   const { isDarkMode } = useTheme()
-  const sidebarClasses = `fixed inset-y-0 left-0 z-[80] bg-orange-color bg-opacity-10 text-white w-64 h-screen transition-transform transform ${
+  const sidebarClasses = `fixed inset-y-0 left-0 z-[80] bg-orange-color scrollbar-hide bg-opacity-10 text-white w-64 h-screen transition-transform transform ${
     isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
   }`
 

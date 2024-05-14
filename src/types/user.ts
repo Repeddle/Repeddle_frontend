@@ -54,10 +54,24 @@ export interface IUser {
 }
 
 export interface UpdateFields {
-  username: string
+  // TODO: ask about username
+  // username: string
   firstName: string
   lastName: string
   image?: string
+  about: string
+  dob: string
+  phone: string
+  address: {
+    apartment: string
+    street: string
+    state: string
+    zipcode: number
+  }
+  rebundle: {
+    status: boolean
+    count: number
+  }
 }
 
 export type UserBalance = {

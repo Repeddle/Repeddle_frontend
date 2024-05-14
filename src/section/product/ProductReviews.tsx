@@ -5,6 +5,7 @@ import { IProduct } from "../../types/product"
 import MessageBox from "../../components/MessageBox"
 import useAuth from "../../hooks/useAuth"
 import { FaThumbsDown, FaThumbsUp } from "react-icons/fa"
+import Button from "../../components/ui/Button"
 
 type Props = {
   product: IProduct
@@ -118,13 +119,11 @@ const ProductReviews = ({ product }: Props) => {
                   />
                 </div>
                 <div className="my-3">
-                  <button
-                    className="search-btn1"
-                    disabled={loadingCreateReview}
+                  <Button
+                    text="Submit"
                     type="submit"
-                  >
-                    Submit
-                  </button>
+                    disabled={loadingCreateReview}
+                  />
                   {loadingCreateReview && <LoadingBox></LoadingBox>}
                 </div>
               </form>

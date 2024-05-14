@@ -1,4 +1,5 @@
 import { saveImageService } from "../services/image"
+import { IProduct } from "../types/product"
 
 export const region = () => {
   const add =
@@ -9,7 +10,12 @@ export const region = () => {
   return add
 }
 
-export const daydiff = (start: Date | string, end: number) => {
+export const currency = (region: IProduct["region"]) => {
+  if (region === "NGN") return "₦"
+  return "R"
+}
+
+export const daydiff = (start: Date | string | number, end: number) => {
   if (!start) return 0
   const startNum = timeDifference(new window.Date(start), new window.Date())
   console.log("startNum", start, end - startNum)
@@ -114,4 +120,71 @@ export const compressImageUpload = async (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     throw new Error(error as any)
   }
+}
+
+export const resizeImage = (
+  files: File[],
+  setinvalidImage: (val: string) => void,
+  setuserInfo: (val: { file: File | null; filepreview: string }) => void
+) => {
+  const reader = new FileReader()
+  const imageFile = files[0]
+  const imageFilname = files[0].name
+
+  if (!imageFile) {
+    setinvalidImage("Please select image.")
+    return false
+  }
+
+  reader.onload = (e) => {
+    const img = new Image()
+    img.onload = () => {
+      //------------- Resize img code ----------------------------------
+      const canvas = document.createElement("canvas")
+
+      const MAX_WIDTH = 1000
+      const MAX_HEIGHT = 1000
+      let width = img.width
+      let height = img.height
+
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width
+          width = MAX_WIDTH
+        }
+      } else {
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height
+          height = MAX_HEIGHT
+        }
+      }
+      canvas.width = width
+      canvas.height = height
+      const ctx = canvas.getContext("2d")
+      ctx!.drawImage(img, 0, 0, width, height)
+      ctx!.canvas.toBlob(
+        (blob) => {
+          const file = new File([blob!], imageFilname, {
+            type: "image/jpeg",
+            lastModified: Date.now(),
+          })
+          setuserInfo({
+            file: file,
+            filepreview: URL.createObjectURL(imageFile),
+          })
+          console.log(file)
+        },
+        "image/jpeg",
+        1
+      )
+      setinvalidImage("")
+    }
+    img.onerror = () => {
+      setinvalidImage("Invalid image content.")
+      return false
+    }
+    //debugger
+    img.src = e.target!.result as string
+  }
+  reader.readAsDataURL(imageFile)
 }

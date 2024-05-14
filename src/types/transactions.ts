@@ -1,46 +1,45 @@
 export type ITransaction = {
-  _id: string
-  txnType: string
-  purpose: string
-  amount: number
-  accountId: string
-  reference: string
-  balanceBefore: number
-  balanceAfter: number
-  metadata: {
-    senderId?: string
-    purpose: string
-    recipientId?: string
-    transaction_id?: string | number
-  }
-  transactionId?: string
-  createdAt: string
-  updatedAt: string
-}
+  walletId: string;
+  userId?: string;
+  amount: number;
+  type: string;
+  description: string;
+  status?: string;
+  paymentTransactionId: string;
+  meta: {
+    senderId?: string;
+    purpose?: string;
+    recipientId?: string;
+    transaction_id?: string | number;
+  };
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+};
 
 export type IPayment = {
-  _id: string
+  _id: string;
   userId: {
-    _id: string
-    username: string
-  }
-  amount: number
-  status: string
+    _id: string;
+    username: string;
+  };
+  amount: number;
+  status: string;
   meta: {
-    Type: string
-    from: string
-    to: string
-    currency: string
+    Type: string;
+    from: string;
+    to: string;
+    currency: string;
     detail?: {
-      accountName: string
-      bankName: string
-      accountNumber: number
-    }
-    typeName?: string
-    id?: string
-    typeNpame?: string
-  }
-  paymentId: string
-  createdAt: string
-  updatedAt: string
-}
+      accountName: string;
+      bankName: string;
+      accountNumber: number;
+    };
+    typeName?: string;
+    id?: string;
+    typeNpame?: string;
+  };
+  paymentId: string;
+  createdAt: string;
+  updatedAt: string;
+};
