@@ -1,3 +1,4 @@
+
 import { useMemo, useState } from "react"
 import { Link } from "react-router-dom"
 import { ITransaction } from "../../types/transactions"
@@ -17,39 +18,39 @@ const headers = [
   { title: "Type", key: "type", hide: true },
   { title: "Amount", key: "amount", hide: true },
   { title: "Status", key: "status" },
-]
+];
 
-type tranKey = keyof ITransaction
+type tranKey = keyof ITransaction;
 
 const TransactionTable = ({ transactions, loading }: Props) => {
   const [sortKey, setSortKey] = useState<{
-    key: string
-    sort: "asc" | "desc"
-  }>()
+    key: string;
+    sort: "asc" | "desc";
+  }>();
 
   const updateSort = (key: string) => {
-    if (sortKey?.key === key && sortKey.sort === "desc") setSortKey(undefined)
-    else if (sortKey?.key === key) setSortKey({ key, sort: "desc" })
-    else setSortKey({ key, sort: "asc" })
-  }
+    if (sortKey?.key === key && sortKey.sort === "desc") setSortKey(undefined);
+    else if (sortKey?.key === key) setSortKey({ key, sort: "desc" });
+    else setSortKey({ key, sort: "asc" });
+  };
 
   const sortedTransactions = useMemo(() => {
-    console.log("tran")
+    console.log("tran");
     if (sortKey && transactions[0][sortKey.key as tranKey]) {
       return transactions.sort((a, b) => {
-        const aVal = a[sortKey.key as tranKey] ?? ""
-        const bVal = b[sortKey.key as tranKey] ?? ""
+        const aVal = a[sortKey.key as tranKey] ?? "";
+        const bVal = b[sortKey.key as tranKey] ?? "";
         if (typeof aVal === "number" && typeof bVal === "number") {
-          return sortKey.sort === "asc" ? aVal - bVal : bVal - aVal
+          return sortKey.sort === "asc" ? aVal - bVal : bVal - aVal;
         }
 
         return sortKey.sort === "asc"
           ? aVal.toString().localeCompare(bVal.toString())
-          : bVal.toString().localeCompare(aVal.toString())
-      })
+          : bVal.toString().localeCompare(aVal.toString());
+      });
     }
-    return transactions
-  }, [sortKey, transactions])
+    return transactions;
+  }, [sortKey, transactions]);
 
   // TODO: table reduce width
 
@@ -99,6 +100,7 @@ const TransactionTable = ({ transactions, loading }: Props) => {
 
                   <td className="px-3 hidden lg:table-cell h-[52px] whitespace-nowrap w-auto overflow-hidden text-ellipsis">
                     {tran.description}
+
                   </td>
 
                   <td className="px-3 h-[52px] whitespace-nowrap w-auto overflow-hidden text-ellipsis">
@@ -135,7 +137,7 @@ const TransactionTable = ({ transactions, loading }: Props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TransactionTable
+export default TransactionTable;

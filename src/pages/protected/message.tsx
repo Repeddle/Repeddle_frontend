@@ -1,202 +1,234 @@
-import { ChangeEvent, MouseEvent, useRef, useState } from "react"
-import { FaAngleLeft, FaSearch } from "react-icons/fa"
-import { Link } from "react-router-dom"
-import useAuth from "../../hooks/useAuth"
-import { FaMessage } from "react-icons/fa6"
-import Conversation from "../../components/Conversation"
-import {
-  conversationData,
-  conversationMessageData,
-  productDetails,
-  searchResultData,
-  user as userData,
-} from "../../utils/data"
-import { IConversation } from "../../types/conversation"
-import MessageItem from "../../components/ui/MessageItem"
+import React, { useState } from "react";
+import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
+import { BiSupport } from "react-icons/bi";
+import { MdReport } from "react-icons/md";
+import { FaImage } from "react-icons/fa";
+import { IoSend } from "react-icons/io5";
 
-function Message() {
-  const { user: userInfo } = useAuth()
+interface IMessage {
+  id: number;
+  sender: string;
+  content: string;
+  timestamp: string;
+  isSentByCurrentUser: boolean; // New property to identify sent messages
+}
 
-  const user1 = userData
-  const user2 = userData
-  const conversations = conversationData
-  const loadingx = false
+// Sample data for messages
+const messages: IMessage[] = [
+  {
+    id: 1,
+    sender: "Alice",
+    content: "Hi there!",
+    timestamp: "10:00 AM",
+    isSentByCurrentUser: false,
+  },
+  {
+    id: 2,
+    sender: "Bob",
+    content: "Hey!",
+    timestamp: "10:02 AM",
+    isSentByCurrentUser: true,
+  },
+  {
+    id: 1,
+    sender: "Alice",
+    content: "How are you doing",
+    timestamp: "10:03 AM",
+    isSentByCurrentUser: false,
+  },
+  {
+    id: 2,
+    sender: "Bob",
+    content: "I am good.",
+    timestamp: "10:04 AM",
+    isSentByCurrentUser: true,
+  },
+  // Add more sample messages here
+];
 
-  const [currentChat, setCurrentChat] = useState<IConversation>()
-  const [showLeft, setShowLeft] = useState(true)
-  const [searchResult, setSearchResult] = useState(searchResultData)
-  const product = productDetails
-  const messages = conversationMessageData
+interface IConversation {
+  user: string;
+  lastMessage: string;
+  lastMessageTime: string;
+  unreadMessages?: number;
+}
 
-  const scrollref = useRef(null)
-  const searchRef = useRef(null)
+// Sample data for messages
+const conversations: IConversation[] = [
+  {
+    user: "Alice",
+    lastMessage: "Hi there!",
+    lastMessageTime: "10:00 AM",
+    unreadMessages: 2,
+  },
+  {
+    user: "Bob",
+    lastMessage: "Hey!",
+    lastMessageTime: "10:02 AM",
+    unreadMessages: 1,
+  },
+  // Add more sample conversations here
+];
 
-  const closeModel = (e: MouseEvent<HTMLDivElement>) => {
-    // TODO:
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    if (searchRef !== e.target) {
-      setSearchResult([])
-    }
-  }
+const Message: React.FC = () => {
+  const [messageInput, setMessageInput] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [currentTab, setCurrentTab] = useState("chat");
+  const [currentConversation, setCurrentConversation] =
+    useState<IConversation | null>(null);
 
-  const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
-  }
+  const handleMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Handle sending message logic
+    setMessageInput("");
+  };
+
+  const filteredConversations = conversations.filter((conversation) =>
+    conversation.user.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <div
-      className="flex-[4] min-w-0 flex gap-2.5 mb-5 mx-5 my-0 bg-light-ev1 dark:bg-dark-ev1"
-      onClick={closeModel}
+      className="flex h-screen bg-light-ev4 dark:bg-dark-ev4"
+      style={{ maxHeight: `calc(100vh - 160px)` }}
     >
-      <div
-        className={`flex-1 p-2.5 rounded-[0.2rem] bg-light-ev2 dark:bg-dark-ev2 lg:block ${
-          showLeft ? "" : "hidden"
-        }`}
-      >
-        <div className="flex justify-between px-[25px] py-[15px]">
-          <div className="relative">
-            <FaSearch className="relative pr-2.5" />
-            <input
-              className={`h-10 px-2.5 py-0 rounded-[0.2rem] border-0 bg-white-color dark:bg-black-color text-black
-              dark:text-white focus-visible:outline-none placeholder:pl-2.5 placeholder:text-light-ev4 dark:placeholder:text-dark-ev4`}
-              placeholder="Search..."
-              onChange={handleSearchInput}
-            />
-
-            {searchResult.length > 0 && (
-              <div
-                className="absolute w-full z-[9] p-[15px] left-0 top-5 bg-white dark:bg-black"
-                ref={searchRef}
-              >
-                {searchResult.map(
-                  (u) =>
-                    u._id !== userInfo?._id && (
-                      <div
-                        className="flex items-center cursor-pointer mb-2.5"
-                        key={u._id}
-                      >
-                        <img
-                          className="w-5 h-5 mr-2.5 rounded-[50%]"
-                          src={u.image}
-                          alt="img"
-                        />
-                        <div>{u.username}</div>
-                      </div>
-                    )
-                )}
-              </div>
-            )}
-          </div>
-          <div>
-            <FaMessage className="relative pr-2.5" />
-          </div>
+      <div className="w-[4.5%]">
+        <div
+          onClick={() => setCurrentTab("chat")}
+          className={`${
+            currentTab === "chat" && "bg-light-ev2 dark:bg-dark-ev2"
+          } py-4 flex justify-center hover:bg-light-ev3 hover:dark:bg-dark-ev3 cursor-pointer`}
+        >
+          <IoChatbubbleEllipsesOutline size={30} />
         </div>
-        <div className="overflow-auto h-[calc(100%_-_50px)] scrollbar-hide">
-          {conversations.length < 1
-            ? "No Conversation"
-            : conversations.map((c, index) => (
-                <div
-                  onClick={() => {
-                    setShowLeft(false)
-                    setCurrentChat(c)
-                  }}
-                  key={index}
-                >
-                  <Conversation
-                    conversation={c}
-                    currentChat={currentChat && currentChat._id}
-                  />
-                </div>
-              ))}
+        <div
+          onClick={() => setCurrentTab("support")}
+          className={`${
+            currentTab === "support" && "bg-light-ev2 dark:bg-dark-ev2"
+          } py-4 flex justify-center hover:bg-light-ev3 hover:dark:bg-dark-ev3 cursor-pointer`}
+        >
+          <BiSupport size={30} />
+        </div>
+        <div
+          onClick={() => setCurrentTab("report")}
+          className={`${
+            currentTab === "report" && "bg-light-ev2 dark:bg-dark-ev2"
+          } py-4 flex justify-center hover:bg-light-ev3 hover:dark:bg-dark-ev3 cursor-pointer`}
+        >
+          <MdReport size={30} />
         </div>
       </div>
-      <div
-        className={`flex-[2] lg:px-[30px] lg:block lg:py-2.5 rounded-[0.2rem] m-[5px] p-2.5 ${
-          showLeft ? "hidden" : ""
-        }`}
-      >
-        {currentChat ? (
-          <div className="overflow-y-auto h-full scrollbar-hide">
-            {!loadingx && (
-              <>
-                {!showLeft && (
-                  <div
-                    className="flex lg:hidden bg-light-ev1 dark:bg-dark-ev1 justify-center items-center w-[55px] p-[5px]"
-                    onClick={() => setShowLeft(true)}
-                  >
-                    <FaAngleLeft className="text-[15px] mr-[5px]" />
-                    Back
+      {/* Sidebar */}
+      <div className="w-1/4 bg-light-ev2 dark:bg-dark-ev2 ">
+        <div className="p-4">
+          {/* Sidebar content */}
+          <h2 className="text-lg font-semibold mb-4">Conversations</h2>
+          {/* Search input */}
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search conversations..."
+            className="w-full mb-4 px-3 py-2 border border-opacity-50 dark:bg-black border-gray-300 rounded-md focus:outline-none focus:border-orange-color"
+          />
+        </div>
+        <div className="overflow-y-auto">
+          {/* Conversation list */}
+          {filteredConversations.map((conversation, index) => (
+            <div
+              key={index}
+              className={`flex items-center py-2 px-4 cursor-pointer transition-colors duration-300 ${
+                conversation.user === currentConversation?.user &&
+                "bg-light-ev1 dark:bg-dark-ev1"
+              } hover:bg-light-ev3 dark:hover:bg-dark-ev3 `}
+              onClick={() => setCurrentConversation(conversation)}
+            >
+              {/* User image */}
+              <div className="w-12 h-12 rounded-full bg-gray-300 mr-4"></div>
+              {/* User details and last message */}
+              <div className="flex-1">
+                <div className="font-semibold">{conversation.user}</div>
+                <div className="text-sm text-gray-600">
+                  {conversation.lastMessage}
+                </div>
+              </div>
+              {/* Last message time and unread messages */}
+              <div className="flex flex-col items-end">
+                <div className="text-sm text-gray-600">
+                  {conversation.lastMessageTime}
+                </div>
+                {conversation.unreadMessages && (
+                  <div className="bg-orange-color text-white text-xs rounded-full px-2 py-1 mt-1">
+                    {conversation.unreadMessages}
                   </div>
                 )}
-                <div className="flex justify-between">
-                  <Link
-                    to={`/seller/${user2._id}`}
-                    className="flex justify-end pr-2.5"
-                  >
-                    <div className="flex items-center">
-                      <img
-                        className="w-10 h-10 object-cover object-top mr-[0_15px] m-[3px] rounded-[50%]"
-                        src={user2.image}
-                      />
-                      <div>{user2.username}</div>
-                    </div>
-                  </Link>
-                  <Link
-                    to={`/seller/${user1._id}`}
-                    className="flex justify-end pr-2.5"
-                  >
-                    <div className="flex items-center">
-                      <img
-                        className="w-10 h-10 object-cover object-top mr-[0_15px] m-[3px] rounded-[50%]"
-                        src={user1.image}
-                      />
-                      <div>{user1.username}</div>
-                    </div>
-                  </Link>
-                </div>
-              </>
-            )}
-            {currentChat.conversationType !== "user" && (
-              <Link
-                to={
-                  currentChat.conversationType === "reportUser"
-                    ? `/seller/${product._id}`
-                    : `/product/${product.slug}`
-                }
-                className="flex justify-center border-b border-b-[gray]"
-              >
-                <div className="flex items-center">
-                  <img
-                    className="w-10 h-10 object-cover object-top mr-[0_15px] m-[3px] rounded-[50%]"
-                    src={product.images[0]}
-                  />
-                  <div>{product.name}</div>
-                </div>
-              </Link>
-            )}
-            <div className="h-[calc(100%_-_70px)] overflow-y-auto flex flex-col scrollbar-hide">
-              <div className="h-full">
-                {messages.map((m, index) => (
-                  <div ref={scrollref} key={index}>
-                    <MessageItem
-                      key={m._id}
-                      own={m.sender === user1._id}
-                      message={m}
-                    />
-                  </div>
-                ))}
               </div>
             </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Main Chat Area */}
+      <div className="flex-1 flex flex-col bg-light-ev1 dark:bg-dark-ev1">
+        {/* Header */}
+        <div className="bg-light-ev4 dark:bg-dark-ev4 px-4 py-2">
+          <div className="flex items-center">
+            <div className="w-10 h-10 rounded-full bg-gray-300 mr-4"></div>
+            <div className="font-semibold">Bob</div>
           </div>
-        ) : (
-          <span className="flex justify-center items-center text-[50px] text-[rgba(99,91,91,0.2)] text-center">
-            Select a conversation to start a chat
-          </span>
-        )}
+        </div>
+
+        {/* Chat Window */}
+        <div className="flex-1 py-4 px-10 overflow-y-auto">
+          {/* Chat content */}
+          {messages.slice().map((message) => (
+            <div
+              key={message.id}
+              className={`flex  mb-4 ${
+                message.isSentByCurrentUser ? "justify-end" : "justify-start"
+              }`}
+            >
+              <div className="flex mb-1">
+                {!message.isSentByCurrentUser && (
+                  <div className="w-8 h-8 rounded-full bg-gray-300 mr-2"></div>
+                )}
+              </div>
+              <div
+                className={`p-3 rounded-lg ${
+                  message.isSentByCurrentUser
+                    ? "bg-orange-color text-white self-end"
+                    : "bg-malon-color text-white self-start"
+                }`}
+              >
+                {message.content}
+                <span className="text-white text-opacity-75 w-full text-xs mr-auto">
+                  <div>{message.timestamp}</div>
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Message Input Box */}
+        <form
+          onSubmit={handleMessageSubmit}
+          className="p-4 border-t border-gray-300 flex items-center gap-4 border-opacity-50"
+        >
+          <FaImage size={30} />
+          <input
+            type="text"
+            value={messageInput}
+            onChange={(e) => setMessageInput(e.target.value)}
+            placeholder="Type a message..."
+            className="w-full border border-opacity-50 dark:bg-black rounded-lg p-3 border-gray-300  focus:outline-none focus:border-orange-color"
+          />
+          <button type="submit" className="">
+            <IoSend size={30} />
+          </button>
+        </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Message
+export default Message;
