@@ -45,7 +45,6 @@ const sidebarLinks = [
     text: "My Orders",
     icon: <AiOutlineShopping />,
   },
-<<<<<<< Victor
   { path: "/dashboard/wallet", 
     text: "Wallet", 
     icon: <AiOutlineWallet /> 
@@ -54,8 +53,6 @@ const sidebarLinks = [
     text: "Articles", 
     icon: <AiOutlineQuestionCircle /> 
  },
-=======
->>>>>>> main
   {
     path: "/dashboard/alltransaction",
     text: "All Transactions",
