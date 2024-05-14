@@ -144,7 +144,7 @@ const router = createBrowserRouter([
           { path: "return/:id", element: <ReturnPage /> },
           { path: "user/:id", element: <User /> },
           { path: "transaction/:id", element: <Transaction /> },
-          { path: "product/:id", element: <EditProduct /> },
+          // { path: "product/:id", element: <EditProduct /> },
         ],
       },
     ],
