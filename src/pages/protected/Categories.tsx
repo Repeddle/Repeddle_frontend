@@ -65,7 +65,7 @@ const Categories = () => {
   const closeModal = (modalName: categoriesModal) => {
     setModal((prevModal) => ({
       ...prevModal,
-      [modalName]: true,
+      [modalName]: false,
     }))
   }
 
@@ -350,16 +350,16 @@ const Categories = () => {
             <FaTimes onClick={() => cancelEdit()} className="ml-2.5" />
           )}
 
-          {selectedSubcategoryIndex && (
+          {/* the check is necessary if not the useState does not receive the update value */}
+          {modal.addNameLink && selectedSubcategoryIndex !== null && (
             <Modal
               isOpen={modal.addNameLink}
               onClose={() => closeModal("addNameLink")}
-              size="sm"
             >
               <FormModal
-                onSubmit={itemIndex !== null ? handleItemChange : handleAddItem}
                 onClose={() => closeModal("addNameLink")}
-                // title="Add Name and Link"
+                handleSubAdd={handleAddItem}
+                handleChange={handleItemChange}
                 category={
                   itemIndex !== null
                     ? subCategories[selectedSubcategoryIndex].items[itemIndex]
@@ -377,45 +377,48 @@ const Categories = () => {
             </Modal>
           )}
 
-          <Modal
-            isOpen={modal.addNameLink2}
-            onClose={() => closeModal("addNameLink2")}
-          >
-            <FormModal
-              onSubmit={
-                selectedSubcategoryIndex !== null
-                  ? handleSubcategoryChange
-                  : handleAddSubcategory
-              }
+          {/* the check is necessary if not the useState does not receive the update value */}
+          {modal.addNameLink2 && (
+            <Modal
+              isOpen={modal.addNameLink2}
               onClose={() => closeModal("addNameLink2")}
-              category={
-                selectedSubcategoryIndex !== null
-                  ? subCategories[selectedSubcategoryIndex]
-                  : {
-                      name: "",
-                      isCategory: true,
-                      path: "",
-                    }
-              }
-              nameLabel="Name:"
-              linkLabel="Link:"
-              index={selectedSubcategoryIndex}
-              itemIndex={null}
-            />
-          </Modal>
+            >
+              <FormModal
+                onClose={() => closeModal("addNameLink2")}
+                handleAdd={handleAddSubcategory}
+                handleSubAdd={handleSubcategoryChange}
+                category={
+                  selectedSubcategoryIndex !== null
+                    ? subCategories[selectedSubcategoryIndex]
+                    : {
+                        name: "",
+                        isCategory: true,
+                        path: "",
+                      }
+                }
+                nameLabel="Name:"
+                linkLabel="Link:"
+                index={selectedSubcategoryIndex}
+                itemIndex={null}
+              />
+            </Modal>
+          )}
 
-          <Modal isOpen={modal.addLink} onClose={() => closeModal("addLink")}>
-            <FormModal
-              onSubmit={handleCategoryPathChange}
-              onClose={() => {
-                closeModal("addLink")
-              }}
-              category={category}
-              linkLabel="Link:"
-              index={null}
-              itemIndex={null}
-            />
-          </Modal>
+          {/* the check is necessary if not the useState does not receive the update value */}
+          {modal.addLink && (
+            <Modal isOpen={modal.addLink} onClose={() => closeModal("addLink")}>
+              <FormModal
+                onClose={() => {
+                  closeModal("addLink")
+                }}
+                category={category}
+                linkLabel="Link:"
+                handleAdd={handleCategoryPathChange}
+                index={null}
+                itemIndex={null}
+              />
+            </Modal>
+          )}
         </div>
 
         <RightCategories

@@ -1,32 +1,32 @@
-import React, { useEffect, useState, ReactNode } from "react";
-import { FaTimes } from "react-icons/fa";
+import React, { useEffect, useState, ReactNode } from "react"
+import { FaTimes } from "react-icons/fa"
 
 const Modal: React.FC<{
-  isOpen: boolean;
-  onClose: () => void;
-  children: ReactNode;
-  size?: "sm" | "lg";
-  dontShowClose?: boolean;
+  isOpen: boolean
+  onClose: () => void
+  children: ReactNode
+  size?: "sm" | "lg"
+  dontShowClose?: boolean
 }> = ({ isOpen, onClose, children, size, dontShowClose }) => {
-  const [modalOpen, setModalOpen] = useState(isOpen);
+  const [modalOpen, setModalOpen] = useState(isOpen)
 
   useEffect(() => {
     if (isOpen) {
-      document.body.classList.add("modal-open");
+      document.body.classList.add("modal-open")
     }
     return () => {
-      document.body.classList.remove("modal-open");
-    };
-  }, []);
+      document.body.classList.remove("modal-open")
+    }
+  }, [])
 
   useEffect(() => {
-    setModalOpen(isOpen);
-  }, [isOpen]);
+    setModalOpen(isOpen)
+  }, [isOpen])
 
   const handleClose = () => {
-    setModalOpen(false);
-    onClose();
-  };
+    setModalOpen(false)
+    onClose()
+  }
 
   return (
     <>
@@ -56,7 +56,7 @@ const Modal: React.FC<{
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Modal;
+export default Modal

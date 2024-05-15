@@ -3,9 +3,9 @@ import useToastNotification from "../hooks/useToastNotification"
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onSubmit: any
+
   index: number | null
-  onClose: () => void
+  onClose?: () => void
   category: {
     name: string
     isCategory: boolean
@@ -14,6 +14,20 @@ type Props = {
   nameLabel?: string
   linkLabel: string
   itemIndex: number | null
+  handleAdd?: (name: string, isCategory: boolean, link: string) => void
+  handleSubAdd?: (
+    index: number,
+    name: string,
+    isCategory: boolean,
+    link: string
+  ) => void
+  handleChange?: (
+    subIndex: number,
+    index: number,
+    name: string,
+    isCategory: boolean,
+    link: string
+  ) => void
 }
 
 const FormModal = ({
@@ -21,12 +35,14 @@ const FormModal = ({
   linkLabel,
   nameLabel,
   onClose,
-  onSubmit,
   index,
   itemIndex,
+  handleAdd,
+  handleChange,
+  handleSubAdd,
 }: Props) => {
-  const [name, setName] = useState(category.name)
-  const [link, setLink] = useState(category.path)
+  const [link, setLink] = useState(category.path || "")
+  const [name, setName] = useState(category.name || "")
   const [isCategory, setIsCategory] = useState(category.isCategory)
 
   const { addNotification } = useToastNotification()
@@ -40,26 +56,25 @@ const FormModal = ({
 
     if (index !== null && index >= 0) {
       if (itemIndex !== null && itemIndex >= 0) {
-        // onSubmit(index, itemIndex, name, isCategory, link)
-        onSubmit()
+        handleChange?.(index, itemIndex, name, isCategory, link)
       } else {
-        // onSubmit(index, name, isCategory, link)
+        handleSubAdd?.(index, name, isCategory, link)
       }
     } else {
-      // onSubmit(name, isCategory, link)
+      handleAdd?.(name, isCategory, link)
     }
-    onClose()
+    onClose?.()
   }
 
   return (
-    <div className="relative bg-white p-5">
+    <div className="bg-white p-5">
       <form className="flex flex-col gap-2.5" onSubmit={handleSubmit}>
         {nameLabel && (
           <>
             <label className="text-sm font-semibold mb-2.5">{nameLabel}</label>
             <input
               className={`h-10 p-2.5 rounded-[0.2rem] focus-visible:outline focus-visible:outline-orange-color border-light-ev3
-              dark:border-dark-ev3 text-black-color dark:text-white-color bg-transparent`}
+              dark:border-dark-ev3 border text-black-color dark:text-white-color bg-transparent`}
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -72,7 +87,7 @@ const FormModal = ({
             <label className="text-sm font-semibold mb-2.5">{linkLabel}</label>
             <input
               className={`h-10 p-2.5 rounded-[0.2rem] focus-visible:outline focus-visible:outline-orange-color border-light-ev3
-              dark:border-dark-ev3 text-black-color dark:text-white-color bg-transparent`}
+              dark:border-dark-ev3 border text-black-color dark:text-white-color bg-transparent`}
               type="text"
               value={link}
               onChange={(e) => setLink(e.target.value)}
