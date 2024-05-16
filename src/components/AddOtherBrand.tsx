@@ -21,11 +21,11 @@ const AddOtherBrand = ({ handleOnChange, setShowOtherBrand }: Props) => {
   const addOtherBrand = async () => {
     const res = await createBrand({
       name: brand,
-      published: user?.isAdmin ? true : false,
+      published: user?.role === "Admin" ? true : false,
     })
 
     if (res) {
-      if (user?.isAdmin) {
+      if (user?.role === "Admin") {
         addNotification("Brand has been added")
         handleOnChange(brand, "brand")
       } else {

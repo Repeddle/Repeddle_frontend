@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 import { FaCheck } from "react-icons/fa"
 import { useState } from "react"
 import { IUser } from "../../types/user"
-import { daydiff, deliveryNumber } from "../../utils/common"
+import { currency, daydiff, deliveryNumber, region } from "../../utils/common"
 
 type Props = {
   orderItem: OrderItem
@@ -213,7 +213,7 @@ const IsSeller = ({
         )}
       </div>
 
-      {user?.isAdmin && (
+      {user?.role === "Admin" && (
         <div
           className="cursor-pointer text-[red] mt-[5px]"
           onClick={() => handleCancelOrder(orderItem)}
@@ -236,15 +236,11 @@ const IsSeller = ({
             </div>
             <div className="mb-2.5">QTY: {orderItem.quantity}</div>
             <div className="font-bold">
-              Unit Price: N
-              {/* TODO: 
-              {orderItem.currency} */}
+              Unit Price: {currency(orderItem.region)}
               {orderItem.sellingPrice}
             </div>
             <div className="font-bold">
-              Total: N
-              {/* TODO: 
-              {orderItem.currency} */}
+              Total: {currency(orderItem.region)}
               {orderItem.sellingPrice * orderItem.quantity}
             </div>
           </div>
@@ -254,7 +250,7 @@ const IsSeller = ({
           <button className="bg-[#0d6efd] w-full px-3 py-[0.375rem] text-base leading-normal border-none">
             <Link to={`/product/${orderItem.slug}`}>Buy Again</Link>
           </button>
-          {user?.isAdmin &&
+          {user?.role === "Admin" &&
             daydiff(orderItem.deliveredAt, 3) <= 0 &&
             deliveryNumber(orderItem.deliveryStatus) < 4 && (
               <button
@@ -265,7 +261,7 @@ const IsSeller = ({
               </button>
             )}
 
-          {user?.isAdmin && (
+          {user?.role === "Admin" && (
             <button
               onClick={() => toggleOrderHoldStatus()}
               className="w-full px-3 py-[0.375rem] text-base leading-normal border-none bg-malon-color mt-2.5"
@@ -274,7 +270,7 @@ const IsSeller = ({
             </button>
           )}
 
-          {user?.isAdmin &&
+          {user?.role === "Admin" &&
             daydiff(orderItem.deliveredAt, 3) <= 0 &&
             deliveryNumber(orderItem.deliveryStatus) === 4 && (
               <button
@@ -297,9 +293,7 @@ const IsSeller = ({
             <div className="flex-1">{key}:</div>
             {key === "cost" ? (
               <div>
-                N {value}
-                {/* TODO: */}
-                {/* {currency} */}
+                {currency(region())} {value}
               </div>
             ) : (
               <div>{value}</div>
@@ -323,7 +317,7 @@ const IsSeller = ({
                 @{userOrdered.username}
               </Link>
             </div>
-            {user?.isAdmin && (
+            {user?.role === "Admin" && (
               <div className="font-bold mx-5 my-0">{userOrdered._id}</div>
             )}
             <div className="font-bold mx-5 my-0">
@@ -332,7 +326,7 @@ const IsSeller = ({
           </div>
         </div>
       </div>
-      {user?.isAdmin && (
+      {user?.role === "Admin" && (
         <div className="mt-2.5">
           <div>Seller Information</div>
           <div className="flex items-center mt-[5px]">
@@ -349,7 +343,7 @@ const IsSeller = ({
                   @{orderItem.seller.username}
                 </Link>
               </div>
-              {user?.isAdmin && (
+              {user?.role === "Admin" && (
                 <div className="font-bold mx-5 my-0">
                   {orderItem.seller._id}
                 </div>

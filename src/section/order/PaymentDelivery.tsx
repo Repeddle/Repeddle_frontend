@@ -1,4 +1,5 @@
 import { Order } from "../../types/order"
+import { currency, region } from "../../utils/common"
 
 type Props = {
   order: Order
@@ -41,31 +42,22 @@ const PaymentDelivery = ({
               <div className="flex capitalize">
                 <div className="flex-1">Item Total:</div>
                 <div className="flex-1 lg:flex-[5]">
-                  {/* TODO:
-                  {currency} */}
-                  N{isSeller ? itemsPrice : order.itemsPrice}
+                  {currency(region())}
+                  {isSeller ? itemsPrice : order.itemsPrice}
                 </div>
               </div>
               <div className="flex capitalize">
                 <div className="flex-1">Shipping Fee:</div>
                 <div className="flex-1 lg:flex-[5]">
-                  {/* TODO:
-                  {currency} */}
-                  N{isSeller ? shippingPrice : order.shippingPrice}
+                  {currency(region())}{" "}
+                  {isSeller ? shippingPrice : order.shippingPrice}
                 </div>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  textTransform: "capitalize",
-                }}
-              >
+              <div className="flex capitalize">
                 <div className="flex-1">Total:</div>
                 <div className="flex-1 lg:flex-[5]">
                   <div className="font-bold">
-                    N
-                    {/* TODO:
-                    {currency} */}
+                    {currency(region())}
                     {isSeller ? itemsPrice + shippingPrice : order.totalPrice}
                   </div>
                 </div>
@@ -78,30 +70,21 @@ const PaymentDelivery = ({
                   <div className="flex">
                     <div className="flex-[2]">Total cost:</div>
                     <div className="flex-[3]">
-                      {" "}
-                      N
-                      {/* TODO: 
-                      {currency} */}
+                      {currency(region())}
                       {itemsPrice + shippingPrice}
                     </div>
                   </div>
                   <div className="flex">
                     <div className="flex-[2]">Repeddle Commision (7.9%):</div>
                     <div className="flex-[3]">
-                      {" "}
-                      N
-                      {/* TODO:
-                      {currency} */}
+                      {currency(region())}
                       {((7.9 / 100) * (itemsPrice + shippingPrice)).toFixed(2)}
                     </div>
                   </div>
                   <div className="flex">
                     <div className="flex-[2]">You will Receive:</div>
                     <div className="flex-[3]">
-                      {" "}
-                      N
-                      {/* TODO:
-                      {currency} */}
+                      {currency(region())}
                       {(
                         itemsPrice +
                         shippingPrice -

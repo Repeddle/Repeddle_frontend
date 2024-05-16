@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+// FIXME: user details not complete
 import { useState } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import MessageBox from "../../components/MessageBox"

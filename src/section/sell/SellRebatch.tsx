@@ -51,7 +51,7 @@ const SellRebatch = () => {
               placeholder="Email:"
               onChange={(e) => setInput(e.target.value)}
             />
-            <div style={{ cursor: "pointer", flex: 1 }} onClick={handleSubmit}>
+            <div className="cursor-pointer flex-1" onClick={handleSubmit}>
               SUBMIT
             </div>
           </div>

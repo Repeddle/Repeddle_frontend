@@ -4,7 +4,7 @@ import useAuth from "../../hooks/useAuth"
 import { OrderItem } from "../../types/order"
 import { useState } from "react"
 import { IUser } from "../../types/user"
-import { daydiff, deliveryNumber } from "../../utils/common"
+import { currency, daydiff, deliveryNumber, region } from "../../utils/common"
 import Modal from "../../components/ui/Modal"
 
 type Props = {
@@ -132,7 +132,7 @@ const IsUser = ({
           )}
         </div>
       )}
-      {user?.isAdmin && (
+      {user?.role === "Admin" && (
         <div
           className="cursor-pointer text-[red] mt-[5px]"
           onClick={() => handleCancelOrder(orderItem)}
@@ -155,15 +155,11 @@ const IsUser = ({
             </div>
             <div className="mb-2.5">QTY: {orderItem.quantity}</div>
             <div className="font-bold">
-              Unit Price: N
-              {/* TODO:
-              {orderItem.currency} */}
+              Unit Price: {currency(orderItem.region)}
               {orderItem.sellingPrice}
             </div>
             <div className="font-bold">
-              Total: N
-              {/* TODO:
-              {orderItem.currency} */}
+              Total:{currency(orderItem.region)}
               {orderItem.sellingPrice * orderItem.quantity}
             </div>
           </div>
@@ -172,7 +168,7 @@ const IsUser = ({
           <button className="bg-[#0d6efd] w-full px-3 py-[0.375rem] text-base leading-normal border-none">
             <Link to={`/product/${orderItem.slug}`}>Buy Again</Link>
           </button>
-          {user?.isAdmin &&
+          {user?.role === "Admin" &&
             daydiff(orderItem.deliveredAt, 3) <= 0 &&
             deliveryNumber(orderItem.deliveryStatus) < 4 && (
               <button
@@ -182,7 +178,7 @@ const IsUser = ({
                 Refund
               </button>
             )}
-          {user?.isAdmin && (
+          {user?.role === "Admin" && (
             <button
               onClick={() => toggleOrderHoldStatus()}
               className="w-full px-3 py-[0.375rem] text-base leading-normal border-none bg-malon-color mt-2.5"
@@ -190,7 +186,7 @@ const IsUser = ({
               {orderItem.onHold ? "UnHold" : "Hold"}
             </button>
           )}
-          {user?.isAdmin &&
+          {user?.role === "Admin" &&
             daydiff(orderItem.deliveredAt, 3) <= 0 &&
             deliveryNumber(orderItem.deliveryStatus) === 4 && (
               <button
@@ -213,9 +209,7 @@ const IsUser = ({
             <div className="flex-1">{key}:</div>
             {key === "cost" ? (
               <div className="flex-1 lg:flex-[5]">
-                N {value}
-                {/* TODO: */}
-                {/* {currency} */}
+                {currency(region())} {value}
               </div>
             ) : (
               <div className="flex-1 lg:flex-[5]">{value}</div>
@@ -239,7 +233,7 @@ const IsUser = ({
                 @{orderItem.seller.username}
               </Link>
             </div>
-            {user?.isAdmin && (
+            {user?.role === "Admin" && (
               <div className="font-bold mx-5 my-0">{orderItem.seller._id}</div>
             )}
             <div className="font-bold mx-5 my-0">
@@ -248,7 +242,7 @@ const IsUser = ({
           </div>
         </div>
       </div>
-      {user?.isAdmin && (
+      {user?.role === "Admin" && (
         <div className="mt-2.5">
           <div>Buyer Information</div>
           <div className="flex items-center mt-[5px]">
@@ -265,7 +259,7 @@ const IsUser = ({
                   @{userOrdered.username}
                 </Link>
               </div>
-              {user?.isAdmin && (
+              {user?.role === "Admin" && (
                 <div className="font-bold mx-5 my-0">{userOrdered._id}</div>
               )}
               <div className="font-bold mx-5 my-0">

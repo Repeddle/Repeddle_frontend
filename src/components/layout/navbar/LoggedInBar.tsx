@@ -101,7 +101,7 @@ const LoggedInBar = ({
                 <Link to="/cart?wishlist=true">
                   Wishlist{" "}
                   <span className="text-orange-color">
-                    ({user.saved?.length})
+                    ({user.wishlist?.length})
                   </span>
                 </Link>
                 {productNotification.length > 0 && (

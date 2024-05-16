@@ -2,7 +2,7 @@
 // TODO: remove this
 import { useState } from "react"
 import DeliveryHistory from "../../components/DeliveryHistory"
-import { daydiff, deliveryNumber } from "../../utils/common"
+import { currency, daydiff, deliveryNumber } from "../../utils/common"
 import { Link, useParams } from "react-router-dom"
 import LoadingBox from "../../components/LoadingBox"
 import useAuth from "../../hooks/useAuth"
@@ -193,8 +193,7 @@ const ReturnPage = () => {
                     <>
                       <div className="flex-[3]">{key}:</div>
                       <div className="flex-[5]">
-                        {/* TODO:  */}
-                        {/* {returned.productId.currency} */}N {value}
+                        {currency(returned.region)} {value}
                       </div>
                     </>
                   ) : (

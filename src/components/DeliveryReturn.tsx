@@ -1,32 +1,33 @@
-import { FormEvent, useState } from "react";
-import { IReturn } from "../types/order";
-import { Helmet } from "react-helmet-async";
-import Modal from "./ui/Modal";
-import AddFund from "../section/wallet/AddFund";
-import { region } from "../utils/common";
-import { postnet, pudo, states } from "../utils/constants";
+import { FormEvent, useState } from "react"
+import { IReturn } from "../types/order"
+import { Helmet } from "react-helmet-async"
+import Modal from "./ui/Modal"
+import AddFund from "../section/wallet/AddFund"
+import { region } from "../utils/common"
+import { postnet, pudo, states } from "../utils/constants"
+import Button from "./ui/Button"
 
 type Props = {
-  returned: IReturn;
-  setShowModel: (val: boolean) => void;
+  returned: IReturn
+  setShowModel: (val: boolean) => void
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dispatch: any;
-};
+  dispatch: any
+}
 
 const DeliveryReturn = ({ setShowModel, returned }: Props) => {
-  const [deliveryOption, setDeliveryOption] = useState("");
-  const [showMap, setShowMap] = useState(false);
-  const [meta, setMeta] = useState<{ [key: string]: string }>({});
-  const [, setValue] = useState("");
-  const [showModel, setShowModel1] = useState(false);
-  const [refresh, setRefresh] = useState(false);
+  const [deliveryOption, setDeliveryOption] = useState("")
+  const [showMap, setShowMap] = useState(false)
+  const [meta, setMeta] = useState<{ [key: string]: string }>({})
+  const [, setValue] = useState("")
+  const [showModel, setShowModel1] = useState(false)
+  const [refresh, setRefresh] = useState(false)
 
-  const error1 = "";
-  const currency = "N";
+  const error1 = ""
+  const currency = "N"
 
   const submitHandler = (e: FormEvent) => {
-    e.preventDefault();
-  };
+    e.preventDefault()
+  }
 
   return (
     <div className="m-[30px]">
@@ -71,10 +72,10 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                         ...meta,
                         deliveryOption: e.target.value,
                         cost: x.value,
-                      });
-                      setDeliveryOption(e.target.value);
-                      setValue(x.value);
-                      setMeta({});
+                      })
+                      setDeliveryOption(e.target.value)
+                      setValue(x.value)
+                      setMeta({})
                     }}
                   />
                   <label className="ml-2.5 capitalize" htmlFor={x.name}>
@@ -129,7 +130,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                         <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
                           <select
                             onChange={(e) => {
-                              setMeta({ ...meta, province: e.target.value });
+                              setMeta({ ...meta, province: e.target.value })
                             }}
                             className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                           >
@@ -159,7 +160,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                         <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
                           <select
                             onChange={(e) => {
-                              setMeta({ ...meta, shortName: e.target.value });
+                              setMeta({ ...meta, shortName: e.target.value })
                             }}
                             className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                           >
@@ -208,7 +209,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                         <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
                           <select
                             onChange={(e) => {
-                              setMeta({ ...meta, province: e.target.value });
+                              setMeta({ ...meta, province: e.target.value })
                             }}
                             className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                           >
@@ -238,7 +239,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                         <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
                           <select
                             onChange={(e) => {
-                              setMeta({ ...meta, pickUp: e.target.value });
+                              setMeta({ ...meta, pickUp: e.target.value })
                             }}
                             className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                           >
@@ -366,7 +367,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                         <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
                           <select
                             onChange={(e) => {
-                              setMeta({ ...meta, province: e.target.value });
+                              setMeta({ ...meta, province: e.target.value })
                             }}
                             className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                           >
@@ -399,13 +400,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
             </div>
           ))}
           <div className="mb-3">
-            <button
-              className="search-btn1"
-              style={{ width: "100%" }}
-              type="submit"
-            >
-              Continue
-            </button>
+            <Button className="w-full" text="Continue" type="submit" />
           </div>
         </form>
         <Modal isOpen={showModel} onClose={() => setShowModel1(false)}>
@@ -418,7 +413,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
         </Modal>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DeliveryReturn;
+export default DeliveryReturn

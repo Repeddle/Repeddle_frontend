@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+// FIXME: user details not complete
 import { ChangeEvent, FormEvent } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import { Link } from "react-router-dom"
@@ -166,7 +169,7 @@ const UserRightComp = ({
             />
           </div>
           <div>
-            {id && userInfo?.isAdmin ? (
+            {id && userInfo?.role === "Admin" ? (
               <>
                 <label className="text-sm">Active</label>
                 <div className="text-sm text-malon-color">

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { IProduct } from "../../types/product"
+import { currency } from "../../utils/common"
 
 type Props = { product: IProduct }
 
@@ -50,8 +51,7 @@ const ProductDetails = ({ product }: Props) => {
               <tr>
                 <td>Price</td>
                 <td>
-                  {/* TODO:  */}
-                  {/* {product.currency} */}
+                  {currency(product.region)}
                   {product.sellingPrice}
                 </td>
               </tr>
@@ -113,13 +113,10 @@ const ProductDetails = ({ product }: Props) => {
             openCondition ? "h-auto ml-5 mb-5" : "h-0"
           }`}
         >
-          <div
-            className="sp_condition"
-            style={{ fontWeight: "bold", padding: "10px" }}
-          >
+          <div className="uppercase text-white-color text-xs flex items-center p-2.5 font-bold rounded-[10px] bg-malon-color">
             {product.condition}
           </div>
-          <div style={{ textAlign: "justify" }}>
+          <div className="text-justify">
             {conditionDetails(product.condition)}
           </div>
         </div>
@@ -140,9 +137,7 @@ const ProductDetails = ({ product }: Props) => {
             openShipping ? "h-auto ml-5 mb-5" : "h-0"
           }`}
         >
-          {/* TODO: */}
-          {/* {product.shippingLocation} */}
-          Nigeria
+          {product.region === "NGN" ? "Nigeria" : "South Africa"}
         </div>
       </div>
       {product.keyFeatures && product.keyFeatures !== "Other" && (

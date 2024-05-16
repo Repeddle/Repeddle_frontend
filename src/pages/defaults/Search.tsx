@@ -73,6 +73,7 @@ const Search = () => {
   const type: { name: string; _id: string }[] = []
   const pattern: { name: string; _id: string }[] = []
   const brands: { name: string; _id: string }[] = []
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const deals: any[] = []
   const maxPrice = 500000
   const minPrice = 0
@@ -206,11 +207,7 @@ const Search = () => {
               {products.products.length === 0 && (
                 <>
                   <MessageBox>
-                    <div
-                      style={{
-                        marginBottom: "15px",
-                      }}
-                    >
+                    <div className="mb-[15px]">
                       🔎Cant't find what you're looking for? Try related
                       products!
                     </div>

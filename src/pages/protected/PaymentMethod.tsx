@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async"
 import { Link } from "react-router-dom"
 import useCart from "../../hooks/useCart"
 import Button from "../../components/ui/Button"
+import { currency, region } from "../../utils/common"
 
 type PaymentType = "card" | "wallet"
 
@@ -49,9 +50,7 @@ const PaymentMethod = () => {
               onChange={(e) => setPaymentMethod(e.target.value as "wallet")}
             />
             <label htmlFor="wallet">
-              {/* TODO:  */}
-              {/* {`Wallet (${currency}${balance.toFixed(2)})`} */}
-              {`Wallet (N ${balance.toFixed(2)})`}
+              {`Wallet (${currency(region())} ${balance.toFixed(2)})`}
             </label>
           </div>
           {balance <= total && (

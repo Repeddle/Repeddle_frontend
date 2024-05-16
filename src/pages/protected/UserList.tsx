@@ -82,7 +82,7 @@ const UserList = () => {
             Email: user.email,
             Date: moment(user.createdAt).format("MMM DD YY, h:mm a"),
             Status: user.active ? "active" : "banned",
-            // TODO:
+            // FIXME:
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             Earnings: currency(region()) + " " + user.earnings ?? 0,

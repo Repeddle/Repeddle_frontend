@@ -152,7 +152,7 @@ export type IReturn = {
         rating: number
         numReviews: number
         badge: boolean
-        region: string
+        region: "NGN" | "ZAR"
       }
       slug: string
       image: string
@@ -196,7 +196,7 @@ export type IReturn = {
       }
       active: boolean
       countInStock: number
-      region: string
+      region: "NGN" | "ZAR"
       isAvailable: boolean
       shares: Array<any>
       viewcount: Array<{
@@ -250,7 +250,7 @@ export type IReturn = {
   refund: string
   image: string
   others: string
-  region: string
+  region: "NGN" | "ZAR"
   status: string
   returnId: string
   createdAt: string

@@ -5,7 +5,7 @@ import { FaCamera, FaChevronCircleRight } from "react-icons/fa"
 import { Link } from "react-router-dom"
 import MessageBox from "../../components/MessageBox"
 import Button from "../../components/ui/Button"
-import { daydiff, deliveryNumber } from "../../utils/common"
+import { currency, daydiff, deliveryNumber } from "../../utils/common"
 
 type TabTypes = "items" | "option" | "form"
 
@@ -71,9 +71,8 @@ const Return = ({ orderItems }: Props) => {
                     </div>
                     <div className="mb-2.5">QTY: {orderItem.quantity}</div>
                     <div className="font-bold">
-                      {/* TODO:
-                      {orderItem.currency} */}
-                      N {orderItem.quantity * orderItem.sellingPrice}
+                      {currency(orderItem.region)}{" "}
+                      {orderItem.quantity * orderItem.sellingPrice}
                     </div>
                   </div>
                 </div>
@@ -100,9 +99,7 @@ const Return = ({ orderItems }: Props) => {
                 </div>
                 <div className="mb-2.5">QTY: {current.quantity}</div>
                 <div className="font-bold">
-                  {/* TODO:
-                  {current.currency} { */}
-                  N {current.sellingPrice}
+                  {currency(current.region)} {current.sellingPrice}
                 </div>
               </div>
             </div>
@@ -149,9 +146,7 @@ const Return = ({ orderItems }: Props) => {
                 </div>
                 <div className="mb-2.5">QTY: {current.quantity}</div>
                 <div className="font-bold">
-                  {/* TODO:
-                  {current.currency} { */}
-                  N {current.sellingPrice}
+                  {currency(current.region)} {current.sellingPrice}
                 </div>
               </div>
             </div>
@@ -310,7 +305,7 @@ const Return = ({ orderItems }: Props) => {
               <input
                 type="file"
                 id="return"
-                style={{ display: "none" }}
+                className="hidden"
                 onChange={handleImageUpload}
               />
             </div>

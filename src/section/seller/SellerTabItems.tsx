@@ -1,22 +1,22 @@
-import useAuth from "../../hooks/useAuth";
-import { IProduct } from "../../types/product";
-import ProductItem from "../../components/ProductItem";
-import { Link } from "react-router-dom";
-import MessageBox from "../../components/MessageBox";
-import LoadingBox from "../../components/LoadingBox";
-import { FaCirclePlus } from "react-icons/fa6";
-import { IUser } from "../../types/user";
+import useAuth from "../../hooks/useAuth"
+import { IProduct } from "../../types/product"
+import ProductItem from "../../components/ProductItem"
+import { Link } from "react-router-dom"
+import MessageBox from "../../components/MessageBox"
+import LoadingBox from "../../components/LoadingBox"
+import { FaCirclePlus } from "react-icons/fa6"
+import { IUser } from "../../types/user"
 
-const tabs = ["all", "selling", "sold", "liked"] as const;
-type DisplayTab = (typeof tabs)[number] | "saved";
+const tabs = ["all", "selling", "sold", "liked"] as const
+type DisplayTab = (typeof tabs)[number] | "saved"
 
 type Props = {
-  displayTab: DisplayTab;
-  loading: boolean;
-  error?: string | null;
-  products: IProduct[];
-  user: IUser;
-};
+  displayTab: DisplayTab
+  loading: boolean
+  error?: string | null
+  products: IProduct[]
+  user: IUser
+}
 
 const SellerTabItems = ({
   displayTab,
@@ -25,13 +25,13 @@ const SellerTabItems = ({
   products,
   user,
 }: Props) => {
-  const { user: userInfo } = useAuth();
+  const { user: userInfo } = useAuth()
 
   return (
     <div className="grid grid-cols-[repeat(2,1fr)] bg-light-ev1 dark:bg-dark-ev1 p-0 lg:grid-cols-[repeat(4,1fr)] gap-2 lg:p-2.5 rounded-[0.2rem]">
       {displayTab === "all" && userInfo && (
         <div className="relative flex justify-center w-[162px] h-[342px] mx-[3px] my-[5px] lg:w-auto lg:h-auto lg:m-0">
-          <Link to={userInfo.isSeller ? "/newproduct" : "/sell"}>
+          <Link to={userInfo.role === "seller" ? "/newproduct" : "/sell"}>
             <div
               className={`flex lg:w-60 lg:h-[500px] cursor-pointer justify-center items-center flex-col rounded-[0.2rem]
               w-[162px] h-[342px] mx-[3px] my-[5px] lg:m-0 bg-light-ev2 dark:bg-dark-ev2 hover:bg-light-ev4 dark:hover:bg-dark-ev4`}
@@ -99,7 +99,7 @@ const SellerTabItems = ({
                         className="relative flex justify-center w-[162px] h-[342px] mx-[3px] my-[5px] lg:w-auto lg:h-auto m-0"
                         key={product._id}
                       >
-                        <div style={{ position: "absolute" }}>
+                        <div className="absolute">
                           <ProductItem product={product} />
                           {product.sold && (
                             <Link to={`/product/${product.slug}`}>
@@ -126,8 +126,14 @@ const SellerTabItems = ({
                 user.likes.map((product) => (
                   <div
                     className="relative flex justify-center w-[162px] h-[342px] mx-[3px] my-[5px] lg:w-auto lg:h-auto m-0"
+                    // FIXME: like is string
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
                     key={product._id}
                   >
+                    {/* FIXME: like is string  */}
+                    {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                    {/* @ts-ignore */}
                     <ProductItem product={product} />
                   </div>
                 ))
@@ -141,13 +147,15 @@ const SellerTabItems = ({
                 <LoadingBox></LoadingBox>
               ) : error ? (
                 <MessageBox className="text-red-500">{error}</MessageBox>
-              ) : user.saved.length === 0 ? (
+              ) : user.wishlist.length === 0 ? (
                 <MessageBox>No Product Found</MessageBox>
               ) : (
-                user.saved.map((product) => (
+                user.wishlist.map((product) => (
                   <div
                     className="relative flex justify-center w-[162px] h-[342px] mx-[3px] my-[5px] lg:w-auto lg:h-auto m-0"
-                    // key={product._id}
+                    // FIXME: wishlist is a string
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
                     key={product._id}
                   >
                     {/* TODO: type fix */}
@@ -160,7 +168,7 @@ const SellerTabItems = ({
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default SellerTabItems;
+export default SellerTabItems

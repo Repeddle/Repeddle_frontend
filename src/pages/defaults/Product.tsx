@@ -80,8 +80,11 @@ const Product = () => {
   const saved = useMemo(() => {
     return !!(
       user &&
-      user.saved &&
-      user.saved.find((x) => x._id === product._id)
+      user.wishlist &&
+      // FIXME: wishlist is string
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      user.wishlist.find((x) => x._id === product._id)
     )
   }, [user])
 
@@ -167,7 +170,6 @@ const Product = () => {
               <div
                 className="w-full h-[60px] flex justify-center items-center"
                 style={{
-                  // backgroundImage: `url('${product.image}')`,
                   backgroundImage: `url('${product.images[0]}')`,
                 }}
               >
@@ -455,10 +457,8 @@ const Product = () => {
             <ProtectionRight />
 
             <ProductSustain />
-            <div
-              style={{ display: "flex", gap: "20px", justifyContent: "end" }}
-            >
-              {user && user.isAdmin && (
+            <div className="flex gap-5 justify-end">
+              {user && user.role === "Admin" && (
                 <div className="pointer text-malon-color text-right">
                   <FaFlag /> Flag As Invalid
                 </div>

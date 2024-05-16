@@ -1,4 +1,7 @@
-import { IUser } from "../../types/user";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+// FIXME: user details not complete 
+import { IUser } from "../../types/user"
 import {
   FaBolt,
   FaDotCircle,
@@ -8,27 +11,27 @@ import {
   FaPlus,
   FaQuestionCircle,
   FaUser,
-} from "react-icons/fa";
-import { currency, region } from "../../utils/common";
-import { FaCalendarDays, FaLocationDot } from "react-icons/fa6";
-import useAuth from "../../hooks/useAuth";
-import Modal from "../../components/ui/Modal";
-import { banks, states } from "../../utils/constants";
-import { MouseEvent, useState } from "react";
-import { InputType } from "../../pages/protected/User";
+} from "react-icons/fa"
+import { currency, region } from "../../utils/common"
+import { FaCalendarDays, FaLocationDot } from "react-icons/fa6"
+import useAuth from "../../hooks/useAuth"
+import Modal from "../../components/ui/Modal"
+import { banks, states } from "../../utils/constants"
+import { MouseEvent, useState } from "react"
+import { InputType } from "../../pages/protected/User"
 
 type Props = {
-  user: IUser;
+  user: IUser
   balance?: {
-    balance: number;
-  };
-  input: InputType;
-  handleOnChange: (val: string, key: keyof InputType) => void;
-  errorInput: InputType;
-  handleError: (val: string, key: keyof InputType) => void;
-  addressValidate: (e: MouseEvent) => void;
-  accountValidate: (e: MouseEvent) => void;
-};
+    balance: number
+  }
+  input: InputType
+  handleOnChange: (val: string, key: keyof InputType) => void
+  errorInput: InputType
+  handleError: (val: string, key: keyof InputType) => void
+  addressValidate: (e: MouseEvent) => void
+  accountValidate: (e: MouseEvent) => void
+}
 
 const UserLeftComp = ({
   user,
@@ -40,10 +43,10 @@ const UserLeftComp = ({
   addressValidate,
   accountValidate,
 }: Props) => {
-  const { user: userInfo } = useAuth();
+  const { user: userInfo } = useAuth()
 
-  const [showModel, setShowModel] = useState(false);
-  const [showModelAddress, setShowModelAddress] = useState(false);
+  const [showModel, setShowModel] = useState(false)
+  const [showModelAddress, setShowModelAddress] = useState(false)
 
   return (
     <div className="flex-1 p-5 rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1">
@@ -68,9 +71,7 @@ const UserLeftComp = ({
             <span className="font-semibold">
               {user.firstName} {user.lastName}
             </span>
-            <span className="font-light">
-              {user.isAdmin ? "Admin" : user.isSeller ? "Seller" : "Buyer"}
-            </span>
+            <span className="font-light">{user.role}</span>
             {user.active ? (
               <div>
                 <FaBolt className="mr-2.5 text-orange-color" /> Active
@@ -123,7 +124,7 @@ const UserLeftComp = ({
           <div
             className="cursor-pointer ml-[5px] p-[5px] rounded-[0.2rem] hover:bg-malon-color"
             onClick={() => {
-              setShowModelAddress(!showModelAddress);
+              setShowModelAddress(!showModelAddress)
             }}
           >
             <FaPlus />
@@ -152,8 +153,8 @@ const UserLeftComp = ({
         <div className="flex items-center mx-0 my-5">
           <FaMoneyBill className="text-sm" />
           <div className="ml-2.5">Bank Account Detail</div>
-          {(userInfo?.isAdmin ||
-            (!user.accountNumber && !userInfo?.isAdmin)) && (
+          {(userInfo?.role==="Admin" ||
+            (!user.accountNumber && !userInfo?.role==="Admin")) && (
             <div
               className="cursor-pointer ml-[5px] p-[5px] rounded-[0.2rem] hover:bg-malon-color"
               onClick={() => setShowModel(!showModel)}
@@ -347,7 +348,7 @@ const UserLeftComp = ({
         </Modal>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default UserLeftComp;
+export default UserLeftComp

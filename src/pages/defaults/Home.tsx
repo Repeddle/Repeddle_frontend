@@ -1,4 +1,3 @@
-
 import CategoriesLinksButtons from "../../components/CategoriesLinksButtons"
 import TheThrill from "../../section/home/TheThrill"
 import { IProduct } from "../../types/product"
@@ -13,11 +12,11 @@ import Discount from "../../section/home/Discount"
 import MobileApp from "../../section/home/MobileApp"
 import Influencers from "../../section/home/Influencers"
 import RepeddleWorks from "../../section/home/RepeddleWorks"
-import { IUser } from "../../types/user"
+import { CompleteUser } from "../../types/user"
 
 function Home() {
   const products: IProduct[] = []
-  const sellers: IUser[] = []
+  const sellers: CompleteUser[] = []
   const loadingUser = false
   const error = undefined
 
@@ -53,7 +52,7 @@ function Home() {
         <TopSellers loadingUser={loadingUser} sellers={sellers} error={error} />
       </div>
     </div>
-  );
+  )
 }
 
-export default Home;
+export default Home

@@ -1,10 +1,10 @@
 import LoadingBox from "../../components/LoadingBox"
 import MessageBox from "../../components/MessageBox"
 import { Link } from "react-router-dom"
-import { IUser } from "../../types/user"
+import { CompleteUser } from "../../types/user"
 
 type Props = {
-  sellers: IUser[]
+  sellers: CompleteUser[]
   loadingUser: boolean
   error?: string
 }

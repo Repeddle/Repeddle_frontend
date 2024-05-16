@@ -78,7 +78,7 @@ const OtherBrandRow = ({ brand, refresh, setRefresh }: Props) => {
   const handleSubmit = async () => {
     const data = await updateBrand(brand._id, {
       name: newName,
-      published: user?.isAdmin ?? false,
+      published: user?.role === "Admin" ?? false,
     })
     if (data) addNotification("Brand added to list")
     setRefresh(!refresh)
