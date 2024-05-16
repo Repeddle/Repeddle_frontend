@@ -7,6 +7,7 @@ import UserLeftComp from "../../section/user/UserLeftComp"
 import UserRightComp from "../../section/user/UserRightComp"
 import useNewsletter from "../../hooks/useNewsletter"
 import { compressImageUpload } from "../../utils/common"
+import useUser from "../../hooks/useUser"
 
 export type InputType = {
   zipcode: string
@@ -36,7 +37,8 @@ export type UserFormType = {
 
 const User = () => {
   const { id } = useParams()
-  const { getUserById, error, updateUser } = useAuth()
+  const { error, updateUser } = useAuth()
+  const { getUserById } = useUser()
   const { addNotification } = useToastNotification()
   const {
     createNewsletter,
@@ -66,7 +68,7 @@ const User = () => {
   const [loadingRebundle, setLoadingRebundle] = useState(false)
   const [rebundleError, setRebundleError] = useState("")
   const [newsletterStatus, setNewsletterStatus] = useState(
-    user?.newsletter ?? false
+    user?.allowNewsletter ?? false
   )
 
   const [input, setInput] = useState<InputType>({

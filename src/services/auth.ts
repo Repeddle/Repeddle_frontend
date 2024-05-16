@@ -182,75 +182,11 @@ export async function getSuggestUsernameService(body: {
   }
 }
 
-export async function getAllUserService(): Promise<IUser[]> {
-  try {
-    const data: any = await api.get("/users/")
-
-    if (!data.status) {
-      // Handle login error, e.g., display an error message to the user
-      throw new Error("Get all failed: " + getBackendErrorMessage(data.data))
-    }
-
-    return data.users
-  } catch (error) {
-    // Handle network errors or other exceptions
-    // You can log the error or perform other error-handling actions
-    console.error("Get user error:", getBackendErrorMessage(error))
-
-    // Re-throw the error to propagate it up the call stack if needed
-    throw getBackendErrorMessage(error)
-  }
-}
-
-export async function getUserByIdService(id: string): Promise<IUser> {
-  try {
-    const data: any = await api.get(`/users/user/${id}`)
-
-    if (!data.status) {
-      // Handle login error, e.g., display an error message to the user
-      throw new Error("Get all failed: " + getBackendErrorMessage(data.data))
-    }
-
-    return data.user
-  } catch (error) {
-    // Handle network errors or other exceptions
-    // You can log the error or perform other error-handling actions
-    console.error("Get user error:", getBackendErrorMessage(error))
-
-    // Re-throw the error to propagate it up the call stack if needed
-    throw getBackendErrorMessage(error)
-  }
-}
-
 export async function updateUserService(
   userData: UpdateFields
 ): Promise<IUser> {
   try {
     const response: any = await api.put("/users/update-profile", userData)
-
-    console.log(response)
-    if (!response.status) {
-      // Handle login error, e.g., display an error message to the user
-      throw new Error("Update failed: " + getBackendErrorMessage(response.data))
-    }
-
-    return response.user
-  } catch (error) {
-    // Handle network errors or other exceptions
-    // You can log the error or perform other error-handling actions
-    console.error("Update user error:", getBackendErrorMessage(error))
-
-    // Re-throw the error to propagate it up the call stack if needed
-    throw getBackendErrorMessage(error)
-  }
-}
-
-export async function updateUserByIdService(
-  id: string,
-  userData: UpdateFields
-): Promise<IUser> {
-  try {
-    const response: any = await api.put(`/users/update-profile/${id}`, userData)
 
     console.log(response)
     if (!response.status) {

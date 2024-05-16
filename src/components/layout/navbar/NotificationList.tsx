@@ -2,6 +2,7 @@ import moment from "moment"
 import { Link } from "react-router-dom"
 
 type Props = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   notifications: any[]
 }
 

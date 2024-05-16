@@ -2,8 +2,6 @@ import { FormEvent, useState } from "react"
 import useToastNotification from "../hooks/useToastNotification"
 
 type Props = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-
   index: number | null
   onClose?: () => void
   category: {

@@ -5,7 +5,7 @@ import ToastNotification from "./components/ui/ToastNotification"
 
 function App() {
   const { isDarkMode } = useTheme()
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   UNSAFE_useScrollRestoration()
 
   return (

@@ -1,4 +1,4 @@
-import { IProduct } from "./product"
+import { Pagination } from "./product"
 
 export interface IAddress {
   apartment?: string
@@ -19,38 +19,25 @@ export interface IUser {
   lastName: string
   image?: string
   email: string
-  isAdmin: boolean
-  isSeller: boolean
+  role: string
   followers: string[]
   following: string[]
-  // likes: string[];
-  likes: IProduct[]
-  // saved: string[]
-  saved: IProduct[]
+  likes: string[]
+  wishlist: string[]
   sold: string[]
-  about?: string
-  dob?: string | Date
-  activeLastUpdate: string | Date
-  usernameLastUpdate?: string | Date
   buyers: string[]
   rating: number
-  accountNumber?: number
   phone?: string
-  accountName?: string
-  newsletter: boolean
-  bankName?: string
-  earnings: number
-  address?: IAddress
+  allowNewsletter: boolean
   numReviews: number
-  badge: boolean
   active: boolean
-  influencer: boolean
   isVerifiedEmail: boolean
   region: "NGN" | "ZAR"
-  rebundle: IRebundle
+  socketId?: string
+  activeLastUpdate: string
+  usernameLastUpdate?: string
   createdAt: string
-  updatedAt?: string | Date
-  role: string
+  updatedAt?: string
 }
 
 export interface UpdateFields {
@@ -78,4 +65,28 @@ export type UserBalance = {
   currency: string
   balance: number
   userId: string
+}
+
+export type CompleteUser = IUser & {
+  about: string
+  dob: string
+  accountNumber: number
+  accountName: string
+  bankName: string
+  tokenVersion: string
+  address: IAddress
+  badge: boolean
+  delected: boolean
+  influencer: boolean
+  rebundle: IRebundle
+}
+
+export type CompleteUsersWithPagination = Pagination & { users: CompleteUser[] }
+
+export type TopSellers = {
+  username: string
+  firstName: string
+  lastName: string
+  image: string
+  sold: number
 }

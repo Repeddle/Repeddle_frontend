@@ -4,13 +4,10 @@ import {
   registerUserService,
   deleteUserService,
   forgetPasswordService,
-  getAllUserService,
-  getUserByIdService,
   getUserService,
   loginUser,
   logoutUser,
   sendVerifyEmailService,
-  updateUserByIdService,
   updateUserService,
   verifyEmailService,
   resetUserPasswordService,
@@ -41,10 +38,7 @@ export const AuthContext = createContext<{
   login: (credentials: { email: string; password: string }) => Promise<boolean>
   sendForgetPasswordEmail: (credentials: { email: string }) => Promise<boolean>
   getUser: () => Promise<IUser | null>
-  getAllUser: () => Promise<IUser[] | null>
-  getUserById: (id: string) => Promise<IUser | null>
   updateUser: (userData: UpdateFields) => Promise<IUser | null>
-  updateUserById: (id: string, userData: UpdateFields) => Promise<IUser | null>
   logout: () => void
   deleteUser: (id: string) => Promise<boolean | null>
   resetPassword: (password: string, token: string) => Promise<boolean>
@@ -183,41 +177,6 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     }
   }
 
-  const getAllUser = async () => {
-    try {
-      setError("")
-      // makes the userlist page to keep refreshing
-      // setLoading(true)
-      const allUser = await getAllUserService()
-      if (allUser) {
-        return allUser
-      }
-      return null
-    } catch (error) {
-      handleError(error)
-      return null
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const getUserById = async (id: string) => {
-    try {
-      setError("")
-      setLoading(true)
-      const user = await getUserByIdService(id)
-      if (user) {
-        return user
-      }
-      return null
-    } catch (error) {
-      handleError(error)
-      return null
-    } finally {
-      setLoading(false)
-    }
-  }
-
   const updateUser = async (userData: UpdateFields) => {
     try {
       setError("")
@@ -233,29 +192,12 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     }
   }
 
-  const updateUserById = async (id: string, userData: UpdateFields) => {
-    try {
-      setError("")
-      const updatedUser: IUser | null = await updateUserByIdService(
-        id,
-        userData
-      )
-      if (updatedUser) {
-        return updatedUser
-      }
-      return null
-    } catch (error) {
-      handleError(error)
-      return null
-    }
-  }
-
   const deleteUser = async (id: string) => {
     try {
       setError("")
       const result = await deleteUserService(id)
       if (result) {
-        getAllUser()
+        // getAllUser()
         return result
       }
       return null
@@ -309,10 +251,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         login,
         sendForgetPasswordEmail,
         getUser,
-        getAllUser,
-        getUserById,
         updateUser,
-        updateUserById,
         resetPassword,
         logout,
         deleteUser,

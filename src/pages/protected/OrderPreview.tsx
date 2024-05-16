@@ -24,6 +24,7 @@ const OrderPreview = () => {
     setCoupon({ code: "" })
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const couponDiscount = (coupon: any, total: number) => {
     console.log(coupon, total)
     return 0

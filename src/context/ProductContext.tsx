@@ -164,9 +164,9 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
       setLoading(false)
       return { message: data.message }
     } catch (error) {
-      handleError(error as string)
+      // handleError(error as string)
       setLoading(false)
-      return {}
+      return { message: error as string }
     }
   }
 

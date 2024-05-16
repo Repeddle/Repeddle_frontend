@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// TODO: remove this
 import { useState } from "react"
 import DeliveryHistory from "../../components/DeliveryHistory"
 import { daydiff, deliveryNumber } from "../../utils/common"
@@ -152,7 +154,7 @@ const ReturnPage = () => {
             )}
             <hr />
           </>
-        ) : user?.isAdmin ? (
+        ) : user?.role === "Admin" ? (
           <>
             <div className="mt-5">
               <textarea
@@ -222,7 +224,7 @@ const ReturnPage = () => {
           (orderitem) =>
             orderitem._id === returned.productId._id && (
               <>
-                {user?.isAdmin &&
+                {user?.role === "Admin" &&
                   daydiff(orderitem.deliveredAt, 3) <= 0 &&
                   deliveryNumber(orderitem.deliveryStatus) === 8 &&
                   !returned.returnDelivery &&
@@ -237,7 +239,7 @@ const ReturnPage = () => {
                     </button>
                   ))}
 
-                {user?.isAdmin &&
+                {user?.role === "Admin" &&
                   daydiff(orderitem.deliveredAt, 3) <= 0 &&
                   deliveryNumber(orderitem.deliveryStatus) === 10 &&
                   (refunding ? (
@@ -251,7 +253,7 @@ const ReturnPage = () => {
                     </button>
                   ))}
 
-                {user?.isAdmin &&
+                {user?.role === "Admin" &&
                   daydiff(orderitem.deliveredAt, 3) <= 0 &&
                   deliveryNumber(orderitem.deliveryStatus) === 8 &&
                   returned.returnDelivery && (
@@ -264,7 +266,7 @@ const ReturnPage = () => {
                       Pay Seller
                     </button>
                   )}
-                {user?.isAdmin &&
+                {user?.role === "Admin" &&
                   daydiff(orderitem.deliveredAt, 7) <= 0 &&
                   deliveryNumber(orderitem.deliveryStatus) === 9 &&
                   returned.returnDelivery && (

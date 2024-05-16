@@ -5,9 +5,11 @@ type Props = {
   userId: string
 }
 
-const RebundleLabel = ({}: Props) => {
+const RebundleLabel = ({ userId }: Props) => {
   const [show, setShow] = useState(false)
   const [timer, setTimer] = useState("00hrs : 00mins : 00secs")
+
+  console.log(userId)
 
   //   TODO: get rebundle expire date and show countdown
   const expireDate = useMemo(() => new Date(), [])

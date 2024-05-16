@@ -3,6 +3,7 @@ import { useState } from "react"
 type Props = {
   changeParam: (val: string) => void
   selectedSize: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sizes: any[]
 }
 

@@ -16,6 +16,7 @@ import { NewsletterProvider } from "./context/NewsletterContext.tsx"
 import { TransactionProvider } from "./context/TransactionContext.tsx"
 import { ContactProvider } from "./context/ContactContext.tsx"
 import { OrderProvider } from "./context/OrderContext.tsx"
+import { UserProvider } from "./context/UserContext.tsx"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -23,27 +24,29 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <ToastNotificationProvider>
         <ThemeProvider>
           <AuthProvider>
-            <CategoryProvider>
-              <ProductProvider>
-                <BrandProvider>
-                  <CategoryProvider>
-                    <NewsletterProvider>
-                      <TransactionProvider>
-                        <ContactProvider>
-                          <OrderProvider>
-                            <CartProvider>
-                              <ArticleProvider>
-                                <RouterProvider router={router} />
-                              </ArticleProvider>
-                            </CartProvider>
-                          </OrderProvider>
-                        </ContactProvider>
-                      </TransactionProvider>
-                    </NewsletterProvider>
-                  </CategoryProvider>
-                </BrandProvider>
-              </ProductProvider>
-            </CategoryProvider>
+            <UserProvider>
+              <CategoryProvider>
+                <ProductProvider>
+                  <BrandProvider>
+                    <CategoryProvider>
+                      <NewsletterProvider>
+                        <TransactionProvider>
+                          <ContactProvider>
+                            <OrderProvider>
+                              <CartProvider>
+                                <ArticleProvider>
+                                  <RouterProvider router={router} />
+                                </ArticleProvider>
+                              </CartProvider>
+                            </OrderProvider>
+                          </ContactProvider>
+                        </TransactionProvider>
+                      </NewsletterProvider>
+                    </CategoryProvider>
+                  </BrandProvider>
+                </ProductProvider>
+              </CategoryProvider>
+            </UserProvider>
           </AuthProvider>
         </ThemeProvider>
       </ToastNotificationProvider>

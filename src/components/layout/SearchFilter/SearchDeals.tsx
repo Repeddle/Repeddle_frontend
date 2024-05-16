@@ -3,6 +3,7 @@ import { FaCircleDot } from "react-icons/fa6"
 
 type Props = {
   changeParam: (val: string) => void
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   deals: any[]
   selectedDeal: string
 }

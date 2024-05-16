@@ -24,6 +24,7 @@ type Props = {
   type: { name: string; _id: string }[]
   pattern: { name: string; _id: string }[]
   brands: { name: string; _id: string }[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   deals: any[]
   minPrice: number
   maxPrice: number

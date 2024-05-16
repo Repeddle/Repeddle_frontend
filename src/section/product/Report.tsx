@@ -17,6 +17,7 @@ const Report = ({ productName }: Props) => {
   const scrollRef = useRef(null)
 
   const loadingReports = false
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const reports: any[] = []
 
   const { user } = useAuth()

@@ -128,7 +128,7 @@ interface SideBarProps {
 const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
   const { user } = useAuth()
   const { isDarkMode } = useTheme()
-  const sidebarClasses = `fixed inset-y-0 left-0 z-[80] bg-orange-color scrollbar-hide bg-opacity-10 text-white w-64 h-screen transition-transform transform ${
+  const sidebarClasses = `fixed inset-y-0 left-0 z-[80] bg-orange-color bg-opacity-10 text-white w-64 h-screen transition-transform transform ${
     isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
   }`
 
@@ -153,7 +153,7 @@ const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
       </div>
 
       {/* Sidebar Navigation */}
-      <nav className="mt-4 overflow-y-auto h-[calc(100vh-150px)] no-scrollbar">
+      <nav className="mt-4 overflow-y-auto h-[calc(100vh-150px)]  scrollbar-hide">
         <ul className=" ">
           {sidebarLinks.map((link, index) => (
             <li

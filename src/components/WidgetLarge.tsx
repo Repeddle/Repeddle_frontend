@@ -6,9 +6,12 @@ type Props = {
   refresh?: boolean
 }
 
-const WidgetLarge = ({}: Props) => {
+const WidgetLarge = ({ refresh }: Props) => {
   const loadingTrans = false
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const transactions: any[] = []
+
+  console.log(refresh)
 
   const [clickItem, setClickItem] = useState("")
 

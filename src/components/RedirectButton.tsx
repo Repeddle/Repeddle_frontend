@@ -8,9 +8,9 @@ const RedirectButton = () => {
   const signoutHandler = () => {
     logout()
     clearCart()
-    // localStorage.removeItem("userInfo");
-    // localStorage.removeItem("shippingAddress");
-    // localStorage.removeItem("paymentMethod");
+    localStorage.removeItem("userInfo")
+    localStorage.removeItem("shippingAddress")
+    localStorage.removeItem("paymentMethod")
     // mixpanel.reset();
   }
 
@@ -37,7 +37,7 @@ const RedirectButton = () => {
     //   } catch (err) {}
   }
 
-  return user?.isAdmin ? (
+  return user?.role === "Admin" ? (
     <div
       onClick={redirect}
       className="text-[white] text-center cursor-pointer rounded-[0.2rem] p-2.5 lg:p-0 bg-orange-color hover:bg-malon-color"

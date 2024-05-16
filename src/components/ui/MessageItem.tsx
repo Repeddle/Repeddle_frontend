@@ -9,6 +9,7 @@ type Props = {
   support?: boolean
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const createHtmlFromObjects = (objectArray: any[]) => {
   return objectArray ? (
     objectArray.map((item, index) => {

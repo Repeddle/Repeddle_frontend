@@ -3,6 +3,7 @@ import { useState } from "react"
 type Props = {
   changeParam: (val: string) => void
   selectedColor: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   colors: any[]
 }
 
