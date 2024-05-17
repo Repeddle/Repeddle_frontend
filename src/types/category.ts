@@ -1,4 +1,7 @@
+import { Key } from "react"
+
 export type ICategory = {
+  [x: string]: Key | null | undefined | boolean | string | ISubCategory[]
   name: string
   image: string
   isCategory: boolean
