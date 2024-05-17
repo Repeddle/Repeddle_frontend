@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import TopBar from './TopBar';
-import BarCategories from './BarCategories';
-import Middlebar from './Middlebar';
+import { useEffect, useState } from "react";
+import TopBar from "./TopBar";
+import BarCategories from "./BarCategories";
+import Middlebar from "./Middlebar";
 
 function Navbar() {
   // useEffect(() => {
@@ -33,10 +33,10 @@ function Navbar() {
       setPrevScrollPos(currentScrollPos);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [prevScrollPos]);
 
@@ -44,7 +44,7 @@ function Navbar() {
     <>
       <div
         className={`fixed lg:relative transition-transform duration-[0.3s] ease-[ease-in-out] z-50 mb-0 left-0 top-0 w-full lg:mb-5 dark:bg-dark-ev1 bg-light-ev1
-       ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}
+       ${isVisible ? "translate-y-0" : "-translate-y-full"}`}
       >
         <TopBar />
 

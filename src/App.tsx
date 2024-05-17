@@ -1,12 +1,12 @@
-import { Outlet, UNSAFE_useScrollRestoration } from "react-router-dom"
-import "./App.css"
-import useTheme from "./hooks/useTheme"
-import ToastNotification from "./components/ui/ToastNotification"
+import { Outlet, UNSAFE_useScrollRestoration } from "react-router-dom";
+import "./App.css";
+import useTheme from "./hooks/useTheme";
+import ToastNotification from "./components/ui/ToastNotification";
 
 function App() {
-  const { isDarkMode } = useTheme()
-
-  UNSAFE_useScrollRestoration()
+  const { isDarkMode } = useTheme();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  UNSAFE_useScrollRestoration();
 
   return (
     <div className={isDarkMode ? "dark" : ""}>
@@ -15,7 +15,7 @@ function App() {
         <Outlet />
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
