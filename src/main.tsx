@@ -17,6 +17,7 @@ import { TransactionProvider } from "./context/TransactionContext.tsx";
 import { ContactProvider } from "./context/ContactContext.tsx";
 import { OrderProvider } from "./context/OrderContext.tsx";
 import MessageProvider from "./context/MessageContext.tsx";
+import { UserProvider } from "./context/UserContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -35,7 +36,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                             <CartProvider>
                               <ArticleProvider>
                                 <MessageProvider>
-                                  <RouterProvider router={router} />
+                                  <UserProvider>
+                                    <RouterProvider router={router} />
+                                  </UserProvider>
                                 </MessageProvider>
                               </ArticleProvider>
                             </CartProvider>
