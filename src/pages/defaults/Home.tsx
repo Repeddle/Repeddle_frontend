@@ -12,11 +12,11 @@ import Discount from "../../section/home/Discount"
 import MobileApp from "../../section/home/MobileApp"
 import Influencers from "../../section/home/Influencers"
 import RepeddleWorks from "../../section/home/RepeddleWorks"
-import { CompleteUser } from "../../types/user"
+import { IUser } from "../../types/user"
 
 function Home() {
   const products: IProduct[] = []
-  const sellers: CompleteUser[] = []
+  const sellers: IUser[] = []
   const loadingUser = false
   const error = undefined
 

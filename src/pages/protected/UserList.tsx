@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { FaTrash } from "react-icons/fa"
 import moment from "moment"
 import { Link } from "react-router-dom"
-import { CompleteUser } from "../../types/user"
+import { IUser } from "../../types/user"
 import { currency, region } from "../../utils/common"
 import useToastNotification from "../../hooks/useToastNotification"
 import useUser from "../../hooks/useUser"
@@ -19,7 +19,7 @@ const headers = [
 
 const UserList = () => {
   const [userQuery, setUserQuery] = useState("")
-  const [users, setUsers] = useState<CompleteUser[]>([])
+  const [users, setUsers] = useState<IUser[]>([])
 
   const { getAllUserAdmin, error } = useUser()
   const { addNotification } = useToastNotification()
@@ -82,9 +82,6 @@ const UserList = () => {
             Email: user.email,
             Date: moment(user.createdAt).format("MMM DD YY, h:mm a"),
             Status: user.active ? "active" : "banned",
-            // FIXME:
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             Earnings: currency(region()) + " " + user.earnings ?? 0,
           },
           action: (

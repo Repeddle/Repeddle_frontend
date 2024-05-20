@@ -12,7 +12,7 @@ export const fetchNewsletterService = async (
       url = url + `?${params}`
     }
 
-    const resp: { newsLetters: INewsletter[]; status: boolean } = await api.get(
+    const resp: { newsletters: INewsletter[]; status: boolean } = await api.get(
       url
     )
     console.log(resp)
@@ -24,7 +24,7 @@ export const fetchNewsletterService = async (
       )
     }
 
-    return resp.newsLetters
+    return resp.newsletters
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions

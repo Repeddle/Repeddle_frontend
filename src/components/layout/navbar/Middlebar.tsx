@@ -1,6 +1,6 @@
-import { useRef } from "react"
+import { useMemo, useRef } from "react"
 import LoggedInBar from "./LoggedInBar"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import SearchBox from "../../SearchBox"
 import { FaBell } from "react-icons/fa"
 import useAuth from "../../../hooks/useAuth"
@@ -17,6 +17,8 @@ function Middlebar() {
   const { user } = useAuth()
   const { cart } = useCart()
 
+  const location = useLocation()
+
   const navigate = useNavigate()
   const notifications: unknown[] = []
   const allNotification: unknown[] = []
@@ -26,20 +28,29 @@ function Middlebar() {
   const productNotification: unknown[] = []
   const soldNotification: unknown[] = []
 
+  const notAllowedRoutes = ["/admin", "/dashboard"]
+
+  const hide = useMemo(
+    () => !notAllowedRoutes.every((val) => !location.pathname.startsWith(val)),
+    []
+  )
+
   const showNotification = false
   return (
     <div className="flex justify-center items-center px-5 pb-2.5 pt-0 lg:py-0">
       <div className="flex-1 pr-5">
-        <Link to="/">
-          <img
-            className="w-4/5"
-            src={
-              isDarkMode
-                ? "https://res.cloudinary.com/emirace/image/upload/v1661147636/Logo_White_3_ii3edm.gif"
-                : "https://res.cloudinary.com/emirace/image/upload/v1661147778/Logo_Black_1_ampttc.gif"
-            }
-          />
-        </Link>
+        {!hide && (
+          <Link to="/">
+            <img
+              className="w-4/5"
+              src={
+                isDarkMode
+                  ? "https://res.cloudinary.com/emirace/image/upload/v1661147636/Logo_White_3_ii3edm.gif"
+                  : "https://res.cloudinary.com/emirace/image/upload/v1661147778/Logo_Black_1_ampttc.gif"
+              }
+            />
+          </Link>
+        )}
       </div>
 
       <div className="hidden lg:block flex-[3]">

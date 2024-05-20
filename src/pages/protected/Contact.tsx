@@ -24,8 +24,6 @@ const Contact = () => {
     }
   }, [error])
 
-  const messages = useMemo(() => contacts, [contacts])
-
   const [showModel, setShowModel] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedMessage, setSelectedMessage] =
@@ -33,14 +31,14 @@ const Contact = () => {
 
   const messagesPerPage = 20 // You can adjust this number according to your preference.
   const canGoPrev = currentPage > 1
-  const canGoNext = currentPage * messagesPerPage < messages.length
+  const canGoNext = currentPage * messagesPerPage < contacts.length
 
   const currentMessages = useMemo(() => {
     const indexOfLastMessage = currentPage * messagesPerPage
     const indexOfFirstMessage = indexOfLastMessage - messagesPerPage
 
-    return messages.slice(indexOfFirstMessage, indexOfLastMessage)
-  }, [currentPage, messages])
+    return contacts.slice(indexOfFirstMessage, indexOfLastMessage)
+  }, [currentPage, contacts])
 
   const handleViewDetails = (message: IContactMessage) => {
     setSelectedMessage(message)
@@ -88,22 +86,28 @@ const Contact = () => {
               </div>
             </div>
           ))}
-          <div className="justify-center mt-2.5 flex">
-            <button
-              className="text-white-color rounded mx-[5px] my-0 px-4 py-2 border-none disabled:bg-[gray] bg-orange-color disabled:hover:bg-[gray] hover:bg-malon-color"
-              onClick={handlePrevPage}
-              disabled={!canGoPrev}
-            >
-              Prev
-            </button>
-            <button
-              className="text-white-color rounded mx-[5px] my-0 px-4 py-2 border-none disabled:bg-[gray] bg-orange-color disabled:hover:bg-[gray] hover:bg-malon-color"
-              onClick={handleNextPage}
-              disabled={!canGoNext}
-            >
-              Next
-            </button>
-          </div>
+
+          {contacts.length > 0 && (
+            <div className="justify-center mt-2.5 flex">
+              <button
+                className="text-white-color rounded mx-[5px] my-0 px-4 py-2 border-none disabled:bg-[gray] bg-orange-color disabled:hover:bg-[gray] hover:bg-malon-color"
+                onClick={handlePrevPage}
+                disabled={!canGoPrev}
+              >
+                Prev
+              </button>
+              <button
+                className="text-white-color rounded mx-[5px] my-0 px-4 py-2 border-none disabled:bg-[gray] bg-orange-color disabled:hover:bg-[gray] hover:bg-malon-color"
+                onClick={handleNextPage}
+                disabled={!canGoNext}
+              >
+                Next
+              </button>
+            </div>
+          )}
+
+          {contacts.length === 0 && <div className="mt-4">No contact yet</div>}
+
           {selectedMessage && (
             <Modal
               size="lg"

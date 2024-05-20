@@ -1,35 +1,30 @@
 import { createContext, PropsWithChildren, useState } from "react"
 import useAuth from "../hooks/useAuth"
 import {
-  CompleteUser,
-  CompleteUsersWithPagination,
+  IUsersWithPagination,
   IUser,
   TopSellers,
   UpdateFields,
 } from "../types/user"
 import {
-  followUserService,
   getAllUserAdminService,
   getTopSellersService,
   getUserByIdService,
   getUserByUsernameService,
-  unFollowUserService,
   updateUserByIdService,
 } from "../services/user"
 
 type ContextType = {
   error: string | null
   loading: boolean
-  getAllUserAdmin: () => Promise<CompleteUsersWithPagination | null>
+  getAllUserAdmin: () => Promise<IUsersWithPagination | null>
   getTopSellers: () => Promise<TopSellers[] | null>
   getUserByUsername: (username: string) => Promise<IUser | string>
-  unFollowUser: (userId: string) => Promise<string | null>
-  followUser: (userId: string) => Promise<string | null>
-  getUserById: (userId: string) => Promise<CompleteUser | null>
+  getUserById: (userId: string) => Promise<IUser | null>
   updateUserById: (
     userId: string,
     userData: UpdateFields
-  ) => Promise<CompleteUser | string>
+  ) => Promise<IUser | string>
 }
 
 // Create user context
@@ -98,36 +93,6 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
-  const unFollowUser = async (userId: string) => {
-    try {
-      setError("")
-      setLoading(true)
-      const result = await unFollowUserService(userId)
-
-      setLoading(false)
-      return result
-    } catch (error) {
-      handleError(error as string)
-      setLoading(false)
-      return null
-    }
-  }
-
-  const followUser = async (userId: string) => {
-    try {
-      setError("")
-      setLoading(true)
-      const result = await followUserService(userId)
-
-      setLoading(false)
-      return result
-    } catch (error) {
-      handleError(error as string)
-      setLoading(false)
-      return null
-    }
-  }
-
   const updateUserById = async (id: string, userData: UpdateFields) => {
     try {
       setError("")
@@ -162,11 +127,9 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
       value={{
         loading,
         error,
-        followUser,
         getAllUserAdmin,
         getTopSellers,
         getUserByUsername,
-        unFollowUser,
         getUserById,
         updateUserById,
       }}

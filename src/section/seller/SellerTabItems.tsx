@@ -15,7 +15,7 @@ type Props = {
   loading: boolean
   error?: string | null
   products: IProduct[]
-  user: IUser
+  user?: IUser
 }
 
 const SellerTabItems = ({
@@ -120,20 +120,14 @@ const SellerTabItems = ({
 
           {displayTab === "liked" && (
             <>
-              {user.likes.length === 0 ? (
+              {user?.likes.length === 0 ? (
                 <MessageBox>No Product Found</MessageBox>
               ) : (
-                user.likes.map((product) => (
+                user?.likes.map((product) => (
                   <div
                     className="relative flex justify-center w-[162px] h-[342px] mx-[3px] my-[5px] lg:w-auto lg:h-auto m-0"
-                    // FIXME: like is string
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore
                     key={product._id}
                   >
-                    {/* FIXME: like is string  */}
-                    {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-                    {/* @ts-ignore */}
                     <ProductItem product={product} />
                   </div>
                 ))
@@ -147,19 +141,15 @@ const SellerTabItems = ({
                 <LoadingBox></LoadingBox>
               ) : error ? (
                 <MessageBox className="text-red-500">{error}</MessageBox>
-              ) : user.wishlist.length === 0 ? (
+              ) : user?.wishlist.length === 0 ? (
                 <MessageBox>No Product Found</MessageBox>
               ) : (
-                user.wishlist.map((product) => (
+                user?.wishlist.map((product) => (
                   <div
                     className="relative flex justify-center w-[162px] h-[342px] mx-[3px] my-[5px] lg:w-auto lg:h-auto m-0"
-                    // FIXME: wishlist is a string
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore
                     key={product._id}
                   >
-                    {/* TODO: type fix */}
-                    {/* <ProductItem product={product} /> */}
+                    <ProductItem product={product} />
                   </div>
                 ))
               )}

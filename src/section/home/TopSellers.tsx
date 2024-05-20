@@ -1,10 +1,10 @@
 import LoadingBox from "../../components/LoadingBox"
 import MessageBox from "../../components/MessageBox"
 import { Link } from "react-router-dom"
-import { CompleteUser } from "../../types/user"
+import { IUser } from "../../types/user"
 
 type Props = {
-  sellers: CompleteUser[]
+  sellers: IUser[]
   loadingUser: boolean
   error?: string
 }
@@ -39,7 +39,7 @@ const TopSellers = ({ sellers, loadingUser, error }: Props) => {
                           src={seller.image}
                           alt={seller.username}
                           className="lg:h-[200px] object-cover object-top lg:w-[200px] rounded-[50%] h-[150px] w-[150px]"
-                        ></img>
+                        />
                         {seller.badge && (
                           <div className="seller_profile_badge">
                             <img

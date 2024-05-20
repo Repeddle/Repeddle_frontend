@@ -10,6 +10,18 @@ export const region = () => {
   return add
 }
 
+export const createSearchParam = (params: [string, string][] | string[][]) => {
+  let string = ""
+
+  params = params.filter((param) => param[1] !== "")
+
+  if (params.length) {
+    string = new URLSearchParams(params).toString()
+  }
+
+  return string
+}
+
 export const currency = (region: IProduct["region"]) => {
   if (region === "NGN") return "₦"
   return "R"

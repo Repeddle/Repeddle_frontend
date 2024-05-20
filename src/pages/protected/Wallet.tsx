@@ -1,28 +1,48 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import WidgetLarge from "../../components/WidgetLarge"
-import LoadingBox from "../../components/LoadingBox"
 import { FaPlus } from "react-icons/fa"
 import Modal from "../../components/ui/Modal"
 import Withdraw from "../../section/wallet/Withdraw"
-import { balanceData as balance } from "../../utils/data"
 import AddFund from "../../section/wallet/AddFund"
+import useWallet from "../../hooks/useWallet"
+import useToastNotification from "../../hooks/useToastNotification"
+import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo"
+import useAuth from "../../hooks/useAuth"
+import useTransactions from "../../hooks/useTransaction"
 
 const Wallet = () => {
-  const loading = false
+  const { error, fetchWallet, loading, wallet } = useWallet()
+  const { user } = useAuth()
+  const { addNotification } = useToastNotification()
+  const { fetchUserTransactions, transactions } = useTransactions()
 
   const [refresh, setRefresh] = useState(false)
   const [showModel, setShowModel] = useState(false)
   const [withdrawShowModel, setWithdrawShowModel] = useState(false)
 
+  useEffect(() => {
+    fetchWallet()
+  }, [refresh])
+
+  useEffect(() => {
+    fetchUserTransactions()
+  }, [refresh])
+
+  useEffect(() => {
+    if (error) addNotification(error)
+  }, [])
+
   return (
-    <div className="flex-[4] lg:ml-5 min-h-[85vh] lg:p-5 rounded-[0.2rem] mb-2.5 m-0 p-2.5 bg-light-ev1 dark:bg-dark-ev1">
+    <div className="flex-[4] relative lg:ml-5 min-h-[85vh] lg:p-5 rounded-[0.2rem] mb-2.5 m-0 p-2.5 bg-light-ev1 dark:bg-dark-ev1">
       <div className="flex items-center justify-between p-5 rounded-lg bg-[#fcf0e0] dark:bg-dark-ev3 mb-5">
         <div>
           {loading ? (
-            <LoadingBox />
+            <div className="absolute bg-white/50 inset-0">
+              <LoadingControlModal />
+            </div>
           ) : (
             <div className="font-bold leading-tight text-xl font-sans lg:text-[50px] text-orange-color">
-              {`${balance.currency} ${Math.floor(balance.balance * 100) / 100}`}
+              {`${wallet.currency} ${Math.floor(wallet.balance * 100) / 100}`}
             </div>
           )}
           <div className="font-bold text-orange-color text-[11px] lg:text-base">
@@ -50,7 +70,7 @@ const Wallet = () => {
           setShowModel={setShowModel}
           setRefresh={setRefresh}
           refresh={refresh}
-          currency={balance.currency}
+          currency={wallet.currency}
         />
       </Modal>
       <Modal
@@ -61,10 +81,10 @@ const Wallet = () => {
           setShowModel={setWithdrawShowModel}
           setRefresh={setRefresh}
           refresh={refresh}
-          balance={balance}
+          balance={{ ...wallet, userId: user?._id ?? "" }}
         />
       </Modal>
-      <WidgetLarge refresh={refresh} />
+      <WidgetLarge refresh={refresh} transactions={transactions} />
     </div>
   )
 }

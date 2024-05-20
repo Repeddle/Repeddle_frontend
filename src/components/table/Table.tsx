@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react"
 import { FaSortDown, FaSortUp } from "react-icons/fa"
 import Pagination from "../layout/Pagination"
+import LoadingControlModal from "../ui/loadin/LoadingControlLogo"
 
 type Header = { title: string; hide?: boolean }
 type Headers = Header[]
@@ -23,6 +24,7 @@ type Props<> = {
   currentPage?: number
   totalCount?: number
   onPageChange?: (val: number) => void
+  message?: string
 }
 
 const Table = ({
@@ -34,6 +36,7 @@ const Table = ({
   currentPage,
   totalPages,
   onPageChange,
+  message,
 }: Props) => {
   const [sortKey, setSortKey] = useState<{
     key: HeaderTitle
@@ -65,7 +68,13 @@ const Table = ({
   }, [sortKey, body])
 
   return (
-    <>
+    <div className="relative w-full h-full flex-1">
+      {loading && (
+        <div className="absolute bg-white/50 inset-0">
+          <LoadingControlModal />
+        </div>
+      )}
+
       <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
         <div className="py-2 px-4 align-middle inline-block min-w-full sm:px-6 lg:px-8">
           <div className="overflow-x-hidden w-full sm:rounded-lg">
@@ -109,6 +118,7 @@ const Table = ({
                       <tr key={Math.random()}>
                         {headers.map((head) => (
                           <td
+                            key={head.title}
                             className={`px-3 h-[52px] whitespace-nowrap w-auto overflow-hidden text-ellipsis ${
                               head.hide ? "hidden lg:table-cell" : ""
                             }`}
@@ -128,7 +138,9 @@ const Table = ({
 
             {!loading && !error && sortedBody.length === 0 && (
               <div className="text-center my-10">
-                No {itemName ? itemName : "data"} added yet
+                {message
+                  ? message
+                  : `No ${itemName ? itemName : "data"} added yet`}
               </div>
             )}
           </div>
@@ -142,7 +154,7 @@ const Table = ({
           onPageChange={onPageChange}
         />
       )}
-    </>
+    </div>
   )
 }
 

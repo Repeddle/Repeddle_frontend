@@ -8,7 +8,7 @@ import { IContactMessage, IEmailList, INewsletter } from "../types/message"
 import { IReturn, Order } from "../types/order"
 import { IBrand, IProduct, Seller } from "../types/product"
 import { IPayment, ITransaction } from "../types/transactions"
-import { CompleteUser, UserBalance } from "../types/user"
+import { IUser, UserBalance } from "../types/user"
 
 export const seller: Seller = {
   address: {
@@ -130,7 +130,7 @@ export const productDetails: IProduct = {
   ],
 }
 
-export const user: CompleteUser = {
+export const user: IUser = {
   address: {
     street: "1 Fagba Street",
     state: "Lagos",
@@ -651,7 +651,7 @@ export const conversationMessageData: ConversationMessage[] = [
   },
 ]
 
-export const manyUsers: CompleteUser[] = [
+export const manyUsers: IUser[] = [
   {
     rebundle: {
       status: false,
