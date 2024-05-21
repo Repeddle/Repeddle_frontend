@@ -1,3 +1,4 @@
+
 import Search from "./pages/defaults/Search"
 import { createBrowserRouter } from "react-router-dom"
 import App from "./App"
@@ -121,6 +122,7 @@ const router = createBrowserRouter([
         children: [
           { path: "payment", element: <PaymentMethod /> },
           { path: "placeorder", element: <OrderPreview /> },
+          { path: "messages", element: <Message /> },
           { path: "order/:id", element: <Order /> },
           { path: "/return/:id", element: <ReturnPage /> },
           { path: "/notifications", element: <MobileNotification /> },
@@ -137,6 +139,8 @@ const router = createBrowserRouter([
           { path: "contact", element: <Contact /> },
           { path: "newsletter", element: <NewsletterList /> },
           { path: "otherbrand", element: <OtherBrand /> },
+          { path: "articlelist", element: <ArticleList /> },
+          // { path: "createarticle", element: <CreateArticle onCancel={() => {}} /> },
           { path: "messages", element: <AllMessage /> },
           { path: "orderlist", element: <OrderList /> },
           { path: "salesList", element: <SalesList /> },

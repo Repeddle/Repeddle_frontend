@@ -4,6 +4,7 @@ import {
   AiOutlineHome,
   AiOutlineArrowRight,
   AiOutlineWallet,
+  AiOutlineQuestionCircle,
 } from "react-icons/ai"
 import { NavLink } from "react-router-dom"
 import { Link } from "react-router-dom"
@@ -48,6 +49,14 @@ const sidebarLinks = [
     text: "Sold Orders",
     icon: <FaChartBar />,
   },
+  { path: "/dashboard/wallet", 
+    text: "Wallet", 
+    icon: <AiOutlineWallet /> 
+  },
+  { path: "/dashboard/articlelist", 
+    text: "Articles", 
+    icon: <AiOutlineQuestionCircle /> 
+ },
   {
     path: "/dashboard/alltransaction",
     text: "All Transactions",

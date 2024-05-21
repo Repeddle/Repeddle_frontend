@@ -130,19 +130,19 @@ function Articles() {
         </div>
 
         <div className="flex flex-col items-center justify-center pt-10 pb-7 text-center">
-  <p className="mb-4 text-lg mr-1">
-    More Questions? Go to{" "}
-    <Link to="/support-articles" className="text-orange-400 font-black">
-      <b>Support Articles</b>
-    </Link>
-  </p>
-  <Link
-    to="/contact-us"
-    className="inline-block px-6 py-3 text-lg text-white bg-orange-400 rounded hover:bg-red-800"
-  >
-    Contact Us
-  </Link>
-</div>
+          <p className="mb-4 text-lg mr-1">
+            More Questions? Go to{" "}
+            <Link to="/support-articles" className="text-orange-400 font-black">
+              <b>Support Articles</b>
+            </Link>
+          </p>
+          <Link
+            to="/contact-us"
+            className="inline-block px-6 py-3 text-lg text-white bg-orange-400 rounded hover:bg-red-800"
+          >
+            Contact Us
+          </Link>
+        </div>
       </section>
     </div>
   );

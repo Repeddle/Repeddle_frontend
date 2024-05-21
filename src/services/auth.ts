@@ -153,6 +153,10 @@ export async function getUserService(): Promise<IUser> {
   }
 }
 
+export async function getAllUserService():Promise<IUser[]>{
+  return []
+}
+
 export async function getSuggestUsernameService(body: {
   firstName: string
   lastName: string

@@ -1,4 +1,4 @@
-import { IProduct } from "../../types/product"
+ import { IProduct } from "../../types/product"
 import { FaEye } from "react-icons/fa"
 import { Link } from "react-router-dom"
 

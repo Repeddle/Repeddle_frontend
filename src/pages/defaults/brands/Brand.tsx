@@ -170,14 +170,15 @@ const Brand = () => {
               : brandKey.charAt(5).toUpperCase()
           }
         >
-          <h2 className="font-black text-xl lg:text-3xl bg-gray-300 mb-3 mt-8 p-1 text-center w-60 mx-auto lg:ml-36 items-center justify-center rounded-xl">
+          <h2 className="font-black text-xl lg:text-3xl bg-gray-300 mb-3 mt-8 p-1 text-center lg:text-left 
+          lg:w-9/12 w-60 mx-auto lg:pl-12 items-center justify-center rounded-xl">
             {brandKey}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 md:gap-4 mx-auto max-w-6xl ">
+          <div className="grid grid-cols-1 md:grid-cols-3 md:gap-4 mx-auto max-w-4xl">
             {brandNames.map((brandName: string) => (
               <div
                 key={brandName}
-                className="border-b border-gray-300 md:border-0 p-2 md:p-0 cursor-pointer hover:text-yellow-500"
+                className="border-b border-gray-300 md:border-0 p-2 md:p-0 cursor-pointer hover:text-yellow-500 ml-10"
               >
                 <Link
                   to={`/product/${brandName}`}

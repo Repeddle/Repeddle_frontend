@@ -1,14 +1,15 @@
-import { useState, useEffect, ReactNode, createContext } from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState, useEffect, ReactNode, createContext } from "react";
 import {
   fetchArticles,
   fetchCategories,
-  fetchArticleById,
+  fetchArticleById as fetchArticleByIdService,
   createArticle as createArticleService,
   updateArticle as updateArticleService,
   deleteArticle as deleteArticleService,
-} from '../services/article';
-import { Article } from '../types/article';
-import useAuth from '../hooks/useAuth';
+} from "../services/article";
+import { Article, ArticleData } from "../types/article";
+import useAuth from "../hooks/useAuth";
 
 type Props = {
   children: ReactNode;
@@ -34,25 +35,21 @@ export const ArticleContext = createContext<ArticleContextData | undefined>(
   undefined
 );
 
-// CartProvider component
+// ArticleProvider component
 const ArticleProvider: React.FC<Props> = ({ children }) => {
   const { setAuthErrorModalOpen } = useAuth();
   const [articles, setArticles] = useState<Article[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleError = (error: any) => {
     setLoading(false);
-
-    // Check if the error indicates an invalid or expired token
-    if (error === 'Token expired' || error === 'Invalid token') {
-      setError('');
-      // Set the state to open the auth error modal
+    if (error === "Token expired" || error === "Invalid token") {
+      setError("");
       setAuthErrorModalOpen(true);
     } else {
-      setError(error || 'An error occurred.');
+      setError(error || "An error occurred.");
     }
   };
 
@@ -64,7 +61,7 @@ const ArticleProvider: React.FC<Props> = ({ children }) => {
         setArticles(fetchedArticles);
         setCategories(fetchedCategories);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
         handleError(error);
       } finally {
         setLoading(false);
@@ -74,15 +71,24 @@ const ArticleProvider: React.FC<Props> = ({ children }) => {
     fetchData();
   }, []);
 
-  const createArticle = async (articleData: Article): Promise<boolean> => {
+  const createArticle = async (articleData: ArticleData): Promise<boolean> => {
     try {
       const createdArticle = await createArticleService(articleData);
       setArticles([...articles, createdArticle]);
       return true;
     } catch (error) {
-      console.error('Error creating article:', error);
       handleError(error);
       return false;
+    }
+  };
+
+  const fetchArticleById = async (id: string): Promise<Article> => {
+    try {
+      const result = await fetchArticleByIdService(id);
+      return result;
+    } catch (error) {
+      handleError(error);
+      throw error;
     }
   };
 
@@ -98,7 +104,6 @@ const ArticleProvider: React.FC<Props> = ({ children }) => {
       setArticles(updatedArticles);
       return true;
     } catch (error) {
-      console.error('Error updating article:', error);
       handleError(error);
       return false;
     }
@@ -110,7 +115,6 @@ const ArticleProvider: React.FC<Props> = ({ children }) => {
       setArticles(articles.filter((article) => article._id !== _id));
       return true;
     } catch (error) {
-      console.error('Error deleting article:', error);
       handleError(error);
       return false;
     }

@@ -69,7 +69,7 @@ const SupportArticles = () => {
         </div>
       </section>
       <section className="mb-8">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-4 gap-5 px-5">
+        <div className="max-w-4xl mx-auto grid lg:grid-cols-4 gap-5 px-5">
           <div>
             <h2 className="text-xl mb-2 font-medium">BUYER'S KITS</h2>
             <ul className="">
