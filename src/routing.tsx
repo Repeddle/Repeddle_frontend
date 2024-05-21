@@ -1,4 +1,3 @@
-
 import Search from "./pages/defaults/Search"
 import { createBrowserRouter } from "react-router-dom"
 import App from "./App"
@@ -65,6 +64,7 @@ import MobileNotification from "./pages/protected/MobileNotification"
 import CategoryMobile from "./pages/defaults/CategoryMobile"
 import EditProduct from "./pages/protected/EditProduct"
 import SalesList from "./pages/protected/SalesList"
+import ArticleList from "./pages/protected/articles"
 
 const router = createBrowserRouter([
   {

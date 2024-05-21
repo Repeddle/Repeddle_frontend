@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react"
-import LoadingBox from "../../components/LoadingBox"
 import { FaDotCircle, FaEye } from "react-icons/fa"
 import Modal from "../../components/ui/Modal"
 import ContactMessageDetail from "../../components/ContactMessageDetail"
 import { IContactMessage } from "../../types/message"
 import useContact from "../../hooks/useContact"
 import useToastNotification from "../../hooks/useToastNotification"
+import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo"
 
 const Contact = () => {
   const { contacts, fetchContacts, error, loading, assignContact } =
@@ -60,13 +60,16 @@ const Contact = () => {
   }
 
   return (
-    <div className="flex-[4] mb-5 px-5 py-0">
+    <div className="flex-[4] mb-5 px-5 py-0 relative flex flex-col min-h-[85vh]">
       <h1 className="text-[calc(1.375rem_+_1.5vw)] leading-tight">
         Contact Us
       </h1>
-      {loading ? (
-        <LoadingBox />
-      ) : (
+      {loading && (
+        <div className="absolute bg-white/50 inset-0">
+          <LoadingControlModal />
+        </div>
+      )}
+      {!loading && (
         <>
           {currentMessages.map((message, index) => (
             <div
