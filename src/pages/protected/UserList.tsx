@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react"
-import { FaTrash } from "react-icons/fa"
-import moment from "moment"
-import { Link } from "react-router-dom"
-import { IUser } from "../../types/user"
-import { currency, region } from "../../utils/common"
-import useToastNotification from "../../hooks/useToastNotification"
-import useUser from "../../hooks/useUser"
-import Table from "../../components/table/Table"
+import { useEffect, useState } from "react";
+import { FaTrash } from "react-icons/fa";
+import moment from "moment";
+import { Link } from "react-router-dom";
+import { IUser } from "../../types/user";
+import { currency, region } from "../../utils/common";
+import useToastNotification from "../../hooks/useToastNotification";
+import useUser from "../../hooks/useUser";
+import Table from "../../components/table/Table";
 
 const headers = [
   { title: "ID", hide: true },
@@ -15,15 +15,15 @@ const headers = [
   { title: "Date", hide: true },
   { title: "Status" },
   { title: "Earnings" },
-]
+];
 
 const UserList = () => {
   const [userQuery, setUserQuery] = useState("")
   const [users, setUsers] = useState<IUser[]>([])
   const [loading, setLoading] = useState(false)
 
-  const { getAllUserAdmin, error } = useUser()
-  const { addNotification } = useToastNotification()
+  const { getAllUserAdmin, error } = useUser();
+  const { addNotification } = useToastNotification();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -31,24 +31,24 @@ const UserList = () => {
       const allUsers = await getAllUserAdmin()
 
       if (allUsers) {
-        setUsers(allUsers.users)
+        setUsers(allUsers.users);
       }
 
       setLoading(false)
     }
 
-    fetchUsers()
-  }, [])
+    fetchUsers();
+  }, []);
 
   useEffect(() => {
-    if (error) addNotification(error)
-  }, [error])
+    if (error) addNotification(error);
+  }, [error]);
 
   const deleteHandler = async (userId: string) => {
     if (window.confirm("Are you sure to delete")) {
-      console.log(userId)
+      console.log(userId);
     }
-  }
+  };
 
   return (
     <div className="flex-[4] overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
@@ -88,6 +88,7 @@ const UserList = () => {
             Date: moment(user.createdAt).format("MMM DD YY, h:mm a"),
             Status: user.active ? "active" : "banned",
             Earnings: currency(region()) + " " + (user.earnings ?? 0),
+
           },
           action: (
             <div className="flex items-center gap-2.5">
@@ -106,7 +107,7 @@ const UserList = () => {
         }))}
       />
     </div>
-  )
-}
+  );
+};
 
-export default UserList
+export default UserList;
