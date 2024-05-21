@@ -41,7 +41,7 @@ export interface IProduct {
   description: string
   sizes: ISize[]
   buyers: string[]
-  deliveryOption: DeliveryOption[]
+  deliveryOption: IDeliveryOption[]
   condition: string
   keyFeatures?: string
   specification?: string
@@ -101,7 +101,24 @@ export interface Pagination {
   totalPages: number
 }
 
-export interface DeliveryOption {}
+export interface IDeliveryOption {
+  name: string
+  value: number
+}
+
+export interface DeliveryMeta {
+  name?: string
+  address?: string
+  phone?: string
+  lat?: number | string
+  lng?: number | string
+  stationId?: string
+}
+
+export interface Stations {
+  stationId: string
+  StateName: string
+}
 
 export interface Review {
   user: IUser

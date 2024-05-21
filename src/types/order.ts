@@ -25,7 +25,7 @@ export type OrderItem = CartItem & {
 export type IOrder = {
   buyer: string
   items: {
-    product: string
+    product: IProduct
     seller: string
     quantity: number
     price: number

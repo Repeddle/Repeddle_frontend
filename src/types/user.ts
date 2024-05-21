@@ -1,4 +1,4 @@
-import { Pagination } from "./product"
+import { IProduct, Pagination } from "./product"
 
 export interface IAddress {
   apartment?: string
@@ -22,8 +22,8 @@ export interface IUser {
   role: string
   followers: string[]
   following: string[]
-  likes: string[]
-  wishlist: string[]
+  likes: IProduct[]
+  wishlist: IProduct[]
   sold: string[]
   buyers: string[]
   rating: number
@@ -38,6 +38,18 @@ export interface IUser {
   usernameLastUpdate?: string
   createdAt: string
   updatedAt?: string
+  about?: string
+  dob?: string
+  accountNumber?: number
+  accountName?: string
+  bankName?: string
+  tokenVersion?: string
+  address?: IAddress
+  badge?: boolean
+  delected?: boolean
+  influencer?: boolean
+  rebundle?: IRebundle
+  earnings?: number
 }
 
 export interface UpdateFields {
@@ -67,21 +79,7 @@ export type UserBalance = {
   userId: string
 }
 
-export type CompleteUser = IUser & {
-  about: string
-  dob: string
-  accountNumber: number
-  accountName: string
-  bankName: string
-  tokenVersion: string
-  address: IAddress
-  badge: boolean
-  delected: boolean
-  influencer: boolean
-  rebundle: IRebundle
-}
-
-export type CompleteUsersWithPagination = Pagination & { users: CompleteUser[] }
+export type IUsersWithPagination = Pagination & { users: IUser[] }
 
 export type TopSellers = {
   username: string

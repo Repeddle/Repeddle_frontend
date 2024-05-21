@@ -1,28 +1,28 @@
-import { Navigate, Outlet } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-import StickyNav from "../../components/layout/StickyNav";
-import { RiMenu2Fill } from "react-icons/ri";
-import { useState } from "react";
-import Sidebar from "../../components/layout/Sidebar";
-import Middlebar from "../../components/layout/navbar/Middlebar";
-import LoadingPage from "../../components/ui/LoadingPage";
+import { Navigate, Outlet } from "react-router-dom"
+import useAuth from "../../hooks/useAuth"
+import StickyNav from "../../components/layout/StickyNav"
+import { RiMenu2Fill } from "react-icons/ri"
+import { useState } from "react"
+import Sidebar from "../../components/layout/Sidebar"
+import Middlebar from "../../components/layout/navbar/Middlebar"
+import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
 
 function Protected() {
-  const { user, loading } = useAuth();
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const { user, loading } = useAuth()
+  const [isSidebarOpen, setSidebarOpen] = useState(false)
 
   if (loading) {
-    return <LoadingPage />;
+    return <LoadingLogoModal />
   }
 
   if (!user) {
     // user is not authenticated
-    return <Navigate to="/auth/login" />;
+    return <Navigate to="/auth/login" />
   }
 
   const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
-  };
+    setSidebarOpen(!isSidebarOpen)
+  }
 
   return (
     <main className="">
@@ -54,7 +54,7 @@ function Protected() {
       </div>
       <StickyNav />
     </main>
-  );
+  )
 }
 
-export default Protected;
+export default Protected

@@ -24,7 +24,7 @@ export const fetchNewsletterService = async (
       );
     }
 
-    return resp.newsletters;
+    return resp.newsletters
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions

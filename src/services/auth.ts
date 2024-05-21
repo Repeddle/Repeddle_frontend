@@ -186,6 +186,50 @@ export async function getSuggestUsernameService(body: {
   }
 }
 
+export async function unFollowUserService(userId: string): Promise<string> {
+  try {
+    const data: { message: string; status: boolean } = await api.delete(
+      `/users/unfollow/${userId}`
+    )
+
+    if (!data.status) {
+      // Handle unfollow user error, e.g., display an error message to the user
+      throw new Error("unFollow user failed: " + getBackendErrorMessage(data))
+    }
+
+    return data.message
+  } catch (error) {
+    // Handle network errors or other exceptions
+    // You can log the error or perform other error-handling actions
+    console.error("unFollow user error:", getBackendErrorMessage(error))
+
+    // Re-throw the error to propagate it up the call stack if needed
+    throw getBackendErrorMessage(error)
+  }
+}
+
+export async function followUserService(userId: string): Promise<string> {
+  try {
+    const data: { message: string; status: boolean } = await api.post(
+      `/users/follow/${userId}`
+    )
+
+    if (!data.status) {
+      // Handle follow user error, e.g., display an error message to the user
+      throw new Error("Follow user failed: " + getBackendErrorMessage(data))
+    }
+
+    return data.message
+  } catch (error) {
+    // Handle network errors or other exceptions
+    // You can log the error or perform other error-handling actions
+    console.error("Follow user error:", getBackendErrorMessage(error))
+
+    // Re-throw the error to propagate it up the call stack if needed
+    throw getBackendErrorMessage(error)
+  }
+}
+
 export async function updateUserService(
   userData: UpdateFields
 ): Promise<IUser> {

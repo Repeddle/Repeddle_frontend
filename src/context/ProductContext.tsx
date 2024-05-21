@@ -8,6 +8,7 @@ import useAuth from "../hooks/useAuth"
 import {
   createProductService,
   deleteProductService,
+  fetchProductByIdService,
   fetchProductBySlugService,
   fetchProductsService,
   fetchUserProductsService,
@@ -21,6 +22,7 @@ type ContextType = {
   fetchProducts: (params?: string) => Promise<boolean>
   fetchUserProducts: (params?: string) => Promise<boolean>
   fetchProductBySlug: (slug: string) => Promise<IProduct | null>
+  fetchProductById: (id: string) => Promise<IProduct | string>
   createProduct: (product: ICreateProduct) => Promise<boolean>
   updateProduct: (id: string, product: ICreateProduct) => Promise<boolean>
   deleteProduct: (id: string) => Promise<{ message?: string }>
@@ -98,6 +100,20 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
       handleError(error as string)
       setLoading(false)
       return null
+    }
+  }
+
+  const fetchProductById = async (id: string) => {
+    try {
+      setError("")
+      setLoading(true)
+      const result = await fetchProductByIdService(id)
+      setLoading(false)
+      return result
+    } catch (error) {
+      handleError(error as string)
+      setLoading(false)
+      return error as string
     }
   }
 
@@ -181,6 +197,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         createProduct,
         deleteProduct,
         fetchProductBySlug,
+        fetchProductById,
         updateProduct,
       }}
     >

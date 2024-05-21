@@ -4,12 +4,13 @@ import { IBrand } from "../../types/product"
 import useBrands from "../../hooks/useBrand"
 import useToastNotification from "../../hooks/useToastNotification"
 import useAuth from "../../hooks/useAuth"
+import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo"
 
 const OtherBrand = () => {
   const [refresh, setRefresh] = useState(true)
 
   const { addNotification } = useToastNotification()
-  const { brands, error, fetchAdminBrands } = useBrands()
+  const { brands, error, fetchAdminBrands, loading } = useBrands()
 
   useEffect(() => {
     fetchAdminBrands()
@@ -20,10 +21,15 @@ const OtherBrand = () => {
   }, [error])
 
   return (
-    <div className="flex-[4] mb-5 px-5 py-0">
+    <div className="flex-[4] flex flex-col mb-5 px-5 py-0">
       <div className="flex flex-col mr-5 mt-2.5">
         <label className="text-sm font-semibold mb-2.5">Brand List</label>
       </div>
+      {loading && (
+        <div className="absolute bg-white/50 inset-0">
+          <LoadingControlModal />
+        </div>
+      )}
       {brands.map((c, index) => (
         <OtherBrandRow
           key={index}
@@ -78,7 +84,7 @@ const OtherBrandRow = ({ brand, refresh, setRefresh }: Props) => {
   const handleSubmit = async () => {
     const data = await updateBrand(brand._id, {
       name: newName,
-      published: user?.role === "Admin" ?? false,
+      published: user?.role === "Admin",
     })
     if (data) addNotification("Brand added to list")
     setRefresh(!refresh)

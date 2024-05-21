@@ -50,7 +50,8 @@ const NewsletterList = () => {
       const data = await deleteNewsletter(id);
 
       if (data.success) {
-        addNotification(data.message ?? "Email deleted Successfully");
+        addNotification(data.message ?? "Newsletter deleted Successfully")
+
       }
     }
   };
@@ -75,8 +76,9 @@ const NewsletterList = () => {
   };
 
   const handleEmailSelection = (newsletter: INewsletter) => {
-    console.log(newsletter);
-  };
+    // TODO:
+    console.log(newsletter)
+  }
 
   const sendEmails = async () => {};
 
@@ -151,46 +153,47 @@ const NewsletterList = () => {
 
         <ul>
           {loadingNewsletters && <LoadingBox />}
-          {newsletters.map((newsletter, index) => (
-            <li
-              className="block lg:flex items-center justify-between text-base px-0 py-2.5 border-b-[#ccc] border-b"
-              key={newsletter._id}
-            >
-              <div className="flex items-center text-base px-0 py-2.5">
-                <input
-                  className={`mr-2.5 mb-2.5 after:w-[15px] after:h-[15px] after:content-[""] after:inline-block
+          {!loadingNewsletters &&
+            newsletters.map((newsletter, index) => (
+              <li
+                className="block lg:flex items-center justify-between text-base px-0 py-2.5 border-b-[#ccc] border-b"
+                key={newsletter._id}
+              >
+                <div className="flex items-center text-base px-0 py-2.5">
+                  <input
+                    className={`mr-2.5 mb-2.5 after:w-[15px] after:h-[15px] after:content-[""] after:inline-block
                   after:visible after:relative after:border after:border-orange-color after:-left-px after:-top-0.5
                   checked:after:w-[15px] checked:after:h-[15px] checked:after:content-[""] checked:after:inline-block
                   checked:after:visible checked:after:relative checked:after:bg-orange-color checked:after:border
                   checked:after:border-orange-color checked:after:-left-px checked:after:-top-0.5 after:bg-white-color after:dark:bg-black-color`}
-                  type="checkbox"
-                  checked={selectedEmails.includes(newsletter.email)}
-                  onChange={() => handleEmailSelection(newsletter)}
-                />
-                <div className="mr-[5px]">{index + 1}. </div>
-                <div
-                  className={`flex-1 ${
-                    newsletter.isDeleted ? "text-[gray] line-through" : ""
-                  }`}
-                >
-                  {newsletter.email}
+                    type="checkbox"
+                    checked={selectedEmails.includes(newsletter.email)}
+                    onChange={() => handleEmailSelection(newsletter)}
+                  />
+                  <div className="mr-[5px]">{index + 1}. </div>
+                  <div
+                    className={`flex-1 ${
+                      newsletter.isDeleted ? "text-[gray] line-through" : ""
+                    }`}
+                  >
+                    {newsletter.email}
+                  </div>
+                  {emailName &&
+                    newsletter?.sent.some(
+                      (obj) => obj.emailName === emailName
+                    ) && (
+                      <FaCheckCircle className="text-green-color bg-white rounded-full ml-2.5" />
+                    )}
                 </div>
-                {emailName &&
-                  newsletter?.sent.some(
-                    (obj) => obj.emailName === emailName
-                  ) && (
-                    <FaCheckCircle className="text-green-color bg-white rounded-full ml-2.5" />
-                  )}
-              </div>
-              <div className="text-[#999]">
-                {moment(newsletter.createdAt).format("LLL")}
-              </div>
-              <FaTrash
-                className="cursor-pointer ml-2.5 text-[red]"
-                onClick={() => deleteHandler(newsletter._id)}
-              />
-            </li>
-          ))}
+                <div className="text-[#999]">
+                  {moment(newsletter.createdAt).format("LLL")}
+                </div>
+                <FaTrash
+                  className="cursor-pointer ml-2.5 text-[red]"
+                  onClick={() => deleteHandler(newsletter._id)}
+                />
+              </li>
+            ))}
         </ul>
         <div className="h-[100px]" />
         <h2 className="text-xl mb-5">Rebatch emails</h2>

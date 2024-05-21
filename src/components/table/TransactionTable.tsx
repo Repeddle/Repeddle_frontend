@@ -8,6 +8,7 @@ type Props = {
   transactions: ITransaction[]
   loading?: boolean
   error?: string
+  onPageChange?: (val: number) => void
 }
 
 const headers = [
@@ -19,12 +20,18 @@ const headers = [
   { title: "Status" },
 ]
 
-const TransactionTable = ({ transactions, loading, error }: Props) => {
+const TransactionTable = ({
+  transactions,
+  loading,
+  error,
+  onPageChange,
+}: Props) => {
   return (
     <Table
       headers={headers}
       error={error}
       itemName="transaction"
+      onPageChange={onPageChange}
       loading={loading}
       body={transactions.map((tran) => ({
         keys: {

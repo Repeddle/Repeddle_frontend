@@ -1,6 +1,57 @@
 export const emailRegex =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
+export const colors = [
+  "red",
+  "anthracite",
+  "beige",
+  "black",
+  "blue",
+  "brown",
+  "burgubdy",
+  "camel",
+  "ecru",
+  "gold",
+  "green",
+  "grey",
+  "khaki",
+  "metallic",
+  "multiculour",
+  "navy",
+  "orange",
+  "pink",
+  "purple",
+  "silver",
+  "turquoise",
+  "white",
+  "yellow",
+  "other",
+]
+
+export const pudoOptions = [
+  { name: "Offer free shipping to buyer + R 0.00", value: 0 },
+  {
+    name: "Extra-Small | 600x170x80 mm (MAX 2kg) + R 60.00",
+    value: 60,
+  },
+  // {
+  //   name: "Small | 600x410x80 mm (MAX 5kg) + R 70.00",
+  //   value: 70,
+  // },
+  {
+    name: " Medium | 600x410x190 mm (MAX 10kg) + R 100.00",
+    value: 100,
+  },
+  {
+    name: " Large | 600x410x410 mm (MAX 15kg) + R 150.00",
+    value: 150,
+  },
+  {
+    name: " Extra-Large | 600x410x690 mm (MAX 20kg) + R 200.00",
+    value: 200,
+  },
+]
+
 export const states = {
   Nigeria: [
     "Abuja(fct)",

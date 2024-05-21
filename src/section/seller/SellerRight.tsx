@@ -10,7 +10,7 @@ const tabs = ["all", "selling", "sold", "liked"] as const
 type DisplayTabs = (typeof tabs)[number] | "saved"
 
 type Props = {
-  user: IUser
+  user?: IUser
   loading: boolean
   error?: string | null
 }
@@ -47,7 +47,7 @@ const SellerRight = ({ user, loading, error }: Props) => {
             {tab}
           </div>
         ))}
-        {userInfo && userInfo._id === user._id && (
+        {userInfo && userInfo._id === user?._id && (
           <div
             className={`flex justify-center cursor-pointer relative capitalize min-w-[70px] m-2.5 hover:text-orange-color ${
               displayTab === "saved"

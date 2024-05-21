@@ -3,23 +3,30 @@ import { useEffect, useState } from "react"
 import TransactionTable from "../../components/table/TransactionTable"
 import useTransactions from "../../hooks/useTransaction"
 import useToastNotification from "../../hooks/useToastNotification"
+import { createSearchParam } from "../../utils/common"
 
 const TransactionList = () => {
   const [salesQuery, setSalesQuery] = useState("")
+  const [page, setPage] = useState(1)
 
   const { error, fetchTransactions, transactions, loading } = useTransactions()
   const { addNotification } = useToastNotification()
 
   useEffect(() => {
-    fetchTransactions()
-  }, [])
+    const string = createSearchParam([
+      ["page", page.toString()],
+      ["transactionId", salesQuery],
+    ])
+
+    fetchTransactions(string)
+  }, [page, salesQuery])
 
   useEffect(() => {
     if (error) addNotification(error)
   }, [error])
 
   return (
-    <div className="flex-[4] overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
+    <div className="flex-[4] flex flex-col overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
       <h1 className="pt-5 pb-0 px-5 text-[calc(1.375rem_+_1.5vw)] font-medium leading-tight mb-2">
         Transactions
       </h1>
@@ -34,7 +41,11 @@ const TransactionList = () => {
         />
       </div>
 
-      <TransactionTable transactions={transactions} loading={loading} />
+      <TransactionTable
+        onPageChange={setPage}
+        transactions={transactions}
+        loading={loading}
+      />
     </div>
   )
 }

@@ -337,11 +337,11 @@ const UserRightComp = ({
                       <FaTruck />
                       <span className="font-semibold">Re:Bundle</span>
                       <div
-                        className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[-180px] hover:after:text-justify 
-      hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
-      lg:hover:after:top-5 hover:after:text-[11px] hover:after:left-[-90px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-white-color
-      hover:after:dark:bg-black hover:after:text-black dark:hover:after:text-white 
-      hover:after:content-["Re:bundle allows buyers to shop multiple items from your store and only pay for delivery once! The buyer will be charged delivery on their first purchase, and, if they make any additional purchases within the next 2 hours, free delivery will then automatically apply. Shops who enable bundling sell more and faster."]`}
+                        data-content="Re:bundle allows buyers to shop multiple items from your store and only pay for delivery once! The buyer will be charged delivery on their first purchase, and, if they make any additional purchases within the next 2 hours, free delivery will then automatically apply. Shops who enable bundling sell more and faster."
+                        className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[30px] hover:after:text-justify 
+                  hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
+                  lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
+                hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
                       >
                         <FaQuestionCircle className="text-neutral-300 ml-2.5" />
                       </div>

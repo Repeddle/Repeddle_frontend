@@ -6,11 +6,11 @@ import { ITransaction } from "../types/transactions"
 
 type Props = {
   refresh?: boolean
+  transactions: ITransaction[]
 }
 
-const WidgetLarge = ({ refresh }: Props) => {
+const WidgetLarge = ({ refresh, transactions }: Props) => {
   const loadingTrans = false
-  const transactions: ITransaction[] = []
 
   console.log(refresh)
 

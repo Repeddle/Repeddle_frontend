@@ -3,7 +3,6 @@ import React from "react"
 import {
   AiOutlineHome,
   AiOutlineArrowRight,
-  AiOutlineShopping,
   AiOutlineWallet,
   AiOutlineQuestionCircle,
 } from "react-icons/ai"
@@ -41,9 +40,14 @@ const sidebarLinks = [
     icon: <FaBasketShopping />,
   },
   {
-    path: "/dashboard/order",
-    text: "My Orders",
-    icon: <AiOutlineShopping />,
+    path: "/dashboard/orderlist",
+    text: "Purchase Orders",
+    icon: <FaChartBar />,
+  },
+  {
+    path: "/dashboard/saleslist",
+    text: "Sold Orders",
+    icon: <FaChartBar />,
   },
   { path: "/dashboard/wallet", 
     text: "Wallet", 
@@ -72,7 +76,7 @@ const sidebarLinks = [
   },
   {
     path: "/dashboard/contact",
-    text: "Contact",
+    text: "Contact Us",
     icon: <FaEnvelope />,
   },
   {

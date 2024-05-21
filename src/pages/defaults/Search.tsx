@@ -12,12 +12,16 @@ import { SearchOptionsKey } from "../../types/search"
 import useCategory from "../../hooks/useCategory"
 import useProducts from "../../hooks/useProducts"
 import { FaTimes } from "react-icons/fa"
+import useBrands from "../../hooks/useBrand"
+import { createSearchParam } from "../../utils/common"
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const { categories } = useCategory()
   const { products, fetchProducts, loading, error } = useProducts()
+
+  const { brands, fetchBrands } = useBrands()
 
   const changeParam = (key: SearchOptionsKey, val: string | number) => {
     setSearchParams((prev) => {
@@ -41,6 +45,20 @@ const Search = () => {
     return all
   }, [searchParams])
 
+  const [queryBrand] = useState("")
+  const rating: { rating: number; id: string }[] = []
+  const sizes: { rating: number; id: string }[] = []
+  const colors: { rating: number; id: string }[] = []
+  const shipping: { name: string; _id: string }[] = []
+  const condition: { name: string; _id: string }[] = []
+  const availability: { name: string; _id: string }[] = []
+  const type: { name: string; _id: string }[] = []
+  const pattern: { name: string; _id: string }[] = []
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const deals: any[] = []
+  const maxPrice = 500000
+  const minPrice = 0
+
   useEffect(() => {
     const fetch = async () => {
       const params: string[][] = []
@@ -55,28 +73,19 @@ const Search = () => {
     fetch()
   }, [searchParams])
 
-  console.log(loading)
+  useEffect(() => {
+    const params = [["search", queryBrand]]
+
+    const string = createSearchParam(params)
+
+    fetchBrands(string)
+  }, [queryBrand])
 
   const rLoading = false
   const rProducts: IProduct[] = []
 
   const [showFilter, setShowFilter] = useState(false)
-  const [queryBrand] = useState("")
   const [order] = useState("")
-
-  const rating: { rating: number; id: string }[] = []
-  const sizes: { rating: number; id: string }[] = []
-  const colors: { rating: number; id: string }[] = []
-  const shipping: { name: string; _id: string }[] = []
-  const condition: { name: string; _id: string }[] = []
-  const availability: { name: string; _id: string }[] = []
-  const type: { name: string; _id: string }[] = []
-  const pattern: { name: string; _id: string }[] = []
-  const brands: { name: string; _id: string }[] = []
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const deals: any[] = []
-  const maxPrice = 500000
-  const minPrice = 0
 
   return (
     <div>

@@ -38,7 +38,7 @@ export type UserFormType = {
 const User = () => {
   const { id } = useParams()
   const { error, updateUser } = useAuth()
-  const { getUserById } = useUser()
+  const { getUserById, error: getUserError } = useUser()
   const { addNotification } = useToastNotification()
   const {
     createNewsletter,
@@ -52,12 +52,15 @@ const User = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      if (!id) return
+      if (!id) {
+        return addNotification("user id not found")
+      }
 
       const user = await getUserById(id)
+      console.log(user)
 
       if (user) setUser(user)
-      else if (error) addNotification(error)
+      else if (getUserError) addNotification(getUserError)
     }
 
     fetchUser()

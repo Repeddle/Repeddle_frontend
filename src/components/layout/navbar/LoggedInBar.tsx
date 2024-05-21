@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { IUser } from "../../../types/user"
 import { Link } from "react-router-dom"
 import useAuth from "../../../hooks/useAuth"
@@ -18,9 +18,25 @@ const LoggedInBar = ({
   purchaseNotification,
   soldNotification,
 }: Props) => {
-  const modelRef = useRef(null)
+  const modelRef = useRef<HTMLImageElement>(null)
 
   const [menu, setMenu] = useState(false)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        !menu &&
+        modelRef.current &&
+        !modelRef.current.contains(event.target as Node | null)
+      ) {
+        setMenu(false)
+      }
+    }
+    document.addEventListener("click", handleClickOutside, true)
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true)
+    }
+  }, [])
 
   const { logout } = useAuth()
 

@@ -5,10 +5,10 @@ import { Link } from "react-router-dom"
 import useAuth from "../../hooks/useAuth"
 import useProducts from "../../hooks/useProducts"
 import MessageBox from "../../components/MessageBox"
-import { currency } from "../../utils/common"
-import LoadingPage from "../../components/ui/LoadingPage"
+import { createSearchParam, currency } from "../../utils/common"
 import useToastNotification from "../../hooks/useToastNotification"
 import Table from "../../components/table/Table"
+import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo"
 
 const headers = [
   { title: "ID", hide: true },
@@ -34,9 +34,12 @@ const ProductList = () => {
   const [productQuery, setProductQuery] = useState("")
 
   useEffect(() => {
-    if (user?.role === "Admin") fetchProducts()
-    else fetchUserProducts()
-  }, [user?.role])
+    const string = createSearchParam([["search", productQuery]])
+
+    // TODO: remove
+    if (user?.role === "Admin") fetchProducts(string)
+    else fetchUserProducts(string)
+  }, [productQuery, user?.role])
 
   const deleteHandler = async (id: string) => {
     if (window.confirm("Are you sure to delete")) {
@@ -46,16 +49,13 @@ const ProductList = () => {
   }
 
   return (
-    <div className="flex-[4] overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
+    <div className="flex-[4] relative overflow-x-hidden mb-5 min-h-[85vh] flex flex-col lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
       <div className="pt-5 pb-0 px-5 mb-6 flex flex-col items-start md:items-center md:flex-row gap-6 md:justify-between">
         <h1 className="text-[calc(1.375rem_+_1.5vw)] font-medium leading-tight">
           My Products
         </h1>
 
-        <div
-          className="flex px-2 py-[5px] items-center cursor-pointer font-bold bg-orange-color text-white-color lg:px-4 lg:py-2.5 rounded-[0.2rem]"
-          // onClick={() => setShowModel(true)}
-        >
+        <div className="flex px-2 py-[5px] items-center cursor-pointer font-bold bg-orange-color text-white-color lg:px-4 lg:py-2.5 rounded-[0.2rem]">
           <FaPlus className="mr-2.5" />
           Add Product
         </div>
@@ -70,67 +70,74 @@ const ProductList = () => {
           value={productQuery}
         />
       </div>
+      <div className="relative h-full w-full flex-1">
+        {loading && (
+          <div className="absolute bg-white/50 inset-0">
+            <LoadingControlModal />
+          </div>
+        )}
 
-      {loading && (
-        <div className="mx-auto self-center">
-          <LoadingPage />
-        </div>
-      )}
+        {!loading && error && (
+          <MessageBox className="text-[red]">{error}</MessageBox>
+        )}
 
-      {!loading && error && (
-        <MessageBox className="text-[red]">{error}</MessageBox>
-      )}
-
-      <Table
-        headers={headers}
-        loading={loading}
-        error={error}
-        itemName="products"
-        body={products.products.map((prod) => ({
-          keys: {
-            ID: prod._id,
-            Product: (
-              <div className="flex gap-2.5 items-center">
-                <img
-                  className="w-8 h-8 object-cover rounded-[50%]"
-                  src={prod.images[0]}
-                  alt={prod.name}
-                />
-                <Link
-                  to={`/product/${prod.slug}`}
-                  className="flex-1 whitespace-nowrap overflow-hidden text-ellipsis hover:underline"
-                >
-                  {prod.name}
+        <Table
+          headers={headers}
+          loading={loading}
+          message={
+            productQuery.length && !products.products.length
+              ? "No product matches search"
+              : undefined
+          }
+          error={error}
+          itemName="products"
+          body={products.products.map((prod) => ({
+            key: prod._id,
+            keys: {
+              ID: prod._id,
+              Product: (
+                <div className="flex gap-2.5 items-center">
+                  <img
+                    className="w-8 h-8 object-cover rounded-[50%]"
+                    src={prod.images[0]}
+                    alt={prod.name}
+                  />
+                  <Link
+                    to={`/product/${prod.slug}`}
+                    className="flex-1 whitespace-nowrap overflow-hidden text-ellipsis hover:underline"
+                  >
+                    {prod.name}
+                  </Link>
+                </div>
+              ),
+              Status: prod.countInStock ? (
+                <span className="text-green-color">In Stock</span>
+              ) : (
+                <span className="text-red-color">Out of Stock</span>
+              ),
+              Stock: prod.countInStock,
+              Date: moment(prod.createdAt).format("MMM DD YY, h:mm a"),
+              Price: currency(prod.region) + " " + prod.sellingPrice,
+            },
+            action: (
+              <div className="flex gap-1 items-center">
+                <Link to={`/dashboard/product/${prod._id}`}>
+                  <button className="text-orange-color dark:bg-dark-ev3 bg-[#fcf0e0] cursor-pointer mr-2.5 px-3 py-[5px] rounded-[0.2rem] border-none">
+                    Edit
+                  </button>
                 </Link>
+
+                {user?.role === "Admin" && (
+                  <FaTrash
+                    className="cursor-pointer text-red-color hover:text-lg"
+                    onClick={() => deleteHandler(prod._id)}
+                  />
+                )}
               </div>
             ),
-            Status: prod.countInStock ? (
-              <span className="text-green-color">In Stock</span>
-            ) : (
-              <span className="text-red-color">Out of Stock</span>
-            ),
-            Stock: prod.countInStock,
-            Date: moment(prod.createdAt).format("MMM DD YY, h:mm a"),
-            Price: currency(prod.region) + " " + prod.sellingPrice,
-          },
-          action: (
-            <>
-              <Link to={`/dashboard/product/${prod._id}`}>
-                <button className="text-orange-color dark:bg-dark-ev3 bg-[#fcf0e0] cursor-pointer mr-2.5 px-3 py-[5px] rounded-[0.2rem] border-none">
-                  Edit
-                </button>
-              </Link>
-
-              {user?.role === "Admin" && (
-                <FaTrash
-                  className="cursor-pointer text-red-color hover:text-lg"
-                  onClick={() => deleteHandler(prod._id)}
-                />
-              )}
-            </>
-          ),
-        }))}
-      />
+          }))}
+        />
+      </div>
     </div>
   )
 }
