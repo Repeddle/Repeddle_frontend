@@ -8,7 +8,6 @@ import MessageBox from "../../components/MessageBox"
 import { createSearchParam, currency } from "../../utils/common"
 import useToastNotification from "../../hooks/useToastNotification"
 import Table from "../../components/table/Table"
-import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo"
 
 const headers = [
   { title: "ID", hide: true },
@@ -71,12 +70,6 @@ const ProductList = () => {
         />
       </div>
       <div className="relative h-full w-full flex-1">
-        {loading && (
-          <div className="absolute bg-white/50 inset-0">
-            <LoadingControlModal />
-          </div>
-        )}
-
         {!loading && error && (
           <MessageBox className="text-[red]">{error}</MessageBox>
         )}

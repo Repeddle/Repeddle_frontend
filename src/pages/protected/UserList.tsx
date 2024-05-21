@@ -18,20 +18,24 @@ const headers = [
 ];
 
 const UserList = () => {
-  const [userQuery, setUserQuery] = useState("");
-  const [users, setUsers] = useState<IUser[]>([]);
+  const [userQuery, setUserQuery] = useState("")
+  const [users, setUsers] = useState<IUser[]>([])
+  const [loading, setLoading] = useState(false)
 
   const { getAllUserAdmin, error } = useUser();
   const { addNotification } = useToastNotification();
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const allUsers = await getAllUserAdmin();
+      setLoading(true)
+      const allUsers = await getAllUserAdmin()
 
       if (allUsers) {
         setUsers(allUsers.users);
       }
-    };
+
+      setLoading(false)
+    }
 
     fetchUsers();
   }, []);
@@ -65,6 +69,7 @@ const UserList = () => {
       <Table
         headers={headers}
         error={error}
+        loading={loading}
         itemName="user"
         body={users.map((user) => ({
           keys: {
@@ -82,7 +87,8 @@ const UserList = () => {
             Email: user.email,
             Date: moment(user.createdAt).format("MMM DD YY, h:mm a"),
             Status: user.active ? "active" : "banned",
-            Earnings: currency(region()) + " " + user.earnings || 0,
+            Earnings: currency(region()) + " " + (user.earnings ?? 0),
+
           },
           action: (
             <div className="flex items-center gap-2.5">

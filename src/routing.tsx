@@ -1,3 +1,4 @@
+
 import Search from "./pages/defaults/Search";
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";

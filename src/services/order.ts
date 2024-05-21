@@ -6,14 +6,14 @@ export const fetchOrdersService = async (): Promise<IOrder[]> => {
   try {
     const url = "/orders"
 
-    const resp: { order: IOrder[]; status: boolean } = await api.get(url)
+    const resp: { orders: IOrder[]; status: boolean } = await api.get(url)
 
     if (!resp.status) {
       // Handle Fetch orders error, e.g., display an error message to the user
       throw new Error("Fetch orders failed: " + getBackendErrorMessage(resp))
     }
 
-    return resp.order
+    return resp.orders
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions

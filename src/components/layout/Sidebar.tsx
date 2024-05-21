@@ -49,20 +49,17 @@ const sidebarLinks = [
     text: "Sold Orders",
     icon: <FaChartBar />,
   },
-  { path: "/dashboard/wallet", 
-    text: "Wallet", 
-    icon: <AiOutlineWallet /> 
+  { path: "/dashboard/wallet", text: "Wallet", icon: <AiOutlineWallet /> },
+  {
+    path: "/dashboard/articlelist",
+    text: "Articles",
+    icon: <AiOutlineQuestionCircle />,
   },
-  { path: "/dashboard/articlelist", 
-    text: "Articles", 
-    icon: <AiOutlineQuestionCircle /> 
- },
   {
     path: "/dashboard/alltransaction",
     text: "All Transactions",
     icon: <FaMoneyBill />,
   },
-  { path: "/dashboard/wallet", text: "Wallet", icon: <AiOutlineWallet /> },
 
   {
     path: "/dashboard/analytics",
