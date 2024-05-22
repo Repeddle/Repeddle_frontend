@@ -1,22 +1,22 @@
-import moment from "moment";
-import { useEffect, useState } from "react";
-import LoadingBox from "../../components/LoadingBox";
-import { FaCheckCircle, FaTrash } from "react-icons/fa";
-import { INewsletter } from "../../types/message";
-import { emailList as emailListData } from "../../utils/data";
-import useNewsletter from "../../hooks/useNewsletter";
-import useToastNotification from "../../hooks/useToastNotification";
+import moment from "moment"
+import { useEffect, useState } from "react"
+import LoadingBox from "../../components/LoadingBox"
+import { FaCheckCircle, FaTrash } from "react-icons/fa"
+import { INewsletter } from "../../types/message"
+import { emailList as emailListData } from "../../utils/data"
+import useNewsletter from "../../hooks/useNewsletter"
+import useToastNotification from "../../hooks/useToastNotification"
 
 const NewsletterList = () => {
-  const [inputEmail, setInputEmail] = useState("");
-  const [emailName, setEmailName] = useState("");
-  const [selectAll, setSelectAll] = useState(false);
-  const [selectedEmails, setSelectedEmails] = useState<string[]>([]);
+  const [inputEmail, setInputEmail] = useState("")
+  const [emailName, setEmailName] = useState("")
+  const [selectAll, setSelectAll] = useState(false)
+  const [selectedEmails, setSelectedEmails] = useState<string[]>([])
 
-  const [loadingSend] = useState(false);
-  const [loadingAdd, setLoadingAdd] = useState(false);
-  const [loadingRebatch] = useState(false);
-  const [loadingNewsletters, setLoadingNewsletters] = useState(false);
+  const [loadingSend] = useState(false)
+  const [loadingAdd, setLoadingAdd] = useState(false)
+  const [loadingRebatch] = useState(false)
+  const [loadingNewsletters, setLoadingNewsletters] = useState(false)
 
   const {
     newsletters,
@@ -24,43 +24,42 @@ const NewsletterList = () => {
     error,
     createNewsletter,
     deleteNewsletter,
-  } = useNewsletter();
-  const { addNotification } = useToastNotification();
+  } = useNewsletter()
+  const { addNotification } = useToastNotification()
 
   useEffect(() => {
     const fetchLetter = async () => {
-      setLoadingNewsletters(true);
-      await fetchNewsletter();
-      setLoadingNewsletters(false);
-    };
+      setLoadingNewsletters(true)
+      await fetchNewsletter()
+      setLoadingNewsletters(false)
+    }
 
-    fetchLetter();
-  }, []);
+    fetchLetter()
+  }, [])
 
   useEffect(() => {
-    if (error) addNotification(error);
-  }, [error]);
+    if (error) addNotification(error)
+  }, [error])
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const rebatchs: any[] = [];
-  const emailLists = [emailListData];
+  const rebatchs: any[] = []
+  const emailLists = [emailListData]
 
   const deleteHandler = async (id: string) => {
     if (window.confirm("Are you sure to delete")) {
-      const data = await deleteNewsletter(id);
+      const data = await deleteNewsletter(id)
 
       if (data.success) {
         addNotification(data.message ?? "Newsletter deleted Successfully")
-
       }
     }
-  };
+  }
 
   const hasMatchingEmailName = (newsletter: INewsletter) => {
     return (
       emailName && newsletter.sent.some((obj) => obj.emailName === emailName)
-    );
-  };
+    )
+  }
 
   const handleSelectAll = () => {
     const selectedEmailSet = new Set(
@@ -70,25 +69,31 @@ const NewsletterList = () => {
             !newsletter.isDeleted && !hasMatchingEmailName(newsletter)
         )
         .map((newsletter) => newsletter.email)
-    );
-    setSelectedEmails([...selectedEmailSet]);
-    setSelectAll(true);
-  };
-
-  const handleEmailSelection = (newsletter: INewsletter) => {
-    // TODO:
-    console.log(newsletter)
+    )
+    setSelectedEmails([...selectedEmailSet])
+    setSelectAll(true)
   }
 
-  const sendEmails = async () => {};
+  const handleEmailSelection = (newsletter: INewsletter) => {
+    if (newsletter.isDeleted) {
+      return
+    }
+    if (selectedEmails.includes(newsletter.email)) {
+      setSelectedEmails(selectedEmails.filter((e) => e !== newsletter.email))
+    } else {
+      setSelectedEmails([...selectedEmails, newsletter.email])
+    }
+  }
+
+  const sendEmails = async () => {}
 
   const handleAddEmail = async () => {
-    setLoadingAdd(true);
-    const data = await createNewsletter(inputEmail);
-    if (data) addNotification("Emails added successfully");
+    setLoadingAdd(true)
+    const data = await createNewsletter(inputEmail)
+    if (data) addNotification("Emails added successfully")
 
-    setLoadingAdd(false);
-  };
+    setLoadingAdd(false)
+  }
 
   return (
     <div className="flex-[4] mb-5 px-5 py-0 min-h-[85vh] bg-light-ev1 dark:bg-dark-ev1">
@@ -97,7 +102,7 @@ const NewsletterList = () => {
         <div className="block lg:flex items-center justify-between px-0 py-2.5">
           <li className="flex items-center text-base px-0 py-2.5">
             <input
-              className={`mr-2.5 mb-2.5 after:w-[15px] after:h-[15px] after:content-[""] after:inline-block
+              className={`mr-2.5 after:w-[15px] after:h-[15px] after:content-[""] after:inline-block
               after:visible after:relative after:border after:border-orange-color after:-left-px after:-top-0.5
               checked:after:w-[15px] checked:after:h-[15px] checked:after:content-[""] checked:after:inline-block
               checked:after:visible checked:after:relative checked:after:bg-orange-color checked:after:border
@@ -135,7 +140,7 @@ const NewsletterList = () => {
           )}
         </div>
         <input
-          className="h-10 mr-2.5 mb-2.5 p-2.5 rounded-[0.2rem] focus-visible:outline focus-visible:outline-orange-color border text-black-color dark:text-white-color border-light-ev4 dark:border-dark-ev4"
+          className="h-10 mr-2.5 mb-2.5 p-2.5 bg-transparent rounded-[0.2rem] focus-visible:outline focus-visible:outline-orange-color border text-black-color dark:text-white-color border-light-ev4 dark:border-dark-ev4"
           value={inputEmail}
           type="text"
           onChange={(e) => setInputEmail(e.target.value.trim())}
@@ -161,7 +166,7 @@ const NewsletterList = () => {
               >
                 <div className="flex items-center text-base px-0 py-2.5">
                   <input
-                    className={`mr-2.5 mb-2.5 after:w-[15px] after:h-[15px] after:content-[""] after:inline-block
+                    className={`mr-2.5 after:w-[15px] after:h-[15px] after:content-[""] after:inline-block
                   after:visible after:relative after:border after:border-orange-color after:-left-px after:-top-0.5
                   checked:after:w-[15px] checked:after:h-[15px] checked:after:content-[""] checked:after:inline-block
                   checked:after:visible checked:after:relative checked:after:bg-orange-color checked:after:border
@@ -207,7 +212,7 @@ const NewsletterList = () => {
             >
               <div className="flex items-center text-base px-0 py-2.5">
                 <input
-                  className={`mr-2.5 mb-2.5 after:w-[15px] after:h-[15px] after:content-[""] after:inline-block
+                  className={`mr-2.5 after:w-[15px] after:h-[15px] after:content-[""] after:inline-block
                   after:visible after:relative after:border after:border-orange-color after:-left-px after:-top-0.5
                   checked:after:w-[15px] checked:after:h-[15px] checked:after:content-[""] checked:after:inline-block
                   checked:after:visible checked:after:relative checked:after:bg-orange-color checked:after:border
@@ -228,7 +233,7 @@ const NewsletterList = () => {
         </ul>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default NewsletterList;
+export default NewsletterList

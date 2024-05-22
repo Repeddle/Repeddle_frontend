@@ -169,7 +169,9 @@ const User = () => {
     }
   }
 
-  const updateAccount = async () => {}
+  const updateAccount = async () => {
+    // TODO:
+  }
 
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
@@ -225,7 +227,7 @@ const User = () => {
     bodyFormData.append("file", file)
     setLoadingUpload(true)
     try {
-      const compressImage = await compressImageUpload(file, 1024)
+      const compressImage = await compressImageUpload(file, 1024, user?.image)
 
       handleOnUserChange(compressImage, "image")
 

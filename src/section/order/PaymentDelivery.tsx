@@ -1,8 +1,8 @@
-import { Order } from "../../types/order"
+import { IOrder } from "../../types/order"
 import { currency, region } from "../../utils/common"
 
 type Props = {
-  order: Order
+  order: IOrder
   isSeller: boolean
   shippingPrice: number
   itemsPrice: number
@@ -58,7 +58,7 @@ const PaymentDelivery = ({
                 <div className="flex-1 lg:flex-[5]">
                   <div className="font-bold">
                     {currency(region())}
-                    {isSeller ? itemsPrice + shippingPrice : order.totalPrice}
+                    {isSeller ? itemsPrice + shippingPrice : order.totalAmount}
                   </div>
                 </div>
               </div>

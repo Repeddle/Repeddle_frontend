@@ -121,7 +121,7 @@ export const fetchProductByIdService = async (
     const data: {
       status: boolean
       product: IProduct
-    } = await api.get(`/products/${id}`)
+    } = await api.get(`/products/product/${id}`)
 
     if (!data.status) {
       // Handle Fetch product error, e.g., display an error message to the user

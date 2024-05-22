@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: remove the lint above
-import { CartItem } from "../context/CartContext"
 import { IProduct } from "./product"
 import { IUser } from "./user"
 
@@ -14,42 +13,36 @@ export type DeliverStatus =
   | "Rejected"
   | "Hold"
 
-export type OrderItem = CartItem & {
-  onHold: boolean
-  deliveredAt: string | Date
-  deliveryStatus: DeliverStatus
-  trackingNumber?: string
-  deliverySelect: { cost: number }
+export type OrderItem = {
+  product: IProduct
+  seller: IUser
+  quantity: number
+  price: number
+  selectedSize: string
+  selectedColor: string
+  deliveryOption: {
+    fee: number
+    method: string
+    _id: string
+  }
+  deliveryTracking: {
+    currentStatus: {
+      status: string
+      timestamp: string
+      _id: string
+    }
+    history: {
+      status: string
+      timestamp: string
+      _id: string
+    }[]
+  }
+  _id: string
 }
 
 export type IOrder = {
-  buyer: string
-  items: {
-    product: IProduct
-    seller: string
-    quantity: number
-    price: number
-    selectedSize: string
-    selectedColor: string
-    deliveryOption: {
-      fee: number
-      method: string
-      _id: string
-    }
-    deliveryTracking: {
-      currentStatus: {
-        status: string
-        timestamp: string
-        _id: string
-      }
-      history: {
-        status: string
-        timestamp: string
-        _id: string
-      }[]
-    }
-    _id: string
-  }[]
+  buyer: IUser
+  items: OrderItem[]
   totalAmount: number
   paymentMethod: string
   transactionId: string
@@ -93,16 +86,14 @@ export type IOrderSummary = {
 }
 
 export type Order = {
-  orderItems: OrderItem[]
-  user: IUser
-  isPaid: boolean
+  buyer: string
+  items: OrderItem[]
+  totalAmount: number
   paymentMethod: string
-  deliveryMethod: string
-  createdAt: string | Date
-  deliveredAt: string | Date
-  itemsPrice: number
-  shippingPrice: number
-  totalPrice: number
+  transactionId: string
+  _id: string
+  createdAt: string
+  updatedAt: string
 }
 
 export enum DeliverStatusEnum {

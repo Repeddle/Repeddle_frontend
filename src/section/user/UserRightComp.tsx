@@ -76,7 +76,7 @@ const UserRightComp = ({
               </div>
             )}
             <input
-              className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+              className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
               disabled={+daydiff > 0}
               placeholder={user.username}
               onChange={(e) => handleOnUserChange(e.target.value, "username")}
@@ -85,7 +85,7 @@ const UserRightComp = ({
           <div className="flex flex-col mt-2.5">
             <label className="text-sm">First Name</label>
             <input
-              className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+              className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
               placeholder={user.firstName}
               onChange={(e) => handleOnUserChange(e.target.value, "firstName")}
             />
@@ -94,7 +94,7 @@ const UserRightComp = ({
           <div className="flex flex-col mt-2.5">
             <label className="text-sm">Last Name</label>
             <input
-              className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+              className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
               placeholder={user.lastName}
               onChange={(e) => handleOnUserChange(e.target.value, "lastName")}
             />
@@ -102,7 +102,7 @@ const UserRightComp = ({
           <div className="flex flex-col mt-2.5">
             <label className="text-sm">Email</label>
             <input
-              className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+              className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
               name="email"
               type="email"
               disabled={id ? false : true}
@@ -113,7 +113,7 @@ const UserRightComp = ({
           <div className="flex flex-col mt-2.5">
             <label className="text-sm">DOB</label>
             <input
-              className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+              className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
               type="date"
               name="DOB"
               placeholder={user.dob && user.dob.toString().substring(0, 10)}
@@ -123,7 +123,7 @@ const UserRightComp = ({
           <div className="flex flex-col mt-2.5">
             <label className="text-sm">Phone</label>
             <input
-              className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+              className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
               type="text"
               name="phone"
               placeholder={user.phone}
@@ -298,7 +298,7 @@ const UserRightComp = ({
                 <div className="flex flex-col mt-2.5">
                   <label className="text-sm">Password</label>
                   <input
-                    className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+                    className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                     name="password"
                     type="password"
                     value={userForm.password}
@@ -310,7 +310,7 @@ const UserRightComp = ({
                 <div className="flex flex-col mt-2.5">
                   <label className="text-sm">Confirm Password</label>
                   <input
-                    className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+                    className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                     name="confirmPassword"
                     type="password"
                     onChange={(e) =>

@@ -31,20 +31,20 @@ export const AuthContext = createContext<{
   sendVerifyEmail: (credentials: { email: string }) => Promise<boolean>
   verifyEmail: (credentials: { token: string }) => Promise<boolean>
   registerUser: (tokenData: {
-    token: string;
-    username: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    phone: string;
-  }) => Promise<boolean>;
-  login: (credentials: { email: string; password: string }) => Promise<boolean>;
-  sendForgetPasswordEmail: (credentials: { email: string }) => Promise<boolean>;
-  getUser: () => Promise<IUser | null>;
-  updateUser: (userData: UpdateFields) => Promise<IUser | null>;
-  logout: () => void;
-  deleteUser: (id: string) => Promise<boolean | null>;
-  resetPassword: (password: string, token: string) => Promise<boolean>;
+    token: string
+    username: string
+    password: string
+    firstName: string
+    lastName: string
+    phone: string
+  }) => Promise<boolean>
+  login: (credentials: { email: string; password: string }) => Promise<boolean>
+  sendForgetPasswordEmail: (credentials: { email: string }) => Promise<boolean>
+  getUser: () => Promise<IUser | null>
+  updateUser: (userData: UpdateFields) => Promise<IUser | null>
+  logout: () => void
+  deleteUser: (id: string) => Promise<boolean | null>
+  resetPassword: (password: string, token: string) => Promise<boolean>
   getSuggestUsername: (body: {
     firstName: string
     lastName: string
@@ -248,7 +248,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       const result = await deleteUserService(id)
       if (result) {
         // getAllUser();
-        return result;
+        return result
       }
       return null
     } catch (error) {
@@ -271,6 +271,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   }
 
   const logout = () => {
+    console.log("clicked")
     logoutUser()
     setUser(null)
     localStorage.removeItem("authToken")
