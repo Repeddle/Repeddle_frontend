@@ -391,13 +391,13 @@ export const user: IUser = {
 }
 
 export const orderData: Order = {
-  orderItems: [
+  items: [
     {
       ...productDetails,
       quantity: 2,
       onHold: false,
-      deliveredAt: "2023-01-24T08:43:36.887Z",
-      deliveryStatus: "Delivered",
+      // deliveredAt: "2023-01-24T08:43:36.887Z",
+      // deliveryStatus: "Delivered",
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       deliverySelect: { cost: 100 },

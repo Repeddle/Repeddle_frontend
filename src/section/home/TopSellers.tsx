@@ -1,14 +1,14 @@
 import LoadingBox from "../../components/LoadingBox"
 import MessageBox from "../../components/MessageBox"
 import { Link } from "react-router-dom"
-import { TopSellers } from "../../types/user"
+import { TopSellers as TopSellersType } from "../../types/user"
 import useUser from "../../hooks/useUser"
 import { useEffect, useState } from "react"
 
 const TopSellers = () => {
   const { getTopSellers } = useUser()
 
-  const [sellers, setSellers] = useState<TopSellers[]>([])
+  const [sellers, setSellers] = useState<TopSellersType[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
 

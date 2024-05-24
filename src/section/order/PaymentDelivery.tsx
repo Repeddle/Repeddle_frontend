@@ -24,7 +24,7 @@ const PaymentDelivery = ({
         >
           <div className="capitalize font-semibold mb-2.5">Payment Status</div>
           <div className="flex">
-            {order.isPaid ? (
+            {order.paymentMethod ? (
               <div className="text-orange-color">Paid</div>
             ) : (
               <div className="text-malon-color">Not Paid</div>
@@ -43,14 +43,14 @@ const PaymentDelivery = ({
                 <div className="flex-1">Item Total:</div>
                 <div className="flex-1 lg:flex-[5]">
                   {currency(region())}
-                  {isSeller ? itemsPrice : order.itemsPrice}
+                  {isSeller ? itemsPrice : order.totalAmount}
                 </div>
               </div>
               <div className="flex capitalize">
                 <div className="flex-1">Shipping Fee:</div>
                 <div className="flex-1 lg:flex-[5]">
                   {currency(region())}{" "}
-                  {isSeller ? shippingPrice : order.shippingPrice}
+                  {isSeller ? shippingPrice : order.items[0].deliveryOption.fee}
                 </div>
               </div>
               <div className="flex capitalize">
