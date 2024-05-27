@@ -103,9 +103,12 @@ function Middlebar() {
           )}
         </div>
         <div className="text-xl group relative px-2.5 py-0 hover:text-orange-color">
-          <Link to="/cart">
+          <Link to="/cart" className="group">
             <img src={CartIcon} alt="cart" className="h-[25px] w-[25px]" />
-            <IconsTooltips classNames="group-hover:opacity-100" tips="Cart" />
+            <IconsTooltips
+              classNames="group-focus:opacity-100 group-active:opacity-0"
+              tips="Cart"
+            />
 
             {cart.length > 0 && (
               <span className="w-3 h-3 flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-0 top-0 bg-orange-color">

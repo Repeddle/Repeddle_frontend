@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { IProduct } from "../../types/product"
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa"
+import MessageBox from "../../components/MessageBox"
 
 const SkeletonProduct = () => (
   <div className="flex-[0_0_calc(33%_-_10px)] bg-[#f0f0f0] p-2.5 md:max-w-[240px]">
@@ -61,20 +62,23 @@ const TheThrill = () => {
           Shop The Thrill
         </h2>
       </div>
+      {products.length > 0 && (
+        <>
+          <button
+            onClick={() => sliderHandler("left")}
+            className="w-[5vw] h-full absolute flex justify-center opacity-50 items-center cursor-pointer z-[8] border-none top-0 left-0"
+          >
+            <FaAngleLeft size={40} opacity={0.2} />
+          </button>
 
-      <button
-        onClick={() => sliderHandler("left")}
-        className="w-[5vw] h-full absolute flex justify-center opacity-50 items-center cursor-pointer z-[8] border-none top-0 left-0"
-      >
-        <FaAngleLeft size={40} opacity={0.2} />
-      </button>
-
-      <button
-        onClick={() => sliderHandler("right")}
-        className="w-[5vw] h-full absolute flex justify-center opacity-50 items-center cursor-pointer z-[8] border-none top-0 right-0"
-      >
-        <FaAngleRight size={40} opacity={0.2} />
-      </button>
+          <button
+            onClick={() => sliderHandler("right")}
+            className="w-[5vw] h-full absolute flex justify-center opacity-50 items-center cursor-pointer z-[8] border-none top-0 right-0"
+          >
+            <FaAngleRight size={40} opacity={0.2} />
+          </button>
+        </>
+      )}
       {loading ? (
         <div className="flex scrollbar-hide flex-wrap w-full gap-2.5 p-2.5 md:flex-nowrap md:overflow-x-auto md:px-[5vw] md:py-2.5">
           {Array.from({ length: 6 }).map((_, index) => (
@@ -113,6 +117,10 @@ const TheThrill = () => {
             </div>
           ))}
         </div>
+      )}
+
+      {!loading && !error && products.length === 0 && (
+        <MessageBox className="mb-4">No product available</MessageBox>
       )}
       <button
         className="block text-base bg-orange-color w-[95%] md:w-auto text-white font-bold cursor-pointer mt-0 mx-auto my-5 px-5 py-[5px] rounded-[0.2rem] border-none hover:bg-malon-color"

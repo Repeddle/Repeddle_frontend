@@ -81,14 +81,37 @@ const ProfileForm = ({ token }: Props) => {
   }
 
   const validateSecondForm = (val: keyof typeof thirdInput) => {
-    if (val === "password" && thirdInput.password.length < 6) {
-      setFormError({
-        ...formError,
-        password: "Password must be at least 6 characters",
-      })
-      return false
+    if (val === "password") {
+      if (thirdInput.password.length < 6) {
+        setFormError({
+          ...formError,
+          password: "Password must be at least 6 characters",
+        })
+        return false
+      }
+      if (val.search(/[a-z]/i) < 0) {
+        setFormError({
+          ...formError,
+          password:
+            "Password must contain at least 1 lowercase alphabetical character",
+        })
+        return false
+      }
+      if (val.search(/[A-Z]/) < 0) {
+        setFormError({
+          ...formError,
+          password:
+            "Password must contain at least 1 uppercase alphabetical character",
+        })
+        return false
+      } else if (val.search(/[0-9]/) < 0) {
+        setFormError({
+          ...formError,
+          password: "Password must contain at least 1 digit",
+        })
+        return false
+      }
     }
-
     if (
       val === "confirmPassword" &&
       thirdInput.password !== thirdInput.confirmPassword

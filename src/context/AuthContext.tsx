@@ -200,7 +200,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     } catch (error) {
       handleError(error as string)
       setLoading(false)
-      return null
+      return error as string
     }
   }
 
@@ -223,7 +223,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     } catch (error) {
       handleError(error as string)
       setLoading(false)
-      return null
+      return error as string
     }
   }
 

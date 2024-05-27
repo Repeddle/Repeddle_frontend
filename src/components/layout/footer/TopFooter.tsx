@@ -15,8 +15,8 @@ const TopFooter = () => {
         alt=""
       />
       <div className="text-white -mt-0.5 bg-malon-color">
-        <div className="!mx-0 !my-[5px] bs-container">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mx-3 gap-3 lg:gap-6">
+        <div className="!mx-0 !my-[5px] !px-1 sm:!px-3 bs-container">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 sm:mx-3 gap-3 lg:gap-6">
             <TopFooterItem
               heading="Free Shipping with RE:BUNDLE"
               linkText="how"

@@ -76,6 +76,7 @@ export interface Seller {
     street: string
     state: string
     zipcode: number
+    region?: string
   }
   rebundle: {
     status: boolean
@@ -93,6 +94,7 @@ export interface Seller {
   badge: boolean
   createdAt: string
   updatedAt: string
+  rating: number
 }
 
 export interface Pagination {
@@ -174,4 +176,11 @@ export type IBrand = {
 export type ICreateBrand = {
   published: boolean
   name: string
+}
+
+export type RecentlyViewed = {
+  numViews: number
+  product: IProduct
+  productId: string
+  score: number
 }

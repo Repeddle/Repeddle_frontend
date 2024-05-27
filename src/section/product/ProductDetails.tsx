@@ -34,7 +34,7 @@ const ProductDetails = ({ product }: Props) => {
         <div
           className={`cursor-pointer relative uppercase mb-[5px] before:content-['_'] before:w-2.5 before:h-2.5
           before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
-          before:top-2/4  sp_condition_cont ${
+          before:top-2/4  sp_condition_cont before:border-black dark:before:border-white ${
             openOverview ? "before:rotate-[134deg]" : "before:-rotate-45"
           }`}
           onClick={() => setOpenOverview(!openOverview)}
@@ -79,7 +79,7 @@ const ProductDetails = ({ product }: Props) => {
         <div
           className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
           before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
-          before:top-2/4  sp_condition_cont ${
+          before:top-2/4 before:border-black dark:before:border-white  sp_condition_cont ${
             openItemDetail ? "before:rotate-[134deg]" : "before:-rotate-45"
           }`}
           onClick={() => setOpenItemDetail(!openItemDetail)}
@@ -99,7 +99,7 @@ const ProductDetails = ({ product }: Props) => {
           <div
             className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
             before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
-            before:top-2/4 sp_condition_cont ${
+            before:top-2/4 sp_condition_cont before:border-black dark:before:border-white ${
               openCondition ? "before:rotate-[134deg]" : "before:-rotate-45"
             }`}
             onClick={() => setOpenCondition(!openCondition)}
@@ -125,7 +125,7 @@ const ProductDetails = ({ product }: Props) => {
         <div
           className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
           before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
-          before:top-2/4  ${
+          before:top-2/4 before:border-black dark:before:border-white  ${
             openShipping ? "before:rotate-[134deg]" : "before:-rotate-45"
           }`}
           onClick={() => setOpenShipping(!openShipping)}
@@ -145,7 +145,7 @@ const ProductDetails = ({ product }: Props) => {
           <div
             className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
             before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
-            before:top-2/4  ${
+            before:top-2/4 before:border-black dark:before:border-white ${
               openFeatures ? "before:rotate-[134deg]" : "before:-rotate-45"
             }`}
             onClick={() => setOpenFeatures(!openFeatures)}
@@ -170,7 +170,7 @@ const ProductDetails = ({ product }: Props) => {
           <div
             className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
             before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
-            before:top-2/4  ${
+            before:top-2/4 before:border-black dark:before:border-white ${
               openSpecifications
                 ? "before:rotate-[134deg]"
                 : "before:-rotate-45"

@@ -30,6 +30,7 @@ export const seller: Seller = {
   followers: ["63cfcd166f44b86e44e3b7e2"],
   sold: ["654b7a7a8698d309f6f768bc", "654b76048698d309f6f767fd"],
   numReviews: 0,
+  rating: 0,
   badge: false,
   createdAt: "2023-02-19T13:25:59.641Z",
   updatedAt: "2023-09-15T21:13:45.394Z",

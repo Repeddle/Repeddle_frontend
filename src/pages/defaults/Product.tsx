@@ -27,6 +27,8 @@ import useProducts from "../../hooks/useProducts"
 import { IProduct } from "../../types/product"
 import useToastNotification from "../../hooks/useToastNotification"
 import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
+import { currency } from "../../utils/common"
+import moment from "moment"
 
 const Product = () => {
   const params = useParams()
@@ -35,7 +37,7 @@ const Product = () => {
   const { fetchProductBySlug, error, loading } = useProducts()
   const { addNotification } = useToastNotification()
 
-  const { user } = useAuth()
+  const { user, followUser, unFollowUser } = useAuth()
   const { addToCart } = useCart()
 
   const [selectedImage, setSelectedImage] = useState("")
@@ -152,7 +154,20 @@ const Product = () => {
 
   const saveItem = () => {}
 
-  const toggleFollow = () => {}
+  const toggleFollow = async () => {
+    if (!user) {
+      setShowLoginModel(true)
+      return
+    }
+
+    if (following === "Following") {
+      const res = await unFollowUser(user._id)
+      if (res) addNotification(res)
+    } else {
+      const res = await followUser(user._id)
+      if (res) addNotification(res)
+    }
+  }
 
   const isOnlineCon = (userId: string) => {
     console.log(userId)
@@ -197,7 +212,7 @@ const Product = () => {
             <title>{product.name}</title>
           </Helmet>
 
-          {product.seller.rebundle.status && (
+          {product.seller.rebundle?.status && (
             <RebundleLabel userId={product.seller._id} />
           )}
 
@@ -244,8 +259,6 @@ const Product = () => {
 
             <div className="md:hidden mb-6">
               <CustomCarousel>
-                {/* TODO: no first image */}
-                {/* {[product.image, ...product.images, product.video] */}
                 {[...product.images, product.video]
                   .filter((image) => image)
                   .map(
@@ -318,8 +331,10 @@ const Product = () => {
                     </Link>
                   </div>
                   <div>
-                    {product.seller?.address?.state}, {/* TODO:  */}
-                    {/* {product.seller.region === "NGN" ? "Nigeria" : "South Africa"} */}
+                    {product.seller?.address?.state},
+                    {product.seller?.address?.region === "NGN"
+                      ? "Nigeria"
+                      : "South Africa"}
                     Nigeria
                   </div>
                   <div
@@ -327,9 +342,7 @@ const Product = () => {
                     onClick={() => setShowModel(!showModel)}
                   >
                     <Rating
-                      // rating={product.seller.rating}
-                      // TODO:
-                      rating={product.seller.numReviews}
+                      rating={product.seller.rating}
                       numReviews={product.seller.numReviews}
                     />
                   </div>
@@ -367,7 +380,7 @@ const Product = () => {
                   </div>
                 )}
               </div>
-              {product.seller.rebundle.status && <RebundlePoster />}
+              {product.seller.rebundle?.status && <RebundlePoster />}
 
               <div className="items-center flex relative mt-[30px] mb-2.5 justify-between lg:justify-normal px-[10vw] py-0 lg:p-0">
                 <div className="relative mr-[30px] flex cursor-pointer text-lg items-center">
@@ -415,9 +428,7 @@ const Product = () => {
                   />
                 </div>
               </div>
-              {/* TODO:  */}
-              {/* <div>Listed {moment(product.createdAt).fromNow()}</div> */}
-              <div>Listed 2hrs ago</div>
+              <div>Listed {moment(product.createdAt).fromNow()}</div>
 
               <div className="flex items-center">
                 <h4 className="text-[25px] font-medium capitalize mt-2.5">
@@ -429,13 +440,11 @@ const Product = () => {
               </div>
               <div className="items-center flex">
                 <div className="text-[25px] font-bold mr-5">
-                  {/* TODO:  */}
-                  {/* {product.currency} */}N {product?.costPrice}
+                  {currency(product.region)} {product?.costPrice}
                 </div>
                 {product.costPrice ?? 0 < product.sellingPrice ? (
                   <div className="line-through text-xl text-[#5b5b5b] mr-5">
-                    {/* TODO:  */}
-                    {/* {product.currenncy} */}N {product.sellingPrice}
+                    {currency(product.region)} {product.sellingPrice}
                   </div>
                 ) : null}
                 {discount ? (

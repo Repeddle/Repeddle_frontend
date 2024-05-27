@@ -97,7 +97,7 @@ const NewsletterList = () => {
 
   return (
     <div className="flex-[4] mb-5 px-5 py-0 min-h-[85vh] bg-light-ev1 dark:bg-dark-ev1">
-      <div className="max-w-[600px] p-5">
+      <div className="max-w-[600px]">
         <h2 className="text-2xl mb-5">Newsletter Emails</h2>
         <div className="block lg:flex items-center justify-between px-0 py-2.5">
           <li className="flex items-center text-base px-0 py-2.5">
@@ -177,7 +177,7 @@ const NewsletterList = () => {
                   />
                   <div className="mr-[5px]">{index + 1}. </div>
                   <div
-                    className={`flex-1 ${
+                    className={`flex-1 overflow-hidden text-nowrap text-ellipsis ${
                       newsletter.isDeleted ? "text-[gray] line-through" : ""
                     }`}
                   >
