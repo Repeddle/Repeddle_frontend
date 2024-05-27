@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import ArticleList from "./pages/protected/articles";
 import CreateArticle from "./pages/protected/articles/CreateArticles";
 import Search from "./pages/defaults/Search";
@@ -61,6 +62,8 @@ import ReturnPage from "./pages/protected/ReturnPage";
 import User from "./pages/protected/User";
 import Transaction from "./pages/protected/Transaction";
 import AllMessage from "./pages/protected/admin/message";
+import { Article } from "./types/article";
+import HowRepeddleWork from "./pages/defaults/info/HowRepeddleWork";
 
 const router = createBrowserRouter([
   {
@@ -106,8 +109,9 @@ const router = createBrowserRouter([
           { path: "Contact-Us", element: <ContactUs /> },
           { path: "feestructure", element: <FeeStructure /> },
           { path: "buyerprotection", element: <BuyersProtection /> },
-          { path: "brands", element: <Brand /> },
-          { path: "messages", element: <Message /> },
+          { path: "brands", element: <Brand /> },  
+          { path: "messages", element: <Message /> }, 
+          { path: "how-repeddle-work", element: <HowRepeddleWork /> },    
         ],
       },
       {
@@ -133,7 +137,9 @@ const router = createBrowserRouter([
           { path: "newsletter", element: <NewsletterList /> },
           { path: "otherbrand", element: <OtherBrand /> },
           { path: "articlelist", element: <ArticleList /> },
-          { path: "createarticle", element: <CreateArticle onCancel={() => {}} /> },
+          { path: "createarticle", element: <CreateArticle onCancel={() => { } } onArticleCreated={function (article: Article): void {
+            throw new Error("Function not implemented.");
+          } } article={null} /> },
           { path: "messages", element: <AllMessage /> },
           { path: "order", element: <OrderList /> },
           { path: "address", element: <AddressBook /> },

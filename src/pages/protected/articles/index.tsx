@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import useArticle from "../../../hooks/useArticle";
@@ -7,7 +7,6 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { Article } from "../../../types/article";
 import CreateArticle from "./CreateArticles";
 import deleteArticleService from '../../../context/ArticleContext';
-
 
 const SkeletonLoader = () => (
   <div className="animate-pulse bg-gray-200 rounded-lg p-4">

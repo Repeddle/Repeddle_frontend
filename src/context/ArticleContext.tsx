@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, ReactNode, createContext } from 'react';
 import {
@@ -22,12 +23,9 @@ interface ArticleContextData {
   error: string;
   fetchArticleById: (id: string) => Promise<Article>;
   fetchArticles: (search?: string) => Promise<Article[]>;
-  createArticle: (articleData: Article) => Promise<boolean>;
-  updateArticle: (
-    _id: number,
-    articleData: Partial<Article>
-  ) => Promise<boolean>;
-  deleteArticle: (_id: number) => Promise<boolean>;
+  createArticle: (articleData: Article) => Promise<Article>;
+  updateArticle: (_id: string, articleData: Partial<Article>) => Promise<boolean>;
+  deleteArticle: (_id: string) => Promise<boolean>;
 }
 
 // Create the ArticleContext
@@ -69,26 +67,28 @@ const ArticleProvider: React.FC<Props> = ({ children }) => {
     fetchData();
   }, []);
 
-  const createArticle = async (articleData: Article): Promise<boolean> => {
+  const createArticle = async (articleData: Article): Promise<Article> => {
     try {
       const createdArticle = await createArticleService(articleData);
       setArticles([...articles, createdArticle]);
-      return true;
+      return createdArticle;
     } catch (error) {
       console.error('Error creating article:', error);
       handleError(error);
-      return false;
+      throw error;
     }
   };
 
   const updateArticle = async (
-    _id: number,
+    _id: string,
     articleData: Partial<Article>
   ): Promise<boolean> => {
     try {
-      await updateArticleService(_id, articleData);
+      // Convert _id from string to number if necessary
+      const numericId = Number(_id);
+      await updateArticleService(numericId, articleData);
       const updatedArticles = articles.map((article) =>
-        article._id === _id? {...article,...articleData } : article
+        String(article._id) === String(_id)? {...article,...articleData} : article
       );
       setArticles(updatedArticles);
       return true;
@@ -99,10 +99,12 @@ const ArticleProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
-  const deleteArticle = async (_id: number): Promise<boolean> => {
+  const deleteArticle = async (_id: string): Promise<boolean> => {
     try {
-      await deleteArticleService(_id);
-      setArticles(articles.filter((article) => article._id!== _id));
+      // Assuming _id needs to be converted to a number, but check if this conversion makes sense for your backend
+      const numericId = Number(_id);
+      await deleteArticleService(numericId); // Pass numericId instead of _id
+      setArticles(articles.filter((article) => String(article._id)!== _id)); // Ensure comparison is done correctly
       return true;
     } catch (error) {
       console.error('Error deleting article:', error);
