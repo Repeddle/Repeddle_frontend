@@ -325,7 +325,7 @@ const ProfileForm = ({ token }: Props) => {
             </h2>
 
             <p className="text-center mt-2">
-              Your Password has been updated successfully, login with the newly
+              Your account has been created successfully, login with the newly
               created password account
             </p>
             <div className="flex justify-center mt-4">
