@@ -1,34 +1,36 @@
-import { FormEvent, useCallback, useEffect, useState } from "react"
-import Button from "../../components/ui/Button"
-import InputWithLabel from "../../components/ui/InputWithLabel"
-import useAuth from "../../hooks/useAuth"
-import useToastNotification from "../../hooks/useToastNotification"
+import { FormEvent, useCallback, useEffect, useState } from "react";
+import Button from "../../components/ui/Button";
+import InputWithLabel from "../../components/ui/InputWithLabel";
+import useAuth from "../../hooks/useAuth";
+import useToastNotification from "../../hooks/useToastNotification";
+import Modal from "../../components/ui/Modal";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
-  token?: string | null
-}
+  token?: string | null;
+};
 
 const ProfileForm = ({ token }: Props) => {
-  const { registerUser, getUser, error, loading, getSuggestUsername } =
-    useAuth()
-  const { addNotification } = useToastNotification()
+  const { registerUser, error, loading, getSuggestUsername } = useAuth();
+  const { addNotification } = useToastNotification();
 
-  const [formNumber, setFormNumber] = useState<1 | 2 | 3>(1)
-  const [usernameSuggest, setUsernameSuggest] = useState<string[]>([])
+  const [formNumber, setFormNumber] = useState<1 | 2 | 3>(1);
+  const [usernameSuggest, setUsernameSuggest] = useState<string[]>([]);
   // when a user picks a suggested name no need to show suggest
-  const [allowSuggest, setAllowSuggest] = useState(true)
+  const [allowSuggest, setAllowSuggest] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   const [firstInput, setFirstInput] = useState({
     firstName: "",
     lastName: "",
     phone: "",
-  })
-  const [username, setUsername] = useState("")
+  });
+  const [username, setUsername] = useState("");
 
   const [thirdInput, setThirdInput] = useState({
     password: "",
     confirmPassword: "",
-  })
+  });
 
   const [formError, setFormError] = useState({
     firstName: "",
@@ -37,48 +39,48 @@ const ProfileForm = ({ token }: Props) => {
     username: "",
     password: "",
     confirmPassword: "",
-  })
+  });
 
   const firstValueChange = (key: keyof typeof firstInput, val: string) => {
-    setFirstInput({ ...firstInput, [key]: val })
-  }
+    setFirstInput({ ...firstInput, [key]: val });
+  };
 
   const thirdValueChange = (key: keyof typeof thirdInput, val: string) => {
-    setThirdInput({ ...thirdInput, [key]: val })
-  }
+    setThirdInput({ ...thirdInput, [key]: val });
+  };
 
   const validateFirstForm = (val: keyof typeof firstInput) => {
     if (val === "firstName" && firstInput["firstName"].length < 3) {
       setFormError({
         ...formError,
         [val]: `First name must be at least 3 characters`,
-      })
-      return false
+      });
+      return false;
     }
 
     if (val === "lastName" && firstInput["lastName"].length < 3) {
       setFormError({
         ...formError,
         [val]: `Last name must be at least 3 characters`,
-      })
-      return false
+      });
+      return false;
     }
 
-    setFormError({ ...formError, [val]: "" })
-    return true
-  }
+    setFormError({ ...formError, [val]: "" });
+    return true;
+  };
 
   const validateUsername = () => {
     if (username.length < 3) {
       setFormError({
         ...formError,
         username: `Username must be at least 3 characters`,
-      })
-      return false
+      });
+      return false;
     }
-    setFormError({ ...formError, username: `` })
-    return true
-  }
+    setFormError({ ...formError, username: `` });
+    return true;
+  };
 
   const validateSecondForm = (val: keyof typeof thirdInput) => {
     if (val === "password") {
@@ -86,30 +88,30 @@ const ProfileForm = ({ token }: Props) => {
         setFormError({
           ...formError,
           password: "Password must be at least 6 characters",
-        })
-        return false
+        });
+        return false;
       }
       if (val.search(/[a-z]/i) < 0) {
         setFormError({
           ...formError,
           password:
             "Password must contain at least 1 lowercase alphabetical character",
-        })
-        return false
+        });
+        return false;
       }
       if (val.search(/[A-Z]/) < 0) {
         setFormError({
           ...formError,
           password:
             "Password must contain at least 1 uppercase alphabetical character",
-        })
-        return false
+        });
+        return false;
       } else if (val.search(/[0-9]/) < 0) {
         setFormError({
           ...formError,
           password: "Password must contain at least 1 digit",
-        })
-        return false
+        });
+        return false;
       }
     }
     if (
@@ -119,78 +121,83 @@ const ProfileForm = ({ token }: Props) => {
       setFormError({
         ...formError,
         confirmPassword: "Confirm password must equal password",
-      })
-      return false
+      });
+      return false;
     }
 
-    setFormError({ ...formError, [val]: "" })
-    return true
-  }
+    setFormError({ ...formError, [val]: "" });
+    return true;
+  };
 
   const nextForm = () => {
     if (formNumber === 1) {
       // validate first form
       const valid = Object.keys(firstInput).every((input) =>
         validateFirstForm(input as keyof typeof firstInput)
-      )
-      if (valid) setFormNumber((formNumber + 1) as 2 | 1 | 3)
+      );
+      if (valid) setFormNumber((formNumber + 1) as 2 | 1 | 3);
 
-      return
+      return;
     }
 
     if (formNumber === 2) {
       // validate first form
-      const valid = validateUsername()
-      if (valid) setFormNumber((formNumber + 1) as 2 | 1 | 3)
+      const valid = validateUsername();
+      if (valid) setFormNumber((formNumber + 1) as 2 | 1 | 3);
 
-      return
+      return;
     }
-  }
+  };
 
   const previousForm = () => {
     if (formNumber !== 1) {
-      setFormNumber((formNumber - 1) as 2 | 1 | 3)
+      setFormNumber((formNumber - 1) as 2 | 1 | 3);
     }
-  }
+  };
 
   const submitHandler = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // validate password form
     const valid = Object.keys(thirdInput).every((input) =>
       validateSecondForm(input as keyof typeof thirdInput)
-    )
+    );
 
-    if (!valid) return
+    if (!valid) return;
 
-    if (!token) return addNotification("token not found")
+    if (!token) return addNotification("token not found");
 
     const res = await registerUser({
       ...firstInput,
       ...thirdInput,
       username,
       token,
-    })
+    });
     if (res) {
-      await getUser()
+      setShowModal(true);
     }
-    if (error) addNotification(error)
-  }
+    if (error) addNotification(error);
+  };
 
   const fetchSuggest = useCallback(async () => {
     const response = await getSuggestUsername({
       firstName: firstInput.firstName,
       lastName: firstInput.lastName,
       otherText: username,
-    })
-    setUsernameSuggest(response)
-  }, [firstInput.firstName, firstInput.lastName, getSuggestUsername, username])
+    });
+    setUsernameSuggest(response);
+  }, [firstInput.firstName, firstInput.lastName, getSuggestUsername, username]);
 
   useEffect(() => {
     if (formNumber === 2 && allowSuggest) {
-      fetchSuggest()
+      fetchSuggest();
     }
-  }, [allowSuggest, fetchSuggest, formNumber])
+  }, [allowSuggest, fetchSuggest, formNumber]);
+
+  const navigate = useNavigate();
+  const handleContinue = () => {
+    navigate("/auth/login");
+  };
 
   return (
     <div className="flex h-full w-full justify-center items-center flex-col">
@@ -239,15 +246,15 @@ const ProfileForm = ({ token }: Props) => {
               placeholder="username"
               value={username}
               onChange={(val: string) => {
-                setUsername(val)
-                !allowSuggest && setAllowSuggest(true)
+                setUsername(val);
+                !allowSuggest && setAllowSuggest(true);
               }}
               error={formError.username}
               // onBlur={validateUsername}
               suggest={allowSuggest ? usernameSuggest : undefined}
               onSuggestClick={(val: string) => {
-                setUsername(val)
-                setAllowSuggest(false)
+                setUsername(val);
+                setAllowSuggest(false);
               }}
             />
           )}
@@ -309,8 +316,31 @@ const ProfileForm = ({ token }: Props) => {
           </div>
         </form>
       </div>
-    </div>
-  )
-}
 
-export default ProfileForm
+      <Modal isOpen={showModal} onClose={() => null} dontShowClose size="lg">
+        <div className="bg-white h-full w-full pt-4 items-center px-8 py-6 rounded-lg flex flex-col gap-3">
+          <div className="flex flex-col gap-4">
+            <h2 className="text-3xl text-center">
+              Account created successfully
+            </h2>
+
+            <p className="text-center mt-2">
+              Your Password has been updated successfully, login with the newly
+              created password account
+            </p>
+            <div className="flex justify-center mt-4">
+              <button
+                className="bg-primary text-white px-4 py-2 rounded "
+                onClick={handleContinue}
+              >
+                Continue to Login
+              </button>
+            </div>
+          </div>
+        </div>
+      </Modal>
+    </div>
+  );
+};
+
+export default ProfileForm;
