@@ -40,7 +40,6 @@ const ShareModal = ({ product, url: shareUrl }: Props) => {
       platform: "Facebook",
       button: (
         <FacebookShareButton
-          // TODO: none existing
           //   quote="See what I found on Africa’s leading social marketplace for secondhand Pre-loved fashion & items"
           hashtag="#Repeddle"
           url={shareUrl}

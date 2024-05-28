@@ -1,6 +1,6 @@
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa"
 import ProductItem from "../../components/ProductItem"
-import { IProduct } from "../../types/product"
+import { RecentlyViewed } from "../../types/product"
 
 const RecentlyViewedProducts = () => {
   const sliderHandler = (direction: "right" | "left") => {
@@ -38,12 +38,17 @@ const RecentlyViewedProducts = () => {
       >
         <FaAngleRight size={40} opacity={0.2} />
       </button>
-      <div id="slider" className="product-container1 scroll_snap">
+      <div
+        id="slider"
+        className="flex gap-5 overflow-x-auto overflow-y-hidden scroll-smooth mx-[5vw] my-0 scrollbar-hide scroll_snap"
+      >
         {(
-          JSON.parse(localStorage.getItem("recentlyView") || "[]") as IProduct[]
-        ).map((product) => (
-          <div key={product._id} className="smooth1">
-            <ProductItem product={product} />
+          JSON.parse(
+            localStorage.getItem("recentlyView") || "[]"
+          ) as RecentlyViewed[]
+        ).map((item) => (
+          <div key={item.product._id} className="smooth1">
+            <ProductItem product={item.product} />
           </div>
         ))}
       </div>

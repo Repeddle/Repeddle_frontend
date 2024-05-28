@@ -7,9 +7,9 @@ const FooterNewsLetter = () => {
         className="w-full -mt-px bg-black"
         src="https://res.cloudinary.com/emirace/image/upload/v1656370086/wave_p4ujhx.png"
         alt=""
-      ></img>
+      />
 
-      <div className="h-[125px] relative w-full -mt-0.5 bg-orange-color">
+      <div className="lg:h-[125px] relative w-full -mt-0.5 bg-orange-color">
         <NewsLetter />
       </div>
     </div>

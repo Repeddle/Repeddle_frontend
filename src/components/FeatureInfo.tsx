@@ -6,6 +6,7 @@ import {
 } from "react-icons/fa"
 import { FaBagShopping } from "react-icons/fa6"
 import { Link } from "react-router-dom"
+import { currency, region } from "../utils/common"
 
 const featureTypes = {
   user: {
@@ -71,8 +72,7 @@ type Props = {
 }
 
 const FeatureInfo = ({ number, type }: Props) => {
-  // TODO:
-  const currency = "N"
+  const currencyVal = currency(region())
 
   return (
     <div className="w-full flex justify-between">
@@ -82,7 +82,7 @@ const FeatureInfo = ({ number, type }: Props) => {
             {featureTypes[type].title}
           </div>
           <div className="text-[28px] font-light">
-            {featureTypes[type].isMoney && currency}{" "}
+            {featureTypes[type].isMoney && currencyVal}{" "}
             {featureTypes[type].isMoney ? number.toFixed(2) : number}
           </div>
           {featureTypes[type].to && (

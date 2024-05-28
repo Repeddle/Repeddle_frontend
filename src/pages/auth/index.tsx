@@ -2,7 +2,7 @@ import { Navigate, Outlet, useSearchParams } from "react-router-dom"
 import useAuth from "../../hooks/useAuth"
 import { useMemo } from "react"
 import AuthNav from "../../components/layout/AuthNav"
-import LoadingModal from "../../components/ui/loadin/LoadingModal"
+import LoadingPage from "../../components/ui/LoadingPage"
 
 export default function Auth() {
   const { loading, user } = useAuth()
@@ -17,7 +17,7 @@ export default function Auth() {
     <div>
       <AuthNav />
       <Outlet />
-      {loading && <LoadingModal />}
+      {loading && <LoadingPage />}
     </div>
   )
 }

@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+// FIXME: user details not complete
 import { ChangeEvent, FormEvent } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import { Link } from "react-router-dom"
@@ -73,7 +76,7 @@ const UserRightComp = ({
               </div>
             )}
             <input
-              className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+              className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
               disabled={+daydiff > 0}
               placeholder={user.username}
               onChange={(e) => handleOnUserChange(e.target.value, "username")}
@@ -82,7 +85,7 @@ const UserRightComp = ({
           <div className="flex flex-col mt-2.5">
             <label className="text-sm">First Name</label>
             <input
-              className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+              className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
               placeholder={user.firstName}
               onChange={(e) => handleOnUserChange(e.target.value, "firstName")}
             />
@@ -91,7 +94,7 @@ const UserRightComp = ({
           <div className="flex flex-col mt-2.5">
             <label className="text-sm">Last Name</label>
             <input
-              className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+              className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
               placeholder={user.lastName}
               onChange={(e) => handleOnUserChange(e.target.value, "lastName")}
             />
@@ -99,7 +102,7 @@ const UserRightComp = ({
           <div className="flex flex-col mt-2.5">
             <label className="text-sm">Email</label>
             <input
-              className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+              className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
               name="email"
               type="email"
               disabled={id ? false : true}
@@ -110,7 +113,7 @@ const UserRightComp = ({
           <div className="flex flex-col mt-2.5">
             <label className="text-sm">DOB</label>
             <input
-              className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+              className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
               type="date"
               name="DOB"
               placeholder={user.dob && user.dob.toString().substring(0, 10)}
@@ -120,7 +123,7 @@ const UserRightComp = ({
           <div className="flex flex-col mt-2.5">
             <label className="text-sm">Phone</label>
             <input
-              className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+              className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
               type="text"
               name="phone"
               placeholder={user.phone}
@@ -166,7 +169,7 @@ const UserRightComp = ({
             />
           </div>
           <div>
-            {id && userInfo?.isAdmin ? (
+            {id && userInfo?.role === "Admin" ? (
               <>
                 <label className="text-sm">Active</label>
                 <div className="text-sm text-malon-color">
@@ -295,7 +298,7 @@ const UserRightComp = ({
                 <div className="flex flex-col mt-2.5">
                   <label className="text-sm">Password</label>
                   <input
-                    className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+                    className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                     name="password"
                     type="password"
                     value={userForm.password}
@@ -307,7 +310,7 @@ const UserRightComp = ({
                 <div className="flex flex-col mt-2.5">
                   <label className="text-sm">Confirm Password</label>
                   <input
-                    className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+                    className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                     name="confirmPassword"
                     type="password"
                     onChange={(e) =>
@@ -334,11 +337,11 @@ const UserRightComp = ({
                       <FaTruck />
                       <span className="font-semibold">Re:Bundle</span>
                       <div
-                        className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[-180px] hover:after:text-justify 
-      hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
-      lg:hover:after:top-5 hover:after:text-[11px] hover:after:left-[-90px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-white-color
-      hover:after:dark:bg-black hover:after:text-black dark:hover:after:text-white 
-      hover:after:content-["Re:bundle allows buyers to shop multiple items from your store and only pay for delivery once! The buyer will be charged delivery on their first purchase, and, if they make any additional purchases within the next 2 hours, free delivery will then automatically apply. Shops who enable bundling sell more and faster."]`}
+                        data-content="Re:bundle allows buyers to shop multiple items from your store and only pay for delivery once! The buyer will be charged delivery on their first purchase, and, if they make any additional purchases within the next 2 hours, free delivery will then automatically apply. Shops who enable bundling sell more and faster."
+                        className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[30px] hover:after:text-justify 
+                  hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
+                  lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
+                hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
                       >
                         <FaQuestionCircle className="text-neutral-300 ml-2.5" />
                       </div>

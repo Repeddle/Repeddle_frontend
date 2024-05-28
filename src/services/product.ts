@@ -114,6 +114,31 @@ export const fetchProductBySlugService = async (
   }
 }
 
+export const fetchProductByIdService = async (
+  id: string
+): Promise<IProduct> => {
+  try {
+    const data: {
+      status: boolean
+      product: IProduct
+    } = await api.get(`/products/product/${id}`)
+
+    if (!data.status) {
+      // Handle Fetch product error, e.g., display an error message to the user
+      throw new Error("Fetch product failed: " + getBackendErrorMessage(data))
+    }
+
+    return data.product
+  } catch (error) {
+    // Handle network errors or other exceptions
+    // You can log the error or perform other error-handling actions
+    console.error("Fetch product error:", getBackendErrorMessage(error))
+
+    // Re-throw the error to propagate it up the call stack if needed
+    throw getBackendErrorMessage(error)
+  }
+}
+
 export const updateProductService = async (
   id: string,
   product: ICreateProduct
@@ -144,7 +169,9 @@ export const deleteProductService = async (
   id: string
 ): Promise<{ status: boolean; message: string }> => {
   try {
-    const  data:{message:string;status:boolean}  = await api.delete(`/products/${id}`)
+    const data: { message: string; status: boolean } = await api.delete(
+      `/products/${id}`
+    )
 
     if (!data.status) {
       // Handle Delete product error, e.g., display an error message to the user

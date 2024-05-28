@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import ArticleList from "./pages/protected/articles";
-import CreateArticle from "./pages/protected/articles/CreateArticles";
 import Search from "./pages/defaults/Search";
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
@@ -62,6 +60,11 @@ import ReturnPage from "./pages/protected/ReturnPage";
 import User from "./pages/protected/User";
 import Transaction from "./pages/protected/Transaction";
 import AllMessage from "./pages/protected/admin/message";
+import MobileProfile from "./pages/defaults/MobileProfile";
+import MobileNotification from "./pages/protected/MobileNotification";
+import CategoryMobile from "./pages/defaults/CategoryMobile";
+import EditProduct from "./pages/protected/EditProduct";
+import SalesList from "./pages/protected/SalesList";
 import { Article } from "./types/article";
 import HowRepeddleWork from "./pages/defaults/info/HowRepeddleWork";
 
@@ -89,7 +92,7 @@ const router = createBrowserRouter([
           { path: "", element: <Home /> },
           { path: "search", element: <Search /> },
           { path: "sell", element: <Sell /> },
-          { path: "product/:id", element: <Product /> },
+          { path: "product/:slug", element: <Product /> },
           { path: "seller/:slug", element: <Seller /> },
           { path: "cart", element: <Cart /> },
           { path: "about", element: <About /> },
@@ -109,9 +112,10 @@ const router = createBrowserRouter([
           { path: "Contact-Us", element: <ContactUs /> },
           { path: "feestructure", element: <FeeStructure /> },
           { path: "buyerprotection", element: <BuyersProtection /> },
-          { path: "brands", element: <Brand /> },  
-          { path: "messages", element: <Message /> }, 
-          { path: "how-repeddle-work", element: <HowRepeddleWork /> },    
+          { path: "brands", element: <Brand /> },
+          { path: "messages", element: <Message /> },
+          { path: "categories", element: <CategoryMobile /> },
+          { path: "how-repeddle-work", element: <HowRepeddleWork /> },
         ],
       },
       {
@@ -123,6 +127,8 @@ const router = createBrowserRouter([
           { path: "messages", element: <Message /> },
           { path: "order/:id", element: <Order /> },
           { path: "/return/:id", element: <ReturnPage /> },
+          { path: "/notifications", element: <MobileNotification /> },
+          { path: "profilmenu", element: <MobileProfile /> },
         ],
       },
       {
@@ -136,12 +142,11 @@ const router = createBrowserRouter([
           { path: "contact", element: <Contact /> },
           { path: "newsletter", element: <NewsletterList /> },
           { path: "otherbrand", element: <OtherBrand /> },
-          { path: "articlelist", element: <ArticleList /> },
-          { path: "createarticle", element: <CreateArticle onCancel={() => { } } onArticleCreated={function (article: Article): void {
-            throw new Error("Function not implemented.");
-          } } article={null} /> },
+          // { path: "articlelist", element: <ArticleList /> },
+          // { path: "createarticle", element: <CreateArticle onCancel={() => {}} /> },
           { path: "messages", element: <AllMessage /> },
-          { path: "order", element: <OrderList /> },
+          { path: "orderlist", element: <OrderList /> },
+          { path: "salesList", element: <SalesList /> },
           { path: "address", element: <AddressBook /> },
           { path: "userlist", element: <UserList /> },
           { path: "productlist", element: <ProductList /> },
@@ -155,7 +160,7 @@ const router = createBrowserRouter([
           { path: "return/:id", element: <ReturnPage /> },
           { path: "user/:id", element: <User /> },
           { path: "transaction/:id", element: <Transaction /> },
-          // { path: "product/:id", element: <EditProduct /> },
+          { path: "product/:id", element: <EditProduct /> },
         ],
       },
     ],

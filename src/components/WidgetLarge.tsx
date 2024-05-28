@@ -1,14 +1,18 @@
 import moment from "moment"
 import { useState } from "react"
 import LoadingBox from "./LoadingBox"
+import { currency, region } from "../utils/common"
+import { ITransaction } from "../types/transactions"
 
 type Props = {
   refresh?: boolean
+  transactions: ITransaction[]
 }
 
-const WidgetLarge = ({}: Props) => {
+const WidgetLarge = ({ refresh, transactions }: Props) => {
   const loadingTrans = false
-  const transactions: any[] = []
+
+  console.log(refresh)
 
   const [clickItem, setClickItem] = useState("")
 
@@ -43,11 +47,9 @@ const WidgetLarge = ({}: Props) => {
               <td className="capitalize w-1/5 mx-0 my-2.5">
                 <div
                   className="relative w-[50px] whitespace-nowrap overflow-x-hidden text-ellipsis lg:overflow-x-visible"
-                  onClick={() =>
-                    setClickItem(t.metadata ? t.metadata.purpose : "")
-                  }
+                  onClick={() => setClickItem(t.description)}
                 >
-                  {t.metadata ? t.metadata.purpose : ""}
+                  {t.description}
                 </div>
               </td>
               <Date>
@@ -62,11 +64,9 @@ const WidgetLarge = ({}: Props) => {
                   {moment(t.createdAt).format("MMM DD YY, h:mm:ss a")}
                 </div>
               </Date>
-              <div className="font-light ml-[15px] lg:ml-0">{t.txnType}</div>
+              <div className="font-light ml-[15px] lg:ml-0">{t.type}</div>
               <div className="font-light ml-[15px] lg:ml-0">
-                {/* TODO: 
-              {currency} */}
-                N {t.amount}
+                {currency(region())} {t.amount}
               </div>
               <td>
                 <button

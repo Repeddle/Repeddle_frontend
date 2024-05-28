@@ -12,12 +12,17 @@ import { SearchOptionsKey } from "../../types/search"
 import useCategory from "../../hooks/useCategory"
 import useProducts from "../../hooks/useProducts"
 import { FaTimes } from "react-icons/fa"
+import useBrands from "../../hooks/useBrand"
+import { createSearchParam } from "../../utils/common"
+// import { colors } from "../../utils/constants"
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   const { categories } = useCategory()
   const { products, fetchProducts, loading, error } = useProducts()
+
+  const { brands, fetchBrands } = useBrands()
 
   const changeParam = (key: SearchOptionsKey, val: string | number) => {
     setSearchParams((prev) => {
@@ -41,6 +46,12 @@ const Search = () => {
     return all
   }, [searchParams])
 
+  const [queryBrand] = useState("")
+  const rating: { rating: number; id: string }[] = []
+
+  const maxPrice = 500000
+  const minPrice = 0
+
   useEffect(() => {
     const fetch = async () => {
       const params: string[][] = []
@@ -55,27 +66,19 @@ const Search = () => {
     fetch()
   }, [searchParams])
 
-  console.log(loading)
+  useEffect(() => {
+    const params = [["search", queryBrand]]
+
+    const string = createSearchParam(params)
+
+    fetchBrands(string)
+  }, [queryBrand])
 
   const rLoading = false
   const rProducts: IProduct[] = []
 
   const [showFilter, setShowFilter] = useState(false)
-  const [queryBrand] = useState("")
   const [order] = useState("")
-
-  const rating: { rating: number; id: string }[] = []
-  const sizes: { rating: number; id: string }[] = []
-  const colors: { rating: number; id: string }[] = []
-  const shipping: { name: string; _id: string }[] = []
-  const condition: { name: string; _id: string }[] = []
-  const availability: { name: string; _id: string }[] = []
-  const type: { name: string; _id: string }[] = []
-  const pattern: { name: string; _id: string }[] = []
-  const brands: { name: string; _id: string }[] = []
-  const deals: any[] = []
-  const maxPrice = 500000
-  const minPrice = 0
 
   return (
     <div>
@@ -84,27 +87,14 @@ const Search = () => {
       </Helmet>
       <div className="flex mt-2.5">
         <SearchFilter
-          // searchBrand={searchBrand}
           queryBrand={queryBrand}
           showFilter={showFilter}
           setShowFilter={setShowFilter}
           categories={categories}
-          // order={order}
-          // page={page}
           maxPrice={maxPrice}
           minPrice={minPrice}
-          // query={query}
           rating={rating}
           brands={brands}
-          colors={colors}
-          sizes={sizes}
-          deals={deals}
-          shipping={shipping}
-          condition={condition}
-          availability={availability}
-          type={type}
-          pattern={pattern}
-          // countProducts={countProducts}
         />
         <div className="flex-[4] dark:bg-dark-ev1 bg-light-ev1 mb-2.5 m-0 pt-20 lg:mb-5 lg:mx-2.5 lg:my-0 lg:pt-2.5 md:pt-24 p-2.5 rounded-[0.2rem]">
           {loading ? (
@@ -206,11 +196,7 @@ const Search = () => {
               {products.products.length === 0 && (
                 <>
                   <MessageBox>
-                    <div
-                      style={{
-                        marginBottom: "15px",
-                      }}
-                    >
+                    <div className="mb-[15px]">
                       🔎Cant't find what you're looking for? Try related
                       products!
                     </div>

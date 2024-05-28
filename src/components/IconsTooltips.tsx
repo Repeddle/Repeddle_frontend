@@ -5,7 +5,7 @@ type Props = {
 
 const IconsTooltips = ({ tips, classNames }: Props) => {
   return (
-    <div className={`relative opacity-0 ${classNames ? classNames : ""}`}>
+    <div className={`relative opacity-0 ${classNames}`}>
       <div
         className={`absolute transition-all duration-[1s] bottom-[-30px] z-[9] bg-white 
       text-black text-[13px] whitespace-nowrap p-[5px] rounded-[10px] before:content-[''] 

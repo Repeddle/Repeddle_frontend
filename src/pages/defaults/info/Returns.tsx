@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 //import React from 'react'
 
 const Returns = () => {
@@ -32,12 +31,12 @@ const Returns = () => {
           for seller’s preferred return information/address and log the product
           before 72hours (3 days) from the date and time order was delivered
           elapse.
-          </p>
-          <p className="mt-4">
-            The return should be sent to the seller’s provided delivery address
-            information using the same shipping method the buyer received the
-            order, unless otherwise agreed between seller and buyer.
-          </p>
+        </p>
+        <p className="mt-4">
+          The return should be sent to the seller’s provided delivery address
+          information using the same shipping method the buyer received the
+          order, unless otherwise agreed between seller and buyer.
+        </p>
       </section>
       <h2 className="font-medium text-xl text-center text-red-600 mb-8 lg:text-2xl">
         RETURN ELIGIBILITY:
@@ -48,7 +47,10 @@ const Returns = () => {
           associated with you order. Please be sure to report this on Repeddle
           App or Website within 72hours (3 days) of receipt.
           <ol className="mb-4 mt-4 pl-8 list-decimal list-inside">
-            <li>The product was misrepresented and your purchased order is remarkably different from the listing descriptions.</li>
+            <li>
+              The product was misrepresented and your purchased order is
+              remarkably different from the listing descriptions.
+            </li>
             <li>Product condition is significantly not as described.</li>
             <li>Missing or wrong product “not what I ordered”</li>
             <li>Product has significant undisclosed damage.</li>
@@ -72,80 +74,126 @@ const Returns = () => {
             <li>Delayed delivery.</li>
           </ol>
           <p className="pt-0">
-          If your purchase is not eligible for return, no worries, we got your back. 
-          With our easy to use selling tools, you can relist your purchased product 
-          within a minute and you are up to grabbing your money back into your pocket. No regrets, All money back!.
+            If your purchase is not eligible for return, no worries, we got your
+            back. With our easy to use selling tools, you can relist your
+            purchased product within a minute and you are up to grabbing your
+            money back into your pocket. No regrets, All money back!.
           </p>
         </div>
       </section>
       <h2 className="font-medium text-xl text-center text-red-600 mb-8 lg:text-2xl">
-       LOGGING A RETURN?
+        LOGGING A RETURN?
       </h2>
       <section className="mb-8">
         <div className="text-justify -mt-5">
-          <p> <b>How to Log a Return: -</b>
-          Ensure to upload pictures that clearly show your reason and include a detailed description of the reason for the return.
-          </p>  
+          <p>
+            {" "}
+            <b>How to Log a Return: -</b>
+            Ensure to upload pictures that clearly show your reason and include
+            a detailed description of the reason for the return.
+          </p>
           <ol className="mb-4 mt-4 pl-8 list-decimal list-inside">
             <li>Login to your account.</li>
             <li>Click on your profile picture.</li>
             <li>Select Purchased Orders.</li>
-            <li>From Purchase Product history, select View on the order you wish to return.</li>
+            <li>
+              From Purchase Product history, select View on the order you wish
+              to return.
+            </li>
             <li>From Items in Your Order, select Log a Return.</li>
             <li>Select the Product you wish to return.</li>
-            <li>Fill out the correct information accordingly and describe reason.</li>
+            <li>
+              Fill out the correct information accordingly and describe reason.
+            </li>
             <li>Upload Image and submit.</li>
           </ol>
           <p className="pt-0">
-           <b>Note: -</b> If you wish to Re-list the product to sell or wish to contact the seller directly to return, 
-           please select any of that option from Preferred Resolution Method and use the link accordingly. <br />
-           Should you want to log a return, please do not confirm you have received order until we advise you on how to proceed. 
-           Once you confirm, the fund will be paid to the seller. Unfortunately, we are unable to honor a return or reverse the payment 
-           to refund your account once fund is remitted to seller. <br /> All eligible returns must be log within 72hours (3days) of received delivery. 
-           You will send back the product to the provided delivery information within 72hours (3 days) you received the return information. 
-           Should you not log a return within 3days, the fund will automatically be paid to the seller’s account at the elapse of the 3rd day you received your delivery. <br />
-           Returns only become eligible when logged through the Log a Return channel, emailing support does not qualify your return as eligible.
+            <b>Note: -</b> If you wish to Re-list the product to sell or wish to
+            contact the seller directly to return, please select any of that
+            option from Preferred Resolution Method and use the link
+            accordingly. <br />
+            Should you want to log a return, please do not confirm you have
+            received order until we advise you on how to proceed. Once you
+            confirm, the fund will be paid to the seller. Unfortunately, we are
+            unable to honor a return or reverse the payment to refund your
+            account once fund is remitted to seller. <br /> All eligible returns
+            must be log within 72hours (3days) of received delivery. You will
+            send back the product to the provided delivery information within
+            72hours (3 days) you received the return information. Should you not
+            log a return within 3days, the fund will automatically be paid to
+            the seller’s account at the elapse of the 3rd day you received your
+            delivery. <br />
+            Returns only become eligible when logged through the Log a Return
+            channel, emailing support does not qualify your return as eligible.
           </p>
         </div>
       </section>
       <h2 className="font-medium text-xl text-center text-red-600 mb-8 lg:text-2xl">
-       REFUND POLICY
+        REFUND POLICY
       </h2>
       <section className="mb-8">
         <div className=" -mt-5 text-justify">
-          <p className="mb-5"> When you make a purchase on Repeddle, we hold the payment of your purchase until we know you have received your order as described. 
-            We allow you 72hours (3 days) after delivery to notify us if the product is significantly not as described or has been misrepresented 
-            by logging a return with description and clear image to support your claim on Repeddle App or Website. For Refund, remember to use the 
-            Log a Return channel should you wish to return the product. Once we receive your return request, we will process and verify the discrepancy, 
-            after verification, we approve your return and prompt the seller to furnish you with their shipping address information to receive the return 
-            and once seller confirms the receipt of their product, we will refund you in full.
-          </p>  
           <p className="mb-5">
-          With our Repeddle Buyer’s & Seller’s protection, your transaction and payments (both Buyers & Sellers) are fully covered only when they are all completed within Repeddle App and Website. 
-          We are not able to make any guarantee of getting your product or payment when transaction is taken outside Repeddle. All risk involved at that point is fully yours.
+            {" "}
+            When you make a purchase on Repeddle, we hold the payment of your
+            purchase until we know you have received your order as described. We
+            allow you 72hours (3 days) after delivery to notify us if the
+            product is significantly not as described or has been misrepresented
+            by logging a return with description and clear image to support your
+            claim on Repeddle App or Website. For Refund, remember to use the
+            Log a Return channel should you wish to return the product. Once we
+            receive your return request, we will process and verify the
+            discrepancy, after verification, we approve your return and prompt
+            the seller to furnish you with their shipping address information to
+            receive the return and once seller confirms the receipt of their
+            product, we will refund you in full.
           </p>
           <p className="mb-5">
-          <b>Note:</b> For your refund to be eligible and processed, the seller must receive their product within the delivery time frame according to the chosen sending method but not more than 10 days from 
-          when you receive the seller’s delivery information to send the return. Once return receipt is confirmed by the seller, the refund will be made available in your Repeddle wallet, the buyer 
-          chooses to either use the funds to shop on Repeddle or transfer it to their provided bank account. Be sure to keep all return proof for further inquiries should the need arise.
+            With our Repeddle Buyer’s & Seller’s protection, your transaction
+            and payments (both Buyers & Sellers) are fully covered only when
+            they are all completed within Repeddle App and Website. We are not
+            able to make any guarantee of getting your product or payment when
+            transaction is taken outside Repeddle. All risk involved at that
+            point is fully yours.
+          </p>
+          <p className="mb-5">
+            <b>Note:</b> For your refund to be eligible and processed, the
+            seller must receive their product within the delivery time frame
+            according to the chosen sending method but not more than 10 days
+            from when you receive the seller’s delivery information to send the
+            return. Once return receipt is confirmed by the seller, the refund
+            will be made available in your Repeddle wallet, the buyer chooses to
+            either use the funds to shop on Repeddle or transfer it to their
+            provided bank account. Be sure to keep all return proof for further
+            inquiries should the need arise.
           </p>
         </div>
       </section>
       <h2 className="font-medium text-xl text-center text-red-600 mb-8 lg:text-2xl">
-       WHO COVERS THE RETURN SHIPPING COST?
+        WHO COVERS THE RETURN SHIPPING COST?
       </h2>
       <section className="mb-8">
         <div className=" -mt-5 text-justify">
-          <p className="mb-5"> We advise that all returns must be a valid reason caused by a seller. As a result, the seller covers the cost of shipment. Should you wish to return for any other reasons not 
-          started under Return Eligibility, we are unfortunately not able to process such return. However, you can Re-list the product for sale on Repeddle App or Website. To avoid a problem with a sale or 
-          paying for return cost, we advise sellers to be as descriptive, transparent and well detailed as possible when adding a product. We encourage buyers to review the listing photos, description, 
-          size and item condition when shopping, and if you have any questions, please use the message system to ask the seller for additional details, measurements, or photos. Sellers are usually 
-          more than happy to provide additional information.
-          </p>  
+          <p className="mb-5">
+            {" "}
+            We advise that all returns must be a valid reason caused by a
+            seller. As a result, the seller covers the cost of shipment. Should
+            you wish to return for any other reasons not started under Return
+            Eligibility, we are unfortunately not able to process such return.
+            However, you can Re-list the product for sale on Repeddle App or
+            Website. To avoid a problem with a sale or paying for return cost,
+            we advise sellers to be as descriptive, transparent and well
+            detailed as possible when adding a product. We encourage buyers to
+            review the listing photos, description, size and item condition when
+            shopping, and if you have any questions, please use the message
+            system to ask the seller for additional details, measurements, or
+            photos. Sellers are usually more than happy to provide additional
+            information.
+          </p>
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default Returns;
+export default Returns

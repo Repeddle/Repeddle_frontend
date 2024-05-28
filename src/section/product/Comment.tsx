@@ -6,38 +6,38 @@ import {
   ReactNode,
   ReactPortal,
   useState,
-} from "react";
-import { FaHeart, FaTrash } from "react-icons/fa";
-import useAuth from "../../hooks/useAuth";
-import moment from "moment";
-import MessageImage from "../../components/ui/MessageImage";
+} from "react"
+import { FaHeart, FaTrash } from "react-icons/fa"
+import useAuth from "../../hooks/useAuth"
+import moment from "moment"
+import MessageImage from "../../components/ui/MessageImage"
 
 type Props = {
-  slug: string;
-  commentC: any;
-};
+  slug: string
+  commentC: any
+}
 
 const Comment = ({ commentC }: Props) => {
-  const [reply, setReply] = useState("");
-  const [replyArea, setReplyArea] = useState(false);
+  const [reply, setReply] = useState("")
+  const [replyArea, setReplyArea] = useState(false)
 
-  const comment = commentC;
+  const comment = commentC
 
-  const { user } = useAuth();
+  const { user } = useAuth()
 
   const likeComment = async (id: string) => {
-    console.log(id);
-  };
+    console.log(id)
+  }
 
   const likeReplyHandler = async (reply: any) => {
-    console.log(reply);
-  };
+    console.log(reply)
+  }
 
   const submitReplyHandler = (e: FormEvent) => {
-    e.preventDefault();
-  };
+    e.preventDefault()
+  }
 
-  const deleteComment = () => {};
+  const deleteComment = () => {}
 
   return (
     <>
@@ -54,7 +54,7 @@ const Comment = ({ commentC }: Props) => {
               <div className="text-xs">
                 {moment(comment.createdAt).fromNow()}
               </div>
-              {user && user.isAdmin && (
+              {user && user.role === "Admin" && (
                 <div
                   className="text-red-500 ml-2.5 cursor-pointer"
                   onClick={deleteComment}
@@ -92,7 +92,7 @@ const Comment = ({ commentC }: Props) => {
         <>
           {comment.replies.map(
             (r: {
-              userImage: string | undefined;
+              userImage: string | undefined
               name:
                 | string
                 | number
@@ -101,8 +101,8 @@ const Comment = ({ commentC }: Props) => {
                 | Iterable<ReactNode>
                 | ReactPortal
                 | null
-                | undefined;
-              createdAt: moment.MomentInput;
+                | undefined
+              createdAt: moment.MomentInput
               comment:
                 | string
                 | number
@@ -111,8 +111,8 @@ const Comment = ({ commentC }: Props) => {
                 | Iterable<ReactNode>
                 | ReactPortal
                 | null
-                | undefined;
-              likes: string | any[];
+                | undefined
+              likes: string | any[]
             }) => (
               <div className="ml-[25px] mr-0 my-[5px] p-2.5 dark:bg-dark-ev1 bg-light-ev1 flex lg:ml-[90px] lg:mr-0 lg:my-[5px] lg:p-5 rounded-[0.2rem]">
                 <img
@@ -157,7 +157,7 @@ const Comment = ({ commentC }: Props) => {
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default Comment;
+export default Comment

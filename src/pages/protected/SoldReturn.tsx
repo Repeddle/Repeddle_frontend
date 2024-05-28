@@ -21,7 +21,6 @@ const SoldReturns = () => {
         />
       </div>
 
-      {/* TODO: table reduce width  */}
       <UserReturnTable returns={returns} />
     </div>
   )

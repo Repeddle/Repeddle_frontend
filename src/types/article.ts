@@ -8,3 +8,9 @@ export interface Article {
   category: string;
   content: string;
 }
+
+export interface ArticleData {
+  topic: string;
+  category: string;
+  content: string;
+}

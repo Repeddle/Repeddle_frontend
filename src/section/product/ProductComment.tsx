@@ -7,6 +7,7 @@ import { Link, useParams } from "react-router-dom"
 import Comment from "./Comment"
 
 type Props = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   comments: any[]
   product: IProduct
 }

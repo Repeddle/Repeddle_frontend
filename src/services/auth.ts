@@ -153,6 +153,10 @@ export async function getUserService(): Promise<IUser> {
   }
 }
 
+export async function getAllUserService():Promise<IUser[]>{
+  return []
+}
+
 export async function getSuggestUsernameService(body: {
   firstName: string
   lastName: string
@@ -182,40 +186,44 @@ export async function getSuggestUsernameService(body: {
   }
 }
 
-export async function getAllUserService(): Promise<IUser[]> {
+export async function unFollowUserService(userId: string): Promise<string> {
   try {
-    const data: any = await api.get("/users/")
+    const data: { message: string; status: boolean } = await api.delete(
+      `/users/unfollow/${userId}`
+    )
 
     if (!data.status) {
-      // Handle login error, e.g., display an error message to the user
-      throw new Error("Get all failed: " + getBackendErrorMessage(data.data))
+      // Handle unfollow user error, e.g., display an error message to the user
+      throw new Error("unFollow user failed: " + getBackendErrorMessage(data))
     }
 
-    return data.users
+    return data.message
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions
-    console.error("Get user error:", getBackendErrorMessage(error))
+    console.error("unFollow user error:", getBackendErrorMessage(error))
 
     // Re-throw the error to propagate it up the call stack if needed
     throw getBackendErrorMessage(error)
   }
 }
 
-export async function getUserByIdService(id: string): Promise<IUser> {
+export async function followUserService(userId: string): Promise<string> {
   try {
-    const data: any = await api.get(`/users/user/${id}`)
+    const data: { message: string; status: boolean } = await api.post(
+      `/users/follow/${userId}`
+    )
 
     if (!data.status) {
-      // Handle login error, e.g., display an error message to the user
-      throw new Error("Get all failed: " + getBackendErrorMessage(data.data))
+      // Handle follow user error, e.g., display an error message to the user
+      throw new Error("Follow user failed: " + getBackendErrorMessage(data))
     }
 
-    return data.user
+    return data.message
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions
-    console.error("Get user error:", getBackendErrorMessage(error))
+    console.error("Follow user error:", getBackendErrorMessage(error))
 
     // Re-throw the error to propagate it up the call stack if needed
     throw getBackendErrorMessage(error)
@@ -227,30 +235,6 @@ export async function updateUserService(
 ): Promise<IUser> {
   try {
     const response: any = await api.put("/users/update-profile", userData)
-
-    console.log(response)
-    if (!response.status) {
-      // Handle login error, e.g., display an error message to the user
-      throw new Error("Update failed: " + getBackendErrorMessage(response.data))
-    }
-
-    return response.user
-  } catch (error) {
-    // Handle network errors or other exceptions
-    // You can log the error or perform other error-handling actions
-    console.error("Update user error:", getBackendErrorMessage(error))
-
-    // Re-throw the error to propagate it up the call stack if needed
-    throw getBackendErrorMessage(error)
-  }
-}
-
-export async function updateUserByIdService(
-  id: string,
-  userData: UpdateFields
-): Promise<IUser> {
-  try {
-    const response: any = await api.put(`/users/update-profile/${id}`, userData)
 
     console.log(response)
     if (!response.status) {

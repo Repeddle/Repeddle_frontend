@@ -18,7 +18,7 @@ const TopBar = () => {
               {/* .style:hover .text {
           @apply block;
           }  */}
-              <Link to="signup">SIGN UP</Link>
+              <Link to="/auth/signup">SIGN UP</Link>
             </div>
             , List All Item For Free{" "}
           </span>
@@ -51,7 +51,7 @@ const TopBar = () => {
       </div>
 
       <div className="flex-1 content-[''] hidden lg:flex justify-end">
-        <Link to={user?.isSeller ? "/newproduct" : "/sell"}>
+        <Link to={user?.role === "Seller" ? "/newproduct" : "/sell"}>
           <div className="bg-orange-color flex justify-center items-center text-white font-bold m-[5px] px-[30px] py-[5px] rounded-lg">
             Sell
           </div>

@@ -73,7 +73,7 @@ const MainFooter = () => {
             />
           </Link>
         </div>
-        <div className="text-xs bg-light-ev1 dark:bg-dark-ev1 lg:bg-transparent lg:dark:bg-transparent text-left mt-2.5 mb-5 mx-5 p-5 lg:text-sm lg:text-justify lg:ml-0 lg:mr-[30px] lg:my-2.5">
+        <div className="text-xs bg-light-ev1 dark:bg-dark-ev1 font-semibold lg:bg-transparent lg:dark:bg-transparent text-left mt-2.5 mb-5 mx-5 p-5 lg:text-sm lg:text-justify lg:ml-0 lg:mr-[30px] lg:my-2.5">
           Africa’s leading social marketplace for Pre-loved fashion/Items,
           Gen-Z, The Millennials, The Environment and Your Budget. By fostering
           a creative generation of conscious fashion consumers to better the

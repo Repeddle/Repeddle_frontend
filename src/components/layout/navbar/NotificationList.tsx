@@ -2,6 +2,7 @@ import moment from "moment"
 import { Link } from "react-router-dom"
 
 type Props = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   notifications: any[]
 }
 
@@ -38,13 +39,7 @@ const NotificationList = ({ notifications }: Props) => {
                 </p>
               </div>
               {!not.read && (
-                <div
-                  className="bg-orange-color w-3 h-3 flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-0 top-0"
-                  style={{
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                  }}
-                />
+                <div className="bg-orange-color -translate-y-1/2 w-3 h-3 flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-0 top-1/2" />
               )}
             </div>
           </Link>

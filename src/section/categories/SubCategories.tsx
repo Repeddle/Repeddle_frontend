@@ -38,6 +38,7 @@ const SubCategories = ({
       </div>
       {subCategories.map((subcategory, subcategoryIndex) => (
         <div
+          key={subcategoryIndex}
           className={`cursor-pointer mb-[5px] px-2.5 py-0 rounded-[0.2rem] ${
             selectedSubcategoryIndex === subcategoryIndex
               ? "border border-orange-color dark:bg-dark-ev3 bg-[#fcf0e0]"

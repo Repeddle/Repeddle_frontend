@@ -32,7 +32,7 @@ const Analytics = () => {
         <LoadingBox />
       ) : (
         <div className="flex gap-5 ml-0 mr-5 mt-0 mb-5 flex-wrap lg:flex-nowrap">
-          {user?.isAdmin && summary.orders ? (
+          {user?.role === "Admin" && summary.orders ? (
             <FeatureInfo type="user" number={summary.users[0].numUsers} />
           ) : (
             ""
@@ -40,7 +40,7 @@ const Analytics = () => {
           <FeatureInfo
             type="order"
             number={
-              summary.orders.length > 0 && user?.isAdmin
+              summary.orders.length > 0 && user?.role === "Admin"
                 ? summary.orders[0].numOrders
                 : users2.length
             }
@@ -48,7 +48,7 @@ const Analytics = () => {
           <FeatureInfo
             type="product"
             number={
-              summary.orders.length > 0 && user?.isAdmin
+              summary.orders.length > 0 && user?.role === "Admin"
                 ? summary.products[0].numProducts
                 : products
                 ? products?.length
@@ -58,7 +58,7 @@ const Analytics = () => {
           <FeatureInfo
             type="earning"
             number={
-              summary.earnings.length > 0 && user?.isAdmin
+              summary.earnings.length > 0 && user?.role === "Admin"
                 ? summary.earnings[0].numSales
                 : 0
             }

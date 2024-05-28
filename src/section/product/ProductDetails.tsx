@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { IProduct } from "../../types/product"
+import { currency } from "../../utils/common"
 
 type Props = { product: IProduct }
 
@@ -33,7 +34,7 @@ const ProductDetails = ({ product }: Props) => {
         <div
           className={`cursor-pointer relative uppercase mb-[5px] before:content-['_'] before:w-2.5 before:h-2.5
           before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
-          before:top-2/4  sp_condition_cont ${
+          before:top-2/4  sp_condition_cont before:border-black dark:before:border-white ${
             openOverview ? "before:rotate-[134deg]" : "before:-rotate-45"
           }`}
           onClick={() => setOpenOverview(!openOverview)}
@@ -50,8 +51,7 @@ const ProductDetails = ({ product }: Props) => {
               <tr>
                 <td>Price</td>
                 <td>
-                  {/* TODO:  */}
-                  {/* {product.currency} */}
+                  {currency(product.region)}
                   {product.sellingPrice}
                 </td>
               </tr>
@@ -79,7 +79,7 @@ const ProductDetails = ({ product }: Props) => {
         <div
           className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
           before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
-          before:top-2/4  sp_condition_cont ${
+          before:top-2/4 before:border-black dark:before:border-white  sp_condition_cont ${
             openItemDetail ? "before:rotate-[134deg]" : "before:-rotate-45"
           }`}
           onClick={() => setOpenItemDetail(!openItemDetail)}
@@ -99,7 +99,7 @@ const ProductDetails = ({ product }: Props) => {
           <div
             className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
             before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
-            before:top-2/4 sp_condition_cont ${
+            before:top-2/4 sp_condition_cont before:border-black dark:before:border-white ${
               openCondition ? "before:rotate-[134deg]" : "before:-rotate-45"
             }`}
             onClick={() => setOpenCondition(!openCondition)}
@@ -113,13 +113,10 @@ const ProductDetails = ({ product }: Props) => {
             openCondition ? "h-auto ml-5 mb-5" : "h-0"
           }`}
         >
-          <div
-            className="sp_condition"
-            style={{ fontWeight: "bold", padding: "10px" }}
-          >
+          <div className="uppercase text-white-color text-xs flex items-center p-2.5 font-bold rounded-[10px] bg-malon-color">
             {product.condition}
           </div>
-          <div style={{ textAlign: "justify" }}>
+          <div className="text-justify">
             {conditionDetails(product.condition)}
           </div>
         </div>
@@ -128,7 +125,7 @@ const ProductDetails = ({ product }: Props) => {
         <div
           className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
           before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
-          before:top-2/4  ${
+          before:top-2/4 before:border-black dark:before:border-white  ${
             openShipping ? "before:rotate-[134deg]" : "before:-rotate-45"
           }`}
           onClick={() => setOpenShipping(!openShipping)}
@@ -140,9 +137,7 @@ const ProductDetails = ({ product }: Props) => {
             openShipping ? "h-auto ml-5 mb-5" : "h-0"
           }`}
         >
-          {/* TODO: */}
-          {/* {product.shippingLocation} */}
-          Nigeria
+          {product.region === "NGN" ? "Nigeria" : "South Africa"}
         </div>
       </div>
       {product.keyFeatures && product.keyFeatures !== "Other" && (
@@ -150,7 +145,7 @@ const ProductDetails = ({ product }: Props) => {
           <div
             className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
             before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
-            before:top-2/4  ${
+            before:top-2/4 before:border-black dark:before:border-white ${
               openFeatures ? "before:rotate-[134deg]" : "before:-rotate-45"
             }`}
             onClick={() => setOpenFeatures(!openFeatures)}
@@ -175,7 +170,7 @@ const ProductDetails = ({ product }: Props) => {
           <div
             className={`cursor-pointer relative uppercase mb-2.5 before:content-['_'] before:w-2.5 before:h-2.5
             before:-translate-y-2/4 before:absolute before:border-b  before:border-l before:right-5
-            before:top-2/4  ${
+            before:top-2/4 before:border-black dark:before:border-white ${
               openSpecifications
                 ? "before:rotate-[134deg]"
                 : "before:-rotate-45"

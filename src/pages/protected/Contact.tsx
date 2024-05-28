@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react"
-import LoadingBox from "../../components/LoadingBox"
 import { FaDotCircle, FaEye } from "react-icons/fa"
 import Modal from "../../components/ui/Modal"
 import ContactMessageDetail from "../../components/ContactMessageDetail"
 import { IContactMessage } from "../../types/message"
 import useContact from "../../hooks/useContact"
 import useToastNotification from "../../hooks/useToastNotification"
+import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo"
 
 const Contact = () => {
   const { contacts, fetchContacts, error, loading, assignContact } =
@@ -24,8 +24,6 @@ const Contact = () => {
     }
   }, [error])
 
-  const messages = useMemo(() => contacts, [contacts])
-
   const [showModel, setShowModel] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedMessage, setSelectedMessage] =
@@ -33,14 +31,14 @@ const Contact = () => {
 
   const messagesPerPage = 20 // You can adjust this number according to your preference.
   const canGoPrev = currentPage > 1
-  const canGoNext = currentPage * messagesPerPage < messages.length
+  const canGoNext = currentPage * messagesPerPage < contacts.length
 
   const currentMessages = useMemo(() => {
     const indexOfLastMessage = currentPage * messagesPerPage
     const indexOfFirstMessage = indexOfLastMessage - messagesPerPage
 
-    return messages.slice(indexOfFirstMessage, indexOfLastMessage)
-  }, [currentPage, messages])
+    return contacts.slice(indexOfFirstMessage, indexOfLastMessage)
+  }, [currentPage, contacts])
 
   const handleViewDetails = (message: IContactMessage) => {
     setSelectedMessage(message)
@@ -62,13 +60,16 @@ const Contact = () => {
   }
 
   return (
-    <div className="flex-[4] mb-5 px-5 py-0">
+    <div className="flex-[4] mb-5 px-5 py-0 relative flex flex-col min-h-[85vh]">
       <h1 className="text-[calc(1.375rem_+_1.5vw)] leading-tight">
         Contact Us
       </h1>
-      {loading ? (
-        <LoadingBox />
-      ) : (
+      {loading && (
+        <div className="absolute bg-white/50 inset-0">
+          <LoadingControlModal />
+        </div>
+      )}
+      {!loading && (
         <>
           {currentMessages.map((message, index) => (
             <div
@@ -88,22 +89,28 @@ const Contact = () => {
               </div>
             </div>
           ))}
-          <div className="justify-center mt-2.5 flex">
-            <button
-              className="text-white-color rounded mx-[5px] my-0 px-4 py-2 border-none disabled:bg-[gray] bg-orange-color disabled:hover:bg-[gray] hover:bg-malon-color"
-              onClick={handlePrevPage}
-              disabled={!canGoPrev}
-            >
-              Prev
-            </button>
-            <button
-              className="text-white-color rounded mx-[5px] my-0 px-4 py-2 border-none disabled:bg-[gray] bg-orange-color disabled:hover:bg-[gray] hover:bg-malon-color"
-              onClick={handleNextPage}
-              disabled={!canGoNext}
-            >
-              Next
-            </button>
-          </div>
+
+          {contacts.length > 0 && (
+            <div className="justify-center mt-2.5 flex">
+              <button
+                className="text-white-color rounded mx-[5px] my-0 px-4 py-2 border-none disabled:bg-[gray] bg-orange-color disabled:hover:bg-[gray] hover:bg-malon-color"
+                onClick={handlePrevPage}
+                disabled={!canGoPrev}
+              >
+                Prev
+              </button>
+              <button
+                className="text-white-color rounded mx-[5px] my-0 px-4 py-2 border-none disabled:bg-[gray] bg-orange-color disabled:hover:bg-[gray] hover:bg-malon-color"
+                onClick={handleNextPage}
+                disabled={!canGoNext}
+              >
+                Next
+              </button>
+            </div>
+          )}
+
+          {contacts.length === 0 && <div className="mt-4">No contact yet</div>}
+
           {selectedMessage && (
             <Modal
               size="lg"

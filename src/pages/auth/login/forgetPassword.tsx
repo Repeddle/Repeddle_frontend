@@ -6,6 +6,7 @@ import useAuth from "../../../hooks/useAuth"
 import useToastNotification from "../../../hooks/useToastNotification"
 import { emailRegex } from "../../../utils/constants"
 import Modal from "../../../components/ui/Modal"
+import { FaEnvelopeCircleCheck } from "react-icons/fa6"
 
 const ForgetPassword = () => {
   const [showModal, setShowModal] = useState(false)
@@ -91,11 +92,20 @@ const ForgetPassword = () => {
           </div>
         </div>
       </div>
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="sm">
-        <div className="bg-white h-full pt-4 px-8 py-6 rounded-lg flex flex-col gap-2">
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="lg">
+        <div className="bg-white h-full items-center pt-4 px-8 py-6 rounded-lg flex flex-col gap-3">
+          <FaEnvelopeCircleCheck size={120} className="text-malon-color" />
           <h1 className="text-3xl">Reset Link Sent</h1>
-          <div className="max-w-md">
-            A password reset link has been sent to your email
+          <div className="max-w-3xl">
+            We have sent you an email to reset your password. If the email
+            address you entered is registered to a RePeddle account, you’ll
+            receive a password reset link. Follow the link provided to reset
+            your password.
+          </div>
+          <div className="max-w-3xl">
+            If you did not get an email, check your <b>promotion</b>,{" "}
+            <b>junk</b> or <b>spam</b> folders, and if nothing, try again with
+            an email address linked to your RePeddle account
           </div>
         </div>
       </Modal>

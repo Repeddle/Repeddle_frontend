@@ -3,7 +3,6 @@ import React from "react"
 import {
   AiOutlineHome,
   AiOutlineArrowRight,
-  AiOutlineShopping,
   AiOutlineWallet,
   AiOutlineQuestionCircle,
 } from "react-icons/ai"
@@ -41,24 +40,26 @@ const sidebarLinks = [
     icon: <FaBasketShopping />,
   },
   {
-    path: "/dashboard/order",
-    text: "My Orders",
-    icon: <AiOutlineShopping />,
+    path: "/dashboard/orderlist",
+    text: "Purchase Orders",
+    icon: <FaChartBar />,
   },
-  { path: "/dashboard/wallet", 
-    text: "Wallet", 
-    icon: <AiOutlineWallet /> 
+  {
+    path: "/dashboard/saleslist",
+    text: "Sold Orders",
+    icon: <FaChartBar />,
   },
-  { path: "/dashboard/articlelist", 
-    text: "Articles", 
-    icon: <AiOutlineQuestionCircle /> 
- },
+  { path: "/dashboard/wallet", text: "Wallet", icon: <AiOutlineWallet /> },
+  {
+    path: "/dashboard/articlelist",
+    text: "Articles",
+    icon: <AiOutlineQuestionCircle />,
+  },
   {
     path: "/dashboard/alltransaction",
     text: "All Transactions",
     icon: <FaMoneyBill />,
   },
-  { path: "/dashboard/wallet", text: "Wallet", icon: <AiOutlineWallet /> },
 
   {
     path: "/dashboard/analytics",
@@ -72,7 +73,7 @@ const sidebarLinks = [
   },
   {
     path: "/dashboard/contact",
-    text: "Contact",
+    text: "Contact Us",
     icon: <FaEnvelope />,
   },
   {
@@ -137,7 +138,7 @@ interface SideBarProps {
 const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
   const { user } = useAuth()
   const { isDarkMode } = useTheme()
-  const sidebarClasses = `fixed inset-y-0 left-0 z-[80] bg-orange-color scrollbar-hide bg-opacity-10 text-white w-64 h-screen transition-transform transform ${
+  const sidebarClasses = `fixed inset-y-0 left-0 z-[80] bg-orange-color bg-opacity-10 text-white w-64 h-screen transition-transform transform ${
     isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
   }`
 
@@ -162,7 +163,7 @@ const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
       </div>
 
       {/* Sidebar Navigation */}
-      <nav className="mt-4 overflow-y-auto h-[calc(100vh-150px)] no-scrollbar">
+      <nav className="mt-4 overflow-y-auto h-[calc(100vh-150px)]  scrollbar-hide">
         <ul className=" ">
           {sidebarLinks.map((link, index) => (
             <li
