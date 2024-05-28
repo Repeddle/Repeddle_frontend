@@ -23,7 +23,7 @@ interface ArticleContextData {
   error: string;
   fetchArticleById: (id: string) => Promise<Article>;
   fetchArticles: (search?: string) => Promise<Article[]>;
-  createArticle: (articleData: Article) => Promise<Article>;
+  createArticle: (articleData: Article) => Promise<boolean>;
   updateArticle: (
     _id: string,
     articleData: Partial<Article>
@@ -99,8 +99,8 @@ const ArticleProvider: React.FC<Props> = ({ children }) => {
   ): Promise<boolean> => {
     try {
       // Convert _id from string to number if necessary
-      const numericId = Number(_id);
-      await updateArticleService(numericId, articleData);
+      // const numericId = Number(_id);
+      await updateArticleService(_id, articleData);
       const updatedArticles = articles.map((article) =>
         article._id === _id ? { ...article, ...articleData } : article
       );

@@ -65,7 +65,7 @@ import MobileNotification from "./pages/protected/MobileNotification";
 import CategoryMobile from "./pages/defaults/CategoryMobile";
 import EditProduct from "./pages/protected/EditProduct";
 import SalesList from "./pages/protected/SalesList";
-import { Article } from "./types/article";
+// import { Article } from "./types/article";
 import HowRepeddleWork from "./pages/defaults/info/HowRepeddleWork";
 
 const router = createBrowserRouter([
