@@ -3,7 +3,6 @@
 // FIXME: user details not complete
 import { IUser } from "../../types/user"
 import {
-  FaBolt,
   FaDotCircle,
   FaEnvelope,
   FaMoneyBill,
@@ -13,7 +12,7 @@ import {
   FaUser,
 } from "react-icons/fa"
 import { currency, region } from "../../utils/common"
-import { FaCalendarDays, FaLocationDot } from "react-icons/fa6"
+import { FaBolt, FaCalendarDays, FaLocationDot } from "react-icons/fa6"
 import useAuth from "../../hooks/useAuth"
 import Modal from "../../components/ui/Modal"
 import { banks, states } from "../../utils/constants"
@@ -73,12 +72,12 @@ const UserLeftComp = ({
             </span>
             <span className="font-light">{user.role}</span>
             {user.active ? (
-              <div>
-                <FaBolt className="mr-2.5 text-orange-color" /> Active
+              <div className="flex items-center text-orange-color">
+                <FaBolt className="mr-2.5" /> Active
               </div>
             ) : (
-              <div>
-                <FaBolt className="mr-2.5 text-malon-color" /> Banned
+              <div className="flex text-malon-color">
+                <FaBolt className="mr-2.5" /> Banned
               </div>
             )}
           </div>

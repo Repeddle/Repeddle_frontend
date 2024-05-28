@@ -1,6 +1,5 @@
 import CategoriesLinksButtons from "../../components/CategoriesLinksButtons"
 import TheThrill from "../../section/home/TheThrill"
-import { IProduct } from "../../types/product"
 import { Helmet } from "react-helmet-async"
 import HomeCarousel from "../../section/home/HomeCarousel"
 import NewCollection from "../../section/home/NewCollection"
@@ -12,13 +11,17 @@ import Discount from "../../section/home/Discount"
 import MobileApp from "../../section/home/MobileApp"
 import Influencers from "../../section/home/Influencers"
 import RepeddleWorks from "../../section/home/RepeddleWorks"
-import { IUser } from "../../types/user"
+import useProducts from "../../hooks/useProducts"
+import { useEffect } from "react"
 
 function Home() {
-  const products: IProduct[] = []
-  const sellers: IUser[] = []
-  const loadingUser = false
-  const error = undefined
+  const { products, fetchProducts } = useProducts()
+
+  useEffect(() => {
+    fetchProducts("order=newest")
+  }, [])
+
+  console.log(products)
 
   return (
     <div>
@@ -41,7 +44,7 @@ function Home() {
 
         <Brands />
 
-        <NewDeals products={products} />
+        <NewDeals products={products.products} />
 
         <MobileApp />
 
@@ -49,7 +52,7 @@ function Home() {
 
         <Discount />
 
-        <TopSellers loadingUser={loadingUser} sellers={sellers} error={error} />
+        <TopSellers />
       </div>
     </div>
   )

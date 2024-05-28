@@ -1,15 +1,29 @@
 import LoadingBox from "../../components/LoadingBox"
 import MessageBox from "../../components/MessageBox"
 import { Link } from "react-router-dom"
-import { IUser } from "../../types/user"
+import { TopSellers as TopSellersType } from "../../types/user"
+import useUser from "../../hooks/useUser"
+import { useEffect, useState } from "react"
 
-type Props = {
-  sellers: IUser[]
-  loadingUser: boolean
-  error?: string
-}
+const TopSellers = () => {
+  const { getTopSellers } = useUser()
 
-const TopSellers = ({ sellers, loadingUser, error }: Props) => {
+  const [sellers, setSellers] = useState<TopSellersType[]>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+
+  useEffect(() => {
+    const getSeller = async () => {
+      setLoading(true)
+      const sellers = await getTopSellers()
+      if (typeof sellers !== "string") setSellers(sellers)
+      else setError(sellers)
+
+      setLoading(false)
+    }
+    getSeller()
+  }, [])
+
   return (
     <section id="top_seller_carousel">
       <div>
@@ -21,7 +35,7 @@ const TopSellers = ({ sellers, loadingUser, error }: Props) => {
         </h2>
       </div>
       <div>
-        {loadingUser ? (
+        {loading ? (
           <LoadingBox />
         ) : error ? (
           <MessageBox>{error}</MessageBox>
@@ -32,7 +46,7 @@ const TopSellers = ({ sellers, loadingUser, error }: Props) => {
               {sellers &&
                 sellers.length > 0 &&
                 sellers.map((seller, index) => (
-                  <Link to={`/seller/${seller._id}`} key={index}>
+                  <Link to={`/seller/${seller.username}`} key={index}>
                     <div className="items-center flex flex-col mr-[30px]">
                       <div className="relative">
                         <img
@@ -40,7 +54,9 @@ const TopSellers = ({ sellers, loadingUser, error }: Props) => {
                           alt={seller.username}
                           className="lg:h-[200px] object-cover object-top lg:w-[200px] rounded-[50%] h-[150px] w-[150px]"
                         />
-                        {seller.badge && (
+                        {/* TODO:  */}
+                        {/* {seller.badge && ( */}
+                        {seller.image && (
                           <div className="seller_profile_badge">
                             <img
                               className="w-5 object-cover"

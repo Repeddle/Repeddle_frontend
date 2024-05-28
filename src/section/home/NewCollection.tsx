@@ -21,7 +21,7 @@ const NewCollection = () => {
         <CategoryListing
           image="/images/categories/engin-akyurt-xbFtknoQG_Y-unsplash.webp"
           title="STYLE UP"
-          link="/recurated"
+          link="/search?type=recurated"
         />
         <CategoryListing
           image="/images/categories/ruan-richard-rodrigues--MCGquf_4mU-unsplash.webp"

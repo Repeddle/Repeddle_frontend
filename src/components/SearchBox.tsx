@@ -1,8 +1,22 @@
+import { FormEvent, useState } from "react"
 import { FaSearch } from "react-icons/fa"
+import { useNavigate } from "react-router-dom"
 
 const SearchBox = () => {
+  const [query, setQuery] = useState("")
+
+  const navigate = useNavigate()
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    navigate(`/search?search=${query}`)
+  }
+
   return (
-    <form className="w-full flex mr-auto rounded-[50px] border-2  border-[#dfdfdf]">
+    <form
+      onSubmit={handleSubmit}
+      className="w-full flex mr-auto rounded-[50px] border-2  border-[#dfdfdf]"
+    >
       <div className="items-center shadow-[0_0.125rem_0.25rem_rgba(0,0,0,0.075)] flex flex-wrap relative w-full rounded-[50rem] border-0">
         <div className="border-0 ml-4">
           <button
@@ -17,7 +31,8 @@ const SearchBox = () => {
           type="search"
           name="q"
           id="q"
-          // onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => setQuery(e.target.value)}
+          value={query}
           placeholder="Search anything..."
           aria-label="Search Products..."
           aria-describedby="button-search"

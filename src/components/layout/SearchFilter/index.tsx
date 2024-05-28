@@ -9,6 +9,16 @@ import SearchColor from "./SearchColor"
 import SearchSizes from "./SearchSizes"
 import { useSearchParams } from "react-router-dom"
 import { ICategory } from "../../../types/category"
+import {
+  availabilitylist,
+  conditionlist,
+  deals,
+  patternlist,
+  ratings,
+  shippinglist,
+  sizelist,
+  typelist,
+} from "../../../utils/constants"
 
 type Props = {
   setShowFilter: (val: boolean) => void
@@ -16,16 +26,7 @@ type Props = {
   queryBrand: string
   categories: ICategory[]
   rating: { rating: number; id: string }[]
-  sizes: { rating: number; id: string }[]
-  colors: { rating: number; id: string }[]
-  shipping: { name: string; _id: string }[]
-  condition: { name: string; _id: string }[]
-  availability: { name: string; _id: string }[]
-  type: { name: string; _id: string }[]
-  pattern: { name: string; _id: string }[]
   brands: { name: string; _id: string }[]
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  deals: any[]
   minPrice: number
   maxPrice: number
 }
@@ -34,17 +35,8 @@ const SearchFilter = ({
   setShowFilter,
   showFilter,
   queryBrand,
-  availability,
   brands,
   categories,
-  colors,
-  condition,
-  deals,
-  pattern,
-  rating,
-  shipping,
-  sizes,
-  type,
   maxPrice,
   minPrice,
 }: Props) => {
@@ -134,24 +126,22 @@ const SearchFilter = ({
         <SearchRatings
           title="Rating"
           all={{ rating: "all" }}
-          allText="& up"
           changeParam={(val: string) =>
             val === "all" ? removeParam("rating") : changeParam("rating", val)
           }
-          list={rating}
+          list={ratings}
           selectedRating={getParam("rating")}
         />
 
         <SearchColor
           changeParam={(val: string) => changeParam("color", val)}
-          colors={colors}
           selectedColor={getParam("color")}
         />
 
         <SearchSizes
           changeParam={(val: string) => changeParam("size", val)}
           selectedSize={getParam("size")}
-          sizes={sizes}
+          sizes={sizelist}
         />
 
         <SearchDropDown
@@ -163,7 +153,7 @@ const SearchFilter = ({
               ? removeParam("shipping")
               : changeParam("shipping", val)
           }
-          list={shipping}
+          list={shippinglist}
           selectedItem={getParam("shipping")}
         />
 
@@ -176,7 +166,7 @@ const SearchFilter = ({
               ? removeParam("condition")
               : changeParam("condition", val)
           }
-          list={condition}
+          list={conditionlist}
           selectedItem={getParam("condition")}
         />
 
@@ -189,7 +179,7 @@ const SearchFilter = ({
               ? removeParam("availability")
               : changeParam("availability", val)
           }
-          list={availability}
+          list={availabilitylist}
           selectedItem={getParam("availability")}
         />
 
@@ -200,7 +190,7 @@ const SearchFilter = ({
           changeParam={(val: string) =>
             val === "all" ? removeParam("type") : changeParam("type", val)
           }
-          list={type}
+          list={typelist}
           selectedItem={getParam("type")}
         />
 
@@ -211,7 +201,7 @@ const SearchFilter = ({
           changeParam={(val: string) =>
             val === "all" ? removeParam("pattern") : changeParam("pattern", val)
           }
-          list={pattern}
+          list={patternlist}
           selectedItem={getParam("pattern")}
         />
       </div>

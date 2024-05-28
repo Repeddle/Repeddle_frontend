@@ -12,6 +12,7 @@ type Props = {
   required?: boolean
   error?: string
   onBlur?: () => void
+  onFocus?: () => void
   suggest?: string[]
   onSuggestClick?: (val: string) => void
 }

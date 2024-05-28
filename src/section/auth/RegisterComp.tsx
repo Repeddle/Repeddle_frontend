@@ -10,6 +10,7 @@ import Modal from "../../components/ui/Modal"
 
 const RegisterComp = () => {
   const [email, setEmail] = useState("")
+  const [showEmail, setShowEmail] = useState("")
   const [formError, setFormError] = useState("")
   const [showModal, setShowModal] = useState(false)
 
@@ -39,6 +40,7 @@ const RegisterComp = () => {
 
       if (value) {
         setShowModal(true)
+        setShowEmail(email)
         setEmail("")
         setFormError("")
       } else {
@@ -112,7 +114,7 @@ const RegisterComp = () => {
           <div className="flex flex-col gap-4">
             <h1 className="text-3xl text-center">Verify Your Email Address</h1>
             <div className=" text-center">
-              You're almost there! We will send an email to <b>{email}</b>
+              You're almost there! We will send an email to <b>{showEmail}</b>
             </div>
 
             <div className="text-center">

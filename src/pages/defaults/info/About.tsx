@@ -1,5 +1,5 @@
 //import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 const About = () => {
   return (
@@ -20,7 +20,7 @@ const About = () => {
             className="w-full  mb-4 sm:w-full"
           />
 
-          <Link to="/signup">
+          <Link to="/auth/signup">
             <div
               className="bg-orange-400 absolute lg:text-4xl z-10 bottom-4 left-1/2 transform -translate-x-1/2 lg:py-4 lg:px-6
              rounded text-white font-bold px-1 py-2 sm:-mr-10 text-base lg:mb-8"
@@ -144,13 +144,12 @@ const About = () => {
             THINK THE PLANET, THINK THE ENVIRONMENT, THINK REPEDDLE; GO PEDDLE
           </a>
         </p>
-
       </section>
       <section className="mb-8">
         <div className="flex flex-col md:flex-row items-center justify-between">
           {/* Image icon on the left side */}
           <div className="md:w-1/3 mb-8 md:mb-0">
-          <img src="img.png" alt="img" />
+            <img src="img.png" alt="img" />
           </div>
           {/* Text on the right side */}
           <div className="md:w-2/3">
@@ -190,7 +189,7 @@ const About = () => {
         <div className="flex flex-col md:flex-row items-center justify-between">
           {/* Image icon on the left side */}
           <div className="md:w-1/3 mb-8 md:mb-0">
-          <img src="img.png" alt="img" />
+            <img src="img.png" alt="img" />
           </div>
           {/* Text on the right side */}
           <div className="md:w-2/3">
@@ -202,7 +201,7 @@ const About = () => {
                 MAKING IT BETTER FOR AFRICA
               </h4>
               <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
-               +THE PLANET
+                +THE PLANET
               </h4>
             </div>
             {/*<p className="font-medium text-lg text-left">
@@ -212,15 +211,15 @@ const About = () => {
               our sustainability take <a href="/sustainability">here</a>
             </p>*/}
             <ul className="box-border m-0 p-0 list-disc lg:leading-8 text-justify">
+              <li>Think before you buy.</li>
               <li>
-               Think before you buy.
+                Buy second-hand clothing from thrift stores, local markets, your
+                family and friends or online like Repeddle.
               </li>
               <li>
-              Buy second-hand clothing from thrift stores, local markets, your family and friends or online like Repeddle.
-              </li>
-              <li>
-              Discourage throw away culture, repair your damaged clothes instead of throwing them away. 
-              You can resale them on Repeddle App and Website.
+                Discourage throw away culture, repair your damaged clothes
+                instead of throwing them away. You can resale them on Repeddle
+                App and Website.
               </li>
             </ul>
           </div>
@@ -230,7 +229,7 @@ const About = () => {
         <div className="flex flex-col md:flex-row items-center justify-between">
           {/* Image icon on the left side */}
           <div className="md:w-1/3 mb-8 md:mb-0">
-           <img src="img.png" alt="img" />
+            <img src="img.png" alt="img" />
           </div>
           {/* Text on the right side */}
           <div className="md:w-2/3">
@@ -242,7 +241,7 @@ const About = () => {
                 MAKING SUSTAINABILITY MORE IMPACTFUL IN THREE EASY WAYS
               </h4>
               <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
-               THE REPEDDLE VIP SHIELD
+                THE REPEDDLE VIP SHIELD
               </h4>
             </div>
             {/*<p className="font-medium text-lg text-left">
@@ -253,24 +252,34 @@ const About = () => {
             </p>*/}
             <ul className="box-border m-0 p-0 list-disc text-justify lg:leading-8">
               <li>
-              First, we advance the conversation of secondhand fashion as part of the solution for sustainable fashion,
-              to address the footprint and impact of fashion in Africa, our environment and the planet.
+                First, we advance the conversation of secondhand fashion as part
+                of the solution for sustainable fashion, to address the
+                footprint and impact of fashion in Africa, our environment and
+                the planet.
               </li>
               <li>
-              Second we strive to take fashion waste off our environment by encouraging people to upcycle, recycle, 
-              rework, reuse and resell fashion by making fashion affordable and sustainable to avoid waste,
-              landfills and carbon emission.
+                Second we strive to take fashion waste off our environment by
+                encouraging people to upcycle, recycle, rework, reuse and resell
+                fashion by making fashion affordable and sustainable to avoid
+                waste, landfills and carbon emission.
               </li>
               <li>
-              Third, we offer the best and quality rare finds to Africa’s Pre-love fashion lovers and community on Repeddle, 
-              helping them to always think secondhand first. <a href="/sustainability" className="cursor-pointer font-extrabold hover:underline hover:text-orange-300">REPEDDLE VIP SHIELD</a> 
+                Third, we offer the best and quality rare finds to Africa’s
+                Pre-love fashion lovers and community on Repeddle, helping them
+                to always think secondhand first.{" "}
+                <a
+                  href="/sustainability"
+                  className="cursor-pointer font-extrabold hover:underline hover:text-orange-300"
+                >
+                  REPEDDLE VIP SHIELD
+                </a>
               </li>
             </ul>
           </div>
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default About;
+export default About

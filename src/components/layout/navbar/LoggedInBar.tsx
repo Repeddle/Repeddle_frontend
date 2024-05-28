@@ -25,9 +25,8 @@ const LoggedInBar = ({
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        !menu &&
         modelRef.current &&
-        !modelRef.current.contains(event.target as Node | null)
+        !modelRef.current.contains(event.target as Node)
       ) {
         setMenu(false)
       }
@@ -46,12 +45,14 @@ const LoggedInBar = ({
         <img
           src={user.image}
           className="w-10 h-10 cursor-pointer object-cover ml-5 rounded-[50%] hidden lg:block"
-          ref={modelRef}
           onClick={() => setMenu(!menu)}
         />
 
         {menu && (
-          <div className="z-[9] absolute left-[-130px] w-[200px] text-sm p-2.5 rounded-[5px] top-[50px] dark:shadow-[0_5px_16px_rgba(225,225,225,0.2)] shadow-[0_5px_16px_rgba(0,0,0,0.2)] bg-white dark:bg-black">
+          <div
+            ref={modelRef}
+            className="z-[9] absolute left-[-130px] w-[200px] text-sm p-2.5 rounded-[5px] top-[50px] dark:shadow-[0_5px_16px_rgba(225,225,225,0.2)] shadow-[0_5px_16px_rgba(0,0,0,0.2)] bg-white dark:bg-black"
+          >
             <h1 className="font-bold text-xl text-orange-color">
               Hi {user.username}
             </h1>

@@ -1,27 +1,24 @@
 import { useMemo, useState } from "react"
-import { productDetails } from "../../utils/data"
-import { IProduct } from "../../types/product"
 import useAuth from "../../hooks/useAuth"
 import { Link, useSearchParams } from "react-router-dom"
-import { IUser } from "../../types/user"
+import { UserByUsername } from "../../types/user"
 import SellerTabItems from "./SellerTabItems"
 
 const tabs = ["all", "selling", "sold", "liked"] as const
 type DisplayTabs = (typeof tabs)[number] | "saved"
 
 type Props = {
-  user?: IUser
+  usernameData?: UserByUsername
   loading: boolean
   error?: string | null
 }
 
-const SellerRight = ({ user, loading, error }: Props) => {
+const SellerRight = ({ usernameData, loading, error }: Props) => {
   const [displayTab, setDisplayTab] = useState<DisplayTabs>("all")
 
   const [searchParams] = useSearchParams()
   const page = useMemo(() => +(searchParams.get("page") ?? 1), [searchParams])
 
-  const products: IProduct[] = [productDetails]
   const pages = 0
 
   const getFilterUrl = (filter: { page: number }) => {
@@ -47,7 +44,7 @@ const SellerRight = ({ user, loading, error }: Props) => {
             {tab}
           </div>
         ))}
-        {userInfo && userInfo._id === user?._id && (
+        {userInfo && userInfo._id === usernameData?.user?._id && (
           <div
             className={`flex justify-center cursor-pointer relative capitalize min-w-[70px] m-2.5 hover:text-orange-color ${
               displayTab === "saved"
@@ -64,8 +61,7 @@ const SellerRight = ({ user, loading, error }: Props) => {
       <SellerTabItems
         displayTab={displayTab}
         loading={loading}
-        products={products}
-        user={user}
+        user={usernameData?.products}
         error={error}
       />
 
@@ -77,7 +73,7 @@ const SellerRight = ({ user, loading, error }: Props) => {
             </div>
           </Link>
         )}
-        {pages > 1 && products.length === 40 && (
+        {pages > 1 && usernameData?.products.all.length === 40 && (
           <Link to={getFilterUrl({ page: page + 1 })}>
             <div className="border w-[100px] text-center font-medium p-1 rounded-[0.2rem] hover:bg-light-ev3 dark:hover:bg-dark-ev2">
               Next

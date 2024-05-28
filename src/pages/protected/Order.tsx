@@ -1,32 +1,44 @@
-import { useRef, useState } from "react"
-import LoadingBox from "../../components/LoadingBox"
+import { useEffect, useRef, useState } from "react"
 import MessageBox from "../../components/MessageBox"
 import useAuth from "../../hooks/useAuth"
 import { Helmet } from "react-helmet-async"
 import { useParams } from "react-router-dom"
 import { useReactToPrint } from "react-to-print"
 import moment from "moment"
-import { orderData as order } from "../../utils/data"
 import IsSeller from "../../section/order/IsSeller"
 import IsUser from "../../section/order/IsUser"
 import PaymentDelivery from "../../section/order/PaymentDelivery"
 import Return from "../../section/order/Return"
 import DeliveryHistory from "../../components/DeliveryHistory"
-import { OrderItem } from "../../types/order"
+import { IOrder, OrderItem } from "../../types/order"
 import Modal from "../../components/ui/Modal"
+import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
+import useOrder from "../../hooks/useOrder"
 
 const Order = () => {
-  const loading = false
-  const error = null
+  const { id: orderId } = useParams()
+  const { fetchOrderById, error, loading } = useOrder()
+
   const isSeller = false
   const [showReturn, setShowReturn] = useState(false)
   const itemsPrice = 0
   const shippingPrice = 0
   const [showDeliveryHistory, setShowDeliveryHistory] = useState(false)
   const [currentDeliveryHistory, setCurrentDeliveryHistory] = useState(0)
+  const [order, setOrder] = useState<IOrder>()
+
+  useEffect(() => {
+    const fetchOrder = async () => {
+      if (!orderId) return
+      const data = await fetchOrderById(orderId)
+
+      if (data) setOrder(data)
+    }
+
+    fetchOrder()
+  }, [orderId])
 
   const componentRef = useRef(null)
-  const { id: orderId } = useParams()
 
   const { user } = useAuth()
 
@@ -53,9 +65,7 @@ const Order = () => {
     console.log(item)
   }
 
-  return loading ? (
-    <LoadingBox></LoadingBox>
-  ) : error ? (
+  return !loading && error ? (
     <MessageBox className="text-[red]">{error}</MessageBox>
   ) : (
     <div
@@ -65,99 +75,105 @@ const Order = () => {
       <Helmet>
         <title>Order {orderId}</title>
       </Helmet>
-      <img
-        className="w-[100px] print:block hidden"
-        src="/images/logo/logo.png"
-      />
-      <div className="w-full hidden text-malon-color mb-0 p-0 print:block">
-        Invoice
-      </div>
-      <div className="flex justify-between">
-        <h1 className="lg:mb-0 lg:px-[30px] lg:py-[15px] text-xl mt-[15px] p-2.5">
-          Order Details
-        </h1>
-        <div
-          className="font-medium text-white-color text-center w-[150px] cursor-pointer h-[30px] px-2 py-px rounded-[0.2rem] hover:bg-malon-color bg-orange-color print:hidden"
-          onClick={handlePrint}
-        >
-          Print as Invoice
-        </div>
-      </div>
-      <div className="w-full mb-[30px] px-[30px] py-0 rounded-[5px] lg:text-base text-[13px] lg:px-2.5 lg:py-0">
-        <div className="px-5 py-[15px] rounded-[0.2rem] print:text-black-color print:bg-white bg-light-ev2 dark:bg-dark-ev2">
-          <div className="font-bold">Order number {orderId}</div>
 
-          <div className="flex">
-            {order.orderItems.length} Item
-            {order.orderItems.length > 1 ? "s" : ""}
+      {loading && <LoadingLogoModal />}
+      {order && (
+        <>
+          <img
+            className="w-[100px] print:block hidden"
+            src="/images/logo/logo.png"
+          />
+          <div className="w-full hidden text-malon-color mb-0 p-0 print:block">
+            Invoice
           </div>
-          <Date>
-            Placed on{" "}
-            {moment(order.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
-          </Date>
-        </div>
-        <div className="flex justify-between items-center mr-5">
-          <div className="uppercase font-bold py-[15px] px-0">
-            Items in your order
+          <div className="flex justify-between">
+            <h1 className="lg:mb-0 lg:px-[30px] lg:py-[15px] text-xl mt-[15px] p-2.5">
+              Order Details
+            </h1>
+            <div
+              className="font-medium text-white-color text-center w-[150px] cursor-pointer h-[30px] px-2 py-px rounded-[0.2rem] hover:bg-malon-color bg-orange-color print:hidden"
+              onClick={handlePrint}
+            >
+              Print as Invoice
+            </div>
           </div>
+          <div className="w-full mb-[30px] px-[30px] py-0 rounded-[5px] lg:text-base text-[13px] lg:px-2.5 lg:py-0">
+            <div className="px-5 py-[15px] rounded-[0.2rem] print:text-black-color print:bg-white bg-light-ev2 dark:bg-dark-ev2">
+              <div className="font-bold">Order number {orderId}</div>
 
-          <Modal isOpen={showReturn} onClose={() => setShowReturn(false)}>
-            {orderId && (
-              <Return
-                // deliverOrderHandler={deliverOrderHandler}
-                orderItems={order.orderItems}
-                // deliveryMethod={order.deliveryMethod}
-                setShowReturn={setShowReturn}
-                orderId={orderId}
-              />
+              <div className="flex">
+                {order.items.length} Item
+                {order.items.length > 1 ? "s" : ""}
+              </div>
+              <Date>
+                Placed on{" "}
+                {moment(order.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
+              </Date>
+            </div>
+            <div className="flex justify-between items-center mr-5">
+              <div className="uppercase font-bold py-[15px] px-0">
+                Items in your order
+              </div>
+
+              <Modal isOpen={showReturn} onClose={() => setShowReturn(false)}>
+                {orderId && (
+                  <Return
+                    // deliverOrderHandler={deliverOrderHandler}
+                    orderItems={order.items}
+                    // deliveryMethod={order.deliveryMethod}
+                    setShowReturn={setShowReturn}
+                    orderId={orderId}
+                  />
+                )}
+              </Modal>
+            </div>
+            {order.items.map((orderItem) =>
+              isSeller ? (
+                orderItem.seller._id === user?._id && (
+                  <IsSeller
+                    itemsPrice={itemsPrice}
+                    userOrdered={order.buyer}
+                    orderItem={orderItem}
+                    shippingPrice={shippingPrice}
+                    deliverOrderHandler={deliverOrderHandler}
+                    handleCancelOrder={handleCancelOrder}
+                    paySeller={paySeller}
+                    refund={refund}
+                    setCurrentDeliveryHistory={setCurrentDeliveryHistory}
+                    setShowDeliveryHistory={setShowDeliveryHistory}
+                  />
+                )
+              ) : (
+                <IsUser
+                  orderItem={orderItem}
+                  userOrdered={order.buyer}
+                  deliverOrderHandler={deliverOrderHandler}
+                  handleCancelOrder={handleCancelOrder}
+                  paySeller={paySeller}
+                  refund={refund}
+                  setCurrentDeliveryHistory={setCurrentDeliveryHistory}
+                  setShowDeliveryHistory={setShowDeliveryHistory}
+                  setShowReturn={setShowReturn}
+                />
+              )
             )}
-          </Modal>
-        </div>
-        {order.orderItems.map((orderItem) =>
-          isSeller ? (
-            orderItem.seller._id === user?._id && (
-              <IsSeller
-                itemsPrice={itemsPrice}
-                userOrdered={order.user}
-                orderItem={orderItem}
-                shippingPrice={shippingPrice}
-                deliverOrderHandler={deliverOrderHandler}
-                handleCancelOrder={handleCancelOrder}
-                paySeller={paySeller}
-                refund={refund}
-                setCurrentDeliveryHistory={setCurrentDeliveryHistory}
-                setShowDeliveryHistory={setShowDeliveryHistory}
-              />
-            )
-          ) : (
-            <IsUser
-              orderItem={orderItem}
-              userOrdered={order.user}
-              deliverOrderHandler={deliverOrderHandler}
-              handleCancelOrder={handleCancelOrder}
-              paySeller={paySeller}
-              refund={refund}
-              setCurrentDeliveryHistory={setCurrentDeliveryHistory}
-              setShowDeliveryHistory={setShowDeliveryHistory}
-              setShowReturn={setShowReturn}
+            <Modal
+              isOpen={showDeliveryHistory}
+              onClose={() => setShowDeliveryHistory(false)}
+            >
+              <div className="flex items-center justify-center h-full">
+                <DeliveryHistory status={currentDeliveryHistory} />
+              </div>
+            </Modal>
+            <PaymentDelivery
+              isSeller={isSeller}
+              shippingPrice={shippingPrice}
+              itemsPrice={itemsPrice}
+              order={order}
             />
-          )
-        )}
-        <Modal
-          isOpen={showDeliveryHistory}
-          onClose={() => setShowDeliveryHistory(false)}
-        >
-          <div className="flex items-center justify-center h-full">
-            <DeliveryHistory status={currentDeliveryHistory} />
           </div>
-        </Modal>
-        <PaymentDelivery
-          isSeller={isSeller}
-          shippingPrice={shippingPrice}
-          itemsPrice={itemsPrice}
-          order={order}
-        />
-      </div>
+        </>
+      )}
     </div>
   )
 }
