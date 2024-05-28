@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// TODO: remove this
 import { useState } from "react"
 import DeliveryHistory from "../../components/DeliveryHistory"
-import { daydiff, deliveryNumber } from "../../utils/common"
+import { currency, daydiff, deliveryNumber } from "../../utils/common"
 import { Link, useParams } from "react-router-dom"
 import LoadingBox from "../../components/LoadingBox"
 import useAuth from "../../hooks/useAuth"
@@ -152,7 +154,7 @@ const ReturnPage = () => {
             )}
             <hr />
           </>
-        ) : user?.isAdmin ? (
+        ) : user?.role === "Admin" ? (
           <>
             <div className="mt-5">
               <textarea
@@ -191,8 +193,7 @@ const ReturnPage = () => {
                     <>
                       <div className="flex-[3]">{key}:</div>
                       <div className="flex-[5]">
-                        {/* TODO:  */}
-                        {/* {returned.productId.currency} */}N {value}
+                        {currency(returned.region)} {value}
                       </div>
                     </>
                   ) : (
@@ -222,7 +223,7 @@ const ReturnPage = () => {
           (orderitem) =>
             orderitem._id === returned.productId._id && (
               <>
-                {user?.isAdmin &&
+                {user?.role === "Admin" &&
                   daydiff(orderitem.deliveredAt, 3) <= 0 &&
                   deliveryNumber(orderitem.deliveryStatus) === 8 &&
                   !returned.returnDelivery &&
@@ -237,7 +238,7 @@ const ReturnPage = () => {
                     </button>
                   ))}
 
-                {user?.isAdmin &&
+                {user?.role === "Admin" &&
                   daydiff(orderitem.deliveredAt, 3) <= 0 &&
                   deliveryNumber(orderitem.deliveryStatus) === 10 &&
                   (refunding ? (
@@ -251,7 +252,7 @@ const ReturnPage = () => {
                     </button>
                   ))}
 
-                {user?.isAdmin &&
+                {user?.role === "Admin" &&
                   daydiff(orderitem.deliveredAt, 3) <= 0 &&
                   deliveryNumber(orderitem.deliveryStatus) === 8 &&
                   returned.returnDelivery && (
@@ -264,7 +265,7 @@ const ReturnPage = () => {
                       Pay Seller
                     </button>
                   )}
-                {user?.isAdmin &&
+                {user?.role === "Admin" &&
                   daydiff(orderitem.deliveredAt, 7) <= 0 &&
                   deliveryNumber(orderitem.deliveryStatus) === 9 &&
                   returned.returnDelivery && (

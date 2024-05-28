@@ -25,10 +25,7 @@ const ContactMessageDetail = ({ message, handleClick }: Props) => {
       </div>
       <div className="mb-2.5">
         <strong className="font-bold">Email:</strong>{" "}
-        <div
-          style={{ color: "var(--malon-color)" }}
-          onClick={() => handleClick(_id)}
-        >
+        <div className="text-malon-color" onClick={() => handleClick(_id)}>
           <a href={`mailto: ${email}`}>{email}</a>
         </div>
       </div>

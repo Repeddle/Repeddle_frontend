@@ -5,7 +5,7 @@ import LoadingBox from "../../components/LoadingBox"
 import { FaTimes } from "react-icons/fa"
 import { useMemo, useState } from "react"
 import WalletModel from "../../components/WalletModel"
-import { region } from "../../utils/common"
+import { currency, region } from "../../utils/common"
 import PayStack from "../../components/gateway/PayStack"
 import { PayStackCallback } from "../../types/gateway"
 import FlutterWave from "../../components/gateway/FlutterWave"
@@ -24,6 +24,7 @@ const OrderPreview = () => {
     setCoupon({ code: "" })
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const couponDiscount = (coupon: any, total: number) => {
     console.log(coupon, total)
     return 0
@@ -60,14 +61,7 @@ const OrderPreview = () => {
                     key={item._id}
                   >
                     <div className="flex flex-wrap gap-4 items-center">
-                      <div
-                        className="mb-2.5 flex items-center flex-[7]"
-                        style={{
-                          marginBottom: "10px",
-                          display: "flex",
-                          alignItems: "center",
-                        }}
-                      >
+                      <div className="mb-2.5 flex items-center flex-[7]">
                         <img
                           src={item.images[0]}
                           alt={item.name}
@@ -80,8 +74,7 @@ const OrderPreview = () => {
                             </Link>
                           </div>
                           <div>
-                            {/* TODO: */}
-                            {/* {item.currency} */}N {item.sellingPrice}
+                            {currency(item.region)} {item.sellingPrice}
                           </div>
                           <div>Size: {item.selectedSize}</div>
                         </div>
@@ -90,8 +83,7 @@ const OrderPreview = () => {
                         <span>x {item.quantity}</span>
                       </div>
                       <div className="flex-[3]">
-                        {/* TODO: */}
-                        {/* {item.currency} */}
+                        {currency(item.region)}
                         {item.sellingPrice * item.quantity}
                       </div>
                     </div>
@@ -103,9 +95,7 @@ const OrderPreview = () => {
                           <div className="flex-[3] lg:flex-1">{key}:</div>
                           {key === "cost" ? (
                             <div className="flex-[5]">
-                              N {value}
-                              {/* TODO: */}
-                              {/* {item.currency} */}
+                              {currency(item.region)} {value}
                             </div>
                           ) : (
                             <div className="flex-[5]">{value}</div>
@@ -165,15 +155,13 @@ const OrderPreview = () => {
                               <div className="flex-1">{c.quantity} </div>
                               <div className="flex-1">x </div>
                               <div className="flex-[2]">
-                                {/* TODO: */}
-                                {/* {currency} */}
+                                {currency(c.region)}
                                 {c.sellingPrice}
                               </div>
                             </div>
                             <div className="flex-[3]">
-                              {/* TODO: */}
-                              {/* {` =  ${currency}` + c.quantity * c.sellingPrice} */}
-                              {` =  N` + c.quantity * c.sellingPrice}
+                              {` =  ${currency(c.region)} ` +
+                                c.quantity * c.sellingPrice}
                             </div>
                           </div>
                         </>
@@ -185,8 +173,7 @@ const OrderPreview = () => {
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">Subtotal</div>
                     <div className="flex-1">
-                      {/* TODO: */}
-                      {/* {currency} */}N {subtotal.toFixed(2)}
+                      {currency(region())} {subtotal.toFixed(2)}
                     </div>
                   </div>
                 </div>
@@ -194,8 +181,8 @@ const OrderPreview = () => {
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">Shipping</div>
                     <div className="flex-1">
+                      {currency(region())}
                       {/* TODO: */}
-                      {/* {currency} */}
                       {/* {cart.shippingPrice.toFixed(2)} */} N 0.00
                     </div>
                   </div>
@@ -205,8 +192,8 @@ const OrderPreview = () => {
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">Tax</div>
                     <div className="flex-1">
+                      {currency(region())}
                       {/* TODO: */}
-                      {/* {currency} */}
                       {/* {cart.taxPrice.toFixed(2)} */} N 0.00
                     </div>
                   </div>
@@ -234,8 +221,7 @@ const OrderPreview = () => {
                     </div>
                     <div className="flex-1">
                       <b>
-                        {/* TODO: */}
-                        {/* {currency} */}N {(total - discount).toFixed(2)}
+                        {currency(region())} {(total - discount).toFixed(2)}
                       </b>
                     </div>
                   </div>
@@ -280,10 +266,7 @@ const OrderPreview = () => {
                   ) : (
                     <FlutterWave
                       amount={total}
-                      currency={"NGN"}
-                      // TODO
-                      // currency={currency === "N " ? "NGN" : "ZAR"}
-
+                      currency={region()}
                       onApprove={onApprove}
                     />
                   )}

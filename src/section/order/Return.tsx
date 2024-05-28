@@ -5,7 +5,7 @@ import { FaCamera, FaChevronCircleRight } from "react-icons/fa"
 import { Link } from "react-router-dom"
 import MessageBox from "../../components/MessageBox"
 import Button from "../../components/ui/Button"
-import { daydiff, deliveryNumber } from "../../utils/common"
+import { currency, daydiff, deliveryNumber } from "../../utils/common"
 
 type TabTypes = "items" | "option" | "form"
 
@@ -62,18 +62,17 @@ const Return = ({ orderItems }: Props) => {
                 <div className="flex flex-[8] mb-2.5">
                   <img
                     className="object-cover object-top w-[100px] h-[130px]"
-                    src={orderItem.images[0]}
-                    alt={orderItem.name}
+                    src={orderItem.product.images[0]}
+                    alt={orderItem.product.name}
                   />
                   <div className="flex flex-col justify-center p-5">
                     <div className="capitalize font-semibold mb-2.5">
-                      {orderItem.name}
+                      {orderItem.product.name}
                     </div>
                     <div className="mb-2.5">QTY: {orderItem.quantity}</div>
                     <div className="font-bold">
-                      {/* TODO:
-                      {orderItem.currency} */}
-                      N {orderItem.quantity * orderItem.sellingPrice}
+                      {currency(orderItem.product.region)}{" "}
+                      {orderItem.quantity * orderItem.price}
                     </div>
                   </div>
                 </div>
@@ -91,25 +90,23 @@ const Return = ({ orderItems }: Props) => {
             <div className="flex flex-[8] mb-2.5">
               <img
                 className="object-cover object-top w-[100px] h-[130px]"
-                src={current.images[0]}
-                alt={current.name}
+                src={current.product.images[0]}
+                alt={current.product.name}
               />
               <div className="flex flex-col justify-center p-5">
                 <div className="capitalize font-semibold mb-2.5">
-                  {current.name}
+                  {current.product.name}
                 </div>
                 <div className="mb-2.5">QTY: {current.quantity}</div>
                 <div className="font-bold">
-                  {/* TODO:
-                  {current.currency} { */}
-                  N {current.sellingPrice}
+                  {currency(current.product.region)} {current.price}
                 </div>
               </div>
             </div>
           )}
           <h4>Preferred Resolution Method</h4>
           <div className="w-full lg:w-2/5">
-            <Link to={`/newproduct?id=${current?.slug}`}>
+            <Link to={`/newproduct?id=${current?.product.slug}`}>
               <div className="cursor-pointer m-5 p-2.5 rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1">
                 Re-list and sell my product
               </div>
@@ -120,9 +117,11 @@ const Return = ({ orderItems }: Props) => {
             >
               Message seller
             </div>
-            {current?.deliveredAt &&
-              deliveryNumber(current.deliveryStatus) === 4 &&
-              daydiff(current.deliveredAt, 3) >= 0 && (
+            {current?.deliveryTracking.currentStatus.status &&
+              deliveryNumber(current.deliveryTracking.currentStatus.status) ===
+                4 &&
+              daydiff(current?.deliveryTracking.currentStatus.status, 3) >=
+                0 && (
                 <div
                   className="cursor-pointer m-5 p-2.5 rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1"
                   onClick={() => setTab("form")}
@@ -140,18 +139,16 @@ const Return = ({ orderItems }: Props) => {
             <div className="flex flex-[8] mb-2.5">
               <img
                 className="object-cover object-top w-[100px] h-[130px]"
-                src={current.images[0]}
-                alt={current.name}
+                src={current.product.images[0]}
+                alt={current.product.name}
               />
               <div className="flex flex-col justify-center p-5">
                 <div className="capitalize font-semibold mb-2.5">
-                  {current.name}
+                  {current.product.name}
                 </div>
                 <div className="mb-2.5">QTY: {current.quantity}</div>
                 <div className="font-bold">
-                  {/* TODO:
-                  {current.currency} { */}
-                  N {current.sellingPrice}
+                  {currency(current.product.region)} {current.price}
                 </div>
               </div>
             </div>
@@ -310,7 +307,7 @@ const Return = ({ orderItems }: Props) => {
               <input
                 type="file"
                 id="return"
-                style={{ display: "none" }}
+                className="hidden"
                 onChange={handleImageUpload}
               />
             </div>

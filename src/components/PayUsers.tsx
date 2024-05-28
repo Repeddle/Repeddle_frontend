@@ -29,9 +29,7 @@ const PayUsers = ({ refresh, setRefresh, setShowModel }: Props) => {
     <div className="flex flex-col items-center mt-[30px] p-5">
       <FaWallet size={64} className="text-orange-color" />
       <div className="font-bold mt-2.5">Make Transfer</div>
-      <div style={{ color: "grey", textTransform: "uppercase" }}>
-        From {user?.username}
-      </div>
+      <div className="text-[grey] uppercase">From {user?.username}</div>
       {error && <MessageBox className="text-[red]">{error}</MessageBox>}
       <input
         className="placeholder:p-2.5 text-black bg-white dark:text-white dark:bg-black h-[45px] w-full border border-malon-color mx-0 my-[25px] p-[15px] rounded-[5px]"

@@ -3,6 +3,7 @@ import { FaWallet } from "react-icons/fa"
 import MessageBox from "../MessageBox"
 import LoadingBox from "../LoadingBox"
 import { PayStackCallback } from "../../types/gateway"
+import { currency, region } from "../../utils/common"
 
 type Props = {
   amount: number
@@ -34,8 +35,7 @@ const PayFund = ({ amount }: Props) => {
         </div>
         {error && <MessageBox className="text-[red]">{error}</MessageBox>}
         <div className="font-bold my-5 mx-0 text-orange-color text-[40px]">
-          {/* TODO: */}
-          {/* {currency} */}N{amount}
+          {currency(region())} {amount}
         </div>
         {loading ? (
           <LoadingBox />

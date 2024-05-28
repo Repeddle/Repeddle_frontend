@@ -11,6 +11,7 @@ type TabType = "comments" | "reviews"
 
 const ProductTab = ({ product }: Props) => {
   const [tab, setTab] = useState<TabType>("comments")
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const comments: any[] = []
 
   return (

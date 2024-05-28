@@ -1,15 +1,15 @@
-import api from './api';
-import { Article } from '../types/article';
-import { getBackendErrorMessage } from '../utils/error';
+import api from "./api";
+import { Article, ArticleData } from "../types/article";
+import { getBackendErrorMessage } from "../utils/error";
 
 export const fetchArticles = async (search?: string): Promise<Article[]> => {
   try {
     const response: { status: boolean; articles: Article[] } = await api.get(
-      `/articles${search ? `?search=${search}` : ''}`
+      `/articles${search ? `?search=${search}` : ""}`
     );
     return response.articles;
   } catch (error) {
-    console.error('Error fetching articles:', error);
+    console.error("Error fetching articles:", error);
     throw getBackendErrorMessage(error);
   }
 };
@@ -21,7 +21,7 @@ export const fetchArticleById = async (id: string): Promise<Article> => {
     );
     return response.article;
   } catch (error) {
-    console.error('Error fetching articles:', error);
+    console.error("Error fetching articles:", error);
     throw getBackendErrorMessage(error);
   }
 };
@@ -33,12 +33,14 @@ export const fetchCategories = async (): Promise<string[]> => {
     );
     return response.categories;
   } catch (error) {
-    console.error('Error fetching categories:', error);
+    console.error("Error fetching categories:", error);
     throw getBackendErrorMessage(error);
   }
 };
 
-export const createArticle = async (articleData: Article): Promise<Article> => {
+export const createArticle = async (
+  articleData: ArticleData
+): Promise<Article> => {
   try {
     const response: { status: boolean; article: Article } = await api.post(
       `/articles`,
@@ -46,7 +48,7 @@ export const createArticle = async (articleData: Article): Promise<Article> => {
     );
     return response.article;
   } catch (error) {
-    console.error('Error creating article:', error);
+    console.error("Error creating article:", error);
     throw getBackendErrorMessage(error);
   }
 };
@@ -58,7 +60,7 @@ export const updateArticle = async (
   try {
     await api.put(`/articles/${id}`, articleData);
   } catch (error) {
-    console.error('Error updating article:', error);
+    console.error("Error updating article:", error);
     throw getBackendErrorMessage(error);
   }
 };
@@ -67,7 +69,7 @@ export const deleteArticle = async (id: number): Promise<void> => {
   try {
     await api.delete(`/articles/${id}`);
   } catch (error) {
-    console.error('Error deleting article:', error);
+    console.error("Error deleting article:", error);
     throw getBackendErrorMessage(error);
   }
 };

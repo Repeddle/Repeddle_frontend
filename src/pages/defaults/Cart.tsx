@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// TODO: remove the above
 import { useRef, useState } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import { Helmet } from "react-helmet-async"
@@ -11,6 +13,7 @@ import CartItems from "../../section/cart/CartItems"
 import { CartItem } from "../../context/CartContext"
 import AlertComponent from "../../section/cart/AlertComponent"
 import Modal from "../../components/ui/Modal"
+import { currency, region } from "../../utils/common"
 
 function Cart() {
   const loading = false
@@ -33,6 +36,8 @@ function Cart() {
     // TODO: some other verifications
     navigate("/payment")
   }
+
+  // FIXME: user wishlist not part of user Data
 
   return loading ? (
     <LoadingBox />
@@ -114,12 +119,12 @@ function Cart() {
                 ref={scrollref}
               >
                 <h1 className="text-[28px] leading-tight mb-2.5">Wishlist</h1>
-                {user.saved && user.saved.length === 0 ? (
+                {user.wishlist && user.wishlist.length === 0 ? (
                   <MessageBox>No save item</MessageBox>
                 ) : (
-                  user.saved &&
-                  user.saved.map((product, index) => {
-                    // TODO: check approach
+                  user.wishlist &&
+                  user.wishlist.map((product, index) => {
+                    //  @ts-ignore
                     const existItem = cart.find((x) => x._id === product._id)
                     return (
                       !existItem && (
@@ -130,18 +135,21 @@ function Cart() {
                           <div className="flex flex-wrap gap-4 items-center justify-between">
                             <div className="flex flex-[7] items-center col-7">
                               <img
+                                // @ts-ignore
                                 src={product.images[0]}
+                                // @ts-ignore
                                 alt={product.name}
                                 className="max-w-full bg-white border rounded h-[100px] p-1 border-[#dee2e6]"
                               />
                               <div className="flex flex-col capitalize ml-5">
+                                {/* @ts-ignore  */}
                                 <Link to={`/product/${product.slug}`}>
+                                  {/* @ts-ignore  */}
                                   {product.name}
                                 </Link>
                                 <div>
-                                  {/* TODO:  */}
-                                  {/* {product.currency} */}N{" "}
-                                  {product.costPrice}
+                                  {/* @ts-ignore  */}
+                                  {currency(product.region)} {product.costPrice}
                                 </div>
                               </div>
                             </div>
@@ -149,6 +157,7 @@ function Cart() {
                               <button
                                 onClick={() =>
                                   addToCart({
+                                    // @ts-ignore
                                     ...product,
                                     quantity: 1,
                                     deliverySelect: {},
@@ -181,14 +190,14 @@ function Cart() {
                               <div className="flex-1">{c.quantity} </div>
                               <div className="flex-1">x </div>
                               <div className="flex-[2]">
-                                {/* TODO: */}
-                                {/* {currency} */}N {c.sellingPrice}
+                                {currency(c.region)} {c.sellingPrice}
                               </div>
                             </div>
                             <div className="flex-[3]">
                               {/* TODO: */}
                               {/* {` =  ${currency}` + c.quantity * c.actualPrice} */}
-                              {` =  N` + c.quantity * c.sellingPrice}
+                              {` =  ${currency(c.region)} ` +
+                                c.quantity * c.sellingPrice}
                             </div>
                           </div>
                         </>
@@ -200,8 +209,7 @@ function Cart() {
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">SubTotal</div>
                     <div className="flex-1">
-                      {/* TODO: */}
-                      {/* {currency} */}N {subtotal}
+                      {currency(region())} {subtotal}
                     </div>
                   </div>
                 </div>
@@ -209,9 +217,9 @@ function Cart() {
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">Shipping</div>
                     <div className="flex-1">
+                      {currency(region())}
                       {/* TODO: */}
-                      {/* {currency} */}
-                      {/* {currentCart.shippingPrice.toFixed(2)} */} N 0.00
+                      {/* {currentCart.shippingPrice.toFixed(2)} */} 0.00
                     </div>
                   </div>
                 </div>
@@ -222,8 +230,7 @@ function Cart() {
                     </div>
                     <div className="flex-1">
                       <b>
-                        {/* TODO: */}
-                        {/* {currency} */}N {total}.00
+                        {currency(region())}N {total}.00
                       </b>
                     </div>
                   </div>

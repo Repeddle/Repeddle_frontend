@@ -1,4 +1,5 @@
-import { useRef } from "react"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useRef, useState } from "react"
 import { IUser } from "../../../types/user"
 import { Link } from "react-router-dom"
 import useAuth from "../../../hooks/useAuth"
@@ -9,7 +10,6 @@ type Props = {
   purchaseNotification: any[]
   soldNotification: any[]
   productNotification: any[]
-  menu: boolean
 }
 
 const LoggedInBar = ({
@@ -17,9 +17,25 @@ const LoggedInBar = ({
   productNotification,
   purchaseNotification,
   soldNotification,
-  menu,
 }: Props) => {
-  const modelRef = useRef(null)
+  const modelRef = useRef<HTMLImageElement>(null)
+
+  const [menu, setMenu] = useState(false)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modelRef.current &&
+        !modelRef.current.contains(event.target as Node)
+      ) {
+        setMenu(false)
+      }
+    }
+    document.addEventListener("click", handleClickOutside, true)
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true)
+    }
+  }, [])
 
   const { logout } = useAuth()
 
@@ -29,17 +45,19 @@ const LoggedInBar = ({
         <img
           src={user.image}
           className="w-10 h-10 cursor-pointer object-cover ml-5 rounded-[50%] hidden lg:block"
-          ref={modelRef}
-          // onClick={() => setMymenu(!menu)}
+          onClick={() => setMenu(!menu)}
         />
 
         {menu && (
-          <div className="z-[9] absolute left-[-130px] w-[200px] text-sm p-2.5 rounded-[5px] top-[50px] dark:shadow-[0_5px_16px_rgba(225,225,225,0.2)] shadow-[0_5px_16px_rgba(0,0,0,0.2)]">
+          <div
+            ref={modelRef}
+            className="z-[9] absolute left-[-130px] w-[200px] text-sm p-2.5 rounded-[5px] top-[50px] dark:shadow-[0_5px_16px_rgba(225,225,225,0.2)] shadow-[0_5px_16px_rgba(0,0,0,0.2)] bg-white dark:bg-black"
+          >
             <h1 className="font-bold text-xl text-orange-color">
               Hi {user.username}
             </h1>
             <ul>
-              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color dark:bg-dark-ev1 bg-light-ev1">
+              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
                 <Link to={`/seller/${user._id}`}>My Profile</Link>
 
                 {/* {messageNotification.length > 0 && (
@@ -48,7 +66,7 @@ const LoggedInBar = ({
       </span>
     )} */}
               </li>
-              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color dark:bg-dark-ev1 bg-light-ev1">
+              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
                 <Link to="/dashboard/orderlist">Purchased Orders</Link>
 
                 {purchaseNotification.length > 0 && (
@@ -58,7 +76,7 @@ const LoggedInBar = ({
                 )}
               </li>
 
-              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color dark:bg-dark-ev1 bg-light-ev1">
+              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
                 <Link to="/dashboard/saleslist">Sold Orders</Link>
 
                 {soldNotification.length > 0 && (
@@ -68,7 +86,7 @@ const LoggedInBar = ({
                 )}
               </li>
 
-              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color dark:bg-dark-ev1 bg-light-ev1">
+              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
                 <Link to="/earning">My Earnings</Link>
 
                 {productNotification.length > 0 && (
@@ -77,7 +95,7 @@ const LoggedInBar = ({
                   </span>
                 )}
               </li>
-              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color dark:bg-dark-ev1 bg-light-ev1">
+              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
                 <Link to="/dashboard/wallet">My Wallet</Link>
 
                 {productNotification.length > 0 && (
@@ -86,7 +104,7 @@ const LoggedInBar = ({
                   </span>
                 )}
               </li>
-              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color dark:bg-dark-ev1 bg-light-ev1">
+              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
                 <Link to="/dashboard/productlist">My Products</Link>
 
                 {productNotification.length > 0 && (
@@ -96,11 +114,11 @@ const LoggedInBar = ({
                 )}
               </li>
 
-              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color dark:bg-dark-ev1 bg-light-ev1">
+              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
                 <Link to="/cart?wishlist=true">
                   Wishlist{" "}
                   <span className="text-orange-color">
-                    ({user.saved?.length})
+                    ({user.wishlist?.length})
                   </span>
                 </Link>
                 {productNotification.length > 0 && (
@@ -109,11 +127,16 @@ const LoggedInBar = ({
                   </span>
                 )}
               </li>
-              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color dark:bg-dark-ev1 bg-light-ev1">
+              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
                 <Link to="/dashboard">Dashboard</Link>
               </li>
-              <li onClick={logout}>Log Out</li>
-              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color dark:bg-dark-ev1 bg-light-ev1">
+              <li
+                className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1"
+                onClick={logout}
+              >
+                Log Out
+              </li>
+              <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
                 <RedirectButton />
               </li>
             </ul>

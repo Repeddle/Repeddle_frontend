@@ -41,7 +41,7 @@ export interface IProduct {
   description: string
   sizes: ISize[]
   buyers: string[]
-  deliveryOption: DeliveryOption[]
+  deliveryOption: IDeliveryOption[]
   condition: string
   keyFeatures?: string
   specification?: string
@@ -76,6 +76,7 @@ export interface Seller {
     street: string
     state: string
     zipcode: number
+    region?: string
   }
   rebundle: {
     status: boolean
@@ -93,6 +94,7 @@ export interface Seller {
   badge: boolean
   createdAt: string
   updatedAt: string
+  rating: number
 }
 
 export interface Pagination {
@@ -101,7 +103,24 @@ export interface Pagination {
   totalPages: number
 }
 
-export interface DeliveryOption {}
+export interface IDeliveryOption {
+  name: string
+  value: number
+}
+
+export interface DeliveryMeta {
+  name?: string
+  address?: string
+  phone?: string
+  lat?: number | string
+  lng?: number | string
+  stationId?: string
+}
+
+export interface Stations {
+  stationId: string
+  StateName: string
+}
 
 export interface Review {
   user: IUser
@@ -157,4 +176,11 @@ export type IBrand = {
 export type ICreateBrand = {
   published: boolean
   name: string
+}
+
+export type RecentlyViewed = {
+  numViews: number
+  product: IProduct
+  productId: string
+  score: number
 }

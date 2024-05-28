@@ -4,19 +4,19 @@ import {
   registerUserService,
   deleteUserService,
   forgetPasswordService,
-  getAllUserService,
-  getUserByIdService,
   getUserService,
   loginUser,
   logoutUser,
   sendVerifyEmailService,
-  updateUserByIdService,
   updateUserService,
   verifyEmailService,
   resetUserPasswordService,
   getSuggestUsernameService,
+  unFollowUserService,
+  followUserService,
 } from "../services/auth"
 import { IUser, UpdateFields } from "../types/user"
+import socket from "../socket"
 
 interface Props {
   children?: ReactNode
@@ -41,10 +41,7 @@ export const AuthContext = createContext<{
   login: (credentials: { email: string; password: string }) => Promise<boolean>
   sendForgetPasswordEmail: (credentials: { email: string }) => Promise<boolean>
   getUser: () => Promise<IUser | null>
-  getAllUser: () => Promise<IUser[] | null>
-  getUserById: (id: string) => Promise<IUser | null>
   updateUser: (userData: UpdateFields) => Promise<IUser | null>
-  updateUserById: (id: string, userData: UpdateFields) => Promise<IUser | null>
   logout: () => void
   deleteUser: (id: string) => Promise<boolean | null>
   resetPassword: (password: string, token: string) => Promise<boolean>
@@ -53,6 +50,8 @@ export const AuthContext = createContext<{
     lastName: string
     otherText?: string
   }) => Promise<string[]>
+  unFollowUser: (userId: string) => Promise<string | null>
+  followUser: (userId: string) => Promise<string | null>
 } | null>(null)
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
@@ -182,39 +181,49 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       setLoading(false)
     }
   }
-
-  const getAllUser = async () => {
-    try {
-      setError("")
-      // makes the userlist page to keep refreshing
-      // setLoading(true)
-      const allUser = await getAllUserService()
-      if (allUser) {
-        return allUser
-      }
-      return null
-    } catch (error) {
-      handleError(error)
-      return null
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const getUserById = async (id: string) => {
+  const unFollowUser = async (userId: string) => {
     try {
       setError("")
       setLoading(true)
-      const user = await getUserByIdService(id)
+      const result = await unFollowUserService(userId)
+
       if (user) {
-        return user
+        const followers = user.followers.filter((fl) => fl !== userId)
+        const newUser = user
+        newUser.followers = followers
+
+        setUser(newUser)
       }
-      return null
-    } catch (error) {
-      handleError(error)
-      return null
-    } finally {
+
       setLoading(false)
+      return result
+    } catch (error) {
+      handleError(error as string)
+      setLoading(false)
+      return error as string
+    }
+  }
+
+  const followUser = async (userId: string) => {
+    try {
+      setError("")
+      setLoading(true)
+      const result = await followUserService(userId)
+
+      if (user) {
+        const followers = [...user.followers, userId]
+        const newUser = user
+        newUser.followers = followers
+
+        setUser(newUser)
+      }
+
+      setLoading(false)
+      return result
+    } catch (error) {
+      handleError(error as string)
+      setLoading(false)
+      return error as string
     }
   }
 
@@ -233,29 +242,12 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     }
   }
 
-  const updateUserById = async (id: string, userData: UpdateFields) => {
-    try {
-      setError("")
-      const updatedUser: IUser | null = await updateUserByIdService(
-        id,
-        userData
-      )
-      if (updatedUser) {
-        return updatedUser
-      }
-      return null
-    } catch (error) {
-      handleError(error)
-      return null
-    }
-  }
-
   const deleteUser = async (id: string) => {
     try {
       setError("")
       const result = await deleteUserService(id)
       if (result) {
-        getAllUser()
+        // getAllUser();
         return result
       }
       return null
@@ -285,6 +277,12 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   }
 
   useEffect(() => {
+    if (user) {
+      socket.emit("login", user._id)
+    }
+  }, [user])
+
+  useEffect(() => {
     const checkUser = async () => {
       const savedToken = authToken || localStorage.getItem("authToken")
       if (savedToken) {
@@ -300,6 +298,8 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       value={{
         user,
         error,
+        followUser,
+        unFollowUser,
         loading,
         authErrorModalOpen,
         setAuthErrorModalOpen,
@@ -309,10 +309,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         login,
         sendForgetPasswordEmail,
         getUser,
-        getAllUser,
-        getUserById,
         updateUser,
-        updateUserById,
         resetPassword,
         logout,
         deleteUser,

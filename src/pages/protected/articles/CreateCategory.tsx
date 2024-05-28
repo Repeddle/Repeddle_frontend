@@ -1,11 +1,5 @@
-
-
 const CreateCategory = () => {
-  return (
-    <div>
-        
-    </div>
-  )
-}
+  return <div></div>;
+};
 
-export default CreateCategory
+export default CreateCategory;

@@ -2,18 +2,22 @@ import { useEffect, useState } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import MessageBox from "../../components/MessageBox"
 import moment from "moment"
-import { getMonday } from "../../utils/common"
+import { currency, getMonday, region } from "../../utils/common"
 import WidgetSmallProduct from "../../section/overview/WidgetSmallProduct"
-import { productDetails } from "../../utils/data"
 import WidgetLarge from "../../components/WidgetLarge"
 import FeaturedInfoOverview from "../../section/overview/FeaturedInfoOverview"
 import useOrder from "../../hooks/useOrder"
 import { IOrderSummary } from "../../types/order"
+import Chart from "../../components/Chart"
+import useProducts from "../../hooks/useProducts"
+import useTransactions from "../../hooks/useTransaction"
 
 const today = moment().startOf("day")
 
 function Overview() {
   const { getOrdersSummary, error, loading } = useOrder()
+  const { fetchUserProducts, products } = useProducts()
+  const { fetchUserTransactions, transactions } = useTransactions()
 
   const now = new window.Date()
   const firstDay = new window.Date(now.getFullYear(), now.getMonth(), 1)
@@ -33,6 +37,16 @@ function Overview() {
 
     getSummary()
   }, [from, to])
+
+  useEffect(() => {
+    fetchUserProducts("order=newest")
+  }, [])
+
+  useEffect(() => {
+    fetchUserTransactions()
+  }, [])
+
+  console.log(orderSummary)
 
   return (
     <div className="flex-[4]">
@@ -115,45 +129,45 @@ function Overview() {
             </Date>
           </div>
           <div className="flex flex-1 gap-5 m-5 flex-col lg:flex-row">
-            {/* <div className="flex-1 flex flex-col gap-5">
+            <div className="flex-1 flex flex-col gap-5">
               <Chart
                 title="Earning"
                 total={`${currency(
                   region()
                 )} ${orderSummary?.soldOrders.numSales.toFixed(2)}`}
                 data={orderSummary?.dailySoldOrders ?? []}
-                dataKey="earning"
+                dataKey="date"
                 grid
               />
               <Chart
                 title="Sold Orders"
-                total={orderSummary?.soldOrders.numSales}
+                total={20}
                 data={orderSummary?.dailySoldOrders ?? []}
-                dataKey="order"
+                dataKey="date"
                 grid
               />
-            </div> */}
+            </div>
             <div className="flex-1 flex flex-col gap-5">
-              {/* <Chart
+              <Chart
                 title="Product"
-                total={totalProducts}
-                data={productData}
-                dataKey="products"
+                total={orderSummary?.purchaseOrders.numSales}
+                data={orderSummary?.dailyPurchasedOrders ?? []}
+                dataKey="date"
                 grid
               />
               <Chart
                 title="Purchase Order"
-                data={purchaseData}
-                dataKey="order"
-                total={totalPurchase}
+                data={orderSummary?.dailyPurchasedOrders ?? []}
+                dataKey="date"
+                total={orderSummary?.purchaseOrders.numOrders}
                 grid
-              /> */}
+              />
             </div>
           </div>
           <div className="m-5 flex gap-2.5 items-start flex-col lg:flex-row lg:items-stretch lg:gap-0">
-            <WidgetSmallProduct products={[productDetails]} />
+            <WidgetSmallProduct products={products.products} />
 
-            <WidgetLarge />
+            <WidgetLarge transactions={transactions} />
           </div>
         </>
       )}

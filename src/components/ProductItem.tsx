@@ -3,6 +3,7 @@ import { IProduct } from "../types/product"
 import { Link } from "react-router-dom"
 import { FaArrowsAlt, FaHeart, FaThumbsUp } from "react-icons/fa"
 import Modal from "./ui/Modal"
+import { currency } from "../utils/common"
 
 type Props = {
   product: IProduct
@@ -95,15 +96,13 @@ const ProductItem = ({ product }: Props) => {
           {product.brand}
         </p>
         <span className="text-base lg:text-xl font-black">
-          {/* TODO:  */}
-          {/* {product.currency} */}
+          {currency(product.region)}
           {product.sellingPrice}
         </span>
         {product.costPrice &&
           (product.costPrice > product.sellingPrice ? (
             <span className="text-base ml-5 line-through text-orange-color">
-              {/* TODO:  */}
-              {/* {product.currency} */}
+              {currency(product.region)}
               {product.costPrice}
             </span>
           ) : null)}

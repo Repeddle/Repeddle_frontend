@@ -1,4 +1,4 @@
-import { IProduct } from "./product"
+import { IProduct, Pagination } from "./product"
 
 export interface IAddress {
   apartment?: string
@@ -19,38 +19,37 @@ export interface IUser {
   lastName: string
   image?: string
   email: string
-  isAdmin: boolean
-  isSeller: boolean
+  role: string
   followers: string[]
   following: string[]
-  // likes: string[];
   likes: IProduct[]
-  // saved: string[]
-  saved: IProduct[]
+  wishlist: IProduct[]
   sold: string[]
-  about?: string
-  dob?: string | Date
-  activeLastUpdate: string | Date
-  usernameLastUpdate?: string | Date
   buyers: string[]
   rating: number
-  accountNumber?: number
   phone?: string
-  accountName?: string
-  newsletter: boolean
-  bankName?: string
-  earnings: number
-  address?: IAddress
+  allowNewsletter: boolean
   numReviews: number
-  badge: boolean
   active: boolean
-  influencer: boolean
   isVerifiedEmail: boolean
   region: "NGN" | "ZAR"
-  rebundle: IRebundle
+  socketId?: string
+  activeLastUpdate: string
+  usernameLastUpdate?: string
   createdAt: string
-  updatedAt?: string | Date
-  role: string
+  updatedAt?: string
+  about?: string
+  dob?: string
+  accountNumber?: number
+  accountName?: string
+  bankName?: string
+  tokenVersion?: string
+  address?: IAddress
+  badge?: boolean
+  delected?: boolean
+  influencer?: boolean
+  rebundle?: IRebundle
+  earnings?: number
 }
 
 export interface UpdateFields {
@@ -78,4 +77,40 @@ export type UserBalance = {
   currency: string
   balance: number
   userId: string
+}
+
+export type IUsersWithPagination = Pagination & { users: IUser[] }
+
+export type TopSellers = {
+  username: string
+  firstName: string
+  lastName: string
+  image: string
+  sold: number
+}
+
+export type UserByUsername = {
+  user: {
+    _id: string
+    username: string
+    followers: string[]
+    following: string[]
+    likes: string[]
+    sold: Array<string>
+    numReviews: number
+    region: string
+    createdAt: string
+    image?: string
+    badge?: boolean
+    about?: string
+    rating?: number
+    buyers?: string[]
+    rebundle?: IRebundle
+  }
+  products: {
+    all: IProduct[]
+    sold: IProduct[]
+    liked: IProduct[]
+    selling: IProduct[]
+  }
 }

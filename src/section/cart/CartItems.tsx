@@ -2,6 +2,8 @@ import { Link } from "react-router-dom"
 import { CartItem } from "../../context/CartContext"
 import { FaMinus, FaPlus, FaTrash } from "react-icons/fa"
 import useCart from "../../hooks/useCart"
+import { currency } from "../../utils/common"
+import useToastNotification from "../../hooks/useToastNotification"
 
 type Props = {
   item: CartItem
@@ -17,6 +19,8 @@ const CartItems = ({
   setShowModel,
 }: Props) => {
   const { addToCart } = useCart()
+
+  const { addNotification } = useToastNotification()
 
   return (
     <div className="lg:mt-0 lg:mb-5 lg:mx-2.5 p-5 rounded-[0.2rem] mx-0 my-2.5 bg-light-ev1 dark:bg-dark-ev1">
@@ -45,9 +49,7 @@ const CartItems = ({
             <Link to={`/product/${item.slug}`}>{item.name}</Link>
 
             <div>
-              {" "}
-              {/* TODO:  */}
-              {/* {item.currency} */}N {item.sellingPrice}
+              {currency(item.region)} {item.sellingPrice}
             </div>
             <span>Size: {item?.selectedSize}</span>
           </div>
@@ -102,9 +104,7 @@ const CartItems = ({
             <Link to={`/product/${item.slug}`}>{item.name}</Link>
 
             <div>
-              {" "}
-              {/* TODO:  */}
-              {/* {item.currency} */}N {item.sellingPrice}
+              {currency(item.region)} {item.sellingPrice}
             </div>
             <span>Size: {item.selectedSize}</span>
           </div>
@@ -154,7 +154,8 @@ const CartItems = ({
           className="text-orange-color text-[15px] cursor-pointer ml-5 border-0 hover:text-malon-color"
           onClick={() => {
             if (item.sold) {
-              //  TODO:  show alert out of stock
+              addNotification("out of stock")
+              return
             }
             setCurrentItem(item)
             setShowModel(true)

@@ -7,6 +7,7 @@ import UserLeftComp from "../../section/user/UserLeftComp"
 import UserRightComp from "../../section/user/UserRightComp"
 import useNewsletter from "../../hooks/useNewsletter"
 import { compressImageUpload } from "../../utils/common"
+import useUser from "../../hooks/useUser"
 
 export type InputType = {
   zipcode: string
@@ -36,7 +37,8 @@ export type UserFormType = {
 
 const User = () => {
   const { id } = useParams()
-  const { getUserById, error, updateUser } = useAuth()
+  const { error, updateUser } = useAuth()
+  const { getUserById, error: getUserError } = useUser()
   const { addNotification } = useToastNotification()
   const {
     createNewsletter,
@@ -50,12 +52,15 @@ const User = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      if (!id) return
+      if (!id) {
+        return addNotification("user id not found")
+      }
 
       const user = await getUserById(id)
+      console.log(user)
 
       if (user) setUser(user)
-      else if (error) addNotification(error)
+      else if (getUserError) addNotification(getUserError)
     }
 
     fetchUser()
@@ -66,7 +71,7 @@ const User = () => {
   const [loadingRebundle, setLoadingRebundle] = useState(false)
   const [rebundleError, setRebundleError] = useState("")
   const [newsletterStatus, setNewsletterStatus] = useState(
-    user?.newsletter ?? false
+    user?.allowNewsletter ?? false
   )
 
   const [input, setInput] = useState<InputType>({
@@ -164,7 +169,9 @@ const User = () => {
     }
   }
 
-  const updateAccount = async () => {}
+  const updateAccount = async () => {
+    // TODO:
+  }
 
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
@@ -220,7 +227,7 @@ const User = () => {
     bodyFormData.append("file", file)
     setLoadingUpload(true)
     try {
-      const compressImage = await compressImageUpload(file, 1024)
+      const compressImage = await compressImageUpload(file, 1024, user?.image)
 
       handleOnUserChange(compressImage, "image")
 

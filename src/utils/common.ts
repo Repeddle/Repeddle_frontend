@@ -10,6 +10,18 @@ export const region = () => {
   return add
 }
 
+export const createSearchParam = (params: [string, string][] | string[][]) => {
+  let string = ""
+
+  params = params.filter((param) => param[1] !== "")
+
+  if (params.length) {
+    string = new URLSearchParams(params).toString()
+  }
+
+  return string
+}
+
 export const currency = (region: IProduct["region"]) => {
   if (region === "NGN") return "₦"
   return "R"
@@ -59,7 +71,7 @@ export function getMonday(d: Date) {
 export const compressImageUpload = async (
   file: File,
   maxSize: number,
-  image = ""
+  image?: string
 ) => {
   // Create an HTMLImageElement to get the original dimensions of the image
 
@@ -110,7 +122,7 @@ export const compressImageUpload = async (
 
   // Upload the resized image using axios
   const formData = new FormData()
-  formData.append("file", file)
+  formData.append("image", file)
   image && formData.append("deleteImage", image)
 
   try {

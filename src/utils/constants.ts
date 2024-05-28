@@ -1,6 +1,170 @@
 export const emailRegex =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
+export const colors = [
+  "red",
+  "anthracite",
+  "beige",
+  "black",
+  "blue",
+  "brown",
+  "burgubdy",
+  "camel",
+  "ecru",
+  "gold",
+  "green",
+  "grey",
+  "khaki",
+  "metallic",
+  "multiculour",
+  "navy",
+  "orange",
+  "pink",
+  "purple",
+  "silver",
+  "turquoise",
+  "white",
+  "yellow",
+  "other",
+]
+export const color1 = [
+  { name: "red", id: 1 },
+  { name: "%23383e42", id: 2 },
+  { name: "beige", id: 3 },
+  { name: "black", id: 4 },
+  { name: "blue", id: 5 },
+  { name: "brown", id: 6 },
+  { name: "#800020", id: 7 },
+  { name: "#c19a6b", id: 8 },
+  { name: "#C2B280", id: 9 },
+  { name: "gold", id: 10 },
+  { name: "green", id: 11 },
+  { name: "grey", id: 12 },
+  { name: "khaki", id: 13 },
+  { name: "#aaa9ad", id: 14 },
+  { name: "multiculour", id: 15 },
+  { name: "navy", id: 16 },
+  { name: "orange", id: 17 },
+  { name: "pink", id: 18 },
+  { name: "purple", id: 19 },
+  { name: "silver", id: 20 },
+  { name: "turquoise", id: 21 },
+  { name: "white", id: 22 },
+  { name: "yellow", id: 23 },
+]
+
+export const ratings = [
+  {
+    name: "4stars & up",
+    rating: 4,
+  },
+  {
+    name: "3stars & up",
+    rating: 3,
+  },
+  {
+    name: "2stars & up",
+    rating: 2,
+  },
+  {
+    name: "1star & up",
+    rating: 1,
+  },
+]
+
+export const sizelist = [
+  { id: 1, name: "XS" },
+  { id: 0, name: "S" },
+  { id: 2, name: "M" },
+  { id: 3, name: "L" },
+  { id: 4, name: "XL" },
+  { id: 5, name: "XXL" },
+]
+
+export const shippinglist = [
+  { _id: 2, name: "Free" },
+  { _id: 3, name: "Discount + Free" },
+]
+export const conditionlist = [
+  { _id: 2, name: "New with Tags" },
+  { _id: 3, name: "New with No Tags" },
+]
+
+export const availabilitylist = [
+  { _id: 2, name: "In Someone's cart" },
+  { _id: 3, name: "In Someone's wish-list" },
+  { _id: 4, name: "Recently Added" },
+  { _id: 5, name: "Dropping Soon" },
+  { _id: 6, name: "Sold Items" },
+  { _id: 7, name: "Trending" },
+]
+
+export const patternlist = [
+  { _id: 1, name: "Acrylic" },
+  { _id: 2, name: "Cashmere" },
+  { _id: 3, name: "Cloth" },
+  { _id: 4, name: "Cotton" },
+  { _id: 5, name: "Exotic leathers" },
+  { _id: 6, name: "Faux fur" },
+  { _id: 7, name: "Fur" },
+  { _id: 8, name: "Leather" },
+  { _id: 9, name: "Linen" },
+  { _id: 10, name: "Polyester" },
+  { _id: 11, name: "Polyurethane" },
+  { _id: 12, name: "Pony-style calfskin" },
+  { _id: 13, name: "Suede" },
+  { _id: 14, name: "Silk" },
+  { _id: 15, name: "Rayon" },
+  { _id: 16, name: "Synthetic" },
+  { _id: 17, name: "Spandex" },
+  { _id: 18, name: "Tweed" },
+  { _id: 19, name: "Vegan leather" },
+  { _id: 20, name: "Velvet" },
+  { _id: 21, name: "Wool" },
+]
+
+export const typelist = [
+  { _id: 2, name: "Re:Curated" },
+  { _id: 3, name: "Bulk n Slot" },
+]
+
+export const deals = [
+  {
+    name: "On Sale Now",
+    id: 1,
+    value: "on-sale",
+  },
+  {
+    name: "Up to 50% Off",
+    id: 2,
+    value: "50",
+  },
+]
+
+export const pudoOptions = [
+  { name: "Offer free shipping to buyer + R 0.00", value: 0 },
+  {
+    name: "Extra-Small | 600x170x80 mm (MAX 2kg) + R 60.00",
+    value: 60,
+  },
+  // {
+  //   name: "Small | 600x410x80 mm (MAX 5kg) + R 70.00",
+  //   value: 70,
+  // },
+  {
+    name: " Medium | 600x410x190 mm (MAX 10kg) + R 100.00",
+    value: 100,
+  },
+  {
+    name: " Large | 600x410x410 mm (MAX 15kg) + R 150.00",
+    value: 150,
+  },
+  {
+    name: " Extra-Large | 600x410x690 mm (MAX 20kg) + R 200.00",
+    value: 200,
+  },
+]
+
 export const states = {
   Nigeria: [
     "Abuja(fct)",

@@ -2,13 +2,13 @@ import {
   ConversationMessage,
   IConversation,
   SearchResult,
-} from "../types/conversation";
-import { BestSeller, Summary, ViewedProducts } from "../types/dashboard";
-import { IContactMessage, IEmailList, INewsletter } from "../types/message";
-import { IReturn, Order } from "../types/order";
-import { IBrand, IProduct, Seller } from "../types/product";
-import { IPayment, ITransaction } from "../types/transactions";
-import { IUser, UserBalance } from "../types/user";
+} from "../types/conversation"
+import { BestSeller, Summary, ViewedProducts } from "../types/dashboard"
+import { IContactMessage, IEmailList, INewsletter } from "../types/message"
+import { IReturn, Order } from "../types/order"
+import { IBrand, IProduct, Seller } from "../types/product"
+import { IPayment, ITransaction } from "../types/transactions"
+import { IUser, UserBalance } from "../types/user"
 
 export const seller: Seller = {
   address: {
@@ -30,10 +30,11 @@ export const seller: Seller = {
   followers: ["63cfcd166f44b86e44e3b7e2"],
   sold: ["654b7a7a8698d309f6f768bc", "654b76048698d309f6f767fd"],
   numReviews: 0,
+  rating: 0,
   badge: false,
   createdAt: "2023-02-19T13:25:59.641Z",
   updatedAt: "2023-09-15T21:13:45.394Z",
-};
+}
 
 export const productDetails: IProduct = {
   name: "Summer Shirt",
@@ -128,7 +129,7 @@ export const productDetails: IProduct = {
       time: "2024-04-12T20:10:34.842Z",
     },
   ],
-};
+}
 
 export const user: IUser = {
   address: {
@@ -137,7 +138,7 @@ export const user: IUser = {
     zipcode: 1234,
   },
   role: "user",
-  earnings: 0,
+  // earnings: 0,
   isVerifiedEmail: true,
   _id: "63cf9a386f44b86e44e3b31e",
   username: "KendoMash",
@@ -146,8 +147,8 @@ export const user: IUser = {
   image:
     "https://res.cloudinary.com/emirace/image/upload/v1692275468/mcph4bdajocqwg4dnxmz.jpg",
   email: "repeddleng@gmail.com",
-  isAdmin: true,
-  isSeller: true,
+  // isAdmin: true,
+  // isSeller: true,
   followers: ["63cfcd166f44b86e44e3b7e2"],
   following: [
     "63f2164fc1128baf474cd433",
@@ -156,246 +157,248 @@ export const user: IUser = {
     "63cfcd166f44b86e44e3b7e2",
   ],
   likes: [
-    {
-      _id: "63f22367c1128baf474cd52c",
-      name: "Massumi gloss heels",
-      seller: {
-        _id: "63f2164fc1128baf474cd433",
-        username: "Lee Thrift Store",
-        image:
-          "https://res.cloudinary.com/emirace/image/upload/v1687333136/gynti5xuzyw6tngdbwbt.jpg",
-        address: {
-          street: "",
-          state: "",
-          zipcode: 0,
-        },
-        rebundle: {
-          status: false,
-          count: 0,
-        },
-        firstName: "lee",
-        lastName: "atores",
-        email: "tshepimabanga@gmail.com",
-        followers: [],
-        sold: [],
-        numReviews: 0,
-        badge: false,
-        createdAt: "2023-02-19T13:25:59.641Z",
-        updatedAt: "2023-09-15T21:13:45.394Z",
-      },
-      slug: "massumi-gloss-heels",
-      images: [
-        "https://res.cloudinary.com/emirace/image/upload/v1676812564/elo89ykn0c0asdmmkcj0.jpg",
-        "https://res.cloudinary.com/emirace/image/upload/v1676812596/xx1st8hhomtaiu9htj06.jpg",
-        "https://res.cloudinary.com/emirace/image/upload/v1676812631/vyqohcxlgvqhuqwvci5e.jpg",
-        "https://res.cloudinary.com/emirace/image/upload/v1676812693/lmuyatsvsmpquhm7byyb.jpg",
-      ],
-      tags: ["Heels", "Court", "Black girls magic "],
-      video: "",
-      brand: "massimo",
-      color: "black",
-      category: "shoes",
-      mainCategory: "Women",
-      subCategory: "ankle boots & booties",
-      material: "Synthetic",
-      description: "Massumi synthetic court heel",
-      sizes: [],
-      // userBuy: [],
-      // deliveryOption: [
-      //   {
-      //     name: "Paxi PEP store",
-      //     value: "59.95",
-      //   },
-      //   {
-      //     name: "Aramex Store-to-Door",
-      //     value: "99.99",
-      //   },
-      // ],
-      condition: "Excellent Condition",
-      // shippingLocation: "South Africa",
-      keyFeatures: "Plain",
-      costPrice: 150,
-      sellingPrice: 75,
-      rating: 0,
-      // currency: "R ",
-      // numReviews: 0,
-      likes: [
-        "63c9207a9ab6a6a276a9a073",
-        "63cfcd166f44b86e44e3b7e2",
-        "648336edf4dbd670b26ce5a2",
-      ],
-      shares: [],
-      sold: true,
-      active: true,
-      countInStock: 0,
-      region: "ZAR",
-      reviews: [],
-      createdAt: "2023-02-19T13:25:59.641Z",
-      updatedAt: "2023-09-15T21:13:45.394Z",
-      // productId: "63f22367c1128baf474cd52c",
-      // soldAll: true,
-      meta: {},
-      viewcount: [
-        {
-          hashed: "d70563106f6b2b11962751cb7e5fe9d8",
-          time: "2023-07-08T11:32:39.613Z",
-        },
-        {
-          hashed: "ed7fcc2c7a7f0a0bc16364b84e06b51c",
-          time: "2023-07-08T16:03:13.920Z",
-        },
-      ],
-      isAvailable: true,
-      badge: false,
-      buyers: [],
-      costPriceHistory: [],
-      deliveryOption: [],
-      sellingPriceHistory: [],
-    },
-    {
-      _id: "648d662e1829a921a1e15310",
-      name: "Quality Stone-Black Jeans For Men",
-      seller: {
-        _id: "63c9cde6b677973f8c09dec8",
-        username: "Emirace",
-        image:
-          "https://res.cloudinary.com/emirace/image/upload/v1675795105/ndksunuy8k2xdsc6wr56.webp",
-        address: {
-          street: "",
-          state: "",
-          zipcode: 0,
-        },
-        rebundle: {
-          status: false,
-          count: 0,
-        },
-        firstName: "Emirace",
-        lastName: "Bob",
-        email: "example@email.com",
-        followers: [],
-        sold: [],
-        numReviews: 0,
-        badge: false,
-        createdAt: "2023-02-19T13:25:59.641Z",
-        updatedAt: "2023-09-15T21:13:45.394Z",
-      },
-      slug: "quality-stone-black-jeans-for-men",
-
-      images: [
-        "https://res.cloudinary.com/emirace/image/upload/v1694097530/axf9pt7clzollrr8vkci.jpg",
-        "https://res.cloudinary.com/emirace/image/upload/v1694097583/amlyyk1tjdb4mdliiw5f.jpg",
-        "https://res.cloudinary.com/emirace/image/upload/v1694097643/v2fvrhsofnuahcylpuna.jpg",
-      ],
-      tags: ["stock ", "guys", "black "],
-      video: "",
-      brand: "S.P.C.C",
-      color: "black",
-      category: "clothing",
-      mainCategory: "men",
-      meta: {},
-      subCategory: "jeans",
-      material: "Wool",
-      description:
-        "Classy and soft to the touch, this Men's fitted denim jeans Trouser is suitable to keep you cool throughout the day, you can pair along with a T-shirt, polo shirt or formal shirt. Never get lost in the crowd, dictate your style and express it at your preferred pace with fashion pieces that let you rock your occasions and also stay in with the newest trends.Buy denim Jeans, a brand that will put you in the elite class. ",
-      sizes: [],
-      // userBuy: [
-      //   "63e777adc1128baf474ccb25",
-      //   "645d4146c465815c478febe0",
-      //   "645d4146c465815c478febe0",
-      // ],
-      // deliveryOption: [
-      //   {
-      //     name: "Pick up from Seller",
-      //     value: 0,
-      //   },
-      // ],
-      condition: "New with Tags",
-      // shippingLocation: "Nigeria",
-      keyFeatures: "Color Block",
-      specification:
-        "SKU: FA203MW2ZLSESNAFAMZ\nProduct Line: A-class Couture\nWeight (kg): 0.2\nColor: Black\nMain Material: Jeans",
-      costPrice: 2500,
-      sellingPrice: 2500,
-      rating: 0,
-      // currency: "N ",
-      // numReviews: 0,
-      likes: [
-        "63cf9a386f44b86e44e3b31e",
-        "64bfa37b61009463a7b8e9af",
-        "645d4146c465815c478febe0",
-      ],
-      shares: [
-        {
-          user: "645d4146c465815c478febe0",
-          hashed: "f8b0f8fc826a20af27c9a20a8ab83408",
-          time: new Date(),
-        },
-        {
-          user: "645d4146c465815c478febe0",
-          hashed: "7016f4335fec7d92dc753779032a4dac",
-          time: new Date(),
-        },
-      ],
-      sold: false,
-      // soldAll: false,
-      active: true,
-      countInStock: 8,
-      region: "NGN",
-      reviews: [],
-      createdAt: "2023-06-17T07:52:14.557Z",
-      updatedAt: "2024-02-18T17:15:41.624Z",
-      // productId: "648d662e1829a921a1e15310",
-      badge: false,
-      buyers: [],
-      costPriceHistory: [],
-      deliveryOption: [],
-      sellingPriceHistory: [],
-      viewcount: [
-        {
-          hashed: "a3dca43a070590f61e0e0cc610863a85",
-          time: "2023-07-08T05:57:25.088Z",
-        },
-        {
-          hashed: "69a9b04a916658c8d19ea57d9d40d2a5",
-          time: "2023-07-08T08:15:39.820Z",
-        },
-      ],
-      isAvailable: true,
-    },
+    // {
+    //   _id: "63f22367c1128baf474cd52c",
+    //   name: "Massumi gloss heels",
+    //   seller: {
+    //     _id: "63f2164fc1128baf474cd433",
+    //     username: "Lee Thrift Store",
+    //     image:
+    //       "https://res.cloudinary.com/emirace/image/upload/v1687333136/gynti5xuzyw6tngdbwbt.jpg",
+    //     address: {
+    //       street: "",
+    //       state: "",
+    //       zipcode: 0,
+    //     },
+    //     rebundle: {
+    //       status: false,
+    //       count: 0,
+    //     },
+    //     firstName: "lee",
+    //     lastName: "atores",
+    //     email: "tshepimabanga@gmail.com",
+    //     followers: [],
+    //     sold: [],
+    //     numReviews: 0,
+    //     badge: false,
+    //     createdAt: "2023-02-19T13:25:59.641Z",
+    //     updatedAt: "2023-09-15T21:13:45.394Z",
+    //   },
+    //   slug: "massumi-gloss-heels",
+    //   images: [
+    //     "https://res.cloudinary.com/emirace/image/upload/v1676812564/elo89ykn0c0asdmmkcj0.jpg",
+    //     "https://res.cloudinary.com/emirace/image/upload/v1676812596/xx1st8hhomtaiu9htj06.jpg",
+    //     "https://res.cloudinary.com/emirace/image/upload/v1676812631/vyqohcxlgvqhuqwvci5e.jpg",
+    //     "https://res.cloudinary.com/emirace/image/upload/v1676812693/lmuyatsvsmpquhm7byyb.jpg",
+    //   ],
+    //   tags: ["Heels", "Court", "Black girls magic "],
+    //   video: "",
+    //   brand: "massimo",
+    //   color: "black",
+    //   category: "shoes",
+    //   mainCategory: "Women",
+    //   subCategory: "ankle boots & booties",
+    //   material: "Synthetic",
+    //   description: "Massumi synthetic court heel",
+    //   sizes: [],
+    //   // userBuy: [],
+    //   // deliveryOption: [
+    //   //   {
+    //   //     name: "Paxi PEP store",
+    //   //     value: "59.95",
+    //   //   },
+    //   //   {
+    //   //     name: "Aramex Store-to-Door",
+    //   //     value: "99.99",
+    //   //   },
+    //   // ],
+    //   condition: "Excellent Condition",
+    //   // shippingLocation: "South Africa",
+    //   keyFeatures: "Plain",
+    //   costPrice: 150,
+    //   sellingPrice: 75,
+    //   rating: 0,
+    //   // currency: "R ",
+    //   // numReviews: 0,
+    //   likes: [
+    //     "63c9207a9ab6a6a276a9a073",
+    //     "63cfcd166f44b86e44e3b7e2",
+    //     "648336edf4dbd670b26ce5a2",
+    //   ],
+    //   shares: [],
+    //   sold: true,
+    //   active: true,
+    //   countInStock: 0,
+    //   region: "ZAR",
+    //   reviews: [],
+    //   createdAt: "2023-02-19T13:25:59.641Z",
+    //   updatedAt: "2023-09-15T21:13:45.394Z",
+    //   // productId: "63f22367c1128baf474cd52c",
+    //   // soldAll: true,
+    //   meta: {},
+    //   viewcount: [
+    //     {
+    //       hashed: "d70563106f6b2b11962751cb7e5fe9d8",
+    //       time: "2023-07-08T11:32:39.613Z",
+    //     },
+    //     {
+    //       hashed: "ed7fcc2c7a7f0a0bc16364b84e06b51c",
+    //       time: "2023-07-08T16:03:13.920Z",
+    //     },
+    //   ],
+    //   isAvailable: true,
+    //   badge: false,
+    //   buyers: [],
+    //   costPriceHistory: [],
+    //   deliveryOption: [],
+    //   sellingPriceHistory: [],
+    // },
+    // {
+    //   _id: "648d662e1829a921a1e15310",
+    //   name: "Quality Stone-Black Jeans For Men",
+    //   seller: {
+    //     _id: "63c9cde6b677973f8c09dec8",
+    //     username: "Emirace",
+    //     image:
+    //       "https://res.cloudinary.com/emirace/image/upload/v1675795105/ndksunuy8k2xdsc6wr56.webp",
+    //     address: {
+    //       street: "",
+    //       state: "",
+    //       zipcode: 0,
+    //     },
+    //     rebundle: {
+    //       status: false,
+    //       count: 0,
+    //     },
+    //     firstName: "Emirace",
+    //     lastName: "Bob",
+    //     email: "example@email.com",
+    //     followers: [],
+    //     sold: [],
+    //     numReviews: 0,
+    //     badge: false,
+    //     createdAt: "2023-02-19T13:25:59.641Z",
+    //     updatedAt: "2023-09-15T21:13:45.394Z",
+    //   },
+    //   slug: "quality-stone-black-jeans-for-men",
+    //   images: [
+    //     "https://res.cloudinary.com/emirace/image/upload/v1694097530/axf9pt7clzollrr8vkci.jpg",
+    //     "https://res.cloudinary.com/emirace/image/upload/v1694097583/amlyyk1tjdb4mdliiw5f.jpg",
+    //     "https://res.cloudinary.com/emirace/image/upload/v1694097643/v2fvrhsofnuahcylpuna.jpg",
+    //   ],
+    //   tags: ["stock ", "guys", "black "],
+    //   video: "",
+    //   brand: "S.P.C.C",
+    //   color: "black",
+    //   category: "clothing",
+    //   mainCategory: "men",
+    //   meta: {},
+    //   subCategory: "jeans",
+    //   material: "Wool",
+    //   description:
+    //     "Classy and soft to the touch, this Men's fitted denim jeans Trouser is suitable to keep you cool throughout the day, you can pair along with a T-shirt, polo shirt or formal shirt. Never get lost in the crowd, dictate your style and express it at your preferred pace with fashion pieces that let you rock your occasions and also stay in with the newest trends.Buy denim Jeans, a brand that will put you in the elite class. ",
+    //   sizes: [],
+    //   // userBuy: [
+    //   //   "63e777adc1128baf474ccb25",
+    //   //   "645d4146c465815c478febe0",
+    //   //   "645d4146c465815c478febe0",
+    //   // ],
+    //   // deliveryOption: [
+    //   //   {
+    //   //     name: "Pick up from Seller",
+    //   //     value: 0,
+    //   //   },
+    //   // ],
+    //   condition: "New with Tags",
+    //   // shippingLocation: "Nigeria",
+    //   keyFeatures: "Color Block",
+    //   specification:
+    //     "SKU: FA203MW2ZLSESNAFAMZ\nProduct Line: A-class Couture\nWeight (kg): 0.2\nColor: Black\nMain Material: Jeans",
+    //   costPrice: 2500,
+    //   sellingPrice: 2500,
+    //   rating: 0,
+    //   // currency: "N ",
+    //   // numReviews: 0,
+    //   likes: [
+    //     "63cf9a386f44b86e44e3b31e",
+    //     "64bfa37b61009463a7b8e9af",
+    //     "645d4146c465815c478febe0",
+    //   ],
+    //   shares: [
+    //     {
+    //       user: "645d4146c465815c478febe0",
+    //       hashed: "f8b0f8fc826a20af27c9a20a8ab83408",
+    //       time: new Date(),
+    //     },
+    //     {
+    //       user: "645d4146c465815c478febe0",
+    //       hashed: "7016f4335fec7d92dc753779032a4dac",
+    //       time: new Date(),
+    //     },
+    //   ],
+    //   sold: false,
+    //   // soldAll: false,
+    //   active: true,
+    //   countInStock: 8,
+    //   region: "NGN",
+    //   reviews: [],
+    //   createdAt: "2023-06-17T07:52:14.557Z",
+    //   updatedAt: "2024-02-18T17:15:41.624Z",
+    //   // productId: "648d662e1829a921a1e15310",
+    //   badge: false,
+    //   buyers: [],
+    //   costPriceHistory: [],
+    //   deliveryOption: [],
+    //   sellingPriceHistory: [],
+    //   viewcount: [
+    //     {
+    //       hashed: "a3dca43a070590f61e0e0cc610863a85",
+    //       time: "2023-07-08T05:57:25.088Z",
+    //     },
+    //     {
+    //       hashed: "69a9b04a916658c8d19ea57d9d40d2a5",
+    //       time: "2023-07-08T08:15:39.820Z",
+    //     },
+    //   ],
+    //   isAvailable: true,
+    // },
   ],
   rebundle: {
     status: true,
     count: 1,
   },
-  saved: [],
+  wishlist: [],
   sold: ["654b7a7a8698d309f6f768bc", "654b76048698d309f6f767fd"],
-  activeLastUpdate: new Date("2023-01-24T09:48:48.167Z"),
+  activeLastUpdate: "2023-01-24T09:48:48.167Z",
   rating: 0,
   phone: "0815133377",
   numReviews: 0,
   badge: false,
+  delected: false,
+  dob: "",
+  tokenVersion: "1",
   active: true,
   influencer: false,
   region: "NGN",
   buyers: [],
   createdAt: "2023-01-24T08:43:36.887Z",
   // usernameUpdate: "2023-08-17T12:16:20.418Z",
-  newsletter: true,
+  allowNewsletter: true,
   accountName: "Repeddle Ng",
   accountNumber: 1234567,
   bankName: "Union Bank",
   about:
     "You will find beautiful rear finds in my store from ladies, men, kids wear, shoes and accessories. Happy Exploring and thank you for checking my store out🤗\n\nMy products ships fast within 2-4 days😍",
-};
+}
 
 export const orderData: Order = {
-  orderItems: [
+  items: [
     {
       ...productDetails,
       quantity: 2,
       onHold: false,
-      deliveredAt: "2023-01-24T08:43:36.887Z",
-      deliveryStatus: "Delivered",
+      // deliveredAt: "2023-01-24T08:43:36.887Z",
+      // deliveryStatus: "Delivered",
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       deliverySelect: { cost: 100 },
@@ -410,13 +413,13 @@ export const orderData: Order = {
   deliveryMethod: "gig",
   createdAt: "2023-01-24T08:43:36.887Z",
   deliveredAt: "2023-01-24T08:43:36.887Z",
-};
+}
 
 export const balanceData: UserBalance = {
   balance: 1234567,
   currency: "N",
   userId: user._id,
-};
+}
 
 export const summary: Summary = {
   users: [
@@ -472,7 +475,7 @@ export const summary: Summary = {
       numSales: 181859,
     },
   ],
-};
+}
 
 export const bestSeller: BestSeller = {
   _id: "640711c93b06321587636b30",
@@ -495,7 +498,7 @@ export const bestSeller: BestSeller = {
   region: "NGN",
   createdAt: "2023-03-07T10:28:25.205Z",
   updatedAt: "2024-02-07T05:31:19.358Z",
-};
+}
 
 export const viewedProduct: ViewedProducts = {
   _id: "655c6a59a797a1b7439a5066",
@@ -511,7 +514,7 @@ export const viewedProduct: ViewedProducts = {
   region: "NGN",
   createdAt: "2023-11-21T08:29:13.055Z",
   updatedAt: "2024-05-02T20:11:52.030Z",
-};
+}
 
 export const contactMessage: IContactMessage = {
   _id: "64d779b2af2d96983b4ab467",
@@ -524,7 +527,7 @@ export const contactMessage: IContactMessage = {
   assignTo: "RepeddleZa",
   createdAt: "2023-08-12T12:23:14.524Z",
   updatedAt: "2023-08-12T12:24:11.281Z",
-};
+}
 
 export const newsLetterData: INewsletter = {
   _id: "65d9cf6e08a7136c2a7ef5e0",
@@ -542,13 +545,13 @@ export const newsLetterData: INewsletter = {
   ],
   createdAt: "2024-02-24T11:13:50.301Z",
   updatedAt: "2024-03-08T12:12:34.321Z",
-};
+}
 
 export const emailList: IEmailList = {
   name: "Hacks on How to Make Your First Repeddle Sale",
   subject: "Hacks on How to Make Your First Repeddle Sale!",
   template: "hack",
-};
+}
 
 export const brandsData: IBrand[] = [
   {
@@ -578,7 +581,7 @@ export const brandsData: IBrand[] = [
     alpha: "D",
     type: "SYSTEM",
   },
-];
+]
 
 export const conversationData: IConversation[] = [
   {
@@ -613,7 +616,7 @@ export const conversationData: IConversation[] = [
     createdAt: "2024-03-19T19:45:44.165Z",
     updatedAt: "2024-03-19T19:50:47.792Z",
   },
-];
+]
 
 export const searchResultData: SearchResult[] = [
   {
@@ -622,7 +625,7 @@ export const searchResultData: SearchResult[] = [
     username: "anthony_813515",
     _id: "6617e76c08a7136c2a8068be",
   },
-];
+]
 
 export const conversationMessageData: ConversationMessage[] = [
   {
@@ -647,7 +650,7 @@ export const conversationMessageData: ConversationMessage[] = [
     createdAt: "2024-02-24T16:41:11.485Z",
     updatedAt: "2024-02-24T16:41:11.485Z",
   },
-];
+]
 
 export const manyUsers: IUser[] = [
   {
@@ -661,20 +664,26 @@ export const manyUsers: IUser[] = [
     lastName: "ryfth",
     image: "/images/pimage.png",
     email: "ryttr@hfh.fgh",
+    about: "",
+    accountName: "",
+    accountNumber: 1,
+    address: {},
+    bankName: "dd",
+    delected: false,
+    dob: "",
+    tokenVersion: "",
 
-    isAdmin: false,
-    isSeller: false,
     followers: [],
     following: [],
     likes: [],
-    saved: [],
+    wishlist: [],
     sold: [],
     activeLastUpdate: "2024-02-14T07:55:06.893Z",
     rating: 0,
     // wallet: 0,
     phone: "46547",
-    newsletter: true,
-    earnings: 0,
+    allowNewsletter: true,
+    // earnings: 0,
     numReviews: 0,
     badge: false,
     active: true,
@@ -686,122 +695,7 @@ export const manyUsers: IUser[] = [
     updatedAt: "2024-05-07T08:53:23.765Z",
     role: "user",
   },
-  {
-    rebundle: {
-      status: false,
-      count: 0,
-    },
-    _id: "6617e76c08a7136c2a8068be",
-    username: "anthony_813515",
-    firstName: "Anthony",
-    // social_id: "116784918716912578062",
-    lastName: "Umeozulu",
-    image:
-      "https://lh3.googleusercontent.com/a/ACg8ocLAFmHvKz6qAHCL_9XdxO_mwxyTL1Mft1gp0ZmP4GVsSQkZIg=s96-c",
-    email: "tonyumeozulu@gmail.com",
-    isAdmin: true,
-    isSeller: true,
-    followers: [],
-    following: [],
-    likes: [],
-    saved: [],
-    sold: [],
-    activeLastUpdate: "2024-02-14T07:55:06.893Z",
-    rating: 0,
-    // wallet: 0,
-    newsletter: true,
-    earnings: 0,
-    numReviews: 0,
-    badge: false,
-    active: true,
-    influencer: false,
-    isVerifiedEmail: true,
-    region: "NGN",
-    buyers: [],
-    createdAt: "2024-04-11T13:36:44.167Z",
-    updatedAt: "2024-04-11T13:36:44.285Z",
-    role: "user",
-  },
-  {
-    address: {
-      state: "Niger",
-      street: "Opposite CBN Quarters Tunga Minna Inside Enoch's House,",
-      apartment: "0233",
-      zipcode: 920104,
-    },
-    rebundle: {
-      status: false,
-      count: 0,
-    },
-    _id: "65d9cf6d08a7136c2a7ef5d9",
-    username: "adamu tako_867463",
-    firstName: "Adamu Tako",
-    lastName: "Musa",
-    image:
-      "https://lh3.googleusercontent.com/a/ACg8ocLvUe93Cv0HuoEUMFSFiQ7sttgbAcGy9DL_s45LVfHM8x4=s96-c",
-    email: "amusatako@gmail.com",
-    isAdmin: false,
-    isSeller: true,
-    followers: [],
-    following: [],
-    likes: [],
-    saved: [],
-    sold: [],
-    activeLastUpdate: "2024-02-14T07:55:06.893Z",
-    rating: 0,
-    newsletter: true,
-    earnings: 0,
-    numReviews: 0,
-    badge: false,
-    active: true,
-    influencer: false,
-    isVerifiedEmail: true,
-    region: "NGN",
-    buyers: [],
-    createdAt: "2024-02-24T11:13:49.802Z",
-    updatedAt: "2024-02-24T11:19:45.147Z",
-
-    role: "user",
-    accountName: "Adamu Tako Musa",
-    accountNumber: 5003772228,
-    bankName: "Standard Chartered",
-  },
-  {
-    rebundle: {
-      status: false,
-      count: 0,
-    },
-    _id: "65c88e282283460e1135370d",
-    username: "closet connection",
-    firstName: "Cwayita",
-    lastName: "Jack",
-    image: "/images/pimage.png",
-    email: "jcwayita@gmail.com",
-    isAdmin: false,
-    isSeller: false,
-    followers: [],
-    following: [],
-    likes: [],
-    saved: [],
-    sold: [],
-    activeLastUpdate: "2024-01-30T08:28:56.424Z",
-    rating: 0,
-    // wallet: 0,
-    phone: "0632029593",
-    newsletter: true,
-    earnings: 0,
-    numReviews: 0,
-    badge: false,
-    active: true,
-    influencer: false,
-    isVerifiedEmail: false,
-    region: "NGN",
-    buyers: [],
-    role: "user",
-    createdAt: "2024-02-11T09:06:48.828Z",
-    updatedAt: "2024-02-11T09:07:17.764Z",
-  },
-];
+]
 
 export const transactions: ITransaction[] = [
   {
@@ -873,7 +767,7 @@ export const transactions: ITransaction[] = [
     createdAt: "2024-02-18T08:25:32.991Z",
     updatedAt: "2024-02-18T08:25:32.991Z",
   },
-];
+]
 
 export const payments: IPayment[] = [
   {
@@ -959,7 +853,7 @@ export const payments: IPayment[] = [
     createdAt: "2024-02-19T04:50:14.393Z",
     updatedAt: "2024-02-19T04:50:14.393Z",
   },
-];
+]
 
 export const returns: IReturn[] = [
   {
@@ -1194,4 +1088,4 @@ export const returns: IReturn[] = [
 
     adminReason: "Return testing ",
   },
-];
+]

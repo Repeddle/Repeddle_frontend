@@ -8,6 +8,7 @@ import useAuth from "../hooks/useAuth"
 import {
   createProductService,
   deleteProductService,
+  fetchProductByIdService,
   fetchProductBySlugService,
   fetchProductsService,
   fetchUserProductsService,
@@ -21,6 +22,7 @@ type ContextType = {
   fetchProducts: (params?: string) => Promise<boolean>
   fetchUserProducts: (params?: string) => Promise<boolean>
   fetchProductBySlug: (slug: string) => Promise<IProduct | null>
+  fetchProductById: (id: string) => Promise<IProduct | string>
   createProduct: (product: ICreateProduct) => Promise<boolean>
   updateProduct: (id: string, product: ICreateProduct) => Promise<boolean>
   deleteProduct: (id: string) => Promise<{ message?: string }>
@@ -101,6 +103,20 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
+  const fetchProductById = async (id: string) => {
+    try {
+      setError("")
+      setLoading(true)
+      const result = await fetchProductByIdService(id)
+      setLoading(false)
+      return result
+    } catch (error) {
+      handleError(error as string)
+      setLoading(false)
+      return error as string
+    }
+  }
+
   const createProduct = async (product: ICreateProduct) => {
     try {
       setError("")
@@ -164,9 +180,9 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
       setLoading(false)
       return { message: data.message }
     } catch (error) {
-      handleError(error as string)
+      // handleError(error as string)
       setLoading(false)
-      return {}
+      return { message: error as string }
     }
   }
 
@@ -181,6 +197,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         createProduct,
         deleteProduct,
         fetchProductBySlug,
+        fetchProductById,
         updateProduct,
       }}
     >

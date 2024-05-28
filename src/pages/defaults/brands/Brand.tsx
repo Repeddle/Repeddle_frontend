@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Link } from "react-router-dom";
-import { FaSearch } from "react-icons/fa";
+import { Link } from "react-router-dom"
+import { FaSearch } from "react-icons/fa"
 import {
   brandA,
   brandB,
@@ -29,12 +28,12 @@ import {
   brandY,
   brandZ,
   brandnumbers,
-} from "../../../components/constant";
-import React from "react";
+} from "../../../components/constant"
+import React from "react"
 
 // Define the Brands interface with an index signature
 interface Brands {
-  [key: string]: string[];
+  [key: string]: string[]
 }
 
 // Use the interface to type your brands object
@@ -66,42 +65,42 @@ const brands: Brands = {
   brandY,
   brandZ,
   brandnumbers,
-};
+}
 
 async function fetchProduct(brandName: string) {
   // Replace with your actual API endpoint
-  const response = await fetch(`/api/products/${brandName}`);
+  const response = await fetch(`/api/products/${brandName}`)
   if (!response.ok) {
-    throw new Error(`Error: ${response.statusText}`);
+    throw new Error(`Error: ${response.statusText}`)
   }
-  const product = await response.json();
-  return product;
+  const product = await response.json()
+  return product
 }
 
 const Brand = () => {
-  const [searchTerm, setSearchTerm] = React.useState("");
+  const [searchTerm, setSearchTerm] = React.useState("")
 
   const handleAlphabetClick = (alphabet: string) => {
     const element = document.getElementById(
       alphabet === "#" ? "brandnumbers" : alphabet
-    );
+    )
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+      element.scrollIntoView({ behavior: "smooth" })
     }
-  };
+  }
 
   const filteredBrands = Object.entries(brands).reduce(
     (acc, [brandKey, brandNames]) => {
       const filteredBrandNames = brandNames.filter((brandName) =>
         brandName.toLowerCase().startsWith(searchTerm.toLowerCase())
-      );
+      )
       if (filteredBrandNames.length > 0) {
-        acc[brandKey] = filteredBrandNames;
+        acc[brandKey] = filteredBrandNames
       }
-      return acc;
+      return acc
     },
     {} as Brands
-  );
+  )
 
   return (
     <div className="container mx-auto max-w-7xl px-6 mb-10">
@@ -185,17 +184,17 @@ const Brand = () => {
                   to={`/product/${brandName}`}
                   onClick={async (e) => {
                     try {
-                      const product = await fetchProduct(brandName);
+                      const product = await fetchProduct(brandName)
                       if (!product) {
-                        e.preventDefault();
+                        e.preventDefault()
                         alert(
                           "The product you're searching for is not available"
-                        );
+                        )
                       }
                     } catch (error) {
-                      console.error(error);
-                      e.preventDefault();
-                      alert("An error occurred while fetching the product");
+                      console.error(error)
+                      e.preventDefault()
+                      alert("An error occurred while fetching the product")
                     }
                   }}
                 >
@@ -207,7 +206,7 @@ const Brand = () => {
         </div>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default Brand;
+export default Brand

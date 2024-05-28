@@ -21,7 +21,7 @@ const StickyNav = () => {
             }`
           }
         >
-          <FaHouse size={27} />
+          <FaHouse className="text-2xl" />
           <div className="text-[11px] leading-normal">Home</div>
         </NavLink>
         <NavLink
@@ -44,7 +44,7 @@ const StickyNav = () => {
           </div>
         </NavLink>
         <NavLink
-          to={user?.isSeller ? "/newproduct" : "/sell"}
+          to={user?.role === "Seller" ? "/newproduct" : "/sell"}
           className={({ isActive }) =>
             `items-center text-malon-color flex flex-col grow justify-center min-w-[50px] relative whitespace-nowrap ${
               isActive ? "text-orange-color" : "text-malon-color"

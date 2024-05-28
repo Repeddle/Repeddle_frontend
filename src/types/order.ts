@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: remove the lint above
-import { CartItem } from "../context/CartContext"
 import { IProduct } from "./product"
 import { IUser } from "./user"
 
@@ -14,18 +13,39 @@ export type DeliverStatus =
   | "Rejected"
   | "Hold"
 
-export type OrderItem = CartItem & {
-  onHold: boolean
-  deliveredAt: string | Date
-  deliveryStatus: DeliverStatus
-  trackingNumber?: string
-  deliverySelect: { cost: number }
+export type OrderItem = {
+  product: IProduct
+  seller: IUser
+  quantity: number
+  price: number
+  selectedSize: string
+  selectedColor: string
+  onHold?: boolean
+  deliveryOption: {
+    fee: number
+    method: string
+    _id: string
+  }
+  deliveryTracking: {
+    currentStatus: {
+      status: string
+      timestamp: string
+      _id: string
+    }
+    history: {
+      status: string
+      timestamp: string
+      _id: string
+    }[]
+  }
+  _id: string
 }
 
-export type IOrder = {
+// TODO: remove when return is implemented
+export type IOrder1 = {
   buyer: string
   items: {
-    product: string
+    product: IProduct
     seller: string
     quantity: number
     price: number
@@ -50,6 +70,17 @@ export type IOrder = {
     }
     _id: string
   }[]
+  totalAmount: number
+  paymentMethod: string
+  transactionId: string
+  _id: string
+  createdAt: string
+  updatedAt: string
+}
+
+export type IOrder = {
+  buyer: IUser
+  items: OrderItem[]
   totalAmount: number
   paymentMethod: string
   transactionId: string
@@ -93,16 +124,14 @@ export type IOrderSummary = {
 }
 
 export type Order = {
-  orderItems: OrderItem[]
-  user: IUser
-  isPaid: boolean
+  buyer: string
+  items: OrderItem[]
+  totalAmount: number
   paymentMethod: string
-  deliveryMethod: string
-  createdAt: string | Date
-  deliveredAt: string | Date
-  itemsPrice: number
-  shippingPrice: number
-  totalPrice: number
+  transactionId: string
+  _id: string
+  createdAt: string
+  updatedAt: string
 }
 
 export enum DeliverStatusEnum {
@@ -152,7 +181,7 @@ export type IReturn = {
         rating: number
         numReviews: number
         badge: boolean
-        region: string
+        region: "NGN" | "ZAR"
       }
       slug: string
       image: string
@@ -196,7 +225,7 @@ export type IReturn = {
       }
       active: boolean
       countInStock: number
-      region: string
+      region: "NGN" | "ZAR"
       isAvailable: boolean
       shares: Array<any>
       viewcount: Array<{
@@ -250,7 +279,7 @@ export type IReturn = {
   refund: string
   image: string
   others: string
-  region: string
+  region: "NGN" | "ZAR"
   status: string
   returnId: string
   createdAt: string

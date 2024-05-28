@@ -31,7 +31,7 @@ const CategoryComp = ({
           placeholder="Enter category name"
         />
         <FaLink
-          className="cursor-pointer ml-2.5"
+          className="cursor-pointer ml-2.5 hover:text-orange-color"
           onClick={() => openModal("addLink")}
         />
       </div>

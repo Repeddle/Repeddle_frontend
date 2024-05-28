@@ -21,7 +21,6 @@ const AllReturns = () => {
         />
       </div>
 
-      {/* TODO: table reduce width  */}
       <ReturnTable returns={returns} />
     </div>
   )

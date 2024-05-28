@@ -1,24 +1,25 @@
 import { useState } from "react"
+import { color1 } from "../../../utils/constants"
+import { FaAngleDown } from "react-icons/fa"
 
 type Props = {
   changeParam: (val: string) => void
   selectedColor: string
-  colors: any[]
 }
 
-const SearchColor = ({ changeParam, selectedColor, colors }: Props) => {
+const SearchColor = ({ changeParam, selectedColor }: Props) => {
   const [open, setOpen] = useState(true)
   return (
     <div className="mb-2.5">
       <h4
         className={`text-sm cursor-pointer relative z-[1] after:content-["_"] after:w-2 after:h-2
-        after:-translate-y-2/4 after:absolute after:border-b mb-2 
+        after:-translate-y-2/4 after:absolute after:border-b mb-2 flex justify-between items-center 
         after:border-l after:right-5 after:top-2/4 ${
           open ? "after:-rotate-45" : "after:rotate-[135deg]"
         }`}
         onClick={() => setOpen(!open)}
       >
-        Color
+        Color <FaAngleDown />
       </h4>
       <div
         className={`h-0 overflow-hidden transition-[0.5s] p-[5px] ${
@@ -36,7 +37,7 @@ const SearchColor = ({ changeParam, selectedColor, colors }: Props) => {
           All
         </div>
         <div className="flex flex-wrap">
-          {colors.map((c) => (
+          {color1.map((c) => (
             <div
               onClick={() => {
                 changeParam(c.name)
@@ -58,7 +59,8 @@ const SearchColor = ({ changeParam, selectedColor, colors }: Props) => {
                 />
               ) : (
                 <div
-                  className={`bg-[${c.name}] w-[30px] h-5 rounded-[0.2rem]`}
+                  className="w-[30px] h-5 rounded-[0.2rem]"
+                  style={{ backgroundColor: c.name }}
                 />
               )}
             </div>

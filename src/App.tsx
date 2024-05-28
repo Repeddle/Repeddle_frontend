@@ -11,8 +11,8 @@ function App() {
   UNSAFE_useScrollRestoration();
 
   return (
-    <div className={isDarkMode? "dark" : ""}>
-      <div className="dark:bg-black-color dark:text-white-color text-sm md:text-base transition-colors duration-300 ease-in-out">
+    <div className={isDarkMode ? "dark" : ""}>
+      <div className="dark:bg-black-color font-medium dark:text-white-color text-sm md:text-base transition-colors duration-300 ease-in-out">
         <ToastNotification />
         <ArticleProvider > {/* Wrap the Outlet with ArticleProvider */}
           <Outlet />
