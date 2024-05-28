@@ -113,7 +113,7 @@ function Articles() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {categories.map((category) => (
+                {categories.map((category: string) => (
                 <h3
                   key={category}
                   className="text-xl font-medium border-gray-300 p-4 rounded-lg shadow-md text-center cursor-pointer hover:text-orange-400"
