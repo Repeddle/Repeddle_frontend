@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import HowRepeddleWork from "./pages/defaults/info/HowRepeddleWork";
 import Search from "./pages/defaults/Search";
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
@@ -65,8 +65,6 @@ import MobileNotification from "./pages/protected/MobileNotification";
 import CategoryMobile from "./pages/defaults/CategoryMobile";
 import EditProduct from "./pages/protected/EditProduct";
 import SalesList from "./pages/protected/SalesList";
-// import { Article } from "./types/article";
-import HowRepeddleWork from "./pages/defaults/info/HowRepeddleWork";
 
 const router = createBrowserRouter([
   {
@@ -112,10 +110,10 @@ const router = createBrowserRouter([
           { path: "Contact-Us", element: <ContactUs /> },
           { path: "feestructure", element: <FeeStructure /> },
           { path: "buyerprotection", element: <BuyersProtection /> },
+          { path: "how-repeddle-work", element: <HowRepeddleWork /> },
           { path: "brands", element: <Brand /> },
           { path: "messages", element: <Message /> },
           { path: "categories", element: <CategoryMobile /> },
-          { path: "how-repeddle-work", element: <HowRepeddleWork /> },
         ],
       },
       {
