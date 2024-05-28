@@ -5,6 +5,7 @@ import {
   IUser,
   TopSellers,
   UpdateFields,
+  UserByUsername,
 } from "../types/user"
 import {
   getAllUserAdminService,
@@ -18,8 +19,8 @@ type ContextType = {
   error: string | null
   loading: boolean
   getAllUserAdmin: () => Promise<IUsersWithPagination | null>
-  getTopSellers: () => Promise<TopSellers[] | null>
-  getUserByUsername: (username: string) => Promise<IUser | string>
+  getTopSellers: () => Promise<TopSellers[] | string>
+  getUserByUsername: (username: string) => Promise<UserByUsername | string>
   getUserById: (userId: string) => Promise<IUser | null>
   updateUserById: (
     userId: string,
@@ -74,7 +75,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     } catch (error) {
       handleError(error as string)
       setLoading(false)
-      return null
+      return error as string
     }
   }
 

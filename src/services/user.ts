@@ -3,6 +3,7 @@ import {
   IUsersWithPagination,
   TopSellers,
   UpdateFields,
+  UserByUsername,
 } from "../types/user"
 import { getBackendErrorMessage } from "../utils/error"
 import api from "./api"
@@ -55,11 +56,13 @@ export async function getTopSellersService(): Promise<TopSellers[]> {
 
 export async function getUserByUsernameService(
   username: string
-): Promise<IUser> {
+): Promise<UserByUsername> {
   try {
-    const data: { user: IUser; status: boolean } = await api.get(
+    const data: UserByUsername & { status: boolean } = await api.get(
       `/users/${username}`
     )
+
+    console.log(data)
 
     if (!data.status) {
       // Handle get all user by username error, e.g., display an error message to the user
@@ -68,7 +71,7 @@ export async function getUserByUsernameService(
       )
     }
 
-    return data.user
+    return data
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions

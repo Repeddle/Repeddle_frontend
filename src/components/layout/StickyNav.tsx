@@ -21,7 +21,7 @@ const StickyNav = () => {
             }`
           }
         >
-          <FaHouse size={27} />
+          <FaHouse className="text-2xl" />
           <div className="text-[11px] leading-normal">Home</div>
         </NavLink>
         <NavLink

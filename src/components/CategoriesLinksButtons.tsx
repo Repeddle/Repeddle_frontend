@@ -1,20 +1,18 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import ThemeContext from "../context/ThemeContext"
 import { useNavigate } from "react-router-dom"
+import useCategory from "../hooks/useCategory"
 
 const CategoriesLinksButtons = () => {
   const theme = useContext(ThemeContext)
 
   const navigate = useNavigate()
 
-  const categories = [
-    { name: "Men", path: "/men" },
-    { name: "Women" },
-    { name: "Kid" },
-    { name: "Parties" },
-    { name: "Accessories" },
-    { name: "Bags" },
-  ]
+  const { categories, fetchCategories } = useCategory()
+
+  useEffect(() => {
+    fetchCategories()
+  }, [])
 
   return (
     <section>

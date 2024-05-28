@@ -1,4 +1,5 @@
 import { ChangeEvent, useState } from "react"
+import { FaAngleDown } from "react-icons/fa"
 import { FaCircleDot } from "react-icons/fa6"
 
 type Props = {
@@ -26,13 +27,13 @@ const SearchBrands = ({
     <div className="mb-2.5">
       <h4
         className={`text-sm cursor-pointer relative z-[1] after:content-["_"] after:w-2 after:h-2
-        after:-translate-y-2/4 after:absolute after:border-b mb-2 
+        after:-translate-y-2/4 after:absolute after:border-b mb-2 flex justify-between items-center 
         after:border-l after:right-5 after:top-2/4 ${
           open ? "after:-rotate-45" : "after:rotate-[135deg]"
         }`}
         onClick={() => setOpen(!open)}
       >
-        Brands
+        Brands <FaAngleDown />
       </h4>
       <div
         className={`h-0 overflow-hidden transition-[0.5s] p-[5px] ${

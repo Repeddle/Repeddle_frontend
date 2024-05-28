@@ -83,7 +83,7 @@ const Categories = () => {
       const file = e.target.files?.[0]
       if (!file) throw Error("No image found")
 
-      const imageUrl = await compressImageUpload(file, 1024)
+      const imageUrl = await compressImageUpload(file, 1024, imageUpload.image)
 
       setImageUpload((prev) => ({
         ...prev,

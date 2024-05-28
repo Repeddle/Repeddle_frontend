@@ -3,7 +3,7 @@ import SellerRight from "../../section/seller/SellerRight"
 import { useParams } from "react-router-dom"
 import useUser from "../../hooks/useUser"
 import { useEffect, useState } from "react"
-import { IUser } from "../../types/user"
+import { UserByUsername } from "../../types/user"
 import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
 import useToastNotification from "../../hooks/useToastNotification"
 
@@ -11,7 +11,7 @@ const Seller = () => {
   const params = useParams()
   const { slug } = params
 
-  const [user, setUser] = useState<IUser>()
+  const [user, setUser] = useState<UserByUsername>()
 
   const { getUserByUsername, loading: loadingUser } = useUser()
   const { addNotification } = useToastNotification()
@@ -39,9 +39,13 @@ const Seller = () => {
       {loadingUser && <LoadingLogoModal />}
 
       <>
-        <SellerLeft loadingUser={loadingUser} error={error} user={user} />
+        <SellerLeft
+          loadingUser={loadingUser}
+          error={error}
+          usernameData={user}
+        />
 
-        <SellerRight user={user} loading={loading} error={error} />
+        <SellerRight usernameData={user} loading={loading} error={error} />
       </>
     </div>
   )

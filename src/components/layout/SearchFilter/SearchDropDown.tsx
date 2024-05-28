@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { FaCircleDot } from "react-icons/fa6"
 import { SearchOptionsObject } from "../../../types/search"
+import { FaAngleDown } from "react-icons/fa"
 
 type Props = {
   changeParam: (val: string) => void
@@ -8,7 +9,7 @@ type Props = {
   selectedItem: string
   all: SearchOptionsObject
   allText: string
-  list: { name: string; _id: string }[]
+  list: { name: string; _id: string | number }[]
 }
 
 const SearchDropDown = ({
@@ -23,14 +24,14 @@ const SearchDropDown = ({
   return (
     <div className="mb-2.5">
       <h4
-        className={`text-sm cursor-pointer relative z-[1] after:content-["_"] after:w-2 after:h-2
-        after:-translate-y-2/4 after:absolute after:border-b mb-2 
+        className={`text-sm cursor-pointer relative z-[1] after:content-[""] after:w-2 after:h-2
+        after:-translate-y-2/4 after:absolute after:border-b mb-2 flex justify-between items-center 
         after:border-l after:right-5 after:top-2/4 ${
           open ? "after:-rotate-45" : "after:rotate-[135deg]"
         }`}
         onClick={() => setOpen(!open)}
       >
-        {title}
+        {title} <FaAngleDown />
       </h4>
       <div
         className={`h-0 overflow-hidden transition-[0.5s] p-[5px] ${

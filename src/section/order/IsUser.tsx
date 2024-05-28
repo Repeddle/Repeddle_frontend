@@ -56,7 +56,9 @@ const IsUser = ({
               onClick={() => {
                 setShowDeliveryHistory(true)
                 setCurrentDeliveryHistory(
-                  deliveryNumber(orderItem.deliveryStatus)
+                  deliveryNumber(
+                    orderItem.deliveryTracking.currentStatus.status
+                  )
                 )
               }}
             >
@@ -64,12 +66,15 @@ const IsUser = ({
             </div>
           </div>
           <div className="capitalize font-semibold mb-2.5">
-            On {moment(orderItem.deliveredAt).format("MMMM Do YYYY, h:mm:ss a")}
+            On{" "}
+            {moment(orderItem.deliveryTracking.currentStatus.timestamp).format(
+              "MMMM Do YYYY, h:mm:ss a"
+            )}
           </div>
         </div>
         {user &&
           userOrdered._id === user._id &&
-          orderItem.deliveryStatus === "Delivered" && (
+          orderItem.deliveryTracking.currentStatus.status === "Delivered" && (
             <>
               <div
                 className="cursor-pointer text-white-color bg-orange-color hover:bg-malon-color h-[30px] mr-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
@@ -111,13 +116,13 @@ const IsUser = ({
               </Modal>
             </>
           )}
-        {orderItem.trackingNumber && (
+        {orderItem.deliveryOption._id && (
           <label className="mr-5">
-            Tracking Number: {orderItem.trackingNumber}
+            Tracking Number: {orderItem.deliveryOption._id}
           </label>
         )}
       </div>
-      {deliveryNumber(orderItem.deliveryStatus) > 3 && (
+      {deliveryNumber(orderItem.deliveryTracking.currentStatus.status) > 3 && (
         <div className="flex gap-1 items-center justify-center">
           <div
             className="cursor-pointer flex flex-col items-center"
@@ -125,9 +130,11 @@ const IsUser = ({
           >
             <b>Log a return</b>
           </div>
-          {daydiff(orderItem.deliveredAt, 3) >= 0 && (
+          {daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) >=
+            0 && (
             <div className="text-[red]">
-              {daydiff(orderItem.deliveredAt, 3)} days left
+              {daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3)}{" "}
+              days left
             </div>
           )}
         </div>
@@ -146,31 +153,33 @@ const IsUser = ({
         <div className="flex mb-2.5 flex-[8]">
           <img
             className="object-cover object-top w-[100px] h-[130px]"
-            src={orderItem.images[0]}
-            alt={orderItem.name}
+            src={orderItem.product.images[0]}
+            alt={orderItem.product.name}
           />
           <div className="flex flex-col justify-center px-5 py-0">
             <div className="capitalize font-semibold mb-2.5">
-              {orderItem.name}
+              {orderItem.product.name}
             </div>
             <div className="mb-2.5">QTY: {orderItem.quantity}</div>
             <div className="font-bold">
-              Unit Price: {currency(orderItem.region)}
-              {orderItem.sellingPrice}
+              Unit Price: {currency(orderItem.product.region)}
+              {orderItem.price}
             </div>
             <div className="font-bold">
-              Total:{currency(orderItem.region)}
-              {orderItem.sellingPrice * orderItem.quantity}
+              Total:{currency(orderItem.product.region)}
+              {orderItem.price * orderItem.quantity}
             </div>
           </div>
         </div>
         <div className="flex-[2] print:hidden print:mb-2.5">
           <button className="bg-[#0d6efd] w-full px-3 py-[0.375rem] text-base leading-normal border-none">
-            <Link to={`/product/${orderItem.slug}`}>Buy Again</Link>
+            <Link to={`/product/${orderItem.product.slug}`}>Buy Again</Link>
           </button>
           {user?.role === "Admin" &&
-            daydiff(orderItem.deliveredAt, 3) <= 0 &&
-            deliveryNumber(orderItem.deliveryStatus) < 4 && (
+            daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) <=
+              0 &&
+            deliveryNumber(orderItem.deliveryTracking.currentStatus.status) <
+              4 && (
               <button
                 onClick={() => refund(orderItem)}
                 className="w-full px-3 py-[0.375rem] text-base leading-normal border-none bg-malon-color mt-2.5"
@@ -187,8 +196,10 @@ const IsUser = ({
             </button>
           )}
           {user?.role === "Admin" &&
-            daydiff(orderItem.deliveredAt, 3) <= 0 &&
-            deliveryNumber(orderItem.deliveryStatus) === 4 && (
+            daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) <=
+              0 &&
+            deliveryNumber(orderItem.deliveryTracking.currentStatus.status) ===
+              4 && (
               <button
                 onClick={() => {
                   paySeller(orderItem)
@@ -201,13 +212,13 @@ const IsUser = ({
             )}
         </div>
       </div>
-      {Object.entries(orderItem.deliverySelect).map(([key, value]) =>
+      {Object.entries(orderItem.deliveryOption).map(([key, value]) =>
         key === "total" ? (
           ""
         ) : (
           <div className="flex capitalize text-[13px]" key={key}>
             <div className="flex-1">{key}:</div>
-            {key === "cost" ? (
+            {key === "fee" ? (
               <div className="flex-1 lg:flex-[5]">
                 {currency(region())} {value}
               </div>

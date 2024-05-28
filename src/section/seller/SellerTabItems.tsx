@@ -1,11 +1,10 @@
 import useAuth from "../../hooks/useAuth"
-import { IProduct } from "../../types/product"
 import ProductItem from "../../components/ProductItem"
 import { Link } from "react-router-dom"
 import MessageBox from "../../components/MessageBox"
 import LoadingBox from "../../components/LoadingBox"
 import { FaCirclePlus } from "react-icons/fa6"
-import { IUser } from "../../types/user"
+import { UserByUsername } from "../../types/user"
 
 const tabs = ["all", "selling", "sold", "liked"] as const
 type DisplayTab = (typeof tabs)[number] | "saved"
@@ -14,17 +13,10 @@ type Props = {
   displayTab: DisplayTab
   loading: boolean
   error?: string | null
-  products: IProduct[]
-  user?: IUser
+  user?: UserByUsername["products"]
 }
 
-const SellerTabItems = ({
-  displayTab,
-  loading,
-  error,
-  products,
-  user,
-}: Props) => {
+const SellerTabItems = ({ displayTab, loading, error, user }: Props) => {
   const { user: userInfo } = useAuth()
 
   return (
@@ -43,19 +35,19 @@ const SellerTabItems = ({
         </div>
       )}
       {loading && <LoadingBox />}
-      {""}
+
       {!loading && error && (
         <MessageBox className="text-red-500">{error}</MessageBox>
       )}
-      {""}
+
       {!loading && !error && (
         <>
           {displayTab === "all" && (
             <>
-              {products.length === 0 ? (
+              {user?.all.length === 0 ? (
                 <MessageBox>No Product Found</MessageBox>
               ) : (
-                products.map((product) => (
+                user?.all.map((product) => (
                   <div
                     className="relative flex justify-center w-[162px] h-[342px] mx-[3px] my-[5px] lg:w-auto lg:h-auto m-0"
                     key={product._id}
@@ -69,10 +61,10 @@ const SellerTabItems = ({
 
           {displayTab === "selling" && (
             <>
-              {products.length === 0 ? (
+              {user?.selling.length === 0 ? (
                 <MessageBox>No Product Found</MessageBox>
               ) : (
-                products.map(
+                user?.selling.map(
                   (product) =>
                     product.countInStock > 0 && (
                       <div
@@ -89,10 +81,10 @@ const SellerTabItems = ({
 
           {displayTab === "sold" && (
             <>
-              {products.length === 0 ? (
+              {user?.sold.length === 0 ? (
                 <MessageBox>No Product Found</MessageBox>
               ) : (
-                products.map(
+                user?.sold.map(
                   (product) =>
                     product.sold && (
                       <div
@@ -120,10 +112,10 @@ const SellerTabItems = ({
 
           {displayTab === "liked" && (
             <>
-              {user?.likes.length === 0 ? (
+              {user?.liked.length === 0 ? (
                 <MessageBox>No Product Found</MessageBox>
               ) : (
-                user?.likes.map((product) => (
+                user?.liked.map((product) => (
                   <div
                     className="relative flex justify-center w-[162px] h-[342px] mx-[3px] my-[5px] lg:w-auto lg:h-auto m-0"
                     key={product._id}
@@ -141,10 +133,10 @@ const SellerTabItems = ({
                 <LoadingBox></LoadingBox>
               ) : error ? (
                 <MessageBox className="text-red-500">{error}</MessageBox>
-              ) : user?.wishlist.length === 0 ? (
+              ) : user?.liked.length === 0 ? (
                 <MessageBox>No Product Found</MessageBox>
               ) : (
-                user?.wishlist.map((product) => (
+                user?.liked.map((product) => (
                   <div
                     className="relative flex justify-center w-[162px] h-[342px] mx-[3px] my-[5px] lg:w-auto lg:h-auto m-0"
                     key={product._id}

@@ -5,8 +5,8 @@ const FooterBrands = () => {
         className="w-full -mt-px text-white bg-malon-color"
         src="https://res.cloudinary.com/emirace/image/upload/v1656370275/wave23_htx1rw.png"
         alt=""
-      ></img>
-      <div className="items-center flex h-[100px] justify-around relative w-full -mt-0.5 bg-black">
+      />
+      <div className="items-center flex h-[100px] overflow-x-scroll scrollbar-hide justify-around relative w-full -mt-0.5 bg-black">
         <img
           src="/images/brands/gucci.png"
           alt="gucci"

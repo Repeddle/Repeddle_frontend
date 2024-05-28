@@ -25,7 +25,7 @@ const TopFooterItem = ({
         <div
           className={`flex text-[15px] lg:hidden font-bold items-center capitalize relative cursor-pointer mx-0 my-[5px] 
           before:content-["_"] before:w-2.5 before:h-2.5 before:-translate-y-2/4 before:absolute before:border-b
-            before:border-l before:right-5 before:top-2/4 ${
+            before:border-l before:right-5 before:top-2/4 pr-7 ${
               showMethod ? "before:rotate-[-45deg]" : "before:rotate-[135deg]"
             }`}
           onClick={() => setShowMethod(!showMethod)}

@@ -14,12 +14,12 @@ const MobileApp = () => {
           <div className="flex justify-start lg:justify-between">
             <img
               src="/images/mobile/as.png"
-              className="w-[140px] mr-2.5 cursor-pointer lg:w-[20vw] lg:mr-[5px]"
+              className="w-[100px] sm:w-[140px] mr-2.5 cursor-pointer lg:w-[20vw] lg:mr-[5px]"
               alt="playstore"
             />
             <img
               src="/images/mobile/gp.png"
-              className="w-[140px] mr-2.5 cursor-pointer lg:w-[20vw] lg:mr-[5px]"
+              className="w-[100px] sm:w-[140px] mr-2.5 cursor-pointer lg:w-[20vw] lg:mr-[5px]"
               alt="playstore"
             />
           </div>
