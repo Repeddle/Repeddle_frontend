@@ -158,7 +158,7 @@ const EditProduct = () => {
   }
 
   const handleError = (
-    errorMessage: "",
+    errorMessage: string,
     input: keyof typeof validationError
   ) => {
     setValidationError((prevState) => ({
@@ -525,7 +525,7 @@ const EditProduct = () => {
                   </div>
                 </div>
                 <div className="relative flex flex-col lg:w-[400px] mr-5 mt-2.5 w-full">
-                  <label className="text-sm mt-[15px] flex mb-2.5">
+                  <label className="text-sm mt-[15px] flex mb-2.5 items-center">
                     Condition{" "}
                     <div
                       data-content="What happens if I’m not certain of my product condition?
@@ -576,7 +576,7 @@ const EditProduct = () => {
                   )}
                 </div>
                 <div className="relative flex flex-col lg:w-[400px] mr-5 mt-2.5 w-full">
-                  <label className="text-sm mt-[15px] flex mb-2.5">
+                  <label className="text-sm mt-[15px] flex mb-2.5 items-center">
                     Material{" "}
                     <div
                       data-content="How do I know what the primary material of the product is? This information is mostly indicated on the Product labels, please refer to the label detailing the composition of your Product."
@@ -854,7 +854,7 @@ const EditProduct = () => {
                   )}
                 </div>
                 <div className="relative flex flex-col lg:w-[400px] mr-5 mt-2.5 w-full">
-                  <label className="text-sm mt-[15px] flex mb-2.5">
+                  <label className="text-sm mt-[15px] flex mb-2.5 items-center">
                     Color{" "}
                     <div
                       data-content="How can I ensure that color of the 
@@ -915,7 +915,7 @@ const EditProduct = () => {
                     <div className="flex-1">
                       <>
                         <div className="relative flex flex-col lg:w-[400px] mr-5 mt-0 w-full">
-                          <label className="text-sm mt-[15px] mb-2.5">
+                          <label className="text-sm flex items-center mt-[15px] mb-2.5">
                             Add Size
                             <div
                               data-content="If I feel the product and the size seems to differ from what indicated on the label, what should I do?

@@ -64,6 +64,9 @@ import MobileNotification from "./pages/protected/MobileNotification"
 import CategoryMobile from "./pages/defaults/CategoryMobile"
 import EditProduct from "./pages/protected/EditProduct"
 import SalesList from "./pages/protected/SalesList"
+import NewProduct from "./pages/protected/NewProduct"
+import VerifyAccount from "./pages/protected/VerifyAccount"
+import VerifyAddress from "./pages/protected/VerifyAddress"
 
 const router = createBrowserRouter([
   {
@@ -125,6 +128,9 @@ const router = createBrowserRouter([
           { path: "/return/:id", element: <ReturnPage /> },
           { path: "/notifications", element: <MobileNotification /> },
           { path: "profilmenu", element: <MobileProfile /> },
+          { path: "newproduct", element: <NewProduct /> },
+          { path: "verifyaccount", element: <VerifyAccount /> },
+          { path: "verifyaddress", element: <VerifyAddress /> },
         ],
       },
       {

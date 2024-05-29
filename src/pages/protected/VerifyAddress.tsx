@@ -1,21 +1,23 @@
 import { FormEvent, useState } from "react"
 import { Helmet } from "react-helmet-async"
-import { region } from "../../utils/common"
-import { banks } from "../../utils/constants"
-import Button from "../../components/ui/Button"
 import InputWithLabel2 from "../../components/ui/InputWithLabel2"
+import { region } from "../../utils/common"
+import { states } from "../../utils/constants"
+import Button from "../../components/ui/Button"
 
-const VerifyAccount = () => {
+const VerifyAddress = () => {
   const [input, setInput] = useState({
-    accountName: "",
-    accountNumber: "",
-    bankName: "",
+    street: "",
+    apartment: "",
+    zipcode: "",
+    state: "",
   })
 
   const [error, setError] = useState({
-    accountName: "",
-    accountNumber: "",
-    bankName: "",
+    street: "",
+    apartment: "",
+    zipcode: "",
+    state: "",
   })
 
   const handleOnChange = (text: string, inputVal: keyof typeof input) => {
@@ -25,21 +27,24 @@ const VerifyAccount = () => {
   const handleError = (errorMessage: string, inputVal: keyof typeof error) => {
     setError((prevState) => ({ ...prevState, [inputVal]: errorMessage }))
   }
-  const submitHandler = async () => {}
 
   const validate = (e: FormEvent) => {
     e.preventDefault()
     let valid = true
-    if (!input.accountNumber) {
-      handleError("Enter a valid account number", "accountNumber")
+    if (!input.street) {
+      handleError("Enter your street", "street")
       valid = false
     }
-    if (!input.accountName) {
-      handleError("Enter a valid account name", "accountName")
+    // if (!input.apartment) {
+    //   handleError("Enter your apartment", "apartment");
+    //   valid = false;
+    // }
+    if (!input.state) {
+      handleError("Select your state/province", "state")
       valid = false
     }
-    if (!input.bankName) {
-      handleError("Select a valid bank", "bankName")
+    if (!input.zipcode) {
+      handleError("Enter your zip code", "zipcode")
       valid = false
     }
 
@@ -47,6 +52,7 @@ const VerifyAccount = () => {
       submitHandler()
     }
   }
+  const submitHandler = async () => {}
 
   return (
     <div className="max-w-[800px] bg-light-ev1 dark:bg-dark-ev1 mx-auto my-10 p-[50px] rounded-[10px]">
@@ -55,21 +61,20 @@ const VerifyAccount = () => {
       </Helmet>
 
       <h3 className="my-4 text-[calc(1.3rem_+_0.6vw)] leading-[1.2]">
-        Provide Your Bank Account Detail
+        Provide Your Receive/Return Address
       </h3>
       <p>
-        To become a Seller, kindly provide your banking details where you can
-        transfer your earnings deposited in your Repeddle wallet
+        The provided address may be use for return should there be a need. This
+        address is not displayed to buyers.
       </p>
-
       <form onSubmit={validate} className="my-2">
         <div className="my-4">
           <InputWithLabel2
-            label="Account Name"
-            error={error.accountName}
-            value={input.accountName}
-            onFocus={() => handleError("", "accountName")}
-            onChange={(e) => handleOnChange(e, "accountName")}
+            label="Street"
+            error={error.street}
+            value={input.street}
+            onFocus={() => handleError("", "street")}
+            onChange={(e) => handleOnChange(e, "street")}
           />
         </div>
 
@@ -77,35 +82,44 @@ const VerifyAccount = () => {
           <InputWithLabel2
             type="number"
             label="Account Number"
-            error={error.accountNumber}
-            value={input.accountNumber}
-            onFocus={() => handleError("", "accountNumber")}
-            onChange={(e) => handleOnChange(e, "accountNumber")}
+            error={error.apartment}
+            value={input.apartment}
+            onFocus={() => handleError("", "apartment")}
+            onChange={(e) => handleOnChange(e, "apartment")}
           />
         </div>
 
         <div className="flex flex-col mt-2.5">
-          <label className="text-sm">Bank Name</label>
+          <label className="text-sm">State</label>
           <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] my-2.5  border border-light-ev4 dark:border-dark-ev4">
             <select
-              onChange={(e) => handleOnChange(e.target.value, "bankName")}
-              onFocus={() => handleError("", "bankName")}
+              onChange={(e) => handleOnChange(e.target.value, "state")}
+              onFocus={() => handleError("", "state")}
               className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
             >
               {region() === "NGN"
-                ? banks.Nigeria.map((x) => (
-                    <option value={x.name}>{x.name}</option>
-                  ))
-                : banks.SouthAfrica.map((x) => (
-                    <option value={x.name}>{x.name}</option>
+                ? states.Nigeria.map((x) => <option value={x}>{x}</option>)
+                : states.SouthAfrican.map((x) => (
+                    <option value={x}>{x}</option>
                   ))}
             </select>
           </div>
         </div>
-        <div className="text-malon-color my-2.5">
-          Note: This cannot be change once saved, contact support to make any
-          changes.
+
+        <div className="my-4">
+          <InputWithLabel2
+            label="Zip Code"
+            error={error.zipcode}
+            value={input.zipcode}
+            onFocus={() => handleError("", "zipcode")}
+            onChange={(e) => handleOnChange(e, "zipcode")}
+          />
         </div>
+
+        <div className="text-malon-color my-2.5">
+          Note: This can be editted later in your profile screen
+        </div>
+
         <div className="mb-3">
           <Button text="Save" />
         </div>
@@ -114,4 +128,4 @@ const VerifyAccount = () => {
   )
 }
 
-export default VerifyAccount
+export default VerifyAddress
