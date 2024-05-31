@@ -9,7 +9,7 @@ import { resizeImage } from "../../utils/common"
 type Props = {
   setShowModel: (val: boolean) => void
   currentImage: string
-  uploadHandler: (file: File, image: string) => void
+  uploadHandler: (file: File, image: string) => Promise<void>
 }
 
 const CropImage = ({ uploadHandler, setShowModel, currentImage }: Props) => {

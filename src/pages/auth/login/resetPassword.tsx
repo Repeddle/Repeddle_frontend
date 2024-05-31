@@ -105,7 +105,7 @@ const ResetPassword = () => {
           <div className="flex-[3] lg:flex-1 p-4 lg:p-8">
             <div className="flex h-full w-full mt-24 lg:mt-0 lg:justify-center items-center flex-col">
               <div className="w-full max-w-lg flex flex-col gap-6">
-                <h2 className="text-2xl font-semibold">Forget Password</h2>
+                <h2 className="text-2xl font-semibold">Reset Password</h2>
                 <form className="flex flex-col gap-6" onSubmit={submitHandler}>
                   <InputWithLabel
                     label="Password"

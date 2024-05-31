@@ -261,9 +261,9 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     try {
       setError("")
       setLoading(true)
-      const response = await resetUserPasswordService(password, token)
+      await resetUserPasswordService(password, token)
       setLoading(false)
-      return !!response
+      return true
     } catch (error) {
       handleError(error)
       return false
