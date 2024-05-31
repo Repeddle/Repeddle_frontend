@@ -1,3 +1,4 @@
+
 import Search from "./pages/defaults/Search"
 import { createBrowserRouter } from "react-router-dom"
 import App from "./App"
@@ -67,6 +68,7 @@ import SalesList from "./pages/protected/SalesList"
 import NewProduct from "./pages/protected/NewProduct"
 import VerifyAccount from "./pages/protected/VerifyAccount"
 import VerifyAddress from "./pages/protected/VerifyAddress"
+        import HowRepeddleWork from "./pages/defaults/info/HowRepeddleWork";
 
 const router = createBrowserRouter([
   {
@@ -112,6 +114,7 @@ const router = createBrowserRouter([
           { path: "Contact-Us", element: <ContactUs /> },
           { path: "feestructure", element: <FeeStructure /> },
           { path: "buyerprotection", element: <BuyersProtection /> },
+          { path: "how-repeddle-work", element: <HowRepeddleWork /> },
           { path: "brands", element: <Brand /> },
           { path: "messages", element: <Message /> },
           { path: "categories", element: <CategoryMobile /> },
@@ -167,6 +170,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-])
+]);
 
-export default router
+export default router;

@@ -54,7 +54,7 @@ export const createArticle = async (
 };
 
 export const updateArticle = async (
-  id: number,
+  id: string,
   articleData: Partial<Article>
 ): Promise<void> => {
   try {
@@ -65,7 +65,7 @@ export const updateArticle = async (
   }
 };
 
-export const deleteArticle = async (id: number): Promise<void> => {
+export const deleteArticle = async (id: string): Promise<void> => {
   try {
     await api.delete(`/articles/${id}`);
   } catch (error) {

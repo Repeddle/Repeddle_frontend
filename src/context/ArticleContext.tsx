@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, ReactNode, createContext } from "react";
 import {
@@ -24,10 +25,10 @@ interface ArticleContextData {
   fetchArticles: (search?: string) => Promise<Article[]>;
   createArticle: (articleData: Article) => Promise<boolean>;
   updateArticle: (
-    _id: number,
+    _id: string,
     articleData: Partial<Article>
   ) => Promise<boolean>;
-  deleteArticle: (_id: number) => Promise<boolean>;
+  deleteArticle: (_id: string) => Promise<boolean>;
 }
 
 // Create the ArticleContext
@@ -78,7 +79,7 @@ const ArticleProvider: React.FC<Props> = ({ children }) => {
       return true;
     } catch (error) {
       handleError(error);
-      return false;
+      throw error;
     }
   };
 
@@ -93,10 +94,12 @@ const ArticleProvider: React.FC<Props> = ({ children }) => {
   };
 
   const updateArticle = async (
-    _id: number,
+    _id: string,
     articleData: Partial<Article>
   ): Promise<boolean> => {
     try {
+      // Convert _id from string to number if necessary
+      // const numericId = Number(_id);
       await updateArticleService(_id, articleData);
       const updatedArticles = articles.map((article) =>
         article._id === _id ? { ...article, ...articleData } : article
@@ -109,7 +112,7 @@ const ArticleProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
-  const deleteArticle = async (_id: number): Promise<boolean> => {
+  const deleteArticle = async (_id: string): Promise<boolean> => {
     try {
       await deleteArticleService(_id);
       setArticles(articles.filter((article) => article._id !== _id));
