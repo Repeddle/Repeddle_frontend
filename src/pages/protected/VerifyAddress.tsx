@@ -4,8 +4,15 @@ import InputWithLabel2 from "../../components/ui/InputWithLabel2"
 import { region } from "../../utils/common"
 import { states } from "../../utils/constants"
 import Button from "../../components/ui/Button"
+import { useNavigate } from "react-router-dom"
+import useToastNotification from "../../hooks/useToastNotification"
+import useAuth from "../../hooks/useAuth"
 
 const VerifyAddress = () => {
+  const { updateUser, loading, error: userError } = useAuth()
+  const { addNotification } = useToastNotification()
+  const navigate = useNavigate()
+
   const [input, setInput] = useState({
     street: "",
     apartment: "",
@@ -35,10 +42,10 @@ const VerifyAddress = () => {
       handleError("Enter your street", "street")
       valid = false
     }
-    // if (!input.apartment) {
-    //   handleError("Enter your apartment", "apartment");
-    //   valid = false;
-    // }
+    if (!input.apartment) {
+      handleError("Enter your apartment", "apartment")
+      valid = false
+    }
     if (!input.state) {
       handleError("Select your state/province", "state")
       valid = false
@@ -52,12 +59,28 @@ const VerifyAddress = () => {
       submitHandler()
     }
   }
-  const submitHandler = async () => {}
+  const submitHandler = async () => {
+    const res = await updateUser({
+      address: {
+        state: input.state,
+        street: input.street,
+        apartment: input.apartment,
+        zipcode: +input.zipcode,
+      },
+      role: "Seller",
+    })
+    if (res) {
+      addNotification("Address Verified Successfully")
+      navigate("/newproduct")
+    } else {
+      addNotification(userError ?? "Failed to verify address")
+    }
+  }
 
   return (
     <div className="max-w-[800px] bg-light-ev1 dark:bg-dark-ev1 mx-auto my-10 p-[50px] rounded-[10px]">
       <Helmet>
-        <title>Verify Account</title>
+        <title>Verify Address</title>
       </Helmet>
 
       <h3 className="my-4 text-[calc(1.3rem_+_0.6vw)] leading-[1.2]">
@@ -109,6 +132,7 @@ const VerifyAddress = () => {
         <div className="my-4">
           <InputWithLabel2
             label="Zip Code"
+            type="number"
             error={error.zipcode}
             value={input.zipcode}
             onFocus={() => handleError("", "zipcode")}
@@ -121,7 +145,7 @@ const VerifyAddress = () => {
         </div>
 
         <div className="mb-3">
-          <Button text="Save" />
+          <Button text="Save" isLoading={loading} />
         </div>
       </form>
     </div>

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IUser, UpdateFields } from "../types/user"
+import { IUser, UpdateUser } from "../types/user"
 import { getBackendErrorMessage } from "../utils/error"
 import api from "./api"
 
@@ -153,7 +153,7 @@ export async function getUserService(): Promise<IUser> {
   }
 }
 
-export async function getAllUserService():Promise<IUser[]>{
+export async function getAllUserService(): Promise<IUser[]> {
   return []
 }
 
@@ -230,9 +230,7 @@ export async function followUserService(userId: string): Promise<string> {
   }
 }
 
-export async function updateUserService(
-  userData: UpdateFields
-): Promise<IUser> {
+export async function updateUserService(userData: UpdateUser): Promise<IUser> {
   try {
     const response: any = await api.put("/users/update-profile", userData)
 

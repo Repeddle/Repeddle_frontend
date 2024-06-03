@@ -9,7 +9,8 @@ const SearchBox = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    navigate(`/search?search=${query}`)
+    if (query) navigate(`/search?search=${query}`)
+    navigate(`/search`)
   }
 
   return (

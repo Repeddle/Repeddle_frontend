@@ -4,8 +4,15 @@ import { region } from "../../utils/common"
 import { banks } from "../../utils/constants"
 import Button from "../../components/ui/Button"
 import InputWithLabel2 from "../../components/ui/InputWithLabel2"
+import useAuth from "../../hooks/useAuth"
+import useToastNotification from "../../hooks/useToastNotification"
+import { useNavigate } from "react-router-dom"
 
 const VerifyAccount = () => {
+  const { updateUser, loading, error: userError } = useAuth()
+  const { addNotification } = useToastNotification()
+  const navigate = useNavigate()
+
   const [input, setInput] = useState({
     accountName: "",
     accountNumber: "",
@@ -25,7 +32,20 @@ const VerifyAccount = () => {
   const handleError = (errorMessage: string, inputVal: keyof typeof error) => {
     setError((prevState) => ({ ...prevState, [inputVal]: errorMessage }))
   }
-  const submitHandler = async () => {}
+
+  const submitHandler = async () => {
+    const res = await updateUser({
+      accountName: input.accountName,
+      accountNumber: +input.accountNumber,
+      bankName: input.bankName,
+    })
+    if (res) {
+      addNotification("Account Verified Successfully")
+      navigate("/newproduct")
+    } else {
+      addNotification(userError ?? "Failed to verify account")
+    }
+  }
 
   const validate = (e: FormEvent) => {
     e.preventDefault()
@@ -107,7 +127,7 @@ const VerifyAccount = () => {
           changes.
         </div>
         <div className="mb-3">
-          <Button text="Save" />
+          <Button text="Save" disabled={loading} />
         </div>
       </form>
     </div>

@@ -15,7 +15,7 @@ import {
   unFollowUserService,
   followUserService,
 } from "../services/auth"
-import { IUser, UpdateFields } from "../types/user"
+import { IUser, UpdateUser } from "../types/user"
 import socket from "../socket"
 
 interface Props {
@@ -41,7 +41,7 @@ export const AuthContext = createContext<{
   login: (credentials: { email: string; password: string }) => Promise<boolean>
   sendForgetPasswordEmail: (credentials: { email: string }) => Promise<boolean>
   getUser: () => Promise<IUser | null>
-  updateUser: (userData: UpdateFields) => Promise<IUser | null>
+  updateUser: (userData: UpdateUser) => Promise<IUser | null>
   logout: () => void
   deleteUser: (id: string) => Promise<boolean | null>
   resetPassword: (password: string, token: string) => Promise<boolean>
@@ -227,7 +227,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     }
   }
 
-  const updateUser = async (userData: UpdateFields) => {
+  const updateUser = async (userData: UpdateUser) => {
     try {
       setError("")
       const updatedUser = await updateUserService(userData)

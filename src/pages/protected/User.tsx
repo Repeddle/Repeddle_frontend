@@ -250,8 +250,7 @@ const User = () => {
 
   const handleNewsletter = async () => {
     if (newsletterStatus) {
-      // TODO: ask if its userid
-      const resp = await deleteNewsletter("")
+      const resp = await deleteNewsletter(user?._id ?? "")
       if (resp.success) {
         addNotification(resp.message ?? "Unsubscribed from newsletter")
         setNewsletterStatus(false)
