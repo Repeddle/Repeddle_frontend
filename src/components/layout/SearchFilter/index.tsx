@@ -3,7 +3,7 @@ import SearchBrands from "./SearchBrands"
 import SearchPrice from "./SearchPrice"
 import SearchDeals from "./SearchDeals"
 import SearchDropDown from "./SearchDropDown"
-import { SearchOptionsKey } from "../../../types/search"
+import { SearchOptions, SearchOptionsKey } from "../../../types/search"
 import SearchRatings from "./SearchRatings"
 import SearchColor from "./SearchColor"
 import SearchSizes from "./SearchSizes"
@@ -19,6 +19,7 @@ import {
   sizelist,
   typelist,
 } from "../../../utils/constants"
+import { useCallback, useEffect, useState } from "react"
 
 type Props = {
   setShowFilter: (val: boolean) => void
@@ -44,21 +45,73 @@ const SearchFilter = ({
 
   const [searchParams, setSearchParams] = useSearchParams()
 
-  const getParam = (key: SearchOptionsKey) => searchParams.get(key) ?? "all"
+  const [params, setParams] = useState<SearchOptions>({})
 
-  const changeParam = (key: SearchOptionsKey, val: string | number) => {
+  const getParam = (key: SearchOptionsKey) => params[key]?.toString() ?? "all"
+
+  const changeFilterParam = (key: SearchOptionsKey, val: string | number) => {
+    if (val === "all") return removeFilterParam(key)
+    const filterParam = getFilterParamObj()
+    filterParam[key] = val.toString()
+
+    const param = joinFilterParm(filterParam)
+
     setSearchParams((prev) => {
-      prev.set(key, val.toString())
+      prev.set("filter", param)
+      prev.delete("page")
+
       return prev
     })
   }
 
-  const removeParam = (key: SearchOptionsKey) => {
+  const getFilterParamObj = useCallback(() => {
+    const param = searchParams.get("filter")
+    const paramObj: { [key: string]: string } = {}
+    if (param) {
+      const paramArray = param.split(",")
+
+      paramArray.map((val) => {
+        const paramSplit = val.split(":")
+        if (paramSplit.length === 2) {
+          paramObj[paramSplit[0]] = paramSplit[1]
+        }
+      })
+    }
+    return paramObj
+  }, [searchParams])
+
+  const joinFilterParm = (param: { [key: string]: string }) => {
+    const params = Object.keys(param)
+      .map((obj) => `${obj}:${param[obj]}`)
+      .join(",")
+    return params
+  }
+
+  const removeFilterParam = (key: SearchOptionsKey) => {
+    const filterParam = getFilterParamObj()
+
+    delete filterParam[key]
+
+    if (Object.keys(filterParam).length === 0) {
+      setSearchParams((prev) => {
+        prev.delete("filter")
+        return prev
+      })
+      return
+    }
+
+    const param = joinFilterParm(filterParam)
+
     setSearchParams((prev) => {
-      prev.delete(key)
+      prev.set("filter", param)
       return prev
     })
   }
+
+  useEffect(() => {
+    const val = getFilterParamObj()
+    setParams(val)
+  }, [getFilterParamObj])
 
   return (
     <div
@@ -93,8 +146,8 @@ const SearchFilter = ({
           allText="All"
           changeParam={(val: string) =>
             val === "all"
-              ? removeParam("category")
-              : changeParam("category", val)
+              ? removeFilterParam("category")
+              : changeFilterParam("category", val)
           }
           list={categories}
           selectedItem={getParam("category")}
@@ -103,7 +156,9 @@ const SearchFilter = ({
         <SearchBrands
           brand="all"
           changeParam={(val: string) =>
-            val === "all" ? removeParam("brand") : changeParam("brand", val)
+            val === "all"
+              ? removeFilterParam("brand")
+              : changeFilterParam("brand", val)
           }
           queryBrand={queryBrand}
           searchBrand={brands}
@@ -114,32 +169,30 @@ const SearchFilter = ({
           maxPrice={maxPrice}
           minPrice={minPrice}
           currency="N"
-          changeParam={changeParam}
+          changeParam={changeFilterParam}
         />
 
         <SearchDeals
           selectedDeal={getParam("deal")}
           deals={deals}
-          changeParam={(val: string) => changeParam("deal", val)}
+          changeParam={(val: string) => changeFilterParam("deal", val)}
         />
 
         <SearchRatings
           title="Rating"
           all={{ rating: "all" }}
-          changeParam={(val: string) =>
-            val === "all" ? removeParam("rating") : changeParam("rating", val)
-          }
+          changeParam={(val: string) => changeFilterParam("rating", val)}
           list={ratings}
           selectedRating={getParam("rating")}
         />
 
         <SearchColor
-          changeParam={(val: string) => changeParam("color", val)}
+          changeParam={(val: string) => changeFilterParam("color", val)}
           selectedColor={getParam("color")}
         />
 
         <SearchSizes
-          changeParam={(val: string) => changeParam("size", val)}
+          changeParam={(val: string) => changeFilterParam("size", val)}
           selectedSize={getParam("size")}
           sizes={sizelist}
         />
@@ -150,8 +203,8 @@ const SearchFilter = ({
           allText="All Product"
           changeParam={(val: string) =>
             val === "all"
-              ? removeParam("shipping")
-              : changeParam("shipping", val)
+              ? removeFilterParam("shipping")
+              : changeFilterParam("shipping", val)
           }
           list={shippinglist}
           selectedItem={getParam("shipping")}
@@ -163,8 +216,8 @@ const SearchFilter = ({
           allText="All Condition"
           changeParam={(val: string) =>
             val === "all"
-              ? removeParam("condition")
-              : changeParam("condition", val)
+              ? removeFilterParam("condition")
+              : changeFilterParam("condition", val)
           }
           list={conditionlist}
           selectedItem={getParam("condition")}
@@ -176,8 +229,8 @@ const SearchFilter = ({
           allText="All"
           changeParam={(val: string) =>
             val === "all"
-              ? removeParam("availability")
-              : changeParam("availability", val)
+              ? removeFilterParam("availability")
+              : changeFilterParam("availability", val)
           }
           list={availabilitylist}
           selectedItem={getParam("availability")}
@@ -188,7 +241,9 @@ const SearchFilter = ({
           all={{ type: "all" }}
           allText="All"
           changeParam={(val: string) =>
-            val === "all" ? removeParam("type") : changeParam("type", val)
+            val === "all"
+              ? removeFilterParam("type")
+              : changeFilterParam("type", val)
           }
           list={typelist}
           selectedItem={getParam("type")}
@@ -199,7 +254,9 @@ const SearchFilter = ({
           all={{ pattern: "all" }}
           allText="All"
           changeParam={(val: string) =>
-            val === "all" ? removeParam("pattern") : changeParam("pattern", val)
+            val === "all"
+              ? removeFilterParam("pattern")
+              : changeFilterParam("pattern", val)
           }
           list={patternlist}
           selectedItem={getParam("pattern")}

@@ -34,7 +34,7 @@ const SearchRatings = ({ list, changeParam, selectedRating, title }: Props) => {
         {list.map((r) => (
           <div
             key={r.rating}
-            onClick={() => changeParam("all")}
+            onClick={() => changeParam(r.rating.toString())}
             className={`cursor-pointer flex items-center capitalize p-0.5 rounded-[0.2rem]
         dark:hover:bg-dark-ev2 dark:active:bg-dark-ev2 hover:bg-light-ev3 active:bg-light-ev3
         ${r.rating === +selectedRating ? "text-orange-color" : ""}`}
