@@ -148,7 +148,7 @@ const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
   return (
     <div className={sidebarClasses}>
       {/* Sidebar Header */}
-      <div className="bg-orange-color py-4 px-6 shadow-lg">
+      <div className="bg-orange-color flex-1 h-[72px] flex justify-center items-center py-4 px-6 shadow-lg">
         <Link to="/" className="text-2xl font-semibold flex items-center">
           <img
             src={

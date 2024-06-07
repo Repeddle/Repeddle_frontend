@@ -100,6 +100,8 @@ const ResetPassword = () => {
     }
   }
 
+  console.log(error)
+
   if (!loading && !token) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">

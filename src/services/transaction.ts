@@ -2,10 +2,18 @@ import { ITransaction } from "./../types/transactions"
 import { getBackendErrorMessage } from "../utils/error"
 import api from "./api"
 
-export const fetchTransactionsService = async (): Promise<ITransaction[]> => {
+export const fetchTransactionsService = async (
+  params?: string
+): Promise<ITransaction[]> => {
   try {
+    let url = "/transactions"
+
+    if (params && params.length) {
+      url = url + `?${params}`
+    }
+
     const resp: { transactions: ITransaction[]; status: boolean } =
-      await api.get("/transactions")
+      await api.get(url)
 
     if (!resp.status) {
       // Handle Fetch transactions error, e.g., display an error message to the user
@@ -25,12 +33,18 @@ export const fetchTransactionsService = async (): Promise<ITransaction[]> => {
   }
 }
 
-export const fetchUserTransactionsService = async (): Promise<
-  ITransaction[]
-> => {
+export const fetchUserTransactionsService = async (
+  params?: string
+): Promise<ITransaction[]> => {
   try {
+    let url = "/transactions/user"
+
+    if (params && params.length) {
+      url = url + `?${params}`
+    }
+
     const resp: { transactions: ITransaction[]; status: boolean } =
-      await api.get("/transactions/user")
+      await api.get(url)
 
     if (!resp.status) {
       // Handle Fetch transactions error, e.g., display an error message to the user

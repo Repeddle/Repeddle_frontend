@@ -297,7 +297,7 @@ export async function resetUserPasswordService(
   token: string
 ): Promise<void | boolean> {
   try {
-    const { data } = await api.post(`/users/reset-password/${token}`, {
+    const data = await api.post(`/users/reset-password/${token}`, {
       password,
     })
 

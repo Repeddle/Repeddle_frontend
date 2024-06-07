@@ -72,7 +72,7 @@ const StickyNav = () => {
           )}
         </NavLink>
         <NavLink
-          to="/profilmenu"
+          to={user ? "/profilmenu" : "/auth/login"}
           className={({ isActive }) =>
             `items-center text-malon-color flex flex-col grow justify-center min-w-[50px] relative whitespace-nowrap ${
               isActive ? "text-orange-color" : "text-malon-color"

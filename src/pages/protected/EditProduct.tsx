@@ -43,8 +43,8 @@ const EditProduct = () => {
 
   const [sizes, setSizes] = useState<{ size: string; value: string }[]>([])
 
-  const [active, setActive] = useState("")
-  const [badge, setBadge] = useState("")
+  const [active, setActive] = useState(false)
+  const [badge, setBadge] = useState(false)
   const [price, setPrice] = useState("")
   const [discount, setDiscount] = useState("")
 
@@ -131,6 +131,23 @@ const EditProduct = () => {
         if (typeof data !== "string") {
           setProduct(data)
           setCurrentImage(data.images[0])
+          setInput({
+            ...input,
+            brand: data.brand ?? input.brand,
+            category: data.category ?? input.category,
+            color: data.color ?? input.color,
+            condition: data.condition ?? input.condition,
+            description: data.description ?? input.description,
+            keyFeatures: data.keyFeatures ?? input.keyFeatures,
+            material: data.material ?? input.material,
+            name: data.name ?? input.name,
+            price: data.sellingPrice.toString() ?? input.price,
+            product: data.mainCategory ?? input.product,
+            specification: data.specification ?? input.specification,
+            subCategory: data.subCategory ?? input.subCategory,
+          })
+          setActive(data?.active ?? false)
+          // tags = data.tags
         } else setError(data)
       }
       setLoading(false)
@@ -315,7 +332,7 @@ const EditProduct = () => {
                 <div className="flex items-center w-full">
                   <div className="capitalize flex-1">seller:</div>
                   <div className="capitalize flex-1 font-light">
-                    {product ? product.seller.username : "loading..."}
+                    {product.seller.username}
                   </div>
                 </div>
                 <div className="flex items-center w-full">
@@ -370,8 +387,10 @@ const EditProduct = () => {
                         name="active"
                         id="active"
                         value="yes"
-                        checked={active === "yes" ? true : false}
-                        onChange={(e) => setActive(e.target.value)}
+                        checked={active}
+                        onChange={() => {
+                          setActive(true)
+                        }}
                       />
                       <label
                         className="text-lg font-light mx-2.5 my-0"
@@ -389,8 +408,8 @@ const EditProduct = () => {
                         name="active"
                         id="active2"
                         value="no"
-                        checked={active === "no" ? true : false}
-                        onChange={(e) => setActive(e.target.value)}
+                        checked={!active}
+                        onChange={() => setActive(false)}
                       />
                       <label
                         className="text-lg font-light mx-2.5 my-0"
@@ -411,8 +430,8 @@ const EditProduct = () => {
                         name="badge"
                         id="badgeyes"
                         value="yes"
-                        checked={badge === "yes" ? true : false}
-                        onChange={(e) => setBadge(e.target.value)}
+                        checked={badge}
+                        onChange={() => setBadge(true)}
                       />
                       <label
                         className="text-lg font-light mx-2.5 my-0"
@@ -430,8 +449,8 @@ const EditProduct = () => {
                         name="badge"
                         id="badgeno"
                         value="no"
-                        checked={badge === "no" ? true : false}
-                        onChange={(e) => setBadge(e.target.value)}
+                        checked={!badge}
+                        onChange={() => setBadge(false)}
                       />
                       <label
                         className="text-lg font-light mx-2.5 my-0"
