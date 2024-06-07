@@ -1,6 +1,7 @@
- import { IProduct } from "../../types/product"
+import { IProduct } from "../../types/product"
 import { FaEye } from "react-icons/fa"
 import { Link } from "react-router-dom"
+import Button from "../../components/ui/Button"
 
 type Props = {
   products?: IProduct[]
@@ -35,6 +36,15 @@ const WidgetSmallProduct = ({ products }: Props) => {
               </Link>
             </li>
           ))}
+
+        {(!products || products?.length === 0) && (
+          <div className="min-h-40 text-center gap-2 flex-col flex justify-center items-center">
+            <div>No product added yet</div>
+            <Link to="/newproduct">
+              <Button text="Create Product" />
+            </Link>
+          </div>
+        )}
       </ul>
     </div>
   )

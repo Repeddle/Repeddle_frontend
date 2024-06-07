@@ -42,11 +42,11 @@ export const TransactionProvider = ({ children }: PropsWithChildren) => {
   }
 
   // Function to fetch transactions
-  const fetchTransactions = async () => {
+  const fetchTransactions = async (params?: string) => {
     try {
       setError("")
       setLoading(true)
-      const result = await fetchTransactionsService()
+      const result = await fetchTransactionsService(params)
       setTransactions(result)
       setLoading(false)
       return true
@@ -58,11 +58,11 @@ export const TransactionProvider = ({ children }: PropsWithChildren) => {
   }
 
   // Function to fetch transactions
-  const fetchUserTransactions = async () => {
+  const fetchUserTransactions = async (val?: string) => {
     try {
       setError("")
       setLoading(true)
-      const result = await fetchUserTransactionsService()
+      const result = await fetchUserTransactionsService(val)
       setTransactions(result)
       setLoading(false)
       return true

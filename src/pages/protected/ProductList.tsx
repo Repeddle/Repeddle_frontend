@@ -20,14 +20,8 @@ const headers = [
 
 const ProductList = () => {
   const { user } = useAuth()
-  const {
-    fetchUserProducts,
-    fetchProducts,
-    loading,
-    error,
-    products,
-    deleteProduct,
-  } = useProducts()
+  const { fetchUserProducts, loading, error, products, deleteProduct } =
+    useProducts()
   const { addNotification } = useToastNotification()
 
   const [productQuery, setProductQuery] = useState("")
@@ -35,9 +29,7 @@ const ProductList = () => {
   useEffect(() => {
     const string = createSearchParam([["search", productQuery]])
 
-    // TODO: remove
-    if (user?.role === "Admin") fetchProducts(string)
-    else fetchUserProducts(string)
+    fetchUserProducts(string)
   }, [productQuery, user?.role])
 
   const deleteHandler = async (id: string) => {

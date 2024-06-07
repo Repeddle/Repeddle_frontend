@@ -93,8 +93,8 @@ const ForgetPassword = () => {
         </div>
       </div>
       <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="lg">
-        <div className="bg-white h-full items-center pt-4 px-8 py-6 rounded-lg flex flex-col gap-3">
-          <FaEnvelopeCircleCheck size={120} className="text-malon-color" />
+        <div className="bg-white h-full items-center pt-4 md:px-8 md:py-6 rounded-lg flex flex-col gap-3">
+          <FaEnvelopeCircleCheck className="text-malon-color text-[90px] md:text-[120px]" />
           <h1 className="text-3xl">Reset Link Sent</h1>
           <div className="max-w-3xl text-justify">
             We have sent you an email to reset your password. If the email
