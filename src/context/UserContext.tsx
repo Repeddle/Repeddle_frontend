@@ -4,8 +4,8 @@ import {
   IUsersWithPagination,
   IUser,
   TopSellers,
-  UpdateFields,
   UserByUsername,
+  UpdateUser,
 } from "../types/user"
 import {
   getAllUserAdminService,
@@ -24,7 +24,7 @@ type ContextType = {
   getUserById: (userId: string) => Promise<IUser | null>
   updateUserById: (
     userId: string,
-    userData: UpdateFields
+    userData: UpdateUser
   ) => Promise<IUser | string>
 }
 
@@ -94,7 +94,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
-  const updateUserById = async (id: string, userData: UpdateFields) => {
+  const updateUserById = async (id: string, userData: UpdateUser) => {
     try {
       setError("")
       const updatedUser = await updateUserByIdService(id, userData)

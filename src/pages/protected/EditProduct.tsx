@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import { currency, region } from "../../utils/common"
+import { currency, region, uploadImage } from "../../utils/common"
 import useAuth from "../../hooks/useAuth"
 import Modal from "../../components/ui/Modal"
 import FeeStructure from "../defaults/info/FeeStructure"
@@ -40,8 +40,6 @@ const EditProduct = () => {
   useEffect(() => {
     fetchCategories()
   }, [])
-
-  console.log(id)
 
   const [sizes, setSizes] = useState<{ size: string; value: string }[]>([])
 
@@ -141,7 +139,7 @@ const EditProduct = () => {
     getProductData()
   }, [id])
 
-  const loadingUpload = false
+  const [loadingUpload, setLoadingUpload] = useState(false)
 
   let tags: string[] = []
 
@@ -206,7 +204,13 @@ const EditProduct = () => {
   }
 
   const uploadHandler = async (file: File, fileType: string) => {
-    console.log(file, fileType)
+    setLoadingUpload(true)
+    try {
+      const res = await uploadImage(file)
+      handleOnChange(res, fileType as keyof typeof input)
+    } catch (error) {
+      addNotification(error as string)
+    }
   }
 
   const sizeHandler = (sizenow: string) => {
