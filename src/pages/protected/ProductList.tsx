@@ -48,7 +48,7 @@ const ProductList = () => {
   }
 
   return (
-    <div className="flex-[4] relative overflow-x-hidden mb-5 min-h-[85vh] flex flex-col lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
+    <div className="flex-[4] relative overflow-x-hidden mb-5 min-h-[85vh] h-full flex flex-col lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
       <div className="pt-5 pb-0 px-5 mb-6 flex flex-col items-start md:items-center md:flex-row gap-6 md:justify-between">
         <h1 className="text-[calc(1.375rem_+_1.5vw)] font-medium leading-tight">
           My Products
