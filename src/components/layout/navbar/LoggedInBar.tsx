@@ -62,7 +62,7 @@ const LoggedInBar = ({
             </h1>
             <ul>
               <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
-                <Link onClick={changeMenu} to={`/seller/${user._id}`}>
+                <Link onClick={changeMenu} to={`/seller/${user.username}`}>
                   My Profile
                 </Link>
 
