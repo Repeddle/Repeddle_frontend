@@ -45,15 +45,15 @@ const NewProduct = () => {
 
   const navigate = useNavigate()
 
-  // useEffect(() => {
-  //   if (!user?.accountNumber) {
-  //     return navigate("/verifyaccount")
-  //   }
+  useEffect(() => {
+    if (!user?.accountNumber) {
+      return navigate("/verifyaccount")
+    }
 
-  //   if (!user?.address) {
-  //     return navigate("/verifyaddress")
-  //   }
-  // }, [navigate, user?.accountNumber, user?.address])
+    if (!user?.address) {
+      return navigate("/verifyaddress")
+    }
+  }, [navigate, user?.accountNumber, user?.address])
 
   const { categories, fetchCategories } = useCategory()
   const { createProduct, loading, error } = useProducts()
