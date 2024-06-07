@@ -17,7 +17,7 @@ const Modal: React.FC<{
     return () => {
       document.body.classList.remove("modal-open")
     }
-  }, [])
+  }, [isOpen])
 
   useEffect(() => {
     setModalOpen(isOpen)

@@ -18,7 +18,7 @@ const TopBar = () => {
               {/* .style:hover .text {
           @apply block;
           }  */}
-              <Link to="/auth/signup">SIGN UP</Link>
+              <Link to="/auth/register">SIGN UP</Link>
             </div>
             , List All Item For Free{" "}
           </span>

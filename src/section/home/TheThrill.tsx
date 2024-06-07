@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { IProduct } from "../../types/product"
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa"
 import MessageBox from "../../components/MessageBox"
+import useProducts from "../../hooks/useProducts"
 
 const SkeletonProduct = () => (
   <div className="flex-[0_0_calc(33%_-_10px)] bg-[#f0f0f0] p-2.5 md:max-w-[240px]">
@@ -13,10 +14,9 @@ const SkeletonProduct = () => (
 )
 
 const TheThrill = () => {
-  const products: IProduct[] = []
-  const loading = false
-  const error = null
   const navigate = useNavigate()
+
+  const { products, loading, error } = useProducts()
 
   const sliderHandler = (direction: "right" | "left") => {
     const slider = document.getElementById("slider")
@@ -62,7 +62,7 @@ const TheThrill = () => {
           Shop The Thrill
         </h2>
       </div>
-      {products.length > 0 && (
+      {products.products.length > 0 && (
         <>
           <button
             onClick={() => sliderHandler("left")}
@@ -89,7 +89,7 @@ const TheThrill = () => {
         <p className="text-red-600">{error}</p>
       ) : (
         <div className="flex scrollbar-hide flex-wrap w-full gap-2.5 p-2.5 md:flex-nowrap md:overflow-x-auto md:px-[5vw] md:py-2.5">
-          {products.slice(0, 6).map((product) => (
+          {products.products.slice(0, 6).map((product) => (
             <div
               className="relative flex-[0_0_calc(33%_-_10px)] md:max-w-[200px]"
               key={product._id}
@@ -119,7 +119,7 @@ const TheThrill = () => {
         </div>
       )}
 
-      {!loading && !error && products.length === 0 && (
+      {!loading && !error && products.products.length === 0 && (
         <MessageBox className="mb-4">No product available</MessageBox>
       )}
       <button

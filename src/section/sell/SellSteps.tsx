@@ -1,8 +1,11 @@
 import { FaArrowLeft, FaArrowRight, FaCircle } from "react-icons/fa"
 import OrangeButton from "../../components/ui/OrangeButton"
 import { Link } from "react-router-dom"
+import useAuth from "../../hooks/useAuth"
 
 const SellSteps = () => {
+  const { user } = useAuth()
+
   return (
     <section className="flex flex-col items-center mx-0 lg:my-10 my-5">
       <div className="flex w-full justify-center items-center">
@@ -68,7 +71,7 @@ const SellSteps = () => {
               delivery method, once the buyer receives your item, you cash-out.
             </p>
           </div>
-          <Link to="/newproduct">
+          <Link to={user ? "/newproduct" : "/auth/login"}>
             <OrangeButton>
               <h2 className="flex text-center justify-center font-bold lg:text-base text-[15px] mx-[5px] my-0">
                 SELL NOW
