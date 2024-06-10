@@ -116,6 +116,15 @@ const Search = () => {
 
   const [showFilter, setShowFilter] = useState(false)
 
+  useEffect(() => {
+    if (showFilter) {
+      document.body.classList.add("modal-open")
+    }
+    return () => {
+      document.body.classList.remove("modal-open")
+    }
+  }, [showFilter])
+
   return (
     <div>
       <Helmet>
@@ -132,7 +141,7 @@ const Search = () => {
           rating={rating}
           brands={brands}
         />
-        <div className="flex-[4] dark:bg-dark-ev1 bg-light-ev1 mb-2.5 m-0 pt-20 lg:mb-5 lg:mx-2.5 lg:my-0 lg:pt-2.5 md:pt-24 p-2.5 rounded-[0.2rem]">
+        <div className="flex-[4] dark:bg-dark-ev1 bg-light-ev1 mb-2.5 m-0 lg:mb-5 lg:mx-2.5 lg:my-0 lg:pt-2.5 md:pt-24 p-2.5 rounded-[0.2rem]">
           {loading ? (
             <LoadingBox></LoadingBox>
           ) : error ? (
