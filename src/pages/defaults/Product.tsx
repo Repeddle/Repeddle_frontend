@@ -33,13 +33,14 @@ import moment from "moment";
 const Product = () => {
   const params = useParams();
   const { slug } = params;
+
   const navigate = useNavigate();
 
   const { fetchProductBySlug, error, loading } = useProducts();
   const { addNotification } = useToastNotification();
 
   const { user, followUser, unFollowUser } = useAuth();
-  const { addToCart } = useCart();
+  const { addToCart, cart } = useCart();
 
   const [selectedImage, setSelectedImage] = useState("");
   const [showLoginModel, setShowLoginModel] = useState(false);
@@ -134,8 +135,27 @@ const Product = () => {
     );
   }, [product?.costPrice, product?.sellingPrice]);
 
-  const addToCartHandler = () => {
+  const addToCartHandler = async () => {
     if (!product) return;
+
+    const existItem = cart.find((x) => x._id === product._id);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
+
+    if (!selectSize && product.sizes.length > 0) {
+      addNotification("Select Size");
+      return;
+    }
+
+    if (user && product.seller._id === user._id) {
+      addNotification("You can't buy your product");
+    }
+
+    const data = await fetchProductBySlug(product.slug);
+    if (data?.countInStock ?? 0 < quantity) {
+      addNotification("Sorry. Product is out of stock");
+      return;
+    }
+
     addToCart({
       ...product,
       quantity: 1,
@@ -143,7 +163,8 @@ const Product = () => {
       deliverySelect: {},
       // selectedColor?: string;
     });
-    addNotification("", "Go to cart", () => navigate("/cart"));
+
+    addNotification("Item added to Cart", "View Cart", () => navigate("/cart"));
   };
 
   const saved = useMemo(() => {
@@ -412,7 +433,6 @@ const Product = () => {
                   />
                 </div>
 
-                {/* TODO: don't see a way to open this */}
                 <Modal
                   isOpen={showLoginModel}
                   onClose={() => setShowLoginModel(false)}

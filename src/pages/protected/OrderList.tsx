@@ -19,7 +19,7 @@ const OrderList = () => {
           Purchase Product History
         </h1>
         {loading && (
-          <div className="absolute bg-white/50 inset-0">
+          <div className="absolute backdrop-blur-sm inset-0">
             <LoadingControlModal />
           </div>
         )}

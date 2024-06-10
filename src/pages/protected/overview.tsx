@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import LoadingBox from "../../components/LoadingBox"
 import MessageBox from "../../components/MessageBox"
 import moment from "moment"
 import { currency, getMonday, region } from "../../utils/common"
@@ -11,6 +10,7 @@ import { IOrderSummary } from "../../types/order"
 import Chart from "../../components/Chart"
 import useProducts from "../../hooks/useProducts"
 import useTransactions from "../../hooks/useTransaction"
+import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo"
 
 const today = moment().startOf("day")
 
@@ -49,9 +49,13 @@ function Overview() {
   console.log(orderSummary)
 
   return (
-    <div className="flex-[4]">
+    <div className="flex-[4] min-h-[60vh]">
       {loading ? (
-        <LoadingBox></LoadingBox>
+        <div className="p-5 my-0 mx-5 relative h-[65vh]">
+          <div className="absolute backdrop-blur-md inset-0">
+            <LoadingControlModal />
+          </div>
+        </div>
       ) : error ? (
         <MessageBox className="text-[red]">{error}</MessageBox>
       ) : (

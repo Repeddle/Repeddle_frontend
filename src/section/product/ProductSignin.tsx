@@ -77,7 +77,7 @@ const ProductSignin = () => {
         </div>
         <div className="mb-3">
           New customer?{"  "}
-          <Link to={`/auth/signup?redirect=${redirect}`}>
+          <Link to={`/auth/register?redirect=${redirect}`}>
             Create your account
           </Link>
         </div>

@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import { currency, region } from "../../utils/common"
+import { currency, region, uploadImage } from "../../utils/common"
 import useAuth from "../../hooks/useAuth"
 import Modal from "../../components/ui/Modal"
 import FeeStructure from "../defaults/info/FeeStructure"
@@ -41,12 +41,10 @@ const EditProduct = () => {
     fetchCategories()
   }, [])
 
-  console.log(id)
-
   const [sizes, setSizes] = useState<{ size: string; value: string }[]>([])
 
-  const [active, setActive] = useState("")
-  const [badge, setBadge] = useState("")
+  const [active, setActive] = useState(false)
+  const [badge, setBadge] = useState(false)
   const [price, setPrice] = useState("")
   const [discount, setDiscount] = useState("")
 
@@ -133,6 +131,23 @@ const EditProduct = () => {
         if (typeof data !== "string") {
           setProduct(data)
           setCurrentImage(data.images[0])
+          setInput({
+            ...input,
+            brand: data.brand ?? input.brand,
+            category: data.category ?? input.category,
+            color: data.color ?? input.color,
+            condition: data.condition ?? input.condition,
+            description: data.description ?? input.description,
+            keyFeatures: data.keyFeatures ?? input.keyFeatures,
+            material: data.material ?? input.material,
+            name: data.name ?? input.name,
+            price: data.sellingPrice.toString() ?? input.price,
+            product: data.mainCategory ?? input.product,
+            specification: data.specification ?? input.specification,
+            subCategory: data.subCategory ?? input.subCategory,
+          })
+          setActive(data?.active ?? false)
+          // tags = data.tags
         } else setError(data)
       }
       setLoading(false)
@@ -141,7 +156,7 @@ const EditProduct = () => {
     getProductData()
   }, [id])
 
-  const loadingUpload = false
+  const [loadingUpload, setLoadingUpload] = useState(false)
 
   let tags: string[] = []
 
@@ -158,7 +173,7 @@ const EditProduct = () => {
   }
 
   const handleError = (
-    errorMessage: "",
+    errorMessage: string,
     input: keyof typeof validationError
   ) => {
     setValidationError((prevState) => ({
@@ -206,7 +221,13 @@ const EditProduct = () => {
   }
 
   const uploadHandler = async (file: File, fileType: string) => {
-    console.log(file, fileType)
+    setLoadingUpload(true)
+    try {
+      const res = await uploadImage(file)
+      handleOnChange(res, fileType as keyof typeof input)
+    } catch (error) {
+      addNotification(error as string)
+    }
   }
 
   const sizeHandler = (sizenow: string) => {
@@ -311,7 +332,7 @@ const EditProduct = () => {
                 <div className="flex items-center w-full">
                   <div className="capitalize flex-1">seller:</div>
                   <div className="capitalize flex-1 font-light">
-                    {product ? product.seller.username : "loading..."}
+                    {product.seller.username}
                   </div>
                 </div>
                 <div className="flex items-center w-full">
@@ -366,8 +387,10 @@ const EditProduct = () => {
                         name="active"
                         id="active"
                         value="yes"
-                        checked={active === "yes" ? true : false}
-                        onChange={(e) => setActive(e.target.value)}
+                        checked={active}
+                        onChange={() => {
+                          setActive(true)
+                        }}
                       />
                       <label
                         className="text-lg font-light mx-2.5 my-0"
@@ -385,8 +408,8 @@ const EditProduct = () => {
                         name="active"
                         id="active2"
                         value="no"
-                        checked={active === "no" ? true : false}
-                        onChange={(e) => setActive(e.target.value)}
+                        checked={!active}
+                        onChange={() => setActive(false)}
                       />
                       <label
                         className="text-lg font-light mx-2.5 my-0"
@@ -407,8 +430,8 @@ const EditProduct = () => {
                         name="badge"
                         id="badgeyes"
                         value="yes"
-                        checked={badge === "yes" ? true : false}
-                        onChange={(e) => setBadge(e.target.value)}
+                        checked={badge}
+                        onChange={() => setBadge(true)}
                       />
                       <label
                         className="text-lg font-light mx-2.5 my-0"
@@ -426,8 +449,8 @@ const EditProduct = () => {
                         name="badge"
                         id="badgeno"
                         value="no"
-                        checked={badge === "no" ? true : false}
-                        onChange={(e) => setBadge(e.target.value)}
+                        checked={!badge}
+                        onChange={() => setBadge(false)}
                       />
                       <label
                         className="text-lg font-light mx-2.5 my-0"
@@ -525,7 +548,7 @@ const EditProduct = () => {
                   </div>
                 </div>
                 <div className="relative flex flex-col lg:w-[400px] mr-5 mt-2.5 w-full">
-                  <label className="text-sm mt-[15px] flex mb-2.5">
+                  <label className="text-sm mt-[15px] flex mb-2.5 items-center">
                     Condition{" "}
                     <div
                       data-content="What happens if I’m not certain of my product condition?
@@ -576,7 +599,7 @@ const EditProduct = () => {
                   )}
                 </div>
                 <div className="relative flex flex-col lg:w-[400px] mr-5 mt-2.5 w-full">
-                  <label className="text-sm mt-[15px] flex mb-2.5">
+                  <label className="text-sm mt-[15px] flex mb-2.5 items-center">
                     Material{" "}
                     <div
                       data-content="How do I know what the primary material of the product is? This information is mostly indicated on the Product labels, please refer to the label detailing the composition of your Product."
@@ -854,7 +877,7 @@ const EditProduct = () => {
                   )}
                 </div>
                 <div className="relative flex flex-col lg:w-[400px] mr-5 mt-2.5 w-full">
-                  <label className="text-sm mt-[15px] flex mb-2.5">
+                  <label className="text-sm mt-[15px] flex mb-2.5 items-center">
                     Color{" "}
                     <div
                       data-content="How can I ensure that color of the 
@@ -915,7 +938,7 @@ const EditProduct = () => {
                     <div className="flex-1">
                       <>
                         <div className="relative flex flex-col lg:w-[400px] mr-5 mt-0 w-full">
-                          <label className="text-sm mt-[15px] mb-2.5">
+                          <label className="text-sm flex items-center mt-[15px] mb-2.5">
                             Add Size
                             <div
                               data-content="If I feel the product and the size seems to differ from what indicated on the label, what should I do?

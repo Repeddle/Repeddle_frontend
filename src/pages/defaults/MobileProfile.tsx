@@ -12,7 +12,7 @@ import {
   FaQuestionCircle,
   FaUser,
 } from "react-icons/fa"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import RedirectButton from "../../components/RedirectButton"
 import {
   FaArrowRotateLeft,
@@ -28,6 +28,8 @@ import useAuth from "../../hooks/useAuth"
 
 const MobileProfile = () => {
   const { isDarkMode, toggleTheme } = useTheme()
+
+  const navigate = useNavigate()
 
   const { user, logout } = useAuth()
 
@@ -45,7 +47,7 @@ const MobileProfile = () => {
     localStorage.removeItem("shippingAddress")
     localStorage.removeItem("paymentMethod")
 
-    window.location.href = "/signin"
+    navigate("/auth/login")
   }
 
   return (

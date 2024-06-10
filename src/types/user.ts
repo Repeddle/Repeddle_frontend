@@ -73,6 +73,8 @@ export interface UpdateFields {
   }
 }
 
+export type UpdateUser = Partial<IUser>
+
 export type UserBalance = {
   currency: string
   balance: number

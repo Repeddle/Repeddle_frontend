@@ -47,6 +47,29 @@ const ResetPassword = () => {
       return false
     }
 
+    if (password.search(/[a-z]/i) < 0) {
+      setFormError({
+        ...formError,
+        password:
+          "Password must contain at least 1 lowercase alphabetical character",
+      })
+      return false
+    }
+    if (password.search(/[A-Z]/) < 0) {
+      setFormError({
+        ...formError,
+        password:
+          "Password must contain at least 1 uppercase alphabetical character",
+      })
+      return false
+    } else if (password.search(/[0-9]/) < 0) {
+      setFormError({
+        ...formError,
+        password: "Password must contain at least 1 digit",
+      })
+      return false
+    }
+
     setFormError({ ...formError, password: "" })
     return true
   }
@@ -77,6 +100,8 @@ const ResetPassword = () => {
     }
   }
 
+  console.log(error)
+
   if (!loading && !token) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
@@ -105,7 +130,7 @@ const ResetPassword = () => {
           <div className="flex-[3] lg:flex-1 p-4 lg:p-8">
             <div className="flex h-full w-full mt-24 lg:mt-0 lg:justify-center items-center flex-col">
               <div className="w-full max-w-lg flex flex-col gap-6">
-                <h2 className="text-2xl font-semibold">Forget Password</h2>
+                <h2 className="text-2xl font-semibold">Reset Password</h2>
                 <form className="flex flex-col gap-6" onSubmit={submitHandler}>
                   <InputWithLabel
                     label="Password"

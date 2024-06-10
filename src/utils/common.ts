@@ -134,6 +134,20 @@ export const compressImageUpload = async (
   }
 }
 
+export const uploadImage = async (file: File, image?: string) => {
+  const formData = new FormData()
+  formData.append("image", file)
+  image && formData.append("deleteImage", image)
+
+  try {
+    const url = await saveImageService(formData)
+    return url
+  } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    throw new Error(error as any)
+  }
+}
+
 export const resizeImage = (
   files: File[],
   setinvalidImage: (val: string) => void,

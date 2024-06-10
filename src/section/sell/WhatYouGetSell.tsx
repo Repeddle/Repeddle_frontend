@@ -2,8 +2,11 @@ import OrangeButton from "../../components/ui/OrangeButton"
 import { Link } from "react-router-dom"
 import { FaChartColumn, FaMessage, FaShield } from "react-icons/fa6"
 import { FaMoneyBill } from "react-icons/fa"
+import useAuth from "../../hooks/useAuth"
 
 const WhatYouGetSell = () => {
+  const { user } = useAuth()
+
   return (
     <section className="flex flex-col items-center mx-0 lg:my-10 my-5">
       <h2 className="flex text-center justify-center font-bold lg:text-[calc(1.325rem_+_0.9vw)] text-[15px] mx-[5px] my-0">
@@ -60,7 +63,7 @@ const WhatYouGetSell = () => {
           </p>
         </div>
       </div>
-      <Link to="/newproduct">
+      <Link to={user ? "/newproduct" : "/auth/login"}>
         <OrangeButton>
           <h2 className="flex text-center justify-center font-bold lg:text-[calc(1.325rem_+_0.9vw)] leading-tight text-[15px] mx-[5px] my-0">
             SELL NOW

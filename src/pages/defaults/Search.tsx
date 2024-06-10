@@ -24,27 +24,48 @@ const Search = () => {
 
   const { brands, fetchBrands } = useBrands()
 
-  const changeParam = (key: SearchOptionsKey, val: string | number) => {
+  const changeParam = (key: "page" | "sort", val: string | number) => {
+    if (val === "") {
+      setSearchParams((prev) => {
+        prev.delete(key)
+        return prev
+      })
+      return
+    }
+
     setSearchParams((prev) => {
       prev.set(key, val.toString())
       return prev
     })
   }
 
-  const removeParam = (key: SearchOptionsKey) => {
+  const joinParm = (param: { [key: string]: string }) => {
+    const params = Object.keys(param)
+      .map((obj) => `${obj}:${param[obj]}`)
+      .join(",")
+    return params
+  }
+
+  const removeFilterParam = (key: SearchOptionsKey) => {
+    const filterParam = filterParamObj
+
+    delete filterParam[key]
+
+    if (Object.keys(filterParam).length === 0) {
+      setSearchParams((prev) => {
+        prev.delete("filter")
+        return prev
+      })
+      return
+    }
+
+    const param = joinParm(filterParam)
+
     setSearchParams((prev) => {
-      prev.delete(key)
+      prev.set("filter", param)
       return prev
     })
   }
-
-  const allSearchParams = useMemo(() => {
-    const all: { key: SearchOptionsKey; value: string }[] = []
-    searchParams.forEach((value, key) =>
-      all.push({ key: key as SearchOptionsKey, value })
-    )
-    return all
-  }, [searchParams])
 
   const [queryBrand] = useState("")
   const rating: { rating: number; id: string }[] = []
@@ -74,11 +95,35 @@ const Search = () => {
     fetchBrands(string)
   }, [queryBrand])
 
+  const filterParamObj = useMemo(() => {
+    const param = searchParams.get("filter")
+    const paramObj: { [key: string]: string } = {}
+    if (param) {
+      const paramArray = param.split(",")
+
+      paramArray.map((val) => {
+        const paramSplit = val.split(":")
+        if (paramSplit.length === 2) {
+          paramObj[paramSplit[0]] = paramSplit[1]
+        }
+      })
+    }
+    return paramObj
+  }, [searchParams])
+
   const rLoading = false
   const rProducts: IProduct[] = []
 
   const [showFilter, setShowFilter] = useState(false)
-  const [order] = useState("")
+
+  useEffect(() => {
+    if (showFilter) {
+      document.body.classList.add("modal-open")
+    }
+    return () => {
+      document.body.classList.remove("modal-open")
+    }
+  }, [showFilter])
 
   return (
     <div>
@@ -96,7 +141,7 @@ const Search = () => {
           rating={rating}
           brands={brands}
         />
-        <div className="flex-[4] dark:bg-dark-ev1 bg-light-ev1 mb-2.5 m-0 pt-20 lg:mb-5 lg:mx-2.5 lg:my-0 lg:pt-2.5 md:pt-24 p-2.5 rounded-[0.2rem]">
+        <div className="flex-[4] dark:bg-dark-ev1 bg-light-ev1 mb-2.5 m-0 lg:mb-5 lg:mx-2.5 lg:my-0 lg:pt-2.5 md:pt-24 p-2.5 rounded-[0.2rem]">
           {loading ? (
             <LoadingBox></LoadingBox>
           ) : error ? (
@@ -124,51 +169,51 @@ const Search = () => {
                   Sort by{"  "}
                   <select
                     className="max-w-[200px] bg-inherit text-inherit border-[#767676] border focus:outline outline-black"
-                    value={order}
+                    value=""
                     onChange={(e) => {
-                      changeParam("order", e.target.value)
+                      changeParam("sort", e.target.value)
                     }}
                   >
                     <option
                       className="bg-white text-black-color dark:bg-black-color dark:text-white-color"
-                      value="newest"
+                      value="createdAt:desc"
                     >
                       Newly Arrived
                     </option>
                     <option
                       className="bg-white text-black-color dark:bg-black-color dark:text-white-color"
-                      value="shared"
+                      value="shared:desc"
                     >
                       Just Shared
                     </option>
                     <option
                       className="bg-white text-black-color dark:bg-black-color dark:text-white-color"
-                      value="likes"
+                      value="likes:desc"
                     >
                       Likes
                     </option>
 
                     <option
                       className="bg-white text-black-color dark:bg-black-color dark:text-white-color"
-                      value="relevance"
+                      value=""
                     >
                       Relevance
                     </option>
                     <option
                       className="bg-white text-black-color dark:bg-black-color dark:text-white-color"
-                      value="lowest"
+                      value="sellingPrice:asc"
                     >
                       Price: Low to High
                     </option>
                     <option
                       className="bg-white text-black-color dark:bg-black-color dark:text-white-color"
-                      value="highest"
+                      value="sellingPrice:desc"
                     >
                       Price: High to Low
                     </option>
                     <option
                       className="bg-white text-black-color dark:bg-black-color dark:text-white-color"
-                      value="toprated"
+                      value="rating:desc"
                     >
                       Avg. Customer Reviews
                     </option>
@@ -177,17 +222,19 @@ const Search = () => {
               </div>
 
               <div className="hidden lg:flex gap-2 mt-2">
-                {allSearchParams.map((val) => (
+                {Object.entries(filterParamObj).map((val) => (
                   <span
-                    key={val.key}
+                    key={val[0]}
                     className="flex gap-2 items-center bg-orange-color hover:bg-malon-color text-white dark:text-black px-2.5 py-1.5 rounded-lg"
                   >
                     <FaTimes
                       className="cursor-pointer"
-                      onClick={() => removeParam(val.key)}
+                      onClick={() =>
+                        removeFilterParam(val[0] as SearchOptionsKey)
+                      }
                     />
                     <span className="first-letter:capitalize">
-                      {val.key} : {val.value}
+                      {val[0]} : {val[1]}
                     </span>
                   </span>
                 ))}

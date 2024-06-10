@@ -19,9 +19,9 @@ const WidgetLarge = ({ refresh, transactions }: Props) => {
   return loadingTrans ? (
     <LoadingBox />
   ) : (
-    <div className="flex-[2]">
+    <div className="flex-[2] bg-light-ev1 dark:bg-dark-ev1 p-4 rounded-[0.2rem]">
       <div className="flex items-center justify-between">
-        <div className="text-[22px] font-semibol">Latest transactions </div>
+        <div className="text-[22px] font-semibold">Latest transactions </div>
         <span className="bg-orange-color text-white">{clickItem}</span>
       </div>
       <table className="w-full border-spacing-5">
@@ -79,6 +79,10 @@ const WidgetLarge = ({ refresh, transactions }: Props) => {
           ))}
         </tbody>
       </table>
+
+      {transactions.length === 0 && (
+        <div className="text-center mt-4">No transactions added yet</div>
+      )}
     </div>
   )
 }

@@ -9,7 +9,7 @@ const data = [
     heading:
       "AFRICA’S MILLENNIALS & GEN-Z ONLINE COMMUNITY FOR SECONDHAND FASHION.",
     linkText: "join us",
-    href: "/auth/signup",
+    href: "/auth/register",
   },
   {
     image: "/images/homeCarousel/greg-raines-rqFBIR6vQXg-unsplash.webp",

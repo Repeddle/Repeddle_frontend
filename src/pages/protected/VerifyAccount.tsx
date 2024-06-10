@@ -3,9 +3,16 @@ import { Helmet } from "react-helmet-async"
 import { region } from "../../utils/common"
 import { banks } from "../../utils/constants"
 import Button from "../../components/ui/Button"
-import InputWithLabel from "../../components/ui/InputWithLabel"
+import InputWithLabel2 from "../../components/ui/InputWithLabel2"
+import useAuth from "../../hooks/useAuth"
+import useToastNotification from "../../hooks/useToastNotification"
+import { useNavigate } from "react-router-dom"
 
 const VerifyAccount = () => {
+  const { updateUser, loading, error: userError } = useAuth()
+  const { addNotification } = useToastNotification()
+  const navigate = useNavigate()
+
   const [input, setInput] = useState({
     accountName: "",
     accountNumber: "",
@@ -25,7 +32,20 @@ const VerifyAccount = () => {
   const handleError = (errorMessage: string, inputVal: keyof typeof error) => {
     setError((prevState) => ({ ...prevState, [inputVal]: errorMessage }))
   }
-  const submitHandler = async () => {}
+
+  const submitHandler = async () => {
+    const res = await updateUser({
+      accountName: input.accountName,
+      accountNumber: +input.accountNumber,
+      bankName: input.bankName,
+    })
+    if (res) {
+      addNotification("Account Verified Successfully")
+      navigate("/newproduct")
+    } else {
+      addNotification(userError ?? "Failed to verify account")
+    }
+  }
 
   const validate = (e: FormEvent) => {
     e.preventDefault()
@@ -49,20 +69,22 @@ const VerifyAccount = () => {
   }
 
   return (
-    <div className="max-w-[600px] my-10 p-[50px] rounded-[10px]">
+    <div className="max-w-[800px] bg-light-ev1 dark:bg-dark-ev1 mx-auto my-10 p-[50px] rounded-[10px]">
       <Helmet>
         <title>Verify Account</title>
       </Helmet>
 
-      <h3 className="my-4">Provide Your Bank Account Detail</h3>
+      <h3 className="my-4 text-[calc(1.3rem_+_0.6vw)] leading-[1.2]">
+        Provide Your Bank Account Detail
+      </h3>
       <p>
         To become a Seller, kindly provide your banking details where you can
         transfer your earnings deposited in your Repeddle wallet
       </p>
 
       <form onSubmit={validate} className="my-2">
-        <div className="m-4">
-          <InputWithLabel
+        <div className="my-4">
+          <InputWithLabel2
             label="Account Name"
             error={error.accountName}
             value={input.accountName}
@@ -71,8 +93,8 @@ const VerifyAccount = () => {
           />
         </div>
 
-        <div className="m-4">
-          <InputWithLabel
+        <div className="y-4">
+          <InputWithLabel2
             type="number"
             label="Account Number"
             error={error.accountNumber}
@@ -84,7 +106,7 @@ const VerifyAccount = () => {
 
         <div className="flex flex-col mt-2.5">
           <label className="text-sm">Bank Name</label>
-          <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
+          <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] my-2.5  border border-light-ev4 dark:border-dark-ev4">
             <select
               onChange={(e) => handleOnChange(e.target.value, "bankName")}
               onFocus={() => handleError("", "bankName")}
@@ -100,12 +122,12 @@ const VerifyAccount = () => {
             </select>
           </div>
         </div>
-        <div className="text-malon-color">
+        <div className="text-malon-color my-2.5">
           Note: This cannot be change once saved, contact support to make any
           changes.
         </div>
         <div className="mb-3">
-          <Button text="Save" />
+          <Button text="Save" disabled={loading} />
         </div>
       </form>
     </div>

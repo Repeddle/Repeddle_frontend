@@ -20,7 +20,7 @@ const About = () => {
             className="w-full  mb-4 sm:w-full"
           />
 
-          <Link to="/auth/signup">
+          <Link to="/auth/register">
             <div
               className="bg-orange-400 absolute lg:text-4xl z-10 bottom-4 left-1/2 transform -translate-x-1/2 lg:py-4 lg:px-6
              rounded text-white font-bold px-1 py-2 sm:-mr-10 text-base lg:mb-8"

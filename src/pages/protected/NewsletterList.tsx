@@ -1,11 +1,12 @@
 import moment from "moment"
 import { useEffect, useState } from "react"
-import LoadingBox from "../../components/LoadingBox"
 import { FaCheckCircle, FaTrash } from "react-icons/fa"
 import { INewsletter } from "../../types/message"
 import { emailList as emailListData } from "../../utils/data"
 import useNewsletter from "../../hooks/useNewsletter"
 import useToastNotification from "../../hooks/useToastNotification"
+import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo"
+import LoadingBox from "../../components/LoadingBox"
 
 const NewsletterList = () => {
   const [inputEmail, setInputEmail] = useState("")
@@ -129,7 +130,9 @@ const NewsletterList = () => {
             </div>
           </li>
           {loadingSend ? (
-            <LoadingBox />
+            <div className="absolute backdrop-blur-sm inset-0">
+              <LoadingControlModal />
+            </div>
           ) : (
             <button
               className="text-white-color cursor-pointer ml-auto px-2.5 py-[7px] rounded-[0.2rem] border-none bg-orange-color hover:bg-malon-color"
@@ -157,7 +160,11 @@ const NewsletterList = () => {
         )}
 
         <ul>
-          {loadingNewsletters && <LoadingBox />}
+          {loadingNewsletters && (
+            <div className="absolute backdrop-blur-sm inset-0">
+              <LoadingControlModal />
+            </div>
+          )}
           {!loadingNewsletters &&
             newsletters.map((newsletter, index) => (
               <li

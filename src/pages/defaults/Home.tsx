@@ -21,8 +21,6 @@ function Home() {
     fetchProducts("order=newest")
   }, [])
 
-  console.log(products)
-
   return (
     <div>
       <Helmet>

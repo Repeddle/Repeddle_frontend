@@ -37,8 +37,6 @@ function Cart() {
     navigate("/payment")
   }
 
-  // FIXME: user wishlist not part of user Data
-
   return loading ? (
     <LoadingBox />
   ) : (
@@ -124,7 +122,6 @@ function Cart() {
                 ) : (
                   user.wishlist &&
                   user.wishlist.map((product, index) => {
-                    //  @ts-ignore
                     const existItem = cart.find((x) => x._id === product._id)
                     return (
                       !existItem && (
@@ -135,20 +132,15 @@ function Cart() {
                           <div className="flex flex-wrap gap-4 items-center justify-between">
                             <div className="flex flex-[7] items-center col-7">
                               <img
-                                // @ts-ignore
                                 src={product.images[0]}
-                                // @ts-ignore
                                 alt={product.name}
                                 className="max-w-full bg-white border rounded h-[100px] p-1 border-[#dee2e6]"
                               />
                               <div className="flex flex-col capitalize ml-5">
-                                {/* @ts-ignore  */}
                                 <Link to={`/product/${product.slug}`}>
-                                  {/* @ts-ignore  */}
                                   {product.name}
                                 </Link>
                                 <div>
-                                  {/* @ts-ignore  */}
                                   {currency(product.region)} {product.costPrice}
                                 </div>
                               </div>
@@ -157,7 +149,6 @@ function Cart() {
                               <button
                                 onClick={() =>
                                   addToCart({
-                                    // @ts-ignore
                                     ...product,
                                     quantity: 1,
                                     deliverySelect: {},

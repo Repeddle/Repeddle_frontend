@@ -1,7 +1,10 @@
 import OrangeButton from "../../components/ui/OrangeButton"
 import { Link } from "react-router-dom"
+import useAuth from "../../hooks/useAuth"
 
 const WhatToSell = () => {
+  const { user } = useAuth()
+
   return (
     <section className="flex flex-col items-center mx-0 lg:my-10 my-5 p-[10px] rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1">
       <h4 className="font-bold text-xs lg:text-[calc(1.275rem_+_0.3vw)] leading-tight text-center mx-[5px] my-0">
@@ -44,7 +47,7 @@ const WhatToSell = () => {
         />
       </div>
 
-      <Link to="/newproduct">
+      <Link to={user ? "/newproduct" : "/auth/login"}>
         <OrangeButton>
           <h2 className="flex text-center justify-center font-bold lg:text-base text-[15px] mx-[5px] my-0">
             Start Selling

@@ -22,6 +22,10 @@ const LoggedInBar = ({
 
   const [menu, setMenu] = useState(false)
 
+  const changeMenu = () => {
+    setMenu(!menu)
+  }
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -58,7 +62,9 @@ const LoggedInBar = ({
             </h1>
             <ul>
               <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
-                <Link to={`/seller/${user._id}`}>My Profile</Link>
+                <Link onClick={changeMenu} to={`/seller/${user.username}`}>
+                  My Profile
+                </Link>
 
                 {/* {messageNotification.length > 0 && (
       <span className="w-3 h-3 flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-0 top-0 bg-orange-color">
@@ -67,7 +73,9 @@ const LoggedInBar = ({
     )} */}
               </li>
               <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
-                <Link to="/dashboard/orderlist">Purchased Orders</Link>
+                <Link onClick={changeMenu} to="/dashboard/orderlist">
+                  Purchased Orders
+                </Link>
 
                 {purchaseNotification.length > 0 && (
                   <span className="w-3 h-3 flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-0 top-0 bg-orange-color">
@@ -77,7 +85,9 @@ const LoggedInBar = ({
               </li>
 
               <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
-                <Link to="/dashboard/saleslist">Sold Orders</Link>
+                <Link onClick={changeMenu} to="/dashboard/saleslist">
+                  Sold Orders
+                </Link>
 
                 {soldNotification.length > 0 && (
                   <span className="w-3 h-3 flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-0 top-0 bg-orange-color">
@@ -87,7 +97,9 @@ const LoggedInBar = ({
               </li>
 
               <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
-                <Link to="/earning">My Earnings</Link>
+                <Link onClick={changeMenu} to="/earning">
+                  My Earnings
+                </Link>
 
                 {productNotification.length > 0 && (
                   <span className="w-3 h-3 flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-0 top-0 bg-orange-color">
@@ -96,7 +108,9 @@ const LoggedInBar = ({
                 )}
               </li>
               <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
-                <Link to="/dashboard/wallet">My Wallet</Link>
+                <Link onClick={changeMenu} to="/dashboard/wallet">
+                  My Wallet
+                </Link>
 
                 {productNotification.length > 0 && (
                   <span className="w-3 h-3 flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-0 top-0 bg-orange-color">
@@ -105,7 +119,9 @@ const LoggedInBar = ({
                 )}
               </li>
               <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
-                <Link to="/dashboard/productlist">My Products</Link>
+                <Link onClick={changeMenu} to="/dashboard/productlist">
+                  My Products
+                </Link>
 
                 {productNotification.length > 0 && (
                   <span className="w-3 h-3 flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-0 top-0 bg-orange-color">
@@ -115,7 +131,7 @@ const LoggedInBar = ({
               </li>
 
               <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
-                <Link to="/cart?wishlist=true">
+                <Link onClick={changeMenu} to="/cart?wishlist=true">
                   Wishlist{" "}
                   <span className="text-orange-color">
                     ({user.wishlist?.length})
@@ -128,11 +144,16 @@ const LoggedInBar = ({
                 )}
               </li>
               <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
-                <Link to="/dashboard">Dashboard</Link>
+                <Link onClick={changeMenu} to="/dashboard">
+                  Dashboard
+                </Link>
               </li>
               <li
                 className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1"
-                onClick={logout}
+                onClick={() => {
+                  logout()
+                  changeMenu()
+                }}
               >
                 Log Out
               </li>

@@ -68,9 +68,9 @@ const Table = ({
   }, [sortKey, body])
 
   return (
-    <div className="relative w-full h-full flex-1">
+    <div className="relative w-full min-h-[65vh] h-full flex-1">
       {loading && (
-        <div className="absolute bg-white/50 inset-0">
+        <div className="absolute h-full backdrop-blur-sm inset-0">
           <LoadingControlModal />
         </div>
       )}
