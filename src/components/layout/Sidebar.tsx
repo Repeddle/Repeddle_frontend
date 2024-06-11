@@ -123,11 +123,6 @@ const sidebarLinks = [
     text: "Purchase Returns",
     icon: <FaArrowRotateRight />,
   },
-  {
-    path: "/dashboard/orderlist",
-    text: "Purchase Orders",
-    icon: <FaChartBar />,
-  },
 ]
 
 interface SideBarProps {

@@ -130,9 +130,7 @@ const NewsletterList = () => {
             </div>
           </li>
           {loadingSend ? (
-            <div className="absolute backdrop-blur-sm inset-0">
-              <LoadingControlModal />
-            </div>
+            <LoadingControlModal />
           ) : (
             <button
               className="text-white-color cursor-pointer ml-auto px-2.5 py-[7px] rounded-[0.2rem] border-none bg-orange-color hover:bg-malon-color"
@@ -160,11 +158,7 @@ const NewsletterList = () => {
         )}
 
         <ul>
-          {loadingNewsletters && (
-            <div className="absolute backdrop-blur-sm inset-0">
-              <LoadingControlModal />
-            </div>
-          )}
+          {loadingNewsletters && <LoadingControlModal />}
           {!loadingNewsletters &&
             newsletters.map((newsletter, index) => (
               <li

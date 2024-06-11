@@ -200,3 +200,11 @@ h4 {
     max-width: 1320px;
   }
 }
+
+.numeric-arrow::-webkit-inner-spin-button,
+.numeric-arrow::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}
