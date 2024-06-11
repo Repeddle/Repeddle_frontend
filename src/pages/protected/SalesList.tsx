@@ -18,11 +18,7 @@ const SalesList = () => {
         <h1 className="text-xl py-5 pl-0 pr-5 lg:text-[calc(1.375rem_+_1.5vw)]">
           Sold Product History
         </h1>
-        {loading && (
-          <div className="absolute bg-white/50 inset-0">
-            <LoadingControlModal />
-          </div>
-        )}
+        {loading && <LoadingControlModal />}
 
         {!loading &&
           (error ? (

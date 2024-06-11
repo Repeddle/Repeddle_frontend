@@ -64,11 +64,7 @@ const Contact = () => {
       <h1 className="text-[calc(1.375rem_+_1.5vw)] leading-tight">
         Contact Us
       </h1>
-      {loading && (
-        <div className="absolute bg-white/50 inset-0">
-          <LoadingControlModal />
-        </div>
-      )}
+      {loading && <LoadingControlModal />}
       {!loading && (
         <>
           {currentMessages.map((message, index) => (

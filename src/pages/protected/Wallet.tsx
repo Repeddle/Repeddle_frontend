@@ -37,9 +37,7 @@ const Wallet = () => {
       <div className="flex items-center justify-between p-5 rounded-lg bg-[#fcf0e0] dark:bg-dark-ev3 mb-5">
         <div>
           {loading ? (
-            <div className="absolute bg-white/50 inset-0">
-              <LoadingControlModal />
-            </div>
+            <LoadingControlModal />
           ) : (
             <div className="font-bold leading-tight text-xl font-sans lg:text-[50px] text-orange-color">
               {`${wallet.currency} ${Math.floor(wallet.balance * 100) / 100}`}
