@@ -25,11 +25,7 @@ const OtherBrand = () => {
       <div className="flex flex-col mr-5 mt-2.5">
         <label className="text-sm font-semibold mb-2.5">Brand List</label>
       </div>
-      {loading && (
-        <div className="absolute bg-white/50 inset-0">
-          <LoadingControlModal />
-        </div>
-      )}
+      {loading && <LoadingControlModal />}
       {brands.map((c, index) => (
         <OtherBrandRow
           key={index}

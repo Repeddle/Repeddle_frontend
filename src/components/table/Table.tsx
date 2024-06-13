@@ -69,11 +69,7 @@ const Table = ({
 
   return (
     <div className="relative w-full min-h-[65vh] h-full flex-1">
-      {loading && (
-        <div className="absolute h-full backdrop-blur-sm inset-0">
-          <LoadingControlModal />
-        </div>
-      )}
+      {loading && <LoadingControlModal />}
 
       <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
         <div className="py-2 px-4 align-middle inline-block min-w-full sm:px-6 lg:px-8">
