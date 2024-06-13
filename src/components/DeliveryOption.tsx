@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { region } from "../utils/common"
 import { FaCheck, FaQuestionCircle, FaTruck } from "react-icons/fa"
 import LoadingBox from "./LoadingBox"
-import { DeliveryMeta, IDeliveryOption, Stations } from "../types/product"
+import { IDeliveryOption, ProductMeta, Stations } from "../types/product"
 import { getBackendErrorMessage } from "../utils/error"
 import useGeoLocation from "../hooks/useGeoLocation"
 import { pudoOptions } from "../utils/constants"
@@ -29,8 +29,8 @@ type Props = {
   deliveryOption: IDeliveryOption[]
   setDeliveryOption: (val: IDeliveryOption[]) => void
   setShowModel: (val: boolean) => void
-  meta: DeliveryMeta
-  setMeta: (val: DeliveryMeta) => void
+  meta: ProductMeta
+  setMeta: (val: ProductMeta) => void
 }
 
 const DeliveryOption = ({
@@ -90,7 +90,7 @@ const DeliveryOption = ({
     const getStations = async () => {
       setLoadingStations(true)
       const data = await fetchStations()
-      if (data) setStations(data)
+      if (data) setStations(data.stations)
 
       setLoadingStations(false)
     }

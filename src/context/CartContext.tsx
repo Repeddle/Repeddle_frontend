@@ -9,7 +9,7 @@ export type CartItem = IProduct & {
   quantity: number
   selectedSize?: string
   selectedColor?: string
-  deliverySelect: { [key: string]: string }
+  deliverySelect: { [key: string]: string | number }
 }
 
 // Define the CartContextData

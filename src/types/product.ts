@@ -55,7 +55,7 @@ export interface IProduct {
   reviews: Review[]
   sold?: boolean
   badge?: boolean
-  meta: Meta
+  meta: ProductMeta
   active?: boolean
   vintage?: boolean
   luxury?: boolean
@@ -129,7 +129,14 @@ export interface Review {
   like: string
 }
 
-export interface Meta {}
+export interface ProductMeta {
+  name?: string
+  address?: string
+  phone?: string
+  stationId?: string | number
+  lat?: string | number
+  lng?: string | number
+}
 
 export interface SellingPriceHistory {
   value: number
