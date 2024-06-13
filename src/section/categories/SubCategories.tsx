@@ -1,5 +1,5 @@
 import { FaDotCircle, FaPen, FaPlus, FaTrash } from "react-icons/fa"
-import { categoriesModal } from "../../pages/protected/Categories"
+import { categoriesModal } from "../../pages/admin/Categories"
 import { ISubCategory } from "../../types/category"
 
 type Props = {

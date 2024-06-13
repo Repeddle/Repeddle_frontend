@@ -1,35 +1,79 @@
 // AdminSidebar.tsx
-import React from "react";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import { NavLink } from "react-router-dom";
-import { Link } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-import useTheme from "../../hooks/useTheme";
-import { BiChart } from "react-icons/bi";
+import React from "react"
+import { AiOutlineArrowRight, AiOutlineQuestionCircle } from "react-icons/ai"
+import { NavLink } from "react-router-dom"
+import { Link } from "react-router-dom"
+import useAuth from "../../hooks/useAuth"
+import useTheme from "../../hooks/useTheme"
+import { BiChart } from "react-icons/bi"
+import { FaEnvelope, FaQuestionCircle, FaUser } from "react-icons/fa"
+import { FaArrowRotateLeft, FaListCheck, FaMoneyBill } from "react-icons/fa6"
 
 const sidebarLinks = [
   {
-    path: "/analytic",
+    path: "/admin/analytic",
     text: "Analytic",
     icon: <BiChart />,
     end: true,
   },
-];
+  { path: "/admin/userlist", text: "Users", icon: <FaUser /> },
+  {
+    path: "/admin/categories",
+    text: "Categories",
+    icon: <FaListCheck />,
+  },
+  {
+    path: "/admin/messages",
+    text: "All Messages",
+    icon: <FaListCheck />,
+  },
+  {
+    path: "/admin/allreturns",
+    text: "Return Queries",
+    icon: <FaArrowRotateLeft />,
+  },
+  { path: "/admin/payments", text: "Payments", icon: <FaMoneyBill /> },
+  {
+    path: "/admin/transactionlist",
+    text: "All Transactions",
+    icon: <FaMoneyBill />,
+  },
+  {
+    path: "/admin/articlelist",
+    text: "Articles",
+    icon: <AiOutlineQuestionCircle />,
+  },
+  {
+    path: "/admin/newsletter",
+    text: "Collected Email",
+    icon: <FaMoneyBill />,
+  },
+  {
+    path: "/admin/otherbrand",
+    text: "Other Brands",
+    icon: <FaQuestionCircle />,
+  },
+  {
+    path: "/admin/contact",
+    text: "Contact Us",
+    icon: <FaEnvelope />,
+  },
+]
 
 interface SideBarProps {
-  isOpen: boolean;
-  setSidebarOpen: (value: boolean) => void;
+  isOpen: boolean
+  setSidebarOpen: (value: boolean) => void
 }
 
 const AdminSidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
-  const { user } = useAuth();
-  const { isDarkMode } = useTheme();
+  const { user } = useAuth()
+  const { isDarkMode } = useTheme()
   const sidebarClasses = `fixed inset-y-0 left-0 z-[80] bg-orange-color bg-opacity-10 text-white w-64 h-screen transition-transform transform ${
     isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-  }`;
+  }`
 
   const listItemClasses =
-    "mb-4 text-base hover:bg-orange-color hover:bg-opacity-10 text-malon-color transition-colors duration-300 px-4";
+    "mb-4 text-base hover:bg-orange-color hover:bg-opacity-10 text-malon-color transition-colors duration-300 px-4"
 
   return (
     <div className={sidebarClasses}>
@@ -77,10 +121,10 @@ const AdminSidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
               onClick={() => setSidebarOpen(false)}
             >
               <NavLink
-                to={"/admin/dashboard"}
+                to={"/dashboard"}
                 className={`flex items-center justify-center gap-4 font-bold p-2`}
               >
-                Admin Dashboard <AiOutlineArrowRight />
+                User Dashboard <AiOutlineArrowRight />
               </NavLink>
             </li>
           )}
@@ -92,7 +136,7 @@ const AdminSidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
         <p className="text-xs text-white">© 2024 Repeddle</p>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AdminSidebar;
+export default AdminSidebar
