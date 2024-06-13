@@ -8,11 +8,11 @@ import {
   productDetails,
   searchResultData,
   user as userData,
-} from "../../../utils/data";
-import { IConversation } from "../../../types/conversation";
-import MessageItem from "../../../components/ui/MessageItem";
-import useAuth from "../../../hooks/useAuth";
-import Conversation from "../../../components/Conversation";
+} from "../../utils/data";
+import { IConversation } from "../../types/conversation";
+import MessageItem from "../../components/ui/MessageItem";
+import useAuth from "../../hooks/useAuth";
+import Conversation from "../../components/Conversation";
 
 function AllMessage() {
   const { user: userInfo } = useAuth();

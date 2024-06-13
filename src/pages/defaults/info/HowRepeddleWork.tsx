@@ -32,7 +32,7 @@ const HowRepeddleWork = () => {
       </section>
       <div className="border-gray-300 border-t-2 lg:mx-36"></div>
       <section className="mt-6 mb-6 px-5">
-        <div className="mt-8 flex lg:flex-row flex-col items-center justify-center">
+        <div className="mt-8 flex lg:flex-row  flex-col-reverse items-center justify-center">
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-end px-4">
             <div className="lg:w-3/4">
               <h2 className="text-primary text-malon-color text-center">
@@ -47,7 +47,7 @@ const HowRepeddleWork = () => {
               </p>
             </div>
           </div>
-          <div className="w-full lg:w-1/2 flex justify-center lg:justify-start mt-4 lg:mt-0">
+          <div className="w-full lg:w-1/2 flex justify-center lg:justify-start mt-4 mb-4 lg:mb-0 lg:mt-0">
             <img
               src="https://res.cloudinary.com/emirace/image/upload/v1691621285/doyhrechq04fnfckki96.png"
               alt="Step-2"
@@ -58,7 +58,7 @@ const HowRepeddleWork = () => {
       </section>
       <div className="border-gray-300 border-t-2 lg:mx-36"></div>
       <section className="mt-6 mb-6 px-5">
-        <div className="mt-8 flex flex-col-reverse lg:flex-row items-center justify-center">
+        <div className="mt-8 flex flex-col lg:flex-row items-center justify-center">
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-end mb-4 lg:mb-0">
             <img
               src="https://res.cloudinary.com/emirace/image/upload/v1691621379/x7wilble1b3muoqsyi6n.png"
@@ -121,7 +121,7 @@ const HowRepeddleWork = () => {
       </section>
       <div className="border-gray-300 border-t-2 lg:mx-36"></div>
       <section className="mt-6 mb-6 px-5">
-        <div className="mt-8 flex lg:flex-row flex-col items-center justify-center">
+        <div className="mt-8 flex lg:flex-row flex-col-reverse items-center justify-center">
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-end px-4">
             <div className="lg:w-3/4">
               <h2 className="text-primary text-malon-color text-center">
@@ -143,7 +143,7 @@ const HowRepeddleWork = () => {
               </p>
             </div>
           </div>
-          <div className="w-full lg:w-1/2 flex justify-center lg:justify-start mt-4 lg:mt-0">
+          <div className="w-full lg:w-1/2 flex justify-center lg:justify-start mb-4 lg:mb-0 mt-4 lg:mt-0">
             <img
               src="https://res.cloudinary.com/emirace/image/upload/v1691621408/odn3kjxjksaptotxjdxg.png"
               alt="Step-2"
