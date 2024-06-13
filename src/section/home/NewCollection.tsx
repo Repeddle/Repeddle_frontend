@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom"
 const NewCollection = () => {
   const navigate = useNavigate()
 
+  const param = (key: string, val: string) => {
+    return new URLSearchParams([[key, val]])
+  }
+
   return (
     <section className="flex-col my-2.5 lg:flex-row flex">
       <div className="flex flex-[2_1] flex-col">
@@ -21,29 +25,29 @@ const NewCollection = () => {
         <CategoryListing
           image="/images/categories/engin-akyurt-xbFtknoQG_Y-unsplash.webp"
           title="STYLE UP"
-          link="/search?type=recurated"
+          link={`/search?${param("filter", "type:recurated")}`}
         />
         <CategoryListing
           image="/images/categories/ruan-richard-rodrigues--MCGquf_4mU-unsplash.webp"
           bottom={true}
           title="ACCESSORIZE"
-          link="/search?query=accessorize"
+          link="/search?search=accessorize"
         />
         <CategoryListing
           image="/images/categories/julian-hochgesang-sA5wcAu4CBA-unsplash.webp"
           title="SHOES AFFAIR"
-          link="/search?query=shoe"
+          link="/search?search=shoe"
         />
         <CategoryListing
           image="/images/categories/stephen-audu-BkB5T-ZdK88-unsplash.webp"
           title="BAGS AFFAIR"
           bottom={true}
-          link="/search?query=bags"
+          link="/search?search=bags"
         />
         <CategoryListing
           image="/images/categories/carmen-fu-4xb2LK36Mps-unsplash.webp"
           title="GEN-Z KIDS"
-          link="/search?query=kids"
+          link="/search?search=kids"
         />
         <CategoryListing
           image="/images/categories/ahmed-carter-GP3-QpmTgPk-unsplash.webp"
