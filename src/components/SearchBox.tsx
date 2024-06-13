@@ -1,17 +1,20 @@
-import { FormEvent, useState } from "react"
-import { FaSearch } from "react-icons/fa"
-import { useNavigate } from "react-router-dom"
+import { FormEvent, useState } from "react";
+import { FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const SearchBox = () => {
-  const [query, setQuery] = useState("")
+  const [query, setQuery] = useState("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-    if (query) navigate(`/search?search=${query}`)
-    navigate(`/search`)
-  }
+    e.preventDefault();
+    if (query) {
+      navigate(`/search?search=${query}`);
+    } else {
+      navigate(`/search`);
+    }
+  };
 
   return (
     <form
@@ -45,7 +48,7 @@ const SearchBox = () => {
         />
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default SearchBox
+export default SearchBox;

@@ -1,132 +1,18 @@
-// Sidebar.tsx
+// AdminSidebar.tsx
 import React from "react";
-import {
-  AiOutlineHome,
-  AiOutlineArrowRight,
-  AiOutlineWallet,
-  AiOutlineQuestionCircle,
-} from "react-icons/ai";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import useTheme from "../../hooks/useTheme";
-import {
-  FaChartBar,
-  FaChartLine,
-  FaComment,
-  FaEnvelope,
-  FaHome,
-  FaMoneyBill,
-  FaQuestionCircle,
-  FaUser,
-} from "react-icons/fa";
-import {
-  FaArrowRotateLeft,
-  FaArrowRotateRight,
-  FaBasketShopping,
-  FaListCheck,
-} from "react-icons/fa6";
+import { BiChart } from "react-icons/bi";
 
 const sidebarLinks = [
   {
-    path: "/dashboard",
-    text: "Overview",
-    icon: <AiOutlineHome />,
+    path: "/analytic",
+    text: "Analytic",
+    icon: <BiChart />,
     end: true,
-  },
-  {
-    path: "/dashboard/productlist",
-    text: "My Products",
-    icon: <FaBasketShopping />,
-  },
-  {
-    path: "/dashboard/orderlist",
-    text: "Purchase Orders",
-    icon: <FaChartBar />,
-  },
-  {
-    path: "/dashboard/saleslist",
-    text: "Sold Orders",
-    icon: <FaChartBar />,
-  },
-  { path: "/dashboard/wallet", text: "Wallet", icon: <AiOutlineWallet /> },
-  {
-    path: "/dashboard/articlelist",
-    text: "Articles",
-    icon: <AiOutlineQuestionCircle />,
-  },
-  {
-    path: "/dashboard/alltransaction",
-    text: "All Transactions",
-    icon: <FaMoneyBill />,
-  },
-
-  {
-    path: "/dashboard/analytics",
-    text: "Analytics",
-    icon: <FaChartLine />,
-  },
-  {
-    path: "/dashboard/categories",
-    text: "Categories",
-    icon: <FaListCheck />,
-  },
-  {
-    path: "/dashboard/contact",
-    text: "Contact Us",
-    icon: <FaEnvelope />,
-  },
-  {
-    path: "/dashboard/address",
-    text: "Address Book",
-    icon: <FaHome />,
-  },
-  {
-    path: "/dashboard/newsletter",
-    text: "Collected Email",
-    icon: <FaMoneyBill />,
-  },
-  {
-    path: "/dashboard/otherbrand",
-    text: "Other Brands",
-    icon: <FaQuestionCircle />,
-  },
-  {
-    path: "/dashboard/messages",
-    text: "Messages",
-    icon: <FaComment />,
-  },
-  { path: "/dashboard/userlist", text: "Users", icon: <FaUser /> },
-  {
-    path: "/dashboard/transactionlist",
-    text: "All Transactions",
-    icon: <FaMoneyBill />,
-  },
-  { path: "/dashboard/payments", text: "Payments", icon: <FaMoneyBill /> },
-  {
-    path: "/dashboard/logreturns",
-    text: "All Logged Returns",
-    icon: <FaArrowRotateLeft />,
-  },
-  {
-    path: "/dashboard/allreturns",
-    text: "Return Queries",
-    icon: <FaArrowRotateLeft />,
-  },
-  {
-    path: "/dashboard/sellerreturns",
-    text: " Sold Returns",
-    icon: <FaArrowRotateLeft />,
-  },
-  {
-    path: "/dashboard/buyerreturns",
-    text: "Purchase Returns",
-    icon: <FaArrowRotateRight />,
-  },
-  {
-    path: "/dashboard/orderlist",
-    text: "Purchase Orders",
-    icon: <FaChartBar />,
   },
 ];
 
@@ -135,7 +21,7 @@ interface SideBarProps {
   setSidebarOpen: (value: boolean) => void;
 }
 
-const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
+const AdminSidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
   const { user } = useAuth();
   const { isDarkMode } = useTheme();
   const sidebarClasses = `fixed inset-y-0 left-0 z-[80] bg-orange-color bg-opacity-10 text-white w-64 h-screen transition-transform transform ${
@@ -147,7 +33,7 @@ const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
 
   return (
     <div className={sidebarClasses}>
-      {/* Sidebar Header */}
+      {/* AdminSidebar Header */}
       <div className="bg-orange-color flex-1 h-[72px] flex justify-center items-center py-4 px-6 shadow-lg">
         <Link to="/" className="text-2xl font-semibold flex items-center">
           <img
@@ -162,7 +48,7 @@ const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
         </Link>
       </div>
 
-      {/* Sidebar Navigation */}
+      {/* AdminSidebar Navigation */}
       <nav className="mt-4 overflow-y-auto h-[calc(100vh-150px)]  scrollbar-hide">
         <ul className=" ">
           {sidebarLinks.map((link, index) => (
@@ -191,7 +77,7 @@ const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
               onClick={() => setSidebarOpen(false)}
             >
               <NavLink
-                to={"/admin/analytic"}
+                to={"/admin/dashboard"}
                 className={`flex items-center justify-center gap-4 font-bold p-2`}
               >
                 Admin Dashboard <AiOutlineArrowRight />
@@ -201,7 +87,7 @@ const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
         </ul>
       </nav>
 
-      {/* Sidebar Footer */}
+      {/* AdminSidebar Footer */}
       <div className="absolute bottom-0 left-0 right-0 p-4 bg-malon-color text-center">
         <p className="text-xs text-white">© 2024 Repeddle</p>
       </div>
@@ -209,4 +95,4 @@ const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
   );
 };
 
-export default Sidebar;
+export default AdminSidebar;

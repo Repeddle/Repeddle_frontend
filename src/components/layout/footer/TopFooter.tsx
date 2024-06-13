@@ -3,8 +3,8 @@ import {
   FaGlobe,
   FaHandshake,
   FaTruckFast,
-} from "react-icons/fa6"
-import TopFooterItem from "./TopFooterItem"
+} from "react-icons/fa6";
+import TopFooterItem from "./TopFooterItem";
 
 const TopFooter = () => {
   return (
@@ -28,7 +28,7 @@ const TopFooter = () => {
             <TopFooterItem
               heading="Secure, Easy and Protected Payments"
               linkText="more"
-              linkHref="protections"
+              linkHref="buyerprotection"
               Icon={FaCreditCard}
               content="With every item you buy using the complete checkout on our App or Website, you are guaranteed 100% money back. Find out"
             />
@@ -58,7 +58,7 @@ const TopFooter = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default TopFooter
+export default TopFooter;

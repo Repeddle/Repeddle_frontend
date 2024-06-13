@@ -1,35 +1,35 @@
-import { Dispatch, SetStateAction } from "react"
-import InputWithLabel2 from "../../components/ui/InputWithLabel2"
-import { ICategory } from "../../types/category"
+import { Dispatch, SetStateAction } from "react";
+import InputWithLabel2 from "../../components/ui/InputWithLabel2";
+import { ICategory } from "../../types/category";
 
 type InputProps = {
-  name: string
-  product: string
-  category: string
-  subCategory: string
-}
+  name: string;
+  product: string;
+  category: string;
+  subCategory: string;
+};
 
 type InputData = InputProps & {
-  brand: string
-  tag: string
-  condition: string
-  material: string
-  description: string
-  price: string
-  color: string
-  selectedSize: string
-  specification: string
-  keyFeatures: string
-  image: string
-}
+  brand: string;
+  tag: string;
+  condition: string;
+  material: string;
+  description: string;
+  price: string;
+  color: string;
+  selectedSize: string;
+  specification: string;
+  keyFeatures: string;
+  image: string;
+};
 
 type Props = {
-  categories: ICategory[]
-  input: InputProps
-  setInput: Dispatch<SetStateAction<InputData>>
-  validationError: InputProps
-  handleError: (text: string, key: keyof InputProps) => void
-}
+  categories: ICategory[];
+  input: InputProps;
+  setInput: Dispatch<SetStateAction<InputData>>;
+  validationError: InputProps;
+  handleError: (text: string, key: keyof InputProps) => void;
+};
 
 const Details = ({
   categories,
@@ -39,8 +39,8 @@ const Details = ({
   handleError,
 }: Props) => {
   const handleOnChange = (text: string, inputVal: keyof typeof input) => {
-    setInput((prevState) => ({ ...prevState, [inputVal]: text }))
-  }
+    setInput((prevState) => ({ ...prevState, [inputVal]: text }));
+  };
 
   return (
     <div className="flex flex-col gap-3">
@@ -58,7 +58,7 @@ const Details = ({
           <select
             value={input.product}
             onChange={(e) => handleOnChange(e.target.value, "product")}
-            className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+            className="text-base m-0 pl-2.5 dark:bg-black border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
             onBlur={() => handleError("", "product")}
           >
             {categories.length > 0 &&
@@ -79,7 +79,7 @@ const Details = ({
           <select
             value={input.category}
             onChange={(e) => handleOnChange(e.target.value, "category")}
-            className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+            className="text-base m-0 pl-2.5 dark:bg-black border-light-ev4 dark:border-dark-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
           >
             {categories.length > 0 &&
               categories.map(
@@ -100,7 +100,7 @@ const Details = ({
           <select
             value={input.subCategory}
             onChange={(e) => handleOnChange(e.target.value, "subCategory")}
-            className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+            className="text-base m-0 pl-2.5 dark:bg-black border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
           >
             {categories.length > 0 &&
               categories.map(
@@ -118,7 +118,7 @@ const Details = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Details
+export default Details;
