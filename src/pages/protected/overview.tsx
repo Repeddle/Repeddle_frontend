@@ -46,15 +46,11 @@ function Overview() {
     fetchUserTransactions();
   }, []);
 
-  console.log(orderSummary);
-
   return (
     <div className="flex-[4] min-h-[60vh]">
       {loading ? (
         <div className="p-5 my-0 mx-5 relative h-[65vh]">
-          <div className="absolute backdrop-blur-md inset-0">
-            <LoadingControlModal />
-          </div>
+          <LoadingControlModal />
         </div>
       ) : error ? (
         <MessageBox className="text-[red]">{error}</MessageBox>

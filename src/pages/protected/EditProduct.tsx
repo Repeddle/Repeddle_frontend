@@ -10,22 +10,27 @@ import {
   FaQuestionCircle,
   FaTimes,
   FaUpload,
-} from "react-icons/fa";
-import Condition from "../defaults/info/Condition";
-import MessageImage from "../../components/ui/MessageImage";
-import LoadingBox from "../../components/LoadingBox";
-import useCategory from "../../hooks/useCategory";
-import useToastNotification from "../../hooks/useToastNotification";
-import CropImage from "../../components/cropImage/CropImage";
-import Chart from "../../components/Chart";
-import AddOtherBrand from "../../components/AddOtherBrand";
-import useBrands from "../../hooks/useBrand";
-import useProducts from "../../hooks/useProducts";
-import DeliveryOption from "../../components/DeliveryOption";
-import { DeliveryMeta, IDeliveryOption, IProduct } from "../../types/product";
-import { colors } from "../../utils/constants";
-import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal";
-import MessageBox from "../../components/MessageBox";
+} from "react-icons/fa"
+import Condition from "../defaults/info/Condition"
+import MessageImage from "../../components/ui/MessageImage"
+import LoadingBox from "../../components/LoadingBox"
+import useCategory from "../../hooks/useCategory"
+import useToastNotification from "../../hooks/useToastNotification"
+import CropImage from "../../components/cropImage/CropImage"
+import Chart from "../../components/Chart"
+import AddOtherBrand from "../../components/AddOtherBrand"
+import useBrands from "../../hooks/useBrand"
+import useProducts from "../../hooks/useProducts"
+import DeliveryOption from "../../components/DeliveryOption"
+import {
+  DeliveryMeta,
+  IDeliveryOption,
+  IProduct,
+  ISize,
+} from "../../types/product"
+import { colors } from "../../utils/constants"
+import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
+import MessageBox from "../../components/MessageBox"
 
 const EditProduct = () => {
   const params = useParams();
@@ -41,7 +46,7 @@ const EditProduct = () => {
     fetchCategories();
   }, []);
 
-  const [sizes, setSizes] = useState<{ size: string; value: string }[]>([]);
+  const [sizes, setSizes] = useState<ISize[]>([])
 
   const [active, setActive] = useState(false);
   const [badge, setBadge] = useState(false);
@@ -97,19 +102,20 @@ const EditProduct = () => {
     image: "",
   });
 
-  const [paxi, setPaxi] = useState(region() === "ZAR");
-  const [gig, setGig] = useState(false);
-  const [pudoLocker, setPudoLocker] = useState(false);
-  const [pudoDoor, setPudoDoor] = useState(false);
-  const [postnet, setPostnet] = useState(false);
-  const [aramex, setAramex] = useState(false);
-  const [pickup, setPickup] = useState(true);
-  const [bundle, setBundle] = useState(false);
-  const [meta, setMeta] = useState<DeliveryMeta>({});
-  const [currentImage, setCurrentImage] = useState("image1");
-  const [product, setProduct] = useState<IProduct>();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [paxi, setPaxi] = useState(region() === "ZAR")
+  const [gig, setGig] = useState(false)
+  const [pudoLocker, setPudoLocker] = useState(false)
+  const [pudoDoor, setPudoDoor] = useState(false)
+  const [postnet, setPostnet] = useState(false)
+  const [aramex, setAramex] = useState(false)
+  const [pickup, setPickup] = useState(true)
+  const [bundle, setBundle] = useState(false)
+  const [meta, setMeta] = useState<DeliveryMeta>({})
+  const [currentImage, setCurrentImage] = useState("image1")
+  const [product, setProduct] = useState<IProduct>()
+  const [tags, setTags] = useState<string[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
 
   useEffect(() => {
     const getFilterBrand = async () => {
@@ -145,10 +151,12 @@ const EditProduct = () => {
             product: data.mainCategory ?? input.product,
             specification: data.specification ?? input.specification,
             subCategory: data.subCategory ?? input.subCategory,
-          });
-          setActive(data?.active ?? false);
-          // tags = data.tags
-        } else setError(data);
+          })
+          setAddSize(!data.sizes.length)
+          setSizes(data.sizes)
+          setActive(data?.active ?? false)
+          setTags(data.tags)
+        } else setError(data)
       }
       setLoading(false);
     };
@@ -157,8 +165,6 @@ const EditProduct = () => {
   }, [id]);
 
   const [loadingUpload, setLoadingUpload] = useState(false);
-
-  let tags: string[] = [];
 
   const validation = (e: FormEvent) => {
     e.preventDefault();
@@ -194,14 +200,14 @@ const EditProduct = () => {
       return;
     }
     if (tag.length > 0) {
-      tags.push(tag);
-      handleOnChange("", "tag");
+      setTags([...tags, tag])
+      handleOnChange("", "tag")
     }
   };
   const removeTags = (tag: string) => {
-    const newtags = tags.filter((data) => data != tag);
-    tags = newtags;
-  };
+    const newtags = tags.filter((data) => data != tag)
+    setTags(newtags)
+  }
 
   const discountCalc = () => {
     if (parseInt(price) < parseInt(discount)) return null;
@@ -212,9 +218,9 @@ const EditProduct = () => {
     setSizes((prevSizes) => {
       const sizeIndex = prevSizes.findIndex((x) => x.size === label);
       if (sizeIndex !== -1) {
-        const updatedSizes = [...prevSizes];
-        updatedSizes[sizeIndex].value = value;
-        return updatedSizes;
+        const updatedSizes = [...prevSizes]
+        updatedSizes[sizeIndex].quantity = +value
+        return updatedSizes
       }
       return prevSizes;
     });
@@ -242,7 +248,7 @@ const EditProduct = () => {
       const newSizes = sizes.filter((s) => s.size !== sizenow);
       setSizes(newSizes);
     } else {
-      setSizes((prevSizes) => [...prevSizes, { size: sizenow, value: "1" }]);
+      setSizes((prevSizes) => [...prevSizes, { size: sizenow, quantity: 1 }])
     }
 
     setInput((prev) => ({ ...prev, selectedSize: "" }));
@@ -988,10 +994,11 @@ const EditProduct = () => {
                               </label>
                               :
                               <input
-                                className="bg-transparent ml-[5px] text-xs border h-5 w-10 p-2.5 rounded-[0.2rem] text-black dark:text-white focus-visible:outline focus-visible:outline-orange-color"
+                                className="bg-transparent numeric-arrow ml-[5px] text-xs border h-5 w-10 p-2.5 rounded-[0.2rem] text-black dark:text-white focus-visible:outline focus-visible:outline-orange-color"
                                 placeholder="qty"
+                                type="number"
                                 maxLength={4}
-                                value={s.value}
+                                value={s.quantity}
                                 onChange={(e) => {
                                   smallSizeHandler(
                                     s.size,
