@@ -16,18 +16,18 @@ export default function Support() {
   const [input, setInput] = useState({ username: "", email: "" });
   const [error, setError] = useState({ username: "", email: "" });
   const [message, setMessage] = useState("");
-  const [currentChat, setCurrentChat] = useState<any>();
+  // const [currentChat, setCurrentChat] = useState<any>();
   const scrollref = useRef<HTMLDivElement>(null);
-  const [messages, setMessages] = useState<any[]>([]);
-  const [arrivalMessage, setArrivalMessage] = useState<any>();
-  const [image, setImage] = useState<string>("");
+  const [messages] = useState([]);
+  // const [arrivalMessage, setArrivalMessage] = useState<any>();
+  // const [image, setImage] = useState<string>("");
   const location = useLocation();
-  const [uploadImage, setUploadImage] = useState(false);
+  const [, setUploadImage] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const CurrentPath = location.pathname;
 
-  const [sendMessage, setSendMessage] = useState(false);
+  const [sendMessage] = useState(false);
 
   const handleOnChange = (text: string, input: string) => {
     setInput((prevState) => ({ ...prevState, [input]: text.trim() }));
@@ -47,18 +47,20 @@ export default function Support() {
     }
   };
 
-  const addConversation = async (user: any) => {};
+  // const addConversation = async (user: any) => {};
 
-  const [sendingMessage, setSendingMessage] = useState(false);
+  const [sendingMessage] = useState(false);
 
-  const handleSubmit = async (e: FormEvent) => {};
-
-  const handleSendMessage = async () => {
-    if (user) {
-      await addConversation(user);
-    }
-    setSendMessage(true);
+  const handleSubmit = async (e: FormEvent) => {
+    console.log(e);
   };
+
+  // const handleSendMessage = async () => {
+  //   if (user) {
+  //     await addConversation(user);
+  //   }
+  //   setSendMessage(true);
+  // };
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !sendingMessage) {
       handleSubmit(e as unknown as FormEvent);
@@ -67,15 +69,13 @@ export default function Support() {
 
   const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files![0];
+    console.log(file);
   };
 
   if (CurrentPath === "/brand" || CurrentPath === "/newproduct") return null;
 
   return (
-    <div
-      className={`hidden lg:block fixed bottom-0 right-5 lg:right-10 ${
-      }`}
-    >
+    <div className={`hidden lg:block fixed bottom-0 right-5 lg:right-10`}>
       <div className="fixed z-50 right-10 bottom-0">
         {showSupport ? (
           <div
@@ -166,7 +166,7 @@ export default function Support() {
                 )}
                 <div className="overflow-auto h-36">
                   {messages.map((m) => (
-                    <div key={m._id} ref={scrollref}>
+                    <div key={m} ref={scrollref}>
                       {/* <Messages message={m} own={m.sender === user._id} /> */}
                     </div>
                   ))}
