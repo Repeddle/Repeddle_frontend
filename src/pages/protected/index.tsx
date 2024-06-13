@@ -1,60 +1,32 @@
-import { Navigate, Outlet } from "react-router-dom"
-import useAuth from "../../hooks/useAuth"
-import StickyNav from "../../components/layout/StickyNav"
-import { RiMenu2Fill } from "react-icons/ri"
-import { useState } from "react"
-import Sidebar from "../../components/layout/Sidebar"
-import Middlebar from "../../components/layout/navbar/Middlebar"
-import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import StickyNav from "../../components/layout/StickyNav";
+import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal";
+import Footer from "../../components/layout/footer";
+import Navbar from "../../components/layout/navbar";
 
 function Protected() {
-  const { user, loading } = useAuth()
-  const [isSidebarOpen, setSidebarOpen] = useState(false)
+  const { user, loading } = useAuth();
+  const location = useLocation();
 
   if (loading) {
-    return <LoadingLogoModal />
+    return <LoadingLogoModal />;
   }
 
   if (!user) {
     // user is not authenticated
-    return <Navigate to="/auth/login" />
+    return <Navigate to="/auth/login" />;
   }
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen)
-  }
-
+  const notAllowedRoutes = ["/messages"];
   return (
     <main className="">
-      <div className="p-4 bg-light-ev1 dark:bg-dark-ev1">
-        <Middlebar />
-      </div>
-      <div className="flex h-[calc(100vh-64px)] overflow-hidden  ">
-        {/* Sidebar */}
-        <Sidebar isOpen={isSidebarOpen} setSidebarOpen={setSidebarOpen} />
-
-        {/* Content area */}
-        <div
-          className={`flex-1 p-4 ${
-            isSidebarOpen ? "ml-64" : "ml-0 md:ml-64 overflow-x-hidden"
-          }`}
-        >
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button onClick={toggleSidebar} className="">
-              <RiMenu2Fill className="text-primary text-3xl" />
-            </button>
-          </div>
-
-          {/* Content */}
-          <main className="">
-            <Outlet />
-          </main>
-        </div>
-      </div>
-      <StickyNav />
+      <Navbar />
+      <Outlet />
+      {!notAllowedRoutes.includes(location.pathname) && <Footer />}
+      {!notAllowedRoutes.includes(location.pathname) && <StickyNav />}
     </main>
-  )
+  );
 }
 
-export default Protected
+export default Protected;

@@ -1,9 +1,9 @@
-import { FormEvent, useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
-import { currency, region, uploadImage } from "../../utils/common"
-import useAuth from "../../hooks/useAuth"
-import Modal from "../../components/ui/Modal"
-import FeeStructure from "../defaults/info/FeeStructure"
+import { FormEvent, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { currency, region, uploadImage } from "../../utils/common";
+import useAuth from "../../hooks/useAuth";
+import Modal from "../../components/ui/Modal";
+import FeeStructure from "../defaults/info/FeeStructure";
 import {
   FaCheck,
   FaCheckCircle,
@@ -33,40 +33,40 @@ import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
 import MessageBox from "../../components/MessageBox"
 
 const EditProduct = () => {
-  const params = useParams()
-  const { id } = params
+  const params = useParams();
+  const { id } = params;
 
-  const { user } = useAuth()
-  const { fetchCategories, categories } = useCategory()
-  const { fetchBrands, brands: searchBrand } = useBrands()
-  const { fetchProductById } = useProducts()
-  const { addNotification } = useToastNotification()
+  const { user } = useAuth();
+  const { fetchCategories, categories } = useCategory();
+  const { fetchBrands, brands: searchBrand } = useBrands();
+  const { fetchProductById } = useProducts();
+  const { addNotification } = useToastNotification();
 
   useEffect(() => {
-    fetchCategories()
-  }, [])
+    fetchCategories();
+  }, []);
 
   const [sizes, setSizes] = useState<ISize[]>([])
 
-  const [active, setActive] = useState(false)
-  const [badge, setBadge] = useState(false)
-  const [price, setPrice] = useState("")
-  const [discount, setDiscount] = useState("")
+  const [active, setActive] = useState(false);
+  const [badge, setBadge] = useState(false);
+  const [price, setPrice] = useState("");
+  const [discount, setDiscount] = useState("");
 
-  const [showUploadingImage, setShowUploadingImage] = useState(false)
+  const [showUploadingImage, setShowUploadingImage] = useState(false);
 
-  const [showConditionModal, setShowConditionModal] = useState(false)
-  const [showOtherBrand, setShowOtherBrand] = useState(false)
-  const [showComissionModal, setShowComissionModal] = useState(false)
-  const [showDelivery, setShowDelivery] = useState(false)
-  const [countInStock, setCountInStock] = useState(1)
-  const [addSize, setAddSize] = useState(sizes.length < 1)
+  const [showConditionModal, setShowConditionModal] = useState(false);
+  const [showOtherBrand, setShowOtherBrand] = useState(false);
+  const [showComissionModal, setShowComissionModal] = useState(false);
+  const [showDelivery, setShowDelivery] = useState(false);
+  const [countInStock, setCountInStock] = useState(1);
+  const [addSize, setAddSize] = useState(sizes.length < 1);
 
-  const [brandQuery, setBrandQuery] = useState("")
+  const [brandQuery, setBrandQuery] = useState("");
 
   const [deliveryOption, setDeliveryOption] = useState<IDeliveryOption[]>([
     { name: "Pick up from Seller", value: 0 },
-  ])
+  ]);
   const [validationError, setValidationError] = useState({
     name: "",
     product: "",
@@ -83,7 +83,7 @@ const EditProduct = () => {
     specification: "",
     keyFeatures: "",
     image: "",
-  })
+  });
   const [input, setInput] = useState({
     name: "",
     product: "",
@@ -100,7 +100,7 @@ const EditProduct = () => {
     specification: "",
     keyFeatures: "",
     image: "",
-  })
+  });
 
   const [paxi, setPaxi] = useState(region() === "ZAR")
   const [gig, setGig] = useState(false)
@@ -119,24 +119,24 @@ const EditProduct = () => {
 
   useEffect(() => {
     const getFilterBrand = async () => {
-      const params: string[][] = [["search", brandQuery]]
+      const params: string[][] = [["search", brandQuery]];
 
-      const string = new URLSearchParams(params).toString()
+      const string = new URLSearchParams(params).toString();
 
-      await fetchBrands(string)
-    }
+      await fetchBrands(string);
+    };
 
-    if (brandQuery) getFilterBrand()
-  }, [brandQuery])
+    if (brandQuery) getFilterBrand();
+  }, [brandQuery]);
 
   useEffect(() => {
     const getProductData = async () => {
       if (id) {
-        setLoading(true)
-        const data = await fetchProductById(id)
+        setLoading(true);
+        const data = await fetchProductById(id);
         if (typeof data !== "string") {
-          setProduct(data)
-          setCurrentImage(data.images[0])
+          setProduct(data);
+          setCurrentImage(data.images[0]);
           setInput({
             ...input,
             brand: data.brand ?? input.brand,
@@ -158,25 +158,25 @@ const EditProduct = () => {
           setTags(data.tags)
         } else setError(data)
       }
-      setLoading(false)
-    }
+      setLoading(false);
+    };
 
-    getProductData()
-  }, [id])
+    getProductData();
+  }, [id]);
 
-  const [loadingUpload, setLoadingUpload] = useState(false)
+  const [loadingUpload, setLoadingUpload] = useState(false);
 
   const validation = (e: FormEvent) => {
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
 
-  const notAvailable = async () => {}
+  const notAvailable = async () => {};
 
-  const handleSold = async () => {}
+  const handleSold = async () => {};
 
   const handleOnChange = (text: string, inputVal: keyof typeof input) => {
-    setInput((prevState) => ({ ...prevState, [inputVal]: text }))
-  }
+    setInput((prevState) => ({ ...prevState, [inputVal]: text }));
+  };
 
   const handleError = (
     errorMessage: string,
@@ -185,74 +185,74 @@ const EditProduct = () => {
     setValidationError((prevState) => ({
       ...prevState,
       [input]: errorMessage,
-    }))
-  }
+    }));
+  };
 
   const handleTags = (tag: string) => {
     if (tag.includes(" ")) {
-      addNotification("Please remove unnecessary space")
-      return
+      addNotification("Please remove unnecessary space");
+      return;
     }
 
     if (tags.length > 5) {
-      addNotification("You can't add more five tags ")
+      addNotification("You can't add more five tags ");
 
-      return
+      return;
     }
     if (tag.length > 0) {
       setTags([...tags, tag])
       handleOnChange("", "tag")
     }
-  }
+  };
   const removeTags = (tag: string) => {
     const newtags = tags.filter((data) => data != tag)
     setTags(newtags)
   }
 
   const discountCalc = () => {
-    if (parseInt(price) < parseInt(discount)) return null
-    return ((parseInt(price) - parseInt(discount)) / parseInt(price)) * 100
-  }
+    if (parseInt(price) < parseInt(discount)) return null;
+    return ((parseInt(price) - parseInt(discount)) / parseInt(price)) * 100;
+  };
 
   const smallSizeHandler = (label: string, value: string) => {
     setSizes((prevSizes) => {
-      const sizeIndex = prevSizes.findIndex((x) => x.size === label)
+      const sizeIndex = prevSizes.findIndex((x) => x.size === label);
       if (sizeIndex !== -1) {
         const updatedSizes = [...prevSizes]
         updatedSizes[sizeIndex].quantity = +value
         return updatedSizes
       }
-      return prevSizes
-    })
-  }
+      return prevSizes;
+    });
+  };
 
   const uploadHandler = async (file: File, fileType: string) => {
-    setLoadingUpload(true)
+    setLoadingUpload(true);
     try {
-      const res = await uploadImage(file)
-      handleOnChange(res, fileType as keyof typeof input)
+      const res = await uploadImage(file);
+      handleOnChange(res, fileType as keyof typeof input);
     } catch (error) {
-      addNotification(error as string)
+      addNotification(error as string);
     }
-  }
+  };
 
   const sizeHandler = (sizenow: string) => {
     if (!sizenow) {
-      addNotification("Please enter size")
-      return
+      addNotification("Please enter size");
+      return;
     }
 
-    const exist = sizes.some((s) => s.size === sizenow)
+    const exist = sizes.some((s) => s.size === sizenow);
 
     if (exist) {
-      const newSizes = sizes.filter((s) => s.size !== sizenow)
-      setSizes(newSizes)
+      const newSizes = sizes.filter((s) => s.size !== sizenow);
+      setSizes(newSizes);
     } else {
       setSizes((prevSizes) => [...prevSizes, { size: sizenow, quantity: 1 }])
     }
 
-    setInput((prev) => ({ ...prev, selectedSize: "" }))
-  }
+    setInput((prev) => ({ ...prev, selectedSize: "" }));
+  };
 
   const productData = [
     {
@@ -273,7 +273,7 @@ const EditProduct = () => {
       pv: 9800,
       amt: 2290,
     },
-  ]
+  ];
 
   return (
     <div className="flex-[4] p-5">
@@ -395,7 +395,7 @@ const EditProduct = () => {
                         value="yes"
                         checked={active}
                         onChange={() => {
-                          setActive(true)
+                          setActive(true);
                         }}
                       />
                       <label
@@ -786,7 +786,7 @@ const EditProduct = () => {
                         placeholder={product.sellingPrice.toString()}
                         type="number"
                         onChange={(e) => {
-                          setDiscount(e.target.value)
+                          setDiscount(e.target.value);
                         }}
                       />
                       <span>
@@ -838,8 +838,8 @@ const EditProduct = () => {
                     type="search"
                     value={input.brand.length > 0 ? input.brand : brandQuery}
                     onChange={(e) => {
-                      handleOnChange("", "brand")
-                      setBrandQuery(e.target.value)
+                      handleOnChange("", "brand");
+                      setBrandQuery(e.target.value);
                     }}
                     onBlur={() => input.brand.length > 0 && setBrandQuery("")}
                   />
@@ -855,11 +855,11 @@ const EditProduct = () => {
                           key={b._id}
                           onClick={() => {
                             if (b.name === "Other") {
-                              setShowOtherBrand(true)
+                              setShowOtherBrand(true);
                             } else {
-                              handleOnChange(b.name, "brand")
+                              handleOnChange(b.name, "brand");
                             }
-                            setBrandQuery("")
+                            setBrandQuery("");
                           }}
                         >
                           {b.name}
@@ -908,6 +908,7 @@ const EditProduct = () => {
                   <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
                     <select
                       value={input.color}
+                      multiple
                       onChange={(e) => handleOnChange(e.target.value, "color")}
                       className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                     >
@@ -934,8 +935,8 @@ const EditProduct = () => {
                 appearance-none bg-[#d4d4d4] outline-0 checked:before:bg-orange-color before:bg-[grey] dark:checked:bg-dark-ev4 checked:bg-[#fcf0e0]`}
                     checked={addSize}
                     onChange={(e) => {
-                      setSizes([])
-                      setAddSize(e.target.checked)
+                      setSizes([]);
+                      setAddSize(e.target.checked);
                     }}
                   />
                 </div>
@@ -969,8 +970,8 @@ const EditProduct = () => {
                                 handleOnChange(
                                   e.target.value.slice(0, 4),
                                   "selectedSize"
-                                )
-                                handleError("", "selectedSize")
+                                );
+                                handleError("", "selectedSize");
                               }}
                             />
                             <div
@@ -1002,8 +1003,8 @@ const EditProduct = () => {
                                   smallSizeHandler(
                                     s.size,
                                     e.target.value.slice(0, 4)
-                                  )
-                                  handleError("", "selectedSize")
+                                  );
+                                  handleError("", "selectedSize");
                                 }}
                               />
                             </div>
@@ -1165,7 +1166,7 @@ const EditProduct = () => {
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default EditProduct
+export default EditProduct;
