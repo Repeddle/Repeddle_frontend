@@ -13,10 +13,17 @@ import CartItems from "../../section/cart/CartItems"
 import { CartItem } from "../../context/CartContext"
 import AlertComponent from "../../section/cart/AlertComponent"
 import Modal from "../../components/ui/Modal"
-import { currency, region } from "../../utils/common"
+import { checkDeliverySelect, currency, region } from "../../utils/common"
 import DeliveryOptionScreen from "../../components/DeliveryOptionScreen"
+import useToastNotification from "../../hooks/useToastNotification"
 
 function Cart() {
+  const { cart, addToCart, removeFromCart, subtotal, total } = useCart()
+  const { user } = useAuth()
+  const { addNotification } = useToastNotification()
+
+  const navigate = useNavigate()
+
   const loading = false
 
   const [showModel, setShowModel] = useState(false)
@@ -24,17 +31,33 @@ function Cart() {
   const [remove, setRemove] = useState(false)
 
   const scrollref = useRef(null)
-  const navigate = useNavigate()
-
-  const { cart, addToCart, removeFromCart, subtotal, total } = useCart()
-  const { user } = useAuth()
 
   const saveItem = (prod: IProduct) => {
     console.log(prod)
   }
 
   const checkoutHandler = () => {
-    // TODO: some other verifications
+    if (!user) {
+      addNotification("Login to continue")
+      navigate("/signin?redirect=cart")
+      return
+    }
+
+    if (!checkDeliverySelect(cart)) {
+      addNotification("Select delivery method")
+      return
+    }
+
+    if (cart.length === 0) {
+      addNotification("Cart is empty")
+    } else {
+      if (user.isVerifiedEmail) {
+        navigate("/payment")
+      } else {
+        navigate("/verifyemail")
+      }
+    }
+
     navigate("/payment")
   }
 
@@ -96,15 +119,20 @@ function Cart() {
               <Modal isOpen={remove} onClose={() => setRemove(false)}>
                 <AlertComponent
                   message="Are you sure you want to remove item from cart?"
-                  onConfirm={() =>
+                  onConfirm={() => {
                     currentItem && removeFromCart(currentItem?._id)
-                  }
+                    setRemove(false)
+                  }}
                   onWishlist={() => currentItem && saveItem(currentItem)}
                 />
               </Modal>
 
               {currentItem && (
-                <Modal isOpen={showModel} onClose={() => setShowModel(false)}>
+                <Modal
+                  isOpen={showModel}
+                  onClose={() => setShowModel(false)}
+                  size="lg"
+                >
                   <DeliveryOptionScreen
                     setShowModel={setShowModel}
                     item={currentItem}
@@ -152,7 +180,6 @@ function Cart() {
                                   addToCart({
                                     ...product,
                                     quantity: 1,
-                                    deliverySelect: {},
                                   })
                                 }
                               >

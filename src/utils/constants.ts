@@ -88,6 +88,9 @@ export const shippinglist = [
 export const conditionlist = [
   { _id: 2, name: "New with Tags" },
   { _id: 3, name: "New with No Tags" },
+  { _id: 4, name: "Excellent Condition" },
+  { _id: 5, name: "Good Condition" },
+  { _id: 6, name: "Fair Condition" },
 ]
 
 export const availabilitylist = [

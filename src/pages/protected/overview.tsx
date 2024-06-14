@@ -1,50 +1,50 @@
-import { useEffect, useState } from "react";
-import MessageBox from "../../components/MessageBox";
-import moment from "moment";
-import { currency, getMonday, region } from "../../utils/common";
-import WidgetSmallProduct from "../../section/overview/WidgetSmallProduct";
-import WidgetLarge from "../../components/WidgetLarge";
-import FeaturedInfoOverview from "../../section/overview/FeaturedInfoOverview";
-import useOrder from "../../hooks/useOrder";
-import { IOrderSummary } from "../../types/order";
-import Chart from "../../components/Chart";
-import useProducts from "../../hooks/useProducts";
-import useTransactions from "../../hooks/useTransaction";
-import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo";
+import { useEffect, useState } from "react"
+import MessageBox from "../../components/MessageBox"
+import moment from "moment"
+import { currency, getMonday, region } from "../../utils/common"
+import WidgetSmallProduct from "../../section/overview/WidgetSmallProduct"
+import WidgetLarge from "../../components/WidgetLarge"
+import FeaturedInfoOverview from "../../section/overview/FeaturedInfoOverview"
+import useOrder from "../../hooks/useOrder"
+import { IOrderSummary } from "../../types/order"
+import Chart from "../../components/Chart"
+import useProducts from "../../hooks/useProducts"
+import useTransactions from "../../hooks/useTransaction"
+import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo"
 
-const today = moment().startOf("day");
+const today = moment().startOf("day")
 
 function Overview() {
-  const { getOrdersSummary, error, loading } = useOrder();
-  const { fetchUserProducts, products } = useProducts();
-  const { fetchUserTransactions, transactions } = useTransactions();
+  const { getOrdersSummary, error, loading } = useOrder()
+  const { fetchUserProducts, products } = useProducts()
+  const { fetchUserTransactions, transactions } = useTransactions()
 
-  const now = new window.Date();
-  const firstDay = new window.Date(now.getFullYear(), now.getMonth(), 1);
+  const now = new window.Date()
+  const firstDay = new window.Date(now.getFullYear(), now.getMonth(), 1)
 
-  const [from, setFrom] = useState("2022-04-24");
-  const [to, setTo] = useState<string | Date>(now);
-  const [orderSummary, setOrderSummary] = useState<IOrderSummary>();
+  const [from, setFrom] = useState("2022-04-24")
+  const [to, setTo] = useState<string | Date>(now)
+  const [orderSummary, setOrderSummary] = useState<IOrderSummary>()
 
   useEffect(() => {
     const getSummary = async () => {
       const res = await getOrdersSummary({
         startDate: from,
         endDate: to.toString(),
-      });
-      if (res) setOrderSummary(res);
-    };
+      })
+      if (res) setOrderSummary(res)
+    }
 
-    getSummary();
-  }, [from, to]);
-
-  useEffect(() => {
-    fetchUserProducts("order=newest");
-  }, []);
+    getSummary()
+  }, [from, to])
 
   useEffect(() => {
-    fetchUserTransactions();
-  }, []);
+    fetchUserProducts("order=newest")
+  }, [])
+
+  useEffect(() => {
+    fetchUserTransactions()
+  }, [])
 
   return (
     <div className="flex-[4] min-h-[60vh]">
@@ -84,8 +84,8 @@ function Overview() {
             <div
               className="font-medium cursor-pointer border border-malon-color px-2 py-px  hover:bg-malon-color hover:text-white-color"
               onClick={() => {
-                setFrom(today.toDate().toString());
-                setTo(moment(today).endOf("day").toDate());
+                setFrom(today.toDate().toString())
+                setTo(moment(today).endOf("day").toDate())
               }}
             >
               Today
@@ -93,8 +93,8 @@ function Overview() {
             <div
               className="font-medium cursor-pointer border border-malon-color px-2 py-px  hover:bg-malon-color hover:text-white-color"
               onClick={() => {
-                setFrom(getMonday(today.toDate()).toString());
-                setTo(moment(today).endOf("day").toDate());
+                setFrom(getMonday(today.toDate()).toString())
+                setTo(moment(today).endOf("day").toDate())
               }}
             >
               This Week
@@ -102,13 +102,13 @@ function Overview() {
             <div
               className="font-medium cursor-pointer border border-malon-color px-2 py-px  hover:bg-malon-color hover:text-white-color"
               onClick={() => {
-                setFrom(firstDay.toString());
-                setTo(moment(today).endOf("day").toDate());
+                setFrom(firstDay.toString())
+                setTo(moment(today).endOf("day").toDate())
               }}
             >
               This Month
             </div>
-            <Date>
+            <div>
               From:
               <input
                 className="w-[100px] pl-[5px] pr-0 py-[5px] rounded-[0.2rem] border-0 text-black-color dark:text-white-color focus-visible:outline-none"
@@ -117,8 +117,8 @@ function Overview() {
                 type="date"
                 value={moment(from).format("YYYY-MM-DD").toString()}
               />
-            </Date>
-            <Date>
+            </div>
+            <div>
               To:{" "}
               <input
                 className="w-[100px] pl-[5px] pr-0 py-[5px] rounded-[0.2rem] border-0 text-black-color dark:text-white-color focus-visible:outline-none"
@@ -126,7 +126,7 @@ function Overview() {
                 type="date"
                 value={moment(to).format("YYYY-MM-DD").toString()}
               />
-            </Date>
+            </div>
           </div>
           <div className="flex flex-1 gap-5 m-5 flex-col lg:flex-row">
             <div className="flex-1 flex flex-col gap-5">
@@ -135,15 +135,23 @@ function Overview() {
                 total={`${currency(
                   region()
                 )} ${orderSummary?.soldOrders.numSales.toFixed(2)}`}
-                data={orderSummary?.dailySoldOrders ?? []}
-                dataKey="date"
+                data={
+                  orderSummary?.dailySoldOrders.map((x) => {
+                    return { name: `${x._id}`, order: x.sales }
+                  }) ?? []
+                }
+                dataKey="order"
                 grid
               />
               <Chart
                 title="Sold Orders"
                 total={20}
-                data={orderSummary?.dailySoldOrders ?? []}
-                dataKey="date"
+                data={
+                  orderSummary?.dailySoldOrders.map((x) => {
+                    return { name: `${x._id}`, order: x.sales }
+                  }) ?? []
+                }
+                dataKey="order"
                 grid
               />
             </div>
@@ -151,15 +159,19 @@ function Overview() {
               <Chart
                 title="Product"
                 total={orderSummary?.purchaseOrders.numSales}
-                data={orderSummary?.dailyPurchasedOrders ?? []}
-                dataKey="date"
+                data={
+                  orderSummary?.dailyPurchasedOrders.map((x) => {
+                    return { name: `${x._id}`, order: x.sales }
+                  }) ?? []
+                }
+                dataKey="order"
                 grid
               />
               <Chart
                 title="Purchase Order"
                 data={
                   orderSummary?.dailyPurchasedOrders.map((x) => {
-                    return { name: `${x._id}`, order: x.orders };
+                    return { name: `${x._id}`, order: x.orders }
                   }) ?? []
                 }
                 dataKey="orders"
@@ -176,7 +188,7 @@ function Overview() {
         </>
       )}
     </div>
-  );
+  )
 }
 
-export default Overview;
+export default Overview

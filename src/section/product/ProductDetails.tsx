@@ -64,7 +64,7 @@ const ProductDetails = ({ product }: Props) => {
                 <td>{product.category}</td>
               </tr>
               <tr>
-                <td>Subcategory</td>
+                <td className="pr-4">Sub Category</td>
                 <td>{product.subCategory || "nal"}</td>
               </tr>
               <tr>

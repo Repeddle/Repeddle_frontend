@@ -51,6 +51,7 @@ export interface IUser {
   influencer?: boolean
   rebundle?: IRebundle
   earnings?: number
+  balance?: number
 }
 
 export interface UpdateFields {
