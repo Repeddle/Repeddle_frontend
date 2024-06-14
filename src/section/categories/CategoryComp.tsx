@@ -1,5 +1,5 @@
 import { FaLink } from "react-icons/fa"
-import { categoriesModal } from "../../pages/protected/Categories"
+import { categoriesModal } from "../../pages/admin/Categories"
 
 type Props = {
   category: {

@@ -1,11 +1,24 @@
 import { useState } from "react"
+import useToastNotification from "../hooks/useToastNotification"
+import useNewsletter from "../hooks/useNewsletter"
+import { emailRegex } from "../utils/constants"
 
 const NewsLetter = () => {
+  const { addNotification } = useToastNotification()
+  const { createNewsletter } = useNewsletter()
+
   const [input, setInput] = useState("")
+  const [sent, setSent] = useState(false)
 
-  const sent = false
-
-  const handleSubmit = () => {}
+  const handleSubmit = async () => {
+    if (!input.toLocaleLowerCase().match(emailRegex)) {
+      addNotification("Please enter a valid email")
+      return
+    }
+    const res = await createNewsletter(input.toLowerCase())
+    if (res) setSent(true)
+    else addNotification("Failed to subscribe to newsletter")
+  }
 
   return sent ? (
     <div className="h-full w-full flex lg:text-lg md:text-base text-sm justify-center items-center text-center px-2.5 py-0">

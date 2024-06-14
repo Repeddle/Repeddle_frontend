@@ -3,7 +3,7 @@ import InputWithLabel2 from "../../components/ui/InputWithLabel2"
 import Modal from "../../components/ui/Modal"
 import DeliveryOption from "../../components/DeliveryOption"
 import { currency, region } from "../../utils/common"
-import { DeliveryMeta, IDeliveryOption } from "../../types/product"
+import { IDeliveryOption, ProductMeta } from "../../types/product"
 import { FaCheck, FaQuestionCircle } from "react-icons/fa"
 import FeeStructure from "../../pages/defaults/info/FeeStructure"
 
@@ -22,8 +22,8 @@ type Props = {
   costPrice?: string | null
   sellingPrice: number
   discount: () => number
-  meta: DeliveryMeta
-  setMeta: (val: DeliveryMeta) => void
+  meta: ProductMeta
+  setMeta: (val: ProductMeta) => void
 }
 
 const Price = ({

@@ -124,7 +124,7 @@ export const patternlist = [
 ]
 
 export const typelist = [
-  { _id: 2, name: "Re:Curated" },
+  { _id: 2, name: "ReCurated" },
   { _id: 3, name: "Bulk n Slot" },
 ]
 

@@ -14,6 +14,7 @@ import { CartItem } from "../../context/CartContext"
 import AlertComponent from "../../section/cart/AlertComponent"
 import Modal from "../../components/ui/Modal"
 import { currency, region } from "../../utils/common"
+import DeliveryOptionScreen from "../../components/DeliveryOptionScreen"
 
 function Cart() {
   const loading = false
@@ -102,14 +103,14 @@ function Cart() {
                 />
               </Modal>
 
-              <Modal isOpen={showModel} onClose={() => setShowModel(false)}>
-                <></>
-                {/* TODO: uncomment when this page is done  */}
-                {/* <DeliveryOptionScreen
-                  setShowModel={setShowModel}
-                  item={currentItem}
-                /> */}
-              </Modal>
+              {currentItem && (
+                <Modal isOpen={showModel} onClose={() => setShowModel(false)}>
+                  <DeliveryOptionScreen
+                    setShowModel={setShowModel}
+                    item={currentItem}
+                  />
+                </Modal>
+              )}
             </div>
             {user && (
               <div

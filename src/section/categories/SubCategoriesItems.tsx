@@ -1,5 +1,5 @@
 import useToastNotification from "../../hooks/useToastNotification"
-import { categoriesModal } from "../../pages/protected/Categories"
+import { categoriesModal } from "../../pages/admin/Categories"
 import { ISubCategory } from "../../types/category"
 import { FaDotCircle, FaPen, FaTrash } from "react-icons/fa"
 
