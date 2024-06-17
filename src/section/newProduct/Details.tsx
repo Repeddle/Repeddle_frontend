@@ -16,7 +16,7 @@ type InputData = InputProps & {
   material: string;
   description: string;
   price: string;
-  color: string;
+  color: string[];
   selectedSize: string;
   specification: string;
   keyFeatures: string;

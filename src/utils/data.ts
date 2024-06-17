@@ -2,13 +2,13 @@ import {
   ConversationMessage,
   IConversation,
   SearchResult,
-} from "../types/conversation"
-import { BestSeller, Summary, ViewedProducts } from "../types/dashboard"
-import { IContactMessage, IEmailList, INewsletter } from "../types/message"
-import { IReturn, Order } from "../types/order"
-import { IBrand, IProduct, Seller } from "../types/product"
-import { IPayment, ITransaction } from "../types/transactions"
-import { IUser, UserBalance } from "../types/user"
+} from "../types/conversation";
+import { BestSeller, Summary, ViewedProducts } from "../types/dashboard";
+import { IContactMessage, IEmailList, INewsletter } from "../types/message";
+import { IReturn, Order } from "../types/order";
+import { IBrand, IProduct, Seller } from "../types/product";
+import { IPayment, ITransaction } from "../types/transactions";
+import { IUser, UserBalance } from "../types/user";
 
 export const seller: Seller = {
   address: {
@@ -34,7 +34,7 @@ export const seller: Seller = {
   badge: false,
   createdAt: "2023-02-19T13:25:59.641Z",
   updatedAt: "2023-09-15T21:13:45.394Z",
-}
+};
 
 export const productDetails: IProduct = {
   name: "Summer Shirt",
@@ -84,7 +84,7 @@ export const productDetails: IProduct = {
   active: true,
   badge: false,
   brand: "nautica",
-  color: "multiculour",
+  color: ["multiculour"],
   keyFeatures: "men",
   material: "Cotton",
   sold: true,
@@ -129,7 +129,7 @@ export const productDetails: IProduct = {
       time: "2024-04-12T20:10:34.842Z",
     },
   ],
-}
+};
 
 export const user: IUser = {
   address: {
@@ -390,7 +390,7 @@ export const user: IUser = {
   bankName: "Union Bank",
   about:
     "You will find beautiful rear finds in my store from ladies, men, kids wear, shoes and accessories. Happy Exploring and thank you for checking my store out🤗\n\nMy products ships fast within 2-4 days😍",
-}
+};
 
 export const orderData: Order = {
   items: [
@@ -414,13 +414,13 @@ export const orderData: Order = {
   deliveryMethod: "gig",
   createdAt: "2023-01-24T08:43:36.887Z",
   deliveredAt: "2023-01-24T08:43:36.887Z",
-}
+};
 
 export const balanceData: UserBalance = {
   balance: 1234567,
   currency: "N",
   userId: user._id,
-}
+};
 
 export const summary: Summary = {
   users: [
@@ -476,7 +476,7 @@ export const summary: Summary = {
       numSales: 181859,
     },
   ],
-}
+};
 
 export const bestSeller: BestSeller = {
   _id: "640711c93b06321587636b30",
@@ -499,7 +499,7 @@ export const bestSeller: BestSeller = {
   region: "NGN",
   createdAt: "2023-03-07T10:28:25.205Z",
   updatedAt: "2024-02-07T05:31:19.358Z",
-}
+};
 
 export const viewedProduct: ViewedProducts = {
   _id: "655c6a59a797a1b7439a5066",
@@ -515,7 +515,7 @@ export const viewedProduct: ViewedProducts = {
   region: "NGN",
   createdAt: "2023-11-21T08:29:13.055Z",
   updatedAt: "2024-05-02T20:11:52.030Z",
-}
+};
 
 export const contactMessage: IContactMessage = {
   _id: "64d779b2af2d96983b4ab467",
@@ -528,7 +528,7 @@ export const contactMessage: IContactMessage = {
   assignTo: "RepeddleZa",
   createdAt: "2023-08-12T12:23:14.524Z",
   updatedAt: "2023-08-12T12:24:11.281Z",
-}
+};
 
 export const newsLetterData: INewsletter = {
   _id: "65d9cf6e08a7136c2a7ef5e0",
@@ -546,13 +546,13 @@ export const newsLetterData: INewsletter = {
   ],
   createdAt: "2024-02-24T11:13:50.301Z",
   updatedAt: "2024-03-08T12:12:34.321Z",
-}
+};
 
 export const emailList: IEmailList = {
   name: "Hacks on How to Make Your First Repeddle Sale",
   subject: "Hacks on How to Make Your First Repeddle Sale!",
   template: "hack",
-}
+};
 
 export const brandsData: IBrand[] = [
   {
@@ -582,7 +582,7 @@ export const brandsData: IBrand[] = [
     alpha: "D",
     type: "SYSTEM",
   },
-]
+];
 
 export const conversationData: IConversation[] = [
   {
@@ -617,7 +617,7 @@ export const conversationData: IConversation[] = [
     createdAt: "2024-03-19T19:45:44.165Z",
     updatedAt: "2024-03-19T19:50:47.792Z",
   },
-]
+];
 
 export const searchResultData: SearchResult[] = [
   {
@@ -626,7 +626,7 @@ export const searchResultData: SearchResult[] = [
     username: "anthony_813515",
     _id: "6617e76c08a7136c2a8068be",
   },
-]
+];
 
 export const conversationMessageData: ConversationMessage[] = [
   {
@@ -651,7 +651,7 @@ export const conversationMessageData: ConversationMessage[] = [
     createdAt: "2024-02-24T16:41:11.485Z",
     updatedAt: "2024-02-24T16:41:11.485Z",
   },
-]
+];
 
 export const manyUsers: IUser[] = [
   {
@@ -697,7 +697,7 @@ export const manyUsers: IUser[] = [
     updatedAt: "2024-05-07T08:53:23.765Z",
     role: "user",
   },
-]
+];
 
 export const transactions: ITransaction[] = [
   {
@@ -769,7 +769,7 @@ export const transactions: ITransaction[] = [
     createdAt: "2024-02-18T08:25:32.991Z",
     updatedAt: "2024-02-18T08:25:32.991Z",
   },
-]
+];
 
 export const payments: IPayment[] = [
   {
@@ -855,7 +855,7 @@ export const payments: IPayment[] = [
     createdAt: "2024-02-19T04:50:14.393Z",
     updatedAt: "2024-02-19T04:50:14.393Z",
   },
-]
+];
 
 export const returns: IReturn[] = [
   {
@@ -1011,7 +1011,7 @@ export const returns: IReturn[] = [
       tags: ["Gift", "Homeworkout", "Workout", "Outdoors"],
       video: "",
       brand: "Civvio",
-      color: "multiculour",
+      color: ["multiculour"],
       category: "gifts",
       subCategory: "Home",
       material: "other",
@@ -1090,4 +1090,4 @@ export const returns: IReturn[] = [
 
     adminReason: "Return testing ",
   },
-]
+];

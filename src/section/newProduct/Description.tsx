@@ -1,47 +1,47 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { FaQuestionCircle, FaTimes } from "react-icons/fa"
-import Modal from "../../components/ui/Modal"
-import AddOtherBrand from "../../components/AddOtherBrand"
-import useBrands from "../../hooks/useBrand"
-import { ISize } from "../../types/product"
-import useToastNotification from "../../hooks/useToastNotification"
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { FaQuestionCircle, FaTimes } from "react-icons/fa";
+import Modal from "../../components/ui/Modal";
+import AddOtherBrand from "../../components/AddOtherBrand";
+import useBrands from "../../hooks/useBrand";
+import { ISize } from "../../types/product";
+import useToastNotification from "../../hooks/useToastNotification";
 
 type InputProps = {
-  selectedSize: string
-  specification: string
-  brand: string
-  tag: string
-}
+  selectedSize: string;
+  specification: string;
+  brand: string;
+  tag: string;
+};
 
 type InputData = InputProps & {
-  name: string
-  product: string
-  category: string
-  subCategory: string
-  condition: string
-  material: string
-  description: string
-  price: string
-  color: string
-  keyFeatures: string
-  image: string
-}
+  name: string;
+  product: string;
+  category: string;
+  subCategory: string;
+  condition: string;
+  material: string;
+  description: string;
+  price: string;
+  color: string[];
+  keyFeatures: string;
+  image: string;
+};
 
 type Props = {
-  input: InputProps
-  validationError: InputProps
-  setInput: Dispatch<SetStateAction<InputData>>
-  handleError: (text: string, key: keyof InputProps) => void
-  sizes: ISize[]
-  setSizes: Dispatch<SetStateAction<ISize[]>>
-  countInStock: number
-  setCountInStock: (val: number) => void
-  tags: string[]
-  handleTags: (tag: string) => void
-  removeTags: (tag: string) => void
-  addSize: boolean
-  setAddSize: (val: boolean) => void
-}
+  input: InputProps;
+  validationError: InputProps;
+  setInput: Dispatch<SetStateAction<InputData>>;
+  handleError: (text: string, key: keyof InputProps) => void;
+  sizes: ISize[];
+  setSizes: Dispatch<SetStateAction<ISize[]>>;
+  countInStock: number;
+  setCountInStock: (val: number) => void;
+  tags: string[];
+  handleTags: (tag: string) => void;
+  removeTags: (tag: string) => void;
+  addSize: boolean;
+  setAddSize: (val: boolean) => void;
+};
 
 const Description = ({
   input,
@@ -58,57 +58,57 @@ const Description = ({
   addSize,
   setAddSize,
 }: Props) => {
-  const { brands: searchBrand, fetchBrands } = useBrands()
-  const { addNotification } = useToastNotification()
+  const { brands: searchBrand, fetchBrands } = useBrands();
+  const { addNotification } = useToastNotification();
 
-  const [showOtherBrand, setShowOtherBrand] = useState(false)
-  const [brandQuery, setBrandQuery] = useState("")
+  const [showOtherBrand, setShowOtherBrand] = useState(false);
+  const [brandQuery, setBrandQuery] = useState("");
 
   useEffect(() => {
     const getFilterBrand = async () => {
-      const params: string[][] = [["search", brandQuery]]
+      const params: string[][] = [["search", brandQuery]];
 
-      const string = new URLSearchParams(params).toString()
+      const string = new URLSearchParams(params).toString();
 
-      await fetchBrands(string)
-    }
+      await fetchBrands(string);
+    };
 
-    if (brandQuery) getFilterBrand()
-  }, [brandQuery])
+    if (brandQuery) getFilterBrand();
+  }, [brandQuery]);
 
   const handleOnChange = (text: string, inputVal: keyof typeof input) => {
-    setInput((prevState) => ({ ...prevState, [inputVal]: text }))
-  }
+    setInput((prevState) => ({ ...prevState, [inputVal]: text }));
+  };
 
   const smallSizeHandler = (label: string, value: string) => {
     setSizes((prevSizes) => {
-      const sizeIndex = prevSizes.findIndex((x) => x.size === label)
+      const sizeIndex = prevSizes.findIndex((x) => x.size === label);
       if (sizeIndex !== -1) {
-        const updatedSizes = [...prevSizes]
-        updatedSizes[sizeIndex].quantity = +value
-        return updatedSizes
+        const updatedSizes = [...prevSizes];
+        updatedSizes[sizeIndex].quantity = +value;
+        return updatedSizes;
       }
-      return prevSizes
-    })
-  }
+      return prevSizes;
+    });
+  };
 
   const sizeHandler = (sizenow: string) => {
     if (!sizenow) {
-      addNotification("Please enter size")
-      return
+      addNotification("Please enter size");
+      return;
     }
 
-    const exist = sizes.some((s) => s.size === sizenow)
+    const exist = sizes.some((s) => s.size === sizenow);
 
     if (exist) {
-      const newSizes = sizes.filter((s) => s.size !== sizenow)
-      setSizes(newSizes)
+      const newSizes = sizes.filter((s) => s.size !== sizenow);
+      setSizes(newSizes);
     } else {
-      setSizes((prevSizes) => [...prevSizes, { size: sizenow, quantity: 1 }])
+      setSizes((prevSizes) => [...prevSizes, { size: sizenow, quantity: 1 }]);
     }
 
-    setInput((prev) => ({ ...prev, selectedSize: "" }))
-  }
+    setInput((prev) => ({ ...prev, selectedSize: "" }));
+  };
 
   return (
     <div className="flex flex-col gap-3">
@@ -123,8 +123,8 @@ const Description = ({
           type="search"
           value={input.brand.length > 0 ? input.brand : brandQuery}
           onChange={(e) => {
-            handleOnChange("", "brand")
-            setBrandQuery(e.target.value)
+            handleOnChange("", "brand");
+            setBrandQuery(e.target.value);
           }}
           onBlur={() => input.brand.length > 0 && setBrandQuery("")}
         />
@@ -137,11 +137,11 @@ const Description = ({
                 key={b._id}
                 onClick={() => {
                   if (b.name === "Other") {
-                    setShowOtherBrand(true)
+                    setShowOtherBrand(true);
                   } else {
-                    handleOnChange(b.name, "brand")
+                    handleOnChange(b.name, "brand");
                   }
-                  setBrandQuery("")
+                  setBrandQuery("");
                 }}
               >
                 {b.name}
@@ -202,8 +202,8 @@ const Description = ({
             appearance-none bg-[#d4d4d4] outline-0 checked:before:bg-orange-color before:bg-[grey] dark:checked:bg-dark-ev4 checked:bg-[#fcf0e0]`}
           checked={addSize}
           onChange={(e) => {
-            setSizes([])
-            setAddSize(e.target.checked)
+            setSizes([]);
+            setAddSize(e.target.checked);
           }}
         />
       </div>
@@ -234,8 +234,11 @@ const Description = ({
                     maxLength={4}
                     placeholder="Add size"
                     onChange={(e) => {
-                      handleOnChange(e.target.value.slice(0, 4), "selectedSize")
-                      handleError("", "selectedSize")
+                      handleOnChange(
+                        e.target.value.slice(0, 4),
+                        "selectedSize"
+                      );
+                      handleError("", "selectedSize");
                     }}
                   />
                   <div
@@ -260,8 +263,8 @@ const Description = ({
                       maxLength={4}
                       value={s.quantity}
                       onChange={(e) => {
-                        smallSizeHandler(s.size, e.target.value.slice(0, 4))
-                        handleError("", "selectedSize")
+                        smallSizeHandler(s.size, e.target.value.slice(0, 4));
+                        handleError("", "selectedSize");
                       }}
                     />
                   </div>
@@ -294,7 +297,7 @@ const Description = ({
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Description
+export default Description;
