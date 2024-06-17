@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: remove the lint above
-import { IProduct } from "./product"
+import { IDeliveryOption, IProduct } from "./product"
 import { IUser } from "./user"
 
 export type DeliverStatus =
@@ -93,9 +93,9 @@ export type ICreateOrder = {
   items: {
     _id: string
     quantity: number
-    selectedSize: string
-    selectedColor: string
-    deliveryOption: string
+    selectedSize?: string
+    selectedColor?: string
+    deliveryOption?: IDeliveryOption[]
   }[]
   totalAmount: number
   paymentMethod: string

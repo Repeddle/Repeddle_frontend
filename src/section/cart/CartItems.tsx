@@ -30,8 +30,10 @@ const CartItems = ({
           src={item.seller.image}
           alt="img"
         />
-        <div className="font-bold mx-5 my-0">
-          <Link to={`/seller/${item.seller._id}`}>{item.seller.username}</Link>
+        <div className="font-bold mx-5 my-0 text-malon-color cursor-pointer">
+          <Link to={`/seller/${item.seller.username}`}>
+            {item.seller.username}
+          </Link>
         </div>
       </div>
       <hr />
@@ -111,7 +113,7 @@ const CartItems = ({
         </div>
         <div className="col-3 d-flex align-items-center">
           <button
-            className={`text-white text-[0.8rem] rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
+            className={`text-[0.8rem] text-orange-color rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
             onClick={() => addToCart({ ...item, quantity: item.quantity - 1 })}
             disabled={item.quantity === 1 || item.sold}
           >
@@ -119,7 +121,7 @@ const CartItems = ({
           </button>{" "}
           <span>{item.quantity}</span>{" "}
           <button
-            className={`text-white text-[0.8rem] rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
+            className={`text-[0.8rem] text-orange-color rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
             onClick={() => addToCart({ ...item, quantity: item.quantity + 1 })}
             disabled={item.quantity === item.countInStock || item.sold}
           >
@@ -128,7 +130,7 @@ const CartItems = ({
         </div>
         <div className="col-2">
           <button
-            className={`text-white text-[0.8rem] rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
+            className={`text-malon-color text-[0.8rem] rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
             onClick={() => {
               setCurrentItem(item)
               setRemove(true)
@@ -140,15 +142,15 @@ const CartItems = ({
       </div>
       <div className={`mt-5 flex ${item.sold ? "opacity-50" : ""}`}>
         <div>
-          Delivery: {/* TODO: not on type  */}
-          {/* {item.deliverySelect ? (
+          Delivery:
+          {item.deliverySelect ? (
             <span className="ml-5">
-              {item.deliverySelect["delivery Option"]} + {currency}
+              {item.deliverySelect["delivery Option"]} + {currency(item.region)}
               {item.deliverySelect.cost}
             </span>
           ) : (
             ""
-          )} */}
+          )}
         </div>
         <div
           className="text-orange-color text-[15px] cursor-pointer ml-5 border-0 hover:text-malon-color"
@@ -161,14 +163,13 @@ const CartItems = ({
             setShowModel(true)
           }}
         >
-          {/* TODO: no on type */}
-          {/* {!item.deliverySelect ? (
+          {!item.deliverySelect ? (
             <div className="bg-orange-color text-white cursor-pointer py-[3px] px-[7px] rounded-[0.2rem] hover:bg-malon-color">
               Select delivery option
             </div>
           ) : (
-            <div style={{ fontWeight: "bold" }}>Change</div>
-          )} */}
+            <div className="font-bold">Change</div>
+          )}
         </div>
       </div>
     </div>

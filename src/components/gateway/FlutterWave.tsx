@@ -2,17 +2,26 @@ import { useState } from "react"
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3"
 import useAuth from "../../hooks/useAuth"
 import { FlutterwaveConfig } from "flutterwave-react-v3/dist/types"
+import { IUser } from "../../types/user"
 
 type Props = {
   amount: number
   currency: string
   onApprove: (val: { transaction_id: string; type: string }) => void
+  user?: IUser | { email: string; name: string; phone: string }
 }
 
-const FlutterWave = ({ amount, currency, onApprove }: Props) => {
+const FlutterWave = ({
+  amount,
+  currency,
+  onApprove,
+  user: userData,
+}: Props) => {
   const [baseKey] = useState("")
 
   const { user } = useAuth()
+
+  const usedUser = userData ?? user
 
   //   TODO: Take customer info from shipping address ??
   const config: FlutterwaveConfig = {
@@ -23,9 +32,12 @@ const FlutterWave = ({ amount, currency, onApprove }: Props) => {
     payment_options:
       "card, account, banktransfer, mpesa, barter, nqr, ussd, credit",
     customer: {
-      email: user?.email ?? "",
-      phone_number: user?.phone ?? "",
-      name: `${user?.firstName} ${user?.lastName}`,
+      email: usedUser?.email ?? "",
+      phone_number: usedUser?.phone ?? "",
+      name:
+        usedUser && "name" in usedUser
+          ? `${usedUser.name}`
+          : `${usedUser?.firstName} ${usedUser?.lastName}`,
     },
     customizations: {
       title: "Repeddle",

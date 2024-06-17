@@ -4,12 +4,15 @@ import { IProduct } from "../types/product"
 type Props = {
   children: ReactNode
 }
+
+export type PaymentType = "Card" | "Wallet"
+
 // Define the types for items in the cart
 export type CartItem = IProduct & {
   quantity: number
   selectedSize?: string
   selectedColor?: string
-  deliverySelect: { [key: string]: string | number }
+  deliverySelect?: { [key: string]: string | number }
 }
 
 // Define the CartContextData
@@ -17,6 +20,8 @@ type CartContextData = {
   cart: CartItem[]
   subtotal: number
   total: number
+  paymentMethod: PaymentType
+  changePaymentMethod: (method: PaymentType) => void
   addToCart: (item: CartItem) => void
   removeFromCart: (id: string) => void
   clearCart: () => void
@@ -28,9 +33,15 @@ export const CartContext = createContext<CartContextData | undefined>(undefined)
 // CartProvider component
 export const CartProvider: React.FC<Props> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>([])
+  const [paymentMethod, setPaymentMethod] = useState<PaymentType>("Card")
 
   const saveCartToLocalStorage = (cartData: CartItem[]) => {
     localStorage.setItem("cart", JSON.stringify(cartData))
+  }
+
+  const changePaymentMethod = (method: PaymentType) => {
+    setPaymentMethod(method)
+    localStorage.setItem("paymentMethod", JSON.stringify(method))
   }
 
   //   function mergeCarts(localCart: CartItem[], remoteCart: CartItem[]): CartItem[] {
@@ -50,6 +61,11 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
     const savedCart = localStorage.getItem("cart")
     if (savedCart) {
       setCart(JSON.parse(savedCart))
+    }
+
+    const savedMethod = localStorage.getItem("paymentMethod")
+    if (savedMethod) {
+      setPaymentMethod(JSON.parse(savedMethod))
     }
   }, [])
 
@@ -92,11 +108,22 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
   const clearCart = () => {
     setCart([])
     localStorage.removeItem("cart")
+    localStorage.removeItem("paymentMethod")
+    setPaymentMethod("Card")
   }
 
   return (
     <CartContext.Provider
-      value={{ cart, subtotal, total, addToCart, removeFromCart, clearCart }}
+      value={{
+        cart,
+        subtotal,
+        total,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        paymentMethod,
+        changePaymentMethod,
+      }}
     >
       {children}
     </CartContext.Provider>

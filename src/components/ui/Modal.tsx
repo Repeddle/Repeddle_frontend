@@ -47,7 +47,7 @@ const Modal: React.FC<{
           {!dontShowClose && (
             <button
               onClick={handleClose}
-              className="absolute top-6 right-6  hover:text-primary text-lg"
+              className="absolute top-6 right-6 bg-white dark:bg-black rounded-full p-1  hover:text-primary text-lg"
             >
               <FaTimes />
             </button>

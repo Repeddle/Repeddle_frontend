@@ -191,3 +191,13 @@ export type RecentlyViewed = {
   productId: string
   score: number
 }
+
+export type Coupon =
+  | {
+      type: "fixed"
+      value: number
+    }
+  | {
+      type: "percent"
+      percentOff: number
+    }

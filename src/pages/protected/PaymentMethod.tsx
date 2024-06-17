@@ -1,21 +1,22 @@
-import { FormEvent, useState } from "react"
+import { FormEvent, useMemo } from "react"
 import { Helmet } from "react-helmet-async"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import useCart from "../../hooks/useCart"
 import Button from "../../components/ui/Button"
 import { currency, region } from "../../utils/common"
-
-type PaymentType = "card" | "wallet"
+import useAuth from "../../hooks/useAuth"
 
 const PaymentMethod = () => {
-  const [paymentMethodName, setPaymentMethod] = useState<PaymentType>()
-
-  const { total } = useCart()
-  const balance = 0
+  const { total, paymentMethod, changePaymentMethod } = useCart()
+  const { user } = useAuth()
+  const navigate = useNavigate()
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault()
+    navigate("/placeorder")
   }
+
+  const balance = useMemo(() => user?.balance ?? 0, [user?.balance])
 
   return (
     <div className="bs-container">
@@ -31,9 +32,9 @@ const PaymentMethod = () => {
             <input
               type="radio"
               id="card"
-              value="card"
-              checked={paymentMethodName === "card"}
-              onChange={(e) => setPaymentMethod(e.target.value as "card")}
+              value="Card"
+              checked={paymentMethod === "Card"}
+              onChange={(e) => changePaymentMethod(e.target.value as "Card")}
             />
             <label htmlFor="card">Debit/Credit/Bank</label>
           </div>
@@ -45,9 +46,9 @@ const PaymentMethod = () => {
               disabled={balance === 0 || balance <= total}
               type="radio"
               id="wallet"
-              value="wallet"
-              checked={paymentMethodName === "wallet"}
-              onChange={(e) => setPaymentMethod(e.target.value as "wallet")}
+              value="Wallet"
+              checked={paymentMethod === "Wallet"}
+              onChange={(e) => changePaymentMethod(e.target.value as "Wallet")}
             />
             <label htmlFor="wallet">
               {`Wallet (${currency(region())} ${balance.toFixed(2)})`}

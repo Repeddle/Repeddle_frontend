@@ -110,7 +110,7 @@ const RegisterComp = () => {
         </div>
       </div>
       <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="lg">
-        <div className="bg-white h-full w-full pt-4 items-center px-8 py-6 rounded-lg flex flex-col gap-3">
+        <div className="h-full w-full pt-4 items-center px-8 py-6 rounded-lg flex flex-col gap-3">
           <div className="flex flex-col gap-4">
             <h1 className="text-3xl text-center">Verify Your Email Address</h1>
             <div className=" text-center">

@@ -26,7 +26,7 @@ const ProductItem = ({ product }: Props) => {
   }, [product.costPrice, product.sellingPrice])
 
   return (
-    <div className="h-[342px] w-[162px] mr-2.5 lg:mr-auto mb-2.5 lg:h-[500px] lg:w-60 lg:flex-[0_0_auto]">
+    <div className="h-[342px] w-[162px] mr-2.5 lg:mr-auto mb-2.5 lg:h-[500px] lg:w-60 lg:flex-[0_0_auto] cursor-pointer">
       {/* {showNotification && (
         <Notification text="Item added to Cart" buttonText={"Checkout"} />
       )} */}

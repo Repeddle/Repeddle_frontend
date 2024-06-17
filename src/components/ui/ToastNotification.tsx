@@ -58,7 +58,7 @@ const ToastNotification: React.FC = () => {
 
               <AiOutlineClose
                 onClick={() => removeNotification(notification.id)}
-                className="text-lg"
+                className="text-lg cursor-pointer"
               />
             </div>
           ))}

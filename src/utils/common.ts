@@ -1,5 +1,6 @@
+import { CartItem } from "../context/CartContext"
 import { saveImageService } from "../services/image"
-import { IProduct } from "../types/product"
+import { Coupon, IProduct } from "../types/product"
 
 export const region = () => {
   const add =
@@ -66,6 +67,26 @@ export function getMonday(d: Date) {
   const day = d.getDay(),
     diff = d.getDate() - day + (day == 0 ? -6 : 1) // adjust when day is sunday
   return new Date(d.setDate(diff))
+}
+
+export const checkDeliverySelect = (cart: CartItem[]) => {
+  let success = true
+  cart.map((x) => {
+    if (!x.deliverySelect) {
+      success = false
+    }
+  })
+  return success
+}
+
+export const couponDiscount = (coupon: Coupon, price: number) => {
+  if (coupon.type === "fixed") {
+    return coupon.value
+  } else if (coupon.type === "percent") {
+    return (coupon.percentOff / 100) * price
+  } else {
+    return 0
+  }
 }
 
 export const compressImageUpload = async (
