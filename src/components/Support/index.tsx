@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export default function Support() {
   const [showSupport, setShowSupport] = useState(false);
-  const [screen, setScreen] = useState("home");
+  const [screen] = useState("home");
 
   const renderScreen = () => {
     switch (screen) {
