@@ -4,7 +4,10 @@ export interface IReview {
   user: IUser
   comment: string
   rating: number
-  like?: string
+  like: boolean
+  _id: string
+  createdAt: string
+  updatedAt: string
 }
 
 export interface Share {
@@ -52,7 +55,8 @@ export interface IProduct {
   likes: string[]
   shares: Share[]
   viewcount: ViewCount[]
-  reviews: Review[]
+  reviews: IReview[]
+  comments?: IComment[]
   sold?: boolean
   badge?: boolean
   meta: ProductMeta
@@ -70,6 +74,24 @@ export interface IProduct {
 }
 
 export type ProductWithPagination = Pagination & { products: IProduct[] }
+
+export type IComment = {
+  _id: string
+  comment: string
+  userId: string
+  replies: ICommentReply[]
+  likes: string[]
+  createdAt: string
+  updatedAt: string
+}
+export type ICommentReply = {
+  _id: string
+  comment: string
+  userId: string
+  likes: string[]
+  createdAt: string
+  updatedAt: string
+}
 
 export interface Seller {
   address: {
@@ -120,13 +142,6 @@ export interface DeliveryMeta {
 export interface Stations {
   stationId: string
   StateName: string
-}
-
-export interface Review {
-  user: IUser
-  comment: string
-  rating: number
-  like: string
 }
 
 export interface ProductMeta {
