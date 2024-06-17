@@ -54,3 +54,10 @@ export type IFund = {
   transactionId: string
   paymentProvider: string
 }
+
+export type TransactionPagination = {
+  totalDocs: number
+  totalPages: number
+  currentPage: number
+  pageSize: number
+}

@@ -200,8 +200,8 @@ function Cart() {
               <div className="flex flex-col mb-0 pl-0">
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">
                   <div className="flex flex-wrap gap-4">
-                    <div className="flex-[3] col-3">Items</div>
-                    <div className="flex-[9] col-9">
+                    <div className="flex-[3]">Items</div>
+                    <div className="flex-[9]">
                       {cart.map((c) => (
                         <>
                           <div className="flex">

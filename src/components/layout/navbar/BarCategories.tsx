@@ -1,26 +1,27 @@
-import { Link } from "react-router-dom";
-import useCategory from "../../../hooks/useCategory";
-import { useEffect } from "react";
+import { Link } from "react-router-dom"
+import useCategory from "../../../hooks/useCategory"
+import { useEffect } from "react"
 
 const BarCategories = () => {
-  const { categories, fetchCategories } = useCategory();
+  const { categories, fetchCategories } = useCategory()
 
   useEffect(() => {
-    fetchCategories();
-  }, []);
+    fetchCategories()
+  }, [])
 
   return (
-    <ul className="relative hidden group lg:flex justify-center items-center">
+    <ul className="relative hidden lg:flex justify-center items-center">
       {categories.length > 0 &&
         categories.map((c) => (
-          <div className="mx-5 my-2.5 group-hover:flex">
+          <div className="mx-5 my-2.5 group">
             <li className="font-medium text-[15px] uppercase cursor-pointer hover:text-orange-color text-black dark:text-white dark:hover:text-orange-color">
-              <Link to={c.path || `/search?category=${c.name}`}>{c.name}</Link>
-              <Link to={`/category/${c.name}`}>{c.name}</Link>
+              <Link to={c.path || `/search?filter=category:${c.name}`}>
+                {c.name}
+              </Link>
             </li>
 
             <ul
-              className={`hidden flex-col items-center z-[9] flex-wrap w-screen h-[550px] absolute px-[120px] py-10 left-0 top-8
+              className={`hidden group-hover:flex flex-col items-center z-[9] flex-wrap w-screen h-[550px] absolute px-[120px] py-10 left-0 top-8
             dark:bg-black dark:shadow-[0_0_3px_rgba(225,225,225,0.2)] bg-white shadow-[0_0_3px_rgba(0,0,0,0.2)]`}
             >
               {c.subCategories.length > 0 &&
@@ -32,7 +33,7 @@ const BarCategories = () => {
                           {s.name}
                         </Link>
                       </li>
-                    );
+                    )
                   } else {
                     return (
                       <div className="mb-2.5 self-start">
@@ -42,14 +43,14 @@ const BarCategories = () => {
                         <ul className="flex flex-col">
                           {s.items.map((l) => (
                             <Link to={l.path || `/search?query=${l.name}`}>
-                              <li className="text-xs cursor-pointer hover:text-orange-color hover:underline">
+                              <li className="text-xs cursor-pointer capitalize hover:text-orange-color hover:underline">
                                 {l.name}
                               </li>
                             </Link>
                           ))}
                         </ul>
                       </div>
-                    );
+                    )
                   }
                 })}
             </ul>
@@ -70,7 +71,7 @@ const BarCategories = () => {
         </Link>
       </div>
     </ul>
-  );
-};
+  )
+}
 
-export default BarCategories;
+export default BarCategories

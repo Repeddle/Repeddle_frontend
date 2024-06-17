@@ -29,6 +29,7 @@ export interface IUser {
   buyers: string[]
   rating: number
   phone?: string
+  isSeller: boolean
   allowNewsletter: boolean
   numReviews: number
   active: boolean
