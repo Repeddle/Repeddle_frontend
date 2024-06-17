@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import Rating from "./Rating";
-import useAuth from "../hooks/useAuth";
-import { Review } from "../types/product";
-import MessageBox from "./MessageBox";
-import { FaThumbsDown, FaThumbsUp } from "react-icons/fa";
-import moment from "moment";
+import { useState } from "react"
+import { Link } from "react-router-dom"
+import Rating from "./Rating"
+import useAuth from "../hooks/useAuth"
+import { IReview } from "../types/product"
+import MessageBox from "./MessageBox"
+import { FaThumbsDown, FaThumbsUp } from "react-icons/fa"
+import moment from "moment"
 
 type Props = {
-  setShowModel: (val: boolean) => void;
-};
+  setShowModel: (val: boolean) => void
+}
 
 const ReviewLists = ({ setShowModel }: Props) => {
-  const [reviews] = useState<Review[]>([]);
+  const [reviews] = useState<IReview[]>([])
 
   return (
     <div className="p-[30px]">
@@ -24,61 +24,101 @@ const ReviewLists = ({ setShowModel }: Props) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
 type ReviewItemProps = {
-  setShowModel: (val: boolean) => void;
-  item: Review;
-};
+  setShowModel: (val: boolean) => void
+  item: IReview
+}
 
 const ReviewItem = ({ setShowModel, item }: ReviewItemProps) => {
-  const [replyText, setReplyText] = useState("");
-  const [replyVisible, setReplyVisible] = useState(false);
-  const [currentReview] = useState(item);
+  const { user } = useAuth()
+  // const { replyProductComment } = useProducts()
+  // const { addNotification } = useToastNotification()
 
-  const { user } = useAuth();
+  const [replyText, setReplyText] = useState("")
+  const [replyVisible, setReplyVisible] = useState(false)
+  const [currentReview] = useState(item)
+  const [loading, setLoading] = useState(false)
 
   const handleReply = () => {
-    setReplyVisible(true);
-  };
+    setReplyVisible(true)
+  }
 
-  const handleReplySubmit = () => {};
+  const handleReplySubmit = async () => {
+    try {
+      // if (!replyText) {
+      //   addNotification("Enter a reply",)
+      //   return
+      // }
+
+      setLoading(true)
+
+      //   const { data } = await axios.put(
+      //     `/api/reviews/${item._id}`,
+      //     { comment: replyText },
+      //     {
+      //       headers: { Authorization: `Bearer ${userInfo.token}` },
+      //     }
+      //   )
+      //   setCurrentReview(data)
+      //   setReplyText("")
+      //   setReplyVisible(false)
+      //   ctxDispatch({
+      //     type: "SHOW_TOAST",
+      //     payload: {
+      //       message: "Reply submitted successfully",
+      //       showStatus: true,
+      //       state1: "visible1 success",
+      //     },
+      //   })
+      //   socket.emit("post_data", {
+      //     userId: currentReview.buyerId._id,
+      //     itemId: currentReview._id,
+      //     notifyType: "review",
+      //     msg: `${userInfo.username} responded to your review`,
+      //     mobile: { path: "MyAccount", id: currentReview.sellerId._id },
+      //     link: `/seller/${currentReview.sellerId._id}`,
+      //     userImage: userInfo.image,
+      //   })
+      //   setLoading(false)
+    } catch (error) {
+      //   ctxDispatch({
+      //     type: "SHOW_TOAST",
+      //     payload: {
+      //       message: getError(error),
+      //       showStatus: true,
+      //       state1: "visible1 error",
+      //     },
+      //   })
+    }
+  }
 
   return (
     <div className="flex items-start mb-5 p-4">
       <div className="flex items-center flex-col justify-center mr-2.5">
         <Link
-          // TODO:
-          //   to={`/seller/${currentReview?.buyerId?._id}`}
-          to={`/seller/${currentReview?.user?._id}`}
+          to={`/seller/${currentReview?.user?.username}`}
           onClick={() => setShowModel(false)}
         >
           <img
             className="w-[50px] h-[50px] mr-0 rounded-[25px]"
-            // TODO:
-            // src={currentReview?.buyerId?.image}
             src={currentReview?.user?.image}
             alt="Reviewer"
           />
         </Link>
         <div className="flex flex-col justify-center items-center">
           <Link
-            // TODO:
-            // to={`/seller/${currentReview?.buyerId?._id}`}
-            to={`/seller/${currentReview?.user?._id}`}
+            to={`/seller/${currentReview?.user?.username}`}
             onClick={() => setShowModel(false)}
           >
             <div className="font-bold text-base text-malon-color">
-              // TODO:
-              {/* {currentReview?.buyerId?.username} */}
               {currentReview?.user?.username}
             </div>
           </Link>
           <div className="text-xs text-[#999999]">
-            // TODO:
-            {/* {moment(currentReview.createdAt).fromNow()} */}
-            {moment(Date.now()).fromNow()}
+            {moment(currentReview.createdAt).fromNow()}
           </div>
         </div>
       </div>
@@ -142,6 +182,7 @@ const ReviewItem = ({ setShowModel, item }: ReviewItemProps) => {
             <button
               className="items-center justify-center text-white font-bold text-sm px-4 py-2 rounded-[5px] border-0 bg-orange-color"
               onClick={handleReplySubmit}
+              disabled={loading}
             >
               Submit
             </button>
@@ -149,7 +190,7 @@ const ReviewItem = ({ setShowModel, item }: ReviewItemProps) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ReviewLists;
+export default ReviewLists

@@ -1,3 +1,5 @@
+import { IUser } from "./user"
+
 export type IConversation = {
   _id: string
   members: string[]
@@ -32,7 +34,7 @@ export type Notification = {
   message: string
   read: boolean
   link: string
-  user: string
+  user: IUser
   _id: string
   createdAt: string
   updatedAt: string

@@ -65,12 +65,6 @@ const LoggedInBar = ({
                 <Link onClick={changeMenu} to={`/seller/${user.username}`}>
                   My Profile
                 </Link>
-
-                {/* {messageNotification.length > 0 && (
-      <span className="w-3 h-3 flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-0 top-0 bg-orange-color">
-        <span>{messageNotification.length}</span>
-      </span>
-    )} */}
               </li>
               <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
                 <Link onClick={changeMenu} to="/dashboard/orderlist">

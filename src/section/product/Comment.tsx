@@ -1,40 +1,113 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  FormEvent,
-  JSXElementConstructor,
-  ReactElement,
-  ReactNode,
-  ReactPortal,
-  useState,
-} from "react"
+import { FormEvent, useMemo, useState } from "react"
 import { FaHeart, FaTrash } from "react-icons/fa"
 import useAuth from "../../hooks/useAuth"
 import moment from "moment"
-import MessageImage from "../../components/ui/MessageImage"
+import { IComment, ICommentReply, IProduct } from "../../types/product"
+import useProducts from "../../hooks/useProducts"
+import useToastNotification from "../../hooks/useToastNotification"
 
 type Props = {
-  slug: string
-  commentC: any
+  comment: IComment
+  product: IProduct
 }
 
-const Comment = ({ commentC }: Props) => {
+const Comment = ({ comment, product }: Props) => {
+  const { user } = useAuth()
+  const {
+    likeProductComment,
+    unlikeProductComment,
+    replyProductComment,
+    likeProductCommentReply,
+    unlikeProductCommentReply,
+    error,
+  } = useProducts()
+  const { addNotification } = useToastNotification()
+
   const [reply, setReply] = useState("")
   const [replyArea, setReplyArea] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  const comment = commentC
+  const liked = useMemo(
+    () => !!comment.likes.find((like) => like === user?._id),
+    [comment.likes, user?._id]
+  )
 
-  const { user } = useAuth()
+  const likeComment = async () => {
+    if (!user) return
 
-  const likeComment = async (id: string) => {
-    console.log(id)
+    if (comment.userId === user._id) {
+      addNotification("You can't like your comment")
+      return
+    }
+
+    setLoading(true)
+
+    if (liked) {
+      const res = await unlikeProductComment(product._id, comment._id)
+
+      if (res) addNotification(res)
+      else addNotification(error)
+    } else {
+      const res = await likeProductComment(product._id, comment._id)
+
+      if (res) addNotification(res)
+      else addNotification(error)
+    }
+
+    setLoading(false)
   }
 
-  const likeReplyHandler = async (reply: any) => {
-    console.log(reply)
+  const likeReplyHandler = async (reply: ICommentReply) => {
+    if (!user) return
+
+    if (reply.userId === user._id) {
+      addNotification("You can't like your reply")
+      return
+    }
+
+    setLoading(true)
+
+    if (reply.likes.find((x) => x === user._id)) {
+      const res = await unlikeProductCommentReply(
+        product._id,
+        comment._id,
+        reply._id
+      )
+
+      if (res) addNotification(res)
+      else addNotification(error)
+    } else {
+      const res = await likeProductCommentReply(
+        product._id,
+        comment._id,
+        reply._id
+      )
+
+      if (res) addNotification(res)
+      else addNotification(error)
+    }
+
+    setLoading(false)
   }
 
-  const submitReplyHandler = (e: FormEvent) => {
+  const submitReplyHandler = async (e: FormEvent) => {
     e.preventDefault()
+
+    if (!reply) {
+      addNotification("Enter a reply")
+      return
+    }
+
+    setLoading(true)
+
+    const res = await replyProductComment(product._id, comment._id, reply)
+
+    if (res) {
+      addNotification(res)
+      setReply("")
+    } else addNotification(error)
+
+    setLoading(false)
   }
 
   const deleteComment = () => {}
@@ -44,13 +117,13 @@ const Comment = ({ commentC }: Props) => {
       <div className="flex mt-[15px] p-2.5 lg:p-5 rounded-[0.2rem] dark:bg-dark-ev1 bg-light-ev1">
         <img
           className="w-[50px] h-[50px] object-cover rounded-[50%]"
-          src={comment.userImage}
+          src={comment.userId}
           alt="pimage"
         />
         <div className="ml-5">
           <div>
             <div className="flex items-center">
-              <div className="font-bold mr-2.5">{comment.name}</div>
+              <div className="font-bold mr-2.5">{comment.userId}</div>
               <div className="text-xs">
                 {moment(comment.createdAt).fromNow()}
               </div>
@@ -73,69 +146,39 @@ const Comment = ({ commentC }: Props) => {
               </div>
               <div className="text-[13px]">{comment.likes.length} like</div>
               <FaHeart
-                className={
-                  user && comment.likes.find((x: string) => x === user._id)
-                    ? "text-orange-color"
-                    : ""
-                }
-                onClick={() => likeComment(comment._id)}
+                className={liked ? "text-orange-color" : ""}
+                onClick={() => !loading && likeComment()}
               />
             </div>
           </div>
           <div>
-            {comment.image && <MessageImage url={comment.image} />}
+            {/* {comment.image && <MessageImage url={comment.image} />} */}
             {/* {comment.image && <CommentImg src={comment.image} alt="d" />}*/}
           </div>
         </div>
       </div>
       {replyArea && (
         <>
-          {comment.replies.map(
-            (r: {
-              userImage: string | undefined
-              name:
-                | string
-                | number
-                | boolean
-                | ReactElement<any, string | JSXElementConstructor<any>>
-                | Iterable<ReactNode>
-                | ReactPortal
-                | null
-                | undefined
-              createdAt: moment.MomentInput
-              comment:
-                | string
-                | number
-                | boolean
-                | ReactElement<any, string | JSXElementConstructor<any>>
-                | Iterable<ReactNode>
-                | ReactPortal
-                | null
-                | undefined
-              likes: string | any[]
-            }) => (
-              <div className="ml-[25px] mr-0 my-[5px] p-2.5 dark:bg-dark-ev1 bg-light-ev1 flex lg:ml-[90px] lg:mr-0 lg:my-[5px] lg:p-5 rounded-[0.2rem]">
-                <img
-                  className="w-[30px] h-[30px] object-cover rounded-[50%]"
-                  src={r.userImage}
-                  alt="pimage"
-                />
-                <div className="ml-5">
-                  <div className="flex items-center">
-                    <div className="font-bold mr-2.5">{r.name}</div>
-                    <div className="text-xs">
-                      {moment(r.createdAt).fromNow()}
-                    </div>
-                  </div>
-                  <div className="m-2.5">{r.comment}</div>
-                  <div className="flex justify-between items-center w-20">
-                    <div className="text-[13px]">{r.likes.length} like</div>
-                    <FaHeart onClick={() => likeReplyHandler(r)} />
-                  </div>
+          {comment.replies.map((r) => (
+            <div className="ml-[25px] mr-0 my-[5px] p-2.5 dark:bg-dark-ev1 bg-light-ev1 flex lg:ml-[90px] lg:mr-0 lg:my-[5px] lg:p-5 rounded-[0.2rem]">
+              <img
+                className="w-[30px] h-[30px] object-cover rounded-[50%]"
+                src={r.userId}
+                alt="pimage"
+              />
+              <div className="ml-5">
+                <div className="flex items-center">
+                  <div className="font-bold mr-2.5">{r.userId}</div>
+                  <div className="text-xs">{moment(r.createdAt).fromNow()}</div>
+                </div>
+                <div className="m-2.5">{r.comment}</div>
+                <div className="flex justify-between items-center w-20">
+                  <div className="text-[13px]">{r.likes.length} like</div>
+                  <FaHeart onClick={() => !loading && likeReplyHandler(r)} />
                 </div>
               </div>
-            )
-          )}
+            </div>
+          ))}
           <form onSubmit={submitReplyHandler}>
             <textarea
               className={`w-full m-0 lg:w-4/5 lg:ml-[90px] lg:mr-0 lg:mt-2.5 lg:mb-0 p-2.5 rounded-[0.2rem] focus-visible:border
@@ -149,6 +192,7 @@ const Comment = ({ commentC }: Props) => {
               <button
                 className="m-0 text-white-color text-xs lg:ml-[90px] px-[7px] py-[5px] rounded-[0.2rem] border-0"
                 type="submit"
+                disabled={loading}
               >
                 Submit
               </button>

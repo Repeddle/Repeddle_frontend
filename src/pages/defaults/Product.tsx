@@ -58,11 +58,6 @@ const Product = () => {
 
       setProduct(data)
 
-      // TODO: add to recently viewed
-      // if (data) {
-      //   await axios.put(`/api/recentviews/${region()}/${data._id}`)
-      // }
-
       const factor = 0.9
 
       const newView = {
@@ -106,9 +101,6 @@ const Product = () => {
     }
     viewItem()
   }, [slug])
-
-  console.log(user)
-  console.log(product)
 
   const following = useMemo(() => {
     if (user && user.following.find((x) => x === product?.seller._id))
@@ -337,7 +329,10 @@ const Product = () => {
 
             <div className="flex-[3] flex flex-col overflow-y-auto h-screen lg:pl-[70px] px-2.5 scrollbar-hide">
               <div className="flex">
-                <Link className="relative" to={`/seller/${product.seller._id}`}>
+                <Link
+                  className="relative"
+                  to={`/seller/${product.seller.username}`}
+                >
                   <img
                     className="object-cover object-top h-[100px] w-[100px] mr-5 rounded-[50%]"
                     src={product.seller.image}
@@ -355,7 +350,7 @@ const Product = () => {
                 <div className="flex flex-col justify-center">
                   <div className="items-center flex font-bold gap-2 capitalize">
                     <Link
-                      to={`/seller/${product.seller._id}`}
+                      to={`/seller/${product.seller.username}`}
                       className="text-malon-color"
                     >
                       @{product.seller.username}

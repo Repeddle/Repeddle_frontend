@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import MessageBox from "../../components/MessageBox"
 import { Link } from "react-router-dom"
@@ -12,6 +12,7 @@ import Rating from "../../components/Rating"
 import { UserByUsername } from "../../types/user"
 import Modal from "../../components/ui/Modal"
 import useAuth from "../../hooks/useAuth"
+import useToastNotification from "../../hooks/useToastNotification"
 
 type Props = {
   loadingUser: boolean
@@ -20,30 +21,81 @@ type Props = {
 }
 
 const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
+  const {
+    user: userInfo,
+    followUser,
+    unFollowUser,
+    error: followError,
+  } = useAuth()
+  const { addNotification } = useToastNotification()
+
   const [showLoginModel, setShowLoginModel] = useState(false)
   const [showModel, setShowModel] = useState(false)
   const [showWriteReview, setShowWriteReview] = useState(false)
-
-  const { user: userInfo } = useAuth()
 
   const isOnlineCon = (c: string) => {
     console.log(c)
     return false
   }
 
-  console.log(usernameData)
+  const toggleFollow = async () => {
+    if (!usernameData) return
+    if (usernameData.user.username === userInfo?.username) {
+      addNotification("You can't follow yourself")
+      return
+    }
 
-  const toggleFollow = () => {}
+    if (!userInfo) {
+      addNotification("Login to follow")
+      return
+    }
+
+    if (isFollowing) {
+      const res = await unFollowUser(usernameData.user._id)
+
+      if (res) addNotification(res)
+      else addNotification(followError ?? "")
+    } else {
+      const res = await followUser(usernameData.user._id)
+
+      if (res) addNotification(res)
+      else addNotification(followError ?? "")
+    }
+  }
 
   const handleReport = (id: string) => {
     console.log(id)
   }
 
-  const handleShare = () => {}
+  const handleShare = async () => {
+    try {
+      await navigator.share({
+        title: "Repeddle",
+        // text: ` ${window.location.protocol}//${window.location.hostname}${
+        //   user.region === "NGN" ? "/ng/" : "/za/"
+        // }${user.username}`,
+        url: ` ${window.location.protocol}//${window.location.hostname}${
+          usernameData?.user.region === "NGN" ? "/ng/" : "/za/"
+        }${usernameData?.user.username}`,
+      })
+      console.log("Shared successfully")
+    } catch (error) {
+      console.error("Error sharing:", error)
+    }
+  }
 
   const addConversation = (id: string, type: string) => {
     console.log(id, type)
   }
+
+  const isFollowing = useMemo(
+    () =>
+      !!(
+        usernameData?.user.followers &&
+        usernameData.user.followers.find((x) => x === userInfo?._id)
+      ),
+    [userInfo?._id, usernameData?.user.followers]
+  )
 
   return (
     <div className="flex-[2]">
@@ -108,11 +160,7 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
                     onClick={toggleFollow}
                     className="w-[72px] text-white-color text-sm px-[5px] py-0 rounded-[5px] border-none bg-orange-color"
                   >
-                    {userInfo &&
-                    usernameData.user.followers &&
-                    usernameData.user.followers.find((x) => x === userInfo._id)
-                      ? "Following"
-                      : "Follow"}
+                    {isFollowing ? "Following" : "Follow"}
                   </button>
                 )}
               </div>
