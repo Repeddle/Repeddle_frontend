@@ -14,7 +14,7 @@ const ProfileForm = ({ token }: Props) => {
   const { registerUser, error, loading, getSuggestUsername } = useAuth()
   const { addNotification } = useToastNotification()
 
-  const [formNumber, setFormNumber] = useState<1 | 2 | 3>(3)
+  const [formNumber, setFormNumber] = useState<1 | 2 | 3>(1)
   const [usernameSuggest, setUsernameSuggest] = useState<string[]>([])
   // when a user picks a suggested name no need to show suggest
   const [allowSuggest, setAllowSuggest] = useState(true)
