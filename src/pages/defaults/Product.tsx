@@ -161,7 +161,9 @@ const Product = () => {
       // selectedColor?: string;
     });
 
-    addNotification("Item added to Cart", "View Cart", () => navigate("/cart"));
+    addNotification("Item added to Cart", "View Cart", false, () =>
+      navigate("/cart")
+    );
   };
 
   const saved = useMemo(() => {

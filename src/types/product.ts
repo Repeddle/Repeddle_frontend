@@ -201,3 +201,21 @@ export type Coupon =
       type: "percent";
       percentOff: number;
     };
+
+export type InputData = {
+  name: string;
+  product: string;
+  category: string;
+  subCategory: string;
+  condition: string;
+  material: string;
+  description: string;
+  price: string;
+  color: string[];
+  keyFeatures: string;
+  image: string;
+  selectedSize: string;
+  specification: string;
+  brand: string;
+  tag: string;
+};
