@@ -202,7 +202,7 @@ const ProfileForm = ({ token }: Props) => {
   return (
     <div className="flex h-full w-full justify-center items-center flex-col">
       <div className="w-full max-w-lg flex flex-col gap-6">
-        <h2 className="text-2xl font-semibold">Finish creating an Account</h2>
+        <h2 className="text-2xl font-semibold">Finish Creating Account</h2>
         <form className="flex flex-col gap-4" onSubmit={submitHandler}>
           {formNumber === 1 && (
             <>

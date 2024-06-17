@@ -1,5 +1,5 @@
 // ToastNotificationContext.tsx
-import React, { createContext, useState, ReactNode, useRef } from 'react';
+import React, { createContext, useState, ReactNode, useRef } from "react";
 
 interface Props {
   children: ReactNode;
@@ -9,12 +9,14 @@ interface INotification {
   message: string;
   action?: () => void;
   buttonText?: string;
+  error?: boolean;
 }
 
 interface ToastNotificationContextProps {
   addNotification: (
     message: string,
     buttonText?: string,
+    error?: boolean,
     action?: () => void
   ) => void;
   removeNotification: (id: string) => void;
@@ -32,6 +34,7 @@ export const ToastNotificationProvider: React.FC<Props> = ({ children }) => {
   const addNotification = (
     message: string,
     buttonText?: string,
+    error?: boolean,
     action?: () => void
   ) => {
     const id = notificationIdCounter.current.toString();
@@ -39,7 +42,7 @@ export const ToastNotificationProvider: React.FC<Props> = ({ children }) => {
 
     setNotifications((prevNotifications) => [
       ...prevNotifications,
-      { id, message, action, buttonText },
+      { id, message, action, buttonText, error },
     ]);
   };
 
