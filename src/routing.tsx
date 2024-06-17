@@ -70,6 +70,7 @@ import HowRepeddleWork from "./pages/defaults/info/HowRepeddleWork"
 import Dashboard from "./pages/protected/dashboard"
 import Overview from "./pages/protected/overview"
 import AdminLayout from "./pages/admin"
+import Earning from "./pages/protected/earning"
 
 const router = createBrowserRouter([
   {
@@ -134,6 +135,7 @@ const router = createBrowserRouter([
           { path: "newproduct", element: <NewProduct /> },
           { path: "verifyaccount", element: <VerifyAccount /> },
           { path: "verifyaddress", element: <VerifyAddress /> },
+          { path: "earning", element: <Earning /> },
         ],
       },
       {

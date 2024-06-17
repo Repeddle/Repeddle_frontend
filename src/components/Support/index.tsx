@@ -17,7 +17,7 @@ export default function Support() {
     }
   };
   return (
-    <div className={`fixed bottom-5 z-50 right-5 lg:right-10`}>
+    <div className={`fixed bottom-5 md:bottom-[55px] z-50 right-5 lg:right-10`}>
       {showSupport && (
         <div
           className={`relative h-[80vh] w-[22rem] mb-2 lg:rounded-md shadow-2xl shadow-gray-500 overflow-hidden flex-col bg-white `}

@@ -1,36 +1,36 @@
-import React, { useEffect } from "react"
-import useToastNotification from "../../hooks/useToastNotification"
-import { AiFillBell, AiOutlineClose } from "react-icons/ai"
+import React, { useEffect } from "react";
+import useToastNotification from "../../hooks/useToastNotification";
+import { AiFillBell, AiOutlineClose } from "react-icons/ai";
 
 const ToastNotification: React.FC = () => {
-  const { notifications, removeNotification } = useToastNotification()
+  const { notifications, removeNotification } = useToastNotification();
 
   useEffect(() => {
-    const notificationTimeouts: Record<string, number> = {}
+    const notificationTimeouts: Record<string, number> = {};
 
     notifications.forEach((notification) => {
       if (!notification.action) {
         const timeoutId = setTimeout(() => {
-          removeNotification(notification.id)
-        }, 5000) // Adjust the duration as needed
-        notificationTimeouts[notification.id] = timeoutId as unknown as number
+          removeNotification(notification.id);
+        }, 5000); // Adjust the duration as needed
+        notificationTimeouts[notification.id] = timeoutId as unknown as number;
       }
-    })
+    });
 
     return () => {
       // Clear timeouts on unmount
       Object.values(notificationTimeouts).forEach((timeoutId) =>
         clearTimeout(timeoutId)
-      )
-    }
-  }, [notifications, removeNotification])
+      );
+    };
+  }, [notifications, removeNotification]);
 
   const notificationsWithAction = notifications.filter(
     (notification) => notification.action
-  )
+  );
   const notificationsWithoutAction = notifications.filter(
     (notification) => !notification.action
-  )
+  );
 
   return (
     <>
@@ -47,8 +47,8 @@ const ToastNotification: React.FC = () => {
                 <div>{notification.message}</div>
                 <button
                   onClick={() => {
-                    notification.action && notification.action()
-                    removeNotification(notification.id)
+                    notification.action && notification.action();
+                    removeNotification(notification.id);
                   }}
                   className="px-2 py-1 bg-white text-orange-color text-sm rounded"
                 >
@@ -70,7 +70,9 @@ const ToastNotification: React.FC = () => {
           {notificationsWithoutAction.map((notification) => (
             <div
               key={notification.id}
-              className="bg-orange-color text-white rounded-lg py-2 px-4 my-2 shadow-md"
+              className={`${
+                notification.error ? "bg-malon-color" : "bg-orange-color"
+              } text-white rounded-lg py-2 px-4 my-2 shadow-md`}
             >
               {notification.message}
             </div>
@@ -78,7 +80,7 @@ const ToastNotification: React.FC = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ToastNotification
+export default ToastNotification;

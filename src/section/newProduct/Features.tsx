@@ -1,42 +1,53 @@
-import { Dispatch, SetStateAction, useState } from "react"
-import { colors } from "../../utils/constants"
-import { FaQuestionCircle } from "react-icons/fa"
-import Modal from "../../components/ui/Modal"
-import Condition from "../../pages/defaults/info/Condition"
+import { Dispatch, SetStateAction, useState } from "react";
+import { colors } from "../../utils/constants";
+import { FaQuestionCircle } from "react-icons/fa";
+import Modal from "../../components/ui/Modal";
+import Condition from "../../pages/defaults/info/Condition";
+import MultiSelect from "../../components/ui/MultiSelect";
 
 type InputProps = {
-  keyFeatures: string
-  color: string
-  condition: string
-  material: string
-}
+  keyFeatures: string;
+  color: string[];
+  condition: string;
+  material: string;
+};
+
+type errorsProps = {
+  keyFeatures: string;
+  color: string;
+  condition: string;
+  material: string;
+};
 
 type InputData = InputProps & {
-  selectedSize: string
-  specification: string
-  brand: string
-  tag: string
-  name: string
-  product: string
-  category: string
-  subCategory: string
-  description: string
-  price: string
-  image: string
-}
+  selectedSize: string;
+  specification: string;
+  brand: string;
+  tag: string;
+  name: string;
+  product: string;
+  category: string;
+  subCategory: string;
+  description: string;
+  price: string;
+  image: string;
+};
 
 type Props = {
-  input: InputProps
-  validationError: InputProps
-  setInput: Dispatch<SetStateAction<InputData>>
-}
+  input: InputProps;
+  validationError: errorsProps;
+  setInput: Dispatch<SetStateAction<InputData>>;
+};
 
 const Features = ({ input, validationError, setInput }: Props) => {
-  const [showConditionModal, setShowConditionModal] = useState(false)
+  const [showConditionModal, setShowConditionModal] = useState(false);
 
-  const handleOnChange = (text: string, inputVal: keyof typeof input) => {
-    setInput((prevState) => ({ ...prevState, [inputVal]: text }))
-  }
+  const handleOnChange = (
+    text: string | string[],
+    inputVal: keyof typeof input
+  ) => {
+    setInput((prevState) => ({ ...prevState, [inputVal]: text }));
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -62,20 +73,11 @@ const Features = ({ input, validationError, setInput }: Props) => {
           Specify the main colour of the product (choose 2 colours minimum)
         </div>
 
-        <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
-          <select
-            value={input.color}
-            onChange={(e) => handleOnChange(e.target.value, "color")}
-            className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
-          >
-            <option value="">-- select --</option>
-            {colors.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-        </div>
+        <MultiSelect
+          onChange={(values) => handleOnChange(values, "color")}
+          options={colors}
+          selected={input.color}
+        />
         {validationError.color && (
           <div className="text-[red] text-xs">{validationError.color}</div>
         )}
@@ -103,7 +105,7 @@ const Features = ({ input, validationError, setInput }: Props) => {
           <select
             value={input.material}
             onChange={(e) => handleOnChange(e.target.value, "material")}
-            className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+            className="text-base m-0 pl-2.5 border-light-ev4 dark:border-dark-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
           >
             <option value="">-- select --</option>
             <option value="Acrylic">Acrylic</option>
@@ -167,7 +169,7 @@ const Features = ({ input, validationError, setInput }: Props) => {
           <select
             value={input.condition}
             onChange={(e) => handleOnChange(e.target.value, "condition")}
-            className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+            className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 dark:bg-dark-ev1 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
           >
             <option value="">-- select --</option>
             <option value="New with Tags">New with Tags</option>
@@ -189,7 +191,7 @@ const Features = ({ input, validationError, setInput }: Props) => {
           <select
             value={input.keyFeatures}
             onChange={(e) => handleOnChange(e.target.value, "keyFeatures")}
-            className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+            className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
           >
             <option value="">-- select --</option>
             <option value="Abstract">Abstract</option>
@@ -227,7 +229,7 @@ const Features = ({ input, validationError, setInput }: Props) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Features
+export default Features;
