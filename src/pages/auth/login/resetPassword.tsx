@@ -78,7 +78,7 @@ const ResetPassword = () => {
     if (password !== confirmPassword) {
       setFormError({
         ...formError,
-        confirmPassword: "Confirm password must equal password",
+        confirmPassword: "Confirm password should match password",
       })
       return false
     }

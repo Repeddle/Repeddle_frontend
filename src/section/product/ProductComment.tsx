@@ -2,47 +2,67 @@ import { ChangeEvent, FormEvent, useRef, useState } from "react"
 import MessageBox from "../../components/MessageBox"
 import useAuth from "../../hooks/useAuth"
 import LoadingBox from "../../components/LoadingBox"
-import { IProduct } from "../../types/product"
-import { Link, useParams } from "react-router-dom"
+import { IComment, IProduct } from "../../types/product"
+import { Link } from "react-router-dom"
 import Comment from "./Comment"
+import useProducts from "../../hooks/useProducts"
+import useToastNotification from "../../hooks/useToastNotification"
+import { compressImageUpload } from "../../utils/common"
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  comments: any[]
+  comments?: IComment[]
   product: IProduct
 }
 
 const ProductComment = ({ comments, product }: Props) => {
-  const [comment, setComment] = useState("")
-
   const { user } = useAuth()
+  const { commentProduct, error } = useProducts()
+  const { addNotification } = useToastNotification()
 
-  const params = useParams()
-  const { slug } = params
+  const [comment, setComment] = useState("")
+  const [loadingCreateReview, setLoadingCreateReview] = useState(false)
 
   const reviewRef = useRef(null)
 
-  const loadingCreateReview = false
-
-  const submitCommentHandler = (e: FormEvent) => {
+  const submitCommentHandler = async (e: FormEvent) => {
     e.preventDefault()
+
+    if (!comment) {
+      addNotification("Enter a comment")
+      return
+    }
+    setLoadingCreateReview(true)
+
+    const res = await commentProduct(product._id, comment)
+
+    if (res) addNotification("Comment added to product")
+    else addNotification(error)
+
+    setLoadingCreateReview(false)
   }
 
-  const uploadImageHandler = (e: ChangeEvent) => {
-    e.preventDefault()
+  const uploadImageHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+    // TODO: are we using image
+    const file = e.target.files?.[0]
+    if (!file) throw Error("No image found")
+
+    const imageUrl = await compressImageUpload(file, 1024)
+    console.log(imageUrl)
   }
 
   return (
     <>
       <div className="my-3 mx-4">
         <div className="my-3" ref={reviewRef}>
-          {comments.length === 0 && (
+          {(!comment || comments?.length === 0) && (
             <MessageBox>There is no comments</MessageBox>
           )}
         </div>
-        {comments.length > 0 &&
+        {comments &&
+          comments.length > 0 &&
           comments.map((comment) => (
-            <Comment key={comment._id} slug={slug ?? ""} commentC={comment} />
+            <Comment key={comment._id} product={product} comment={comment} />
           ))}
         <div className="my-3">
           {user ? (

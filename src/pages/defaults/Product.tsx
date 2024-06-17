@@ -56,12 +56,7 @@ const Product = () => {
 
       setProduct(data);
 
-      // TODO: add to recently viewed
-      // if (data) {
-      //   await axios.put(`/api/recentviews/${region()}/${data._id}`)
-      // }
-
-      const factor = 0.9;
+      const factor = 0.9
 
       const newView = {
         score: factor,
@@ -104,9 +99,6 @@ const Product = () => {
     };
     viewItem();
   }, [slug]);
-
-  console.log(user);
-  console.log(product);
 
   const following = useMemo(() => {
     if (user && user.following.find((x) => x === product?.seller._id))

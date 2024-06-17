@@ -68,8 +68,6 @@ const VerifyAccount = () => {
     }
   }
 
-  console.log(error)
-
   return (
     <div className="max-w-[800px] bg-light-ev1 dark:bg-dark-ev1 mx-auto my-10 p-[50px] rounded-[10px]">
       <Helmet>

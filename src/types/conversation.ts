@@ -1,3 +1,5 @@
+import { IUser } from "./user"
+
 export type IConversation = {
   _id: string
   members: string[]
@@ -24,6 +26,16 @@ export type ConversationMessage = {
   image: string
   type: string
   emailMessages: string[]
+  createdAt: string
+  updatedAt: string
+}
+
+export type Notification = {
+  message: string
+  read: boolean
+  link: string
+  user: IUser
+  _id: string
   createdAt: string
   updatedAt: string
 }
