@@ -1,47 +1,47 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { FaQuestionCircle, FaTimes } from "react-icons/fa";
-import Modal from "../../components/ui/Modal";
-import AddOtherBrand from "../../components/AddOtherBrand";
-import useBrands from "../../hooks/useBrand";
-import { ISize } from "../../types/product";
-import useToastNotification from "../../hooks/useToastNotification";
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
+import { FaQuestionCircle, FaTimes } from "react-icons/fa"
+import Modal from "../../components/ui/Modal"
+import AddOtherBrand from "../../components/AddOtherBrand"
+import useBrands from "../../hooks/useBrand"
+import { ISize } from "../../types/product"
+import useToastNotification from "../../hooks/useToastNotification"
 
 type InputProps = {
-  selectedSize: string;
-  specification: string;
-  brand: string;
-  tag: string;
-};
+  selectedSize: string
+  specification: string
+  brand: string
+  tag: string
+  description: string
+}
 
 type InputData = InputProps & {
-  name: string;
-  product: string;
-  category: string;
-  subCategory: string;
-  condition: string;
-  material: string;
-  description: string;
-  price: string;
-  color: string[];
-  keyFeatures: string;
-  image: string;
-};
+  name: string
+  product: string
+  category: string
+  subCategory: string
+  condition: string
+  material: string
+  price: string
+  color: string[]
+  keyFeatures: string
+  image: string
+}
 
 type Props = {
-  input: InputProps;
-  validationError: InputProps;
-  setInput: Dispatch<SetStateAction<InputData>>;
-  handleError: (text: string, key: keyof InputProps) => void;
-  sizes: ISize[];
-  setSizes: Dispatch<SetStateAction<ISize[]>>;
-  countInStock: number;
-  setCountInStock: (val: number) => void;
-  tags: string[];
-  handleTags: (tag: string) => void;
-  removeTags: (tag: string) => void;
-  addSize: boolean;
-  setAddSize: (val: boolean) => void;
-};
+  input: InputProps
+  validationError: InputProps
+  setInput: Dispatch<SetStateAction<InputData>>
+  handleError: (text: string, key: keyof InputProps) => void
+  sizes: ISize[]
+  setSizes: Dispatch<SetStateAction<ISize[]>>
+  countInStock: number
+  setCountInStock: (val: number) => void
+  tags: string[]
+  handleTags: (tag: string) => void
+  removeTags: (tag: string) => void
+  addSize: boolean
+  setAddSize: (val: boolean) => void
+}
 
 const Description = ({
   input,
@@ -58,57 +58,57 @@ const Description = ({
   addSize,
   setAddSize,
 }: Props) => {
-  const { brands: searchBrand, fetchBrands } = useBrands();
-  const { addNotification } = useToastNotification();
+  const { brands: searchBrand, fetchBrands } = useBrands()
+  const { addNotification } = useToastNotification()
 
-  const [showOtherBrand, setShowOtherBrand] = useState(false);
-  const [brandQuery, setBrandQuery] = useState("");
+  const [showOtherBrand, setShowOtherBrand] = useState(false)
+  const [brandQuery, setBrandQuery] = useState("")
 
   useEffect(() => {
     const getFilterBrand = async () => {
-      const params: string[][] = [["search", brandQuery]];
+      const params: string[][] = [["search", brandQuery]]
 
-      const string = new URLSearchParams(params).toString();
+      const string = new URLSearchParams(params).toString()
 
-      await fetchBrands(string);
-    };
+      await fetchBrands(string)
+    }
 
-    if (brandQuery) getFilterBrand();
-  }, [brandQuery]);
+    if (brandQuery) getFilterBrand()
+  }, [brandQuery])
 
   const handleOnChange = (text: string, inputVal: keyof typeof input) => {
-    setInput((prevState) => ({ ...prevState, [inputVal]: text }));
-  };
+    setInput((prevState) => ({ ...prevState, [inputVal]: text }))
+  }
 
   const smallSizeHandler = (label: string, value: string) => {
     setSizes((prevSizes) => {
-      const sizeIndex = prevSizes.findIndex((x) => x.size === label);
+      const sizeIndex = prevSizes.findIndex((x) => x.size === label)
       if (sizeIndex !== -1) {
-        const updatedSizes = [...prevSizes];
-        updatedSizes[sizeIndex].quantity = +value;
-        return updatedSizes;
+        const updatedSizes = [...prevSizes]
+        updatedSizes[sizeIndex].quantity = +value
+        return updatedSizes
       }
-      return prevSizes;
-    });
-  };
+      return prevSizes
+    })
+  }
 
   const sizeHandler = (sizenow: string) => {
     if (!sizenow) {
-      addNotification("Please enter size");
-      return;
+      addNotification("Please enter size")
+      return
     }
 
-    const exist = sizes.some((s) => s.size === sizenow);
+    const exist = sizes.some((s) => s.size === sizenow)
 
     if (exist) {
-      const newSizes = sizes.filter((s) => s.size !== sizenow);
-      setSizes(newSizes);
+      const newSizes = sizes.filter((s) => s.size !== sizenow)
+      setSizes(newSizes)
     } else {
-      setSizes((prevSizes) => [...prevSizes, { size: sizenow, quantity: 1 }]);
+      setSizes((prevSizes) => [...prevSizes, { size: sizenow, quantity: 1 }])
     }
 
-    setInput((prev) => ({ ...prev, selectedSize: "" }));
-  };
+    setInput((prev) => ({ ...prev, selectedSize: "" }))
+  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -123,25 +123,24 @@ const Description = ({
           type="search"
           value={input.brand.length > 0 ? input.brand : brandQuery}
           onChange={(e) => {
-            handleOnChange("", "brand");
-            setBrandQuery(e.target.value);
+            handleOnChange("", "brand")
+            setBrandQuery(e.target.value)
           }}
           onBlur={() => input.brand.length > 0 && setBrandQuery("")}
         />
-        <div className="absolute max-h-[300px] overflow-auto z-[9] rounded-br-[0.2rem] rounded-bl-[0.2rem] top-[120px] bg-light-ev2 dark:bg-dark-ev2">
-          {searchBrand &&
-            brandQuery.length > 0 &&
+        <div className="absolute max-h-[300px] overflow-auto z-[9] rounded-br-[0.2rem] rounded-bl-[0.2rem] top-[93px] bg-light-ev2 dark:bg-dark-ev2">
+          {brandQuery.length > 0 &&
             [...searchBrand, { name: "Other", _id: Math.random() }].map((b) => (
               <div
                 className="text-[15px] cursor-pointer px-5 py-2.5 hover:bg-light-ev3 dark:hover:bg-dark-ev3"
                 key={b._id}
                 onClick={() => {
                   if (b.name === "Other") {
-                    setShowOtherBrand(true);
+                    setShowOtherBrand(true)
                   } else {
-                    handleOnChange(b.name, "brand");
+                    handleOnChange(b.name, "brand")
                   }
-                  setBrandQuery("");
+                  setBrandQuery("")
                 }}
               >
                 {b.name}
@@ -202,8 +201,8 @@ const Description = ({
             appearance-none bg-[#d4d4d4] outline-0 checked:before:bg-orange-color before:bg-[grey] dark:checked:bg-dark-ev4 checked:bg-[#fcf0e0]`}
           checked={addSize}
           onChange={(e) => {
-            setSizes([]);
-            setAddSize(e.target.checked);
+            setSizes([])
+            setAddSize(e.target.checked)
           }}
         />
       </div>
@@ -211,7 +210,7 @@ const Description = ({
         {!addSize ? (
           <div className="flex-1">
             <>
-              <div className="relative flex flex-col mr-5 w-full">
+              <div className="relative flex flex-col mr-5 gap-2 w-full">
                 <label className="text-sm flex items-center">
                   Add Size
                   <div
@@ -234,11 +233,8 @@ const Description = ({
                     maxLength={4}
                     placeholder="Add size"
                     onChange={(e) => {
-                      handleOnChange(
-                        e.target.value.slice(0, 4),
-                        "selectedSize"
-                      );
-                      handleError("", "selectedSize");
+                      handleOnChange(e.target.value.slice(0, 4), "selectedSize")
+                      handleError("", "selectedSize")
                     }}
                   />
                   <div
@@ -249,7 +245,7 @@ const Description = ({
                   </div>
                 </div>
               </div>
-              <div className="flex flex-wrap">
+              <div className="flex flex-wrap items-center">
                 <div className="w-auto lg:w-[70%] text-sm leading-[1.2]">
                   Provide the exact size as indicated on your product's label.
                 </div>
@@ -263,8 +259,8 @@ const Description = ({
                       maxLength={4}
                       value={s.quantity}
                       onChange={(e) => {
-                        smallSizeHandler(s.size, e.target.value.slice(0, 4));
-                        handleError("", "selectedSize");
+                        smallSizeHandler(s.size, e.target.value.slice(0, 4))
+                        handleError("", "selectedSize")
                       }}
                     />
                   </div>
@@ -287,7 +283,21 @@ const Description = ({
       {validationError.selectedSize && (
         <div className="text-[red] text-xs">{validationError.selectedSize}</div>
       )}
-      <div className="relative flex flex-col mr-5 w-full">
+      <div className="relative flex gap-2 flex-col mr-5 mb-2 w-full">
+        <label className="text-sm">Description</label>
+        <textarea
+          className="h-[120px] p-2.5 rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4 text-black dark:text-white bg-transparent focus-visible:outline focus-visible:outline-orange-color"
+          value={input.description}
+          placeholder="Describe your product by giving buyers more information. Start with Headline, Condition, Material, Style & Size. Be concise and only use relevant keywords."
+          onChange={(e) => handleOnChange(e.target.value, "description")}
+        />
+        {validationError.description && (
+          <div className="text-[red] text-xs">
+            {validationError.description}
+          </div>
+        )}
+      </div>
+      <div className="relative flex gap-2 flex-col mr-5 w-full">
         <label className="text-sm">Specification</label>
         <textarea
           className="h-[100px] p-2.5 rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4 text-black dark:text-white bg-transparent focus-visible:outline focus-visible:outline-orange-color"
@@ -297,7 +307,7 @@ const Description = ({
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Description;
+export default Description

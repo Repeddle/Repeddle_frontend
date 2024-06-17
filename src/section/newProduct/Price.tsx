@@ -55,31 +55,33 @@ const Price = ({
 
   return (
     <div className="flex flex-col gap-3">
-      <InputWithLabel2
-        label="Cost Price"
-        type="number"
-        onChange={(e) => handleOnChange(e, "costPrice")}
-        onBlur={() => handleError("", "costPrice")}
-        error={validationError.costPrice}
-      />
-      <InputWithLabel2
-        label="Selling Price"
-        type="number"
-        onChange={(e) => handleOnChange(e, "sellingPrice")}
-        onBlur={() => handleError("", "sellingPrice")}
-        error={validationError.sellingPrice}
-      />
+      <div className="flex items-center gap-3">
+        <InputWithLabel2
+          label="Cost Price"
+          type="number"
+          onChange={(e) => handleOnChange(e, "costPrice")}
+          onBlur={() => handleError("", "costPrice")}
+          error={validationError.costPrice}
+        />
+        <InputWithLabel2
+          label="Selling Price"
+          type="number"
+          onChange={(e) => handleOnChange(e, "sellingPrice")}
+          onBlur={() => handleError("", "sellingPrice")}
+          error={validationError.sellingPrice}
+        />
+      </div>
       {sellingPrice ? (
         <div className="">
           <div className="flex gap-2.5">
             <div
-              className={`text-2xl text-malon-color mt-5 ${
+              className={`text-2xl text-malon-color mt-3 ${
                 sellingPrice && "line-through text-opacity-50"
               }`}
             >
               {costPrice}
             </div>
-            <div className="text-2xl text-malon-color mt-5 font-light">
+            <div className="text-2xl text-orange-color mt-3 font-light">
               {currency(region())}
               {sellingPrice}
             </div>

@@ -89,6 +89,8 @@ const Media = ({ input, setInput, setVideo, video }: Props) => {
     } catch (error) {
       addNotification(error as string)
     }
+
+    setLoadingUpload(false)
   }
 
   const handleLuxury = async (e: ChangeEvent<HTMLInputElement>) => {

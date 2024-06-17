@@ -1,60 +1,60 @@
-import MessageBox from "../../components/MessageBox";
-import { Helmet } from "react-helmet-async";
-import { useEffect, useMemo, useState } from "react";
-import ReactImageMagnify from "react-image-magnify";
-import { FaEye, FaFlag, FaHeart, FaPlay, FaTag } from "react-icons/fa";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import Rating from "../../components/Rating";
-import useAuth from "../../hooks/useAuth";
-import IconsTooltips from "../../components/IconsTooltips";
-import useCart from "../../hooks/useCart";
-import { FaMessage, FaThumbsUp } from "react-icons/fa6";
-import Report from "../../section/product/Report";
-import ProtectionRight from "../../section/product/ProtectionRight";
-import ProductDetails from "../../section/product/ProductDetails";
-import ProductSustain from "../../section/product/ProductSustain";
-import ProductTab from "../../section/product/ProductTab";
-import SizeChart from "../../section/product/SizeChart";
-import RebundleLabel from "../../section/product/RebundleLabel";
-import ReviewLists from "../../components/ReviewLists";
-import RebundlePoster from "../../components/RebundlePoster";
-import ShareModal from "../../section/product/ShareModal";
-import CustomCarousel from "../../section/product/CustomCarousel";
-import RecentlyViewedProducts from "../../section/product/RecentlyViewedProducts";
-import Modal from "../../components/ui/Modal";
-import useProducts from "../../hooks/useProducts";
-import { IProduct } from "../../types/product";
-import useToastNotification from "../../hooks/useToastNotification";
-import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal";
-import { currency } from "../../utils/common";
-import moment from "moment";
+import MessageBox from "../../components/MessageBox"
+import { Helmet } from "react-helmet-async"
+import { useEffect, useMemo, useState } from "react"
+import ReactImageMagnify from "react-image-magnify"
+import { FaEye, FaFlag, FaHeart, FaPlay, FaTag } from "react-icons/fa"
+import { Link, useNavigate, useParams } from "react-router-dom"
+import Rating from "../../components/Rating"
+import useAuth from "../../hooks/useAuth"
+import IconsTooltips from "../../components/IconsTooltips"
+import useCart from "../../hooks/useCart"
+import { FaMessage, FaThumbsUp } from "react-icons/fa6"
+import Report from "../../section/product/Report"
+import ProtectionRight from "../../section/product/ProtectionRight"
+import ProductDetails from "../../section/product/ProductDetails"
+import ProductSustain from "../../section/product/ProductSustain"
+import ProductTab from "../../section/product/ProductTab"
+import SizeChart from "../../section/product/SizeChart"
+import RebundleLabel from "../../section/product/RebundleLabel"
+import ReviewLists from "../../components/ReviewLists"
+import RebundlePoster from "../../components/RebundlePoster"
+import ShareModal from "../../section/product/ShareModal"
+import CustomCarousel from "../../section/product/CustomCarousel"
+import RecentlyViewedProducts from "../../section/product/RecentlyViewedProducts"
+import Modal from "../../components/ui/Modal"
+import useProducts from "../../hooks/useProducts"
+import { IProduct } from "../../types/product"
+import useToastNotification from "../../hooks/useToastNotification"
+import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
+import { currency } from "../../utils/common"
+import moment from "moment"
 
 const Product = () => {
-  const params = useParams();
-  const { slug } = params;
+  const params = useParams()
+  const { slug } = params
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const { fetchProductBySlug, error, loading } = useProducts();
-  const { addNotification } = useToastNotification();
+  const { fetchProductBySlug, error, loading } = useProducts()
+  const { addNotification } = useToastNotification()
 
-  const { user, followUser, unFollowUser } = useAuth();
-  const { addToCart, cart } = useCart();
+  const { user, followUser, unFollowUser } = useAuth()
+  const { addToCart, cart } = useCart()
 
-  const [selectedImage, setSelectedImage] = useState("");
-  const [showModel, setShowModel] = useState(false);
-  const [size, setSize] = useState("");
-  const [selectSize, setSelectSize] = useState("");
-  const [product, setProduct] = useState<IProduct>();
+  const [selectedImage, setSelectedImage] = useState("")
+  const [showModel, setShowModel] = useState(false)
+  const [size, setSize] = useState("")
+  const [selectSize, setSelectSize] = useState("")
+  const [product, setProduct] = useState<IProduct>()
 
   useEffect(() => {
     const viewItem = async () => {
-      if (!slug) return addNotification("invalid slug");
+      if (!slug) return addNotification("invalid slug")
 
-      const data = await fetchProductBySlug(slug);
-      if (!data) return;
+      const data = await fetchProductBySlug(slug)
+      if (!data) return
 
-      setProduct(data);
+      setProduct(data)
 
       const factor = 0.9
 
@@ -63,11 +63,11 @@ const Product = () => {
         numViews: 1,
         productId: data._id,
         product: data,
-      };
+      }
       const views: (typeof newView)[] = JSON.parse(
         localStorage.getItem("recentlyView") || "[]"
-      );
-      const existing = views.find((x) => x.productId === data._id);
+      )
+      const existing = views.find((x) => x.productId === data._id)
 
       const newViews = existing
         ? views.map((item) =>
@@ -80,9 +80,9 @@ const Product = () => {
                 }
               : item
           )
-        : [...views, newView];
+        : [...views, newView]
 
-      localStorage.setItem("recentlyView", JSON.stringify(newViews));
+      localStorage.setItem("recentlyView", JSON.stringify(newViews))
       if (newViews) {
         const newViews1 = newViews.map((v) =>
           data._id !== v.productId
@@ -93,57 +93,58 @@ const Product = () => {
                 numViews: v.numViews,
               }
             : v
-        );
-        localStorage.setItem("recentlyView", JSON.stringify(newViews1));
+        )
+        localStorage.setItem("recentlyView", JSON.stringify(newViews1))
       }
-    };
-    viewItem();
-  }, [slug]);
+    }
+    viewItem()
+  }, [slug])
 
   const following = useMemo(() => {
     if (user && user.following.find((x) => x === product?.seller._id))
-      return "Following";
+      return "Following"
 
-    return "Follow";
-  }, [product?.seller._id, user]);
+    return "Follow"
+  }, [product?.seller._id, user])
 
   const liked = useMemo(() => {
-    return !!(user && user?.likes.find((x) => x._id === product?._id));
-  }, [product?._id, user]);
+    return !!(user && user?.likes.find((x) => x._id === product?._id))
+  }, [product?._id, user])
 
   const discount = useMemo(() => {
     if (!product?.costPrice || product.sellingPrice) {
-      return null;
+      return null
     }
     if (product.costPrice < product.sellingPrice) {
-      return null;
+      return null
     }
 
     return (
       ((product.costPrice - product.sellingPrice) / product.costPrice) * 100
-    );
-  }, [product?.costPrice, product?.sellingPrice]);
+    )
+  }, [product?.costPrice, product?.sellingPrice])
 
   const addToCartHandler = async () => {
-    if (!product) return;
+    if (!product) return
 
-    const existItem = cart.find((x) => x._id === product._id);
-    const quantity = existItem ? existItem.quantity + 1 : 1;
+    const existItem = cart.find((x) => x._id === product._id)
+    const quantity = existItem ? existItem.quantity + 1 : 1
 
     if (!selectSize && product.sizes.length > 0) {
-      addNotification("Select Size");
-      return;
+      addNotification("Select Size")
+      return
     }
 
-    if (user && product.seller._id === user._id) {
-      addNotification("You can't buy your product");
-    }
+    // if (user && product.seller._id === user._id) {
+    //   addNotification("You can't buy your product")
+    //   return
+    // }
 
-    const data = await fetchProductBySlug(product.slug);
-    console.log(data, "data");
+    const data = await fetchProductBySlug(product.slug)
+    console.log(data, "data")
     if (!data?.countInStock || data?.countInStock < quantity) {
-      addNotification("Sorry. Product is out of stock");
-      return;
+      addNotification("Sorry. Product is out of stock")
+      return
     }
 
     addToCart({
@@ -151,78 +152,78 @@ const Product = () => {
       quantity: 1,
       selectedSize: selectSize,
       // selectedColor?: string;
-    });
+    })
 
     addNotification("Item added to Cart", "View Cart", false, () =>
       navigate("/cart")
-    );
-  };
+    )
+  }
 
   const saved = useMemo(() => {
     return !!(
       user &&
       user.wishlist &&
       user.wishlist.find((x) => x._id === product!._id)
-    );
-  }, [product, user]);
+    )
+  }, [product, user])
 
-  const saveItem = () => {};
+  const saveItem = () => {}
 
   const toggleFollow = async () => {
     if (!product || !slug) {
-      return;
+      return
     }
 
     if (!user) {
-      addNotification("Login to follow a user");
-      return;
+      addNotification("Login to follow a user")
+      return
     }
 
     if (following === "Following") {
-      const res = await unFollowUser(product.seller._id);
-      if (res) addNotification(res);
+      const res = await unFollowUser(product.seller._id)
+      if (res) addNotification(res)
     } else {
-      const res = await followUser(product.seller._id);
-      if (res) addNotification(res);
+      const res = await followUser(product.seller._id)
+      if (res) addNotification(res)
     }
 
-    const data = await fetchProductBySlug(slug);
-    if (!data) return;
+    const data = await fetchProductBySlug(slug)
+    if (!data) return
 
-    setProduct(data);
-  };
+    setProduct(data)
+  }
 
   const isOnlineCon = (userId: string) => {
-    console.log(userId);
-    return true;
-  };
+    console.log(userId)
+    return true
+  }
 
-  const addConversation = () => {};
+  const addConversation = () => {}
 
-  const toggleLikes = () => {};
+  const toggleLikes = () => {}
 
   const checkFileTypeByExtension = (fileUrl: string) => {
-    const extension = fileUrl.split(".").pop()?.toLowerCase() ?? "";
+    const extension = fileUrl.split(".").pop()?.toLowerCase() ?? ""
 
     if (["jpg", "jpeg", "png", "gif", "bmp"].includes(extension)) {
-      return "image";
+      return "image"
     } else if (["mp4", "avi", "mov", "mkv"].includes(extension)) {
-      return "video";
+      return "video"
     } else {
-      return "unknown";
+      return "unknown"
     }
-  };
+  }
 
   const sizeHandler = (item: string) => {
-    const current = product?.sizes.filter((s) => s.size === item) ?? [];
+    const current = product?.sizes.filter((s) => s.size === item) ?? []
     if (current.length > 0) {
-      setSize(`${item} ( ${current[0].quantity} left)`);
-      setSelectSize(item);
+      setSize(`${item} ( ${current[0].quantity} left)`)
+      setSelectSize(item)
     } else {
-      setSize("Out of stock");
-      setSelectSize("");
+      setSize("Out of stock")
+      setSelectSize("")
     }
-  };
+  }
 
   return !loading && error ? (
     <MessageBox className="text-red-500">{error}</MessageBox>
@@ -578,7 +579,7 @@ const Product = () => {
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default Product;
+export default Product

@@ -18,7 +18,7 @@ const RegisterComp = () => {
   const { addNotification } = useToastNotification()
 
   const validateEmail = () => {
-    if (email.length === 0) {
+    if (email.trim().length === 0) {
       setFormError("Email field must not be empty")
       return false
     }
@@ -36,7 +36,7 @@ const RegisterComp = () => {
     e.preventDefault()
 
     if (validateEmail()) {
-      const value = await sendVerifyEmail({ email })
+      const value = await sendVerifyEmail({ email: email.trim() })
 
       if (value) {
         setShowModal(true)

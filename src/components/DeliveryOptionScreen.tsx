@@ -372,6 +372,8 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
     }
   }
 
+  console.log(item)
+
   return (
     <div className="m-[30px]">
       <div>
