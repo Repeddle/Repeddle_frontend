@@ -1,4 +1,3 @@
-
 import { useMemo, useState } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import MessageBox from "../../components/MessageBox"
@@ -14,16 +13,14 @@ import { UserByUsername } from "../../types/user"
 import Modal from "../../components/ui/Modal"
 import useAuth from "../../hooks/useAuth"
 import useToastNotification from "../../hooks/useToastNotification"
-in
 
 type Props = {
-  loadingUser: boolean;
-  error?: string | null;
-  usernameData?: UserByUsername;
-};
+  loadingUser: boolean
+  error?: string | null
+  usernameData?: UserByUsername
+}
 
 const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
-
   const {
     user: userInfo,
     followUser,
@@ -37,9 +34,9 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
   const [showWriteReview, setShowWriteReview] = useState(false)
 
   const isOnlineCon = (c: string) => {
-    console.log(c);
-    return false;
-  };
+    console.log(c)
+    return false
+  }
 
   const toggleFollow = async () => {
     if (!usernameData) return
@@ -67,8 +64,8 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
   }
 
   const handleReport = (id: string) => {
-    console.log(id);
-  };
+    console.log(id)
+  }
 
   const handleShare = async () => {
     try {
@@ -88,8 +85,8 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
   }
 
   const addConversation = (id: string, type: string) => {
-    console.log(id, type);
-  };
+    console.log(id, type)
+  }
 
   const isFollowing = useMemo(
     () =>
@@ -279,7 +276,7 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
         )
       )}
     </div>
-  );
-};
+  )
+}
 
-export default SellerLeft;
+export default SellerLeft
