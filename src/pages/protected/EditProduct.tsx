@@ -23,10 +23,10 @@ import useBrands from "../../hooks/useBrand"
 import useProducts from "../../hooks/useProducts"
 import DeliveryOption from "../../components/DeliveryOption"
 import {
-  DeliveryMeta,
   IDeliveryOption,
   IProduct,
   ISize,
+  ProductMeta,
 } from "../../types/product"
 import { colors } from "../../utils/constants"
 import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
@@ -110,7 +110,7 @@ const EditProduct = () => {
   const [aramex, setAramex] = useState(false)
   const [pickup, setPickup] = useState(true)
   const [bundle, setBundle] = useState(false)
-  const [meta, setMeta] = useState<DeliveryMeta>({})
+  const [meta, setMeta] = useState<ProductMeta>({})
   const [currentImage, setCurrentImage] = useState("image1")
   const [product, setProduct] = useState<IProduct>()
   const [tags, setTags] = useState<string[]>([])

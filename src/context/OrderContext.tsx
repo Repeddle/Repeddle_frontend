@@ -17,7 +17,9 @@ type ContextType = {
   fetchOrders: () => Promise<boolean>
   fetchOrderById: (id: string) => Promise<IOrder | null>
   fetchSoldOrders: () => Promise<boolean>
-  createOrder: (order: ICreateOrder) => Promise<null | string>
+  createOrder: (
+    order: ICreateOrder
+  ) => Promise<null | { order: IOrder; message: string }>
   updateOrderItemTracking: (
     orderId: string,
     itemId: string,
@@ -106,7 +108,7 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
       const result = await createOrderService(order)
       setOrders((prevOrders) => [...prevOrders, result.order])
       setLoading(false)
-      return result.message
+      return result
     } catch (error) {
       handleError(error as string)
       setLoading(false)

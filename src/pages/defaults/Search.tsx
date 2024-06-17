@@ -111,6 +111,13 @@ const Search = () => {
     return paramObj
   }, [searchParams])
 
+  const sortObj = useMemo(() => {
+    const param = searchParams.get("sort")
+    if (param) {
+      return param
+    }
+  }, [searchParams])
+
   const rLoading = false
   const rProducts: IProduct[] = []
 
@@ -169,7 +176,7 @@ const Search = () => {
                   Sort by{"  "}
                   <select
                     className="max-w-[200px] bg-inherit text-inherit border-[#767676] border focus:outline outline-black"
-                    value=""
+                    value={sortObj}
                     onChange={(e) => {
                       changeParam("sort", e.target.value)
                     }}

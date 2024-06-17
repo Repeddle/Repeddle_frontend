@@ -5,6 +5,10 @@ import { useNavigate } from "react-router-dom"
 const Brands = () => {
   const navigate = useNavigate()
 
+  const param = (key: string, val: string) => {
+    return new URLSearchParams([[key, val]])
+  }
+
   return (
     <section className="flex-col mx-0 my-2.5 lg:flex-row flex">
       <div className="flex flex-[2_1] flex-col">
@@ -21,34 +25,34 @@ const Brands = () => {
         <CategoryListing
           image="https://res.cloudinary.com/emirace/image/upload/v1692426674/usljgmtg7fb5wi0m5o4r.jpg"
           title="PUMA"
-          link="/search?brand=puma"
+          link={`/search?${param("filter", "brand:puma")}`}
         />
         <CategoryListing
           image="/images/brands/Picture1.webp"
           title="PATAGONIA"
-          link="/search?brand=patagonia"
+          link={`/search?${param("filter", "brand:patagonia")}`}
         />
         <CategoryListing
           image="/images/brands/lucas-hoang-O0e6Ka5vYSs-unsplash.webp"
           bottom
           title="GUCCI"
-          link="/search?brand=gucci"
+          link={`/search?${param("filter", "brand:gucci")}`}
         />
         <CategoryListing
           image="/images/brands/tony-tran-VKVDdLGoilc-unsplash.webp"
           title="BALANCIAGA"
           bottom
-          link="/search?brand=balanciaga"
+          link={`/search?${param("filter", "brand:balanciaga")}`}
         />
         <CategoryListing
           image="/images/brands/jakayla-toney-v0gHLhdQPCY-unsplash.webp"
           title="ADIDAS"
-          link="/search?brand=adidas"
+          link={`/search?${param("filter", "brand:adidas")}`}
         />
         <CategoryListing
           image="/images/brands/A.mcqueen.webp"
           title="A. MCQUEEN"
-          link="/search?brand=alexander%20mcqueen"
+          link={`/search?${param("filter", "brand:alexander mcqueen")}`}
         />
       </div>
       <div

@@ -87,22 +87,23 @@ const OrderPreview = () => {
                         {item.sellingPrice * item.quantity}
                       </div>
                     </div>
-                    {Object.entries(item.deliverySelect).map(([key, value]) =>
-                      key === "total" ? (
-                        ""
-                      ) : (
-                        <div className="flex capitalize text-[13px]">
-                          <div className="flex-[3] lg:flex-1">{key}:</div>
-                          {key === "cost" ? (
-                            <div className="flex-[5]">
-                              {currency(item.region)} {value}
-                            </div>
-                          ) : (
-                            <div className="flex-[5]">{value}</div>
-                          )}
-                        </div>
-                      )
-                    )}
+                    {item.deliverySelect &&
+                      Object.entries(item.deliverySelect).map(([key, value]) =>
+                        key === "total" ? (
+                          ""
+                        ) : (
+                          <div className="flex capitalize text-[13px]">
+                            <div className="flex-[3] lg:flex-1">{key}:</div>
+                            {key === "cost" ? (
+                              <div className="flex-[5]">
+                                {currency(item.region)} {value}
+                              </div>
+                            ) : (
+                              <div className="flex-[5]">{value}</div>
+                            )}
+                          </div>
+                        )
+                      )}
                   </div>
                 ))}
               </div>

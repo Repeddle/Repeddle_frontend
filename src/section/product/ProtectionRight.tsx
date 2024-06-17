@@ -15,7 +15,7 @@ const ProtectionRight = () => {
         <FaKey size={25} className="text-orange-color mr-2.5" /> Buyer's &
         Seller's Protection !
       </div>
-      <Modal isOpen={showModel} onClose={() => setShowModel(false)}>
+      <Modal isOpen={showModel} onClose={() => setShowModel(false)} size="lg">
         <BuyersPro />
       </Modal>
     </div>

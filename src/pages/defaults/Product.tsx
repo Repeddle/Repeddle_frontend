@@ -105,20 +105,19 @@ const Product = () => {
     viewItem();
   }, [slug]);
 
+  console.log(user);
+  console.log(product);
+
   const following = useMemo(() => {
-    if (
-      user &&
-      product?.seller &&
-      user.followers.find((x) => x === product?.seller._id)
-    )
+    if (user && user.following.find((x) => x === product?.seller._id))
       return "Following";
 
     return "Follow";
-  }, [product?.seller.followers, user]);
+  }, [product?.seller._id, user]);
 
   const liked = useMemo(() => {
-    return !!(user && product?.likes.find((x) => x === user._id));
-  }, [product?.likes, user]);
+    return !!(user && user?.likes.find((x) => x._id === product?._id));
+  }, [product?._id, user]);
 
   const discount = useMemo(() => {
     if (!product?.costPrice || product.sellingPrice) {
@@ -149,7 +148,8 @@ const Product = () => {
     }
 
     const data = await fetchProductBySlug(product.slug);
-    if (data?.countInStock ?? 0 < quantity) {
+    console.log(data, "data");
+    if (!data?.countInStock || data?.countInStock < quantity) {
       addNotification("Sorry. Product is out of stock");
       return;
     }
@@ -158,7 +158,6 @@ const Product = () => {
       ...product,
       quantity: 1,
       selectedSize: selectSize,
-      deliverySelect: {},
       // selectedColor?: string;
     });
 
@@ -176,18 +175,27 @@ const Product = () => {
   const saveItem = () => {};
 
   const toggleFollow = async () => {
+    if (!product || !slug) {
+      return;
+    }
+
     if (!user) {
       addNotification("Login to follow a user");
       return;
     }
 
     if (following === "Following") {
-      const res = await unFollowUser(user._id);
+      const res = await unFollowUser(product.seller._id);
       if (res) addNotification(res);
     } else {
-      const res = await followUser(user._id);
+      const res = await followUser(product.seller._id);
       if (res) addNotification(res);
     }
+
+    const data = await fetchProductBySlug(slug);
+    if (!data) return;
+
+    setProduct(data);
   };
 
   const isOnlineCon = (userId: string) => {
@@ -459,7 +467,8 @@ const Product = () => {
                 <div className="text-[25px] font-bold mr-5">
                   {currency(product.region)} {product?.costPrice}
                 </div>
-                {product.costPrice ?? 0 < product.sellingPrice ? (
+                {product.costPrice &&
+                product.costPrice < product.sellingPrice ? (
                   <div className="line-through text-xl text-[#5b5b5b] mr-5">
                     {currency(product.region)} {product.sellingPrice}
                   </div>
@@ -477,7 +486,7 @@ const Product = () => {
                   Tags:
                   <div className="flex flex-wrap">
                     {product.tags.map((t) => (
-                      <Link to={`/search?query=${t}`}>
+                      <Link to={`/search?search=${t}`}>
                         <div className="border m-0.5 px-2.5 py-0 rounded-[10px] border-black">
                           {t}
                         </div>
@@ -548,7 +557,7 @@ const Product = () => {
                 <ProductSustain />
                 <div className="flex gap-5 justify-end">
                   {user && user.role === "Admin" && (
-                    <div className="pointer text-malon-color text-right">
+                    <div className="pointer flex gap-1 items-center text-malon-color text-right">
                       <FaFlag /> Flag As Invalid
                     </div>
                   )}

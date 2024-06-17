@@ -1,74 +1,75 @@
-import { FormEvent, useState } from "react";
-import { Helmet } from "react-helmet-async";
-import { region } from "../../utils/common";
-import { banks } from "../../utils/constants";
-import Button from "../../components/ui/Button";
-import InputWithLabel2 from "../../components/ui/InputWithLabel2";
-import useAuth from "../../hooks/useAuth";
-import useToastNotification from "../../hooks/useToastNotification";
-import { useNavigate } from "react-router-dom";
+import { FormEvent, useState } from "react"
+import { Helmet } from "react-helmet-async"
+import { region } from "../../utils/common"
+import { banks } from "../../utils/constants"
+import Button from "../../components/ui/Button"
+import InputWithLabel2 from "../../components/ui/InputWithLabel2"
+import useAuth from "../../hooks/useAuth"
+import useToastNotification from "../../hooks/useToastNotification"
+import { useNavigate } from "react-router-dom"
 
 const VerifyAccount = () => {
-  const { updateUser, loading, error: userError } = useAuth();
-  const { addNotification } = useToastNotification();
-  const navigate = useNavigate();
+  const { updateUser, loading, error: userError } = useAuth()
+  const { addNotification } = useToastNotification()
+  const navigate = useNavigate()
 
   const [input, setInput] = useState({
     accountName: "",
     accountNumber: "",
     bankName: "",
-  });
+  })
 
   const [error, setError] = useState({
     accountName: "",
     accountNumber: "",
     bankName: "",
-  });
+  })
 
   const handleOnChange = (text: string, inputVal: keyof typeof input) => {
-    setInput((prevState) => ({ ...prevState, [inputVal]: text }));
-  };
+    setInput((prevState) => ({ ...prevState, [inputVal]: text }))
+  }
 
   const handleError = (errorMessage: string, inputVal: keyof typeof error) => {
-    setError((prevState) => ({ ...prevState, [inputVal]: errorMessage }));
-  };
+    setError((prevState) => ({ ...prevState, [inputVal]: errorMessage }))
+  }
 
   const submitHandler = async () => {
     const res = await updateUser({
       accountName: input.accountName,
       accountNumber: +input.accountNumber,
       bankName: input.bankName,
-    });
+    })
     if (res) {
-      addNotification("Account Verified Successfully");
-      navigate("/newproduct");
+      addNotification("Account Verified Successfully")
+      navigate("/newproduct")
     } else {
-      addNotification(userError ?? "Failed to verify account");
+      addNotification(userError ?? "Failed to verify account")
     }
-  };
+  }
 
   const validate = (e: FormEvent) => {
-    e.preventDefault();
-    let valid = true;
+    e.preventDefault()
+    let valid = true
     if (!input.accountNumber) {
-      handleError("Enter a valid account number", "accountNumber");
-      valid = false;
+      handleError("Enter a valid account number", "accountNumber")
+      valid = false
     }
     if (!input.accountName) {
-      handleError("Enter a valid account name", "accountName");
-      valid = false;
+      handleError("Enter a valid account name", "accountName")
+      valid = false
     }
     if (!input.bankName) {
-      handleError("Select a valid bank", "bankName");
-      valid = false;
+      handleError("Select a valid bank", "bankName")
+      valid = false
     }
 
     if (valid) {
-      submitHandler();
+      submitHandler()
     }
-  };
+  }
 
-  console.log(error);
+  console.log(error)
+
   return (
     <div className="max-w-[800px] bg-light-ev1 dark:bg-dark-ev1 mx-auto my-10 p-[50px] rounded-[10px]">
       <Helmet>
@@ -132,7 +133,7 @@ const VerifyAccount = () => {
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default VerifyAccount;
+export default VerifyAccount
