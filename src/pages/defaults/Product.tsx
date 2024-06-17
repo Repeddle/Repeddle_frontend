@@ -20,7 +20,6 @@ import ReviewLists from "../../components/ReviewLists";
 import RebundlePoster from "../../components/RebundlePoster";
 import ShareModal from "../../section/product/ShareModal";
 import CustomCarousel from "../../section/product/CustomCarousel";
-import ProductSignin from "../../section/product/ProductSignin";
 import RecentlyViewedProducts from "../../section/product/RecentlyViewedProducts";
 import Modal from "../../components/ui/Modal";
 import useProducts from "../../hooks/useProducts";
@@ -43,7 +42,6 @@ const Product = () => {
   const { addToCart, cart } = useCart();
 
   const [selectedImage, setSelectedImage] = useState("");
-  const [showLoginModel, setShowLoginModel] = useState(false);
   const [showModel, setShowModel] = useState(false);
   const [size, setSize] = useState("");
   const [selectSize, setSelectSize] = useState("");
@@ -110,8 +108,8 @@ const Product = () => {
   const following = useMemo(() => {
     if (
       user &&
-      product?.seller.followers &&
-      product.seller.followers.find((x) => x === user._id)
+      product?.seller &&
+      user.followers.find((x) => x === product?.seller._id)
     )
       return "Following";
 
@@ -179,7 +177,7 @@ const Product = () => {
 
   const toggleFollow = async () => {
     if (!user) {
-      setShowLoginModel(true);
+      addNotification("Login to follow a user");
       return;
     }
 
@@ -329,7 +327,10 @@ const Product = () => {
 
             <div className="flex-[3] flex flex-col overflow-y-auto h-screen lg:pl-[70px] px-2.5 scrollbar-hide">
               <div className="flex">
-                <Link className="relative" to={`/seller/${product.seller._id}`}>
+                <Link
+                  className="relative"
+                  to={`/seller/${product.seller.username}`}
+                >
                   <img
                     className="object-cover object-top h-[100px] w-[100px] mr-5 rounded-[50%]"
                     src={product.seller.image}
@@ -347,7 +348,7 @@ const Product = () => {
                 <div className="flex flex-col justify-center">
                   <div className="items-center flex font-bold gap-2 capitalize">
                     <Link
-                      to={`/seller/${product.seller._id}`}
+                      to={`/seller/${product.seller.username}`}
                       className="text-malon-color"
                     >
                       @{product.seller.username}
@@ -433,12 +434,6 @@ const Product = () => {
                   />
                 </div>
 
-                <Modal
-                  isOpen={showLoginModel}
-                  onClose={() => setShowLoginModel(false)}
-                >
-                  <ProductSignin />
-                </Modal>
                 <div className="relative mr-[30px] flex cursor-pointer text-lg group items-center">
                   <FaMessage
                     className="peer hover:text-orange-color"

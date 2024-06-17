@@ -1,49 +1,49 @@
-import { useState } from "react"
-import LoadingBox from "../../components/LoadingBox"
-import MessageBox from "../../components/MessageBox"
-import { Link } from "react-router-dom"
-import { FaGlobe, FaLink, FaPen, FaTag, FaUser } from "react-icons/fa"
-import ReviewLists from "../../components/ReviewLists"
-import WriteReview from "./WriteReview"
-import RebundlePoster from "../../components/RebundlePoster"
-import { FaLocationDot } from "react-icons/fa6"
-import Report from "../product/Report"
-import Rating from "../../components/Rating"
-import { UserByUsername } from "../../types/user"
-import Modal from "../../components/ui/Modal"
-import useAuth from "../../hooks/useAuth"
+import { useState } from "react";
+import LoadingBox from "../../components/LoadingBox";
+import MessageBox from "../../components/MessageBox";
+import { Link } from "react-router-dom";
+import { FaGlobe, FaLink, FaPen, FaTag, FaUser } from "react-icons/fa";
+import ReviewLists from "../../components/ReviewLists";
+import WriteReview from "./WriteReview";
+import RebundlePoster from "../../components/RebundlePoster";
+import { FaLocationDot } from "react-icons/fa6";
+import Report from "../product/Report";
+import Rating from "../../components/Rating";
+import { UserByUsername } from "../../types/user";
+import Modal from "../../components/ui/Modal";
+import useAuth from "../../hooks/useAuth";
 
 type Props = {
-  loadingUser: boolean
-  error?: string | null
-  usernameData?: UserByUsername
-}
+  loadingUser: boolean;
+  error?: string | null;
+  usernameData?: UserByUsername;
+};
 
 const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
-  const [showLoginModel, setShowLoginModel] = useState(false)
-  const [showModel, setShowModel] = useState(false)
-  const [showWriteReview, setShowWriteReview] = useState(false)
+  const [showLoginModel, setShowLoginModel] = useState(false);
+  const [showModel, setShowModel] = useState(false);
+  const [showWriteReview, setShowWriteReview] = useState(false);
 
-  const { user: userInfo } = useAuth()
+  const { user: userInfo } = useAuth();
 
   const isOnlineCon = (c: string) => {
-    console.log(c)
-    return false
-  }
+    console.log(c);
+    return false;
+  };
 
-  console.log(usernameData)
+  console.log(usernameData);
 
-  const toggleFollow = () => {}
+  const toggleFollow = () => {};
 
   const handleReport = (id: string) => {
-    console.log(id)
-  }
+    console.log(id);
+  };
 
-  const handleShare = () => {}
+  const handleShare = () => {};
 
   const addConversation = (id: string, type: string) => {
-    console.log(id, type)
-  }
+    console.log(id, type);
+  };
 
   return (
     <div className="flex-[2]">
@@ -116,7 +116,10 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
                   </button>
                 )}
               </div>
-              <div className="pointer" onClick={() => setShowModel(!showModel)}>
+              <div
+                className="cursor-pointer"
+                onClick={() => setShowModel(!showModel)}
+              >
                 <Rating
                   rating={usernameData.user.rating ?? 0}
                   numReviews={usernameData.user.numReviews}
@@ -225,7 +228,7 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
         )
       )}
     </div>
-  )
-}
+  );
+};
 
-export default SellerLeft
+export default SellerLeft;
