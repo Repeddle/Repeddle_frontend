@@ -1,9 +1,9 @@
 import moment from "moment"
 import { Link } from "react-router-dom"
+import { Notification } from "../../../types/conversation"
 
 type Props = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  notifications: any[]
+  notifications: Notification[]
 }
 
 const NotificationList = ({ notifications }: Props) => {
@@ -15,8 +15,10 @@ const NotificationList = ({ notifications }: Props) => {
       <div className="font-bold mb-2.5 dark:text-white text-black">
         Notifications
       </div>
-      {notifications.length < 0 ? (
-        <b>No Notification</b>
+      {notifications.length === 0 ? (
+        <b className="text-center text-black dark:text-white text-sm md:text-base font-semibold">
+          No Notification
+        </b>
       ) : (
         notifications.map((not) => (
           <Link to={not.link}>
@@ -29,11 +31,11 @@ const NotificationList = ({ notifications }: Props) => {
             >
               <img
                 className="w-[50px] h-[50px] rounded-[50%]"
-                src={not.userImage}
+                src={not.user.image}
                 alt="img"
               />
               <div className="text-sm flex-1 ml-[5px]">
-                <p className="dark:text-white text-black">{not.msg}</p>
+                <p className="dark:text-white text-black">{not.message}</p>
                 <p className="text-orange-color">
                   {moment(not.createdAt).fromNow()}
                 </p>

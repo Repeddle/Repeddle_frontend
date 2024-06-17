@@ -46,10 +46,13 @@ const ProductList = () => {
           My Products
         </h1>
 
-        <div className="flex px-2 py-[5px] items-center cursor-pointer font-bold bg-orange-color text-white-color lg:px-4 lg:py-2.5 rounded-[0.2rem]">
+        <Link
+          to={user?.isSeller ? "/newproduct" : "/sell"}
+          className="flex px-2 py-[5px] items-center cursor-pointer font-bold bg-orange-color text-white-color lg:px-4 lg:py-2.5 rounded-[0.2rem]"
+        >
           <FaPlus className="mr-2.5" />
           Add Product
-        </div>
+        </Link>
       </div>
       <div className="flex mr-2.5 mb-2.5 justify-end">
         <input

@@ -86,7 +86,7 @@ const CropImage = ({ uploadHandler, setShowModel, currentImage }: Props) => {
   }
 
   return (
-    <div className="w-full h-full p-[30px]">
+    <div className="w-full h-[70vh] p-[30px]">
       <label
         className="text-malon-color border border-malon-color capitalize mx-0 my-[5px] px-[5px] py-[3px] rounded-[0.2rem]"
         htmlFor="inputButton"

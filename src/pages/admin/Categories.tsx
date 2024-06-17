@@ -343,17 +343,19 @@ const Categories = () => {
             subCategories={subCategories}
           />
 
-          <button
-            className="w-[200px] bg-orange-color text-white-color cursor-pointer mx-0 my-2.5 px-2.5 py-[5px] rounded-[0.2rem] border-none"
-            onClick={submitHandler}
-            disabled={loading}
-          >
-            {editCat ? "Update Category" : "Add Category"}
-          </button>
+          <div className="flex items-center">
+            <button
+              className="w-[200px] bg-orange-color text-white-color cursor-pointer mx-0 my-2.5 px-2.5 py-[5px] rounded-[0.2rem] border-none"
+              onClick={submitHandler}
+              disabled={loading}
+            >
+              {editCat ? "Update Category" : "Add Category"}
+            </button>
 
-          {editCat && (
-            <FaTimes onClick={() => cancelEdit()} className="ml-2.5" />
-          )}
+            {editCat && (
+              <FaTimes onClick={() => cancelEdit()} className="ml-2.5" />
+            )}
+          </div>
 
           {/* the check is necessary if not the useState does not receive the update value */}
           {modal.addNameLink && selectedSubcategoryIndex !== null && (

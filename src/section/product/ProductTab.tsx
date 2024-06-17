@@ -11,8 +11,6 @@ type TabType = "comments" | "reviews"
 
 const ProductTab = ({ product }: Props) => {
   const [tab, setTab] = useState<TabType>("comments")
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const comments: any[] = []
 
   return (
     <section>
@@ -25,7 +23,7 @@ const ProductTab = ({ product }: Props) => {
           }`}
           onClick={() => setTab("comments")}
         >
-          Comments ({comments.length})
+          Comments ({product.comments?.length ?? 0})
         </div>
         <div
           className={`flex justify-center cursor-pointer relative capitalize min-w-[50px] m-2.5 hover:text-orange-color ${
@@ -40,7 +38,7 @@ const ProductTab = ({ product }: Props) => {
       </div>
       <div className="container">
         {tab === "comments" && (
-          <ProductComment comments={comments} product={product} />
+          <ProductComment comments={product.comments} product={product} />
         )}
 
         {tab === "reviews" && <ProductReviews product={product} />}
