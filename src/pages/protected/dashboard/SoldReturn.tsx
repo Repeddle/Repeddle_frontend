@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { returns } from "../../utils/data"
-import UserReturnTable from "../../components/table/UserReturnTable"
+import { returns } from "../../../utils/data"
+import UserReturnTable from "../../../components/table/UserReturnTable"
 
-const PurchaseReturn = () => {
+const SoldReturns = () => {
   const [query, setQuery] = useState("")
 
   return (
@@ -26,4 +26,4 @@ const PurchaseReturn = () => {
   )
 }
 
-export default PurchaseReturn
+export default SoldReturns

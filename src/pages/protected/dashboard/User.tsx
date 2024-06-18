@@ -1,13 +1,13 @@
 import { ChangeEvent, FormEvent, MouseEvent, useEffect, useState } from "react"
-import useAuth from "../../hooks/useAuth"
+import useAuth from "../../../hooks/useAuth"
 import { useNavigate, useParams } from "react-router-dom"
-import { IUser } from "../../types/user"
-import useToastNotification from "../../hooks/useToastNotification"
-import UserLeftComp from "../../section/user/UserLeftComp"
-import UserRightComp from "../../section/user/UserRightComp"
-import useNewsletter from "../../hooks/useNewsletter"
-import { compressImageUpload } from "../../utils/common"
-import useUser from "../../hooks/useUser"
+import { IUser } from "../../../types/user"
+import useToastNotification from "../../../hooks/useToastNotification"
+import UserLeftComp from "../../../section/user/UserLeftComp"
+import UserRightComp from "../../../section/user/UserRightComp"
+import useNewsletter from "../../../hooks/useNewsletter"
+import { compressImageUpload } from "../../../utils/common"
+import useUser from "../../../hooks/useUser"
 
 export type InputType = {
   zipcode: string

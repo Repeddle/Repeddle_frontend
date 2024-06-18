@@ -1,13 +1,12 @@
-
-import LoadingBox from "../../components/LoadingBox"
-import MessageBox from "../../components/MessageBox"
+import LoadingBox from "../../../components/LoadingBox"
+import MessageBox from "../../../components/MessageBox"
 import { useParams } from "react-router-dom"
-import { currency, region } from "../../utils/common"
+import { currency, region } from "../../../utils/common"
 import moment from "moment"
-import useAuth from "../../hooks/useAuth"
-import useTransactions from "../../hooks/useTransaction"
+import useAuth from "../../../hooks/useAuth"
+import useTransactions from "../../../hooks/useTransaction"
 import { useEffect, useState } from "react"
-import { ITransaction } from "../../types/transactions"
+import { ITransaction } from "../../../types/transactions"
 
 const Transaction = () => {
   const params = useParams()
@@ -124,4 +123,4 @@ const Transaction = () => {
   )
 }
 
-export default Transaction;
+export default Transaction

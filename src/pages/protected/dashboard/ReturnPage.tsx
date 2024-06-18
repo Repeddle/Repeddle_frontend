@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: remove this
 import { useState } from "react"
-import DeliveryHistory from "../../components/DeliveryHistory"
-import { currency, daydiff, deliveryNumber } from "../../utils/common"
+import DeliveryHistory from "../../../components/DeliveryHistory"
+import { currency, daydiff, deliveryNumber } from "../../../utils/common"
 import { Link, useParams } from "react-router-dom"
-import LoadingBox from "../../components/LoadingBox"
-import useAuth from "../../hooks/useAuth"
-import { returns } from "../../utils/data"
+import LoadingBox from "../../../components/LoadingBox"
+import useAuth from "../../../hooks/useAuth"
+import { returns } from "../../../utils/data"
 import moment from "moment"
-import MessageImage from "../../components/ui/MessageImage"
-import Modal from "../../components/ui/Modal"
+import MessageImage from "../../../components/ui/MessageImage"
+import Modal from "../../../components/ui/Modal"
 import { FaCheck } from "react-icons/fa"
-import DeliveryReturn from "../../components/DeliveryReturn"
-import { IUser } from "../../types/user"
+import DeliveryReturn from "../../../components/DeliveryReturn"
+import { IUser } from "../../../types/user"
 
 const ReturnPage = () => {
   const { id: returnId } = useParams()

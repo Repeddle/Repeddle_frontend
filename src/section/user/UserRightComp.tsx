@@ -9,7 +9,7 @@ import moment from "moment"
 import useAuth from "../../hooks/useAuth"
 import { IUser } from "../../types/user"
 import { timeDifference } from "../../utils/common"
-import { UserFormType } from "../../pages/protected/User"
+import { UserFormType } from "../../pages/protected/dashboard/User"
 
 type Props = {
   user: IUser
