@@ -35,14 +35,23 @@ const Product = () => {
 
   const navigate = useNavigate()
 
-  const { fetchProductBySlug, error, loading } = useProducts()
+  const { fetchProductBySlug, error, loading, likeProduct, unlikeProduct } =
+    useProducts()
   const { addNotification } = useToastNotification()
 
-  const { user, followUser, unFollowUser } = useAuth()
+  const {
+    user,
+    followUser,
+    unFollowUser,
+    addToWishlist,
+    error: wishListError,
+  } = useAuth()
   const { addToCart, cart } = useCart()
 
   const [selectedImage, setSelectedImage] = useState("")
   const [showModel, setShowModel] = useState(false)
+  const [liking, setLiking] = useState(false)
+  const [addToWish, setAddToWish] = useState(false)
   const [size, setSize] = useState("")
   const [selectSize, setSelectSize] = useState("")
   const [product, setProduct] = useState<IProduct>()
@@ -108,8 +117,8 @@ const Product = () => {
   }, [product?.seller._id, user])
 
   const liked = useMemo(() => {
-    return !!(user && user?.likes.find((x) => x._id === product?._id))
-  }, [product?._id, user])
+    return !!product?.likes.find((like) => like === user?._id)
+  }, [product?.likes, user?._id])
 
   const discount = useMemo(() => {
     if (!product?.costPrice || product.sellingPrice) {
@@ -135,13 +144,13 @@ const Product = () => {
       return
     }
 
-    // if (user && product.seller._id === user._id) {
-    //   addNotification("You can't buy your product")
-    //   return
-    // }
+    if (user && product.seller._id === user._id) {
+      addNotification("You can't buy your product")
+      return
+    }
 
     const data = await fetchProductBySlug(product.slug)
-    console.log(data, "data")
+
     if (!data?.countInStock || data?.countInStock < quantity) {
       addNotification("Sorry. Product is out of stock")
       return
@@ -149,7 +158,7 @@ const Product = () => {
 
     addToCart({
       ...product,
-      quantity: 1,
+      quantity,
       selectedSize: selectSize,
       // selectedColor?: string;
     })
@@ -167,7 +176,36 @@ const Product = () => {
     )
   }, [product, user])
 
-  const saveItem = () => {}
+  const saveItem = async () => {
+    if (!product) return
+
+    if (!user) {
+      addNotification(
+        "Sign In/ Sign Up to add an item to wishlist",
+        undefined,
+        true
+      )
+      return
+    }
+
+    if (product.seller._id === user._id) {
+      addNotification("You can't add your product to wishlist", undefined, true)
+      return
+    }
+
+    setAddToWish(true)
+
+    const res = await addToWishlist(product._id)
+    if (res) addNotification(res)
+    else
+      addNotification(
+        wishListError ?? "Failed to add to wishlist",
+        undefined,
+        true
+      )
+
+    setAddToWish(false)
+  }
 
   const toggleFollow = async () => {
     if (!product || !slug) {
@@ -182,9 +220,11 @@ const Product = () => {
     if (following === "Following") {
       const res = await unFollowUser(product.seller._id)
       if (res) addNotification(res)
+      else addNotification(error, undefined, true)
     } else {
       const res = await followUser(product.seller._id)
       if (res) addNotification(res)
+      else addNotification(error, undefined, true)
     }
 
     const data = await fetchProductBySlug(slug)
@@ -200,7 +240,33 @@ const Product = () => {
 
   const addConversation = () => {}
 
-  const toggleLikes = () => {}
+  const toggleLikes = async () => {
+    if (!user) {
+      addNotification("Sign in /  Sign Up to like", undefined, true)
+      return
+    }
+
+    if (!product) return
+
+    if (product.seller._id === user._id) {
+      addNotification("You can't like your product", undefined, true)
+      return
+    }
+
+    setLiking(true)
+
+    if (liked) {
+      const res = await unlikeProduct(product._id)
+      if (res) addNotification(res)
+      else addNotification(error, undefined, true)
+    } else {
+      const res = await likeProduct(product._id)
+      if (res) addNotification(res)
+      else addNotification(error, undefined, true)
+    }
+
+    setLiking(false)
+  }
 
   const checkFileTypeByExtension = (fileUrl: string) => {
     const extension = fileUrl.split(".").pop()?.toLowerCase() ?? ""
@@ -416,7 +482,7 @@ const Product = () => {
                     className={`ml-[5px] peer hover:text-orange-color ${
                       liked ? "text-orange-color" : ""
                     }`}
-                    onClick={toggleLikes}
+                    onClick={!liking ? toggleLikes : undefined}
                   />
                   <IconsTooltips
                     classNames="peer-hover:opacity-100"
@@ -429,7 +495,7 @@ const Product = () => {
                     className={`peer hover:text-orange-color ${
                       saved ? "text-orange-color" : ""
                     }`}
-                    onClick={saveItem}
+                    onClick={!addToWish ? saveItem : undefined}
                   />
                   <IconsTooltips
                     classNames="peer-hover:opacity-100"

@@ -35,7 +35,7 @@ const Comment = ({ comment, product }: Props) => {
   const likeComment = async () => {
     if (!user) return
 
-    if (comment.userId === user._id) {
+    if (comment.userId._id === user._id) {
       addNotification("You can't like your comment")
       return
     }
@@ -60,7 +60,7 @@ const Comment = ({ comment, product }: Props) => {
   const likeReplyHandler = async (reply: ICommentReply) => {
     if (!user) return
 
-    if (reply.userId === user._id) {
+    if (reply.userId._id === user._id) {
       addNotification("You can't like your reply")
       return
     }
@@ -117,13 +117,13 @@ const Comment = ({ comment, product }: Props) => {
       <div className="flex mt-[15px] p-2.5 lg:p-5 rounded-[0.2rem] dark:bg-dark-ev1 bg-light-ev1">
         <img
           className="w-[50px] h-[50px] object-cover rounded-[50%]"
-          src={comment.userId}
+          src={comment.userId.image}
           alt="pimage"
         />
         <div className="ml-5">
           <div>
             <div className="flex items-center">
-              <div className="font-bold mr-2.5">{comment.userId}</div>
+              <div className="font-bold mr-2.5">{comment.userId.username}</div>
               <div className="text-xs">
                 {moment(comment.createdAt).fromNow()}
               </div>
@@ -163,12 +163,12 @@ const Comment = ({ comment, product }: Props) => {
             <div className="ml-[25px] mr-0 my-[5px] p-2.5 dark:bg-dark-ev1 bg-light-ev1 flex lg:ml-[90px] lg:mr-0 lg:my-[5px] lg:p-5 rounded-[0.2rem]">
               <img
                 className="w-[30px] h-[30px] object-cover rounded-[50%]"
-                src={r.userId}
+                src={r.userId.image}
                 alt="pimage"
               />
               <div className="ml-5">
                 <div className="flex items-center">
-                  <div className="font-bold mr-2.5">{r.userId}</div>
+                  <div className="font-bold mr-2.5">{r.userId.username}</div>
                   <div className="text-xs">{moment(r.createdAt).fromNow()}</div>
                 </div>
                 <div className="m-2.5">{r.comment}</div>

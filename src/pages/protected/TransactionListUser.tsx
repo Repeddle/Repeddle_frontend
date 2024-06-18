@@ -9,8 +9,13 @@ const TransactionListUser = () => {
   const [query, setQuery] = useState("")
   const [page, setPage] = useState(1)
 
-  const { error, fetchUserTransactions, loading, transactions } =
-    useTransactions()
+  const {
+    error,
+    fetchUserTransactions,
+    loading,
+    transactions,
+    transactionsPagination,
+  } = useTransactions()
   const { addNotification } = useToastNotification()
 
   useEffect(() => {
@@ -46,6 +51,7 @@ const TransactionListUser = () => {
         transactions={transactions}
         loading={loading}
         onPageChange={setPage}
+        transactionPagination={transactionsPagination}
       />
     </div>
   )

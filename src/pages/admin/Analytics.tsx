@@ -92,13 +92,13 @@ const Analytics = () => {
                 </div>
 
                 <div className="flex justify-between items-center w-[170px] m-[5px]">
-                  <Link to={`/seller/${user._id}`}>
+                  <Link to={`/seller/${user.username}`}>
                     <div className="flex items-center text-white-color bg-orange-color cursor-pointer px-2 py-[3px] rounded-[0.2rem] border-none">
                       <FaEye className="text-base mr-[5px]" /> View
                     </div>
                   </Link>
                   <Link to={`/dashboard/user/${user._id}`}>
-                    <div className="flex items-center text-white-color bg-orange-color cursor-pointer px-2 py-[3px] rounded-[0.2rem] border-none">
+                    <div className="flex items-center text-white-color bg-malon-color cursor-pointer px-2 py-[3px] rounded-[0.2rem] border-none">
                       <FaPen className="text-base mr-[5px]" /> Edit
                     </div>
                   </Link>

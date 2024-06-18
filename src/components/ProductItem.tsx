@@ -4,13 +4,22 @@ import { Link } from "react-router-dom"
 import { FaArrowsAlt, FaHeart, FaThumbsUp } from "react-icons/fa"
 import Modal from "./ui/Modal"
 import { currency } from "../utils/common"
+import useAuth from "../hooks/useAuth"
+import useProducts from "../hooks/useProducts"
+import useToastNotification from "../hooks/useToastNotification"
 
 type Props = {
   product: IProduct
 }
 
 const ProductItem = ({ product }: Props) => {
+  const { user, addToWishlist, error: wishlistError } = useAuth()
+  const { likeProduct, unlikeProduct, error } = useProducts()
+  const { addNotification } = useToastNotification()
+
   const [showModel, setShowModel] = useState(false)
+  const [liking, setLiking] = useState(false)
+  const [addToWish, setAddToWish] = useState(false)
 
   const discount = useMemo(() => {
     if (!product.costPrice || product.sellingPrice) {
@@ -24,6 +33,69 @@ const ProductItem = ({ product }: Props) => {
       ((product.costPrice - product.sellingPrice) / product.costPrice) * 100
     )
   }, [product.costPrice, product.sellingPrice])
+
+  const liked = useMemo(() => {
+    return !!product?.likes.find((like) => like === user?._id)
+  }, [product?.likes, user?._id])
+
+  const toggleLikes = async () => {
+    if (!user) {
+      addNotification("Sign in /  Sign Up to like", undefined, true)
+      return
+    }
+
+    if (!product) return
+
+    if (product.seller._id === user._id) {
+      addNotification("You can't like your product", undefined, true)
+      return
+    }
+
+    setLiking(true)
+
+    if (liked) {
+      const res = await unlikeProduct(product._id)
+      if (res) addNotification(res)
+      else addNotification(error, undefined, true)
+    } else {
+      const res = await likeProduct(product._id)
+      if (res) addNotification(res)
+      else addNotification(error, undefined, true)
+    }
+
+    setLiking(false)
+  }
+
+  const saveItem = async () => {
+    if (!product) return
+
+    if (!user) {
+      addNotification(
+        "Sign In/ Sign Up to add an item to wishlist",
+        undefined,
+        true
+      )
+      return
+    }
+
+    if (product.seller._id === user._id) {
+      addNotification("You can't add your product to wishlist", undefined, true)
+      return
+    }
+
+    setAddToWish(true)
+
+    const res = await addToWishlist(product._id)
+    if (res) addNotification(res)
+    else
+      addNotification(
+        wishlistError ?? "Failed to add to wishlist",
+        undefined,
+        true
+      )
+
+    setAddToWish(false)
+  }
 
   return (
     <div className="h-[342px] w-[162px] mr-2.5 lg:mr-auto mb-2.5 lg:h-[500px] lg:w-60 lg:flex-[0_0_auto] cursor-pointer">
@@ -73,7 +145,7 @@ const ProductItem = ({ product }: Props) => {
           <li className="inline-block opacity-0 group-hover:opacity-100 relative mr-2.5 top-[100px] group-hover:top-0 justify-center items-center list-none transition-all duration-[0.4s] ease-[ease] delay-[0.15s]">
             <span
               className="cursor-pointer bg-white shadow-[0_0_25px_hsla(0,0%,9%,0.4)] text-black block text-lg h-[45px] leading-[45px] transition-all duration-500 w-[45px] rounded-[50px]"
-              // onClick={toggleLikes}
+              onClick={!liking ? toggleLikes : undefined}
             >
               <FaThumbsUp className="text-lg text-orange-color inline-block relative rotate-[0] transition-all duration-[0.3s]" />
             </span>
@@ -81,7 +153,7 @@ const ProductItem = ({ product }: Props) => {
           <li className="inline-block opacity-0 group-hover:opacity-100 relative top-[100px] group-hover:top-0 justify-center items-center list-none transition-all duration-[0.4s] ease-[ease] delay-[0.2s] mr-0">
             <span
               className="cursor-pointer bg-white shadow-[0_0_25px_hsla(0,0%,9%,0.4)] text-black block text-lg h-[45px] leading-[45px] transition-all duration-500 w-[45px] rounded-[50px]"
-              // onClick={() => saveItem()}
+              onClick={() => !addToWish && saveItem()}
             >
               <FaHeart className="text-lg text-orange-color inline-block relative rotate-[0] transition-all duration-[0.3s]" />
             </span>
