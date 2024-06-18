@@ -128,7 +128,7 @@ const Wishlist = () => {
 
       <Table
         headers={headers}
-        itemName="transaction"
+        itemName="product"
         loading={removeFromWish}
         body={(user?.wishlist ?? []).map((wish) => ({
           keys: {

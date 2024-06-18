@@ -71,6 +71,7 @@ import Dashboard from "./pages/protected/dashboard"
 import Overview from "./pages/protected/overview"
 import AdminLayout from "./pages/admin"
 import Earning from "./pages/protected/earning"
+import Wishlist from "./pages/protected/dashboard/Wishlist"
 
 const router = createBrowserRouter([
   {
@@ -147,6 +148,7 @@ const router = createBrowserRouter([
           { path: "analytics", element: <Analytics /> },
           { path: "messages", element: <AllMessage /> },
           { path: "orderlist", element: <OrderList /> },
+          { path: "wishlist", element: <Wishlist /> },
           { path: "salesList", element: <SalesList /> },
           { path: "address", element: <AddressBook /> },
           { path: "productlist", element: <ProductList /> },

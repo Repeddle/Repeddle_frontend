@@ -9,7 +9,13 @@ import { NavLink } from "react-router-dom"
 import { Link } from "react-router-dom"
 import useAuth from "../../hooks/useAuth"
 import useTheme from "../../hooks/useTheme"
-import { FaChartBar, FaComment, FaHome, FaMoneyBill } from "react-icons/fa"
+import {
+  FaChartBar,
+  FaComment,
+  FaHeart,
+  FaHome,
+  FaMoneyBill,
+} from "react-icons/fa"
 import {
   FaArrowRotateLeft,
   FaArrowRotateRight,
@@ -27,6 +33,11 @@ const sidebarLinks = [
     path: "/dashboard/productlist",
     text: "My Products",
     icon: <FaBasketShopping />,
+  },
+  {
+    path: "/dashboard/wishlist",
+    text: "Wishlist",
+    icon: <FaHeart />,
   },
   {
     path: "/dashboard/orderlist",
