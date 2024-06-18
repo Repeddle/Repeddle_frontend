@@ -32,7 +32,7 @@ type ContextType = {
   fetchUserProducts: (params?: string) => Promise<boolean>
   fetchProductBySlug: (slug: string) => Promise<IProduct | null>
   fetchProductById: (id: string) => Promise<IProduct | string>
-  createProduct: (product: ICreateProduct) => Promise<boolean>
+  createProduct: (product: ICreateProduct) => Promise<IProduct | null>
   updateProduct: (id: string, product: ICreateProduct) => Promise<boolean>
   deleteProduct: (id: string) => Promise<{ message?: string }>
   likeProduct: (id: string) => Promise<string | null>
@@ -171,11 +171,11 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         return newProd
       })
       setLoading(false)
-      return true
+      return result
     } catch (error) {
       handleError(error as string)
       setLoading(false)
-      return false
+      return null
     }
   }
 

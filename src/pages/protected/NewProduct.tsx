@@ -9,12 +9,20 @@ import InverseButton from "../../components/ui/InverseButton"
 import Media from "../../section/newProduct/Media"
 import useToastNotification from "../../hooks/useToastNotification"
 import Price from "../../section/newProduct/Price"
-import { IDeliveryOption, ISize, ProductMeta } from "../../types/product"
+import {
+  IDeliveryOption,
+  IProduct,
+  ISize,
+  ProductMeta,
+} from "../../types/product"
 import useProducts from "../../hooks/useProducts"
 import { currency, region } from "../../utils/common"
 import MessageBox from "../../components/MessageBox"
 import Description from "../../section/newProduct/Description"
 import Features from "../../section/newProduct/Features"
+import Modal from "../../components/ui/Modal"
+import { FaRegCheckCircle } from "react-icons/fa"
+import { Link } from "react-router-dom"
 
 const stepsItems = [
   {
@@ -74,12 +82,15 @@ const NewProduct = () => {
   }, [navigate, user?.accountNumber, user?.address])
 
   const { categories, fetchCategories } = useCategory()
-  const { createProduct, loading, error } = useProducts()
+  const { createProduct, error } = useProducts()
+  const [newProduct, setNewProduct] = useState<IProduct>()
 
   useEffect(() => {
     fetchCategories()
   }, [])
 
+  const [showModal, setShowModal] = useState(false)
+  const [createProductLoading, setCreateProductLoading] = useState(false)
   const [validationError, setValidationError] = useState({
     name: "",
     product: "",
@@ -242,10 +253,6 @@ const NewProduct = () => {
     if (step === 4 && validateDescription()) {
       jumpStep(step + 1)
     }
-
-    if (step === 5 && validateFeatures()) {
-      jumpStep(step + 1)
-    }
   }
 
   const validateDetails = () => {
@@ -331,11 +338,15 @@ const NewProduct = () => {
   }
 
   const handleCreate = async () => {
+    if (!validateFeatures()) return
+
     const images: string[] = []
     if (mediaInput.image1) images.push(mediaInput.image1)
     if (mediaInput.image2) images.push(mediaInput.image2)
     if (mediaInput.image3) images.push(mediaInput.image3)
     if (mediaInput.image4) images.push(mediaInput.image4)
+
+    setCreateProductLoading(true)
 
     const res = await createProduct({
       name: input.name,
@@ -365,11 +376,54 @@ const NewProduct = () => {
     })
 
     if (res) {
-      addNotification("Product created successfully")
-      navigate("/dashboard/productlist")
+      setNewProduct(res)
+      setShowModal(true)
     } else {
       addNotification(error)
     }
+
+    setCreateProductLoading(false)
+  }
+
+  const addAnother = () => {
+    setShowModal(false)
+    setNewProduct(undefined)
+    setStep(1)
+    setInput({
+      brand: "",
+      category: "",
+      color: [],
+      condition: "",
+      description: "",
+      image: "",
+      keyFeatures: "",
+      material: "",
+      name: "",
+      price: "",
+      product: "",
+      selectedSize: "",
+      specification: "",
+      subCategory: "",
+      tag: "",
+    })
+    setMediaInput({
+      image1: "",
+      image2: "",
+      image3: "",
+      image4: "",
+      luxury: false,
+      luxuryImage: "",
+      video: "",
+      vintage: false,
+    })
+    setPriceInput({ costPrice: "", discount: "", sellingPrice: "" })
+    setMeta({})
+    setDeliveryOption([{ name: "Pick up from Seller", value: 0 }])
+    setVideo("")
+    setSizes([])
+    setCountInStock(1)
+    setTags([])
+    setAddSize(true)
   }
 
   return (
@@ -514,14 +568,14 @@ const NewProduct = () => {
           {step > 1 && (
             <InverseButton
               text="Previous"
-              disabled={loading}
+              disabled={createProductLoading}
               onClick={() => jumpStep(step - 1)}
             />
           )}
           <Button
             text={step === stepsItems.length ? "Create" : "Next"}
-            disabled={loading}
-            isLoading={loading}
+            disabled={createProductLoading}
+            isLoading={createProductLoading}
             className="ml-auto"
             onClick={() =>
               step === stepsItems.length ? handleCreate() : next()
@@ -529,6 +583,43 @@ const NewProduct = () => {
           />
         </div>
       </div>
+
+      <Modal
+        isOpen={showModal}
+        dontShowClose
+        onClose={() => setShowModal(false)}
+        size="lg"
+      >
+        <div className="h-full items-center pt-4 md:px-8 md:py-6 rounded-lg flex flex-col gap-3">
+          <FaRegCheckCircle className="text-orange-color text-[90px] md:text-[120px]" />
+          <h1 className="text-3xl">Product Created</h1>
+          <div className="max-w-3xl text-justify">
+            Your product was created successfully
+          </div>
+          <div className="max-w-3xl flex gap-2.5 flex-wrap">
+            <button
+              className="flex items-center hover:bg-malon-color text-white-color bg-orange-color cursor-pointer px-2 py-[3px] rounded-[0.2rem] border-none"
+              onClick={addAnother}
+            >
+              Add another product
+            </button>
+            {newProduct && (
+              <Link
+                to={`/product/${newProduct._id}`}
+                className="flex items-center hover:bg-malon-color text-white-color bg-orange-color cursor-pointer px-2 py-[3px] rounded-[0.2rem] border-none"
+              >
+                View products
+              </Link>
+            )}
+            <Link
+              to="/dashboard/productlist"
+              className="flex items-center hover:bg-malon-color text-white-color bg-orange-color cursor-pointer px-2 py-[3px] rounded-[0.2rem] border-none"
+            >
+              View all products
+            </Link>
+          </div>
+        </div>
+      </Modal>
     </>
   )
 }
