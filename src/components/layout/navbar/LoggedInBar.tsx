@@ -125,7 +125,7 @@ const LoggedInBar = ({
               </li>
 
               <li className="relative whitespace-nowrap cursor-pointer px-[30px] py-[5px] hover:text-orange-color hover:dark:bg-dark-ev1 hover:bg-light-ev1">
-                <Link onClick={changeMenu} to="/cart?wishlist=true">
+                <Link onClick={changeMenu} to="/dashboard/wishlist">
                   Wishlist{" "}
                   <span className="text-orange-color">
                     ({user.wishlist?.length})

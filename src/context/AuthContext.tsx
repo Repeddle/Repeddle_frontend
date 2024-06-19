@@ -14,6 +14,8 @@ import {
   getSuggestUsernameService,
   unFollowUserService,
   followUserService,
+  addToWishlistService,
+  removeFromWishlistService,
 } from "../services/auth"
 import { IUser, UpdateUser } from "../types/user"
 import socket from "../socket"
@@ -52,6 +54,8 @@ export const AuthContext = createContext<{
   }) => Promise<string[]>
   unFollowUser: (userId: string) => Promise<string | null>
   followUser: (userId: string) => Promise<string | null>
+  addToWishlist: (productId: string) => Promise<string | null>
+  removeFromWishlist: (productId: string) => Promise<string | null>
 } | null>(null)
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
@@ -270,6 +274,36 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     }
   }
 
+  const addToWishlist = async (productId: string) => {
+    if (!user) return null
+    try {
+      setError("")
+      const result = await addToWishlistService(productId)
+      const newUser = { ...user, wishlist: result.wishlist }
+
+      setUser(newUser)
+      return result.message
+    } catch (error) {
+      handleError(error)
+      return null
+    }
+  }
+
+  const removeFromWishlist = async (productId: string) => {
+    if (!user) return null
+    try {
+      setError("")
+      const result = await removeFromWishlistService(productId)
+      const newUser = { ...user, wishlist: result.wishlist }
+
+      setUser(newUser)
+      return result.message
+    } catch (error) {
+      handleError(error)
+      return null
+    }
+  }
+
   const logout = () => {
     logoutUser()
     setUser(null)
@@ -314,6 +348,8 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         logout,
         deleteUser,
         getSuggestUsername,
+        addToWishlist,
+        removeFromWishlist,
       }}
     >
       {children}

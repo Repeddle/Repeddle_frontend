@@ -2,12 +2,12 @@ import { useEffect, useState } from "react"
 import { FaPlus, FaTrash } from "react-icons/fa"
 import moment from "moment"
 import { Link } from "react-router-dom"
-import useAuth from "../../hooks/useAuth"
-import useProducts from "../../hooks/useProducts"
-import MessageBox from "../../components/MessageBox"
-import { createSearchParam, currency } from "../../utils/common"
-import useToastNotification from "../../hooks/useToastNotification"
-import Table from "../../components/table/Table"
+import useAuth from "../../../hooks/useAuth"
+import useProducts from "../../../hooks/useProducts"
+import MessageBox from "../../../components/MessageBox"
+import { createSearchParam, currency } from "../../../utils/common"
+import useToastNotification from "../../../hooks/useToastNotification"
+import Table from "../../../components/table/Table"
 
 const headers = [
   { title: "ID", hide: true },

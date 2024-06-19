@@ -17,7 +17,7 @@ import useAuth from "../../hooks/useAuth"
 import Modal from "../../components/ui/Modal"
 import { banks, states } from "../../utils/constants"
 import { MouseEvent, useState } from "react"
-import { InputType } from "../../pages/protected/User"
+import { InputType } from "../../pages/protected/dashboard/User"
 
 type Props = {
   user: IUser

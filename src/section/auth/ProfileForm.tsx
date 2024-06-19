@@ -319,7 +319,7 @@ const ProfileForm = ({ token }: Props) => {
       </div>
 
       <Modal isOpen={showModal} onClose={() => null} dontShowClose size="lg">
-        <div className="bg-white h-full w-full pt-4 items-center px-8 py-6 rounded-lg flex flex-col gap-3">
+        <div className="h-full w-full pt-4 items-center px-8 py-6 rounded-lg flex flex-col gap-3">
           <div className="flex flex-col gap-4">
             <h2 className="text-3xl text-center">
               Account created successfully
@@ -331,7 +331,7 @@ const ProfileForm = ({ token }: Props) => {
             </p>
             <div className="flex justify-center mt-4">
               <button
-                className="bg-primary text-white px-4 py-2 rounded "
+                className="bg-orange-color text-white px-4 py-2 rounded "
                 onClick={handleContinue}
               >
                 Continue to Login

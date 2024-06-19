@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react"
-import WidgetLarge from "../../components/WidgetLarge"
+import WidgetLarge from "../../../components/WidgetLarge"
 import { FaPlus } from "react-icons/fa"
-import Modal from "../../components/ui/Modal"
-import Withdraw from "../../section/wallet/Withdraw"
-import AddFund from "../../section/wallet/AddFund"
-import useWallet from "../../hooks/useWallet"
-import useToastNotification from "../../hooks/useToastNotification"
-import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo"
-import useAuth from "../../hooks/useAuth"
-import useTransactions from "../../hooks/useTransaction"
+import Modal from "../../../components/ui/Modal"
+import Withdraw from "../../../section/wallet/Withdraw"
+import AddFund from "../../../section/wallet/AddFund"
+import useWallet from "../../../hooks/useWallet"
+import useToastNotification from "../../../hooks/useToastNotification"
+import LoadingControlModal from "../../../components/ui/loadin/LoadingControlLogo"
+import useAuth from "../../../hooks/useAuth"
+import useTransactions from "../../../hooks/useTransaction"
 
 const Wallet = () => {
   const { error, fetchWallet, loading, wallet } = useWallet()

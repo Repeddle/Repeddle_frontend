@@ -1,20 +1,28 @@
-import { useEffect, useState } from "react";
-import useAuth from "../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
-import useCategory from "../../hooks/useCategory";
-import Details from "../../section/newProduct/Details";
-import { Helmet } from "react-helmet-async";
-import Button from "../../components/ui/Button";
-import InverseButton from "../../components/ui/InverseButton";
-import Media from "../../section/newProduct/Media";
-import useToastNotification from "../../hooks/useToastNotification";
-import Price from "../../section/newProduct/Price";
-import { IDeliveryOption, ISize, ProductMeta } from "../../types/product";
-import useProducts from "../../hooks/useProducts";
-import { currency, region } from "../../utils/common";
-import MessageBox from "../../components/MessageBox";
-import Description from "../../section/newProduct/Description";
-import Features from "../../section/newProduct/Features";
+import { useEffect, useState } from "react"
+import useAuth from "../../hooks/useAuth"
+import { useNavigate } from "react-router-dom"
+import useCategory from "../../hooks/useCategory"
+import Details from "../../section/newProduct/Details"
+import { Helmet } from "react-helmet-async"
+import Button from "../../components/ui/Button"
+import InverseButton from "../../components/ui/InverseButton"
+import Media from "../../section/newProduct/Media"
+import useToastNotification from "../../hooks/useToastNotification"
+import Price from "../../section/newProduct/Price"
+import {
+  IDeliveryOption,
+  IProduct,
+  ISize,
+  ProductMeta,
+} from "../../types/product"
+import useProducts from "../../hooks/useProducts"
+import { currency, region } from "../../utils/common"
+import MessageBox from "../../components/MessageBox"
+import Description from "../../section/newProduct/Description"
+import Features from "../../section/newProduct/Features"
+import Modal from "../../components/ui/Modal"
+import { FaRegCheckCircle } from "react-icons/fa"
+import { Link } from "react-router-dom"
 
 const stepsItems = [
   {
@@ -37,49 +45,52 @@ const stepsItems = [
     id: 5,
     name: "Features",
   },
-];
+]
 
 type InputData = {
-  name: string;
-  product: string;
-  category: string;
-  subCategory: string;
-  condition: string;
-  material: string;
-  description: string;
-  price: string;
-  color: string[];
-  keyFeatures: string;
-  image: string;
-  selectedSize: string;
-  specification: string;
-  brand: string;
-  tag: string;
-};
+  name: string
+  product: string
+  category: string
+  subCategory: string
+  condition: string
+  material: string
+  description: string
+  price: string
+  color: string[]
+  keyFeatures: string
+  image: string
+  selectedSize: string
+  specification: string
+  brand: string
+  tag: string
+}
 
 const NewProduct = () => {
-  const { user } = useAuth();
-  const { addNotification } = useToastNotification();
+  const { user } = useAuth()
+  const { addNotification } = useToastNotification()
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (!user?.accountNumber) {
-      return navigate("/verifyaccount");
+      return navigate("/verifyaccount")
     }
 
     if (!user?.address) {
-      return navigate("/verifyaddress");
+      return navigate("/verifyaddress")
     }
-  }, [navigate, user?.accountNumber, user?.address]);
+  }, [navigate, user?.accountNumber, user?.address])
 
-  const { categories, fetchCategories } = useCategory();
-  const { createProduct, loading, error } = useProducts();
+  const { categories, fetchCategories } = useCategory()
+  const { createProduct, error } = useProducts()
+  const [newProduct, setNewProduct] = useState<IProduct>()
 
   useEffect(() => {
-    fetchCategories();
-  }, []);
+    fetchCategories()
+  }, [])
 
+  const [showModal, setShowModal] = useState(false)
+  const [createProductLoading, setCreateProductLoading] = useState(false)
   const [validationError, setValidationError] = useState({
     name: "",
     product: "",
@@ -96,8 +107,8 @@ const NewProduct = () => {
     specification: "",
     keyFeatures: "",
     image: "",
-  });
-  const [meta, setMeta] = useState<ProductMeta>({});
+  })
+  const [meta, setMeta] = useState<ProductMeta>({})
 
   const [input, setInput] = useState<InputData>({
     name: "",
@@ -115,7 +126,7 @@ const NewProduct = () => {
     specification: "",
     keyFeatures: "",
     image: "",
-  });
+  })
 
   const [mediaInput, setMediaInput] = useState({
     image1: "",
@@ -126,49 +137,49 @@ const NewProduct = () => {
     luxury: false,
     luxuryImage: "",
     vintage: false,
-  });
+  })
 
   const [priceInput, setPriceInput] = useState({
     costPrice: "",
     sellingPrice: "",
     discount: "",
-  });
+  })
 
   const [priceValidation, setPriceValidation] = useState({
     costPrice: "",
     sellingPrice: "",
     discount: "",
-  });
+  })
   const [deliveryOption, setDeliveryOption] = useState<IDeliveryOption[]>([
     { name: "Pick up from Seller", value: 0 },
-  ]);
-  const [video, setVideo] = useState("");
-  const [sizes, setSizes] = useState<ISize[]>([]);
-  const [countInStock, setCountInStock] = useState(1);
-  const [tags, setTags] = useState<string[]>([]);
-  const [addSize, setAddSize] = useState(true);
+  ])
+  const [video, setVideo] = useState("")
+  const [sizes, setSizes] = useState<ISize[]>([])
+  const [countInStock, setCountInStock] = useState(1)
+  const [tags, setTags] = useState<string[]>([])
+  const [addSize, setAddSize] = useState(true)
 
   const handleTags = (tag: string) => {
     if (tag.includes(" ")) {
-      addNotification("Please remove unnecessary space");
-      return;
+      addNotification("Please remove unnecessary space")
+      return
     }
 
     if (tags.length > 5) {
-      addNotification("You can't add more five tags ");
+      addNotification("You can't add more five tags ")
 
-      return;
+      return
     }
     if (tag.length > 0) {
-      setTags([...tags, tag]);
-      setInput({ ...input, tag: "" });
+      setTags([...tags, tag])
+      setInput({ ...input, tag: "" })
     }
-  };
+  }
 
   const removeTags = (tag: string) => {
-    const newtags = tags.filter((data) => data != tag);
-    setTags(newtags);
-  };
+    const newtags = tags.filter((data) => data != tag)
+    setTags(newtags)
+  }
 
   const handleError = (
     errorMessage: string,
@@ -177,8 +188,8 @@ const NewProduct = () => {
     setValidationError((prevState) => ({
       ...prevState,
       [input]: errorMessage,
-    }));
-  };
+    }))
+  }
 
   const handlePriceError = (
     errorMessage: string,
@@ -187,155 +198,157 @@ const NewProduct = () => {
     setPriceValidation((prevState) => ({
       ...prevState,
       [input]: errorMessage,
-    }));
-  };
+    }))
+  }
 
-  const [showTopInfo, setShowTopInfo] = useState(false);
+  const [showTopInfo, setShowTopInfo] = useState(false)
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(1)
 
   const jumpStep = (val: number) => {
-    setStep(val);
-  };
+    setStep(val)
+  }
 
   const discount = () => {
     if (
       parseInt(priceInput.costPrice) < parseInt(priceInput?.sellingPrice ?? "0")
     )
-      return 0;
+      return 0
     return (
       ((parseInt(priceInput.costPrice) -
         parseInt(priceInput?.sellingPrice ?? "0")) /
         parseInt(priceInput.costPrice)) *
       100
-    );
-  };
+    )
+  }
 
   const costPrice = priceInput.sellingPrice
     ? parseInt(priceInput.sellingPrice) < parseInt(priceInput.costPrice)
       ? `${currency(region())}${priceInput.costPrice}`
       : null
-    : null;
+    : null
 
   const costPriceNumber = priceInput.sellingPrice
     ? parseInt(priceInput.sellingPrice) < parseInt(priceInput.costPrice)
       ? parseInt(priceInput.costPrice)
       : undefined
-    : undefined;
+    : undefined
 
   const sellingPrice = priceInput.sellingPrice
     ? parseInt(priceInput.sellingPrice)
-    : parseInt(priceInput.costPrice);
+    : parseInt(priceInput.costPrice)
 
   const next = () => {
     if (step === 1 && validateDetails()) {
-      jumpStep(step + 1);
+      jumpStep(step + 1)
     }
 
     if (step === 2 && validateMedia()) {
-      jumpStep(step + 1);
+      jumpStep(step + 1)
     }
 
     if (step === 3 && validatePrice()) {
-      jumpStep(step + 1);
+      jumpStep(step + 1)
     }
     if (step === 4 && validateDescription()) {
-      jumpStep(step + 1);
+      jumpStep(step + 1)
     }
-
-    if (step === 5 && validateFeatures()) {
-      jumpStep(step + 1);
-    }
-  };
+  }
 
   const validateDetails = () => {
     if (input.name.length === 0) {
-      handleError("Name is required", "name");
-      return false;
+      handleError("Name is required", "name")
+      return false
     }
 
     if (input.name.length < 3) {
-      handleError("Name must be at least 3 characters", "name");
-      return false;
+      handleError("Name must be at least 3 characters", "name")
+      return false
     }
 
     if (input.product === "") {
-      handleError("Main category is required", "product");
-      return false;
+      handleError("Main category is required", "product")
+      return false
     }
 
-    return true;
-  };
+    return true
+  }
 
   const validateMedia = () => {
     if (
       Object.values(mediaInput).every((val) => {
         if (typeof val === "string") {
-          return val === "";
+          return val === ""
         }
-        return true;
+        return true
       })
     ) {
-      addNotification("At least one image is required");
-      return false;
+      addNotification("At least one image is required")
+      return false
     }
 
-    return true;
-  };
+    return true
+  }
 
   const validatePrice = () => {
     if (sellingPrice < 1) {
-      handlePriceError("price must be greater than 1", "costPrice");
-      return false;
+      handlePriceError("price must be greater than 1", "costPrice")
+      return false
     }
 
-    return true;
-  };
+    return true
+  }
 
   const validateDescription = () => {
     if (!input.brand) {
-      handleError("Select brand", "brand");
-      return false;
+      handleError("Select brand", "brand")
+      return false
+    }
+
+    if (!input.description) {
+      handleError("Enter description", "description")
+      return false
     }
 
     if (addSize) {
       if (countInStock < 1) {
-        handleError("Enter count in stock", "selectedSize");
-        return false;
+        handleError("Enter count in stock", "selectedSize")
+        return false
       }
     } else {
       if (!sizes.length || sizes.some((obj) => !obj.quantity)) {
-        handleError(
-          "Enter a valid size and quantity available",
-          "selectedSize"
-        );
-        return false;
+        handleError("Enter a valid size and quantity available", "selectedSize")
+        return false
       }
     }
-    return true;
-  };
+    return true
+  }
   const validateFeatures = () => {
     if (!input.condition) {
-      handleError("Select condition", "condition");
-      return false;
+      handleError("Select condition", "condition")
+      return false
     }
 
     if (!input.color) {
-      handleError("Select color", "color");
-      return false;
+      handleError("Select color", "color")
+      return false
     }
 
-    return true;
-  };
+    return true
+  }
 
   const handleCreate = async () => {
-    const images: string[] = [];
-    if (mediaInput.image1) images.push(mediaInput.image1);
-    if (mediaInput.image2) images.push(mediaInput.image2);
-    if (mediaInput.image3) images.push(mediaInput.image3);
-    if (mediaInput.image4) images.push(mediaInput.image4);
+    if (!validateFeatures()) return
 
-    await createProduct({
+    const images: string[] = []
+    if (mediaInput.image1) images.push(mediaInput.image1)
+    if (mediaInput.image2) images.push(mediaInput.image2)
+    if (mediaInput.image3) images.push(mediaInput.image3)
+    if (mediaInput.image4) images.push(mediaInput.image4)
+
+    setCreateProductLoading(true)
+
+    const res = await createProduct({
       name: input.name,
       images,
       video,
@@ -360,8 +373,58 @@ const NewProduct = () => {
       luxuryImage: mediaInput.luxuryImage,
       // addSize,
       countInStock,
-    });
-  };
+    })
+
+    if (res) {
+      setNewProduct(res)
+      setShowModal(true)
+    } else {
+      addNotification(error)
+    }
+
+    setCreateProductLoading(false)
+  }
+
+  const addAnother = () => {
+    setShowModal(false)
+    setNewProduct(undefined)
+    setStep(1)
+    setInput({
+      brand: "",
+      category: "",
+      color: [],
+      condition: "",
+      description: "",
+      image: "",
+      keyFeatures: "",
+      material: "",
+      name: "",
+      price: "",
+      product: "",
+      selectedSize: "",
+      specification: "",
+      subCategory: "",
+      tag: "",
+    })
+    setMediaInput({
+      image1: "",
+      image2: "",
+      image3: "",
+      image4: "",
+      luxury: false,
+      luxuryImage: "",
+      video: "",
+      vintage: false,
+    })
+    setPriceInput({ costPrice: "", discount: "", sellingPrice: "" })
+    setMeta({})
+    setDeliveryOption([{ name: "Pick up from Seller", value: 0 }])
+    setVideo("")
+    setSizes([])
+    setCountInStock(1)
+    setTags([])
+    setAddSize(true)
+  }
 
   return (
     <>
@@ -505,14 +568,14 @@ const NewProduct = () => {
           {step > 1 && (
             <InverseButton
               text="Previous"
-              disabled={loading}
+              disabled={createProductLoading}
               onClick={() => jumpStep(step - 1)}
             />
           )}
           <Button
             text={step === stepsItems.length ? "Create" : "Next"}
-            // disabled={loading}
-            // isLoading={loading}
+            disabled={createProductLoading}
+            isLoading={createProductLoading}
             className="ml-auto"
             onClick={() =>
               step === stepsItems.length ? handleCreate() : next()
@@ -520,8 +583,45 @@ const NewProduct = () => {
           />
         </div>
       </div>
-    </>
-  );
-};
 
-export default NewProduct;
+      <Modal
+        isOpen={showModal}
+        dontShowClose
+        onClose={() => setShowModal(false)}
+        size="lg"
+      >
+        <div className="h-full items-center pt-4 md:px-8 md:py-6 rounded-lg flex flex-col gap-3">
+          <FaRegCheckCircle className="text-orange-color text-[90px] md:text-[120px]" />
+          <h1 className="text-3xl">Product Created</h1>
+          <div className="max-w-3xl text-justify">
+            Your product was created successfully
+          </div>
+          <div className="max-w-3xl flex gap-2.5 flex-wrap">
+            <button
+              className="flex items-center hover:bg-malon-color text-white-color bg-orange-color cursor-pointer px-2 py-[3px] rounded-[0.2rem] border-none"
+              onClick={addAnother}
+            >
+              Add another product
+            </button>
+            {newProduct && (
+              <Link
+                to={`/product/${newProduct._id}`}
+                className="flex items-center hover:bg-malon-color text-white-color bg-orange-color cursor-pointer px-2 py-[3px] rounded-[0.2rem] border-none"
+              >
+                View products
+              </Link>
+            )}
+            <Link
+              to="/dashboard/productlist"
+              className="flex items-center hover:bg-malon-color text-white-color bg-orange-color cursor-pointer px-2 py-[3px] rounded-[0.2rem] border-none"
+            >
+              View all products
+            </Link>
+          </div>
+        </div>
+      </Modal>
+    </>
+  )
+}
+
+export default NewProduct

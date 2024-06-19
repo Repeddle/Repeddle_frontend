@@ -121,7 +121,7 @@ const CropImage = ({ uploadHandler, setShowModel, currentImage }: Props) => {
           <LoadingBox />
         ) : (
           <div
-            className="text-white bg-orange-color hover:bg-malon-color capitalize mx-0 my-[5px] px-[5px] py-[3px] rounded-[0.2rem]"
+            className="text-white cursor-pointer bg-orange-color hover:bg-malon-color capitalize mx-0 my-[5px] px-[5px] py-[3px] rounded-[0.2rem]"
             onClick={showCroppedImage}
           >
             Done

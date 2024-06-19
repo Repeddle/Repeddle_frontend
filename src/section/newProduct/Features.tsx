@@ -1,53 +1,53 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import { colors } from "../../utils/constants";
-import { FaQuestionCircle } from "react-icons/fa";
-import Modal from "../../components/ui/Modal";
-import Condition from "../../pages/defaults/info/Condition";
-import MultiSelect from "../../components/ui/MultiSelect";
+import { Dispatch, SetStateAction, useState } from "react"
+import { colors } from "../../utils/constants"
+import { FaQuestionCircle } from "react-icons/fa"
+import Modal from "../../components/ui/Modal"
+import Condition from "../../pages/defaults/info/Condition"
+import MultiSelect from "../../components/ui/MultiSelect"
 
 type InputProps = {
-  keyFeatures: string;
-  color: string[];
-  condition: string;
-  material: string;
-};
+  keyFeatures: string
+  color: string[]
+  condition: string
+  material: string
+}
 
 type errorsProps = {
-  keyFeatures: string;
-  color: string;
-  condition: string;
-  material: string;
-};
+  keyFeatures: string
+  color: string
+  condition: string
+  material: string
+}
 
 type InputData = InputProps & {
-  selectedSize: string;
-  specification: string;
-  brand: string;
-  tag: string;
-  name: string;
-  product: string;
-  category: string;
-  subCategory: string;
-  description: string;
-  price: string;
-  image: string;
-};
+  selectedSize: string
+  specification: string
+  brand: string
+  tag: string
+  name: string
+  product: string
+  category: string
+  subCategory: string
+  description: string
+  price: string
+  image: string
+}
 
 type Props = {
-  input: InputProps;
-  validationError: errorsProps;
-  setInput: Dispatch<SetStateAction<InputData>>;
-};
+  input: InputProps
+  validationError: errorsProps
+  setInput: Dispatch<SetStateAction<InputData>>
+}
 
 const Features = ({ input, validationError, setInput }: Props) => {
-  const [showConditionModal, setShowConditionModal] = useState(false);
+  const [showConditionModal, setShowConditionModal] = useState(false)
 
   const handleOnChange = (
     text: string | string[],
     inputVal: keyof typeof input
   ) => {
-    setInput((prevState) => ({ ...prevState, [inputVal]: text }));
-  };
+    setInput((prevState) => ({ ...prevState, [inputVal]: text }))
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -66,7 +66,7 @@ const Features = ({ input, validationError, setInput }: Props) => {
                   lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
                 hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
           >
-            <FaQuestionCircle className="text-black ml-2.5" />
+            <FaQuestionCircle className="text-black ml-2.5 dark:text-white" />
           </div>
         </label>
         <div className="w-auto lg:w-[70%] text-sm leading-[1.2]">
@@ -93,7 +93,7 @@ const Features = ({ input, validationError, setInput }: Props) => {
                   lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
                 hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
           >
-            <FaQuestionCircle className="text-black ml-2.5" />
+            <FaQuestionCircle className="text-black ml-2.5 dark:text-white" />
           </div>
         </label>
 
@@ -149,7 +149,7 @@ const Features = ({ input, validationError, setInput }: Props) => {
                   lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
                 hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
           >
-            <FaQuestionCircle className="text-black ml-2.5" />
+            <FaQuestionCircle className="text-black ml-2.5 dark:text-white" />
           </div>{" "}
           <span
             className="underline text-[11px] font-normal cursor-pointer ml-2.5 hover:text-orange-color"
@@ -229,7 +229,7 @@ const Features = ({ input, validationError, setInput }: Props) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Features;
+export default Features

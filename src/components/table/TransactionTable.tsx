@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { ITransaction } from "../../types/transactions"
+import { ITransaction, TransactionPagination } from "../../types/transactions"
 import moment from "moment"
 import { currency, region } from "../../utils/common"
 import Table from "./Table"
@@ -9,6 +9,7 @@ type Props = {
   loading?: boolean
   error?: string
   onPageChange?: (val: number) => void
+  transactionPagination?: TransactionPagination
 }
 
 const headers = [
@@ -25,10 +26,14 @@ const TransactionTable = ({
   loading,
   error,
   onPageChange,
+  transactionPagination,
 }: Props) => {
   return (
     <Table
       headers={headers}
+      currentPage={transactionPagination?.currentPage}
+      totalCount={transactionPagination?.totalDocs}
+      totalPages={transactionPagination?.totalPages}
       error={error}
       itemName="transaction"
       onPageChange={onPageChange}

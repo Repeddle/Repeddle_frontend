@@ -1,16 +1,21 @@
 import { useEffect, useState } from "react"
 
-import TransactionTable from "../../components/table/TransactionTable"
-import useTransactions from "../../hooks/useTransaction"
-import useToastNotification from "../../hooks/useToastNotification"
-import { createSearchParam } from "../../utils/common"
+import TransactionTable from "../../../components/table/TransactionTable"
+import useTransactions from "../../../hooks/useTransaction"
+import useToastNotification from "../../../hooks/useToastNotification"
+import { createSearchParam } from "../../../utils/common"
 
 const TransactionListUser = () => {
   const [query, setQuery] = useState("")
   const [page, setPage] = useState(1)
 
-  const { error, fetchUserTransactions, loading, transactions } =
-    useTransactions()
+  const {
+    error,
+    fetchUserTransactions,
+    loading,
+    transactions,
+    transactionsPagination,
+  } = useTransactions()
   const { addNotification } = useToastNotification()
 
   useEffect(() => {
@@ -46,6 +51,7 @@ const TransactionListUser = () => {
         transactions={transactions}
         loading={loading}
         onPageChange={setPage}
+        transactionPagination={transactionsPagination}
       />
     </div>
   )

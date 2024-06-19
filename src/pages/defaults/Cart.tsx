@@ -19,7 +19,7 @@ import useToastNotification from "../../hooks/useToastNotification"
 
 function Cart() {
   const { cart, addToCart, removeFromCart, subtotal, total } = useCart()
-  const { user } = useAuth()
+  const { user, addToWishlist, error } = useAuth()
   const { addNotification } = useToastNotification()
 
   const navigate = useNavigate()
@@ -29,11 +29,36 @@ function Cart() {
   const [showModel, setShowModel] = useState(false)
   const [currentItem, setCurrentItem] = useState<CartItem | null>(null)
   const [remove, setRemove] = useState(false)
+  const [addToWish, setAddToWish] = useState(false)
 
   const scrollref = useRef(null)
 
-  const saveItem = (prod: IProduct) => {
-    console.log(prod)
+  const saveItem = async (product: IProduct) => {
+    if (!user) {
+      addNotification(
+        "Sign In/ Sign Up to add an item to wishlist",
+        undefined,
+        true
+      )
+      return
+    }
+
+    if (product.seller._id === user._id) {
+      addNotification("You can't add your product to wishlist", undefined, true)
+      return
+    }
+
+    setAddToWish(true)
+
+    const res = await addToWishlist(product._id)
+    if (res) {
+      addNotification(res)
+      removeFromCart(product._id)
+      setRemove(false)
+    } else
+      addNotification(error ?? "Failed to add to wishlist", undefined, true)
+
+    setAddToWish(false)
   }
 
   const checkoutHandler = () => {
@@ -120,10 +145,14 @@ function Cart() {
                 <AlertComponent
                   message="Are you sure you want to remove item from cart?"
                   onConfirm={() => {
-                    currentItem && removeFromCart(currentItem?._id)
-                    setRemove(false)
+                    if (currentItem && !addToWish) {
+                      removeFromCart(currentItem?._id)
+                      setRemove(false)
+                    }
                   }}
-                  onWishlist={() => currentItem && saveItem(currentItem)}
+                  onWishlist={() =>
+                    currentItem && !addToWish && saveItem(currentItem)
+                  }
                 />
               </Modal>
 

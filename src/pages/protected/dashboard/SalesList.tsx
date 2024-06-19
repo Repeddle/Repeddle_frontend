@@ -1,22 +1,22 @@
 import { Link } from "react-router-dom"
-import MessageBox from "../../components/MessageBox"
-import useOrder from "../../hooks/useOrder"
+import MessageBox from "../../../components/MessageBox"
+import useOrder from "../../../hooks/useOrder"
 import { useEffect } from "react"
-import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo"
 import moment from "moment"
+import LoadingControlModal from "../../../components/ui/loadin/LoadingControlLogo"
 
-const OrderList = () => {
-  const { fetchOrders, loading, error, orders } = useOrder()
+const SalesList = () => {
+  const { fetchSoldOrders, loading, error, orders } = useOrder()
 
   useEffect(() => {
-    fetchOrders()
+    fetchSoldOrders()
   }, [])
 
   return (
     <div className="flex-[4] relative flex flex-col">
       <div className="p-5 my-0 mx-5 min-h-[85vh] dark:bg-dark-ev1 bg-light-ev1">
         <h1 className="text-xl py-5 pl-0 pr-5 lg:text-[calc(1.375rem_+_1.5vw)]">
-          Purchase Product History
+          Sold Product History
         </h1>
         {loading && <LoadingControlModal />}
 
@@ -75,9 +75,7 @@ const OrderList = () => {
                   ))}
               </div>
 
-              {orders.length === 0 && (
-                <MessageBox>No Purchases made yet</MessageBox>
-              )}
+              {orders.length === 0 && <MessageBox>No orders yet</MessageBox>}
             </>
           ))}
       </div>
@@ -85,4 +83,4 @@ const OrderList = () => {
   )
 }
 
-export default OrderList
+export default SalesList
