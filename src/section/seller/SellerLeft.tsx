@@ -71,9 +71,9 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
     try {
       await navigator.share({
         title: "Repeddle",
-        // text: ` ${window.location.protocol}//${window.location.hostname}${
-        //   user.region === "NGN" ? "/ng/" : "/za/"
-        // }${user.username}`,
+        text: ` ${window.location.protocol}//${window.location.hostname}${
+          usernameData?.user.region === "NGN" ? "/ng/" : "/za/"
+        }${usernameData?.user.username}`,
         url: ` ${window.location.protocol}//${window.location.hostname}${
           usernameData?.user.region === "NGN" ? "/ng/" : "/za/"
         }${usernameData?.user.username}`,

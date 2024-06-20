@@ -35,7 +35,7 @@ const Product = () => {
 
   const navigate = useNavigate()
 
-  const { fetchProductBySlug, error, loading, likeProduct, unlikeProduct } =
+  const { fetchProductBySlug, error, likeProduct, unlikeProduct } =
     useProducts()
   const { addNotification } = useToastNotification()
 
@@ -52,18 +52,31 @@ const Product = () => {
   const [showModel, setShowModel] = useState(false)
   const [liking, setLiking] = useState(false)
   const [addToWish, setAddToWish] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [addLoading, setAddLoading] = useState(true)
   const [size, setSize] = useState("")
   const [selectSize, setSelectSize] = useState("")
   const [product, setProduct] = useState<IProduct>()
 
+  // update product TODO:
+
   useEffect(() => {
     const viewItem = async () => {
-      if (!slug) return addNotification("invalid slug")
+      setLoading(true)
+      if (!slug) {
+        setLoading(false)
+        return addNotification("invalid slug")
+      }
 
       const data = await fetchProductBySlug(slug)
-      if (!data) return
+      if (!data) {
+        setLoading(false)
+        return addNotification("Failed to get Product", undefined, true)
+      }
 
       setProduct(data)
+
+      setLoading(false)
 
       const factor = 0.9
 
@@ -110,7 +123,7 @@ const Product = () => {
   }, [slug])
 
   const following = useMemo(() => {
-    if (user && user.following.find((x) => x === product?.seller._id))
+    if (user && user?.following.find((x) => x === product?.seller._id))
       return "Following"
 
     return "Follow"
@@ -134,26 +147,27 @@ const Product = () => {
   }, [product?.costPrice, product?.sellingPrice])
 
   const addToCartHandler = async () => {
-    if (!product) return
+    setAddLoading(true)
+    if (!product) return setAddLoading(false)
 
     const existItem = cart.find((x) => x._id === product._id)
     const quantity = existItem ? existItem.quantity + 1 : 1
 
     if (!selectSize && product.sizes.length > 0) {
-      addNotification("Select Size")
-      return
+      addNotification("Select Size", undefined, true)
+      return setAddLoading(false)
     }
 
     if (user && product.seller._id === user._id) {
-      addNotification("You can't buy your product")
-      return
+      addNotification("You can't buy your product", undefined, true)
+      return setAddLoading(false)
     }
 
     const data = await fetchProductBySlug(product.slug)
 
     if (!data?.countInStock || data?.countInStock < quantity) {
-      addNotification("Sorry. Product is out of stock")
-      return
+      addNotification("Sorry. Product is out of stock", undefined, true)
+      return setAddLoading(false)
     }
 
     addToCart({
@@ -166,14 +180,12 @@ const Product = () => {
     addNotification("Item added to Cart", "View Cart", false, () =>
       navigate("/cart")
     )
+
+    setAddLoading(false)
   }
 
   const saved = useMemo(() => {
-    return !!(
-      user &&
-      user.wishlist &&
-      user.wishlist.find((x) => x._id === product!._id)
-    )
+    return !!(user?.wishlist && user.wishlist.find((x) => x === product?._id))
   }, [product, user])
 
   const saveItem = async () => {
@@ -257,12 +269,20 @@ const Product = () => {
 
     if (liked) {
       const res = await unlikeProduct(product._id)
-      if (res) addNotification(res)
-      else addNotification(error, undefined, true)
+      if (res) {
+        const newProd = product
+        newProd.likes = res.likes
+        setProduct(newProd)
+        addNotification(res.message)
+      } else addNotification(error, undefined, true)
     } else {
       const res = await likeProduct(product._id)
-      if (res) addNotification(res)
-      else addNotification(error, undefined, true)
+      if (res) {
+        const newProd = product
+        newProd.likes = res.likes
+        setProduct(newProd)
+        addNotification(res.message)
+      } else addNotification(error, undefined, true)
     }
 
     setLiking(false)
@@ -592,6 +612,7 @@ const Product = () => {
                     </button>
                   ) : product.countInStock > 0 ? (
                     <button
+                      disabled={addLoading}
                       onClick={addToCartHandler}
                       className="w-full text-white-color text-lg font-bold uppercase mb-5 p-2.5 rounded-[5px] border-0 bg-orange-color hover:bg-malon-color"
                     >
@@ -641,7 +662,7 @@ const Product = () => {
 
           <RecentlyViewedProducts />
 
-          <ProductTab product={product} />
+          <ProductTab setProduct={setProduct} product={product} />
         </div>
       )}
     </>

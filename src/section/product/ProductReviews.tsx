@@ -13,9 +13,10 @@ import useProducts from "../../hooks/useProducts"
 
 type Props = {
   product: IProduct
+  setProduct: (val: IProduct) => void
 }
 
-const ProductReviews = ({ product }: Props) => {
+const ProductReviews = ({ product, setProduct }: Props) => {
   const { user } = useAuth()
   const { addNotification } = useToastNotification()
   const { createProductReview, error } = useProducts()
@@ -54,7 +55,9 @@ const ProductReviews = ({ product }: Props) => {
     })
 
     if (res) {
-      addNotification(res)
+      const newProd = product
+      newProd.reviews = [...newProd.reviews, res.review]
+      setProduct(newProd)
     } else {
       addNotification(error)
     }
@@ -68,7 +71,7 @@ const ProductReviews = ({ product }: Props) => {
 
   return (
     <>
-      <div className="my-3 mx-4">
+      <div className="my-3 mx-4 bs-container">
         <div className="my-3" ref={reviewRef}>
           {product.reviews.length === 0 && (
             <MessageBox>There is no reviews</MessageBox>
@@ -136,17 +139,21 @@ const ProductReviews = ({ product }: Props) => {
                   onChange={(e) => setComment(e.target.value)}
                 />
               </div>
-              <div className="flex">
-                <div>Like</div>
-                <FaThumbsUp
-                  onClick={() => setLike(true)}
-                  color={like ? "#eb9f40" : "grey"}
-                />{" "}
-                <div>Dislike</div>
-                <FaThumbsDown
-                  onClick={() => setLike(false)}
-                  color={!like ? "#eb9f40" : "grey"}
-                />
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1">
+                  <div>Like</div>
+                  <FaThumbsUp
+                    onClick={() => setLike(true)}
+                    color={like ? "#eb9f40" : "grey"}
+                  />{" "}
+                </div>
+                <div className="flex items-center gap-1">
+                  <div>Dislike</div>
+                  <FaThumbsDown
+                    onClick={() => setLike(false)}
+                    color={like === false ? "#eb9f40" : "grey"}
+                  />
+                </div>
               </div>
               <div className="my-3">
                 <Button

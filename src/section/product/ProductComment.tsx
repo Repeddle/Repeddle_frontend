@@ -13,9 +13,10 @@ type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   comments?: IComment[]
   product: IProduct
+  setProduct: (val: IProduct) => void
 }
 
-const ProductComment = ({ comments, product }: Props) => {
+const ProductComment = ({ comments, product, setProduct }: Props) => {
   const { user } = useAuth()
   const { commentProduct, error } = useProducts()
   const { addNotification } = useToastNotification()
@@ -36,8 +37,12 @@ const ProductComment = ({ comments, product }: Props) => {
 
     const res = await commentProduct(product._id, comment)
 
-    if (res) addNotification("Comment added to product")
-    else addNotification(error)
+    if (res) {
+      const newProd = product
+      newProd.comments = [...(newProd.comments ?? []), res.comment]
+      setProduct(newProd)
+      addNotification("Comment added to product")
+    } else addNotification(error)
 
     setLoadingCreateReview(false)
   }
@@ -53,7 +58,7 @@ const ProductComment = ({ comments, product }: Props) => {
 
   return (
     <>
-      <div className="my-3 mx-4">
+      <div className="my-3 mx-4 bs-container">
         <div className="my-3" ref={reviewRef}>
           {(!comment || comments?.length === 0) && (
             <MessageBox>There is no comments</MessageBox>
@@ -62,7 +67,12 @@ const ProductComment = ({ comments, product }: Props) => {
         {comments &&
           comments.length > 0 &&
           comments.map((comment) => (
-            <Comment key={comment._id} product={product} comment={comment} />
+            <Comment
+              key={comment._id}
+              product={product}
+              comment={comment}
+              setProduct={setProduct}
+            />
           ))}
         <div className="my-3">
           {user ? (
@@ -90,13 +100,15 @@ const ProductComment = ({ comments, product }: Props) => {
                 />
               </div>
               <div className="my-4">
-                <button
-                  className="text-white-color text-[0.8rem] mx-[5px] my-0 border-0"
-                  disabled={loadingCreateReview}
-                  type="submit"
-                >
-                  Submit
-                </button>
+                {!loadingCreateReview && (
+                  <button
+                    className="text-white-color bg-orange-color px-3.5 py-2 rounded-[0.2rem] text-[0.8rem] mx-[5px] my-0 border-0"
+                    disabled={loadingCreateReview}
+                    type="submit"
+                  >
+                    Submit
+                  </button>
+                )}
                 {loadingCreateReview && <LoadingBox></LoadingBox>}
               </div>
             </form>

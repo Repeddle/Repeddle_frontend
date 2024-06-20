@@ -16,8 +16,9 @@ import {
   followUserService,
   addToWishlistService,
   removeFromWishlistService,
+  getWishlistService,
 } from "../services/auth"
-import { IUser, UpdateUser } from "../types/user"
+import { IUser, UpdateUser, Wishlist } from "../types/user"
 import socket from "../socket"
 
 interface Props {
@@ -56,6 +57,7 @@ export const AuthContext = createContext<{
   followUser: (userId: string) => Promise<string | null>
   addToWishlist: (productId: string) => Promise<string | null>
   removeFromWishlist: (productId: string) => Promise<string | null>
+  getWishlist: () => Promise<Wishlist[] | null>
 } | null>(null)
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
@@ -304,6 +306,18 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     }
   }
 
+  const getWishlist = async () => {
+    try {
+      setError("")
+      const result = await getWishlistService()
+
+      return result
+    } catch (error) {
+      handleError(error)
+      return null
+    }
+  }
+
   const logout = () => {
     logoutUser()
     setUser(null)
@@ -350,6 +364,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         getSuggestUsername,
         addToWishlist,
         removeFromWishlist,
+        getWishlist,
       }}
     >
       {children}

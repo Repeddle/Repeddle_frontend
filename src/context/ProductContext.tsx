@@ -1,7 +1,10 @@
 import { createContext, PropsWithChildren, useState } from "react"
 import {
+  IComment,
+  ICommentReply,
   ICreateProduct,
   IProduct,
+  IReview,
   ProductWithPagination,
 } from "../types/product"
 import useAuth from "../hooks/useAuth"
@@ -35,29 +38,58 @@ type ContextType = {
   createProduct: (product: ICreateProduct) => Promise<IProduct | null>
   updateProduct: (id: string, product: ICreateProduct) => Promise<boolean>
   deleteProduct: (id: string) => Promise<{ message?: string }>
-  likeProduct: (id: string) => Promise<string | null>
-  unlikeProduct: (id: string) => Promise<string | null>
-  commentProduct: (id: string, comment: string) => Promise<boolean>
-  likeProductComment: (id: string, commentId: string) => Promise<string | null>
+  likeProduct: (id: string) => Promise<{
+    message: string
+    likes: string[]
+  } | null>
+  unlikeProduct: (id: string) => Promise<{
+    message: string
+    likes: string[]
+  } | null>
+  commentProduct: (
+    id: string,
+    comment: string
+  ) => Promise<{
+    comment: IComment
+  } | null>
+  likeProductComment: (
+    id: string,
+    commentId: string
+  ) => Promise<{
+    message: string
+    comment: IComment
+  } | null>
   unlikeProductComment: (
     id: string,
     commentId: string
-  ) => Promise<string | null>
+  ) => Promise<{
+    message: string
+    comment: IComment
+  } | null>
   replyProductComment: (
     id: string,
     commentId: string,
     comment: string
-  ) => Promise<string | null>
+  ) => Promise<{
+    message: string
+    comment: IComment
+  } | null>
   likeProductCommentReply: (
     id: string,
     commentId: string,
     replyId: string
-  ) => Promise<string | null>
+  ) => Promise<{
+    message: string
+    reply: ICommentReply
+  } | null>
   unlikeProductCommentReply: (
     id: string,
     commentId: string,
     replyId: string
-  ) => Promise<string | null>
+  ) => Promise<{
+    message: string
+    reply: ICommentReply
+  } | null>
   createProductReview: (
     id: string,
     review: {
@@ -65,7 +97,10 @@ type ContextType = {
       rating: number
       like: boolean
     }
-  ) => Promise<string | null>
+  ) => Promise<{
+    message: string
+    review: IReview
+  } | null>
 }
 
 // Create product context
@@ -242,7 +277,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         return newProd
       })
       // setLoading(false)
-      return result.message
+      return result
     } catch (error) {
       handleError(error as string)
       // setLoading(false)
@@ -265,7 +300,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         return newProd
       })
       // setLoading(false)
-      return result.message
+      return result
     } catch (error) {
       handleError(error as string)
       // setLoading(false)
@@ -290,11 +325,11 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         return newProd
       })
       // setLoading(false)
-      return true
+      return result
     } catch (error) {
       handleError(error as string)
       // setLoading(false)
-      return false
+      return null
     }
   }
 
@@ -315,7 +350,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         return newProd
       })
       // setLoading(false)
-      return result.message
+      return result
     } catch (error) {
       handleError(error as string)
       // setLoading(false)
@@ -340,7 +375,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         return newProd
       })
       // setLoading(false)
-      return result.message
+      return result
     } catch (error) {
       handleError(error as string)
       // setLoading(false)
@@ -369,7 +404,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         return newProd
       })
       // setLoading(false)
-      return result.message
+      return result
     } catch (error) {
       handleError(error as string)
       // setLoading(false)
@@ -413,7 +448,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         return newProd
       })
       // setLoading(false)
-      return result.message
+      return result
     } catch (error) {
       handleError(error as string)
       // setLoading(false)
@@ -457,7 +492,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         return newProd
       })
       // setLoading(false)
-      return result.message
+      return result
     } catch (error) {
       handleError(error as string)
       // setLoading(false)
@@ -489,7 +524,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         return newProd
       })
       // setLoading(false)
-      return result.message
+      return result
     } catch (error) {
       handleError(error as string)
       // setLoading(false)

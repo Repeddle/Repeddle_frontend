@@ -55,11 +55,11 @@ const ProductItem = ({ product }: Props) => {
 
     if (liked) {
       const res = await unlikeProduct(product._id)
-      if (res) addNotification(res)
+      if (res) addNotification(res.message)
       else addNotification(error, undefined, true)
     } else {
       const res = await likeProduct(product._id)
-      if (res) addNotification(res)
+      if (res) addNotification(res.message)
       else addNotification(error, undefined, true)
     }
 

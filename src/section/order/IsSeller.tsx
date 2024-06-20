@@ -1,5 +1,5 @@
 import moment from "moment"
-import { OrderItem } from "../../types/order"
+import { DeliverStatus, OrderItem } from "../../types/order"
 import LoadingBox from "../../components/LoadingBox"
 import useAuth from "../../hooks/useAuth"
 import { Link } from "react-router-dom"
@@ -7,6 +7,7 @@ import { FaCheck } from "react-icons/fa"
 import { useState } from "react"
 import { IUser } from "../../types/user"
 import { currency, daydiff, deliveryNumber, region } from "../../utils/common"
+import DeliveryStatus from "../../components/DeliveryStatus"
 
 type Props = {
   orderItem: OrderItem
@@ -59,9 +60,14 @@ const IsSeller = ({
         </div>
         <div>
           <div className="flex text-center">
-            {/* {displayDeliveryStatus(
-              orderItem.onHold ? "Hold" : orderItem.deliveryStatus
-            )} */}
+            <DeliveryStatus
+              status={
+                orderItem.onHold
+                  ? "Hold"
+                  : (orderItem.deliveryTracking.currentStatus
+                      .status as DeliverStatus)
+              }
+            />
             <div
               className="text-malon-color cursor-pointer text-center ml-[15px]"
               onClick={() => {

@@ -80,7 +80,7 @@ const MobileProfile = () => {
       <div className="p-2.5 uppercase bg-light-ev2 dark:bg-dark-ev2">
         Dashboard
       </div>{" "}
-      <Link to={user ? `/seller/${user?._id}` : "/"}>
+      <Link to={user ? `/seller/${user?.username}` : "/"}>
         <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
           <FaUser className="mr-2.5" />
           My Profile

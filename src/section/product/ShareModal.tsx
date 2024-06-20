@@ -31,7 +31,19 @@ const ShareModal = ({ product, url: shareUrl }: Props) => {
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen)
   }
-  const handleShare2 = () => {}
+  const handleShare2 = async () => {
+    try {
+      await navigator.share({
+        title: "Repeddle",
+        text: "See what I found on Africa’s leading social marketplace for secondhand Pre-loved fashion & items",
+        url: shareUrl,
+      })
+      console.log("Shared successfully")
+      handleShare()
+    } catch (error) {
+      console.error("Error sharing:", error)
+    }
+  }
 
   const handleShare = () => {}
 

@@ -6,7 +6,7 @@ type Props = {
 
 const DeliveryHistory = ({ status }: Props) => {
   return (
-    <div className="flex w-2/5 pb-[30px]">
+    <div className="flex pb-[30px]">
       <div className="flex flex-col lg:flex-row items-center">
         {status < 6 ? (
           <>

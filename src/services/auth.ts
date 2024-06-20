@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IUser, UpdateUser } from "../types/user"
+import { IUser, UpdateUser, Wishlist } from "../types/user"
 import { getBackendErrorMessage } from "../utils/error"
 import api from "./api"
 
@@ -363,3 +363,27 @@ export async function removeFromWishlistService(productId: string) {
 }
 
 // You can add more authentication-related functions here, such as checking the user's authentication status, resetting passwords, etc.
+
+export async function getWishlistService() {
+  try {
+    const data: { wishlist: Wishlist[]; status: boolean } = await api.get(
+      `/users/users/wishlist`
+    )
+
+    if (!data.status) {
+      // Handle all users wishlist error, e.g., display an error message to the user
+      throw new Error(
+        "Get all wishlist failed: " + getBackendErrorMessage(data)
+      )
+    }
+
+    return data.wishlist
+  } catch (error) {
+    // Handle network errors or other exceptions
+    // You can log the error or perform other error-handling actions
+    console.error("Get user wishlist error:", getBackendErrorMessage(error))
+
+    // Re-throw the error to propagate it up the call stack if needed
+    throw getBackendErrorMessage(error)
+  }
+}

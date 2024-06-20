@@ -87,7 +87,7 @@ const Order = () => {
             Invoice
           </div>
           <div className="flex justify-between">
-            <h1 className="lg:mb-0 lg:px-[30px] lg:py-[15px] text-xl mt-[15px] p-2.5">
+            <h1 className="lg:mb-0 lg:py-[15px] p-2.5 text-[calc(1.375rem_+_1.5vw)] font-medium leading-tight">
               Order Details
             </h1>
             <div
@@ -115,7 +115,11 @@ const Order = () => {
                 Items in your order
               </div>
 
-              <Modal isOpen={showReturn} onClose={() => setShowReturn(false)}>
+              <Modal
+                isOpen={showReturn}
+                onClose={() => setShowReturn(false)}
+                size="lg"
+              >
                 {orderId && (
                   <Return
                     // deliverOrderHandler={deliverOrderHandler}
@@ -160,8 +164,9 @@ const Order = () => {
             <Modal
               isOpen={showDeliveryHistory}
               onClose={() => setShowDeliveryHistory(false)}
+              size="lg"
             >
-              <div className="flex items-center justify-center h-full">
+              <div className="flex items-center justify-center h-full py-12">
                 <DeliveryHistory status={currentDeliveryHistory} />
               </div>
             </Modal>
