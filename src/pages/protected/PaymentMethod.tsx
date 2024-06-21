@@ -28,7 +28,7 @@ const PaymentMethod = () => {
       </h1>
       <form onSubmit={submitHandler}>
         <div className="mb-4">
-          <div className="block min-h-[1.5rem] mb-0.5 pl-[1.5em]">
+          <div className="flex items-center gap-2.5 min-h-[1.5rem] mb-0.5 pl-[1.5em]">
             <input
               type="radio"
               id="card"
@@ -41,7 +41,7 @@ const PaymentMethod = () => {
         </div>
 
         <div className="mb-4">
-          <div className="block min-h-[1.5rem] mb-0.5 pl-[1.5em]">
+          <div className="flex items-center gap-2.5 min-h-[1.5rem] mb-4 pl-[1.5em]">
             <input
               disabled={balance === 0 || balance <= total}
               type="radio"
@@ -55,9 +55,14 @@ const PaymentMethod = () => {
             </label>
           </div>
           {balance <= total && (
-            <div className="text-[red] text-[13px]">
+            <div className="text-[red] text-[13px] pl-[2em]">
               Insufficient balance{" "}
-              <Link to="/dashboard/wallet">Fund Wallet Now</Link>
+              <Link
+                to="/dashboard/wallet"
+                className="text-orange-color hover:text-malon-color"
+              >
+                Fund Wallet Now
+              </Link>
             </div>
           )}
         </div>

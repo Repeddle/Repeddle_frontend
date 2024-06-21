@@ -48,7 +48,7 @@ const OrderPreview = () => {
       <Helmet>
         <title>Order Preview</title>
       </Helmet>
-      <h1 className="my-4">Order Preview</h1>
+      <h1 className="my-4">Order Review</h1>
       <div className="flex gap-5 flex-col lg:flex-row">
         <div className="flex-[8]">
           <div className="my-5 mx-0 bg-light-ev2 dark:bg-dark-ev2">

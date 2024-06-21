@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import useAuth from "../../../hooks/useAuth"
 import Table from "../../../components/table/Table"
 import { currency, region } from "../../../utils/common"
@@ -9,6 +9,9 @@ import useToastNotification from "../../../hooks/useToastNotification"
 import { useNavigate } from "react-router-dom"
 import Modal from "../../../components/ui/Modal"
 import SizeChart from "../../../section/product/SizeChart"
+import { Wishlist as WishlistType } from "../../../types/user"
+import { Link } from "react-router-dom"
+import { FaCartPlus, FaTrash } from "react-icons/fa"
 
 const headers = [
   { title: "ID", hide: true },
@@ -18,7 +21,7 @@ const headers = [
 ]
 
 const Wishlist = () => {
-  const { removeFromWishlist, user, error } = useAuth()
+  const { removeFromWishlist, user, error, getWishlist } = useAuth()
   const { addToCart, cart } = useCart()
   const { fetchProductBySlug } = useProducts()
   const { addNotification } = useToastNotification()
@@ -30,8 +33,23 @@ const Wishlist = () => {
   const [removeFromWish, setRemoveFromWish] = useState(false)
   const [showRemove, setShowRemove] = useState(false)
   const [showSize, setShowSize] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [refresh, setRefresh] = useState(false)
+  const [wishlist, setWishlist] = useState<WishlistType[]>([])
   const [selectSize, setSelectSize] = useState<string>()
   const [size, setSize] = useState("")
+
+  useEffect(() => {
+    const getList = async () => {
+      setLoading(true)
+      const res = await getWishlist()
+      if (res) setWishlist(res)
+      else addNotification(error ?? "An error occurred")
+      setLoading(false)
+    }
+
+    getList()
+  }, [refresh])
 
   const openRemove = (item: IProduct) => {
     setRemoveItem(item)
@@ -100,8 +118,12 @@ const Wishlist = () => {
     setRemoveFromWish(true)
 
     const res = await removeFromWishlist(removeItem._id)
-    if (res) addNotification(res)
-    else addNotification(error ?? "Failed to add to wishlist", undefined, true)
+    if (res) {
+      setRefresh(true)
+      addNotification(res)
+      closeRemove()
+    } else
+      addNotification(error ?? "Failed to add to wishlist", undefined, true)
 
     setRemoveFromWish(false)
   }
@@ -129,28 +151,39 @@ const Wishlist = () => {
       <Table
         headers={headers}
         itemName="product"
-        loading={removeFromWish}
-        body={(user?.wishlist ?? []).map((wish) => ({
+        loading={loading || removeFromWish}
+        body={(wishlist ?? []).map((wish) => ({
           keys: {
             ID: wish._id,
-            Product: wish.name,
+            Product: (
+              <div className="flex flex-1 gap-2.5 items-center">
+                <img
+                  className="w-8 h-8 object-cover rounded-[50%]"
+                  src={wish.images[0]}
+                  alt={wish.name}
+                />
+                <Link
+                  to={`/product/${wish.slug}`}
+                  className="flex-1 whitespace-nowrap overflow-hidden text-ellipsis hover:underline"
+                >
+                  {wish.name}
+                </Link>
+              </div>
+            ),
             Stock: wish.countInStock,
             Price: currency(region()) + " " + wish.sellingPrice,
           },
           action: (
-            <div className="flex gap-2.5 items-center">
-              <button
+            <div className="flex gap-6 items-center">
+              <FaCartPlus
                 onClick={() => addToCartHandler(wish)}
-                className="text-white bg-orange-color cursor-pointer mr-2.5 px-3 py-[5px] rounded-[0.2rem] border-none"
-              >
-                Add To Cart
-              </button>
-              <button
+                className="text-orange-color cursor-pointer text-xl"
+              />
+
+              <FaTrash
                 onClick={() => openRemove(wish)}
-                className="text-white bg-orange-color cursor-pointer mr-2.5 px-3 py-[5px] rounded-[0.2rem] border-none"
-              >
-                Remove
-              </button>
+                className="text-malon-color cursor-pointer text-xl"
+              />
             </div>
           ),
         }))}
@@ -167,7 +200,7 @@ const Wishlist = () => {
               onClick={closeRemove}
               disabled={removeFromWish}
             >
-              <span className="text-malon-color text-lg">No</span>
+              No
             </button>
             <button
               onClick={removeWishlistItem}

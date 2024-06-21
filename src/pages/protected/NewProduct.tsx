@@ -21,7 +21,7 @@ import MessageBox from "../../components/MessageBox"
 import Description from "../../section/newProduct/Description"
 import Features from "../../section/newProduct/Features"
 import Modal from "../../components/ui/Modal"
-import { FaRegCheckCircle } from "react-icons/fa"
+import { FaArrowRight, FaRegCheckCircle } from "react-icons/fa"
 import { Link } from "react-router-dom"
 
 const stepsItems = [
@@ -593,30 +593,33 @@ const NewProduct = () => {
         <div className="h-full items-center pt-4 md:px-8 md:py-6 rounded-lg flex flex-col gap-3">
           <FaRegCheckCircle className="text-orange-color text-[90px] md:text-[120px]" />
           <h1 className="text-3xl">Product Created</h1>
-          <div className="max-w-3xl text-justify">
-            Your product was created successfully
+          <div className="max-w-3xl text-justify mb-1">
+            Congratulations, Your product was created successfully
           </div>
           <div className="max-w-3xl flex gap-2.5 flex-wrap">
             <button
-              className="flex items-center hover:bg-malon-color text-white-color bg-orange-color cursor-pointer px-2 py-[3px] rounded-[0.2rem] border-none"
+              className="flex items-center justify-center w-32 capitalize text-center text-white-color bg-malon-color cursor-pointer px-2 py-[3px] rounded-[0.2rem] border-none"
               onClick={addAnother}
             >
-              Add another product
+              Add product
             </button>
             {newProduct && (
               <Link
-                to={`/product/${newProduct._id}`}
-                className="flex items-center hover:bg-malon-color text-white-color bg-orange-color cursor-pointer px-2 py-[3px] rounded-[0.2rem] border-none"
+                to={`/product/${newProduct?.slug}`}
+                className="flex w-32 capitalize justify-center items-center text-center text-white-color bg-orange-color cursor-pointer px-2 py-[3px] rounded-[0.2rem] border-none"
               >
-                View products
+                View product
               </Link>
             )}
+          </div>
+          <div className="flex items-center text-black dark:text-white hover:text-orange-color">
             <Link
               to="/dashboard/productlist"
-              className="flex items-center hover:bg-malon-color text-white-color bg-orange-color cursor-pointer px-2 py-[3px] rounded-[0.2rem] border-none"
+              className="flex items-center capitalize cursor-pointer px-2 py-[3px] rounded-[0.2rem] border-none"
             >
-              View all products
+              View My Products
             </Link>
+            <FaArrowRight />
           </div>
         </div>
       </Modal>

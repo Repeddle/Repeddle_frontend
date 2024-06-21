@@ -5,11 +5,12 @@ import ProductReviews from "./ProductReviews"
 
 type Props = {
   product: IProduct
+  setProduct: (val: IProduct) => void
 }
 
 type TabType = "comments" | "reviews"
 
-const ProductTab = ({ product }: Props) => {
+const ProductTab = ({ product, setProduct }: Props) => {
   const [tab, setTab] = useState<TabType>("comments")
 
   return (
@@ -38,10 +39,16 @@ const ProductTab = ({ product }: Props) => {
       </div>
       <div className="container">
         {tab === "comments" && (
-          <ProductComment comments={product.comments} product={product} />
+          <ProductComment
+            comments={product.comments}
+            product={product}
+            setProduct={setProduct}
+          />
         )}
 
-        {tab === "reviews" && <ProductReviews product={product} />}
+        {tab === "reviews" && (
+          <ProductReviews product={product} setProduct={setProduct} />
+        )}
       </div>
     </section>
   )

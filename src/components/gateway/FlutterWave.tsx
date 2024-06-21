@@ -17,7 +17,7 @@ const FlutterWave = ({
   onApprove,
   user: userData,
 }: Props) => {
-  const [baseKey] = useState("")
+  const [baseKey] = useState("FLWPUBK_TEST-6a1e30713a8c6962ecb7d6cfbda2df69-X")
 
   const { user } = useAuth()
 

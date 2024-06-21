@@ -28,7 +28,10 @@ const BarCategories = () => {
                 c.subCategories.map((s) => {
                   if (s.items.length === 0) {
                     return (
-                      <li className="whitespace-nowrap text-xs uppercase font-medium cursor-pointer pb-2.5 hover:text-orange-color hover:underline self-start">
+                      <li
+                        key={s._id}
+                        className="whitespace-nowrap text-xs uppercase font-medium cursor-pointer pb-2.5 hover:text-orange-color hover:underline self-start"
+                      >
                         <Link to={s.path || `/search?query=${s.name}`}>
                           {s.name}
                         </Link>
@@ -36,7 +39,7 @@ const BarCategories = () => {
                     )
                   } else {
                     return (
-                      <div className="mb-2.5 self-start">
+                      <div key={s._id} className="mb-2.5 self-start">
                         <li className="uppercase font-bold whitespace-nowrap text-xs self-start">
                           {s.name}
                         </li>

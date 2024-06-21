@@ -10,7 +10,7 @@ export default function Auth() {
   const redirectUrl = useMemo(() => searchParam.get("redirect"), [searchParam])
 
   if (user) {
-    return <Navigate to={redirectUrl ? redirectUrl : "/dashboard"} />
+    return <Navigate to={redirectUrl ? `/${redirectUrl}` : "/dashboard"} />
   }
 
   return (

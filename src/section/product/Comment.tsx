@@ -9,9 +9,10 @@ import useToastNotification from "../../hooks/useToastNotification"
 type Props = {
   comment: IComment
   product: IProduct
+  setProduct: (val: IProduct) => void
 }
 
-const Comment = ({ comment, product }: Props) => {
+const Comment = ({ comment, product, setProduct }: Props) => {
   const { user } = useAuth()
   const {
     likeProductComment,
@@ -45,13 +46,25 @@ const Comment = ({ comment, product }: Props) => {
     if (liked) {
       const res = await unlikeProductComment(product._id, comment._id)
 
-      if (res) addNotification(res)
-      else addNotification(error)
+      if (res) {
+        const newProd = product
+        newProd.comments = newProd.comments?.map((com) =>
+          com._id === res.comment._id ? res.comment : com
+        )
+        setProduct(newProd)
+        addNotification(res.message)
+      } else addNotification(error)
     } else {
       const res = await likeProductComment(product._id, comment._id)
 
-      if (res) addNotification(res)
-      else addNotification(error)
+      if (res) {
+        const newProd = product
+        newProd.comments = newProd.comments?.map((com) =>
+          com._id === res.comment._id ? res.comment : com
+        )
+        setProduct(newProd)
+        addNotification(res.message)
+      } else addNotification(error)
     }
 
     setLoading(false)
@@ -74,8 +87,21 @@ const Comment = ({ comment, product }: Props) => {
         reply._id
       )
 
-      if (res) addNotification(res)
-      else addNotification(error)
+      if (res) {
+        const newProd = product
+        newProd.comments = newProd.comments?.map((com) => {
+          if (com._id === comment._id) {
+            const newComment = com
+            com.replies = com.replies.map((rep) =>
+              rep._id === res.reply._id ? res.reply : rep
+            )
+            return newComment
+          }
+          return com
+        })
+        setProduct(newProd)
+        addNotification(res.message)
+      } else addNotification(error)
     } else {
       const res = await likeProductCommentReply(
         product._id,
@@ -83,8 +109,21 @@ const Comment = ({ comment, product }: Props) => {
         reply._id
       )
 
-      if (res) addNotification(res)
-      else addNotification(error)
+      if (res) {
+        const newProd = product
+        newProd.comments = newProd.comments?.map((com) => {
+          if (com._id === comment._id) {
+            const newComment = com
+            com.replies = com.replies.map((rep) =>
+              rep._id === res.reply._id ? res.reply : rep
+            )
+            return newComment
+          }
+          return com
+        })
+        setProduct(newProd)
+        addNotification(res.message)
+      } else addNotification(error)
     }
 
     setLoading(false)
@@ -103,7 +142,16 @@ const Comment = ({ comment, product }: Props) => {
     const res = await replyProductComment(product._id, comment._id, reply)
 
     if (res) {
-      addNotification(res)
+      const newProd = product
+      newProd.comments = newProd.comments?.map((com) => {
+        if (com._id === comment._id) {
+          const newComment = com
+          com.replies = [...com.replies, res.comment]
+          return newComment
+        }
+        return com
+      })
+      setProduct(newProd)
       setReply("")
     } else addNotification(error)
 

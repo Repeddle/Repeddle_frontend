@@ -24,7 +24,7 @@ export interface IUser {
   followers: string[]
   following: string[]
   likes: IProduct[]
-  wishlist: IProduct[]
+  wishlist: string[]
   sold: string[]
   buyers: string[]
   rating: number
@@ -54,6 +54,8 @@ export interface IUser {
   earnings?: number
   balance?: number
 }
+
+export type Wishlist = IProduct
 
 export interface UpdateFields {
   // TODO: ask about username

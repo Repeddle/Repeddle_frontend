@@ -15,7 +15,6 @@ import Sell from "./pages/defaults/Sell"
 import Product from "./pages/defaults/Product"
 import Seller from "./pages/defaults/Seller"
 import PaymentMethod from "./pages/protected/PaymentMethod"
-import OrderPreview from "./pages/protected/OrderPreview"
 import Order from "./pages/protected/Order"
 import PrivacyPolicy from "./pages/defaults/info/PrivacyPolicy"
 import Terms from "./pages/defaults/info/Terms"
@@ -72,6 +71,7 @@ import Overview from "./pages/protected/dashboard/overview"
 import AdminLayout from "./pages/admin"
 import Earning from "./pages/protected/earning"
 import Wishlist from "./pages/protected/dashboard/Wishlist"
+import PlaceOrder from "./pages/protected/PlaceOrder"
 
 const router = createBrowserRouter([
   {
@@ -127,7 +127,7 @@ const router = createBrowserRouter([
         element: <Protected />,
         children: [
           { path: "payment", element: <PaymentMethod /> },
-          { path: "placeorder", element: <OrderPreview /> },
+          { path: "placeorder", element: <PlaceOrder /> },
           { path: "messages", element: <Message /> },
           { path: "order/:id", element: <Order /> },
           { path: "/return/:id", element: <ReturnPage /> },

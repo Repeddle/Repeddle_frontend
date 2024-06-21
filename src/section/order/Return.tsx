@@ -47,12 +47,12 @@ const Return = ({ orderItems }: Props) => {
   return (
     <div className="p-[30px]">
       {tab === "items" && (
-        <div className="flex justify-center items-center">
-          <h4>Select a Product to Return</h4>
+        <div className="flex flex-col justify-center items-center">
+          <h4 className="leading-tight mb-2.5">Select a Product to Return</h4>
           {orderItems.map((orderItem) => (
             <>
               <div
-                className="w-auto lg:w-1/2 hover:bg-light-ev1 dark:hover:bg-dark-ev1 flex justify-between items-center cursor-pointer p-2.5 rounded-[0.2rem]"
+                className="w-auto lg:w-3/4 hover:bg-light-ev1 dark:hover:bg-dark-ev1 flex justify-between items-center cursor-pointer p-2.5 rounded-[0.2rem]"
                 key={orderItem._id}
                 onClick={() => {
                   setTab("option")
@@ -61,7 +61,7 @@ const Return = ({ orderItems }: Props) => {
               >
                 <div className="flex flex-[8] mb-2.5">
                   <img
-                    className="object-cover object-top w-[100px] h-[130px]"
+                    className="object-cover object-top w-[100px] bg-black h-[130px]"
                     src={orderItem.product.images[0]}
                     alt={orderItem.product.name}
                   />
@@ -76,7 +76,7 @@ const Return = ({ orderItems }: Props) => {
                     </div>
                   </div>
                 </div>
-                <FaChevronCircleRight className="text-2xl" />
+                <FaChevronCircleRight className="text-2xl mr-2.5" />
               </div>
               <hr />
             </>

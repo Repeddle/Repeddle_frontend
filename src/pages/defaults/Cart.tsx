@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// TODO: remove the above
-import { useRef, useState } from "react"
+import { useState } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import { Helmet } from "react-helmet-async"
 import useCart from "../../hooks/useCart"
@@ -18,7 +16,7 @@ import DeliveryOptionScreen from "../../components/DeliveryOptionScreen"
 import useToastNotification from "../../hooks/useToastNotification"
 
 function Cart() {
-  const { cart, addToCart, removeFromCart, subtotal, total } = useCart()
+  const { cart, removeFromCart, subtotal, total } = useCart()
   const { user, addToWishlist, error } = useAuth()
   const { addNotification } = useToastNotification()
 
@@ -31,7 +29,7 @@ function Cart() {
   const [remove, setRemove] = useState(false)
   const [addToWish, setAddToWish] = useState(false)
 
-  const scrollref = useRef(null)
+  // const scrollref = useRef(null)
 
   const saveItem = async (product: IProduct) => {
     if (!user) {
@@ -64,7 +62,7 @@ function Cart() {
   const checkoutHandler = () => {
     if (!user) {
       addNotification("Login to continue")
-      navigate("/signin?redirect=cart")
+      navigate("/auth/login?redirect=cart")
       return
     }
 
@@ -169,7 +167,7 @@ function Cart() {
                 </Modal>
               )}
             </div>
-            {user && (
+            {/* {user && (
               <div
                 className="mt-0 mb-5 mx-0 p-2.5 bg-light-ev1 dark:bg-dark-ev1 lg:p-5 rounded-[0.2rem]"
                 ref={scrollref}
@@ -222,7 +220,7 @@ function Cart() {
                   })
                 )}
               </div>
-            )}
+            )} */}
           </div>
           <div className="flex-1 rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1">
             <div className="p-4 flex-1">

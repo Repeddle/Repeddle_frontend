@@ -1,11 +1,12 @@
 import moment from "moment"
 import { Link } from "react-router-dom"
 import useAuth from "../../hooks/useAuth"
-import { OrderItem } from "../../types/order"
+import { DeliverStatus, OrderItem } from "../../types/order"
 import { useState } from "react"
 import { IUser } from "../../types/user"
 import { currency, daydiff, deliveryNumber, region } from "../../utils/common"
 import Modal from "../../components/ui/Modal"
+import DeliveryStatus from "../../components/DeliveryStatus"
 
 type Props = {
   orderItem: OrderItem
@@ -48,9 +49,15 @@ const IsUser = ({
       <div className="flex flex-col w-full lg:flex-row">
         <div>
           <div className="flex text-center">
-            {/* {displayDeliveryStatus(
-              orderItem.onHold ? "Hold" : orderItem.deliveryStatus
-            )} */}
+            <DeliveryStatus
+              status={
+                orderItem.onHold
+                  ? "Hold"
+                  : (orderItem.deliveryTracking.currentStatus
+                      .status as DeliverStatus)
+              }
+            />
+
             <div
               className="text-malon-color cursor-pointer text-center ml-[15px]"
               onClick={() => {
@@ -84,7 +91,11 @@ const IsUser = ({
               >
                 Comfirm you have recieved order
               </div>
-              <Modal isOpen={afterAction} onClose={() => setAfterAction(false)}>
+              <Modal
+                isOpen={afterAction}
+                onClose={() => setAfterAction(false)}
+                size="lg"
+              >
                 <div className="flex flex-col justify-center items-center h-full p-2.5">
                   <div className="flex">
                     <div
@@ -122,23 +133,24 @@ const IsUser = ({
           </label>
         )}
       </div>
-      {deliveryNumber(orderItem.deliveryTracking.currentStatus.status) > 3 && (
-        <div className="flex gap-1 items-center justify-center">
-          <div
-            className="cursor-pointer flex flex-col items-center"
-            onClick={() => setShowReturn(true)}
-          >
-            <b>Log a return</b>
-          </div>
-          {daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) >=
-            0 && (
-            <div className="text-[red]">
-              {daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3)}{" "}
-              days left
+      {deliveryNumber(orderItem.deliveryTracking.currentStatus.status) < 3 &&
+        daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) >= 0 && (
+          <div className="flex gap-1 items-center justify-center">
+            <div
+              className="cursor-pointer flex flex-col items-center"
+              onClick={() => setShowReturn(true)}
+            >
+              <b>Log a return</b>
             </div>
-          )}
-        </div>
-      )}
+            {daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) >=
+              0 && (
+              <div className="text-[red]">
+                {daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3)}{" "}
+                days left
+              </div>
+            )}
+          </div>
+        )}
       {user?.role === "Admin" && (
         <div
           className="cursor-pointer text-[red] mt-[5px]"
@@ -172,7 +184,7 @@ const IsUser = ({
           </div>
         </div>
         <div className="flex-[2] print:hidden print:mb-2.5">
-          <button className="bg-[#0d6efd] w-full px-3 py-[0.375rem] text-base leading-normal border-none">
+          <button className="bg-orange-color text-white w-full px-3 py-[0.375rem] text-base leading-normal border-none">
             <Link to={`/product/${orderItem.product.slug}`}>Buy Again</Link>
           </button>
           {user?.role === "Admin" &&
@@ -190,7 +202,7 @@ const IsUser = ({
           {user?.role === "Admin" && (
             <button
               onClick={() => toggleOrderHoldStatus()}
-              className="w-full px-3 py-[0.375rem] text-base leading-normal border-none bg-malon-color mt-2.5"
+              className="w-full px-3 py-[0.375rem] text-white text-base leading-normal border-none bg-malon-color mt-2.5"
             >
               {orderItem.onHold ? "UnHold" : "Hold"}
             </button>
@@ -213,7 +225,7 @@ const IsUser = ({
         </div>
       </div>
       {Object.entries(orderItem.deliveryOption).map(([key, value]) =>
-        key === "total" ? (
+        key === "total" || key === "_id" ? (
           ""
         ) : (
           <div className="flex capitalize text-[13px]" key={key}>
@@ -231,7 +243,7 @@ const IsUser = ({
       <div className="mt-2.5">
         <div>Seller Information</div>
         <div className="flex items-center mt-[5px]">
-          <Link to={`/seller/${orderItem.seller._id}`}>
+          <Link to={`/seller/${orderItem.seller.username}`}>
             <img
               className="w-10 h-10 object-cover rounded-[50%]"
               src={orderItem.seller.image}
@@ -240,7 +252,7 @@ const IsUser = ({
           </Link>
           <div>
             <div className="font-bold hover:underline text-malon-color mx-5 my-0">
-              <Link to={`/seller/${orderItem.seller._id}`}>
+              <Link to={`/seller/${orderItem.seller.username}`}>
                 @{orderItem.seller.username}
               </Link>
             </div>
@@ -257,7 +269,7 @@ const IsUser = ({
         <div className="mt-2.5">
           <div>Buyer Information</div>
           <div className="flex items-center mt-[5px]">
-            <Link to={`/seller/${userOrdered._id}`}>
+            <Link to={`/seller/${userOrdered.username}`}>
               <img
                 className="w-10 h-10 object-cover rounded-[50%]"
                 src={userOrdered.image}
@@ -266,7 +278,7 @@ const IsUser = ({
             </Link>
             <div>
               <div className="font-bold hover:underline text-malon-color mx-5 my-0">
-                <Link to={`/seller/${userOrdered._id}`}>
+                <Link to={`/seller/${userOrdered.username}`}>
                   @{userOrdered.username}
                 </Link>
               </div>

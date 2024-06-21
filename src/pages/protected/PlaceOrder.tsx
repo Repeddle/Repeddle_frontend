@@ -16,7 +16,7 @@ import { PayStackCallback } from "../../types/gateway"
 import useOrder from "../../hooks/useOrder"
 import useToastNotification from "../../hooks/useToastNotification"
 
-const PaymentScreen = () => {
+const PlaceOrder = () => {
   const { cart, subtotal, total, paymentMethod, clearCart } = useCart()
   const { createOrder, error } = useOrder()
   const { user } = useAuth()
@@ -42,12 +42,12 @@ const PaymentScreen = () => {
     [coupon]
   )
 
-  const placeOrderHandler = async () => {
+  const placeOrderHandler = async (paymentMet: string, transId: string) => {
     const res = await createOrder({
       items: cart,
-      paymentMethod,
+      paymentMethod: paymentMet,
       totalAmount: total,
-      transactionId: "",
+      transactionId: transId,
     })
 
     if (res) {
@@ -58,9 +58,9 @@ const PaymentScreen = () => {
     }
   }
 
-  const processOrder = async () => {
+  const processOrder = async (paymentMethod: string, transId: string) => {
     setLoadingPay(true)
-    const order1 = await placeOrderHandler()
+    const order1 = await placeOrderHandler(paymentMethod, transId)
     if (!order1) {
       setLoadingPay(false)
       return
@@ -91,21 +91,27 @@ const PaymentScreen = () => {
     navigate(`/order/${order1._id}`)
   }
 
-  const WalletSuccess = async (response: PayStackCallback) => {
+  const WalletSuccess = async (
+    response: PayStackCallback,
+    paymentMethod: string
+  ) => {
     console.log(response)
-    await processOrder()
+    await processOrder(paymentMethod, response.transaction_id)
   }
 
-  const onApprove = async (response: {
-    transaction_id: string
-    type: string
-  }) => {
+  const onApprove = async (
+    response: {
+      transaction_id: string
+      type: string
+    },
+    paymentMethod: string
+  ) => {
     console.log(response)
-    await processOrder()
+    await processOrder(paymentMethod, response.transaction_id)
   }
 
   return (
-    <div className="mx-0 my-2.5 pt-5 pb-0 px-[5px] lg:m-5 lg:pt-5 lg:pb-0 lg:px-[5vw] bg-light-ev1 dark:bg-dark-ev1">
+    <div className="mx-0 my-2.5 pt-5 pb-0 px-[5px] lg:m-5 lg:pt-5 lg:pb-0 lg:px-[3vw] bg-light-ev1 dark:bg-dark-ev1">
       <Helmet>
         <title>Order Preview</title>
       </Helmet>
@@ -118,7 +124,7 @@ const PaymentScreen = () => {
               <div className="flex flex-col mb-0 pl-0">
                 {cart.map((item) => (
                   <div
-                    className="relative block bg-white px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]"
+                    className="relative block px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]"
                     key={item._id}
                   >
                     <div className="flex flex-wrap mr-[-15px] ml-[-15px]">
@@ -201,7 +207,7 @@ const PaymentScreen = () => {
             <div className="p-5">
               <div className="text-xl mb-3">Order Summary</div>
               <div className="flex flex-col mb-0 pl-0">
-                <div className="relative block bg-white px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]">
+                <div className="relative block px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]">
                   <div className="flex flex-wrap mr-[-15px] ml-[-15px]">
                     <div className="col-3">Items</div>
                     <div className="col-9">
@@ -226,7 +232,7 @@ const PaymentScreen = () => {
                     </div>
                   </div>
                 </div>
-                <div className="relative block bg-white px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]">
+                <div className="relative block px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]">
                   <div className="flex flex-wrap mr-[-15px] ml-[-15px]">
                     <div className="basis-0 grow max-w-full">Subtotal</div>
                     <div className="basis-0 grow max-w-full">
@@ -235,7 +241,7 @@ const PaymentScreen = () => {
                     </div>
                   </div>
                 </div>
-                <div className="relative block bg-white px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]">
+                <div className="relative block px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]">
                   <div className="flex flex-wrap mr-[-15px] ml-[-15px]">
                     <div className="basis-0 grow max-w-full">Shipping</div>
                     <div className="basis-0 grow max-w-full">
@@ -245,7 +251,7 @@ const PaymentScreen = () => {
                   </div>
                 </div>
 
-                <div className="relative block bg-white px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]">
+                <div className="relative block px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]">
                   <div className="flex flex-wrap mr-[-15px] ml-[-15px]">
                     <div className="basis-0 grow max-w-full">Tax</div>
                     <div className="basis-0 grow max-w-full">
@@ -254,7 +260,7 @@ const PaymentScreen = () => {
                     </div>
                   </div>
                 </div>
-                <div className="relative block bg-white px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]">
+                <div className="relative block px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]">
                   <div className="flex flex-wrap mr-[-15px] ml-[-15px]">
                     <div className="basis-0 grow max-w-full">
                       Discount ({coupon ? code : ""})
@@ -270,7 +276,7 @@ const PaymentScreen = () => {
                     </div>
                   </div>
                 </div>
-                <div className="relative block bg-white px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]">
+                <div className="relative block px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]">
                   <div className="flex flex-wrap mr-[-15px] ml-[-15px]">
                     <div className="basis-0 grow max-w-full">
                       <b>Order Total</b>
@@ -283,10 +289,10 @@ const PaymentScreen = () => {
                     </div>
                   </div>
                 </div>
-                <div className="relative block bg-white px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]">
+                <div className="relative block px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]">
                   <div className="h-10 flex rounded-[0.2rem] border border-malon-color">
                     <input
-                      className="flex-[4] p-[5px] rounded-tl-[0.2rem] rounded-bl-[0.2rem] border-0 bg-light-ev1 dark:bg-dark-ev1 text-black dark:text-white"
+                      className="flex-[4] p-[5px] rounded-tl-[0.2rem] rounded-bl-[0.2rem] border-0 bg-transparent text-black dark:text-white"
                       onChange={(e) => setCode(e.target.value)}
                       placeholder="Enter Coupon Code"
                     />
@@ -298,7 +304,7 @@ const PaymentScreen = () => {
                     </button>
                   </div>
                 </div>
-                <div className="relative block bg-white px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]">
+                <div className="relative block px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]">
                   {loadingPay ? (
                     <LoadingBox />
                   ) : paymentMethod === "Wallet" ? (
@@ -314,7 +320,10 @@ const PaymentScreen = () => {
                     //   placeOrderHandler={placeOrderHandler}
                     //   totalPrice={cart.totalPrice}
                     // />
-                    <PayStack amount={total} onApprove={onApprove} />
+                    <PayStack
+                      amount={total}
+                      onApprove={(res) => onApprove(res, "Paystack")}
+                    />
                   ) : (
                     <FlutterWave
                       amount={total}
@@ -328,7 +337,7 @@ const PaymentScreen = () => {
                         //     phone: cart.shippingAddress.phone,
                         //   }
                       }
-                      onApprove={onApprove}
+                      onApprove={(res) => onApprove(res, "Flutterwave")}
                       // method={cart.paymentMethod}
                     />
                   )}
@@ -336,7 +345,7 @@ const PaymentScreen = () => {
 
                 <Modal isOpen={showModel} onClose={() => setShowModel(false)}>
                   <PayFund
-                    onApprove={WalletSuccess}
+                    onApprove={(res) => WalletSuccess(res, "Payfund")}
                     setShowModel={setShowModel}
                     amount={total}
                   />
@@ -350,4 +359,4 @@ const PaymentScreen = () => {
   )
 }
 
-export default PaymentScreen
+export default PlaceOrder
