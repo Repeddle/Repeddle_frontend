@@ -14,7 +14,7 @@ import { Link } from "react-router-dom"
 import { FaCartPlus, FaTrash } from "react-icons/fa"
 
 const headers = [
-  { title: "ID", hide: true },
+  // { title: "ID", hide: true },
   { title: "Product" },
   { title: "Stock" },
   { title: "Price" },
@@ -110,6 +110,8 @@ const Wishlist = () => {
     addNotification("Item added to Cart", "View Cart", false, () =>
       navigate("/cart")
     )
+
+    closeShowSize()
   }
 
   const removeWishlistItem = async () => {

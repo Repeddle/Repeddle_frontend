@@ -60,7 +60,7 @@ const ProductComment = ({ comments, product, setProduct }: Props) => {
     <>
       <div className="my-3 mx-4 bs-container">
         <div className="my-3" ref={reviewRef}>
-          {(!comment || comments?.length === 0) && (
+          {(!comments || comments?.length === 0) && (
             <MessageBox>There is no comments</MessageBox>
           )}
         </div>
@@ -82,7 +82,7 @@ const ProductComment = ({ comments, product, setProduct }: Props) => {
               </h4>
               <div className="relative my-4">
                 <textarea
-                  className={`w-full block text-base font-normal rounded border text-black-color dark:text-white-color
+                  className={`w-full block text-base font-normal rounded bg-transparent border text-black-color dark:text-white-color
               min-h-[calc(1.5em_+_0.75rem_+_2px)] h-[calc(3.5rem_+_2px)] leading-tight px-3 py-4  border-[#a2a3a5]
               bg-none`}
                   style={{

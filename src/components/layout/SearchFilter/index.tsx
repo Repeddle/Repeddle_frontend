@@ -200,7 +200,7 @@ const SearchFilter = ({
         <SearchDropDown
           title="Shipping"
           all={{ shipping: "all" }}
-          allText="All Product"
+          allText="All"
           changeParam={(val: string) =>
             val === "all"
               ? removeFilterParam("shipping")

@@ -222,7 +222,10 @@ const Comment = ({ comment, product, setProduct }: Props) => {
                 <div className="m-2.5">{r.comment}</div>
                 <div className="flex justify-between items-center w-20">
                   <div className="text-[13px]">{r.likes.length} like</div>
-                  <FaHeart onClick={() => !loading && likeReplyHandler(r)} />
+                  <FaHeart
+                    color={r.likes.find((val) => val === user?._id)}
+                    onClick={() => !loading && likeReplyHandler(r)}
+                  />
                 </div>
               </div>
             </div>
