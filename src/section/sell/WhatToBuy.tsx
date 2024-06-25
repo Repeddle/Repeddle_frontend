@@ -12,12 +12,14 @@ const WhatToBuy = () => {
       }}
     >
       <div className="flex items-center justify-around w-full z-[9] lg:p-2.5 rounded-[0.2rem] flex-col p-[5px]">
-        <h3 className="text-[13px] text-white-color lg:text-[25px] font-bold">
+        <div className="text-[13px] text-white-color leading-tight lg:text-[25px] font-bold">
           WONDERING WHAT TO BUY?
-        </h3>
+        </div>
         <Link to="/search" className="ml-auto">
           <div className="cursor-pointer ml-auto lg:mx-2.5 text-white uppercase mt-5 mb-0 mx-2.5 px-2.5 py-[5px] rounded-[0.2rem] bg-malon-color">
-            <div className="font-bold text-[13px] lg:text-[25px]">SHOP NOW</div>
+            <div className="font-bold text-[13px] leading-tight lg:text-[25px]">
+              SHOP NOW
+            </div>
           </div>
         </Link>
       </div>

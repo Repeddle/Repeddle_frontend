@@ -5,11 +5,11 @@ import MessageBox from "../../components/MessageBox"
 import useProducts from "../../hooks/useProducts"
 
 const SkeletonProduct = () => (
-  <div className="flex-[0_0_calc(33%_-_10px)] bg-[#f0f0f0] p-2.5 md:max-w-[240px]">
-    <div className="flex-1 h-[150px] bg-[#f0f0f0] animate-[skeletonPulse_1.5s_infinite]" />
-    <div className="w-4/5 h-[18px] bg-[#e0e0e0] animate-[skeletonPulse_1.5s_infinite] mt-2.5" />
-    <div className="w-3/5 h-4 bg-[#e0e0e0] animate-[skeletonPulse_1.5s_infinite] mt-[5px]" />
-    <div className="w-10 h-3.5 bg-[#e0e0e0] animate-[skeletonPulse_1.5s_infinite] mt-[5px]" />
+  <div className="flex-[0_0_calc(33%_-_10px)] bg-light-ev1 dark:bg-dark-ev1 p-2.5 md:max-w-[240px]">
+    <div className="flex-1 h-[150px] bg-light-ev1 dark:bg-dark-ev1 animate-[skeletonPulse_1.5s_infinite]" />
+    <div className="w-4/5 h-[18px] bg-light-ev2 dark:bg-dark-ev2 animate-[skeletonPulse_1.5s_infinite] mt-2.5" />
+    <div className="w-3/5 h-4 bg-light-ev2 dark:bg-dark-ev2 animate-[skeletonPulse_1.5s_infinite] mt-[5px]" />
+    <div className="w-10 h-3.5 bg-light-ev2 dark:bg-dark-ev2 animate-[skeletonPulse_1.5s_infinite] mt-[5px]" />
   </div>
 )
 

@@ -239,11 +239,6 @@ const Product = () => {
       if (res) addNotification(res)
       else addNotification(error, undefined, true)
     }
-
-    const data = await fetchProductBySlug(slug)
-    if (!data) return
-
-    setProduct(data)
   }
 
   const isOnlineCon = (userId: string) => {
