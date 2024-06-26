@@ -116,6 +116,8 @@ const ProductReviews = ({ product, setProduct }: Props) => {
                   aria-label="Rating"
                   value={rating}
                   onChange={(e) => setRating(e.target.value)}
+                  // className="bg-transparent"
+                  className="text-base ml-2.5 pl-2.5 pr-6 text-ellipsis whitespace-nowrap leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color appearance-none text-black-color dark:text-white-color"
                 >
                   <option value="">Select...</option>
                   <option value="1">1- Poor</option>
@@ -128,7 +130,7 @@ const ProductReviews = ({ product, setProduct }: Props) => {
               <div className="relative my-4">
                 <textarea
                   className={`w-full block text-base font-normal rounded border text-black-color dark:text-white-color
-                    min-h-[calc(1.5em_+_0.75rem_+_2px)] h-[calc(3.5rem_+_2px)] leading-tight px-3 py-4  border-[#a2a3a5]
+                    min-h-[calc(1.5em_+_0.75rem_+_2px)] bg-transparent h-[calc(3.5rem_+_2px)] leading-tight px-3 py-4  border-[#a2a3a5]
                     bg-none`}
                   style={{
                     transition:

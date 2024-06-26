@@ -367,7 +367,7 @@ export async function removeFromWishlistService(productId: string) {
 export async function getWishlistService() {
   try {
     const data: { wishlist: Wishlist[]; status: boolean } = await api.get(
-      `/users/users/wishlist`
+      `/users/wishlist`
     )
 
     if (!data.status) {

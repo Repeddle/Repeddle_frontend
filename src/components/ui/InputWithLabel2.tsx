@@ -60,6 +60,7 @@ const InputWithLabel2 = ({
           required={required}
           onChange={(e) => onChange && onChange(e.target.value)}
           onBlur={onBlur}
+          inputMode={type === "number" ? "numeric" : "text"}
         />
 
         {type === "password" &&
