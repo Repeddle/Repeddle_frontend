@@ -53,7 +53,7 @@ const Product = () => {
   const [liking, setLiking] = useState(false)
   const [addToWish, setAddToWish] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [addLoading, setAddLoading] = useState(true)
+  const [addLoading, setAddLoading] = useState(false)
   const [size, setSize] = useState("")
   const [selectSize, setSelectSize] = useState("")
   const [product, setProduct] = useState<IProduct>()
@@ -147,6 +147,7 @@ const Product = () => {
   }, [product?.costPrice, product?.sellingPrice])
 
   const addToCartHandler = async () => {
+    console.log("here")
     setAddLoading(true)
     if (!product) return setAddLoading(false)
 
@@ -238,11 +239,6 @@ const Product = () => {
       if (res) addNotification(res)
       else addNotification(error, undefined, true)
     }
-
-    const data = await fetchProductBySlug(slug)
-    if (!data) return
-
-    setProduct(data)
   }
 
   const isOnlineCon = (userId: string) => {
