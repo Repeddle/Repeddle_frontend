@@ -17,7 +17,10 @@ type Props = {
   handleCancelOrder: (val: OrderItem) => void
   refund: (val: OrderItem) => void
   paySeller: (val: OrderItem) => void
-  deliverOrderHandler: (deliveryStatus: string, orderItem: OrderItem) => void
+  deliverOrderHandler: (
+    deliveryStatus: string,
+    orderItem: OrderItem
+  ) => Promise<void>
   updatingStatus: boolean
 }
 
@@ -41,7 +44,10 @@ const IsUser = ({
 
   const toggleOrderHoldStatus = () => {}
 
-  const paymentRequest = () => {}
+  const paymentRequest = async () => {
+    await deliverOrderHandler("Received", orderItem)
+    setAfterAction(false)
+  }
 
   return (
     <div
@@ -98,22 +104,21 @@ const IsUser = ({
                 onClose={() => setAfterAction(false)}
                 size="lg"
               >
-                <div className="flex flex-col justify-center items-center h-full p-2.5">
-                  <div className="flex">
+                <div className="flex flex-col justify-center items-center gap-2.5 h-full p-2.5">
+                  <div className="flex justify-between gap-2.5 w-full max-w-sm">
                     <div
-                      className="cursor-pointer text-white-color bg-orange-color hover:bg-malon-color h-[30px] mr-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
-                      onClick={() => {
-                        paymentRequest()
-                        setAfterAction(false)
-                      }}
+                      className="cursor-pointer text-white-color bg-orange-color h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
+                      onClick={() => !updatingStatus && paymentRequest()}
                     >
                       Confirm you have received order
                     </div>
                     <div
                       className="cursor-pointer bg-malon-color hover:bg-orange-color text-white-color h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
                       onClick={() => {
-                        setShowReturn(true)
-                        setAfterAction(false)
+                        if (!updatingStatus) {
+                          setShowReturn(true)
+                          setAfterAction(false)
+                        }
                       }}
                     >
                       Log a return
@@ -129,11 +134,11 @@ const IsUser = ({
               </Modal>
             </>
           )}
-        {/* {orderItem.deliveryOption._id && (
+        {orderItem.trackingNumber && (
           <label className="mr-5">
-            Tracking Number: {orderItem.deliveryOption._id}
+            Tracking Number: {orderItem.trackingNumber}
           </label>
-        )} */}
+        )}
       </div>
       {deliveryNumber(orderItem.deliveryTracking.currentStatus.status) < 3 &&
         daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) >= 0 && (
@@ -161,7 +166,7 @@ const IsUser = ({
           Cancel Order
         </div>
       )}
-      <hr />
+      <hr className="my-2.5 border-light-ev3 dark:border-dark-ev3" />
 
       <div className="flex justify-center flex-col lg:flex-row mb-2.5 lg:mb-0">
         <div className="flex mb-2.5 flex-[8]">

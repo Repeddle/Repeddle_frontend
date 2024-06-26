@@ -68,7 +68,7 @@ const SalesList = () => {
                         </div>
                       </div>
                       <Link
-                        to={`/order/id`}
+                        to={`/order/${order._id}`}
                         className="text-orange-color p-1 uppercase font-medium hover:underline"
                       >
                         See Details

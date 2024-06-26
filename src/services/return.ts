@@ -74,3 +74,30 @@ export const createReturnService = async (body: CreateReturn) => {
     throw getBackendErrorMessage(error)
   }
 }
+
+export const updateReturnStatusAdminService = async (
+  id: string,
+  body: { status: string; adminReason: string }
+) => {
+  const url = `/returns/${id}/status`
+
+  try {
+    const data: { return: IReturn; status: boolean } = await api.put(url, body)
+
+    if (!data.status) {
+      // Handle Get update return error, e.g., display an error message to the user
+      throw new Error(
+        "Get update return failed: " + getBackendErrorMessage(data)
+      )
+    }
+
+    return data.return
+  } catch (error) {
+    // Handle network errors or other exceptions
+    // You can log the error or perform other error-handling actions
+    console.error("Get update return error:", getBackendErrorMessage(error))
+
+    // Re-throw the error to propagate it up the call stack if needed
+    throw getBackendErrorMessage(error)
+  }
+}

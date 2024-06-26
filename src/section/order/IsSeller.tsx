@@ -81,7 +81,8 @@ const IsSeller = ({
     } else {
       await deliverOrderHandler(
         orderItem.deliveryTracking.currentStatus.status,
-        orderItem
+        orderItem,
+        trackingNumber
       )
     }
   }
@@ -139,7 +140,7 @@ const IsSeller = ({
                 !updatingStatus && deliverOrderHandler("Received", orderItem)
               }
             >
-              Comfirm you have recieved order
+              Confirm you have received order
             </div>
           )}
         {user && (
@@ -166,24 +167,31 @@ const IsSeller = ({
                 </div>
               )
             ) : (
-              <>
-                {/* {orderItem.deliveryOption._id && (
+              <div className="flex flex-col justify-end gap-2">
+                {orderItem.trackingNumber && (
                   <label className="mr-5">
-                    Tracking Number: {orderItem.deliveryOption._id}
+                    Tracking Number: {orderItem.trackingNumber}
                   </label>
-                )} */}
+                )}
 
-                <div
-                  onClick={updateTracking}
-                  className="p-2 rounded-[0.2rem] cursor-pointer self-start ml-4 transition-all duration-300 bg-orange-color text-white hover:bg-malon-color"
-                >
-                  {`Mark as ${
-                    showNextStatus(
-                      orderItem.deliveryTracking.currentStatus.status
-                    )[0]
-                  }`}
-                </div>
-              </>
+                {deliveryNumber(
+                  orderItem.deliveryTracking.currentStatus.status
+                ) < 3 &&
+                  (!updatingStatus ? (
+                    <div
+                      onClick={updateTracking}
+                      className="p-2 self-start lg:self-end rounded-[0.2rem] cursor-pointer transition-all duration-300 bg-orange-color text-white hover:bg-malon-color"
+                    >
+                      {`Mark as ${
+                        showNextStatus(
+                          orderItem.deliveryTracking.currentStatus.status
+                        )[0]
+                      }`}
+                    </div>
+                  ) : (
+                    <LoadingBox />
+                  ))}
+              </div>
             )}
           </div>
         )}
@@ -345,25 +353,3 @@ const IsSeller = ({
 }
 
 export default IsSeller
-
-{
-  /* <div className="relative">
-        <select
-          className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          value={selectedOption}
-          onChange={handleChange}
-        >
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-        <label
-          className="absolute top-0 left-3 px-1 text-gray-500 bg-white pointer-events-none"
-          style={{ transform: "translateY(-50%)", transition: "0.2s" }}
-        >
-          Select
-        </label>
-      </div> */
-}

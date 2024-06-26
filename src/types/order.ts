@@ -20,6 +20,7 @@ export type OrderItem = {
   price: number
   selectedSize: string
   selectedColor: string
+  trackingNumber?: string
   onHold?: boolean
   deliveryOption: {
     fee: number
@@ -39,43 +40,6 @@ export type OrderItem = {
     }[]
   }
   _id: string
-}
-
-// TODO: remove when return is implemented
-export type IOrder1 = {
-  buyer: string
-  items: {
-    product: IProduct
-    seller: string
-    quantity: number
-    price: number
-    selectedSize: string
-    selectedColor: string
-    deliveryOption: {
-      fee: number
-      method: string
-      _id: string
-    }
-    deliveryTracking: {
-      currentStatus: {
-        status: string
-        timestamp: string
-        _id: string
-      }
-      history: {
-        status: string
-        timestamp: string
-        _id: string
-      }[]
-    }
-    _id: string
-  }[]
-  totalAmount: number
-  paymentMethod: string
-  transactionId: string
-  _id: string
-  createdAt: string
-  updatedAt: string
 }
 
 export type IOrder = {

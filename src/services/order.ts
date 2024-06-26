@@ -110,6 +110,8 @@ export const updateOrderItemTrackingService = async (
       body
     )
 
+    console.log(data)
+
     if (!data.status) {
       // Handle Update order error, e.g., display an error message to the user
       throw new Error("Update order failed: " + getBackendErrorMessage(data))

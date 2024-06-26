@@ -5,6 +5,7 @@ import {
   createReturnService,
   fetchReturnByIdService,
   fetchReturnService,
+  updateReturnStatusAdminService,
 } from "../services/return"
 
 type ContextType = {
@@ -14,6 +15,10 @@ type ContextType = {
   fetchReturns: () => Promise<boolean>
   createReturns: (body: CreateReturn) => Promise<IReturn | null>
   fetchReturnById: (id: string) => Promise<IReturn | null>
+  updateReturnStatusAdmin: (
+    id: string,
+    body: { status: string; adminReason: string }
+  ) => Promise<IReturn | null>
 }
 
 // Create return context
@@ -84,6 +89,20 @@ export const ReturnProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
+  const updateReturnStatusAdmin = async (
+    id: string,
+    body: { status: string; adminReason: string }
+  ) => {
+    try {
+      const result = await updateReturnStatusAdminService(id, body)
+
+      return result
+    } catch (error) {
+      handleError(error)
+      return null
+    }
+  }
+
   return (
     <ReturnContext.Provider
       value={{
@@ -93,6 +112,7 @@ export const ReturnProvider = ({ children }: PropsWithChildren) => {
         returns,
         loading,
         error,
+        updateReturnStatusAdmin,
       }}
     >
       {children}

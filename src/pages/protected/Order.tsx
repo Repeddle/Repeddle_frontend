@@ -21,8 +21,9 @@ const Order = () => {
   const { id: orderId } = useParams()
   const { fetchOrderById, error, loading, updateOrderItemTracking } = useOrder()
   const { addNotification } = useToastNotification()
+  const { user } = useAuth()
 
-  const isSeller = false
+  const [isSeller, setIsSeller] = useState(false)
   const [showReturn, setShowReturn] = useState(false)
   const itemsPrice = 0
   const shippingPrice = 0
@@ -30,21 +31,30 @@ const Order = () => {
   const [currentDeliveryHistory, setCurrentDeliveryHistory] = useState(0)
   const [order, setOrder] = useState<IOrder>()
   const [updatingStatus, setUpdatingStatus] = useState(false)
+  const [showError, setShowError] = useState(false)
 
   useEffect(() => {
     const fetchOrder = async () => {
       if (!orderId) return
       const data = await fetchOrderById(orderId)
 
-      if (data) setOrder(data)
+      if (data) {
+        setOrder(data)
+        if (user) {
+          const existSell = data.items.filter((x) => x.seller._id === user._id)
+          if (existSell.length) {
+            setIsSeller(true)
+          }
+        }
+      } else {
+        setShowError(true)
+      }
     }
 
     fetchOrder()
   }, [orderId])
 
   const componentRef = useRef(null)
-
-  const { user } = useAuth()
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -78,16 +88,22 @@ const Order = () => {
 
     setUpdatingStatus(true)
 
-    const res = await updateOrderItemTracking(order._id, orderItem._id, {
-      status: nextStatus[0],
-      trackingNumber,
-    })
+    const res = await updateOrderItemTracking(
+      order._id,
+      orderItem.product._id,
+      {
+        status: nextStatus[0],
+        trackingNumber,
+      }
+    )
     if (res) {
       addNotification("Item status has been updated")
       setOrder(res)
     } else {
-      addNotification("Failed to update status", undefined, true)
+      addNotification(error ?? "Failed to update status", undefined, true)
     }
+
+    setUpdatingStatus(false)
   }
 
   const handleCancelOrder = (item: OrderItem) => {
@@ -102,7 +118,7 @@ const Order = () => {
     console.log(item)
   }
 
-  return !loading && error ? (
+  return !loading && showError ? (
     <MessageBox className="text-[red]">{error}</MessageBox>
   ) : (
     <div
@@ -159,9 +175,7 @@ const Order = () => {
               >
                 {orderId && (
                   <Return
-                    // deliverOrderHandler={deliverOrderHandler}
                     orderItems={order.items}
-                    // deliveryMethod={order.deliveryMethod}
                     setShowReturn={setShowReturn}
                     orderId={orderId}
                   />
@@ -169,22 +183,20 @@ const Order = () => {
               </Modal>
             </div>
             {order.items.map((orderItem) =>
-              isSeller ? (
-                orderItem.seller._id === user?._id && (
-                  <IsSeller
-                    itemsPrice={itemsPrice}
-                    userOrdered={order.buyer}
-                    orderItem={orderItem}
-                    shippingPrice={shippingPrice}
-                    deliverOrderHandler={deliverOrderHandler}
-                    handleCancelOrder={handleCancelOrder}
-                    paySeller={paySeller}
-                    refund={refund}
-                    setCurrentDeliveryHistory={setCurrentDeliveryHistory}
-                    setShowDeliveryHistory={setShowDeliveryHistory}
-                    updatingStatus={updatingStatus}
-                  />
-                )
+              orderItem.seller._id === user?._id ? (
+                <IsSeller
+                  itemsPrice={itemsPrice}
+                  userOrdered={order.buyer}
+                  orderItem={orderItem}
+                  shippingPrice={shippingPrice}
+                  deliverOrderHandler={deliverOrderHandler}
+                  handleCancelOrder={handleCancelOrder}
+                  paySeller={paySeller}
+                  refund={refund}
+                  setCurrentDeliveryHistory={setCurrentDeliveryHistory}
+                  setShowDeliveryHistory={setShowDeliveryHistory}
+                  updatingStatus={updatingStatus}
+                />
               ) : (
                 <IsUser
                   orderItem={orderItem}
