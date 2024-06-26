@@ -2,7 +2,12 @@
 // TODO: remove this
 import { useState } from "react"
 import DeliveryHistory from "../../../components/DeliveryHistory"
-import { currency, daydiff, deliveryNumber } from "../../../utils/common"
+import {
+  currency,
+  // daydiff,
+  deliveryNumber,
+  region,
+} from "../../../utils/common"
 import { Link, useParams } from "react-router-dom"
 import LoadingBox from "../../../components/LoadingBox"
 import useAuth from "../../../hooks/useAuth"
@@ -10,9 +15,9 @@ import { returns } from "../../../utils/data"
 import moment from "moment"
 import MessageImage from "../../../components/ui/MessageImage"
 import Modal from "../../../components/ui/Modal"
-import { FaCheck } from "react-icons/fa"
+// import { FaCheck } from "react-icons/fa"
 import DeliveryReturn from "../../../components/DeliveryReturn"
-import { IUser } from "../../../types/user"
+// import { IUser } from "../../../types/user"
 
 const ReturnPage = () => {
   const { id: returnId } = useParams()
@@ -21,39 +26,39 @@ const ReturnPage = () => {
 
   const [reasonText, setReasonText] = useState("")
   const [showModel, setShowModel] = useState(false)
-  const [enterwaybil, setEnterwaybil] = useState(false)
-  const [waybillNumber, setWaybillNumber] = useState("")
+  // const [enterwaybil, setEnterwaybil] = useState(false)
+  // const [waybillNumber, setWaybillNumber] = useState("")
 
   const loading = false
   const returned = returns[0]
-  const refunding = false
+  // const refunding = false
   const dispatch = false
 
   const handleReturn = (val: string) => {
     console.log(val)
   }
 
-  const refund = (val: any) => {
-    console.log(val)
-  }
+  // const refund = (val: any) => {
+  //   console.log(val)
+  // }
 
-  const paySeller = (val: any) => {
-    console.log(val)
-  }
+  // const paySeller = (val: any) => {
+  //   console.log(val)
+  // }
 
-  const confirmWaybill = (val: any) => {
-    console.log(val)
-  }
+  // const confirmWaybill = (val: any) => {
+  //   console.log(val)
+  // }
 
-  const paymentRequest = async (user: IUser, cost: number, type: string) => {
-    console.log(user, cost, type)
-  }
-  const deliverOrderHandler = async (
-    deliveryStatus: string,
-    productId: string
-  ) => {
-    console.log(deliveryStatus, productId)
-  }
+  // const paymentRequest = async (user: IUser, cost: number, type: string) => {
+  //   console.log(user, cost, type)
+  // }
+  // const deliverOrderHandler = async (
+  //   deliveryStatus: string,
+  //   productId: string
+  // ) => {
+  //   console.log(deliveryStatus, productId)
+  // }
 
   return loading ? (
     <LoadingBox />
@@ -89,8 +94,8 @@ const ReturnPage = () => {
         <hr />
         <div className="capitalize font-semibold mb-2.5">Buyer</div>
         <div className="flex text-malon-color">
-          <Link to={`/seller/${returned.orderId.user._id}`}>
-            {returned.orderId.user.username}
+          <Link to={`/seller/${returned.orderId.buyer._id}`}>
+            {returned.orderId.buyer.username}
           </Link>
         </div>
         <hr />
@@ -118,7 +123,7 @@ const ReturnPage = () => {
         <div className="capitalize font-semibold mb-2.5">
           Preferred Sending Method
         </div>
-        <div className="flex">{returned.sending["delivery Option"]}</div>
+        <div className="flex">{returned.deliveryOption.method}</div>
         <hr />
         <div className="capitalize font-semibold mb-2.5">
           Preferred Refund Method
@@ -162,7 +167,7 @@ const ReturnPage = () => {
                 onChange={(e) => setReasonText(e.target.value)}
                 value={reasonText}
               >
-                Enter Reason for Declince here...
+                Enter Reason for Decline here...
               </textarea>
             </div>
             <button
@@ -186,14 +191,14 @@ const ReturnPage = () => {
             <div className="capitalize font-semibold mb-2.5">
               Return Delivery Address
             </div>
-            {returned.returnDelivery ? (
-              Object.entries(returned.returnDelivery).map(([key, value]) => (
+            {returned.deliveryOption ? (
+              Object.entries(returned.deliveryOption).map(([key, value]) => (
                 <div className="flex capitalize text-[13px]">
-                  {key === "cost" ? (
+                  {key === "fee" ? (
                     <>
                       <div className="flex-[3]">{key}:</div>
                       <div className="flex-[5]">
-                        {currency(returned.region)} {value}
+                        {currency(region())} {value}
                       </div>
                     </>
                   ) : (
@@ -219,13 +224,15 @@ const ReturnPage = () => {
           </>
         )}
 
-        {returned.orderId.orderItems.map(
+        {returned.orderId.items.map(
           (orderitem) =>
             orderitem._id === returned.productId._id && (
               <>
-                {user?.role === "Admin" &&
+                {/* {user?.role === "Admin" &&
                   daydiff(orderitem.deliveredAt, 3) <= 0 &&
-                  deliveryNumber(orderitem.deliveryStatus) === 8 &&
+                  deliveryNumber(
+                    orderitem.deliveryTracking.currentStatus.status
+                  ) === 8 &&
                   !returned.returnDelivery &&
                   (refunding ? (
                     <LoadingBox />
@@ -236,11 +243,13 @@ const ReturnPage = () => {
                     >
                       Refund
                     </button>
-                  ))}
+                  ))} */}
 
-                {user?.role === "Admin" &&
+                {/* {user?.role === "Admin" &&
                   daydiff(orderitem.deliveredAt, 3) <= 0 &&
-                  deliveryNumber(orderitem.deliveryStatus) === 10 &&
+                  deliveryNumber(
+                    orderitem.deliveryTracking.currentStatus.status
+                  ) === 10 &&
                   (refunding ? (
                     <LoadingBox />
                   ) : (
@@ -250,11 +259,13 @@ const ReturnPage = () => {
                     >
                       Refund
                     </button>
-                  ))}
+                  ))} */}
 
-                {user?.role === "Admin" &&
+                {/* {user?.role === "Admin" &&
                   daydiff(orderitem.deliveredAt, 3) <= 0 &&
-                  deliveryNumber(orderitem.deliveryStatus) === 8 &&
+                  deliveryNumber(
+                    orderitem.deliveryTracking.currentStatus.status
+                  ) === 8 &&
                   returned.returnDelivery && (
                     <button
                       onClick={() => {
@@ -264,10 +275,12 @@ const ReturnPage = () => {
                     >
                       Pay Seller
                     </button>
-                  )}
-                {user?.role === "Admin" &&
+                  )} */}
+                {/* {user?.role === "Admin" &&
                   daydiff(orderitem.deliveredAt, 7) <= 0 &&
-                  deliveryNumber(orderitem.deliveryStatus) === 9 &&
+                  deliveryNumber(
+                    orderitem.deliveryTracking.currentStatus.status
+                  ) === 9 &&
                   returned.returnDelivery && (
                     <button
                       onClick={() => {
@@ -277,9 +290,8 @@ const ReturnPage = () => {
                     >
                       Pay Seller
                     </button>
-                  )}
-                <div className="flex justify-center mx-0 my-5">
-                  {/* TODO: raised label  */}
+                  )} */}
+                {/* <div className="flex justify-center mx-0 my-5">
                   {returned.productId.seller._id === user?._id ? (
                     <div className="flex flex-col gap-2 relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
                       <label className="text-black dark:text-white">
@@ -291,11 +303,11 @@ const ReturnPage = () => {
                             e.target.value,
                             returned.productId._id
                           )
-                          returned.orderId.orderItems.map(async (item) => {
+                          returned.orderId.items.map(async (item) => {
                             if (item._id === returned.productId._id) {
                               await paymentRequest(
-                                returned.orderId.user as IUser,
-                                // TODO: remove the above
+                                returned.orderId.buyer as IUser,
+
                                 returned.returnDelivery?.cost * 2 +
                                   returned.productId.sellingPrice, // dont forget to add quantity {item.quantity}
                                 "Return Completed"
@@ -307,7 +319,9 @@ const ReturnPage = () => {
                       >
                         <option
                           disabled={
-                            deliveryNumber(orderitem.deliveryStatus) !== 10
+                            deliveryNumber(
+                              orderitem.deliveryTracking.currentStatus.status
+                            ) !== 10
                           }
                           value="Return Received"
                         >
@@ -315,7 +329,7 @@ const ReturnPage = () => {
                         </option>
                       </select>
                     </div>
-                  ) : returned.orderId.user._id === user?._id ? (
+                  ) : returned.orderId.buyer._id === user?._id ? (
                     enterwaybil ? (
                       <div className="flex items-center">
                         <input
@@ -336,7 +350,7 @@ const ReturnPage = () => {
                             Tracking Number: {orderitem.returnTrackingNumber}
                           </div>
                         )}
-                        {/* TODO: raised label  */}
+
                         <div className="flex flex-col gap-2 relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
                           <label className="text-black dark:text-white">
                             Update Delivery Status
@@ -360,8 +374,10 @@ const ReturnPage = () => {
                           >
                             <option
                               disabled={
-                                deliveryNumber(orderitem.deliveryStatus) !==
-                                  8 || !returned.returnDelivery
+                                deliveryNumber(
+                                  orderitem.deliveryTracking.currentStatus
+                                    .status
+                                ) !== 8 || !returned.returnDelivery
                               }
                               value="Return Dispatched"
                             >
@@ -370,7 +386,10 @@ const ReturnPage = () => {
 
                             <option
                               disabled={
-                                deliveryNumber(orderitem.deliveryStatus) !== 9
+                                deliveryNumber(
+                                  orderitem.deliveryTracking.currentStatus
+                                    .status
+                                ) !== 9
                               }
                               value="Return Delivered"
                             >
@@ -383,9 +402,11 @@ const ReturnPage = () => {
                   ) : (
                     ""
                   )}
-                </div>
+                </div> */}
                 <DeliveryHistory
-                  status={deliveryNumber(orderitem.deliveryStatus)}
+                  status={deliveryNumber(
+                    orderitem.deliveryTracking.currentStatus.status
+                  )}
                 />
               </>
             )

@@ -12,6 +12,8 @@ const SalesList = () => {
     fetchSoldOrders()
   }, [])
 
+  console.log(orders)
+
   return (
     <div className="flex-[4] relative flex flex-col">
       <div className="p-5 my-0 mx-5 min-h-[85vh] dark:bg-dark-ev1 bg-light-ev1">

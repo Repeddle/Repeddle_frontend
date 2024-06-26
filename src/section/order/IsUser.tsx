@@ -18,6 +18,7 @@ type Props = {
   refund: (val: OrderItem) => void
   paySeller: (val: OrderItem) => void
   deliverOrderHandler: (deliveryStatus: string, orderItem: OrderItem) => void
+  updatingStatus: boolean
 }
 
 const IsUser = ({
@@ -30,6 +31,7 @@ const IsUser = ({
   refund,
   paySeller,
   deliverOrderHandler,
+  updatingStatus,
 }: Props) => {
   const { user } = useAuth()
 
@@ -89,7 +91,7 @@ const IsUser = ({
                   orderItem.onHold ? placeOrderOnHold() : setAfterAction(true)
                 }}
               >
-                Comfirm you have recieved order
+                Confirm you have received your order
               </div>
               <Modal
                 isOpen={afterAction}
@@ -105,7 +107,7 @@ const IsUser = ({
                         setAfterAction(false)
                       }}
                     >
-                      Comfirm you have recieved order
+                      Confirm you have received order
                     </div>
                     <div
                       className="cursor-pointer bg-malon-color hover:bg-orange-color text-white-color h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
@@ -127,11 +129,11 @@ const IsUser = ({
               </Modal>
             </>
           )}
-        {orderItem.deliveryOption._id && (
+        {/* {orderItem.deliveryOption._id && (
           <label className="mr-5">
             Tracking Number: {orderItem.deliveryOption._id}
           </label>
-        )}
+        )} */}
       </div>
       {deliveryNumber(orderItem.deliveryTracking.currentStatus.status) < 3 &&
         daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) >= 0 && (
@@ -214,8 +216,13 @@ const IsUser = ({
               4 && (
               <button
                 onClick={() => {
-                  paySeller(orderItem)
-                  deliverOrderHandler("Payment To Seller Initiated", orderItem)
+                  if (!updatingStatus) {
+                    paySeller(orderItem)
+                    deliverOrderHandler(
+                      "Payment To Seller Initiated",
+                      orderItem
+                    )
+                  }
                 }}
                 className="w-full px-3 py-[0.375rem] text-base leading-normal border-none bg-malon-color mt-2.5"
               >

@@ -232,7 +232,7 @@ const NewProduct = () => {
     ? parseInt(priceInput.sellingPrice) < parseInt(priceInput.costPrice)
       ? parseInt(priceInput.costPrice)
       : parseInt(priceInput.sellingPrice)
-    : undefined
+    : parseInt(priceInput.costPrice)
 
   const sellingPrice = priceInput.sellingPrice
     ? parseInt(priceInput.sellingPrice)
@@ -274,8 +274,8 @@ const NewProduct = () => {
     return true
   }
 
-  console.log(costPriceNumber)
-  console.log(sellingPrice)
+  console.log(costPriceNumber, "cost")
+  console.log(sellingPrice, "selling")
 
   const validateMedia = () => {
     if (

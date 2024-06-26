@@ -6,6 +6,8 @@ import { Link } from "react-router-dom"
 import MessageBox from "../../components/MessageBox"
 import Button from "../../components/ui/Button"
 import { currency, daydiff, deliveryNumber } from "../../utils/common"
+import useReturn from "../../hooks/useReturn"
+import useToastNotification from "../../hooks/useToastNotification"
 
 type TabTypes = "items" | "option" | "form"
 
@@ -16,13 +18,19 @@ type Props = {
   setShowReturn: (val: boolean) => void
 }
 
-const Return = ({ orderItems }: Props) => {
+const Return = ({ orderItems, orderId, setShowReturn }: Props) => {
+  const { createReturns, error: creatingError } = useReturn()
+  const { addNotification } = useToastNotification()
+
   const [tab, setTab] = useState<TabTypes>("items")
   const [current, setCurrent] = useState<OrderItem>()
   const [invalidImage] = useState("")
   const [description, setDescription] = useState("")
-  const [image] = useState("")
-  const error = null
+  const [refund, setRefund] = useState("")
+  const [reason, setReason] = useState("")
+  const [image, setImage] = useState("")
+  const [error, setError] = useState("")
+  const [sending, setSending] = useState("")
   const loading = false
   const loadingUpload = false
 
@@ -32,7 +40,50 @@ const Return = ({ orderItems }: Props) => {
 
   const handleImageUpload = () => {}
 
-  const handleReturn = () => {}
+  const handleReturn = async () => {
+    if (!reason.length) {
+      setError("Please select a reason for return")
+      return
+    }
+    if (!sending) {
+      setError("Please select a method of sending")
+      return
+    }
+    if (!refund.length) {
+      setError("Please select a method of refund")
+      return
+    }
+
+    if (!current) {
+      setError("Please select the item you want to return")
+      return
+    }
+
+    const res = await createReturns({
+      image,
+      reason,
+      refund,
+      productId: current.product._id, //fix
+      orderId,
+      deliveryOption: {
+        fee: current.deliveryOption.fee,
+        method: current.deliveryOption.method,
+      },
+      others: "",
+    })
+
+    if (res) {
+      addNotification("Return logged successfully")
+      setImage("")
+      setShowReturn(false)
+    } else {
+      addNotification(
+        creatingError ?? "Failed to log a return",
+        undefined,
+        true
+      )
+    }
+  }
 
   useEffect(() => {
     if (tab === "option" && current) {
@@ -158,133 +209,56 @@ const Return = ({ orderItems }: Props) => {
             <div className="m-2.5 w-full">
               <label>Reasons for Return</label>
 
-              {/* <FormControl
-                sx={{
-                  width: "100%",
-                  margin: 0,
-                  borderRadius: "0.2rem",
-                  border: `1px solid ${
-                    mode === "pagebodydark"
-                      ? "var(--dark-ev4)"
-                      : "var(--light-ev4)"
-                  }`,
-                  "& .MuiOutlinedInput-root": {
-                    color: `${
-                      mode === "pagebodydark"
-                        ? "var(--white-color)"
-                        : "var(--black-color)"
-                    }`,
-                    "&:hover": {
-                      outline: "none",
-                      border: 0,
-                    },
-                  },
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    border: "0 !important",
-                  },
-                }}
-                size="small"
-              >
-                <Select
+              <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
+                <select
+                  value={reason}
                   onChange={(e) => setReason(e.target.value)}
-                  displayEmpty
-                  id="deliveryStatus"
+                  className="text-base m-0 pl-2.5 dark:bg-black border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                  onBlur={() => setError("")}
                 >
-                  <MenuItem value="Missing or wrong product, not what i ordered">
+                  <option value="Missing or wrong product, not what i ordered">
                     Missing or wrong product, not what i ordered
-                  </MenuItem>
-                  <MenuItem value="Product condition is significantly not as described">
+                  </option>
+                  <option value="Product condition is significantly not as described">
                     Product condition is significantly not as described
-                  </MenuItem>
-                  <MenuItem value="The product is totally defective or completely demaged.">
+                  </option>
+                  <option value="The product is totally defective or completely demaged.">
                     The product is totally defective or completely damage
-                  </MenuItem>
-                </Select>
-              </FormControl> */}
+                  </option>
+                </select>
+              </div>
             </div>
             <div className="m-2.5 w-full">
               <label>Preferred Sending Method</label>
 
-              {/* <FormControl
-                sx={{
-                  width: "100%",
-                  margin: 0,
-                  borderRadius: "0.2rem",
-                  border: `1px solid ${
-                    mode === "pagebodydark"
-                      ? "var(--dark-ev4)"
-                      : "var(--light-ev4)"
-                  }`,
-                  "& .MuiOutlinedInput-root": {
-                    color: `${
-                      mode === "pagebodydark"
-                        ? "var(--white-color)"
-                        : "var(--black-color)"
-                    }`,
-                    "&:hover": {
-                      outline: "none",
-                      border: 0,
-                    },
-                  },
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    border: "0 !important",
-                  },
-                }}
-                size="small"
-              >
-                <Select
+              <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
+                <select
+                  value={sending}
                   onChange={(e) => setSending(e.target.value)}
-                  displayEmpty
-                  id="deliveryStatus"
+                  className="text-base m-0 pl-2.5 dark:bg-black border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                  onBlur={() => setError("")}
                 >
-                  {console.log(current)}
-
-                  <MenuItem value={current.deliverySelect}>
-                    {current.deliverySelect["delivery Option"]}
-                  </MenuItem>
-                </Select>
-              </FormControl> */}
+                  <option value={current?.deliveryOption._id}>
+                    {current?.deliveryOption.method}
+                  </option>
+                </select>
+              </div>
             </div>
             <div className="m-2.5 w-full">
               <label>Preferred Refund Method</label>
 
-              {/* <FormControl
-                sx={{
-                  width: "100%",
-                  margin: 0,
-                  borderRadius: "0.2rem",
-                  border: `1px solid ${
-                    mode === "pagebodydark"
-                      ? "var(--dark-ev4)"
-                      : "var(--light-ev4)"
-                  }`,
-                  "& .MuiOutlinedInput-root": {
-                    color: `${
-                      mode === "pagebodydark"
-                        ? "var(--white-color)"
-                        : "var(--black-color)"
-                    }`,
-                    "&:hover": {
-                      outline: "none",
-                      border: 0,
-                    },
-                  },
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    border: "0 !important",
-                  },
-                }}
-                size="small"
-              >
-                <Select
+              <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
+                <select
+                  value={refund}
                   onChange={(e) => setRefund(e.target.value)}
-                  displayEmpty
-                  id="deliveryStatus"
+                  className="text-base m-0 pl-2.5 dark:bg-black border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                  onBlur={() => setError("")}
                 >
-                  <MenuItem value="Credit my Repeddle wallet">
+                  <option value="Credit my Repeddle wallet">
                     Credit my Repeddle wallet
-                  </MenuItem>
-                </Select>
-              </FormControl> */}
+                  </option>
+                </select>
+              </div>
             </div>
             <div className="m-2.5 w-full">
               <label>Other Information</label>

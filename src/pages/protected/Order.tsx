@@ -14,10 +14,13 @@ import { IOrder, OrderItem } from "../../types/order"
 import Modal from "../../components/ui/Modal"
 import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
 import useOrder from "../../hooks/useOrder"
+import { deliveryNumber, deliveryStatusMap } from "../../utils/common"
+import useToastNotification from "../../hooks/useToastNotification"
 
 const Order = () => {
   const { id: orderId } = useParams()
-  const { fetchOrderById, error, loading } = useOrder()
+  const { fetchOrderById, error, loading, updateOrderItemTracking } = useOrder()
+  const { addNotification } = useToastNotification()
 
   const isSeller = false
   const [showReturn, setShowReturn] = useState(false)
@@ -26,6 +29,7 @@ const Order = () => {
   const [showDeliveryHistory, setShowDeliveryHistory] = useState(false)
   const [currentDeliveryHistory, setCurrentDeliveryHistory] = useState(0)
   const [order, setOrder] = useState<IOrder>()
+  const [updatingStatus, setUpdatingStatus] = useState(false)
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -46,11 +50,44 @@ const Order = () => {
     content: () => componentRef.current,
   })
 
-  const deliverOrderHandler = (
-    deliveryStatus: string,
-    orderItem: OrderItem
+  const showNextStatus = (status: string) => {
+    const entries = Object.entries(deliveryStatusMap)
+    const currentNumber = deliveryNumber(status)
+
+    return entries[currentNumber]
+  }
+
+  const deliverOrderHandler = async (
+    currentStatus: string,
+    orderItem: OrderItem,
+    trackingNumber?: string
   ) => {
-    console.log(deliveryStatus, orderItem)
+    if (!order) return
+    const nextStatus = showNextStatus(currentStatus)
+
+    if (nextStatus[1] === 2) {
+      if (!trackingNumber) {
+        addNotification(
+          "Tracking number is required to dispatch item",
+          undefined,
+          true
+        )
+        return
+      }
+    }
+
+    setUpdatingStatus(true)
+
+    const res = await updateOrderItemTracking(order._id, orderItem._id, {
+      status: nextStatus[0],
+      trackingNumber,
+    })
+    if (res) {
+      addNotification("Item status has been updated")
+      setOrder(res)
+    } else {
+      addNotification("Failed to update status", undefined, true)
+    }
   }
 
   const handleCancelOrder = (item: OrderItem) => {
@@ -145,6 +182,7 @@ const Order = () => {
                     refund={refund}
                     setCurrentDeliveryHistory={setCurrentDeliveryHistory}
                     setShowDeliveryHistory={setShowDeliveryHistory}
+                    updatingStatus={updatingStatus}
                   />
                 )
               ) : (
@@ -158,6 +196,7 @@ const Order = () => {
                   setCurrentDeliveryHistory={setCurrentDeliveryHistory}
                   setShowDeliveryHistory={setShowDeliveryHistory}
                   setShowReturn={setShowReturn}
+                  updatingStatus={updatingStatus}
                 />
               )
             )}
