@@ -45,7 +45,8 @@ const IsUser = ({
   const toggleOrderHoldStatus = () => {}
 
   const paymentRequest = async () => {
-    await deliverOrderHandler("Received", orderItem)
+    // the below function accepts the current status then uses the next function to update
+    await deliverOrderHandler("Delivered", orderItem)
     setAfterAction(false)
   }
 

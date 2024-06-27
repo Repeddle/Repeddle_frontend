@@ -100,7 +100,9 @@ const Order = () => {
       addNotification("Item status has been updated")
       setOrder(res)
     } else {
-      addNotification(error ?? "Failed to update status", undefined, true)
+      console.log(error)
+      console.log(!!error)
+      addNotification(error || "Failed to update status", undefined, true)
     }
 
     setUpdatingStatus(false)
