@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// TODO: remove the lint above
 import { IDeliveryOption, IProduct } from "./product"
 import { IUser } from "./user"
 
@@ -123,9 +121,14 @@ export type IReturn = {
   others: string
   region: string
   adminReason: string
-  deliveryToken: string
+  trackingNumber?: string
   status: string
   deliveryOption: {
+    fee: number
+    method: string
+    _id: string
+  }
+  deliverySelected?: {
     fee: number
     method: string
     _id: string

@@ -55,7 +55,7 @@ const IsUser = ({
       className={`h-full mb-[15px] lg:px-5 lg:py-[15px] rounded-[5px] print:text-black-color
     print:mb-[5px] print:p-[5px] print:bg-white px-[15px] py-2.5 bg-light-ev2 dark:bg-dark-ev2`}
     >
-      <div className="flex flex-col w-full lg:flex-row">
+      <div className="flex flex-col w-full mb-3 lg:justify-between lg:flex-row">
         <div>
           <div className="flex text-center">
             <DeliveryStatus
@@ -88,60 +88,62 @@ const IsUser = ({
             )}
           </div>
         </div>
-        {user &&
-          userOrdered._id === user._id &&
-          orderItem.deliveryTracking.currentStatus.status === "Delivered" && (
-            <>
-              <div
-                className="cursor-pointer text-white-color bg-orange-color hover:bg-malon-color h-[30px] mr-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
-                onClick={() => {
-                  orderItem.onHold ? placeOrderOnHold() : setAfterAction(true)
-                }}
-              >
-                Confirm you have received your order
-              </div>
-              <Modal
-                isOpen={afterAction}
-                onClose={() => setAfterAction(false)}
-                size="lg"
-              >
-                <div className="flex flex-col justify-center items-center gap-2.5 h-full p-2.5">
-                  <div className="flex justify-between gap-2.5 w-full max-w-sm">
-                    <div
-                      className="cursor-pointer text-white-color bg-orange-color h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
-                      onClick={() => !updatingStatus && paymentRequest()}
-                    >
-                      Confirm you have received order
-                    </div>
-                    <div
-                      className="cursor-pointer bg-malon-color hover:bg-orange-color text-white-color h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
-                      onClick={() => {
-                        if (!updatingStatus) {
-                          setShowReturn(true)
-                          setAfterAction(false)
-                        }
-                      }}
-                    >
-                      Log a return
-                    </div>
-                  </div>
-                  <div className="text-[13px] max-w-[400px]">
-                    Please inspect your order before confirming receipt. Kindly
-                    know that you can't LOG A RETURN after order receipt
-                    confirmation. However, you can re-list your product for sale
-                    at this point
-                  </div>
-                </div>
-              </Modal>
-            </>
+        <div className="flex flex-col items-start lg:items-end">
+          {orderItem.trackingNumber && (
+            <label className="">
+              Tracking Number: {orderItem.trackingNumber}
+            </label>
           )}
-        {orderItem.trackingNumber && (
-          <label className="mr-5">
-            Tracking Number: {orderItem.trackingNumber}
-          </label>
-        )}
+          {user &&
+            userOrdered._id === user._id &&
+            orderItem.deliveryTracking.currentStatus.status === "Delivered" && (
+              <>
+                <div
+                  className="cursor-pointer text-white-color bg-orange-color hover:bg-malon-color h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
+                  onClick={() => {
+                    orderItem.onHold ? placeOrderOnHold() : setAfterAction(true)
+                  }}
+                >
+                  Confirm you have received your order
+                </div>
+                <Modal
+                  isOpen={afterAction}
+                  onClose={() => setAfterAction(false)}
+                  size="lg"
+                >
+                  <div className="flex flex-col justify-center items-center gap-2.5 h-full p-2.5">
+                    <div className="flex justify-between gap-2.5 w-full max-w-sm">
+                      <div
+                        className="cursor-pointer text-white-color bg-orange-color h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
+                        onClick={() => !updatingStatus && paymentRequest()}
+                      >
+                        Confirm you have received order
+                      </div>
+                      <div
+                        className="cursor-pointer bg-malon-color hover:bg-orange-color text-white-color h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
+                        onClick={() => {
+                          if (!updatingStatus) {
+                            setShowReturn(true)
+                            setAfterAction(false)
+                          }
+                        }}
+                      >
+                        Log a return
+                      </div>
+                    </div>
+                    <div className="text-[13px] max-w-[400px]">
+                      Please inspect your order before confirming receipt.
+                      Kindly know that you can't LOG A RETURN after order
+                      receipt confirmation. However, you can re-list your
+                      product for sale at this point
+                    </div>
+                  </div>
+                </Modal>
+              </>
+            )}
+        </div>
       </div>
-      {deliveryNumber(orderItem.deliveryTracking.currentStatus.status) < 3 &&
+      {deliveryNumber(orderItem.deliveryTracking.currentStatus.status) >= 4 &&
         daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) >= 0 && (
           <div className="flex gap-1 items-center justify-center">
             <div

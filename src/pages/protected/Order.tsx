@@ -170,19 +170,14 @@ const Order = () => {
                 Items in your order
               </div>
 
-              <Modal
-                isOpen={showReturn}
-                onClose={() => setShowReturn(false)}
-                size="lg"
-              >
-                {orderId && (
-                  <Return
-                    orderItems={order.items}
-                    setShowReturn={setShowReturn}
-                    orderId={orderId}
-                  />
-                )}
-              </Modal>
+              {orderId && (
+                <Return
+                  orderItems={order.items}
+                  setShowReturn={setShowReturn}
+                  orderId={orderId}
+                  showReturn={showReturn}
+                />
+              )}
             </div>
             {order.items.map((orderItem) =>
               orderItem.seller._id === user?._id ? (

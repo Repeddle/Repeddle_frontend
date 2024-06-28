@@ -176,7 +176,7 @@ const IsSeller = ({
 
                 {deliveryNumber(
                   orderItem.deliveryTracking.currentStatus.status
-                ) < 3 &&
+                ) < 4 &&
                   (!updatingStatus ? (
                     <div
                       onClick={updateTracking}
