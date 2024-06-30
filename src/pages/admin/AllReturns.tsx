@@ -1,9 +1,15 @@
-import { useState } from "react"
-import { returns } from "../../utils/data"
+import { useEffect, useState } from "react"
 import ReturnTable from "../../components/table/ReturnTable"
+import useReturn from "../../hooks/useReturn"
 
 const AllReturns = () => {
+  const { fetchAdminReturns, error, loading, returns } = useReturn()
+
   const [query, setQuery] = useState("")
+
+  useEffect(() => {
+    fetchAdminReturns()
+  }, [])
 
   return (
     <div className="flex-[4] overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
@@ -21,7 +27,7 @@ const AllReturns = () => {
         />
       </div>
 
-      <ReturnTable returns={returns} />
+      <ReturnTable returns={returns} error={error} loading={loading} />
     </div>
   )
 }

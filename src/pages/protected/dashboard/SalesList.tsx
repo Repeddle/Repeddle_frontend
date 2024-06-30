@@ -12,6 +12,8 @@ const SalesList = () => {
     fetchSoldOrders()
   }, [])
 
+  console.log(orders)
+
   return (
     <div className="flex-[4] relative flex flex-col">
       <div className="p-5 my-0 mx-5 min-h-[85vh] dark:bg-dark-ev1 bg-light-ev1">
@@ -66,7 +68,7 @@ const SalesList = () => {
                         </div>
                       </div>
                       <Link
-                        to={`/order/id`}
+                        to={`/order/${order._id}`}
                         className="text-orange-color p-1 uppercase font-medium hover:underline"
                       >
                         See Details

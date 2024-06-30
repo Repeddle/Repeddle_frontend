@@ -43,7 +43,7 @@ const ReturnTable = ({ returns, error, loading }: Props) => {
               </Link>
             </div>
           ),
-          Buyer: ret.orderId.user.username,
+          Buyer: ret.orderId.buyer.username,
           Seller: ret.productId.seller.username,
           Order: ret.orderId._id,
           Date: moment(ret.createdAt).format("MMM DD YY, h:mm a"),

@@ -20,6 +20,7 @@ import MessageProvider from "./context/MessageContext.tsx"
 import { UserProvider } from "./context/UserContext.tsx"
 import { WalletProvider } from "./context/WalletContext.tsx"
 import { NotificationProvider } from "./context/NotificationContext.tsx"
+import { ReturnProvider } from "./context/ReturnContext.tsx"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -41,7 +42,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                                   <WalletProvider>
                                     <MessageProvider>
                                       <NotificationProvider>
-                                        <RouterProvider router={router} />
+                                        <ReturnProvider>
+                                          <RouterProvider router={router} />
+                                        </ReturnProvider>
                                       </NotificationProvider>
                                     </MessageProvider>
                                   </WalletProvider>

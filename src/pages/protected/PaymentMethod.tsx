@@ -34,7 +34,7 @@ const PaymentMethod = () => {
               id="card"
               value="Card"
               checked={paymentMethod === "Card"}
-              onChange={(e) => changePaymentMethod(e.target.value as "Card")}
+              onChange={() => changePaymentMethod("Card")}
             />
             <label htmlFor="card">Debit/Credit/Bank</label>
           </div>
@@ -48,7 +48,7 @@ const PaymentMethod = () => {
               id="wallet"
               value="Wallet"
               checked={paymentMethod === "Wallet"}
-              onChange={(e) => changePaymentMethod(e.target.value as "Wallet")}
+              onChange={() => changePaymentMethod("Wallet")}
             />
             <label htmlFor="wallet">
               {`Wallet (${currency(region())} ${balance.toFixed(2)})`}

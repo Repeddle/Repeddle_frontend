@@ -3,30 +3,64 @@ import { IReturn } from "../types/order"
 import { Helmet } from "react-helmet-async"
 import Modal from "./ui/Modal"
 import AddFund from "../section/wallet/AddFund"
-import { region } from "../utils/common"
+import { currency, region } from "../utils/common"
 import { postnet, pudo, states } from "../utils/constants"
 import Button from "./ui/Button"
+import useToastNotification from "../hooks/useToastNotification"
+import useReturn from "../hooks/useReturn"
 
 type Props = {
   returned: IReturn
+  setReturned: (val: IReturn) => void
   setShowModel: (val: boolean) => void
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dispatch: any
 }
 
-const DeliveryReturn = ({ setShowModel, returned }: Props) => {
+const DeliveryReturn = ({ setShowModel, returned, setReturned }: Props) => {
+  const { addNotification } = useToastNotification()
+  const { updateReturnAddress, error } = useReturn()
+
   const [deliveryOption, setDeliveryOption] = useState("")
   const [showMap, setShowMap] = useState(false)
-  const [meta, setMeta] = useState<{ [key: string]: string }>({})
-  const [, setValue] = useState("")
+  const [meta, setMeta] = useState<{ [key: string]: string | number }>({})
+  const [value, setValue] = useState<number>()
   const [showModel, setShowModel1] = useState(false)
   const [refresh, setRefresh] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const error1 = ""
-  const currency = "N"
+  const currencys = currency(region())
 
-  const submitHandler = (e: FormEvent) => {
+  const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
+
+    if (!deliveryOption) {
+      addNotification("Select a method of delivery", undefined, true)
+      return
+    }
+
+    setLoading(true)
+
+    if (
+      !returned.deliverySelected &&
+      returned.deliveryOption.method !== "Pick up from Seller"
+    ) {
+      // TODO:  method for other delivery methods
+    } else {
+      const res = await updateReturnAddress(returned._id, {
+        method: deliveryOption,
+        fee: value ?? 0,
+      })
+
+      if (res) {
+        setReturned(res)
+        setShowModel(false)
+        addNotification("address added")
+      } else {
+        addNotification(error || "Failed to update address", undefined, true)
+      }
+    }
+
+    setLoading(false)
   }
 
   return (
@@ -52,8 +86,8 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
         <form onSubmit={submitHandler}>
           {[
             {
-              name: returned.sending["delivery Option"],
-              value: returned.sending.cost,
+              name: returned.deliveryOption.method,
+              value: returned.deliveryOption.fee,
             },
           ].map((x) => (
             <div className="mb-3" key={x.name}>
@@ -71,7 +105,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                       setMeta({
                         ...meta,
                         deliveryOption: e.target.value,
-                        cost: x.value,
+                        fee: +x.value,
                       })
                       setDeliveryOption(e.target.value)
                       setValue(x.value)
@@ -79,7 +113,7 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
                     }}
                   />
                   <label className="ml-2.5 capitalize" htmlFor={x.name}>
-                    {x.name} {x.value === 1 ? "" : `+ ${currency}${x.value}`}
+                    {x.name} {x.value === 1 ? "" : `+ ${currencys}${x.value}`}
                   </label>
                 </div>
                 {deliveryOption === x.name ? (
@@ -400,13 +434,18 @@ const DeliveryReturn = ({ setShowModel, returned }: Props) => {
             </div>
           ))}
           <div className="mb-3">
-            <Button className="w-full" text="Continue" type="submit" />
+            <Button
+              className="w-full"
+              isLoading={loading}
+              text="Continue"
+              type="submit"
+            />
           </div>
         </form>
         <Modal isOpen={showModel} onClose={() => setShowModel1(false)}>
           <AddFund
             setShowModel={setShowModel}
-            currency={currency}
+            currency={currencys}
             setRefresh={setRefresh}
             refresh={refresh}
           />
