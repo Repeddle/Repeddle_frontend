@@ -12,8 +12,10 @@ import {
   getTopSellersService,
   getUserByIdService,
   getUserByUsernameService,
+  reviewSellerService,
   updateUserByIdService,
 } from "../services/user"
+import { IReview } from "../types/product"
 
 type ContextType = {
   error: string | null
@@ -26,6 +28,10 @@ type ContextType = {
     userId: string,
     userData: UpdateUser
   ) => Promise<IUser | string>
+  reviewSeller: (
+    id: string,
+    review: { comment: string; rating: number; like: boolean }
+  ) => Promise<{ review: IReview; message: string } | null>
 }
 
 // Create user context
@@ -123,6 +129,26 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
+  const reviewSeller = async (
+    id: string,
+    review: { comment: string; rating: number; like: boolean }
+  ) => {
+    try {
+      setError("")
+      // setLoading(true)
+      const res = await reviewSellerService(id, review)
+      if (res) {
+        return res
+      }
+      // setLoading(false)
+      return null
+    } catch (error) {
+      handleError(error)
+      // setLoading(false)
+      return null
+    }
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -133,6 +159,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
         getUserByUsername,
         getUserById,
         updateUserById,
+        reviewSeller,
       }}
     >
       {children}

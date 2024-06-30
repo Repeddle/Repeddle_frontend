@@ -99,7 +99,7 @@ export const fetchSoldOrdersService = async (): Promise<IOrder[]> => {
 export const updateOrderItemTrackingService = async (
   orderId: string,
   itemId: string,
-  body: { status: string }
+  body: { status: string; trackingNumber?: string }
 ): Promise<IOrder> => {
   try {
     const data: {
@@ -109,6 +109,8 @@ export const updateOrderItemTrackingService = async (
       `/orders/${orderId}/items/${itemId}/delivery-tracking`,
       body
     )
+
+    console.log(data)
 
     if (!data.status) {
       // Handle Update order error, e.g., display an error message to the user

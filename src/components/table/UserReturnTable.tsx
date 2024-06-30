@@ -42,12 +42,12 @@ const UserReturnTable = ({ returns, error, loading }: Props) => {
               </Link>
             </div>
           ),
-          Buyer: ret.orderId.user.username,
+          Buyer: ret.orderId.buyer.username,
           Order: ret.orderId._id,
           Date: moment(ret.createdAt).format("MMM DD YY, h:mm a"),
         },
         action: (
-          <Link to={`/return/${ret._id}?orderId=${ret.orderId._id}`}>
+          <Link to={`/return/${ret._id}`}>
             <button className="text-orange-color dark:bg-dark-ev3 bg-[#fcf0e0] cursor-pointer mr-2.5 px-3 py-[5px] rounded-[0.2rem] border-none">
               View
             </button>
