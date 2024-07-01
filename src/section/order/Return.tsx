@@ -1,11 +1,16 @@
-import { useEffect, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import { OrderItem } from "../../types/order"
 import { FaCamera, FaChevronCircleRight } from "react-icons/fa"
 import { Link, useNavigate } from "react-router-dom"
 import MessageBox from "../../components/MessageBox"
 import Button from "../../components/ui/Button"
-import { currency, daydiff, deliveryNumber } from "../../utils/common"
+import {
+  compressImageUpload,
+  currency,
+  daydiff,
+  deliveryNumber,
+} from "../../utils/common"
 import useReturn from "../../hooks/useReturn"
 import useToastNotification from "../../hooks/useToastNotification"
 import Modal from "../../components/ui/Modal"
@@ -41,8 +46,22 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
     if (!sellerId || userId) return
   }
 
-  const handleImageUpload = () => {
-    console.log(setLoadUpload)
+  const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    try {
+      setLoadUpload(true)
+
+      const file = e.target.files?.[0]
+      if (!file) throw Error("No image found")
+
+      const imageUrl = await compressImageUpload(file, 1024, image)
+
+      setImage(imageUrl)
+      setLoadUpload(false)
+
+      addNotification("Image uploaded")
+    } catch (err) {
+      addNotification("Failed uploading image")
+    }
   }
 
   const handleReturn = async () => {

@@ -223,7 +223,11 @@ const Comment = ({ comment, product, setProduct }: Props) => {
                 <div className="flex justify-between items-center w-20">
                   <div className="text-[13px]">{r.likes.length} like</div>
                   <FaHeart
-                    color={r.likes.find((val) => val === user?._id)}
+                    className={
+                      r.likes.find((val) => val === user?._id)
+                        ? "text-orange-color"
+                        : ""
+                    }
                     onClick={() => !loading && likeReplyHandler(r)}
                   />
                 </div>
@@ -232,7 +236,7 @@ const Comment = ({ comment, product, setProduct }: Props) => {
           ))}
           <form onSubmit={submitReplyHandler}>
             <textarea
-              className={`w-full m-0 lg:w-4/5 lg:ml-[90px] lg:mr-0 lg:mt-2.5 lg:mb-0 p-2.5 rounded-[0.2rem] focus-visible:border
+              className={`w-full m-0 lg:w-4/5 lg:ml-[90px] lg:mr-0 lg:mt-2.5 lg:mb-0 p-2.5 rounded-[0.2rem] focus-visible:border border-light-ev4 dark:border-gray-200 border
               focus-visible:border-orange-color focus-visible:shadow-[0_0_0_0.25rem_rgb(247_154_35_/_10%)] focus-visible:outline-1
               focus-visible:outline-orange-color bg-white-color dark:bg-black-color text-black-color dark:text-white-color`}
               placeholder="Leave a reply here"
@@ -241,7 +245,7 @@ const Comment = ({ comment, product, setProduct }: Props) => {
             />
             <div>
               <button
-                className="m-0 text-white-color text-xs lg:ml-[90px] px-[7px] py-[5px] rounded-[0.2rem] border-0"
+                className="m-0 text-white-color bg-orange-color text-xs lg:ml-[90px] px-[7px] py-[5px] rounded-[0.2rem] border-0"
                 type="submit"
                 disabled={loading}
               >

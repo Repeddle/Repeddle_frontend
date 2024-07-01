@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import SearchBox from "../../components/SearchBox";
-import { ICategory, ISubCategory } from "../../types/category";
-import { FaChevronDown } from "react-icons/fa";
-import useCategory from "../../hooks/useCategory";
+import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+import SearchBox from "../../components/SearchBox"
+import { ICategory, ISubCategory } from "../../types/category"
+import { FaChevronDown } from "react-icons/fa"
+import useCategory from "../../hooks/useCategory"
 
 const CategoryMobile = () => {
-  const { categories, fetchCategories } = useCategory();
+  const { categories, fetchCategories } = useCategory()
 
   useEffect(() => {
-    fetchCategories();
-  }, []);
+    fetchCategories()
+  }, [])
 
   return (
     <>
-      <div className="fixed z-[7] overflow-auto mt-[72px] p-2.5 inset-0 bg-white dark:bg-black">
+      <div className="z-[7] overflow-auto p-2.5 inset-0 bg-white dark:bg-black">
         <div className="flex justify-center items-center text-white mx-0 my-[15px] p-[3px] rounded-[0.2rem] bg-orange-color">
           Let's help you find what you are looking for
         </div>
@@ -31,11 +31,11 @@ const CategoryMobile = () => {
         <div className="h-[55px] w-full" />
       </div>
     </>
-  );
-};
+  )
+}
 
 const SidebarItem = ({ item }: { item: ICategory | ISubCategory }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   if ("subCategories" in item && item?.subCategories?.length > 0) {
     return (
@@ -59,7 +59,7 @@ const SidebarItem = ({ item }: { item: ICategory | ISubCategory }) => {
           </div>
         )}
       </div>
-    );
+    )
   } else if (Array.isArray(item.items)) {
     return (
       <div
@@ -85,14 +85,14 @@ const SidebarItem = ({ item }: { item: ICategory | ISubCategory }) => {
           </div>
         )}
       </div>
-    );
+    )
   } else {
     return (
       <div className="text-[1em] capitalize px-[1em] py-[0.75em] hover:text-orange-color">
         <Link to={`/search?query=${item.name}`}> {item.name}</Link>
       </div>
-    );
+    )
   }
-};
+}
 
-export default CategoryMobile;
+export default CategoryMobile
