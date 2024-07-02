@@ -110,7 +110,7 @@ const VerifyAccount = () => {
             <select
               onChange={(e) => handleOnChange(e.target.value, "bankName")}
               onFocus={() => handleError("", "bankName")}
-              className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+              className="text-base m-0 pl-2.5 border-light-ev4 dark:border-[grey] pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
             >
               {region() === "NGN"
                 ? banks.Nigeria.map((x) => (

@@ -394,7 +394,6 @@ const ReturnPage = () => {
                       Pay Seller
                     </button>
                   )} */}
-                  here
                   <div className="flex justify-center mx-0 my-5">
                     {returned.productId.seller._id === user?._id ? (
                       deliveryNumber(
