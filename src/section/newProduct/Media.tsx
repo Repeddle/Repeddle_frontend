@@ -111,7 +111,7 @@ const Media = ({ input, setInput, setVideo, video }: Props) => {
             lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
             hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
         >
-          <FaQuestionCircle className="text-black ml-2.5" />
+          <FaQuestionCircle className="text-black dark:text-white ml-2.5" />
         </div>
       </label>
       <div className="flex gap-[5px]">
