@@ -9,6 +9,13 @@ import useGeoLocation from "../hooks/useGeoLocation"
 import { pudoOptions } from "../utils/constants"
 import { fetchStations } from "../services/others"
 
+type InputProps = {
+  costPrice: string
+  sellingPrice: string
+  discount: string
+  deliveryOption: string
+}
+
 type Props = {
   paxi: boolean
   setPaxi: (val: boolean) => void
@@ -31,6 +38,7 @@ type Props = {
   setShowModel: (val: boolean) => void
   meta: ProductMeta
   setMeta: (val: ProductMeta) => void
+  handleError?: (text: string, key: keyof InputProps) => void
 }
 
 const DeliveryOption = ({
@@ -55,6 +63,7 @@ const DeliveryOption = ({
   setShowModel,
   bundle,
   setBundle,
+  handleError,
 }: Props) => {
   const [error1, setError1] = useState("")
 
@@ -245,6 +254,7 @@ const DeliveryOption = ({
                 appearance-none bg-[#d4d4d4] outline-0 checked:before:bg-orange-color before:bg-[grey] dark:checked:bg-dark-ev4 checked:bg-[#fcf0e0]`}
                 checked={paxi}
                 onChange={(e) => {
+                  handleError?.("", "deliveryOption")
                   setPaxi(e.target.checked)
                   if (!e.target.checked) {
                     setDeliveryOption(
@@ -265,7 +275,10 @@ const DeliveryOption = ({
                     className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
                     type="radio"
                     name="Paxi PEP store"
-                    onChange={(e) => handleChange(e.target)}
+                    onChange={(e) => {
+                      handleChange(e.target)
+                      handleError?.("", "deliveryOption")
+                    }}
                     id="free"
                     value={0}
                   />
@@ -278,7 +291,10 @@ const DeliveryOption = ({
                     className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
                     type="radio"
                     name="Paxi PEP store"
-                    onChange={(e) => handleChange(e.target)}
+                    onChange={(e) => {
+                      handleChange(e.target)
+                      handleError?.("", "deliveryOption")
+                    }}
                     value={59.95}
                     id="standard"
                   />
@@ -291,7 +307,10 @@ const DeliveryOption = ({
                     className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
                     type="radio"
                     name="Paxi PEP store"
-                    onChange={(e) => handleChange(e.target)}
+                    onChange={(e) => {
+                      handleChange(e.target)
+                      handleError?.("", "deliveryOption")
+                    }}
                     value={99.95}
                     id="Large"
                   />
@@ -328,6 +347,7 @@ const DeliveryOption = ({
                 appearance-none bg-[#d4d4d4] outline-0 checked:before:bg-orange-color before:bg-[grey] dark:checked:bg-dark-ev4 checked:bg-[#fcf0e0]`}
                 checked={pudoLocker}
                 onChange={(e) => {
+                  handleError?.("", "deliveryOption")
                   setPudoLocker(e.target.checked)
                   if (!e.target.checked) {
                     setDeliveryOption(
@@ -350,7 +370,10 @@ const DeliveryOption = ({
                     className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
                     type="radio"
                     name="PUDO Locker-to-Locker"
-                    onChange={(e) => handleChange(e.target)}
+                    onChange={(e) => {
+                      handleChange(e.target)
+                      handleError?.("", "deliveryOption")
+                    }}
                     id="free"
                     value={0}
                   />
@@ -363,7 +386,10 @@ const DeliveryOption = ({
                     className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
                     type="radio"
                     name="PUDO Locker-to-Locker"
-                    onChange={(e) => handleChange(e.target)}
+                    onChange={(e) => {
+                      handleChange(e.target)
+                      handleError?.("", "deliveryOption")
+                    }}
                     value={50}
                     id="standard"
                   />
@@ -376,7 +402,10 @@ const DeliveryOption = ({
                     className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
                     type="radio"
                     name="PUDO Locker-to-Locker"
-                    onChange={(e) => handleChange(e.target)}
+                    onChange={(e) => {
+                      handleChange(e.target)
+                      handleError?.("", "deliveryOption")
+                    }}
                     value={60}
                     id="Large"
                   />
@@ -389,7 +418,10 @@ const DeliveryOption = ({
                     className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
                     type="radio"
                     name="PUDO Locker-to-Locker"
-                    onChange={(e) => handleChange(e.target)}
+                    onChange={(e) => {
+                      handleChange(e.target)
+                      handleError?.("", "deliveryOption")
+                    }}
                     value={60}
                     id="Large"
                   />
@@ -402,7 +434,10 @@ const DeliveryOption = ({
                     className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
                     type="radio"
                     name="PUDO Locker-to-Locker"
-                    onChange={(e) => handleChange(e.target)}
+                    onChange={(e) => {
+                      handleChange(e.target)
+                      handleError?.("", "deliveryOption")
+                    }}
                     value={60}
                     id="Large"
                   />
@@ -440,6 +475,7 @@ const DeliveryOption = ({
                 checked={pudoDoor}
                 onChange={(e) => {
                   setPudoDoor(e.target.checked)
+                  handleError?.("", "deliveryOption")
                   if (!e.target.checked) {
                     setDeliveryOption(
                       deliveryOption.filter(
@@ -460,7 +496,10 @@ const DeliveryOption = ({
                       className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
                       type="radio"
                       name="PUDO Locker-to-Door"
-                      onChange={(e) => handleChange(e.target)}
+                      onChange={(e) => {
+                        handleChange(e.target)
+                        handleError?.("", "deliveryOption")
+                      }}
                       value={opt.value}
                       id="standard"
                     />
@@ -500,6 +539,7 @@ const DeliveryOption = ({
                 checked={postnet}
                 onChange={(e) => {
                   setPostnet(e.target.checked)
+                  handleError?.("", "deliveryOption")
                   if (!e.target.checked) {
                     setDeliveryOption(
                       deliveryOption.filter(
@@ -521,7 +561,10 @@ const DeliveryOption = ({
                     className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
                     type="radio"
                     name="PostNet-to-PostNet"
-                    onChange={(e) => handleChange(e.target)}
+                    onChange={(e) => {
+                      handleChange(e.target)
+                      handleError?.("", "deliveryOption")
+                    }}
                     id="free"
                     value={0}
                   />
@@ -534,7 +577,10 @@ const DeliveryOption = ({
                     className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
                     type="radio"
                     name="PostNet-to-PostNet"
-                    onChange={(e) => handleChange(e.target)}
+                    onChange={(e) => {
+                      handleChange(e.target)
+                      handleError?.("", "deliveryOption")
+                    }}
                     value={99.99}
                     id="standard"
                   />
@@ -547,7 +593,10 @@ const DeliveryOption = ({
                     className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
                     type="radio"
                     name="PostNet-to-PostNet"
-                    onChange={(e) => handleChange(e.target)}
+                    onChange={(e) => {
+                      handleChange(e.target)
+                      handleError?.("", "deliveryOption")
+                    }}
                     value={99.99}
                     id="standard"
                   />
@@ -585,6 +634,7 @@ const DeliveryOption = ({
                 checked={aramex}
                 onChange={(e) => {
                   setAramex(e.target.checked)
+                  handleError?.("", "deliveryOption")
                   if (!e.target.checked) {
                     setDeliveryOption(
                       deliveryOption.filter(
@@ -606,7 +656,10 @@ const DeliveryOption = ({
                     className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
                     type="radio"
                     name="Aramex Store-to-Door"
-                    onChange={(e) => handleChange(e.target)}
+                    onChange={(e) => {
+                      handleChange(e.target)
+                      handleError?.("", "deliveryOption")
+                    }}
                     id="free"
                     value={0}
                   />
@@ -619,7 +672,10 @@ const DeliveryOption = ({
                     className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
                     type="radio"
                     name="Aramex Store-to-Door"
-                    onChange={(e) => handleChange(e.target)}
+                    onChange={(e) => {
+                      handleChange(e.target)
+                      handleError?.("", "deliveryOption")
+                    }}
                     value={99.99}
                     id="standard"
                   />
@@ -661,6 +717,7 @@ const DeliveryOption = ({
                 type="checkbox"
                 onChange={(e) => {
                   setGig(e.target.checked)
+                  handleError?.("", "deliveryOption")
                   handleChange({
                     name: "GIG Logistics",
                     value: 0,
@@ -682,7 +739,7 @@ const DeliveryOption = ({
                 )}
                 <div className="flex items-center justify-between mx-0 my-2 px-[30px] py-2.5">
                   <input
-                    className="w-full h-[30px] pl-2.5 text-black dark:text-white bg-transparent border-b-light-ev3 dark:border-b-dark-ev3 focus:outline-0 placeholder:text-sm border-b focus:border-b-orange-color focus:border-b"
+                    className="w-full h-[30px] pl-2.5 text-black dark:text-white bg-transparent border-b-light-ev3 dark:border-b-[grey] focus:outline-0 placeholder:text-sm border-b focus:border-b-orange-color focus:border-b"
                     type="text"
                     onChange={(e) => setMeta({ ...meta, name: e.target.value })}
                     placeholder="Name"
@@ -691,37 +748,38 @@ const DeliveryOption = ({
                 </div>
                 <div className="flex items-center justify-between mx-0 my-2 px-[30px] py-2.5">
                   <input
-                    className="w-full h-[30px] pl-2.5 text-black dark:text-white bg-transparent border-b-light-ev3 dark:border-b-dark-ev3 focus:outline-0 placeholder:text-sm border-b focus:border-b-orange-color focus:border-b"
+                    className="w-full h-[30px] pl-2.5 text-black dark:text-white bg-transparent border-b-light-ev3 dark:border-b-[grey] focus:outline-0 placeholder:text-sm border-b focus:border-b-orange-color focus:border-b"
                     type="text"
-                    onChange={(e) =>
+                    onChange={(e) => {
                       setMeta({ ...meta, address: e.target.value })
-                    }
+                      handleError?.("", "deliveryOption")
+                    }}
                     placeholder="Address"
                     value={meta?.address}
                   />
                 </div>
                 <div className="flex items-center justify-between mx-0 my-2 px-[30px] py-2.5">
                   <input
-                    className="w-full h-[30px] pl-2.5 text-black dark:text-white bg-transparent border-b-light-ev3 dark:border-b-dark-ev3 focus:outline-0 placeholder:text-sm border-b focus:border-b-orange-color focus:border-b"
+                    className="w-full h-[30px] pl-2.5 text-black dark:text-white bg-transparent border-b-light-ev3 dark:border-b-[grey] focus:outline-0 placeholder:text-sm border-b focus:border-b-orange-color focus:border-b"
                     type="text"
-                    onChange={(e) =>
+                    onChange={(e) => {
                       setMeta({ ...meta, phone: e.target.value })
-                    }
+                      handleError?.("", "deliveryOption")
+                    }}
                     placeholder="Phone"
                     value={meta?.phone}
                   />
                 </div>
                 <div className="flex items-center justify-between mx-0 my-2 px-[30px] py-2.5">
-                  <label className="text-sm tex-[grey] mx-5">
-                    Select Station
-                  </label>
-                  <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
+                  <label className="text-sm tex-[grey] ">Select Station</label>
+                  <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 dark:bg-dark-ev1 overflow-hidden rounded-[0.2rem] w-[150px] border border-light-ev4 dark:border-dark-ev4">
                     <select
                       value={meta.stationId}
-                      onChange={(e) =>
+                      onChange={(e) => {
                         setMeta({ ...meta, stationId: e.target.value })
-                      }
-                      className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-4/5 appearance-none text-black-color dark:text-white-color"
+                        handleError?.("", "deliveryOption")
+                      }}
+                      className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                     >
                       {loadingStations ? (
                         <option value="">Loading...</option>
@@ -771,6 +829,7 @@ const DeliveryOption = ({
             type="checkbox"
             onChange={(e) => {
               setPickup(e.target.checked)
+              handleError?.("", "deliveryOption")
               handleChange({ name: "Pick up from Seller", value: "0" })
               if (!e.target.checked) {
                 setDeliveryOption(
@@ -804,6 +863,7 @@ const DeliveryOption = ({
             checked={rebundleStatus}
             type="checkbox"
             onChange={(e) => {
+              handleError?.("", "deliveryOption")
               if (e.target.checked) {
                 setRebundleStatus(e.target.checked)
               } else {
@@ -828,9 +888,10 @@ const DeliveryOption = ({
                 </div>
                 <div className="flex items-center justify-between mx-0 my-2">
                   <input
-                    className="w-full h-[30px] pl-2.5 text-black dark:text-white bg-transparent border-b-light-ev3 dark:border-b-dark-ev3 focus:outline-0 placeholder:text-sm border-b focus:border-b-orange-color focus:border-b"
+                    className="w-full h-[30px] pl-2.5 text-black dark:text-white bg-transparent border-b-light-ev3 dark:border-b-[grey] focus:outline-0 placeholder:text-sm border-b focus:border-b-orange-color focus:border-b"
                     type="number"
                     onChange={(e) => {
+                      handleError?.("", "deliveryOption")
                       setRebundleCount(+e.target.value)
                     }}
                     onFocus={() => setRebundleError("")}
