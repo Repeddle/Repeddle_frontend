@@ -27,11 +27,11 @@ const AddOtherBrand = ({ handleOnChange, setShowOtherBrand }: Props) => {
     if (res) {
       if (user?.role === "Admin") {
         addNotification("Brand has been added")
-        handleOnChange(brand, "brand")
       } else {
         addNotification("Brand has been added and awaiting approval")
       }
 
+      handleOnChange(brand, "brand")
       setShowOtherBrand(false)
       setBrand("")
       return
@@ -40,11 +40,11 @@ const AddOtherBrand = ({ handleOnChange, setShowOtherBrand }: Props) => {
   }
 
   return (
-    <div className="p-8">
-      <div className="flex flex-col mt-2.5">
+    <div className="p-8 flex flex-col gap-2 items-start">
+      <div className="flex gap-2 flex-col mt-2.5">
         <label className="mb-[5px] text-sm mr-2.5">Enter brand name</label>
         <input
-          className="w-[250px] h-[30px] border-light-ev3 dark:border-dark-ev3 border pl-2.5 bg-transparent focus:border focus:border-orange-color"
+          className="w-[250px] h-[30px] border-light-ev3 dark:border-[grey] rounded-[0.2rem] border pl-2.5 bg-transparent focus:border focus:border-orange-color"
           name="brand"
           type="text"
           onChange={(e) => setBrand(e.target.value)}

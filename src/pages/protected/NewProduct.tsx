@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import useAuth from "../../hooks/useAuth"
 import { useNavigate } from "react-router-dom"
 import useCategory from "../../hooks/useCategory"
@@ -85,6 +85,8 @@ const NewProduct = () => {
   const { createProduct, error } = useProducts()
   const [newProduct, setNewProduct] = useState<IProduct>()
 
+  const topRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     fetchCategories()
   }, [])
@@ -143,16 +145,16 @@ const NewProduct = () => {
     costPrice: "",
     sellingPrice: "",
     discount: "",
+    deliveryOption: "",
   })
 
   const [priceValidation, setPriceValidation] = useState({
     costPrice: "",
     sellingPrice: "",
     discount: "",
+    deliveryOption: "",
   })
-  const [deliveryOption, setDeliveryOption] = useState<IDeliveryOption[]>([
-    { name: "Pick up from Seller", value: 0 },
-  ])
+  const [deliveryOption, setDeliveryOption] = useState<IDeliveryOption[]>([])
   const [video, setVideo] = useState("")
   const [sizes, setSizes] = useState<ISize[]>([])
   const [countInStock, setCountInStock] = useState(1)
@@ -161,7 +163,7 @@ const NewProduct = () => {
 
   const handleTags = (tag: string) => {
     if (tag.includes(" ")) {
-      addNotification("Please remove unnecessary space")
+      addNotification("Please remove space")
       return
     }
 
@@ -207,7 +209,9 @@ const NewProduct = () => {
 
   const jumpStep = (val: number) => {
     if (step > val) {
-      return setStep(val)
+      setStep(val)
+      topRef.current?.scrollIntoView({ behavior: "smooth" })
+      return
     }
 
     if (val > 1 && !validateDetails()) {
@@ -226,6 +230,7 @@ const NewProduct = () => {
     }
 
     setStep(val)
+    topRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
   const discount = () => {
@@ -295,6 +300,11 @@ const NewProduct = () => {
   const validatePrice = () => {
     if (sellingPrice < 1) {
       handlePriceError("price must be greater than 1", "costPrice")
+      return false
+    }
+
+    if (deliveryOption.length === 0) {
+      handlePriceError("Delivery option is required", "deliveryOption")
       return false
     }
 
@@ -418,9 +428,14 @@ const NewProduct = () => {
       video: "",
       vintage: false,
     })
-    setPriceInput({ costPrice: "", discount: "", sellingPrice: "" })
+    setPriceInput({
+      costPrice: "",
+      discount: "",
+      sellingPrice: "",
+      deliveryOption: "",
+    })
     setMeta({})
-    setDeliveryOption([{ name: "Pick up from Seller", value: 0 }])
+    setDeliveryOption([])
     setVideo("")
     setSizes([])
     setCountInStock(1)
@@ -434,8 +449,8 @@ const NewProduct = () => {
         <title>New Product</title>
       </Helmet>
       <div className="pb-20 px-8 lg:pb-12">
-        <div className="mb-1 mt-6 text-center flex flex-col gap-4">
-          <h1 className="text-[28px]">New integrationProduct</h1>
+        <div className="mb-1 mt-6 text-center flex flex-col gap-4" ref={topRef}>
+          <h1 className="text-[28px]">New Product</h1>
           <div
             className="text-[red] text-center mx-auto cursor-pointer"
             onClick={() => setShowTopInfo(!showTopInfo)}

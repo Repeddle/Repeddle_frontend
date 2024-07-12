@@ -232,8 +232,8 @@ const DeliveryOption = ({
                 <div
                   data-content="How do I know what the primary material of the product is? This information is mostly indicated on the Product labels, please refer to the label detailing the composition of your Product."
                   className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[30px] hover:after:text-justify 
-                  hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
-                  lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
+                  hover:after:text-[11px] hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
+                  lg:hover:after:top-0 hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
                 hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
                 >
                   <FaQuestionCircle className="mr-2.5" />
@@ -315,8 +315,8 @@ const DeliveryOption = ({
                 <div
                   data-content="Locker-to-locker courier service anywhere in South Africa. Drop off the item at the nearest Pudo locker. The Buyer will collect the item from the locker of their choice. Pudo lockers are accessible 24/7, so you can drop off or pick up your package when it suits you best."
                   className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[30px] hover:after:text-justify 
-                  hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
-                  lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
+                  hover:after:text-[11px] hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
+                  lg:hover:after:top-0 hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
                 hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
                 >
                   <FaQuestionCircle className="text-neutral-300" />
@@ -426,8 +426,8 @@ const DeliveryOption = ({
                 <div
                   data-content="Locker-to-locker courier service anywhere in South Africa. Drop off the item at the nearest Pudo locker. The Buyer will collect the item from the locker of their choice. Pudo lockers are accessible 24/7, so you can drop off or pick up your package when it suits you best."
                   className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[30px] hover:after:text-justify 
-                  hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
-                  lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
+                  hover:after:text-[11px] hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
+                  lg:hover:after:top-0 hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
                 hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
                 >
                   <FaQuestionCircle className="text-neutral-300" />
@@ -486,8 +486,8 @@ const DeliveryOption = ({
                 <div
                   data-content="PostNet-to-PostNet courier service anywhere in South Africa. Drop off the item at the nearest PostNet counter. The Buyer will collect the item from the pick-up point of their choice. Your parcel will be delivered within 2-4 working days."
                   className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[30px] hover:after:text-justify 
-                  hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
-                  lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
+                  hover:after:text-[11px] hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
+                  lg:hover:after:top-0 hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
                 hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
                 >
                   <FaQuestionCircle className="text-neutral-300" />
@@ -571,8 +571,8 @@ const DeliveryOption = ({
                 <div
                   data-content="Store-to-door courier service anywhere in South Africa. Aramex shipment sleeves can be bought at kiosks, selected Pick n Pay and Freshstop stores nationwide. The parcel will be delivered to buyer’s door."
                   className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[30px] hover:after:text-justify 
-                  hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
-                  lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
+                  hover:after:text-[11px] hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
+                  lg:hover:after:top-0 hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
                 hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
                 >
                   <FaQuestionCircle className="text-neutral-300" />
@@ -646,8 +646,8 @@ const DeliveryOption = ({
                 <div
                   data-content="Sending & receiving package almost anywhere in Nigeria is made easy with GIGL integrated on Repeddle. Simply fill in a contactable correct address and phone number. A GIGL driver may come to you for pick up, or ask you to drop off your package to the nearest GIGL experience centre closer to you. The buyer pays for delivery and package will be delivered to the address buyer will provide when making a purchase. Please do not make any delivery payment to anyone."
                   className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[30px] hover:after:text-justify 
-                  hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
-                  lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
+                  hover:after:text-[11px] hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
+                  lg:hover:after:top-0 hover:after:left-[-35px] hover:after:w-[200px] hover:after:-top-9 hover:after:bg-black
                 hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
                 >
                   <FaQuestionCircle className="text-neutral-300" />
@@ -756,8 +756,8 @@ const DeliveryOption = ({
             <div
               data-content="Pick-up from seller is an option seller & buyer agrees upon a choice of delivery outside of delivery methods available on Repeddle. Pick-up from seller may be ideal for users within the same locality."
               className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[30px] hover:after:text-justify 
-                  hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
-                  lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
+                  hover:after:text-[11px] hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
+                  lg:hover:after:top-0 hover:after:left-[-70px] hover:after:w-[200px] hover:after:top-0 hover:after:bg-black
                 hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
             >
               <FaQuestionCircle className="text-neutral-300" />
@@ -790,8 +790,8 @@ const DeliveryOption = ({
             <div
               data-content="Re:bundle allows buyers to shop multiple items from your store and only pay for delivery once! The buyer will be charged delivery on their first purchase, and, if they make any additional purchases within the next 2 hours, free delivery will then automatically apply. Shops who enable bundling sell more and faster."
               className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[30px] hover:after:text-justify 
-                  hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
-                  lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
+                  hover:after:text-[11px] hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
+                  lg:hover:after:top-0 hover:after:left-[-20px] hover:after:w-[200px] hover:after:-top-14 hover:after:bg-black
                 hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
             >
               <FaQuestionCircle className="text-neutral-300" />
@@ -828,7 +828,7 @@ const DeliveryOption = ({
                 </div>
                 <div className="flex items-center justify-between mx-0 my-2">
                   <input
-                    className="w-full h-[30px] pl-2.5 border-none text-black dark:text-white bg-transparent border-b-light-ev3 dark:border-b-dark-ev3 focus:outline-0 placeholder:text-sm border-b focus:border-b-orange-color focus:border-b"
+                    className="w-full h-[30px] pl-2.5 text-black dark:text-white bg-transparent border-b-light-ev3 dark:border-b-dark-ev3 focus:outline-0 placeholder:text-sm border-b focus:border-b-orange-color focus:border-b"
                     type="number"
                     onChange={(e) => {
                       setRebundleCount(+e.target.value)

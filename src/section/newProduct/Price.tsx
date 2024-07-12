@@ -11,6 +11,7 @@ type InputProps = {
   costPrice: string
   sellingPrice: string
   discount: string
+  deliveryOption: string
 }
 
 type Props = {
@@ -46,7 +47,7 @@ const Price = ({
   const [pudoDoor, setPudoDoor] = useState(false)
   const [postnet, setPostnet] = useState(false)
   const [aramex, setAramex] = useState(false)
-  const [pickup, setPickup] = useState(true)
+  const [pickup, setPickup] = useState(false)
   const [bundle, setBundle] = useState(false)
 
   const handleOnChange = (text: string, input: keyof InputProps) => {
@@ -108,6 +109,7 @@ const Price = ({
             </div>
             <div className="flex">
               <div className="flex-[3] flex items-center gap-2.5">
+                Estimated amount you will Receive
                 <div
                   data-content="Amount shown here is an estimated withdrawable amount you will receive in your Repeddle wallet. Final amount pay is determined by the delivery cost when product sells"
                   className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[30px] hover:after:text-justify 
@@ -115,9 +117,8 @@ const Price = ({
                 lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
                 hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
                 >
-                  <FaQuestionCircle className="text-black" />
+                  <FaQuestionCircle className="text-black dark:text-white" />
                 </div>
-                Estimated amount you will Receive
               </div>
               <div className="flex-1">
                 {currency(region())}
@@ -157,6 +158,11 @@ const Price = ({
         >
           Add delivery option
         </div>
+        {validationError.deliveryOption && (
+          <span className="text-sm text-[red]">
+            {validationError.deliveryOption}
+          </span>
+        )}
         <Modal
           onClose={() => setShowDelivery(false)}
           isOpen={showDelivery}
