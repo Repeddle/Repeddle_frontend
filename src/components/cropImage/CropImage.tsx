@@ -94,6 +94,15 @@ const CropImage = ({ uploadHandler, setShowModel, currentImage }: Props) => {
       >
         Add an image
       </label>
+      <div>
+        <input
+          id="inputButton"
+          className="hidden"
+          type="file"
+          accept="image/*"
+          onChange={onFileChange}
+        />
+      </div>
       {imageSrc && (
         <div className="flex w-full gap-5 items-center justify-center h-[90%] relative p-[5px]">
           <Cropper
@@ -106,15 +115,6 @@ const CropImage = ({ uploadHandler, setShowModel, currentImage }: Props) => {
             onCropComplete={onCropComplete}
             onZoomChange={setZoom}
           />
-          <div>
-            <input
-              id="inputButton"
-              className="hidden"
-              type="file"
-              accept="image/*"
-              onChange={onFileChange}
-            />
-          </div>
         </div>
       )}
       <div className="flex justify-end w-full items-end">
