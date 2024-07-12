@@ -7,12 +7,16 @@ import useAuth from "../../hooks/useAuth";
 
 const Message: React.FC = () => {
   const { user } = useAuth();
-  const { currentTab, getConversations } = useMessage();
+  const { currentTab, getConversations, setCurrentConversation } = useMessage();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   // Load initial messages or data on component mount
   useEffect(() => {
     getConversations(currentTab);
+
+    return () => {
+      setCurrentConversation(null);
+    };
   }, [currentTab]);
 
   return (

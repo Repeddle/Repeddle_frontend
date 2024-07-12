@@ -32,7 +32,7 @@ interface MessageContextType {
   currentTab: string;
   isAnimating: boolean;
   setIsAnimating: (conversation: boolean) => void;
-  setCurrentTab: (conversation: string) => void;
+  handleTabChange: (conversation: string) => void;
   setCurrentConversation: (conversation: IConversation | null) => void;
   sendMessage: (message: MessageData) => Promise<void>;
   getMessages: (receiver: string) => Promise<void>;
@@ -64,6 +64,8 @@ export const MessageProvider: React.FC<Props> = ({ children }) => {
     const fetchData = async () => {
       if (currentConversation) {
         await getMessages(currentConversation._id);
+      } else {
+        setMessages([]);
       }
     };
     fetchData();
@@ -105,10 +107,8 @@ export const MessageProvider: React.FC<Props> = ({ children }) => {
     };
   }, []);
 
-  console.log(isAnimating);
-
   useEffect(() => {
-    const handleMessage = (message: IMessage) => {
+    const handleMessage = (message: IMessage, type: string) => {
       if (message.conversationId === currentConversation?._id) {
         if (!messages.find((msg) => msg._id === message._id)) {
           setIsAnimating(true);
@@ -119,7 +119,7 @@ export const MessageProvider: React.FC<Props> = ({ children }) => {
           markMessagesAsRead(currentConversation._id, user!._id);
         }
       } else {
-        reloadConversation();
+        reloadConversation(type);
       }
     };
 
@@ -132,7 +132,7 @@ export const MessageProvider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     socket.on("messagesRead", () => {
-      reloadConversation();
+      reloadConversation(currentConversation?.type || currentTab);
     });
 
     return () => {
@@ -155,7 +155,7 @@ export const MessageProvider: React.FC<Props> = ({ children }) => {
     try {
       const res = await sendMessageService(message);
       setMessages((prevMessages) => [...prevMessages, res]);
-      reloadConversation();
+      reloadConversation(currentConversation?.type || currentTab);
     } catch (error) {
       handleError(error);
       throw error;
@@ -203,9 +203,14 @@ export const MessageProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
-  const reloadConversation = async () => {
-    const res = await getConversationsService(currentTab);
+  const reloadConversation = async (tab: string) => {
+    console.log("currentRab", currentTab);
+    const res = await getConversationsService(tab);
     setConversations(res);
+  };
+
+  const handleTabChange = (type: string) => {
+    setCurrentTab(type);
   };
 
   return (
@@ -221,7 +226,7 @@ export const MessageProvider: React.FC<Props> = ({ children }) => {
         loadingMessage,
         isAnimating,
         setIsAnimating,
-        setCurrentTab,
+        handleTabChange,
         setCurrentConversation,
         sendMessage,
         getMessages,

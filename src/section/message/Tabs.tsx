@@ -4,11 +4,11 @@ import { BiSupport } from "react-icons/bi";
 import { MdReport } from "react-icons/md";
 
 function Tabs() {
-  const { currentTab, setCurrentTab } = useMessage();
+  const { currentTab, handleTabChange } = useMessage();
   return (
     <div className="w-[15%] bg-light-ev4 dark:bg-dark-ev4">
       <div
-        onClick={() => setCurrentTab("Chat")}
+        onClick={() => handleTabChange("Chat")}
         className={`${
           currentTab === "Chat"
             ? "bg-light-ev2 dark:bg-dark-ev2"
@@ -18,7 +18,7 @@ function Tabs() {
         <IoChatbubbleEllipsesOutline size={30} />
       </div>
       <div
-        onClick={() => setCurrentTab("Support")}
+        onClick={() => handleTabChange("Support")}
         className={`${
           currentTab === "Support"
             ? "bg-light-ev2 dark:bg-dark-ev2"
@@ -28,7 +28,7 @@ function Tabs() {
         <BiSupport size={30} />
       </div>
       <div
-        onClick={() => setCurrentTab("Report")}
+        onClick={() => handleTabChange("Report")}
         className={`${
           currentTab === "Report"
             ? "bg-light-ev2 dark:bg-dark-ev2"

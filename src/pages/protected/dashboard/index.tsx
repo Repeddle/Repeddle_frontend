@@ -40,11 +40,11 @@ function Dashboard() {
           }`}
         >
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* <div className="md:hidden">
             <button onClick={toggleSidebar} className="">
               <RiMenu2Fill className="text-primary text-3xl" />
             </button>
-          </div>
+          </div> */}
 
           {/* Content */}
           <main className="">
