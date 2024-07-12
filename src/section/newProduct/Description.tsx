@@ -197,11 +197,13 @@ const Description = ({
           </div>
         </div>
       </div>
-      <label
-        onClick={() => setShowSize(!showSize)}
-        className="text-sm flex mt-2.5 items-center"
-      >
-        Add Size
+      <label className="text-sm flex mt-3 items-center">
+        <div
+          onClick={() => setShowSize(!showSize)}
+          className="border rounded-[0.2rem] cursor-pointer border-light-ev1 px-3 py-1.5 dark:border-[grey]"
+        >
+          Add Size
+        </div>
         <div
           data-content="If I feel the product and the size seems to differ from what indicated on the label, what should I do?
                     Please be advised to list the product with the size printed on the label. Mentioning the size discrepancy, you noticed in the product description helps a great deal for buyers to make informed size decision. If buyers are forewarned, they will not be disappointed. This minimizes the chances of your products been returned as a result of unfit size."
@@ -214,8 +216,8 @@ const Description = ({
         </div>
       </label>
       {showSize && (
-        <div className="flex lg:flex-row gap-2.5 lg:gap-5 flex-col gap-0 m-0">
-          <div className="text-[10px] max-w-[300px] mb-2.5">
+        <div className="flex flex-col gap-2.5 lg:gap-5 m-0">
+          <div className="text-sm mb-2.5">
             Please include size for items that requires size, EG: Shoes, Clothes
             Etc. For item that does not require size, EG: Books, Cups, Etc.
             Kindly switch to "ITEM DO NOT REQUIRE SIZE" button.
@@ -264,7 +266,7 @@ const Description = ({
                 </div>
 
                 <div className="flex flex-wrap items-center">
-                  <div className="w-auto lg:w-[70%] mt-2 text-sm leading-[1.2]">
+                  <div className="w-auto lg:w-[70%] mt-3 text-sm leading-[1.2]">
                     Provide the exact size as indicated on your product's label.
                   </div>
                   {sizes.map((s) => (
