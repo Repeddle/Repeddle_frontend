@@ -72,7 +72,7 @@ function Cart() {
     }
 
     if (cart.length === 0) {
-      addNotification("Cart is empty")
+      return addNotification("Cart is empty")
     } else {
       if (user.isVerifiedEmail) {
         navigate("/payment")
