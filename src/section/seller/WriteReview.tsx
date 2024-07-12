@@ -2,6 +2,8 @@ import { FormEvent, useState } from "react"
 import { FaThumbsDown, FaThumbsUp } from "react-icons/fa"
 import LoadingBox from "../../components/LoadingBox"
 import Button from "../../components/ui/Button"
+import useUser from "../../hooks/useUser"
+import useToastNotification from "../../hooks/useToastNotification"
 
 type Props = {
   setShowModel: (val: boolean) => void
@@ -9,15 +11,42 @@ type Props = {
 }
 
 const WriteReview = ({ setShowModel, userId }: Props) => {
-  const [like, setLike] = useState(false)
+  const { error, reviewSeller } = useUser()
+  const { addNotification } = useToastNotification()
+
+  const [like, setLike] = useState<boolean | undefined>()
   const [rating, setRating] = useState("")
   const [comment, setComment] = useState("")
-
-  const loading = false
+  const [loading, setLoading] = useState(false)
 
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
-    console.log(userId, setShowModel)
+
+    if (!comment)
+      return addNotification("Please enter a review", undefined, true)
+
+    if (!rating) return addNotification("Please select rating", undefined, true)
+
+    if (!like)
+      return addNotification(
+        "Give review a thumb up or thumb down",
+        undefined,
+        true
+      )
+
+    setLoading(true)
+
+    const res = await reviewSeller(userId, { comment, like, rating: +rating })
+    if (res) {
+      addNotification(res.message)
+      setComment("")
+      setRating("")
+      setLike(undefined)
+      // TODO: update seller
+
+      setShowModel(false)
+    } else addNotification(error || "Failed to create review", undefined, true)
+    setLoading(false)
   }
 
   return (
@@ -31,6 +60,7 @@ const WriteReview = ({ setShowModel, userId }: Props) => {
             aria-label="Rating"
             value={rating}
             onChange={(e) => setRating(e.target.value)}
+            className="bg-transparent rounded-[0.2rem] p-1 border-dark-ev1 dark:border-light-ev1 border ml-2.5 focus-within:outline-orange-color text-black-color dark:text-white-color"
           >
             <option value="">Select...</option>
             <option value="1">1- Poor</option>
@@ -40,28 +70,32 @@ const WriteReview = ({ setShowModel, userId }: Props) => {
             <option value="5">5- Excellent</option>
           </select>
         </div>
-        <div className="my-4">
+        <div className="my-4 flex gap-2.5 items-start">
           <label htmlFor="comment">Comment</label>
           <textarea
-            className={`bg-white-color text-black-color`}
+            className={`bg-transparent border rounded-[0.2rem] p-1 border-black text-black-color`}
             id="comment"
             placeholder="Leave a comment here"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
           />
         </div>
-        <div className="flex">
-          <div>Like</div>
-          <FaThumbsUp
-            className="text-lg px-2.5"
-            onClick={() => setLike(true)}
-            color={like ? "#eb9f40" : "grey"}
-          />{" "}
-          <div>Dislike</div>
-          <FaThumbsDown
-            onClick={() => setLike(false)}
-            color={!like ? "#eb9f40" : "grey"}
-          />
+        <div className="flex gap-2">
+          <div className="flex items-center gap-1">
+            <div>Like</div>
+            <FaThumbsUp
+              // className="text-lg px-2.5"
+              onClick={() => setLike(true)}
+              color={like === true ? "#eb9f40" : "grey"}
+            />{" "}
+          </div>
+          <div className="flex items-center gap-1">
+            <div>Dislike</div>
+            <FaThumbsDown
+              onClick={() => setLike(false)}
+              color={like === false ? "#eb9f40" : "grey"}
+            />
+          </div>
         </div>
         <div className="my-3">
           <Button text="Submit" disabled={loading} type="submit" />

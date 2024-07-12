@@ -6,7 +6,13 @@ import { Link } from "react-router-dom"
 import { FaCheck } from "react-icons/fa"
 import { useState } from "react"
 import { IUser } from "../../types/user"
-import { currency, daydiff, deliveryNumber, region } from "../../utils/common"
+import {
+  currency,
+  daydiff,
+  deliveryNumber,
+  deliveryStatusMap,
+  region,
+} from "../../utils/common"
 import DeliveryStatus from "../../components/DeliveryStatus"
 
 type Props = {
@@ -19,7 +25,12 @@ type Props = {
   handleCancelOrder: (val: OrderItem) => void
   refund: (val: OrderItem) => void
   paySeller: (val: OrderItem) => void
-  deliverOrderHandler: (deliveryStatus: string, orderItem: OrderItem) => void
+  deliverOrderHandler: (
+    deliveryStatus: string,
+    orderItem: OrderItem,
+    trackingNumber?: string
+  ) => Promise<void>
+  updatingStatus: boolean
 }
 
 const IsSeller = ({
@@ -33,17 +44,48 @@ const IsSeller = ({
   refund,
   paySeller,
   deliverOrderHandler,
+  updatingStatus,
 }: Props) => {
   const { user } = useAuth()
 
-  const [enterwaybil] = useState(false)
-  const [waybillNumber, setWaybillNumber] = useState("")
+  const [trackingNumber, setTrackingNumber] = useState("")
+  const [showTracking, setShowTracking] = useState(false)
 
   const loadingWaybill = false
 
-  const comfirmWaybill = () => {}
+  const comfirmWaybill = async () => {
+    if (!trackingNumber) return
+
+    await updateTracking()
+    setShowTracking(false)
+  }
 
   const toggleOrderHoldStatus = () => {}
+
+  const showNextStatus = (status: string) => {
+    const entries = Object.entries(deliveryStatusMap)
+    const currentNumber = deliveryNumber(status)
+
+    return entries[currentNumber]
+  }
+
+  const updateTracking = async () => {
+    if (updatingStatus) return
+
+    const nextStatus = showNextStatus(
+      orderItem.deliveryTracking.currentStatus.status
+    )
+
+    if (nextStatus[1] === 2 && !trackingNumber) {
+      setShowTracking(true)
+    } else {
+      await deliverOrderHandler(
+        orderItem.deliveryTracking.currentStatus.status,
+        orderItem,
+        trackingNumber
+      )
+    }
+  }
 
   return (
     <div
@@ -94,14 +136,16 @@ const IsSeller = ({
           orderItem.deliveryTracking.currentStatus.status === "Delivered" && (
             <div
               className="cursor-pointer text-white-color bg-orange-color hover:bg-malon-color h-[30px] mr-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
-              onClick={() => deliverOrderHandler("Received", orderItem)}
+              onClick={() =>
+                !updatingStatus && deliverOrderHandler("Received", orderItem)
+              }
             >
-              Comfirm you have recieved order
+              Confirm you have received order
             </div>
           )}
         {user && (
           <div className="print:hidden">
-            {enterwaybil ? (
+            {showTracking ? (
               loadingWaybill ? (
                 <LoadingBox />
               ) : (
@@ -110,9 +154,9 @@ const IsSeller = ({
                     className={`border h-10 ml-5 p-2.5 rounded-[0.2rem]  border-[grey] text-black-color
                     dark:text-white-color focus-visible:outline focus-visible:outline-orange-color`}
                     placeholder="Enter Tracking number"
-                    value={waybillNumber}
+                    value={trackingNumber}
                     type="text"
-                    onChange={(e) => setWaybillNumber(e.target.value)}
+                    onChange={(e) => setTrackingNumber(e.target.value)}
                   />
                   <div className="h-10 w-10 flex justify-center items-center cursor-pointer bg-orange-color text-white-color rounded-tr-[0.2rem] rounded-br-[0.2rem]">
                     <FaCheck
@@ -123,99 +167,31 @@ const IsSeller = ({
                 </div>
               )
             ) : (
-              <>
-                {orderItem.deliveryOption._id && (
+              <div className="flex flex-col justify-end gap-2">
+                {orderItem.trackingNumber && (
                   <label className="mr-5">
-                    Tracking Number: {orderItem.deliveryOption._id}
+                    Tracking Number: {orderItem.trackingNumber}
                   </label>
                 )}
-                {/* <FormControl
-                  disabled={
-                    orderItem.onHold ||
-                    orderItem.deliveryStatus === "Received" ||
-                    orderItem.deliveryStatus === "Return Logged"
-                  }
-                  sx={{
-                    minWidth: "220px",
-                    margin: 0,
-                    borderRadius: "0.2rem",
-                    border: `1px solid ${
-                      mode === "pagebodydark"
-                        ? "var(--dark-ev4)"
-                        : "var(--light-ev4)"
-                    }`,
-                    "& .MuiOutlinedInput-root": {
-                      color: `${
-                        mode === "pagebodydark"
-                          ? "var(--white-color)"
-                          : "var(--black-color)"
-                      }`,
-                      "&:hover": {
-                        outline: "none",
-                        border: 0,
-                      },
-                    },
-                    "& .MuiOutlinedInput-notchedOutline": {
-                      border: "0 !important",
-                    },
-                  }}
-                  size="small"
-                >
-                  <InputLabel
-                    sx={{
-                      color: `${
-                        mode === "pagebodydark"
-                          ? "var(--white-color)"
-                          : "var(--black-color)"
-                      }`,
-                    }}
-                    id="deliveryStatus"
-                  >
-                    Update Delivery Status
-                  </InputLabel>
 
-                  <Select
-                    onChange={(e) => {
-                      if (
-                        e.target.value === "Dispatched" &&
-                        orderItem.deliverySelect["delivery Option"] !==
-                          "Pick up from Seller"
-                      ) {
-                        setEnterwaybil(true)
-                      } else {
-                        deliverOrderHandler(e.target.value, orderItem._id)
-                      }
-                    }}
-                    displayEmpty
-                    id="deliveryStatus"
-                  >
-                    <MenuItem
-                      disabled={deliveryNumber(orderItem.deliveryStatus) > 0}
-                      value="Processing"
+                {deliveryNumber(
+                  orderItem.deliveryTracking.currentStatus.status
+                ) < 4 &&
+                  (!updatingStatus ? (
+                    <div
+                      onClick={updateTracking}
+                      className="p-2 self-start lg:self-end rounded-[0.2rem] cursor-pointer transition-all duration-300 bg-orange-color text-white hover:bg-malon-color"
                     >
-                      Processing
-                    </MenuItem>
-                    <MenuItem
-                      disabled={deliveryNumber(orderItem.deliveryStatus) !== 1}
-                      value="Dispatched"
-                    >
-                      Dispatched
-                    </MenuItem>
-                    <MenuItem
-                      disabled={deliveryNumber(orderItem.deliveryStatus) !== 2}
-                      value="In Transit"
-                    >
-                      In Transit
-                    </MenuItem>
-                    <MenuItem
-                      disabled={deliveryNumber(orderItem.deliveryStatus) !== 3}
-                      value="Delivered"
-                    >
-                      Delivered
-                    </MenuItem>
-                  </Select>
-                </FormControl> */}
-              </>
+                      {`Mark as ${
+                        showNextStatus(
+                          orderItem.deliveryTracking.currentStatus.status
+                        )[0]
+                      }`}
+                    </div>
+                  ) : (
+                    <LoadingBox />
+                  ))}
+              </div>
             )}
           </div>
         )}
@@ -287,8 +263,13 @@ const IsSeller = ({
               4 && (
               <button
                 onClick={() => {
-                  paySeller(orderItem)
-                  deliverOrderHandler("Payment To Seller Initiated", orderItem)
+                  if (!updatingStatus) {
+                    paySeller(orderItem)
+                    deliverOrderHandler(
+                      "Payment To Seller Initiated",
+                      orderItem
+                    )
+                  }
                 }}
                 className="inline-block bg-malon-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
               >
@@ -372,25 +353,3 @@ const IsSeller = ({
 }
 
 export default IsSeller
-
-{
-  /* <div className="relative">
-        <select
-          className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          value={selectedOption}
-          onChange={handleChange}
-        >
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-        <label
-          className="absolute top-0 left-3 px-1 text-gray-500 bg-white pointer-events-none"
-          style={{ transform: "translateY(-50%)", transition: "0.2s" }}
-        >
-          Select
-        </label>
-      </div> */
-}

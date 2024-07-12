@@ -68,22 +68,24 @@ const PaymentDelivery = ({
                 <hr />
                 <div className="w-full mt-5 lg:w-1/2 lg:mt-0">
                   <div className="flex">
-                    <div className="flex-[2]">Total cost:</div>
-                    <div className="flex-[3]">
+                    <div className="flex-1 lg:flex-[2]">Total cost:</div>
+                    <div className="flex-1 lg:flex-[3]">
                       {currency(region())}
                       {itemsPrice + shippingPrice}
                     </div>
                   </div>
                   <div className="flex">
-                    <div className="flex-[2]">Repeddle Commision (7.9%):</div>
-                    <div className="flex-[3]">
+                    <div className="flex-1 lg:flex-[2]">
+                      Repeddle Commision (7.9%):
+                    </div>
+                    <div className="flex-1 lg:flex-[3]">
                       {currency(region())}
                       {((7.9 / 100) * (itemsPrice + shippingPrice)).toFixed(2)}
                     </div>
                   </div>
                   <div className="flex">
-                    <div className="flex-[2]">You will Receive:</div>
-                    <div className="flex-[3]">
+                    <div className="flex-1 lg:flex-[2]">You will Receive:</div>
+                    <div className="flex-1 lg:flex-[3]">
                       {currency(region())}
                       {(
                         itemsPrice +

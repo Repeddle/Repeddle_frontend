@@ -117,7 +117,7 @@ const VerifyAddress = () => {
             <select
               onChange={(e) => handleOnChange(e.target.value, "state")}
               onFocus={() => handleError("", "state")}
-              className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+              className="text-base m-0 pl-2.5 border-light-ev4 dark:border-[grey] outline-[grey] pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
             >
               <option value="">-- Select --</option>
               {region() === "NGN"

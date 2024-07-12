@@ -1,3 +1,4 @@
+import { IReview } from "../types/product"
 import {
   IGuestUser,
   IUser,
@@ -155,5 +156,32 @@ export async function loginGuestService(userData: IGuestUser): Promise<IUser> {
 
     // Re-throw the error to propagate it up the call stack if needed
     throw getBackendErrorMessage(error);
+  }
+}
+
+export async function reviewSellerService(
+  id: string,
+  review: { comment: string; rating: number; like: boolean }
+) {
+  try {
+    const response: { review: IReview; message: string } = await api.post(
+      `/users/${id}/reviews`,
+      review
+    )
+
+    // console.log(response)
+    // if (!response.status) {
+    //   // Handle all users error, e.g., display an error message to the user
+    //   throw new Error("Update failed: " + getBackendErrorMessage(response))
+    // }
+
+    return response
+  } catch (error) {
+    // Handle network errors or other exceptions
+    // You can log the error or perform other error-handling actions
+    console.error("Update user error:", getBackendErrorMessage(error))
+
+    // Re-throw the error to propagate it up the call stack if needed
+    throw getBackendErrorMessage(error)
   }
 }
