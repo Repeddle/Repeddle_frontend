@@ -218,14 +218,14 @@ const NewProduct = () => {
       return
     }
 
-    if (step > 2 && !validateMedia()) {
+    if (val > 2 && !validateMedia()) {
       return
     }
 
-    if (step > 3 && !validatePrice()) {
+    if (val > 3 && !validatePrice()) {
       return
     }
-    if (step > 4 && !validateDescription()) {
+    if (val > 4 && !validateDescription()) {
       return
     }
 
@@ -290,7 +290,7 @@ const NewProduct = () => {
         return true
       })
     ) {
-      addNotification("At least one image is required")
+      step === 2 && addNotification("At least one image is required")
       return false
     }
 

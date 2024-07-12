@@ -93,28 +93,28 @@ const Price = ({
             </span>
           ) : null}
           <div className="text-xs flex flex-col gap-1">
-            <div className="flex">
+            <div className="flex gap-2.5">
               <div className="flex-[3]">Total cost:</div>
               <div className="flex-1">
                 {currency(region())}
                 {sellingPrice.toFixed(2)}
               </div>
             </div>
-            <div className="flex">
+            <div className="flex gap-2.5">
               <div className="flex-[3]">Repeddle Commision (7.9%):</div>
               <div className="flex-1">
                 {currency(region())}
                 {((7.9 / 100) * sellingPrice).toFixed(2)}
               </div>
             </div>
-            <div className="flex">
+            <div className="flex gap-2.5">
               <div className="flex-[3] flex items-center gap-2.5">
                 Estimated amount you will Receive
                 <div
                   data-content="Amount shown here is an estimated withdrawable amount you will receive in your Repeddle wallet. Final amount pay is determined by the delivery cost when product sells"
                   className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[30px] hover:after:text-justify 
-                hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
-                lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
+                hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
+                lg:hover:after:top-0 hover:after:text-sm hover:after:left-[-100px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
                 hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
                 >
                   <FaQuestionCircle className="text-black dark:text-white" />

@@ -828,7 +828,7 @@ const DeliveryOption = ({
                 </div>
                 <div className="flex items-center justify-between mx-0 my-2">
                   <input
-                    className="w-full h-[30px] pl-2.5 text-black dark:text-white bg-transparent border-b-light-ev3 dark:border-b-dark-ev3 focus:outline-0 placeholder:text-sm border-b focus:border-b-orange-color focus:border-b"
+                    className="w-full h-[30px] pl-2.5 text-black dark:text-white bg-transparent border-b-light-ev3 dark:border-b-[grey] focus:outline-0 placeholder:text-sm border-b focus:border-b-orange-color focus:border-b"
                     type="number"
                     onChange={(e) => {
                       setRebundleCount(+e.target.value)
