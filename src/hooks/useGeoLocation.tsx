@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export default function useGeoLocation() {
+export default function useGeoLocation(show?: boolean) {
   const [location, setLocation] = useState<{
     loaded: boolean
     coordinates?: { lat: string; lng: string }
@@ -30,6 +30,7 @@ export default function useGeoLocation() {
   }
 
   useEffect(() => {
+    if (!show) return
     if (!("geolocation" in navigator)) {
       onError({
         code: 0,
@@ -37,7 +38,7 @@ export default function useGeoLocation() {
       })
     }
     navigator.geolocation.getCurrentPosition(onSuccess, onError)
-  }, [])
+  }, [show])
 
   return location
 }

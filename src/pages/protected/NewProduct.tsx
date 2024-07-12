@@ -206,6 +206,25 @@ const NewProduct = () => {
   const [step, setStep] = useState(1)
 
   const jumpStep = (val: number) => {
+    if (step > val) {
+      return setStep(val)
+    }
+
+    if (val > 1 && !validateDetails()) {
+      return
+    }
+
+    if (step > 2 && !validateMedia()) {
+      return
+    }
+
+    if (step > 3 && !validatePrice()) {
+      return
+    }
+    if (step > 4 && !validateDescription()) {
+      return
+    }
+
     setStep(val)
   }
 
@@ -238,23 +257,6 @@ const NewProduct = () => {
     ? parseInt(priceInput.sellingPrice)
     : parseInt(priceInput.costPrice)
 
-  const next = () => {
-    if (step === 1 && validateDetails()) {
-      jumpStep(step + 1)
-    }
-
-    if (step === 2 && validateMedia()) {
-      jumpStep(step + 1)
-    }
-
-    if (step === 3 && validatePrice()) {
-      jumpStep(step + 1)
-    }
-    if (step === 4 && validateDescription()) {
-      jumpStep(step + 1)
-    }
-  }
-
   const validateDetails = () => {
     if (input.name.length === 0) {
       handleError("Name is required", "name")
@@ -273,9 +275,6 @@ const NewProduct = () => {
 
     return true
   }
-
-  console.log(costPriceNumber, "cost")
-  console.log(sellingPrice, "selling")
 
   const validateMedia = () => {
     if (
@@ -436,7 +435,7 @@ const NewProduct = () => {
       </Helmet>
       <div className="pb-20 px-8 lg:pb-12">
         <div className="mb-1 mt-6 text-center flex flex-col gap-4">
-          <h1 className="text-[28px]">NewProduct</h1>
+          <h1 className="text-[28px]">New integrationProduct</h1>
           <div
             className="text-[red] text-center mx-auto cursor-pointer"
             onClick={() => setShowTopInfo(!showTopInfo)}
@@ -466,9 +465,7 @@ const NewProduct = () => {
                 >
                   <div className="flex flex-col justify-center items-center">
                     <span
-                      onClick={() =>
-                        step > stepsItem.id && jumpStep(stepsItem.id)
-                      }
+                      onClick={() => jumpStep(stepsItem.id)}
                       className={`size-7 flex justify-center transition-all duration-300 items-center flex-shrink-0 font-medium rounded-full ${
                         step === stepsItem.id
                           ? "bg-orange-color text-white"
@@ -585,7 +582,7 @@ const NewProduct = () => {
             isLoading={createProductLoading}
             className="ml-auto"
             onClick={() =>
-              step === stepsItems.length ? handleCreate() : next()
+              step === stepsItems.length ? handleCreate() : jumpStep(step + 1)
             }
           />
         </div>
