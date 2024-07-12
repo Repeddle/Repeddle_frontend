@@ -159,7 +159,7 @@ const NewProduct = () => {
   const [sizes, setSizes] = useState<ISize[]>([])
   const [countInStock, setCountInStock] = useState(1)
   const [tags, setTags] = useState<string[]>([])
-  const [addSize, setAddSize] = useState(true)
+  const [addSize, setAddSize] = useState(false)
 
   const handleTags = (tag: string) => {
     if (tag.includes(" ")) {

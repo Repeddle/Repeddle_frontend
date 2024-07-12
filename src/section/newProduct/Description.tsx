@@ -62,6 +62,7 @@ const Description = ({
   const { addNotification } = useToastNotification()
 
   const [showOtherBrand, setShowOtherBrand] = useState(false)
+  const [showSize, setShowSize] = useState(false)
   const [brandQuery, setBrandQuery] = useState("")
 
   useEffect(() => {
@@ -196,103 +197,117 @@ const Description = ({
           </div>
         </div>
       </div>
-      <div className="flex items-center">
-        <label className="mr-2.5">Item do not require size</label>
-        <input
-          type="checkbox"
-          className={`relative w-10 h-[15px] transition-[0.5s] rounded-[20px] checked:before:left-[25px] before:w-[15px] before:h-[15px]
-            before:content-[""] before:absolute before:-translate-y-2/4 before:transition-[0.5s] before:rounded-[50%] before:left-0 before:top-2/4
-            appearance-none bg-[#d4d4d4] outline-0 checked:before:bg-orange-color before:bg-[grey] dark:checked:bg-dark-ev4 checked:bg-[#fcf0e0]`}
-          checked={addSize}
-          onChange={(e) => {
-            setSizes([])
-            setAddSize(e.target.checked)
-          }}
-        />
-      </div>
-      <div className="flex lg:flex-row lg:gap-5 flex-col gap-0 m-0">
-        {!addSize ? (
-          <div className="flex-1">
-            <>
-              <div className="relative flex flex-col mr-5 gap-2 w-full">
-                <label className="text-sm flex items-center">
-                  Add Size
-                  <div
-                    data-content="If I feel the product and the size seems to differ from what indicated on the label, what should I do?
+      <label
+        onClick={() => setShowSize(!showSize)}
+        className="text-sm flex mt-2.5 items-center"
+      >
+        Add Size
+        <div
+          data-content="If I feel the product and the size seems to differ from what indicated on the label, what should I do?
                     Please be advised to list the product with the size printed on the label. Mentioning the size discrepancy, you noticed in the product description helps a great deal for buyers to make informed size decision. If buyers are forewarned, they will not be disappointed. This minimizes the chances of your products been returned as a result of unfit size."
-                    className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[30px] hover:after:text-justify 
+          className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[30px] hover:after:text-justify 
                     hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
                     lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
                     hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
-                  >
-                    <FaQuestionCircle className="text-black ml-2.5" />
-                  </div>
-                </label>
+        >
+          <FaQuestionCircle className="text-black dark:text-white ml-2.5" />
+        </div>
+      </label>
+      {showSize && (
+        <div className="flex lg:flex-row gap-2.5 lg:gap-5 flex-col gap-0 m-0">
+          <div className="text-[10px] max-w-[300px] mb-2.5">
+            Please include size for items that requires size, EG: Shoes, Clothes
+            Etc. For item that does not require size, EG: Books, Cups, Etc.
+            Kindly switch to "ITEM DO NOT REQUIRE SIZE" button.
+          </div>
+          <div className="flex items-center">
+            <label className="mr-2.5">Item do not require size</label>
+            <input
+              type="checkbox"
+              className={`relative w-10 h-[15px] transition-[0.5s] rounded-[20px] checked:before:left-[25px] before:w-[15px] before:h-[15px]
+          before:content-[""] before:absolute before:-translate-y-2/4 before:transition-[0.5s] before:rounded-[50%] before:left-0 before:top-2/4
+          appearance-none bg-[#d4d4d4] outline-0 checked:before:bg-orange-color before:bg-[grey] dark:checked:bg-dark-ev4 checked:bg-[#fcf0e0]`}
+              checked={addSize}
+              onChange={(e) => {
+                setSizes([])
+                setAddSize(e.target.checked)
+              }}
+            />
+          </div>
 
-                <div className="flex bg-transparent overflow-hidden items-center border h-10 rounded-[0.2rem] border-light-ev4 dark:border-dark-ev4">
-                  <input
-                    className="flex-1 h-10 p-2.5 border-0 focus-visible:outline-none bg-transparent"
-                    value={input.selectedSize}
-                    type="text"
-                    maxLength={4}
-                    placeholder="Add size"
-                    onChange={(e) => {
-                      handleOnChange(e.target.value.slice(0, 4), "selectedSize")
-                      handleError("", "selectedSize")
-                    }}
-                  />
-                  <div
-                    className="text-white cursor-pointer mx-[5px] my-0 px-[5px] py-0.5 bg-malon-color"
-                    onClick={() => sizeHandler(input.selectedSize)}
-                  >
-                    Add
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-wrap items-center">
-                <div className="w-auto lg:w-[70%] text-sm leading-[1.2]">
-                  Provide the exact size as indicated on your product's label.
-                </div>
-                {sizes.map((s) => (
-                  <div className="m-2.5 flex items-center">
-                    <label className="text-sm">{s.size}</label>
-                    :
+          {!addSize ? (
+            <div className="flex-1">
+              <>
+                <div className="relative flex flex-col mr-5 gap-2 w-full">
+                  <div className="flex bg-transparent overflow-hidden items-center border h-10 rounded-[0.2rem] border-light-ev4 dark:border-dark-ev4">
                     <input
-                      className="bg-transparent numeric-arrow ml-[5px] text-xs border h-5 w-10 p-2.5 rounded-[0.2rem] text-black dark:text-white focus-visible:outline focus-visible:outline-orange-color"
-                      placeholder="qty"
+                      className="flex-1 h-10 p-2.5 border-0 focus-visible:outline-none bg-transparent"
+                      value={input.selectedSize}
+                      type="text"
                       maxLength={4}
-                      type="number"
-                      value={s.quantity}
+                      placeholder="Add size"
                       onChange={(e) => {
-                        smallSizeHandler(s.size, e.target.value.slice(0, 4))
+                        handleOnChange(
+                          e.target.value.slice(0, 4),
+                          "selectedSize"
+                        )
                         handleError("", "selectedSize")
                       }}
                     />
-                    <FaTimes
-                      className="text-sm ml-2 cursor-pointer"
-                      onClick={() => removeSize(s.size)}
-                    />
+                    <div
+                      className="text-white cursor-pointer mx-[5px] my-0 px-[5px] py-0.5 bg-malon-color"
+                      onClick={() => sizeHandler(input.selectedSize)}
+                    >
+                      Add
+                    </div>
                   </div>
-                ))}
-              </div>
-            </>
-          </div>
-        ) : (
-          <div className="relative flex flex-col mr-5 w-full">
-            <label className="text-sm">Count in stock</label>
-            <input
-              className="border h-10 bg-transparent p-2.5 rounded-[0.2rem] focus-visible:outline focus-visible:outline-orange-color border-light-ev4 dark:border-dark-ev4 text-black dark:text-white"
-              type="number"
-              value={countInStock}
-              onChange={(e) => setCountInStock(parseInt(e.target.value))}
-            />
-          </div>
-        )}
-      </div>
+                </div>
+
+                <div className="flex flex-wrap items-center">
+                  <div className="w-auto lg:w-[70%] mt-2 text-sm leading-[1.2]">
+                    Provide the exact size as indicated on your product's label.
+                  </div>
+                  {sizes.map((s) => (
+                    <div className="m-2.5 flex items-center">
+                      <label className="text-sm">{s.size}</label>
+                      :
+                      <input
+                        className="bg-transparent numeric-arrow ml-[5px] text-xs border h-5 w-10 p-2.5 rounded-[0.2rem] text-black dark:text-white focus-visible:outline focus-visible:outline-orange-color"
+                        placeholder="qty"
+                        maxLength={4}
+                        type="number"
+                        value={s.quantity}
+                        onChange={(e) => {
+                          smallSizeHandler(s.size, e.target.value.slice(0, 4))
+                          handleError("", "selectedSize")
+                        }}
+                      />
+                      <FaTimes
+                        className="text-sm ml-2 cursor-pointer"
+                        onClick={() => removeSize(s.size)}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </>
+            </div>
+          ) : (
+            <div className="relative flex flex-col mr-5 w-full">
+              <label className="text-sm">Count in stock</label>
+              <input
+                className="border h-10 bg-transparent p-2.5 rounded-[0.2rem] focus-visible:outline focus-visible:outline-orange-color border-light-ev4 dark:border-dark-ev4 text-black dark:text-white"
+                type="number"
+                value={countInStock}
+                onChange={(e) => setCountInStock(parseInt(e.target.value))}
+              />
+            </div>
+          )}
+        </div>
+      )}
       {validationError.selectedSize && (
         <div className="text-[red] text-xs">{validationError.selectedSize}</div>
       )}
-      <div className="relative flex gap-2 flex-col mr-5 mb-2 w-full">
+      <div className="relative flex gap-2 flex-col mr-5 my-2 w-full">
         <label className="text-sm">Description</label>
         <textarea
           className="h-[120px] p-2.5 rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4 text-black dark:text-white bg-transparent focus-visible:outline focus-visible:outline-orange-color"

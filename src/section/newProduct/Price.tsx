@@ -190,6 +190,7 @@ const Price = ({
             meta={meta}
             setMeta={setMeta}
             deliveryOption={deliveryOption}
+            handleError={handleError}
           />
         </Modal>
       </div>
