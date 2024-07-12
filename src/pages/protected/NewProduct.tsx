@@ -486,8 +486,12 @@ const NewProduct = () => {
                         onClick={() =>
                           step > stepsItem.id && jumpStep(stepsItem.id)
                         }
-                        className={`block font-medium font-sans text-black dark:text-white overflow-hidden text-nowrap text-ellipsis ${
+                        className={`block font-medium font-sans overflow-hidden text-nowrap text-ellipsis ${
                           step > stepsItem.id ? "cursor-pointer" : ""
+                        } ${
+                          step === stepsItem.id
+                            ? "text-orange-color dark:text-orange-color"
+                            : "dark:text-white text-black"
                         }`}
                       >
                         {stepsItem.name}
