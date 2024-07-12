@@ -43,7 +43,8 @@ export type IEmailList = {
 
 export interface MessageData {
   content: string;
-  conversationId: string;
+  type: string;
+  conversationId?: string;
   referencedUser?: string;
   referencedProduct?: string;
   image?: string;
@@ -83,6 +84,8 @@ export interface IConversation {
   participants: string[];
   type: string;
   createdAt: string;
+  closed: boolean;
+  isGuest: boolean;
   lastMessage: {
     content: string;
     createdAt: string;
@@ -90,7 +93,7 @@ export interface IConversation {
     receiver: string;
   };
   unreadCount: number;
-  otherUser: {
+  otherUser?: {
     username: string;
     image: string;
   };

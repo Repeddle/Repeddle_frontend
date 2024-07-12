@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
+import { FcCheckmark } from "react-icons/fc";
 
 interface MultiSelectProps {
   options: string[];
@@ -56,16 +57,17 @@ const MultiSelect: React.FC<MultiSelectProps> = ({
         onClick={() => setIsOpen(!isOpen)}
       />
       {isOpen && (
-        <div className="absolute z-10 w-full border border-gray-300 dark:border-dark-ev4 rounded mt-1 bg-white dark:bg-dark-ev1">
+        <div className="absolute z-10 w-full border max-h-64 overflow-y-auto border-gray-300 dark:border-dark-ev4 rounded mt-1 bg-white dark:bg-dark-ev1">
           {options.map((option) => (
             <div
               key={option}
-              className={`p-2 cursor-pointer ${
-                isSelected(option) ? "bg-orange-color" : ""
-              }`}
+              className={`p-2 cursor-pointer flex items-center justify-between`}
               onClick={() => handleSelect(option)}
             >
-              {option}
+              <div>{option}</div>
+              {isSelected(option) && (
+                <FcCheckmark className="text-orange-color" />
+              )}
             </div>
           ))}
         </div>

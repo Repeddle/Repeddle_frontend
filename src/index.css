@@ -49,3 +49,7 @@ h3,
 h4 {
   font-family: "Absentiasans";
 }
+
+.modal-open {
+  overflow: hidden;
+}

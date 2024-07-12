@@ -1,5 +1,4 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { RiMenu2Fill } from "react-icons/ri";
 import { useState } from "react";
 import Sidebar from "../../../components/layout/Sidebar";
 import StickyNav from "../../../components/layout/StickyNav";
@@ -20,10 +19,6 @@ function Dashboard() {
     return <Navigate to="/auth/login" />;
   }
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
-  };
-
   return (
     <main className="">
       <div className="p-4 bg-light-ev1 dark:bg-dark-ev1">
@@ -40,11 +35,11 @@ function Dashboard() {
           }`}
         >
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* <div className="md:hidden">
             <button onClick={toggleSidebar} className="">
               <RiMenu2Fill className="text-primary text-3xl" />
             </button>
-          </div>
+          </div> */}
 
           {/* Content */}
           <main className="">
