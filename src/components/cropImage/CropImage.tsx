@@ -38,6 +38,7 @@ const CropImage = ({ uploadHandler, setShowModel, currentImage }: Props) => {
         if (!invalidImage && resizeImage1.filepreview && resizeImage1.file) {
           await uploadHandler(resizeImage1.file, currentImage)
           setLoading(false)
+          setImageSrc("")
           setShowModel(false)
         }
       } catch (err) {
