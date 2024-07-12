@@ -75,7 +75,7 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
       setSending((prev) => ({ ...prev, value: true, failed: true }));
     }
   };
-
+  console.log(error);
   return (
     <div className="h-full flex flex-col overflow-hidden   text-black">
       <div

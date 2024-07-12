@@ -1,5 +1,5 @@
 import { FiSearch } from "react-icons/fi";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BiChevronRight } from "react-icons/bi";
 import { FaPaperPlane } from "react-icons/fa";
 import { IUser } from "../../types/user";

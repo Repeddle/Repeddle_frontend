@@ -1,5 +1,4 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { RiMenu2Fill } from "react-icons/ri";
 import { useState } from "react";
 import Sidebar from "../../../components/layout/Sidebar";
 import StickyNav from "../../../components/layout/StickyNav";
@@ -19,10 +18,6 @@ function Dashboard() {
     // user is not authenticated
     return <Navigate to="/auth/login" />;
   }
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
-  };
 
   return (
     <main className="">
