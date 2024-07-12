@@ -38,6 +38,7 @@ const CropImage = ({ uploadHandler, setShowModel, currentImage }: Props) => {
         if (!invalidImage && resizeImage1.filepreview && resizeImage1.file) {
           await uploadHandler(resizeImage1.file, currentImage)
           setLoading(false)
+          setImageSrc("")
           setShowModel(false)
         }
       } catch (err) {
@@ -86,15 +87,24 @@ const CropImage = ({ uploadHandler, setShowModel, currentImage }: Props) => {
   }
 
   return (
-    <div className="w-full h-[70vh] p-[30px]">
+    <div className="w-full flex justify-center items-center flex-col h-[70vh] p-[30px]">
       <label
         className="text-malon-color border border-malon-color capitalize mx-0 my-[5px] px-[5px] py-[3px] rounded-[0.2rem]"
         htmlFor="inputButton"
       >
         Add an image
       </label>
-      <div className="flex gap-5 items-center justify-center h-[90%] relative p-[5px]">
-        {imageSrc && (
+      <div>
+        <input
+          id="inputButton"
+          className="hidden"
+          type="file"
+          accept="image/*"
+          onChange={onFileChange}
+        />
+      </div>
+      {imageSrc && (
+        <div className="flex w-full gap-5 items-center justify-center h-[90%] relative p-[5px]">
           <Cropper
             image={imageSrc}
             crop={crop}
@@ -105,27 +115,20 @@ const CropImage = ({ uploadHandler, setShowModel, currentImage }: Props) => {
             onCropComplete={onCropComplete}
             onZoomChange={setZoom}
           />
-        )}
-        <div>
-          <input
-            id="inputButton"
-            className="hidden"
-            type="file"
-            accept="image/*"
-            onChange={onFileChange}
-          />
         </div>
-      </div>
-      <div className="flex justify-end items-end">
+      )}
+      <div className="flex justify-end w-full items-end">
         {loading ? (
           <LoadingBox />
         ) : (
-          <div
-            className="text-white cursor-pointer bg-orange-color hover:bg-malon-color capitalize mx-0 my-[5px] px-[5px] py-[3px] rounded-[0.2rem]"
-            onClick={showCroppedImage}
-          >
-            Done
-          </div>
+          imageSrc && (
+            <div
+              className="text-white self-end cursor-pointer bg-orange-color hover:bg-malon-color capitalize mx-0 my-[5px] px-[5px] py-[3px] rounded-[0.2rem]"
+              onClick={showCroppedImage}
+            >
+              Done
+            </div>
+          )
         )}
       </div>
     </div>

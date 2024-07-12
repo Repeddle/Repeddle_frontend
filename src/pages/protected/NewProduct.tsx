@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import useAuth from "../../hooks/useAuth"
 import { useNavigate } from "react-router-dom"
 import useCategory from "../../hooks/useCategory"
@@ -85,6 +85,8 @@ const NewProduct = () => {
   const { createProduct, error } = useProducts()
   const [newProduct, setNewProduct] = useState<IProduct>()
 
+  const topRef = useRef<HTMLDivElement>(null)
+
   useEffect(() => {
     fetchCategories()
   }, [])
@@ -143,16 +145,16 @@ const NewProduct = () => {
     costPrice: "",
     sellingPrice: "",
     discount: "",
+    deliveryOption: "",
   })
 
   const [priceValidation, setPriceValidation] = useState({
     costPrice: "",
     sellingPrice: "",
     discount: "",
+    deliveryOption: "",
   })
-  const [deliveryOption, setDeliveryOption] = useState<IDeliveryOption[]>([
-    { name: "Pick up from Seller", value: 0 },
-  ])
+  const [deliveryOption, setDeliveryOption] = useState<IDeliveryOption[]>([])
   const [video, setVideo] = useState("")
   const [sizes, setSizes] = useState<ISize[]>([])
   const [countInStock, setCountInStock] = useState(1)
@@ -161,7 +163,7 @@ const NewProduct = () => {
 
   const handleTags = (tag: string) => {
     if (tag.includes(" ")) {
-      addNotification("Please remove unnecessary space")
+      addNotification("Please remove space")
       return
     }
 
@@ -206,7 +208,29 @@ const NewProduct = () => {
   const [step, setStep] = useState(1)
 
   const jumpStep = (val: number) => {
+    if (step > val) {
+      setStep(val)
+      topRef.current?.scrollIntoView({ behavior: "smooth" })
+      return
+    }
+
+    if (val > 1 && !validateDetails()) {
+      return
+    }
+
+    if (step > 2 && !validateMedia()) {
+      return
+    }
+
+    if (step > 3 && !validatePrice()) {
+      return
+    }
+    if (step > 4 && !validateDescription()) {
+      return
+    }
+
     setStep(val)
+    topRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
   const discount = () => {
@@ -238,23 +262,6 @@ const NewProduct = () => {
     ? parseInt(priceInput.sellingPrice)
     : parseInt(priceInput.costPrice)
 
-  const next = () => {
-    if (step === 1 && validateDetails()) {
-      jumpStep(step + 1)
-    }
-
-    if (step === 2 && validateMedia()) {
-      jumpStep(step + 1)
-    }
-
-    if (step === 3 && validatePrice()) {
-      jumpStep(step + 1)
-    }
-    if (step === 4 && validateDescription()) {
-      jumpStep(step + 1)
-    }
-  }
-
   const validateDetails = () => {
     if (input.name.length === 0) {
       handleError("Name is required", "name")
@@ -273,9 +280,6 @@ const NewProduct = () => {
 
     return true
   }
-
-  console.log(costPriceNumber, "cost")
-  console.log(sellingPrice, "selling")
 
   const validateMedia = () => {
     if (
@@ -296,6 +300,11 @@ const NewProduct = () => {
   const validatePrice = () => {
     if (sellingPrice < 1) {
       handlePriceError("price must be greater than 1", "costPrice")
+      return false
+    }
+
+    if (deliveryOption.length === 0) {
+      handlePriceError("Delivery option is required", "deliveryOption")
       return false
     }
 
@@ -419,9 +428,14 @@ const NewProduct = () => {
       video: "",
       vintage: false,
     })
-    setPriceInput({ costPrice: "", discount: "", sellingPrice: "" })
+    setPriceInput({
+      costPrice: "",
+      discount: "",
+      sellingPrice: "",
+      deliveryOption: "",
+    })
     setMeta({})
-    setDeliveryOption([{ name: "Pick up from Seller", value: 0 }])
+    setDeliveryOption([])
     setVideo("")
     setSizes([])
     setCountInStock(1)
@@ -435,8 +449,8 @@ const NewProduct = () => {
         <title>New Product</title>
       </Helmet>
       <div className="pb-20 px-8 lg:pb-12">
-        <div className="mb-1 mt-6 text-center flex flex-col gap-4">
-          <h1 className="text-[28px]">NewProduct</h1>
+        <div className="mb-1 mt-6 text-center flex flex-col gap-4" ref={topRef}>
+          <h1 className="text-[28px]">New Product</h1>
           <div
             className="text-[red] text-center mx-auto cursor-pointer"
             onClick={() => setShowTopInfo(!showTopInfo)}
@@ -466,9 +480,7 @@ const NewProduct = () => {
                 >
                   <div className="flex flex-col justify-center items-center">
                     <span
-                      onClick={() =>
-                        step > stepsItem.id && jumpStep(stepsItem.id)
-                      }
+                      onClick={() => jumpStep(stepsItem.id)}
                       className={`size-7 flex justify-center transition-all duration-300 items-center flex-shrink-0 font-medium rounded-full ${
                         step === stepsItem.id
                           ? "bg-orange-color text-white"
@@ -486,8 +498,12 @@ const NewProduct = () => {
                         onClick={() =>
                           step > stepsItem.id && jumpStep(stepsItem.id)
                         }
-                        className={`block font-medium font-sans text-black dark:text-white overflow-hidden text-nowrap text-ellipsis ${
+                        className={`block font-medium font-sans overflow-hidden text-nowrap text-ellipsis ${
                           step > stepsItem.id ? "cursor-pointer" : ""
+                        } ${
+                          step === stepsItem.id
+                            ? "text-orange-color dark:text-orange-color"
+                            : "dark:text-white text-black"
                         }`}
                       >
                         {stepsItem.name}
@@ -581,7 +597,7 @@ const NewProduct = () => {
             isLoading={createProductLoading}
             className="ml-auto"
             onClick={() =>
-              step === stepsItems.length ? handleCreate() : next()
+              step === stepsItems.length ? handleCreate() : jumpStep(step + 1)
             }
           />
         </div>

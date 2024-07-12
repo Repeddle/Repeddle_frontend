@@ -85,11 +85,15 @@ const Description = ({
       const sizeIndex = prevSizes.findIndex((x) => x.size === label)
       if (sizeIndex !== -1) {
         const updatedSizes = [...prevSizes]
-        updatedSizes[sizeIndex].quantity = +value
+        updatedSizes[sizeIndex].quantity = parseInt(value)
         return updatedSizes
       }
       return prevSizes
     })
+  }
+
+  const removeSize = (label: string) => {
+    setSizes((prev) => prev.filter((val) => val.size !== label))
   }
 
   const sizeHandler = (sizenow: string) => {
@@ -250,18 +254,23 @@ const Description = ({
                   Provide the exact size as indicated on your product's label.
                 </div>
                 {sizes.map((s) => (
-                  <div className="m-2.5">
+                  <div className="m-2.5 flex items-center">
                     <label className="text-sm">{s.size}</label>
                     :
                     <input
-                      className="bg-transparent ml-[5px] text-xs border h-5 w-10 p-2.5 rounded-[0.2rem] text-black dark:text-white focus-visible:outline focus-visible:outline-orange-color"
+                      className="bg-transparent numeric-arrow ml-[5px] text-xs border h-5 w-10 p-2.5 rounded-[0.2rem] text-black dark:text-white focus-visible:outline focus-visible:outline-orange-color"
                       placeholder="qty"
                       maxLength={4}
+                      type="number"
                       value={s.quantity}
                       onChange={(e) => {
                         smallSizeHandler(s.size, e.target.value.slice(0, 4))
                         handleError("", "selectedSize")
                       }}
+                    />
+                    <FaTimes
+                      className="text-sm ml-2 cursor-pointer"
+                      onClick={() => removeSize(s.size)}
                     />
                   </div>
                 ))}
@@ -275,7 +284,7 @@ const Description = ({
               className="border h-10 bg-transparent p-2.5 rounded-[0.2rem] focus-visible:outline focus-visible:outline-orange-color border-light-ev4 dark:border-dark-ev4 text-black dark:text-white"
               type="number"
               value={countInStock}
-              onChange={(e) => setCountInStock(+e.target.value)}
+              onChange={(e) => setCountInStock(parseInt(e.target.value))}
             />
           </div>
         )}
