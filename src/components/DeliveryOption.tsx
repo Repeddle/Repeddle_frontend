@@ -66,7 +66,7 @@ const DeliveryOption = ({
   const [locationerror, setLocationerror] = useState("")
   const [stations, setStations] = useState<Stations[]>([])
 
-  const location = useGeoLocation()
+  const location = useGeoLocation(gig)
 
   const setLocation = useCallback(() => {
     if (gig) {

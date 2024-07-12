@@ -76,7 +76,7 @@ const Price = ({
           <div className="flex gap-2.5">
             <div
               className={`text-2xl text-malon-color mt-3 ${
-                sellingPrice && "line-through text-opacity-50"
+                sellingPrice && "line-through"
               }`}
             >
               {costPrice}
