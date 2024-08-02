@@ -106,66 +106,67 @@ const ProductReviews = ({ product, setProduct }: Props) => {
           ))}
         </div>
         <div className="my-3">
-          {user && product?.buyers.includes(user._id) ? (
-            <form onSubmit={submitHandler}>
-              <h2>Write a customer review</h2>
-              <div className="my-4">
-                <label htmlFor="rating">Rating</label>
-                <select
-                  id="rating"
-                  aria-label="Rating"
-                  value={rating}
-                  onChange={(e) => setRating(e.target.value)}
-                  // className="bg-transparent"
-                  className="text-base ml-2.5 pl-2.5 pr-6 text-ellipsis whitespace-nowrap leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color appearance-none text-black-color dark:text-white-color"
-                >
-                  <option value="">Select...</option>
-                  <option value="1">1- Poor</option>
-                  <option value="2">2- Fair</option>
-                  <option value="3">3- Good</option>
-                  <option value="4">4- Very good</option>
-                  <option value="5">5- Excellent</option>
-                </select>
-              </div>
-              <div className="relative my-4">
-                <textarea
-                  className={`w-full block text-base font-normal rounded border text-black-color dark:text-white-color
+          {user ? (
+            product?.buyers.includes(user._id) ? (
+              <form onSubmit={submitHandler}>
+                <h2>Write a customer review</h2>
+                <div className="my-4">
+                  <label htmlFor="rating">Rating</label>
+                  <select
+                    id="rating"
+                    aria-label="Rating"
+                    value={rating}
+                    onChange={(e) => setRating(e.target.value)}
+                    className="text-base ml-2.5 pl-2.5 pr-6 text-ellipsis whitespace-nowrap leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color appearance-none text-black-color dark:text-white-color"
+                  >
+                    <option value="">Select...</option>
+                    <option value="1">1- Poor</option>
+                    <option value="2">2- Fair</option>
+                    <option value="3">3- Good</option>
+                    <option value="4">4- Very good</option>
+                    <option value="5">5- Excellent</option>
+                  </select>
+                </div>
+                <div className="relative my-4">
+                  <textarea
+                    className={`w-full block text-base font-normal rounded border text-black-color dark:text-white-color
                     min-h-[calc(1.5em_+_0.75rem_+_2px)] bg-transparent h-[calc(3.5rem_+_2px)] leading-tight px-3 py-4  border-[#a2a3a5]
                     bg-none`}
-                  style={{
-                    transition:
-                      "border-color .15s ease-in-out, box-shadow .15s ease-in-out",
-                  }}
-                  placeholder="Leave a comment here"
-                  value={comment}
-                  onChange={(e) => setComment(e.target.value)}
-                />
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1">
-                  <div>Like</div>
-                  <FaThumbsUp
-                    onClick={() => setLike(true)}
-                    color={like ? "#eb9f40" : "grey"}
-                  />{" "}
-                </div>
-                <div className="flex items-center gap-1">
-                  <div>Dislike</div>
-                  <FaThumbsDown
-                    onClick={() => setLike(false)}
-                    color={like === false ? "#eb9f40" : "grey"}
+                    style={{
+                      transition:
+                        "border-color .15s ease-in-out, box-shadow .15s ease-in-out",
+                    }}
+                    placeholder="Leave a comment here"
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
                   />
                 </div>
-              </div>
-              <div className="my-3">
-                <Button
-                  text="Submit"
-                  type="submit"
-                  disabled={loadingCreateReview}
-                />
-                {loadingCreateReview && <LoadingBox></LoadingBox>}
-              </div>
-            </form>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1">
+                    <div>Like</div>
+                    <FaThumbsUp
+                      onClick={() => setLike(true)}
+                      color={like ? "#eb9f40" : "grey"}
+                    />{" "}
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <div>Dislike</div>
+                    <FaThumbsDown
+                      onClick={() => setLike(false)}
+                      color={like === false ? "#eb9f40" : "grey"}
+                    />
+                  </div>
+                </div>
+                <div className="my-3">
+                  <Button
+                    text="Submit"
+                    type="submit"
+                    disabled={loadingCreateReview}
+                  />
+                  {loadingCreateReview && <LoadingBox></LoadingBox>}
+                </div>
+              </form>
+            ) : null
           ) : (
             <div>
               Please{" "}

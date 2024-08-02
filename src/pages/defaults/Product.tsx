@@ -440,11 +440,10 @@ const Product = () => {
                     </Link>
                   </div>
                   <div>
-                    {product.seller?.address?.state},
+                    {product.seller?.address?.state},{" "}
                     {product.seller?.address?.region === "NGN"
                       ? "Nigeria"
                       : "South Africa"}
-                    Nigeria
                   </div>
                   <div
                     className="cursor-pointer"
@@ -527,12 +526,13 @@ const Product = () => {
                   <IconsTooltips
                     classNames="peer-hover:opacity-100"
                     tips="Message Seller "
+                    tipClassName="-left-[50px] !-bottom-[50px] lg:left-auto lg:!-bottom-[30px]"
                   />
                 </div>
               </div>
               <div>Listed {moment(product.createdAt).fromNow()}</div>
 
-              <div className="flex items-center">
+              <div className="flex items-center mt-2.5">
                 <h4 className="text-[25px] font-medium capitalize mt-2.5">
                   {product.name}
                 </h4>
@@ -540,7 +540,7 @@ const Product = () => {
                   {product.brand}
                 </h4>
               </div>
-              <div className="items-center flex">
+              <div className="items-center flex mt-2.5">
                 <div className="text-[25px] font-bold mr-5">
                   {currency(product.region)} {product?.costPrice}
                 </div>
@@ -564,7 +564,7 @@ const Product = () => {
                   <div className="flex flex-wrap">
                     {product.tags.map((t) => (
                       <Link to={`/search?search=${t}`}>
-                        <div className="border m-0.5 px-2.5 py-0 rounded-[10px] border-black">
+                        <div className="border m-0.5 px-2.5 py-0 rounded-[10px] dark:border-white-color border-black">
                           {t}
                         </div>
                       </Link>

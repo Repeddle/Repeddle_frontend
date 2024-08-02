@@ -111,6 +111,18 @@ const Wishlist = () => {
       navigate("/cart")
     )
 
+    const res = await removeFromWishlist(product._id)
+    if (res) {
+      setRefresh(true)
+      addNotification(res)
+      closeRemove()
+    } else
+      addNotification(
+        error ?? "Failed to remove from wishlist",
+        undefined,
+        true
+      )
+
     closeShowSize()
   }
 
@@ -125,7 +137,11 @@ const Wishlist = () => {
       addNotification(res)
       closeRemove()
     } else
-      addNotification(error ?? "Failed to add to wishlist", undefined, true)
+      addNotification(
+        error ?? "Failed to remove from wishlist",
+        undefined,
+        true
+      )
 
     setRemoveFromWish(false)
   }
@@ -189,6 +205,17 @@ const Wishlist = () => {
             </div>
           ),
         }))}
+        messageJsx={
+          <div>
+            No product added yet. {"  "}
+            <Link
+              className="font-bold text-[15px] text-orange-color hover:text-malon-color"
+              to={`/`}
+            >
+              Go Shopping
+            </Link>
+          </div>
+        }
       />
 
       <Modal isOpen={showRemove} onClose={() => setShowRemove(false)}>
