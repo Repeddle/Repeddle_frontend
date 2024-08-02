@@ -25,6 +25,7 @@ type Props<> = {
   totalCount?: number
   onPageChange?: (val: number) => void
   message?: string
+  messageJsx?: React.JSX.Element
 }
 
 const Table = ({
@@ -37,6 +38,7 @@ const Table = ({
   totalPages,
   onPageChange,
   message,
+  messageJsx,
 }: Props) => {
   const [sortKey, setSortKey] = useState<{
     key: HeaderTitle
@@ -134,7 +136,9 @@ const Table = ({
 
             {!loading && !error && sortedBody.length === 0 && (
               <div className="text-center my-10">
-                {message
+                {messageJsx
+                  ? messageJsx
+                  : message
                   ? message
                   : `No ${itemName ? itemName : "data"} added yet`}
               </div>

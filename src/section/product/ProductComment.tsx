@@ -89,7 +89,7 @@ const ProductComment = ({ comments, product, setProduct }: Props) => {
                     transition:
                       "border-color .15s ease-in-out, box-shadow .15s ease-in-out",
                   }}
-                  placeholder="Leave a comment here"
+                  placeholder="Please leave a comment here"
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
                 />

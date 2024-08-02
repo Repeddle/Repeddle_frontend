@@ -171,7 +171,7 @@ const ProfileForm = ({ token }: Props) => {
     const res = await registerUser({
       ...firstInput,
       ...thirdInput,
-      username,
+      username: username.trim(),
       token,
     })
     if (res) {

@@ -1,5 +1,3 @@
-
-
 const sustainability = () => {
   return (
     <div className="container mx-auto max-w-7xl px-8">
@@ -30,13 +28,14 @@ const sustainability = () => {
           need to take this very seriously.
         </p>
       </section>
-      <h2 className="text-xl text-center mb-8 lg:text-4xl font-extrabold text-red-900">
+      <h2 className="text-xl text-center mb-8 lg:text-4xl font-extrabold text-malon-color">
         WHAT YOU MAY NEED TO KNOW! “THE PROBLEM”
       </h2>
       <section className="mb-8">
         <p className="text-justify -mt-5">
-          <b className="text-red-800"> FACTS: </b> Here are some REAL FACTS that
-          shows the impact of fast fashion which harms Africa and the planet.
+          <b className="text-malon-color"> FACTS: </b> Here are some REAL FACTS
+          that shows the impact of fast fashion which harms Africa and the
+          planet.
         </p>
         <div className="text-justify mt-2">
           <ul className="list-disc ml-6">
@@ -88,9 +87,12 @@ const sustainability = () => {
           <div className="justify-center items-center ml-6 mr-6">
             <p className="text-center">
               The equivalent of <br />{" "}
-              <i className="text-red-900 font-semibold"> 1 garbage truck </i>
+              <i className="text-malon-color font-semibold">
+                {" "}
+                1 garbage truck{" "}
+              </i>
               <br /> of textiles is wasted <br />{" "}
-              <i className="text-red-900 font-semibold"> every second </i>
+              <i className="text-malon-color font-semibold"> every second </i>
             </p>
             <svg
               aria-hidden="true"
@@ -111,7 +113,7 @@ const sustainability = () => {
           <div className="justify-center ml-6 mr-6">
             <p className="text-center">
               5.2% <br />{" "}
-              <i className="text-red-900 font-semibold"> of the waste </i>{" "}
+              <i className="text-malon-color font-semibold"> of the waste </i>{" "}
               <br /> in our landfills are textiles
             </p>
             <svg
@@ -134,7 +136,7 @@ const sustainability = () => {
           <div className="justify-center ml-6 mr-6">
             <p className="text-center">
               3 years <br />{" "}
-              <i className="text-red-900 font-semibold">
+              <i className="text-malon-color font-semibold">
                 {" "}
                 is the average lifetime{" "}
               </i>{" "}
@@ -162,8 +164,8 @@ const sustainability = () => {
         <div className="items-center">
           <p className="text-center text-4xl font-extrabold">
             {" "}
-            <b className="text-yellow-500"> Less </b> <b> Is </b>{" "}
-            <b className="text-red-900"> More </b>{" "}
+            <b className="text-orange-color"> Less </b> <b> Is </b>{" "}
+            <b className="text-malon-color"> More </b>{" "}
           </p>
           <img
             src="https://res.cloudinary.com/emirace/image/upload/v1661221992/cherie-birkner-J6MJPuJiDPo-unsplash_cclo31.webp"
@@ -177,12 +179,12 @@ const sustainability = () => {
           </h2>
         </div>
       </section>
-      <h2 className="text-xl text-center mb-8 lg:text-4xl font-extrabold text-yellow-500">
+      <h2 className="text-xl text-center mb-8 lg:text-4xl font-extrabold text-orange-color">
         WHAT WE CAN DO!
       </h2>
       <section className="mb-8">
         <p className="text-justify -mt-5">
-          <b className="text-yellow-500"> THE SOLUTION: </b> We hope this
+          <b className="text-orange-color"> THE SOLUTION: </b> We hope this
           enlightens you and helps you rethink consciously on how we use
           fashion. The first route to go from here is to promote circular
           economy by upcycling, recycling and reworking clothes, rather than the
@@ -283,7 +285,7 @@ const sustainability = () => {
       <section className="mb-8">
         <div className="items-center">
           <h2 className="text-center text-4xl font-extrabold">
-          REUSE & RESELL
+            REUSE & RESELL
           </h2>
           <img
             src="https://res.cloudinary.com/emirace/image/upload/v1661221988/utopia-by-cho-rgC0lhKbr5o-unsplash_2_sckict.webp"
@@ -294,7 +296,7 @@ const sustainability = () => {
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default sustainability;
+export default sustainability
