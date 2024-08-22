@@ -19,7 +19,7 @@ const LoginComp = () => {
     if (value) {
       await getUser()
     } else {
-      addNotification(error ?? "An error occurred")
+      addNotification(error ? error : "An error occurred")
     }
   }
 

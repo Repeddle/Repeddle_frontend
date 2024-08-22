@@ -89,7 +89,7 @@ const ProductItem = ({ product }: Props) => {
     if (res) addNotification(res)
     else
       addNotification(
-        wishlistError ?? "Failed to add to wishlist",
+        wishlistError ? wishlistError : "Failed to add to wishlist",
         undefined,
         true
       )

@@ -39,7 +39,7 @@ const ForgetPassword = () => {
       if (value) {
         setShowModal(true)
       } else {
-        addNotification(error ?? "An error occurred")
+        addNotification(error ? error : "An error occurred")
       }
     }
   }

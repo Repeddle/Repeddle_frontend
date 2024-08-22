@@ -125,11 +125,11 @@ const Product = () => {
   }, [slug])
 
   const following = useMemo(() => {
-    if (user && user?.following.find((x) => x === product?.seller._id))
+    if (user?.following.find((x) => x === product?.seller._id))
       return "Following"
 
     return "Follow"
-  }, [product?.seller._id, user])
+  }, [product?.seller._id, user?.following])
 
   const liked = useMemo(() => {
     return !!product?.likes.find((like) => like === user?._id)
@@ -213,7 +213,7 @@ const Product = () => {
     if (res) addNotification(res)
     else
       addNotification(
-        wishListError ?? "Failed to add to wishlist",
+        wishListError ? wishListError : "Failed to add to wishlist",
         undefined,
         true
       )
@@ -246,8 +246,6 @@ const Product = () => {
     () => product?.seller._id === user?._id,
     [product?.seller._id, user?._id]
   )
-
-  console.log(product?.seller._id, user?._id)
 
   const isOnlineCon = (userId: string) => {
     console.log(userId)

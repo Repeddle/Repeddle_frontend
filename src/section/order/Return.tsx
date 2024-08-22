@@ -109,7 +109,7 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
       navigate(`/return/${res._id}`)
     } else {
       addNotification(
-        creatingError ?? "Failed to log a return",
+        creatingError ? creatingError : "Failed to log a return",
         undefined,
         true
       )

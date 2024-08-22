@@ -44,7 +44,7 @@ const RegisterComp = () => {
         setEmail("")
         setFormError("")
       } else {
-        addNotification(error ?? "An error occurred")
+        addNotification(error ? error : "An error occurred")
       }
     }
   }

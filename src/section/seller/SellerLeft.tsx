@@ -54,12 +54,12 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
       const res = await unFollowUser(usernameData.user._id)
 
       if (res) addNotification(res)
-      else addNotification(followError ?? "")
+      else addNotification(followError ? followError : "")
     } else {
       const res = await followUser(usernameData.user._id)
 
       if (res) addNotification(res)
-      else addNotification(followError ?? "")
+      else addNotification(followError ? followError : "")
     }
   }
 
