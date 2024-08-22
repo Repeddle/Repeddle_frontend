@@ -139,7 +139,7 @@ const About = () => {
         <p className="text-center -mt-8">
           <a
             href="https://repeddle.com/sell"
-            className="font-bold lg:text-2xl text-1xl text-red-700 -mt-14 cursor-pointer hover:underline hover:text-orange-300"
+            className="font-bold lg:text-2xl text-1xl text-malon-color -mt-14 cursor-pointer hover:underline hover:text-orange-300"
           >
             THINK THE PLANET, THINK THE ENVIRONMENT, THINK REPEDDLE; GO PEDDLE
           </a>

@@ -3,7 +3,7 @@
 const Returns = () => {
   return (
     <div className="container mx-auto max-w-7xl px-8">
-      <h2 className="font-medium text-xl text-center text-red-600 mb-8 lg:text-2xl">
+      <h2 className="font-medium text-xl text-center text-malon-color mb-8 lg:text-2xl">
         RETURN POLICY
       </h2>
       <section className="mb-8">
@@ -16,7 +16,7 @@ const Returns = () => {
           to back and forth of returns and refunds.
         </div>
       </section>
-      <h2 className="font-medium text-xl text-center text-red-600 mb-8 lg:text-2xl">
+      <h2 className="font-medium text-xl text-center text-malon-color mb-8 lg:text-2xl">
         YOUR RIGHT!
       </h2>
       <section className="mb-8">
@@ -38,7 +38,7 @@ const Returns = () => {
           order, unless otherwise agreed between seller and buyer.
         </p>
       </section>
-      <h2 className="font-medium text-xl text-center text-red-600 mb-8 lg:text-2xl">
+      <h2 className="font-medium text-xl text-center text-malon-color mb-8 lg:text-2xl">
         RETURN ELIGIBILITY:
       </h2>
       <section className="mb-8">
@@ -63,7 +63,7 @@ const Returns = () => {
           </p>
         </div>
       </section>
-      <h2 className="font-medium text-xl text-center text-red-600 mb-8 lg:text-2xl">
+      <h2 className="font-medium text-xl text-center text-malon-color mb-8 lg:text-2xl">
         NOT ELIGIBILE:
       </h2>
       <section className="mb-8">
@@ -81,7 +81,7 @@ const Returns = () => {
           </p>
         </div>
       </section>
-      <h2 className="font-medium text-xl text-center text-red-600 mb-8 lg:text-2xl">
+      <h2 className="font-medium text-xl text-center text-malon-color mb-8 lg:text-2xl">
         LOGGING A RETURN?
       </h2>
       <section className="mb-8">
@@ -128,7 +128,7 @@ const Returns = () => {
           </p>
         </div>
       </section>
-      <h2 className="font-medium text-xl text-center text-red-600 mb-8 lg:text-2xl">
+      <h2 className="font-medium text-xl text-center text-malon-color mb-8 lg:text-2xl">
         REFUND POLICY
       </h2>
       <section className="mb-8">
@@ -169,7 +169,7 @@ const Returns = () => {
           </p>
         </div>
       </section>
-      <h2 className="font-medium text-xl text-center text-red-600 mb-8 lg:text-2xl">
+      <h2 className="font-medium text-xl text-center text-malon-color mb-8 lg:text-2xl">
         WHO COVERS THE RETURN SHIPPING COST?
       </h2>
       <section className="mb-8">

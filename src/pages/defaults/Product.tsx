@@ -76,6 +76,8 @@ const Product = () => {
 
       setProduct(data)
 
+      window.scrollTo({ top: 0 })
+
       setLoading(false)
 
       const factor = 0.9
@@ -147,7 +149,6 @@ const Product = () => {
   }, [product?.costPrice, product?.sellingPrice])
 
   const addToCartHandler = async () => {
-    console.log("here")
     setAddLoading(true)
     if (!product) return setAddLoading(false)
 
@@ -240,6 +241,13 @@ const Product = () => {
       else addNotification(error, undefined, true)
     }
   }
+
+  const isUser = useMemo(
+    () => product?.seller._id === user?._id,
+    [product?.seller._id, user?._id]
+  )
+
+  console.log(product?.seller._id, user?._id)
 
   const isOnlineCon = (userId: string) => {
     console.log(userId)
@@ -458,12 +466,14 @@ const Product = () => {
                     <ReviewLists setShowModel={setShowModel} />
                   </Modal>
 
-                  <div
-                    className="text-white-color text-center cursor-pointer mt-[5px] px-2.5 py-0 rounded-[10px] bg-orange-color"
-                    onClick={toggleFollow}
-                  >
-                    {following}
-                  </div>
+                  {!isUser && (
+                    <div
+                      className="text-white-color text-center cursor-pointer mt-[5px] px-2.5 py-0 rounded-[10px] bg-orange-color"
+                      onClick={toggleFollow}
+                    >
+                      {following}
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="flex mt-[15px] justify-between lg:justify-normal">
@@ -532,7 +542,7 @@ const Product = () => {
               </div>
               <div>Listed {moment(product.createdAt).fromNow()}</div>
 
-              <div className="flex items-center mt-2.5">
+              <div className="flex items-center mt-2.5 mb-2.5">
                 <h4 className="text-[25px] font-medium capitalize mt-2.5">
                   {product.name}
                 </h4>

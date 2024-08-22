@@ -1,14 +1,15 @@
-import { NavLink } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-import Search from "../../assets/icons/search.svg";
-import { FaEnvelope, FaHouse, FaUser } from "react-icons/fa6";
+import { NavLink } from "react-router-dom"
+import useAuth from "../../hooks/useAuth"
+import Search from "../../assets/icons/search.svg"
+import { FaEnvelope, FaHouse, FaUser } from "react-icons/fa6"
 
 const StickyNav = () => {
-  const { user } = useAuth();
+  const { user } = useAuth()
 
-  const messageNotification = [];
-  const purchaseNotification: never[] = [];
-  const soldNotification: never[] = [];
+  // TODO:
+  const messageNotification = []
+  const purchaseNotification: never[] = []
+  const soldNotification: never[] = []
 
   return (
     <div className="block lg:hidden">
@@ -92,7 +93,7 @@ const StickyNav = () => {
       </div>
       <div className="h-[60px]" />
     </div>
-  );
-};
+  )
+}
 
-export default StickyNav;
+export default StickyNav

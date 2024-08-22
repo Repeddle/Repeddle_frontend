@@ -1,6 +1,6 @@
-import useArticle from "../../../hooks/useArticle";
-import { FaEdit, FaTrash } from "react-icons/fa";
-import { useState } from "react";
+import useArticle from "../../../hooks/useArticle"
+import { FaEdit, FaTrash } from "react-icons/fa"
+import { useState } from "react"
 
 const SkeletonLoader = () => (
   <div className="animate-pulse bg-gray-200 rounded-lg p-4">
@@ -8,11 +8,11 @@ const SkeletonLoader = () => (
     <div className="h-4 w-full mb-2 bg-gray-300 rounded"></div>
     <div className="h-4 w-5/6 mb-2 bg-gray-300 rounded"></div>
   </div>
-);
+)
 
 const ArticleList = () => {
-  const { articles, loading } = useArticle();
-  const [activeComponent] = useState("list");
+  const { articles, loading } = useArticle()
+  const [activeComponent] = useState("list")
 
   // const handleCreateArticleClick = () => {
   //   setActiveComponent('createArticle');
@@ -73,13 +73,13 @@ const ArticleList = () => {
                       <div className="flex items-center mt-2">
                         <div
                           // onClick={() => handleEditClick(article)}
-                          className="flex items-center text-black hover:text-red-700 mr-4 cursor-pointer"
+                          className="flex items-center text-black hover:text-malon-color mr-4 cursor-pointer"
                         >
                           <FaEdit className="mr-2" /> Edit
                         </div>
                         <div
                           // onClick={() => handleDeleteClick(article)}
-                          className="flex items-center text-black hover:text-red-700 cursor-pointer"
+                          className="flex items-center text-black hover:text-malon-color cursor-pointer"
                         >
                           <FaTrash className="mr-2" /> Delete
                         </div>
@@ -95,7 +95,7 @@ const ArticleList = () => {
 
       {/* {(activeComponent === 'createArticle' || activeComponent === 'editArticle') && <CreateArticle onCancel={handleCancelCreateArticle} onArticleCreated={handleArticleCreated} article={selectedArticle} />} */}
     </div>
-  );
-};
+  )
+}
 
-export default ArticleList;
+export default ArticleList

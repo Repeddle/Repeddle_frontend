@@ -1,20 +1,20 @@
-import { FormEvent, useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { FormEvent, useState } from "react"
+import { FaSearch } from "react-icons/fa"
+import { useNavigate } from "react-router-dom"
 
 const SearchBox = () => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("")
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     if (query) {
-      navigate(`/search?search=${query}`);
+      navigate(`/search?search=${query}`)
     } else {
-      navigate(`/search`);
+      navigate(`/search`)
     }
-  };
+  }
 
   return (
     <form
@@ -40,7 +40,7 @@ const SearchBox = () => {
           placeholder="Search anything..."
           aria-label="Search Products..."
           aria-describedby="button-search"
-          className="flex-auto min-w-0 relative w-[1%] text-black-color appearance-none block text-base font-normal leading-normal -outline-offset-2 -ml-px px-3 py-1.5 rounded-[50rem] bg-transparent focus:shadow-[0_0_0_0.25rem_rgba(247,154,35,0.1)] focus:outline-none"
+          className="flex-auto min-w-0 relative w-[1%] dark:text-white text-black-color appearance-none block text-base font-normal leading-normal -outline-offset-2 -ml-px px-3 py-1.5 rounded-[50rem] bg-transparent focus:shadow-[0_0_0_0.25rem_rgba(247,154,35,0.1)] focus:outline-none"
           style={{
             transition:
               "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out",
@@ -48,7 +48,7 @@ const SearchBox = () => {
         />
       </div>
     </form>
-  );
-};
+  )
+}
 
-export default SearchBox;
+export default SearchBox

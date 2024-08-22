@@ -11,7 +11,6 @@ type Props =
     }
 
 const Rating = (props: Props) => {
-  console.log(props.rating >= 0 + 1)
   return (
     <div className="items-center flex gap-1">
       <div className="flex">

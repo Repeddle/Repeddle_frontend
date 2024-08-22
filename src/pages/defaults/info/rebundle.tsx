@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 
 const rebundle = () => {
   return (
@@ -15,7 +15,7 @@ const rebundle = () => {
       <h2 className="font-medium text-xl text-center mb-8 lg:text-2xl">
         HOW IT WORKS
       </h2>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         Buyer
       </h1>
       <section className="mb-8">
@@ -36,7 +36,7 @@ const rebundle = () => {
           delivery, and get free delivery for the other items.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         Seller
       </h1>
       <section className="mb-8">
@@ -60,7 +60,7 @@ const rebundle = () => {
       <h2 className="font-medium text-xl text-center mb-8 lg:text-2xl">
         LET’S BREAK IT DOWN
       </h2>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         As a Buyer
       </h1>
       <section className="mb-8">
@@ -83,7 +83,7 @@ const rebundle = () => {
           </ul>
         </div>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         As a Seller
       </h1>
       <section className="mb-8">
@@ -134,21 +134,27 @@ const rebundle = () => {
         </div>
       </section>
       <section className="mb-8">
-        <h1 className="text-center cursor-pointer hover:text-red-800 underline font-medium text-xl lg:text-2xl">
+        <h1 className="text-center cursor-pointer hover:text-malon-color underline font-medium text-xl lg:text-2xl">
           Happy Thrifting!
         </h1>
         <div className="flex flex-row items-center justify-center gap-5">
-            <Link to="/buyersguide" className="text-left float-left lg:mr-52 text-red-700 cursor-pointer hover:text-orange-400">
+          <Link
+            to="/buyersguide"
+            className="text-left float-left lg:mr-52 text-malon-color cursor-pointer hover:text-orange-400"
+          >
             BUYING GUIDE
-            </Link>
-      
-            <Link to="/buyersguide" className="text-right float-right lg:ml-64 lg:-mr-12 text-red-700 cursor-pointer hover:text-orange-400">
+          </Link>
+
+          <Link
+            to="/buyersguide"
+            className="text-right float-right lg:ml-64 lg:-mr-12 text-malon-color cursor-pointer hover:text-orange-400"
+          >
             CASH-OUT WITH FREE DELIVERY
-            </Link>
+          </Link>
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default rebundle;
+export default rebundle

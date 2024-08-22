@@ -116,20 +116,20 @@ const SearchFilter = ({
   return (
     <div
       className={`flex-1 lg:block lg:z-0 lg:transition-none pt-20 pb-20 lg:pt-0 lg:sticky mb-5 rounded-[0.2rem] lg:top-[168px] lg:h-auto 
-      dark:bg-dark-ev1 bg-light-ev1 transition-[left] duration-[2s] z-[9] fixed h-screen
+      dark:bg-dark-ev1 bg-light-ev1 transition-[left] duration-[2s] z-[10] fixed h-screen
       lg:overflow-visible overflow-auto lg:w-auto w-screen top-0 ${
         showFilter ? "left-0 block" : "hidden -left-[100vw]"
       }`}
     >
       <div
-        className="flex py-2.5 px-5 justify-end lg:hidden"
+        className="flex px-5 justify-end lg:hidden"
         onClick={() => setShowFilter(false)}
       >
         <FaTimes size={15} />
       </div>
       {showFilter && (
         <div
-          className="fixed lg:hidden -translate-x-1/2 bg-orange-color w-1/2 text-center z-[9] text-white-color rounded-[0.2rem] px-[7px] py-[5px] left-1/2 bottom-20"
+          className="fixed lg:hidden bg-orange-color text-center z-[9] text-white-color rounded-[0.2rem] px-[7px] py-[5px] left-2 right-2 bottom-1"
           onClick={() => {
             setShowFilter(false)
             window.scrollTo(0, 0)
@@ -139,7 +139,7 @@ const SearchFilter = ({
         </div>
       )}
 
-      <div className="p-5 pt-10">
+      <div className="p-5">
         <SearchDropDown
           title="Categories"
           all={{ category: "all" }}

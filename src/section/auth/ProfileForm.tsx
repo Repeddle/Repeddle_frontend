@@ -184,7 +184,7 @@ const ProfileForm = ({ token }: Props) => {
     const response = await getSuggestUsername({
       firstName: firstInput.firstName,
       lastName: firstInput.lastName,
-      otherText: username,
+      otherText: username.trim(),
     })
     setUsernameSuggest(response)
   }, [firstInput.firstName, firstInput.lastName, getSuggestUsername, username])
