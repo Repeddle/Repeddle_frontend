@@ -72,6 +72,7 @@ import AdminLayout from "./pages/admin"
 import Earning from "./pages/protected/earning"
 import Wishlist from "./pages/protected/dashboard/Wishlist"
 import PlaceOrder from "./pages/protected/PlaceOrder"
+import ShopByOutfit from "./pages/defaults/ShopByOutfit"
 
 const router = createBrowserRouter([
   {
@@ -120,6 +121,7 @@ const router = createBrowserRouter([
           { path: "how-repeddle-work", element: <HowRepeddleWork /> },
           { path: "brands", element: <Brand /> },
           { path: "categories", element: <CategoryMobile /> },
+          { path: "recurated", element: <ShopByOutfit /> },
         ],
       },
       {

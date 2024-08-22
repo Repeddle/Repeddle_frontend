@@ -43,7 +43,8 @@ const VerifyAccount = () => {
       addNotification("Account Verified Successfully");
       navigate("/newproduct");
     } else {
-      addNotification(userError ?? "Failed to verify account");
+      addNotification(userError ? userError : "Failed to verify account")
+
     }
   };
 

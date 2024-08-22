@@ -9,7 +9,7 @@ const FooterNewsLetter = () => {
         alt=""
       />
 
-      <div className="lg:h-[125px] relative w-full -mt-0.5 bg-orange-color">
+      <div className="lg:h-[125px] h-[155px] relative w-full -mt-0.5 bg-orange-color">
         <NewsLetter />
       </div>
     </div>

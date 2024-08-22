@@ -44,7 +44,7 @@ const Wishlist = () => {
       setLoading(true)
       const res = await getWishlist()
       if (res) setWishlist(res)
-      else addNotification(error ?? "An error occurred")
+      else addNotification(error ? error : "An error occurred")
       setLoading(false)
     }
 
@@ -118,7 +118,7 @@ const Wishlist = () => {
       closeRemove()
     } else
       addNotification(
-        error ?? "Failed to remove from wishlist",
+        error ? error : "Failed to remove from wishlist",
         undefined,
         true
       )
@@ -138,7 +138,7 @@ const Wishlist = () => {
       closeRemove()
     } else
       addNotification(
-        error ?? "Failed to remove from wishlist",
+        error ? error : "Failed to remove from wishlist",
         undefined,
         true
       )

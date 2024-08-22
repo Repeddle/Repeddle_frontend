@@ -194,9 +194,11 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       const result = await unFollowUserService(userId);
 
       if (user) {
-        const followers = user.followers.filter((fl) => fl !== userId);
-        const newUser = user;
-        newUser.followers = followers;
+
+        const following = user.following.filter((fl) => fl !== userId)
+        const newUser = user
+        newUser.following = following
+
 
         setUser(newUser);
       }
@@ -217,9 +219,11 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       const result = await followUserService(userId);
 
       if (user) {
-        const followers = [...user.followers, userId];
-        const newUser = user;
-        newUser.followers = followers;
+
+        const following = [...user.following, userId]
+        const newUser = user
+        newUser.following = following
+
 
         setUser(newUser);
       }

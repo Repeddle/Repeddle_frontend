@@ -72,7 +72,9 @@ const VerifyAddress = () => {
       addNotification("Address Verified Successfully");
       navigate("/newproduct");
     } else {
-      addNotification(userError ?? "Failed to verify address");
+
+      addNotification(userError ? userError : "Failed to verify address")
+
     }
   };
 

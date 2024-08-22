@@ -26,8 +26,8 @@ const SearchRatings = ({ list, changeParam, selectedRating, title }: Props) => {
         />
       </h4>
       <div
-        className={`h-0 overflow-hidden transition-[0.5s] p-[5px] ${
-          open ? "after:content-[''] after:rotate-[135deg] h-full" : ""
+        className={`h-0 overflow-hidden transition-[0.5s] ${
+          open ? "after:content-[''] after:rotate-[135deg] p-[5px] h-full" : ""
         }`}
       >
         {list.map((r) => (

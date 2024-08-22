@@ -26,8 +26,8 @@ const NewsLetter = () => {
       your subscription.
     </div>
   ) : (
-    <div className="items-center flex flex-col justify-center pt-[10px] lg:pt-0">
-      <div className="text-center text-black font-extrabold text-base">
+    <div className="items-center gap-1 flex flex-col justify-center pt-[10px] lg:pt-0">
+      <div className="text-center text-black font-extrabold text-xs sm:text-sm lg:text-base">
         WANT TO GET EXCITING HOT DEALS, DISCOUNTS, AND TIMELY UPDATE FROM YOUR
         FAVOURITES STORE?
       </div>
@@ -40,7 +40,7 @@ const NewsLetter = () => {
           placeholder="Your Email"
           onChange={(e) => setInput(e.target.value)}
           value={input}
-          className="flex-[8_1] pl-5 rounded-tl-[15px] rounded-bl-[15px] border-none"
+          className="flex-[8_1] dark:text-black pl-5 rounded-tl-[15px] rounded-bl-[15px] border-none"
         />
         <button
           className="text-white flex-[2_1] rounded-tr-[15px] rounded-br-[15px] border-l-0 border-none bg-malon-color"

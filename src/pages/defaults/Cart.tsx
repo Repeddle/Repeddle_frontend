@@ -54,7 +54,11 @@ function Cart() {
       removeFromCart(product._id)
       setRemove(false)
     } else
-      addNotification(error ?? "Failed to add to wishlist", undefined, true)
+      addNotification(
+        error ? error : "Failed to add to wishlist",
+        undefined,
+        true
+      )
 
     setAddToWish(false)
   }

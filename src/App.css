@@ -208,3 +208,11 @@ h4 {
   appearance: none;
   margin: 0;
 }
+
+.screen {
+  height: 100vh;
+
+  @media (max-width: 768px) {
+    height: 100svh;
+  }
+}

@@ -77,7 +77,11 @@ const ReturnPage = () => {
       if (res) {
         setReturned(res)
       } else {
-        addNotification(error ?? "failed to update status", undefined, true)
+        addNotification(
+          error ? error : "failed to update status",
+          undefined,
+          true
+        )
       }
     } else {
       setLoadingReturn(true)
@@ -90,7 +94,11 @@ const ReturnPage = () => {
       if (res) {
         setReturned(res)
       } else {
-        addNotification(error ?? "failed to update status", undefined, true)
+        addNotification(
+          error ? error : "failed to update status",
+          undefined,
+          true
+        )
       }
     }
 

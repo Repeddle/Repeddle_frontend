@@ -215,7 +215,7 @@ const User = () => {
       addNotification("User updated")
       navigate(id ? "/dashboard/userlist" : `../../seller/${id}`)
     } else {
-      addNotification(error ?? "failed to update user")
+      addNotification(error ? error : "failed to update user")
     }
   }
 
@@ -252,11 +252,15 @@ const User = () => {
     if (newsletterStatus) {
       const resp = await deleteNewsletter(user?._id ?? "")
       if (resp.success) {
-        addNotification(resp.message ?? "Unsubscribed from newsletter")
+        addNotification(
+          resp.message ? resp.message : "Unsubscribed from newsletter"
+        )
         setNewsletterStatus(false)
       } else {
         addNotification(
-          newsletterError ?? "failed to unsubscribe from newsletter"
+          newsletterError
+            ? newsletterError
+            : "failed to unsubscribe from newsletter"
         )
       }
     } else {
@@ -265,7 +269,11 @@ const User = () => {
         addNotification("Subscribed from newsletter")
         setNewsletterStatus(true)
       } else {
-        addNotification(newsletterError ?? "failed to subscribe to newsletter")
+        addNotification(
+          newsletterError
+            ? newsletterError
+            : "failed to subscribe to newsletter"
+        )
       }
     }
   }

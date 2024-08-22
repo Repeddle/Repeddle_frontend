@@ -5,10 +5,6 @@ import { useNavigate } from "react-router-dom"
 const NewCollection = () => {
   const navigate = useNavigate()
 
-  const param = (key: string, val: string) => {
-    return new URLSearchParams([[key, val]])
-  }
-
   return (
     <section className="flex-col my-2.5 lg:flex-row flex">
       <div className="flex flex-[2_1] flex-col">
@@ -25,7 +21,7 @@ const NewCollection = () => {
         <CategoryListing
           image="/images/categories/engin-akyurt-xbFtknoQG_Y-unsplash.webp"
           title="STYLE UP"
-          link={`/search?${param("filter", "type:recurated")}`}
+          link={`/recurated`}
         />
         <CategoryListing
           image="/images/categories/ruan-richard-rodrigues--MCGquf_4mU-unsplash.webp"

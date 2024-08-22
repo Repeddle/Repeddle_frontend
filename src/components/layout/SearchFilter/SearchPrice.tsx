@@ -43,8 +43,8 @@ const SearchPrice = ({ currency, changeParam, maxPrice, minPrice }: Props) => {
         />
       </h4>
       <div
-        className={`h-0 overflow-hidden transition-[0.5s] p-[5px] pl-5 ${
-          open ? "after:content-[''] after:rotate-[135deg] h-full" : ""
+        className={`h-0 overflow-hidden transition-[0.5s] pl-5 ${
+          open ? "after:content-[''] after:rotate-[135deg] p-[5px] h-full" : ""
         }`}
       >
         <div className="mb-[5px]">
