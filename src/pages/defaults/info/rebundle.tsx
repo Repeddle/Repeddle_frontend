@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 const rebundle = () => {
   return (
-    <div className="container mx-auto max-w-7xl px-8">
+    <div className="bs-container mx-auto max-w-7xl px-4 lg:px-8">
       <h2 className="font-medium text-xl text-center mb-8 lg:text-2xl">
         RE: BUNDLE
       </h2>
@@ -137,17 +137,17 @@ const rebundle = () => {
         <h1 className="text-center cursor-pointer hover:text-malon-color underline font-medium text-xl lg:text-2xl">
           Happy Thrifting!
         </h1>
-        <div className="flex flex-row items-center justify-center gap-5">
+        <div className="flex flex-row items-center justify-around mt-2.5 gap-5">
           <Link
             to="/buyersguide"
-            className="text-left float-left lg:mr-52 text-malon-color cursor-pointer hover:text-orange-400"
+            className="text-left lg:text-justify text-[11px] lg:text-lg float-left lg:mr-52 text-malon-color cursor-pointer hover:text-orange-400"
           >
             BUYING GUIDE
           </Link>
 
           <Link
             to="/buyersguide"
-            className="text-right float-right lg:ml-64 lg:-mr-12 text-malon-color cursor-pointer hover:text-orange-400"
+            className="text-right lg:text-justify text-[11px] lg:text-lg float-right lg:ml-64 lg:-mr-12 text-malon-color cursor-pointer hover:text-orange-400"
           >
             CASH-OUT WITH FREE DELIVERY
           </Link>

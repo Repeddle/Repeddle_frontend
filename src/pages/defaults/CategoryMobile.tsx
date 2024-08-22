@@ -14,7 +14,7 @@ const CategoryMobile = () => {
 
   return (
     <>
-      <div className="z-[7] overflow-auto p-2.5 inset-0 bg-white dark:bg-black">
+      <div className="z-[7] min-h-[73vh] overflow-auto p-2.5 inset-0 bg-white dark:bg-black">
         <div className="flex justify-center items-center text-white mx-0 my-[15px] p-[3px] rounded-[0.2rem] bg-orange-color">
           Let's help you find what you are looking for
         </div>

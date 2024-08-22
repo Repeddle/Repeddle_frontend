@@ -57,7 +57,7 @@ const Brands = () => {
       </div>
       <div
         className="flex lg:hidden items-center text-orange-color cursor-pointer text-[15px] font-bold self-end mx-5 hover:text-malon-color"
-        onClick={() => navigate("/brand")}
+        onClick={() => navigate("/brands")}
       >
         <span>Search All Brands</span>
         <FaArrowRight className="ml-2.5" />
