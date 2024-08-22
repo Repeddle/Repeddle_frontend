@@ -3,7 +3,7 @@
 const HowToLogAreturn = () => {
   return (
     <div className="container mx-auto max-w-7xl px-8">
-       <h2 className="font-medium text-xl text-center text-red-600 mb-2 lg:text-2xl">
+       <h2 className="font-medium text-xl text-center text-malon-color mb-2 lg:text-2xl">
         HOW TO LOG A RETURN
       </h2>
       <p className="text-justify mb-6">

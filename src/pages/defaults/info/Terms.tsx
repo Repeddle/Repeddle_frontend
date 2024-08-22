@@ -2,7 +2,7 @@ const Terms = () => {
   return (
     <div className="container mx-auto max-w-7xl px-8">
       <h1 className="text-3xl mb-8">REPEDDLE TERMS OF USE</h1>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         1. Introduction
       </h1>
       <section className="mb-8">
@@ -20,7 +20,7 @@ const Terms = () => {
           use or/may discontinue in the use of this service.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         1.1 Overview
       </h1>
       <section className="mb-8">
@@ -68,7 +68,7 @@ const Terms = () => {
           constitutes acceptance of those changes.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         2. Service: Online Store Terms
       </h1>
       <section className="mb-8">
@@ -126,7 +126,7 @@ const Terms = () => {
           and or legal actions.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         2.1 Registration
       </h1>
       <section className="mb-8">
@@ -246,7 +246,7 @@ const Terms = () => {
           platform will be free from all malfunctions should incase any arises.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         3. Third Party Conditions
       </h1>
       <section className="mb-8">
@@ -299,7 +299,7 @@ const Terms = () => {
           usefulness of Third Party Materials.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         3.1 Reiteration Third-Party Links
       </h1>
       <section className="mb-8">
@@ -333,7 +333,7 @@ const Terms = () => {
           affect these Terms.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         4. Accuracy, Completeness, Timeliness of Information and Contents
       </h1>
       <section className="mb-8">
@@ -450,7 +450,7 @@ const Terms = () => {
           information for investigative purposes.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         4.1. Electronic Communications
       </h1>
       <section className="mb-8">
@@ -470,7 +470,7 @@ const Terms = () => {
           be in writing.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         4.2. Modifications to Service, Credits, Offers and Prices
       </h1>
       <section className="mb-8">
@@ -527,7 +527,7 @@ const Terms = () => {
           herein.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         5. Intellectual Rights
       </h1>
       <section className="mb-8">
@@ -584,7 +584,7 @@ const Terms = () => {
           owner or authorized to act on the copyright owner’s behalf. <br />
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         5.1 Representing Yourself and Store/ Infringement Warranties
       </h1>
       <section className="mb-8">
@@ -644,7 +644,7 @@ const Terms = () => {
           </ol>
         </div>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         6. Products And Services
       </h1>
       <section className="mb-8">
@@ -670,7 +670,7 @@ const Terms = () => {
           will be corrected.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         6.1 Repeddle Buyer and Seller Protection
       </h1>
       <section className="mb-8">
@@ -721,7 +721,7 @@ const Terms = () => {
           </ol>
         </div>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         7. Accuracy Of Billing, Payment and Account Information
       </h1>
       <section className="mb-8">
@@ -751,7 +751,7 @@ const Terms = () => {
           tools, see section 8 below.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         7.1 Fees/Commission
       </h1>
       <section className="mb-8">
@@ -807,7 +807,7 @@ const Terms = () => {
           that may/or if apply.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         8. Delivery, Cancellation, Return.
       </h1>
       <section className="mb-8">
@@ -923,7 +923,7 @@ const Terms = () => {
           fee and any charges incurred for delivery attempts).
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         8.1 Cancellation:
       </h1>
       <section className="mb-8">
@@ -938,7 +938,7 @@ const Terms = () => {
           payment verification, your order may be canceled. <br />
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         8.2 Returns
       </h1>
       <section className="mb-8">
@@ -954,7 +954,7 @@ const Terms = () => {
           Refund Policy forms part of our Terms of Use.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         9. Optional Tools
       </h1>
       <section className="mb-8">
@@ -974,7 +974,7 @@ const Terms = () => {
           features and/or services shall also be subject to these Terms of Use.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         10. Users Comments, Feedback and Other Submissions
       </h1>
       <section className="mb-8">
@@ -1013,7 +1013,7 @@ const Terms = () => {
           or any third-party.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         10.1 Personal Information
       </h1>
       <section className="mb-8">
@@ -1023,7 +1023,7 @@ const Terms = () => {
           forms part of our Terms of Use.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         11. Errors, Inaccuracies and Omissions
       </h1>
       <section className="mb-8">
@@ -1047,7 +1047,7 @@ const Terms = () => {
           or updated.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         12. Prohibited Use
       </h1>
       <section className="mb-8">
@@ -1120,7 +1120,7 @@ const Terms = () => {
           website for violating any of the prohibited uses.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         12.1. Prohibited Products:
       </h1>
       <section className="mb-8">
@@ -1162,7 +1162,7 @@ const Terms = () => {
           new updates.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         13. Disclaimer Of Warranties; Limitation On Liability
       </h1>
       <section className="mb-8">
@@ -1231,7 +1231,7 @@ const Terms = () => {
           cannot be excluded or limited by law.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         14. Indemnification
       </h1>
       <section className="mb-8">
@@ -1284,7 +1284,7 @@ const Terms = () => {
           claims as reasonably obligated.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         15. Severability
       </h1>
       <section className="mb-8">
@@ -1297,7 +1297,7 @@ const Terms = () => {
           enforceability of any other remaining provisions.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         16. Termination
       </h1>
       <section className="mb-8">
@@ -1325,7 +1325,7 @@ const Terms = () => {
           referred to appropriate law enforcement authorities.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         17. Third Party Users
       </h1>
       <section className="mb-8">
@@ -1357,7 +1357,7 @@ const Terms = () => {
           obligation to do so.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         18. Entire Agreement
       </h1>
       <section className="mb-8">
@@ -1375,7 +1375,7 @@ const Terms = () => {
           the drafting party.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         19. Governing Law
       </h1>
       <section className="mb-8">
@@ -1399,7 +1399,7 @@ const Terms = () => {
           effect of the affected provision.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         19.1. South African Users:
       </h1>
       <section className="mb-8">
@@ -1419,7 +1419,7 @@ const Terms = () => {
           any other language or translations.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         20. Changes To Terms Of Use
       </h1>
       <section className="mb-8">
@@ -1436,7 +1436,7 @@ const Terms = () => {
           changes to these Terms of Use constitutes acceptance of those changes.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         21. Contact Information
       </h1>
       <section className="mb-8">
@@ -1447,7 +1447,7 @@ const Terms = () => {
         </p>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default Terms;
+export default Terms

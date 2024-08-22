@@ -13,7 +13,7 @@ const PrivacyPolicy = () => {
           understand and agreed to be bound by this privacy policy.
         </div>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         Personal Information We Collect
       </h1>
       <section className="mb-8">
@@ -58,7 +58,7 @@ const PrivacyPolicy = () => {
           miss-information.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         How We Use Your Personal Information
       </h1>
       <section className="mb-8">
@@ -80,7 +80,7 @@ const PrivacyPolicy = () => {
           and to assess the success of our marketing and advertising campaigns).
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         Social Media Networks
       </h1>
       <section className="mb-8">
@@ -99,7 +99,7 @@ const PrivacyPolicy = () => {
           these services privacy policies.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         Sharing Your Personal Information
       </h1>
       <section className="mb-8">
@@ -121,7 +121,7 @@ const PrivacyPolicy = () => {
           otherwise protect our rights.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         Behavioral Advertising
       </h1>
       <section className="mb-8">
@@ -148,7 +148,7 @@ const PrivacyPolicy = () => {
           http://optout.aboutads.info/.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         Do Not Track
       </h1>
       <section className="mb-8">
@@ -157,7 +157,7 @@ const PrivacyPolicy = () => {
           practices when we see a Do Not Track signal from your browser.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         Cookies
       </h1>
       <section className="mb-8">
@@ -209,7 +209,7 @@ const PrivacyPolicy = () => {
           site from functioning properly.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         Your Rights
       </h1>
       <section className="mb-8">
@@ -229,7 +229,7 @@ const PrivacyPolicy = () => {
           outside of Europe, including to Canada and the United States.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         Data Retention
       </h1>
       <section className="mb-8">
@@ -239,7 +239,7 @@ const PrivacyPolicy = () => {
           information.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         Facebook Data Deletion Instructions URL
       </h1>
       <section className="mb-8">
@@ -266,7 +266,7 @@ const PrivacyPolicy = () => {
           </li>
         </ol>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         Changes
       </h1>
       <section className="mb-8">
@@ -276,7 +276,7 @@ const PrivacyPolicy = () => {
           operational, legal or regulatory reasons.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         Popia Disclaimer(SA)
       </h1>
       <section className="mb-8">
@@ -318,7 +318,7 @@ const PrivacyPolicy = () => {
           actions or transaction resulting therefrom.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         Security
       </h1>
       <section className="mb-8">
@@ -333,7 +333,7 @@ const PrivacyPolicy = () => {
           obligations.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         Limitations
       </h1>
       <section className="mb-8">
@@ -343,7 +343,7 @@ const PrivacyPolicy = () => {
           third-party websites.
         </p>
       </section>
-      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-red-600">
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         Contact Us
       </h1>
       <section className="mb-8">
@@ -354,7 +354,7 @@ const PrivacyPolicy = () => {
         </p>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default PrivacyPolicy;
+export default PrivacyPolicy

@@ -30,7 +30,7 @@ const Vipshield = () => {
           global environmental crisis we and the planet is currently faced.
         </p>
       </section>
-      <h2 className="font-medium text-xl text-center text-red-600 mb-8 lg:text-2xl">
+      <h2 className="font-medium text-xl text-center text-malon-color mb-8 lg:text-2xl">
         HOW WE MEASURE TOP SELLER QUALIFICATION
       </h2>
       <section className="mb-8">
@@ -59,7 +59,7 @@ const Vipshield = () => {
           </ol>
         </div>
       </section>
-      <h2 className="font-medium text-xl text-center text-red-600 mb-8 lg:text-2xl">
+      <h2 className="font-medium text-xl text-center text-malon-color mb-8 lg:text-2xl">
         BENEFIT FOR EARNING A VIP SHIELD
       </h2>
       <section className="mb-8">
@@ -101,11 +101,11 @@ const Vipshield = () => {
 
         <p className="text-center mt-12">
           SPREAD THE WORD. START SELLING. ADD MORE ITEMS TO KEEP EARNING{" "}
-          <b className="text-red-500"> TODAY </b>{" "}
+          <b className="text-malon-color"> TODAY </b>{" "}
         </p>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default Vipshield;
+export default Vipshield

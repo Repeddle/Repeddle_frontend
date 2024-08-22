@@ -134,8 +134,8 @@ const MobileProfile = () => {
       <Link to="/dashboard/wishlist">
         <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
           <FaHeart className="mr-2.5" />
-          My Wishlist{" "}
-          <span style={{ color: "var(--orange-color)" }}>
+          My Wishlist{"  "}
+          <span className="text-orange-color ml-1">
             ({user?.wishlist?.length})
           </span>
         </div>
