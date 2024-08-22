@@ -6,8 +6,8 @@ const Vipshield = () => {
       </h2>
       <section className="mb-8">
         <p className="-mt-5 text-justify">
-          <b className="text-yellow-500">OUR APPROACH:</b> We are powering a new
-          generation of conscious fashion thinkers in AFRICA by creating a
+          <b className="text-orange-color">OUR APPROACH:</b> We are powering a
+          new generation of conscious fashion thinkers in AFRICA by creating a
           unique platform our generation will find very useful, keeping their
           creative minds and spirit alive, turning their creativity as an income
           stream for them, while doing right by our planet and environment,
@@ -16,7 +16,7 @@ const Vipshield = () => {
         <p className="mt-4">
           To support the business growth and reward the effort of our thrift
           community that buy and sell using our platforms, we have created a{" "}
-          <b className="text-yellow-500"> REPEDDLE VIP SHIELD </b>
+          <b className="text-orange-color"> REPEDDLE VIP SHIELD </b>
           for them to showcase on their profile. Our VIP shield can only be
           earned when you become <b>(TOP SELLER)</b> an active user.
         </p>
@@ -85,13 +85,13 @@ const Vipshield = () => {
           </ul>
           <p className="mt-4 text-justify">
             {" "}
-            <b className="text-yellow-500"> WE NEED EACH OTHER </b> This is a
+            <b className="text-orange-color"> WE NEED EACH OTHER </b> This is a
             journey we are on. With you, we can achieve more for Africa and make
             our environment a better, cleaner planet to live.
           </p>
           <p className="mt-4 text-justify">
             {" "}
-            <b className="text-yellow-500">JOIN US TODAY!</b>Together, we can
+            <b className="text-orange-color">JOIN US TODAY!</b>Together, we can
             make <b> SUSTAINABLE IMPACT </b>
             and change the way people think and use fashion one person at a
             time. This is the best gift we can give our generation, our planet

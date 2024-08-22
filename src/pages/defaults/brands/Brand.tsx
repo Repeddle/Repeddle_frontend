@@ -141,7 +141,7 @@ const Brand = () => {
           <div
             key={alphabet}
             onClick={() => handleAlphabetClick(alphabet)}
-            className="cursor-pointer hover:text-yellow-400"
+            className="cursor-pointer hover:text-orange-color"
           >
             {alphabet}
           </div>
@@ -156,7 +156,7 @@ const Brand = () => {
           className=" bg-white outline-none w-full p-2 rounded-xl"
         />
         <FaSearch
-          className="text-yellow-400 mr-1 ml-3 cursor-pointer hover:text-black"
+          className="text-orange-color mr-1 ml-3 cursor-pointer hover:text-black"
           size={25}
         />
       </div>
@@ -180,7 +180,7 @@ const Brand = () => {
             {brandNames.map((brandName: string) => (
               <div
                 key={brandName}
-                className="border-b border-gray-300 md:border-0 p-2 md:p-0 cursor-pointer hover:text-yellow-500 md:ml-10"
+                className="border-b border-gray-300 md:border-0 p-2 md:p-0 cursor-pointer hover:text-orange-color md:ml-10"
               >
                 <Link
                   to={`/product/${brandName}`}

@@ -145,12 +145,9 @@ const rebundle = () => {
             BUYING GUIDE
           </Link>
 
-          <Link
-            to="/buyersguide"
-            className="text-right lg:text-justify text-[11px] lg:text-lg float-right lg:ml-64 lg:-mr-12 text-malon-color cursor-pointer hover:text-orange-400"
-          >
+          <div className="text-right lg:text-justify text-[11px] lg:text-lg float-right lg:ml-64 lg:-mr-12 text-malon-color cursor-pointer hover:text-orange-400">
             CASH-OUT WITH FREE DELIVERY
-          </Link>
+          </div>
         </div>
       </section>
     </div>
