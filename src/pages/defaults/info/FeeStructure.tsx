@@ -10,7 +10,7 @@ const FeeStructure = () => {
         <h2 className="font-medium text-xl lg:text-2xl text-malon-color mb-2">
           OUR COMMISSION EXPLIANED
         </h2>
-        <p className="text-justify leading-8">
+        <p className="text-justify leading-tight">
           Here’s how our fee structure works to help you understand what you
           could earn and decides how you should mark your price. <br />
           To give you unmatched user experience and support the growth of your

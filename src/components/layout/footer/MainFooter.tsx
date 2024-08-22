@@ -35,10 +35,10 @@ const footerLinks: FooterLinks = [
   {
     heading: "Categories",
     linkItems: [
-      { href: "/category/women", name: "Women" },
-      { href: "/category/men", name: "Men" },
-      { href: "/category/kids", name: "Kids" },
-      { href: "/category/home", name: "Home" },
+      { href: "/search?category=women", name: "Women" },
+      { href: "/search?category=men", name: "Men" },
+      { href: "/search?category=kids", name: "Kids" },
+      { href: "/", name: "Home" },
       { href: "/search", name: "More" },
       { href: "/recurated", name: "Re:Curated" },
     ],
