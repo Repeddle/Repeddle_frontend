@@ -22,7 +22,7 @@ const Sidebar: React.FC<Props> = ({ setIsSidebarOpen }) => {
 
   const [searchQuery, setSearchQuery] = useState<string>("");
   const filteredConversations = conversations.filter((conversation) =>
-    conversation.otherUser.username
+    conversation.otherUser?.username
       .toLowerCase()
       .includes(searchQuery.toLowerCase())
   );
@@ -68,8 +68,22 @@ const Sidebar: React.FC<Props> = ({ setIsSidebarOpen }) => {
               <div className="w-12 h-12 rounded-full bg-gray-300 mr-4"></div>
               {/* User details and last message */}
               <div className="flex-1">
-                <div className="font-semibold">
-                  {conversation.otherUser.username}
+                <div className="font-semibold flex gap-3 items-center">
+                  {conversation.otherUser?.username}{" "}
+                  {conversation.isGuest && (
+                    <span className="text-malon-color text-xs uppercase">
+                      Guest
+                    </span>
+                  )}
+                  {conversation.closed ? (
+                    <span className="text-malon-color text-xs uppercase">
+                      closed
+                    </span>
+                  ) : (
+                    <span className="text-orange-color text-xs uppercase">
+                      open
+                    </span>
+                  )}
                 </div>
                 <div className="text-sm text-gray-600 ">
                   {isTypingList.find((type) => type.id === conversation._id) ? (
