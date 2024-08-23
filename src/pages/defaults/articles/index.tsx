@@ -1,32 +1,32 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from "react";
-import useArticle from "../../../hooks/useArticle";
-import { Article } from "../../../types/article";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react"
+import useArticle from "../../../hooks/useArticle"
+import { Article } from "../../../types/article"
+import { Link } from "react-router-dom"
 
 function Articles() {
-  const { articles, categories, loading, fetchArticles } = useArticle();
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
+  const { articles, categories, loading, fetchArticles } = useArticle()
+  const [searchQuery, setSearchQuery] = useState<string>("")
+  const [filteredArticles, setFilteredArticles] = useState<Article[]>([])
 
   useEffect(() => {
-    if (searchQuery.trim() === "") {
-      setFilteredArticles([]);
-      return;
+    const searchArticles = async () => {
+      if (searchQuery.trim() === "") {
+        setFilteredArticles([])
+        return
+      } else {
+        try {
+          const filteredArticles = await fetchArticles(searchQuery)
+          console.log("art", filteredArticles)
+          setFilteredArticles(filteredArticles)
+        } catch (error) {
+          console.log("Error searching articles")
+        }
+      }
     }
 
-    const searchArticles = async () => {
-      try {
-        const filteredArticles = await fetchArticles(searchQuery);
-        console.log("art", filteredArticles);
-        setFilteredArticles(filteredArticles);
-      } catch (error) {
-        console.log("Error searching articles");
-      }
-    };
-
-    searchArticles();
-  }, [searchQuery]);
+    searchArticles()
+  }, [searchQuery])
 
   // Skeleton loading component
   const SkeletonLoader = () => (
@@ -35,40 +35,37 @@ function Articles() {
       <div className="h-4 w-full mb-2 bg-gray-300 rounded"></div>
       <div className="h-4 w-5/6 mb-2 bg-gray-300 rounded"></div>
     </div>
-  );
+  )
 
   return (
     <div>
-      <section className="mb-8 bg-light-ev2 dark:bg-dark-ev2 px-16 md:px-20 py-16 md:py-20 ">
-        <h1 className="text-3xl md:text-6xl text-center mb-10 font-bold">
+      <div className="flex relative flex-col items-center py-10 md:py-20 bg-light-ev2 dark:bg-dark-ev2">
+        <h1 className="text-3xl md:text-6xl font-bold leading-tight mb-5">
           How can we help?
         </h1>
-        <div className="lg:w-6/12 mx-auto relative justify-center items-center -mt-5">
-          <input
-            type="text"
-            placeholder="Search articles..."
-            className="w-full py-4 px-8 border  border-gray-300 rounded-full focus:outline-none focus:border-orange-300
-            text-xl"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          {filteredArticles.length !== 0 && searchQuery && (
-            <div className="absolute z-10 bg-gray-100 mt-2 w-full border border-gray-300 rounded-lg overflow-auto max-h-60">
-              {filteredArticles.map((article) => (
-                <Link
-                  key={article._id}
-                  to={`/articles/${article._id}`}
-                  className="block p-4 hover:bg-gray-200"
-                >
-                  {article.topic}
-                </Link>
-              ))}
-            </div>
-          )}
+        <input
+          type="search"
+          placeholder="Search articles by topic"
+          className="text-base w-full max-w-[300px] focus:outline-0 focus:border-orange-color lg:max-w-[650px] border mb-5 p-2.5 rounded-[30px] border-solid border-[#ddd]"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <div className="absolute -translate-x-1/2 w-full md:w-1/2 max-h-[200px] overflow-y-auto bg-[#f0f0f0] border z-10 rounded-[5px] border-solid border-[#ccc] left-2/4 top-full">
+          {filteredArticles.length !== 0 &&
+            filteredArticles.map((article) => (
+              <Link
+                key={article._id}
+                to={`/articles/${article._id}`}
+                className="block p-2.5 text-black hover:bg-[#e0e0e0]"
+              >
+                {article.topic}
+              </Link>
+            ))}
         </div>
-      </section>
-      <section className="container mx-auto max-w-4xl px-8 mb-4">
-        <h2 className="font-bold text-2xl text-center mb-6 ">
+      </div>
+
+      <div className="max-w-[800px] mx-auto my-0 p-5">
+        <h2 className="text-2xl text-center font-bold mb-[30px]">
           Popular Questions
         </h2>
         <div className="mb-4">
@@ -81,46 +78,42 @@ function Articles() {
               <SkeletonLoader />
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-2 gap-2.5">
               {articles.map((article) => (
-                <Link
-                  to={`/articles/${article._id}`}
-                  key={article._id}
-                  className=""
-                >
-                  <h3 className="text-xl font-medium mb-2">{article.topic}</h3>
-                  <div
-                    className=""
-                    dangerouslySetInnerHTML={{
-                      __html: article.content.slice(0, 100) + "...",
-                    }}
-                  />
-                </Link>
+                <div key={article._id} className="mb-1.5">
+                  <Link to={`/articles/${article._id}`}>
+                    <h3 className="text-xl hover:text-orange-color mb-2">
+                      {article.topic}
+                    </h3>
+                    <div
+                      className=""
+                      dangerouslySetInnerHTML={{
+                        __html: article.content.slice(0, 100) + "...",
+                      }}
+                    />
+                  </Link>
+                </div>
               ))}
             </div>
           )}
         </div>
-      </section>
+      </div>
+      <h2 className="text-2xl text-center font-bold mb-[30px]">Learn More</h2>
       <section className="container mx-auto max-w-4xl px-8">
-        <h2 className="font-bold text-2xl text-center mb-6 ">Learn More</h2>
         <div className="mb-4">
           {loading ? (
             // Skeleton loading for categories
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 md:gap-5">
               <SkeletonLoader />
               <SkeletonLoader />
               <SkeletonLoader />
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {categories.map((category: string) => (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 md:gap-5">
+              {categories.map((category: string) => (
                 <h3
                   key={category}
-                  className="text-xl font-medium border-gray-300 p-4 rounded-lg shadow-md text-center cursor-pointer hover:text-orange-400"
-                  style={{
-                    boxShadow:
-                      "0 4px 6px rgba(0, 0, 0, 0.1), -4px 0 6px rgba(0, 0, 0, 0.1), 4px 0 6px rgba(0, 0, 0, 0.1)",
-                  }}
+                  className="text-xl rounded shadow-[2px_2px_10px_-5px_grey] text-center capitalize mb-2.5 p-5 hover:text-orange-color"
                 >
                   {category}
                 </h3>
@@ -129,23 +122,26 @@ function Articles() {
           )}
         </div>
 
-        <div className="flex flex-col items-center justify-center pt-10 pb-7 text-center">
-          <p className="mb-4 text-lg mr-1">
+        <div className="flex flex-col items-center justify-center my-5">
+          <p className="mb-4 font-medium">
             More Questions? Go to{" "}
-            <Link to="/support-articles" className="text-orange-400 font-black">
+            <Link
+              to="/support-articles"
+              className="text-orange-color font-black"
+            >
               <b>Support Articles</b>
             </Link>
           </p>
           <Link
             to="/contact-us"
-            className="inline-block px-6 py-3 text-lg text-white bg-orange-400 rounded hover:bg-red-800"
+            className="inline-block px-6 py-3 text-lg text-white bg-orange-color rounded hover:bg-red-800"
           >
             Contact Us
           </Link>
         </div>
       </section>
     </div>
-  );
+  )
 }
 
-export default Articles;
+export default Articles
