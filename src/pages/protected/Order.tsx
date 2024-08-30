@@ -214,7 +214,7 @@ const Order = () => {
               onClose={() => setShowDeliveryHistory(false)}
               size="lg"
             >
-              <div className="flex items-center justify-center h-full py-12">
+              <div className="flex items-center justify-center h-full py-12 pr-[20%] lg:pr-0">
                 <DeliveryHistory status={currentDeliveryHistory} />
               </div>
             </Modal>

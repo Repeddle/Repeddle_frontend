@@ -122,7 +122,7 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
                   )}
                 </div>
               </div>
-              <Link to="/dashboard/user">
+              <Link to={`/dashboard/user/${usernameData.user._id}`}>
                 {userInfo && userInfo._id === usernameData.user._id && (
                   <FaPen className="absolute left-[30px] top-[30px]" />
                 )}

@@ -12,8 +12,8 @@ const DeliveryHistory = ({ status }: Props) => {
           <>
             <div className="relative">
               <div
-                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center bg-[grey] ${
-                  status >= 1 ? "bg-[green]" : ""
+                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center  ${
+                  status >= 1 ? "bg-[green]" : "bg-[grey]"
                 }`}
               >
                 <FaCheck color="white" className="-rotate-45" />
@@ -23,19 +23,19 @@ const DeliveryHistory = ({ status }: Props) => {
               </div>
             </div>
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 1 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 1 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 2 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 2 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
             <div className="relative">
               <div
-                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center bg-[grey] ${
-                  status >= 2 ? "bg-[green]" : ""
+                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center  ${
+                  status >= 2 ? "bg-[green]" : "bg-[grey]"
                 }`}
               >
                 <FaCheck color="white" className="-rotate-45" />
@@ -45,19 +45,19 @@ const DeliveryHistory = ({ status }: Props) => {
               </div>
             </div>
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 2 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 2 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 3 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 3 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
             <div className="relative">
               <div
-                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center bg-[grey] ${
-                  status >= 3 ? "bg-[green]" : ""
+                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center  ${
+                  status >= 3 ? "bg-[green]" : "bg-[grey]"
                 }`}
               >
                 <FaCheck color="white" className="-rotate-45" />
@@ -67,19 +67,19 @@ const DeliveryHistory = ({ status }: Props) => {
               </div>
             </div>
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 3 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 3 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 4 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 4 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
             <div className="relative">
               <div
-                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center bg-[grey] ${
-                  status >= 4 ? "bg-[green]" : ""
+                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center  ${
+                  status >= 4 ? "bg-[green]" : "bg-[grey]"
                 }`}
               >
                 <FaCheck color="white" className="-rotate-45" />
@@ -89,19 +89,19 @@ const DeliveryHistory = ({ status }: Props) => {
               </div>
             </div>
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 4 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 4 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 5 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 5 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
             <div className="relative">
               <div
-                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center bg-[grey] ${
-                  status >= 5 ? "bg-[green]" : ""
+                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center  ${
+                  status >= 5 ? "bg-[green]" : "bg-[grey]"
                 }`}
               >
                 <FaCheck color="white" className="-rotate-45" />
@@ -114,14 +114,14 @@ const DeliveryHistory = ({ status }: Props) => {
         ) : status < 12 ? (
           <>
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 6 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 6 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
             <div className="relative">
               <div
-                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center bg-[grey] ${
-                  status >= 6 ? "bg-[green]" : ""
+                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center ${
+                  status >= 6 ? "bg-[green]" : "bg-[grey]"
                 }`}
               >
                 <FaCheck color="white" className="-rotate-45" />
@@ -131,21 +131,21 @@ const DeliveryHistory = ({ status }: Props) => {
               </div>
             </div>
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 6 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 6 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
             {status > 7 ? (
               <>
                 <div
-                  className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                    status >= 8 ? "bg-[green]" : ""
+                  className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                    status >= 8 ? "bg-[green]" : "bg-[grey]"
                   }`}
                 />
                 <div className="relative">
                   <div
-                    className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center bg-[grey] ${
-                      status >= 8 ? "bg-[green]" : ""
+                    className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center  ${
+                      status >= 8 ? "bg-[green]" : "bg-[grey]"
                     }`}
                   >
                     <FaCheck color="white" className="-rotate-45" />
@@ -155,22 +155,22 @@ const DeliveryHistory = ({ status }: Props) => {
                   </div>
                 </div>
                 <div
-                  className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                    status >= 8 ? "bg-[green]" : ""
+                  className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                    status >= 8 ? "bg-[green]" : "bg-[grey]"
                   }`}
                 />
               </>
             ) : (
               <>
                 <div
-                  className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                    status >= 7 ? "bg-[green]" : ""
+                  className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                    status >= 7 ? "bg-[green]" : "bg-[grey]"
                   }`}
                 />
                 <div className="relative">
                   <div
-                    className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center bg-[grey] ${
-                      status >= 7 ? "bg-[red]" : ""
+                    className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center  ${
+                      status >= 7 ? "bg-[red]" : "bg-[grey]"
                     }`}
                   >
                     <FaCheck color="white" className="-rotate-45" />
@@ -184,14 +184,14 @@ const DeliveryHistory = ({ status }: Props) => {
               </>
             )}
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 9 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 9 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
             <div className="relative">
               <div
-                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center bg-[grey] ${
-                  status >= 9 ? "bg-[green]" : ""
+                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center  ${
+                  status >= 9 ? "bg-[green]" : "bg-[grey]"
                 }`}
               >
                 <FaCheck color="white" className="-rotate-45" />
@@ -201,19 +201,19 @@ const DeliveryHistory = ({ status }: Props) => {
               </div>
             </div>
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 9 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 9 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 10 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 10 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
             <div className="relative">
               <div
-                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center bg-[grey] ${
-                  status >= 10 ? "bg-[green]" : ""
+                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center  ${
+                  status >= 10 ? "bg-[green]" : "bg-[grey]"
                 }`}
               >
                 <FaCheck color="white" className="-rotate-45" />
@@ -223,19 +223,19 @@ const DeliveryHistory = ({ status }: Props) => {
               </div>
             </div>
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 10 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 10 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 11 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 11 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
             <div className="relative">
               <div
-                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center bg-[grey] ${
-                  status >= 11 ? "bg-[green]" : ""
+                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center  ${
+                  status >= 11 ? "bg-[green]" : "bg-[grey]"
                 }`}
               >
                 <FaCheck color="white" className="-rotate-45" />
@@ -248,14 +248,14 @@ const DeliveryHistory = ({ status }: Props) => {
         ) : status > 12 ? (
           <>
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 13 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 13 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
             <div className="relative">
               <div
-                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center bg-[grey] ${
-                  status >= 13 ? "bg-[green]" : ""
+                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center  ${
+                  status >= 13 ? "bg-[green]" : "bg-[grey]"
                 }`}
               >
                 <FaCheck color="white" className="-rotate-45" />
@@ -265,22 +265,22 @@ const DeliveryHistory = ({ status }: Props) => {
               </div>
             </div>
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 13 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 13 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
           </>
         ) : (
           <>
             <div
-              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px] bg-[grey] ${
-                status >= 12 ? "bg-[green]" : ""
+              className={`h-5 w-[5px] lg:w-[45px] lg:h-[5px]  ${
+                status >= 12 ? "bg-[green]" : "bg-[grey]"
               }`}
             />
             <div className="relative">
               <div
-                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center bg-[grey] ${
-                  status >= 12 ? "bg-[red]" : ""
+                className={`w-[30px] h-[30px] rotate-45 flex items-center justify-center  ${
+                  status >= 12 ? "bg-[red]" : "bg-[grey]"
                 }`}
               >
                 <FaCheck color="white" className="-rotate-45" />

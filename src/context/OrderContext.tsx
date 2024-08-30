@@ -14,7 +14,7 @@ type ContextType = {
   orders: IOrder[]
   loading: boolean
   error: string
-  fetchOrders: () => Promise<boolean>
+  fetchOrders: (orderId?: string) => Promise<boolean>
   fetchOrderById: (id: string) => Promise<IOrder | null>
   fetchSoldOrders: () => Promise<boolean>
   createOrder: (
@@ -55,11 +55,11 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
   }
 
   // Function to fetch orders
-  const fetchOrders = async () => {
+  const fetchOrders = async (orderId?: string) => {
     try {
       setError("")
       setLoading(true)
-      const result = await fetchOrdersService()
+      const result = await fetchOrdersService(orderId)
       setOrders(result)
       setLoading(false)
       return true

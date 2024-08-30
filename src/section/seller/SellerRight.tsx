@@ -33,7 +33,7 @@ const SellerRight = ({ usernameData, loading, error }: Props) => {
       <div className="flex justify-center mb-[5px] rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1">
         {tabs.map((tab) => (
           <div
-            className={`flex justify-center cursor-pointer relative capitalize min-w-[70px] m-2.5 hover:text-orange-color ${
+            className={`flex justify-center cursor-pointer relative capitalize flex-1 sm:flex-initial sm:min-w-[70px] m-2.5 hover:text-orange-color ${
               displayTab === tab
                 ? "text-orange-color font-bold after:content-[''] after:absolute after:w-full after:h-0.5 after:left-0 after:-bottom-2.5 after:bg-orange-color"
                 : ""
