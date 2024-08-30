@@ -2,9 +2,15 @@ import { ICreateOrder, IOrder, IOrderSummary } from "../types/order"
 import { getBackendErrorMessage } from "../utils/error"
 import api from "./api"
 
-export const fetchOrdersService = async (): Promise<IOrder[]> => {
+export const fetchOrdersService = async (
+  orderId?: string
+): Promise<IOrder[]> => {
   try {
-    const url = "/orders"
+    let url = "/orders"
+
+    if (orderId) {
+      url = url + `?orderId=${orderId}`
+    }
 
     const resp: { orders: IOrder[]; status: boolean } = await api.get(url)
 

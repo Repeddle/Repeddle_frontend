@@ -1,21 +1,18 @@
 import moment from "moment"
 import { useNavigate } from "react-router"
-
-type TempNotifications = {
-  link: string
-  _id: string
-  userImage: string
-  createdAt: string
-  msg: string
-  read: boolean
-}
+import useNotification from "../../hooks/useNotification"
+import { useEffect } from "react"
+import { Notification } from "../../types/conversation"
 
 const MobileNotification = () => {
   const navigate = useNavigate()
+  const { fetchNotifications, notifications } = useNotification()
 
-  const notifications: TempNotifications[] = []
+  useEffect(() => {
+    fetchNotifications()
+  }, [])
 
-  const handleOnClick = (not: TempNotifications) => {
+  const handleOnClick = (not: Notification) => {
     // console.log("not", not)
     // socket.emit("remove_id_notifications", not._id)
     navigate(not.link)
@@ -27,7 +24,7 @@ const MobileNotification = () => {
         <div className="font-bold mb-2.5 text-black dark:text-white">
           Notifications
         </div>
-        {notifications.length < 0 ? (
+        {notifications.length === 0 ? (
           <b>No Notification</b>
         ) : (
           notifications.map((not) => (
@@ -38,11 +35,11 @@ const MobileNotification = () => {
             >
               <img
                 className="w-[50px] h-[50px] rounded-[50%]"
-                src={not.userImage}
+                src={not.user.image}
                 alt="img"
               />
               <div className="flex-1 ml-[5px] text-sm">
-                <div className="text-black dark:text-white">{not.msg}</div>
+                <div className="text-black dark:text-white">{not.message}</div>
                 <div className="text-orange-color">
                   {moment(not.createdAt).fromNow()}
                 </div>

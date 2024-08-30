@@ -57,7 +57,7 @@ const CartItems = ({
           </div>
           <div className="col-3 flex items-center flex-[3]">
             <button
-              className={`text-white text-[0.8rem] rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
+              className={`text-black dark:text-white text-[0.8rem] rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
               onClick={() =>
                 addToCart({ ...item, quantity: item.quantity - 1 })
               }
@@ -67,7 +67,7 @@ const CartItems = ({
             </button>{" "}
             <span>{item.quantity}</span>{" "}
             <button
-              className={`text-white text-[0.8rem] rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
+              className={`text-black dark:text-white text-[0.8rem] rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
               onClick={() =>
                 addToCart({ ...item, quantity: item.quantity + 1 })
               }
@@ -77,7 +77,7 @@ const CartItems = ({
             </button>
             <div>
               <button
-                className={`text-white text-[0.8rem] rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
+                className={`text-black dark:text-white text-[0.8rem] rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
                 onClick={() => {
                   setCurrentItem(item)
                   setRemove(true)

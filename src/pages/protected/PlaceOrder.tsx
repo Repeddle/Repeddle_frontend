@@ -72,8 +72,6 @@ const PlaceOrder = () => {
     //   )
     // )
 
-    addNotification("Order is paid")
-
     // order1.order.seller.forEach((s) => {
     //   socket.emit("post_data", {
     //     userId: s,
