@@ -115,9 +115,7 @@ export default function Support() {
         </div>
       )}
       <div
-        className={`justify-end shadow-2xl shadow-gray-500 ${
-          showSupport ? "hidden md:flex" : "md:flex"
-        }`}
+        className={`justify-end${showSupport ? "hidden md:flex" : "md:flex"}`}
       >
         <div
           onClick={handleToggle}
