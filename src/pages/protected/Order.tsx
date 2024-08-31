@@ -141,18 +141,16 @@ const Order = () => {
           <div className="w-full hidden text-malon-color mb-0 p-0 print:block">
             Invoice
           </div>
-          <div className="flex justify-between">
-            <h1 className="lg:mb-0 lg:py-[15px] p-2.5 text-[calc(1.375rem_+_1.5vw)] font-medium leading-tight">
-              Order Details
-            </h1>
-            <div
-              className="font-medium text-white-color text-center w-[150px] cursor-pointer h-[30px] px-2 py-px rounded-[0.2rem] hover:bg-malon-color bg-orange-color print:hidden"
-              onClick={handlePrint}
-            >
-              Print as Invoice
-            </div>
+          <div
+            className="font-medium ml-auto text-white-color text-center w-[150px] cursor-pointer h-[30px] px-2 py-px mt-1 rounded-[0.2rem] hover:bg-malon-color bg-orange-color print:hidden"
+            onClick={handlePrint}
+          >
+            Print as Invoice
           </div>
-          <div className="w-full mb-[30px] px-[30px] py-0 rounded-[5px] lg:text-base text-[13px] lg:px-2.5 lg:py-0">
+          <h1 className="lg:mb-0 lg:py-[15px] p-2.5 text-[calc(1.375rem_+_1.5vw)] font-medium leading-tight">
+            Order Details
+          </h1>
+          <div className="w-full mb-[30px] px-2.5 py-0 rounded-[5px] lg:text-base text-[13px] lg:px-2.5 lg:py-0">
             <div className="px-5 py-[15px] rounded-[0.2rem] print:text-black-color print:bg-white bg-light-ev2 dark:bg-dark-ev2">
               <div className="font-bold">Order number {orderId}</div>
 

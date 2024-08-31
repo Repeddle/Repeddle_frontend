@@ -38,7 +38,7 @@ const IsUser = ({
 }: Props) => {
   const { user } = useAuth()
 
-  const [afterAction, setAfterAction] = useState(false)
+  const [afterAction, setAfterAction] = useState(true)
 
   const placeOrderOnHold = () => {}
 
@@ -111,16 +111,16 @@ const IsUser = ({
                   onClose={() => setAfterAction(false)}
                   size="lg"
                 >
-                  <div className="flex flex-col justify-center items-center gap-2.5 h-full p-2.5">
-                    <div className="flex justify-between gap-2.5 w-full max-w-sm">
+                  <div className="flex flex-col justify-center items-center gap-2.5 h-full pt-10 md:pt-8 p-2.5">
+                    <div className="flex justify-between gap-1.5 sm:gap-2.5 w-full max-w-sm">
                       <div
-                        className="cursor-pointer text-white-color bg-orange-color h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
+                        className="cursor-pointer text-white-color bg-orange-color sm:h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
                         onClick={() => !updatingStatus && paymentRequest()}
                       >
                         Confirm you have received order
                       </div>
                       <div
-                        className="cursor-pointer bg-malon-color hover:bg-orange-color text-white-color h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
+                        className="cursor-pointer bg-malon-color hover:bg-orange-color text-white-color sm:h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
                         onClick={() => {
                           if (!updatingStatus) {
                             setShowReturn(true)
