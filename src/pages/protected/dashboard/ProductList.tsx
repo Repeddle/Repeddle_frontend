@@ -45,18 +45,17 @@ const ProductList = () => {
         <h1 className="text-[calc(1.375rem_+_1.5vw)] font-medium leading-tight">
           My Products
         </h1>
-
+      </div>
+      <div className="flex mr-2.5 gap-3 mb-2.5 justify-between">
         <Link
           to={user?.isSeller ? "/newproduct" : "/sell"}
-          className="flex px-2 py-[5px] items-center cursor-pointer font-bold bg-orange-color text-white-color lg:px-4 lg:py-2.5 rounded-[0.2rem]"
+          className="flex px-2 text-nowrap py-[5px] items-center cursor-pointer font-bold bg-orange-color text-white-color lg:px-4 lg:py-2.5 rounded-[0.2rem]"
         >
           <FaPlus className="mr-2.5" />
           Add Product
         </Link>
-      </div>
-      <div className="flex mr-2.5 mb-2.5 justify-end">
         <input
-          className={`w-3/5 md:w-2/5 h-[45px] border border-malon-color focus-visible:outline focus-visible:outline-orange-color p-[15px] rounded-[5px]
+          className={`w-1/2 sm:w-3/5 md:w-2/5 h-[45px] border border-malon-color focus-visible:outline focus-visible:outline-orange-color p-2 sm:p-[15px] rounded-[5px]
           placeholder:p-2.5 text-black dark:text-white bg-white dark:bg-black`}
           onChange={(e) => setProductQuery(e.target.value)}
           placeholder="Search "

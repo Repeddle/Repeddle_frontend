@@ -1,7 +1,9 @@
 const Terms = () => {
   return (
-    <div className="container mx-auto max-w-7xl px-8">
-      <h1 className="text-3xl mb-8">REPEDDLE TERMS OF USE</h1>
+    <div className="container mt-6 sm:mt-10 mx-auto max-w-7xl px-8">
+      <h1 className="text-[calc(1.275rem_+_0.3vw)] font-medium leading-[1.2] font-sans mb-8">
+        REPEDDLE TERMS OF USE
+      </h1>
       <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         1. Introduction
       </h1>

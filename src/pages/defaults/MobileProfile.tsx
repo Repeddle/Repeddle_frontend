@@ -183,12 +183,14 @@ const MobileProfile = () => {
           Address Book
         </div>
       </Link>
-      <Link to="/dashboard/coupon">
-        <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
-          <FaGift className="mr-2.5" />
-          Coupon/Gift
-        </div>
-      </Link>
+      {user?.role === "Admin" && (
+        <Link to="/dashboard/admin/coupon">
+          <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
+            <FaGift className="mr-2.5" />
+            Coupon/Gift
+          </div>
+        </Link>
+      )}
       {user?.role === "Admin" && (
         <>
           <div className="p-2.5 uppercase bg-light-ev2 dark:bg-dark-ev2">

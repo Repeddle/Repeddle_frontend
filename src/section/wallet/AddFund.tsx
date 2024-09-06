@@ -61,11 +61,11 @@ const AddFund = ({ currency }: Props) => {
       <FaWallet size={64} className="text-orange-color" />
       <div className="font-bold mt-2.5">Fund your Wallet</div>
       <input
-        className="flex-1 text-lg border-0 focus-visible:outline-none placeholder:p-2.5 text-black-color dark:text-white-color bg-white-color dark:bg-black-color"
+        className="h-[45px] w-full border border-malon-color mx-0 my-[25px] p-[15px] numeric-arrow rounded-[5px] focus-within:border-orange-color focus-visible:outline-orange-color focus-visible:outline-1 text-black dark:text-white bg-white dark:bg-black placeholder:p-2"
         type="number"
         value={amount}
         placeholder="Enter Amount to be Added in Wallet"
-        onChange={(e) => setAmount(+e.target.value)}
+        onChange={(e) => setAmount(parseFloat(e.target.value))}
       />
       {region() === "NGN" ? (
         <div

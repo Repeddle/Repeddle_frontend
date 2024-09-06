@@ -277,7 +277,7 @@ const EditProduct = () => {
   ]
 
   return (
-    <div className="flex-[4] p-5">
+    <div className="flex-[4]">
       <div className="flex items-center justify-between">
         <h1 className="text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] font-medium leading-tight">
           Product

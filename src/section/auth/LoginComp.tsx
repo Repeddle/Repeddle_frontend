@@ -9,14 +9,14 @@ import useToastNotification from "../../hooks/useToastNotification"
 const LoginComp = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const { login, getUser, loading, error } = useAuth()
+  const { login, getUser, loading } = useAuth()
   const { addNotification } = useToastNotification()
 
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
 
-    const value = await login({ email: email.trim(), password })
-    if (value) {
+    const { isError, error } = await login({ email: email.trim(), password })
+    if (!isError) {
       await getUser()
     } else {
       addNotification(error ? error : "An error occurred")

@@ -147,13 +147,13 @@ const Table = ({
         </div>
       </div>
 
-      {totalPages && totalPages >= 2 && (
+      {totalPages && totalPages >= 2 ? (
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={onPageChange}
         />
-      )}
+      ) : null}
     </div>
   )
 }

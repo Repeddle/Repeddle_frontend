@@ -73,6 +73,7 @@ import Earning from "./pages/protected/earning"
 import Wishlist from "./pages/protected/dashboard/Wishlist"
 import PlaceOrder from "./pages/protected/PlaceOrder"
 import ShopByOutfit from "./pages/defaults/ShopByOutfit"
+import Coupon from "./pages/admin/Coupon"
 
 const router = createBrowserRouter([
   {
@@ -178,6 +179,7 @@ const router = createBrowserRouter([
           { path: "otherbrand", element: <OtherBrand /> },
           { path: "logreturns", element: <AllReturnsLog /> },
           { path: "contact", element: <Contact /> },
+          { path: "coupon", element: <Coupon /> },
           // { path: "articlelist", element: <ArticleList /> },
           // { path: "createarticle", element: <CreateArticle onCancel={() => {}} /> },
         ],

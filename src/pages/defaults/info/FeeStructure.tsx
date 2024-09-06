@@ -213,7 +213,7 @@ const FeeStructure = () => {
 
         <Link
           to="/newproduct"
-          className="text-orange-400 hover:text-malon-color hover:underline font-medium text-xl lg:text-2xl"
+          className="text-orange-400 hover:text-malon-color hover:underline font-medium text-[1.2rem]"
         >
           LIST A PRODUCT TO START SELLING TODAY!
         </Link>
