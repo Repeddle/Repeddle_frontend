@@ -8,6 +8,7 @@ import UserRightComp from "../../../section/user/UserRightComp"
 import useNewsletter from "../../../hooks/useNewsletter"
 import { compressImageUpload } from "../../../utils/common"
 import useUser from "../../../hooks/useUser"
+import LoadingLogoModal from "../../../components/ui/loadin/LoadingLogoModal"
 
 export type InputType = {
   zipcode: string
@@ -49,18 +50,20 @@ const User = () => {
   const navigate = useNavigate()
 
   const [user, setUser] = useState<IUser>()
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const fetchUser = async () => {
       if (!id) {
         return addNotification("user id not found")
       }
-
+      setLoading(true)
       const user = await getUserById(id)
       console.log(user)
 
       if (user) setUser(user)
       else if (getUserError) addNotification(getUserError)
+      setLoading(false)
     }
 
     fetchUser()
@@ -279,12 +282,13 @@ const User = () => {
   }
 
   return (
-    <div className="flex-[4] p-5">
+    <div className="flex-[4]">
       <div className="flex items-center justify-between">
         <h1 className="text-[calc(1.375rem_+_1.5vw)] leading-tight">
           Edit User
         </h1>
       </div>
+      {loading && <LoadingLogoModal />}
       {user && (
         <div className="flex mt-5 flex-col gap-5 lg:flex-row lg:gap-0">
           <UserLeftComp
