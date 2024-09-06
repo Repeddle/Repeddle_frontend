@@ -5,6 +5,7 @@ import { currency, region } from "../utils/common"
 import {
   fetchWalletService,
   fundWalletFlutterService,
+  withdrawWalletFlutterService,
 } from "../services/wallet"
 
 type ContextType = {
@@ -13,6 +14,10 @@ type ContextType = {
   error: string
   fetchWallet: () => Promise<boolean>
   fundWalletFlutter: (data: IFund) => Promise<{
+    error: boolean
+    result: string
+  }>
+  withdrawWalletFlutter: (amount: number) => Promise<{
     error: boolean
     result: string
   }>
@@ -25,7 +30,7 @@ export const WalletProvider = ({ children }: PropsWithChildren) => {
   const { setAuthErrorModalOpen } = useAuth()
   const [wallet, setWallet] = useState<IWallet>({
     balance: 0,
-    currency: currency(region()),
+    currency: currency(region()) == "₦" ? "NGN" : "ZAR",
   })
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
@@ -70,11 +75,22 @@ export const WalletProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
+  const withdrawWalletFlutter = async (amount: number) => {
+    try {
+      const result = await withdrawWalletFlutterService(amount)
+
+      return { error: false, result }
+    } catch (error) {
+      return { error: true, result: error as string }
+    }
+  }
+
   return (
     <WalletContext.Provider
       value={{
         fetchWallet,
         fundWalletFlutter,
+        withdrawWalletFlutter,
         wallet,
         loading,
         error,

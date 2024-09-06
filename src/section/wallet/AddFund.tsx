@@ -21,10 +21,10 @@ type Props = {
   setShowModel: (val: boolean) => void
   setRefresh: (val: boolean) => void
   refresh: boolean
-  currency: string
+  currency: "NGN" | "ZAR"
 }
 
-const AddFund = ({ currency }: Props) => {
+const AddFund = ({ currency, refresh, setRefresh, setShowModel }: Props) => {
   const { fundWalletFlutter, loading } = useWallet()
   const { addNotification } = useToastNotification()
 
@@ -38,7 +38,7 @@ const AddFund = ({ currency }: Props) => {
     // TODO: used uuid in previous code
     tx_ref: Date.now().toString(),
     amount,
-    currency: currency === "N " ? "NGN" : "ZAR",
+    currency,
     //currency: "ZAR",
     //country: "ZAR",
     payment_options: "card,mobilemoney,ussd",
@@ -67,6 +67,9 @@ const AddFund = ({ currency }: Props) => {
 
     if (!error) {
       addNotification(result)
+      setRefresh(true)
+      setAmount(0)
+      setShowModel(!refresh)
     } else {
       addNotification(result, undefined, true)
     }

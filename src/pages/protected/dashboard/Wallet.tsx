@@ -49,7 +49,7 @@ const Wallet = () => {
         </div>
         <div>
           <div
-            className="flex text-xs px-[7px] py-[5px] lg:text-base items-center cursor-pointer font-bold bg-orange-color text-white-color lg:px-[30px] lg:py-2.5 rounded-[0.2rem]"
+            className="flex text-xs capitalize px-[7px] py-[5px] lg:text-base items-center cursor-pointer font-bold bg-orange-color text-white-color lg:px-[30px] lg:py-2.5 rounded-[0.2rem]"
             onClick={() => setShowModel(true)}
           >
             <FaPlus className="mr-2.5" />
