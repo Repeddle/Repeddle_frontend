@@ -48,3 +48,30 @@ export const fundWalletFlutterService = async (
     throw getBackendErrorMessage(error)
   }
 }
+
+export const withdrawWalletFlutterService = async (
+  amount: number
+): Promise<string> => {
+  try {
+    const resp: { message: string; status: boolean } = await api.post(
+      "/wallets/withdrawal",
+      { amount }
+    )
+
+    if (!resp.status) {
+      // Handle Fetch wallets error, e.g., display an error message to the user
+      throw new Error(
+        "Withdraw wallets failed: " + getBackendErrorMessage(resp)
+      )
+    }
+
+    return resp.message
+  } catch (error) {
+    // Handle network errors or other exceptions
+    // You can log the error or perform other error-handling actions
+    console.error("Withdraw wallets error:", getBackendErrorMessage(error))
+
+    // Re-throw the error to propagate it up the call stack if needed
+    throw getBackendErrorMessage(error)
+  }
+}

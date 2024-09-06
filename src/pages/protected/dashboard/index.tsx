@@ -30,7 +30,7 @@ function Dashboard() {
 
         {/* Content area */}
         <div
-          className={`flex-1 sm:p-4 ${
+          className={`flex-1 py-4 px-2 sm:p-4 ${
             isSidebarOpen ? "ml-64" : "ml-0 md:ml-64 overflow-x-hidden"
           }`}
         >

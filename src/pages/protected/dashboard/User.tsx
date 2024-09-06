@@ -56,6 +56,8 @@ const User = () => {
   useEffect(() => {
     const fetchUser = async () => {
       let user: string | IUser | null
+      setLoading(true)
+      setErrors("")
       if (usersData?.role === "Admin") {
         if (!id) {
           setErrors("user id not found")
@@ -65,8 +67,6 @@ const User = () => {
       } else {
         user = await getUser()
       }
-      setErrors("")
-      setLoading(true)
       console.log(user)
 
       if (user && typeof user !== "string") setUser(user)

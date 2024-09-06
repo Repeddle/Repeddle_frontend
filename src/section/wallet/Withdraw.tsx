@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // TODO: remove this when it is resolved
-import { ChangeEvent, useState } from "react"
+import { useEffect, useState } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import useAuth from "../../hooks/useAuth"
 import { FaQuestionCircle, FaWallet } from "react-icons/fa"
-import MessageBox from "../../components/MessageBox"
 import { UserBalance } from "../../types/user"
+import { region } from "../../utils/common"
+import useWallet from "../../hooks/useWallet"
+import useToastNotification from "../../hooks/useToastNotification"
 
 type Props = {
   setShowModel: (val: boolean) => void
@@ -16,22 +18,53 @@ type Props = {
 
 // TODO: account information is not part of logged in data
 
-const Withdraw = ({ balance }: Props) => {
-  const loading = false
-  const error = ""
+const Withdraw = ({ balance, refresh, setRefresh, setShowModel }: Props) => {
+  const { withdrawWalletFlutter, loading } = useWallet()
+  const { addNotification } = useToastNotification()
 
   const { user } = useAuth()
 
   const [amount, setAmount] = useState(0)
-  const [fee] = useState("")
-  const [errormsg] = useState("")
+  const [fee, setFee] = useState(0)
+  const [errormsg, setErrormsg] = useState("")
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setAmount(+e.target.value)
-    // dispatch({ type: "FETCH_FAIL", payload: "" });
+  const handleWithdraw = async () => {
+    const { error, result } = await withdrawWalletFlutter(amount)
+
+    if (!error) {
+      addNotification(result)
+      setRefresh(!refresh)
+      setShowModel(false)
+      setAmount(0)
+    } else {
+      addNotification(result, undefined, true)
+    }
   }
 
-  const handleWithdraw = () => {}
+  useEffect(() => {
+    const fees =
+      region() === "ZAR"
+        ? 10
+        : amount <= 5000
+        ? 10.75
+        : amount > 5000 && amount <= 50000
+        ? 26.88
+        : 53.75
+    setFee(fees)
+    const totalMoney = Number(amount) + Number(fees)
+    console.log("totalMoney", totalMoney, balance.balance)
+    if (totalMoney > balance.balance) {
+      setErrormsg(
+        "Insufficient funds, Please enter a lower amount to complete your withdrawal"
+      )
+      return
+    }
+    if (!amount) {
+      setErrormsg("Please enter the amount you want to withdraw")
+      return
+    }
+    setErrormsg("")
+  }, [amount, balance.balance])
 
   return loading ? (
     <LoadingBox />
@@ -49,21 +82,23 @@ const Withdraw = ({ balance }: Props) => {
   ) : (
     <div className="flex flex-col items-center mt-[30px] p-5">
       <FaWallet size={64} className="text-orange-color" />
-      {/* @ts-ignore */}
+
       <div className="font-bold mt-2.5">To {user.accountName}</div>
       <div className="text-[grey] uppercase">
-        {/* @ts-ignore */}
         {user.bankName} ({user.accountNumber})
       </div>
-      {error && <MessageBox className="text-[red]">{error}</MessageBox>}
-      <div className="text-right w-full mt-[25px]">bal: {balance.balance}</div>
+      {/* {error && <MessageBox className="text-[red]">{error}</MessageBox>} */}
+      <div className="text-right w-full mt-[25px]">
+        Balance: {balance.currency}
+        {balance.balance}
+      </div>
       <div className="h-[45px] w-full border border-malon-color flex items-center p-[5px] rounded-[5px]">
         <input
-          className="flex-1 text-lg border-0 focus-visible:outline-none placeholder:p-2.5 text-black-color dark:text-white-color bg-white-color dark:bg-black-color"
+          className="flex-1 numeric-arrow text-lg border-0 focus-visible:outline-none placeholder:p-2.5 text-black-color dark:text-white-color bg-white-color dark:bg-black-color"
           type="number"
           value={amount}
           placeholder="Enter Amount to Withdraw"
-          onChange={handleChange}
+          onChange={(e) => setAmount(parseFloat(e.target.value))}
         />
         <div
           className="text-orange-color font-bold cursor-pointer"

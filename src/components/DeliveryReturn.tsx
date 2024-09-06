@@ -445,7 +445,7 @@ const DeliveryReturn = ({ setShowModel, returned, setReturned }: Props) => {
         <Modal isOpen={showModel} onClose={() => setShowModel1(false)}>
           <AddFund
             setShowModel={setShowModel}
-            currency={currencys}
+            currency={currencys === "₦" ? "NGN" : "ZAR"}
             setRefresh={setRefresh}
             refresh={refresh}
           />

@@ -46,7 +46,7 @@ export type IPayment = {
 
 export type IWallet = {
   balance: number
-  currency: string
+  currency: "NGN" | "ZAR"
 }
 
 export type IFund = {
