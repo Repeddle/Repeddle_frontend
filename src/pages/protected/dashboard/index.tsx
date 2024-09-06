@@ -1,22 +1,22 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useState } from "react";
-import Sidebar from "../../../components/layout/Sidebar";
-import StickyNav from "../../../components/layout/StickyNav";
-import Middlebar from "../../../components/layout/navbar/Middlebar";
-import LoadingLogoModal from "../../../components/ui/loadin/LoadingLogoModal";
-import useAuth from "../../../hooks/useAuth";
+import { Navigate, Outlet } from "react-router-dom"
+import { useState } from "react"
+import Sidebar from "../../../components/layout/Sidebar"
+import StickyNav from "../../../components/layout/StickyNav"
+import Middlebar from "../../../components/layout/navbar/Middlebar"
+import LoadingLogoModal from "../../../components/ui/loadin/LoadingLogoModal"
+import useAuth from "../../../hooks/useAuth"
 
 function Dashboard() {
-  const { user, loading } = useAuth();
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const { user, loading } = useAuth()
+  const [isSidebarOpen, setSidebarOpen] = useState(false)
 
   if (loading) {
-    return <LoadingLogoModal />;
+    return <LoadingLogoModal />
   }
 
   if (!user) {
     // user is not authenticated
-    return <Navigate to="/auth/login" />;
+    return <Navigate to="/auth/login" />
   }
 
   return (
@@ -30,7 +30,7 @@ function Dashboard() {
 
         {/* Content area */}
         <div
-          className={`flex-1 p-4 ${
+          className={`flex-1 sm:p-4 ${
             isSidebarOpen ? "ml-64" : "ml-0 md:ml-64 overflow-x-hidden"
           }`}
         >
@@ -49,7 +49,7 @@ function Dashboard() {
       </div>
       <StickyNav />
     </main>
-  );
+  )
 }
 
-export default Dashboard;
+export default Dashboard

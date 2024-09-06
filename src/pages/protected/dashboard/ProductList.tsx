@@ -46,7 +46,7 @@ const ProductList = () => {
           My Products
         </h1>
       </div>
-      <div className="flex mr-2.5 gap-3 mb-2.5 justify-between">
+      <div className="flex mx-2.5 ml-6 gap-3 mb-2.5 justify-between">
         <Link
           to={user?.isSeller ? "/newproduct" : "/sell"}
           className="flex px-2 text-nowrap py-[5px] items-center cursor-pointer font-bold bg-orange-color text-white-color lg:px-4 lg:py-2.5 rounded-[0.2rem]"

@@ -4,7 +4,9 @@ import api from "./api"
 
 export const fetchWalletService = async (): Promise<IWallet> => {
   try {
-    const resp: IWallet & { status: boolean } = await api.get("/wallets")
+    const resp: IWallet & { status: boolean } = await api.get(
+      "/wallets/balance"
+    )
 
     if (!resp.status) {
       // Handle Fetch wallets error, e.g., display an error message to the user

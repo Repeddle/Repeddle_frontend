@@ -282,35 +282,36 @@ const EditProduct = () => {
         <h1 className="text-[calc(1.375rem_+_1.5vw)] xl:text-[2.5rem] font-medium leading-tight">
           Product
         </h1>
-        {product && (
-          <Link to="/dashboard/newproduct">
-            <button className="w-20 text-white-color bg-orange-color cursor-pointer p-[5px] rounded-[0.2rem] border-none">
-              Create
-            </button>
-          </Link>
-        )}
       </div>
 
       {error && <MessageBox className="text-[red]">{error}</MessageBox>}
       {loading && <LoadingLogoModal />}
       {product && (
         <>
-          {!product.sold &&
-            (product.isAvailable ? (
-              <button
-                className="text-white bg-malon-color cursor-pointer mb-2.5 px-5 py-[5px] rounded-[0.2rem] border-none"
-                onClick={notAvailable}
-              >
-                No Longer Available
+          <div className="flex items-start max-w-[1190px] justify-between my-2.5">
+            {!product.sold &&
+              (product.isAvailable ? (
+                <button
+                  className="text-white bg-malon-color cursor-pointer mb-2.5 px-5 py-[5px] rounded-[0.2rem] border-none"
+                  onClick={notAvailable}
+                >
+                  No Longer Available
+                </button>
+              ) : (
+                <button
+                  className="text-white bg-malon-color cursor-pointer mb-2.5 px-5 py-[5px] rounded-[0.2rem] border-none"
+                  onClick={notAvailable}
+                >
+                  Mark as Available
+                </button>
+              ))}
+
+            <Link to="/newproduct" className="justify-self-end">
+              <button className="w-20 text-white-color bg-orange-color cursor-pointer p-[5px] rounded-[0.2rem] border-none">
+                Create
               </button>
-            ) : (
-              <button
-                className="text-white bg-malon-color cursor-pointer mb-2.5 px-5 py-[5px] rounded-[0.2rem] border-none"
-                onClick={notAvailable}
-              >
-                Mark as Available
-              </button>
-            ))}
+            </Link>
+          </div>
 
           <div className="flex flex-col lg:flex-row">
             <div className="flex-1">
@@ -487,13 +488,13 @@ const EditProduct = () => {
                     Main Category
                   </label>
 
-                  <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
+                  <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 dark:bg-dark-ev1 overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
                     <select
                       value={input.product}
                       onChange={(e) =>
                         handleOnChange(e.target.value, "product")
                       }
-                      className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                      className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                     >
                       {categories.length > 0 &&
                         categories.map((cat) => (
@@ -506,13 +507,13 @@ const EditProduct = () => {
                 <div className="relative flex flex-col lg:w-[400px] mr-5 mt-2.5 w-full">
                   <label className="text-sm mt-[15px] mb-2.5">Category</label>
 
-                  <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
+                  <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 dark:bg-dark-ev1 overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
                     <select
                       value={input.category}
                       onChange={(e) =>
                         handleOnChange(e.target.value, "category")
                       }
-                      className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                      className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                     >
                       {categories.length > 0 &&
                         categories.map(
@@ -531,13 +532,13 @@ const EditProduct = () => {
                     Sub Category
                   </label>
 
-                  <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
+                  <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 dark:bg-dark-ev1 overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
                     <select
                       value={input.subCategory}
                       onChange={(e) =>
                         handleOnChange(e.target.value, "subCategory")
                       }
-                      className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                      className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                     >
                       {categories.length > 0 &&
                         categories.map(
@@ -581,13 +582,13 @@ const EditProduct = () => {
                     <Condition />
                   </Modal>
 
-                  <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
+                  <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 dark:bg-dark-ev1 overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
                     <select
                       value={input.condition}
                       onChange={(e) =>
                         handleOnChange(e.target.value, "condition")
                       }
-                      className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                      className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                     >
                       <option value="">-- select --</option>
                       <option value="New with Tags">New with Tags</option>
@@ -623,13 +624,13 @@ const EditProduct = () => {
                     Specify Product's primary material.
                   </div>
 
-                  <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
+                  <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 dark:bg-dark-ev1 overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
                     <select
                       value={input.material}
                       onChange={(e) =>
                         handleOnChange(e.target.value, "material")
                       }
-                      className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                      className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                     >
                       <option value="">-- select --</option>
                       <option value="Acrylic">Acrylic</option>
@@ -906,12 +907,12 @@ const EditProduct = () => {
                     minimum)
                   </div>
 
-                  <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
+                  <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 dark:bg-dark-ev1 overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
                     <select
                       value={input.color}
                       multiple
                       onChange={(e) => handleOnChange(e.target.value, "color")}
-                      className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                      className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                     >
                       <option value="">-- select --</option>
                       {colors.map((c) => (
@@ -1051,13 +1052,13 @@ const EditProduct = () => {
                     Key Features: Pattern & Printed
                   </label>
 
-                  <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
+                  <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 dark:bg-dark-ev1 overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
                     <select
                       value={input.keyFeatures}
                       onChange={(e) =>
                         handleOnChange(e.target.value, "keyFeatures")
                       }
-                      className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                      className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                     >
                       <option value="">-- select --</option>
                       <option value="Abstract">Abstract</option>

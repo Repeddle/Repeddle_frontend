@@ -9,6 +9,7 @@ import useNewsletter from "../../../hooks/useNewsletter"
 import { compressImageUpload } from "../../../utils/common"
 import useUser from "../../../hooks/useUser"
 import LoadingLogoModal from "../../../components/ui/loadin/LoadingLogoModal"
+import MessageBox from "../../../components/MessageBox"
 
 export type InputType = {
   zipcode: string
@@ -38,7 +39,7 @@ export type UserFormType = {
 
 const User = () => {
   const { id } = useParams()
-  const { error, updateUser } = useAuth()
+  const { error, updateUser, getUser, user: usersData } = useAuth()
   const { getUserById, error: getUserError } = useUser()
   const { addNotification } = useToastNotification()
   const {
@@ -54,15 +55,25 @@ const User = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      if (!id) {
-        return addNotification("user id not found")
+      let user: string | IUser | null
+      if (usersData?.role === "Admin") {
+        if (!id) {
+          setErrors("user id not found")
+          return addNotification("user id not found")
+        }
+        user = await getUserById(id)
+      } else {
+        user = await getUser()
       }
+      setErrors("")
       setLoading(true)
-      const user = await getUserById(id)
       console.log(user)
 
-      if (user) setUser(user)
-      else if (getUserError) addNotification(getUserError)
+      if (user && typeof user !== "string") setUser(user)
+      else if (getUserError) {
+        addNotification(getUserError)
+        setErrors(user || "Failed to get user")
+      }
       setLoading(false)
     }
 
@@ -73,6 +84,7 @@ const User = () => {
   const [rebundleCount, setRebundleCount] = useState(0)
   const [loadingRebundle, setLoadingRebundle] = useState(false)
   const [rebundleError, setRebundleError] = useState("")
+  const [errors, setErrors] = useState("")
   const [newsletterStatus, setNewsletterStatus] = useState(
     user?.allowNewsletter ?? false
   )
@@ -289,6 +301,7 @@ const User = () => {
         </h1>
       </div>
       {loading && <LoadingLogoModal />}
+      {errors && <MessageBox>{errors}</MessageBox>}
       {user && (
         <div className="flex mt-5 flex-col gap-5 lg:flex-row lg:gap-0">
           <UserLeftComp
