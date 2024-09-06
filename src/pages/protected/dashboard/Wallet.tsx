@@ -34,7 +34,7 @@ const Wallet = () => {
 
   return (
     <div className="flex-[4] relative lg:ml-5 min-h-[85vh] lg:p-5 rounded-[0.2rem] mb-2.5 m-0 p-2.5 bg-light-ev1 dark:bg-dark-ev1">
-      <div className="flex items-center justify-between p-5 rounded-lg bg-[#fcf0e0] dark:bg-dark-ev3 mb-5">
+      <div className="flex items-center justify-between px-4 py-5 gap-1 sm:p-5 rounded-lg bg-[#fcf0e0] dark:bg-dark-ev3 mb-5">
         <div>
           {loading ? (
             <LoadingControlModal />

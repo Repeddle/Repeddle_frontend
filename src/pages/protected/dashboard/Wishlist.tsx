@@ -8,7 +8,6 @@ import { IProduct } from "../../../types/product"
 import useToastNotification from "../../../hooks/useToastNotification"
 import { useNavigate } from "react-router-dom"
 import Modal from "../../../components/ui/Modal"
-import SizeChart from "../../../section/product/SizeChart"
 import { Wishlist as WishlistType } from "../../../types/user"
 import { Link } from "react-router-dom"
 import { FaCartPlus, FaTrash } from "react-icons/fa"
@@ -263,8 +262,6 @@ const Wishlist = () => {
                   </span>
                 )
             )}
-
-            <SizeChart />
           </div>
           <div className="flex w-full gap-2.5 justify-end">
             <button

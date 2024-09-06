@@ -12,7 +12,10 @@ type ContextType = {
   loading: boolean
   error: string
   fetchWallet: () => Promise<boolean>
-  fundWalletFlutter: (data: IFund) => Promise<string>
+  fundWalletFlutter: (data: IFund) => Promise<{
+    error: boolean
+    result: string
+  }>
 }
 
 // Create wallet context
@@ -61,9 +64,9 @@ export const WalletProvider = ({ children }: PropsWithChildren) => {
     try {
       const result = await fundWalletFlutterService(data)
 
-      return result
+      return { error: false, result }
     } catch (error) {
-      return error as string
+      return { error: true, result: error as string }
     }
   }
 

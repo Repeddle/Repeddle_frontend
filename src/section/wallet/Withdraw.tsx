@@ -72,13 +72,15 @@ const Withdraw = ({ balance }: Props) => {
           All
         </div>
       </div>
-      {errormsg && <div className="text-[red] text-[11px]">{errormsg}</div>}
-      {amount && (
+      {errormsg ? (
+        <div className="text-[red] text-[11px]">{errormsg}</div>
+      ) : null}
+      {amount ? (
         <div className="text-[11px] flex items-center gap-2">
           <FaQuestionCircle /> You will be charged {balance.currency}
           {fee} for payment gateway withdrawal processing fee
         </div>
-      )}
+      ) : null}
       <div
         className="flex items-center cursor-pointer font-bold hover:bg-malon-color bg-orange-color text-white-color mt-2.5 px-[50px] py-2.5 rounded-[0.2rem]"
         onClick={errormsg ? undefined : handleWithdraw}

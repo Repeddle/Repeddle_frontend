@@ -23,7 +23,7 @@ type ContextType = {
   getAllUserAdmin: () => Promise<IUsersWithPagination | null>
   getTopSellers: () => Promise<TopSellers[] | string>
   getUserByUsername: (username: string) => Promise<UserByUsername | string>
-  getUserById: (userId: string) => Promise<IUser | null>
+  getUserById: (userId: string) => Promise<IUser | string>
   updateUserById: (
     userId: string,
     userData: UpdateUser
@@ -121,11 +121,11 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
         return user
       }
       setLoading(false)
-      return null
+      return ""
     } catch (error) {
       handleError(error)
       setLoading(false)
-      return null
+      return error as string
     }
   }
 

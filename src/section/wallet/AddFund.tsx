@@ -9,10 +9,13 @@ import {
   FlutterwaveConfig,
 } from "flutterwave-react-v3/dist/types"
 import { PayStackCallback } from "../../types/gateway"
+import useWallet from "../../hooks/useWallet"
+import useToastNotification from "../../hooks/useToastNotification"
+import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
 
 // TODO: ask about this, fetching in one part and in env in another part
 // const BASE_KEY = process.env.REACT_APP_FLUTTERWAVE_KEY
-const BASE_KEY = ""
+const BASE_KEY = "FLWPUBK_TEST-6a1e30713a8c6962ecb7d6cfbda2df69-X"
 
 type Props = {
   setShowModel: (val: boolean) => void
@@ -22,6 +25,9 @@ type Props = {
 }
 
 const AddFund = ({ currency }: Props) => {
+  const { fundWalletFlutter, loading } = useWallet()
+  const { addNotification } = useToastNotification()
+
   const [amount, setAmount] = useState(0)
 
   const { user } = useAuth()
@@ -50,16 +56,27 @@ const AddFund = ({ currency }: Props) => {
 
   const handleFlutterPayment = useFlutterwave(config)
 
-  const onApprove = (
+  const onApprove = async (
     val: (FlutterWaveResponse & { type: string }) | PayStackCallback
   ) => {
-    console.log(val)
+    const { error, result } = await fundWalletFlutter({
+      amount,
+      paymentProvider: "Flutterwave",
+      transactionId: val.transaction_id.toString(),
+    })
+
+    if (!error) {
+      addNotification(result)
+    } else {
+      addNotification(result, undefined, true)
+    }
   }
 
   return (
     <div className="flex flex-col items-center mt-[30px] p-5">
+      {loading && <LoadingLogoModal />}
       <FaWallet size={64} className="text-orange-color" />
-      <div className="font-bold mt-2.5">Fund your Wallet</div>
+      <div className="font-bold mt-2.5 capitalize">Fund your Wallet</div>
       <input
         className="h-[45px] w-full border border-malon-color mx-0 my-[25px] p-[15px] numeric-arrow rounded-[5px] focus-within:border-orange-color focus-visible:outline-orange-color focus-visible:outline-1 text-black dark:text-white bg-white dark:bg-black placeholder:p-2"
         type="number"
@@ -71,6 +88,7 @@ const AddFund = ({ currency }: Props) => {
         <div
           className="flex items-center cursor-pointer font-bold hover:bg-malon-color bg-orange-color text-white-color mt-2.5 px-[50px] py-2.5 rounded-[0.2rem]"
           onClick={() => {
+            console.log(config)
             handleFlutterPayment({
               callback: async (response) => {
                 console.log(response)
