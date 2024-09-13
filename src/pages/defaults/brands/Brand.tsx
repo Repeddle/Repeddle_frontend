@@ -67,15 +67,15 @@ const brands: Brands = {
   numbers,
 };
 
-async function fetchProduct(brandName: string) {
-  // Replace with your actual API endpoint
-  const response = await fetch(`/api/products/${brandName}`);
-  if (!response.ok) {
-    throw new Error(`Error: ${response.statusText}`);
-  }
-  const product = await response.json();
-  return product;
-}
+// async function fetchProduct(brandName: string) {
+//   // Replace with your actual API endpoint
+//   const response = await fetch(`/api/products/${brandName}`);
+//   if (!response.ok) {
+//     throw new Error(`Error: ${response.statusText}`);
+//   }
+//   const product = await response.json();
+//   return product;
+// }
 
 const Brand = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
