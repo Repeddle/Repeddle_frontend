@@ -194,7 +194,7 @@ const ReturnPage = () => {
           <hr />
           <div className="capitalize font-semibold mb-2.5">Buyer</div>
           <div className="flex text-orange-color">
-            <Link to={`/seller/${returned.orderId.buyer._id}`}>
+            <Link to={`/seller/${returned.orderId.buyer.username}`}>
               {returned.orderId.buyer.username}
             </Link>
           </div>
@@ -203,7 +203,7 @@ const ReturnPage = () => {
           <div className="capitalize font-semibold mb-2.5">Seller</div>
           <div className="flex">
             <Link
-              to={`/seller/${returned.productId.seller._id}`}
+              to={`/seller/${returned.productId.seller.username}`}
               className="text-orange-color"
             >
               {returned.productId.seller.username}
@@ -425,7 +425,7 @@ const ReturnPage = () => {
                       showTracking ? (
                         <div className="flex items-center">
                           <input
-                            className="border h-10 ml-5 p-2.5 rounded-tl-[0.2rem] rounded-bl-[0.2rem] focus-visible:outline outline-orange-color text-black dark:text-white border-[grey]"
+                            className="border h-10 ml-5 p-2.5 rounded-tl-[0.2rem] rounded-bl-[0.2rem] focus-visible:outline bg-white dark:bg-dark-ev1 outline-orange-color text-black dark:text-white border-[grey]"
                             placeholder="Enter Tracking number"
                             value={trackingNumber}
                             type="text"

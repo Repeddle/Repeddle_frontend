@@ -68,7 +68,7 @@ const IsUser = ({
             />
 
             <div
-              className="text-malon-color cursor-pointer text-center ml-[15px]"
+              className="text-orange-color cursor-pointer text-center ml-[15px]"
               onClick={() => {
                 setShowDeliveryHistory(true)
                 setCurrentDeliveryHistory(
