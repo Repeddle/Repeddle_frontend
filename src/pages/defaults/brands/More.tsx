@@ -9,7 +9,7 @@ interface Brands {
 
 const BrandMore = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
-  const [brands, setBrands] = useState<Brands>({});
+  const [brands] = useState<Brands>({});
 
   const filteredBrands = Object.entries(brands).reduce(
     (acc, [brandKey, brandNames]) => {
