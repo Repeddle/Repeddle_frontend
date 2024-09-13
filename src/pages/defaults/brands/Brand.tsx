@@ -108,7 +108,7 @@ const Brand = () => {
         Brands
       </h1>
 
-      <section className="mt-8 text-center text-xl  font-extrabold flex flex-wrap justify-center space-x-4 lg:space-x-5 lg:mb-6">
+      <section className="mt-8 text-center text-lg  font-bold flex flex-wrap justify-center space-x-4 lg:space-x-5 lg:mb-6">
         {[
           "#",
           "A",
@@ -153,7 +153,7 @@ const Brand = () => {
           type="text"
           placeholder="Search brands..."
           onChange={(e) => setSearchTerm(e.target.value)}
-          className=" bg-white outline-none w-full p-2 rounded-xl"
+          className=" bg-white dark:bg-black outline-none w-full p-2 rounded-xl"
         />
         <FaSearch
           className="text-orange-color mr-1 ml-3 cursor-pointer hover:text-black"
@@ -164,16 +164,12 @@ const Brand = () => {
       {Object.entries(filteredBrands).map(([brandKey, brandNames]) => (
         <div
           key={brandKey}
-          id={
-            brandKey === "brandnumbers"
-              ? "brandnumbers"
-              : brandKey.charAt(5).toUpperCase()
-          }
+          id={brandKey === "numbers" ? "numbers" : brandKey.toUpperCase()}
         >
           <div className="font-medium text-xl lg:text-3xl bg-light-ev2 dark:bg-dark-ev2 mb-3 mt-8 px-4 py-1 text-left rounded">
             {brandKey}
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 md:gap-4 mx-auto max-w-4xl">
+          <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4 mx-auto max-w-6xl">
             {brandNames.map((brandName: string) => (
               <div
                 key={brandName}
