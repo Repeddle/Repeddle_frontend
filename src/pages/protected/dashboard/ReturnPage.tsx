@@ -163,11 +163,11 @@ const ReturnPage = () => {
     <LoadingControlModal />
   ) : (
     returned && (
-      <div className="flex-[4] lg:mx-[10vw] lg:my-0 lg:p-5 rounded-[0.2rem] min-h-[85vh] m-0 p-2.5 bg-light-ev1 dark:bg-dark-ev1">
+      <div className="flex-[4] lg:mx-[10vw] lg:my-0 lg:p-5 rounded-[0.2rem] min-h-[85vh] m-0 p-2.5 bg-light-ev1 dark:bg-dark-ev2">
         <h1 className="text-xl lg:text-[28px] leading-tight">
           Return ID MRRN: {returnId}
         </h1>
-        <div className="h-full mb-[15px] px-[15px] py-2.5 lg:px-5 lg:py-[15px] rounded-[5px] bg-light-ev2 dark:bg-dark-ev2">
+        <div className="h-full mb-[15px] px-[15px] py-2.5 lg:px-5 lg:py-[15px] rounded-[5px] bg-light-ev2 dark:bg-transparent">
           <div className="capitalize font-semibold mb-2.5">Product</div>
           <div className="flex items-center">
             <img
@@ -176,7 +176,7 @@ const ReturnPage = () => {
               className="w-[100px] h-[100px] rounded-[50%] object-cover object-top"
             />
             <Link to={`/product/${returned.productId.slug}`}>
-              <div className="ml-5 text-malon-color">
+              <div className="ml-5 text-orange-color">
                 {returned.productId.name}
               </div>
             </Link>
@@ -184,7 +184,7 @@ const ReturnPage = () => {
           <hr />
           <div className="capitalize font-semibold mb-2.5">Order ID</div>
           <Link to={`/order/${returned.orderId._id}`}>
-            <div className="flex text-malon-color">{returned.orderId._id}</div>
+            <div className="flex text-orange-color">{returned.orderId._id}</div>
           </Link>
           <hr />
           <div className="capitalize font-semibold mb-2.5">Date</div>
@@ -193,7 +193,7 @@ const ReturnPage = () => {
           </div>
           <hr />
           <div className="capitalize font-semibold mb-2.5">Buyer</div>
-          <div className="flex text-malon-color">
+          <div className="flex text-orange-color">
             <Link to={`/seller/${returned.orderId.buyer._id}`}>
               {returned.orderId.buyer.username}
             </Link>
@@ -204,7 +204,7 @@ const ReturnPage = () => {
           <div className="flex">
             <Link
               to={`/seller/${returned.productId.seller._id}`}
-              className="text-malon-color"
+              className="text-orange-color"
             >
               {returned.productId.seller.username}
             </Link>
@@ -266,7 +266,7 @@ const ReturnPage = () => {
               <div className="mt-5 flex flex-col">
                 <label htmlFor="">Reason</label>
                 <textarea
-                  className="w-1/2 h-[150px] p-5"
+                  className="w-1/2 bg-white dark:bg-black h-[150px] p-5"
                   onChange={(e) => setReasonText(e.target.value)}
                   value={reasonText}
                 >
@@ -278,13 +278,13 @@ const ReturnPage = () => {
               ) : (
                 <>
                   <button
-                    className="w-[200px] text-white hover:bg-malon-color bg-orange-color cursor-pointer mr-5 mt-[30px] px-2.5 py-[7px] rounded-[0.2rem] border-none"
+                    className="w-[200px] text-white hover:bg-orange-color bg-orange-color cursor-pointer mr-5 mt-[30px] px-2.5 py-[7px] rounded-[0.2rem] border-none"
                     onClick={() => handleReturn("Approved")}
                   >
                     Approve
                   </button>
                   <button
-                    className="w-[200px] text-white bg-malon-color cursor-pointer mr-5 mt-[30px] px-2.5 py-[7px] rounded-[0.2rem] border-none"
+                    className="w-[200px] text-white bg-orange-color cursor-pointer mr-5 mt-[30px] px-2.5 py-[7px] rounded-[0.2rem] border-none"
                     onClick={() => handleReturn("Declined")}
                   >
                     Decline
@@ -323,7 +323,7 @@ const ReturnPage = () => {
                 )
               ) : returned.productId.seller._id === user?._id ? (
                 <button
-                  className="w-[250px] text-white hover:bg-malon-color bg-orange-color cursor-pointer mr-5 mt-[10px] px-2.5 py-[7px] rounded-[0.2rem] border-none"
+                  className="w-[250px] text-white hover:bg-orange-color bg-orange-color cursor-pointer mr-5 mt-[10px] px-2.5 py-[7px] rounded-[0.2rem] border-none"
                   onClick={() => setShowModel(true)}
                 >
                   Add Return Delivery Address
@@ -352,7 +352,7 @@ const ReturnPage = () => {
                   ) : (
                     <button
                       onClick={() => refund(orderitem)}
-                      className="inline-block bg-malon-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
+                      className="inline-block bg-orange-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
                     >
                       Refund
                     </button>
@@ -367,7 +367,7 @@ const ReturnPage = () => {
                   ) : (
                     <button
                       onClick={() => refund(orderitem)}
-                      className="inline-block bg-malon-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
+                      className="inline-block bg-orange-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
                     >
                       Refund
                     </button>
@@ -382,7 +382,7 @@ const ReturnPage = () => {
                       onClick={() => {
                         paySeller(orderitem)
                       }}
-                      className="inline-block bg-malon-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
+                      className="inline-block bg-orange-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
                     >
                       Pay Seller
                     </button>
@@ -397,7 +397,7 @@ const ReturnPage = () => {
                       onClick={() => {
                         paySeller(orderitem)
                       }}
-                      className="inline-block bg-malon-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
+                      className="inline-block bg-orange-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
                     >
                       Pay Seller
                     </button>
@@ -410,7 +410,7 @@ const ReturnPage = () => {
                       (!loadingReturn ? (
                         <div
                           onClick={updateTracking}
-                          className="p-2 self-start lg:self-end rounded-[0.2rem] cursor-pointer transition-all duration-300 bg-orange-color text-white hover:bg-malon-color"
+                          className="p-2 self-start lg:self-end rounded-[0.2rem] cursor-pointer transition-all duration-300 bg-orange-color text-white hover:bg-orange-color"
                         >
                           {`Mark as ${
                             showNextStatus(
@@ -431,7 +431,7 @@ const ReturnPage = () => {
                             type="text"
                             onChange={(e) => setTrackingNumber(e.target.value)}
                           />
-                          <div className="h-10 w-10 flex justify-center items-center cursor-pointer text-white-color rounded-tr-[0.2rem] rounded-br-[0.2rem] hover:text-malon-color bg-orange-color">
+                          <div className="h-10 w-10 flex justify-center items-center cursor-pointer text-white-color rounded-tr-[0.2rem] rounded-br-[0.2rem] hover:text-orange-color bg-orange-color">
                             <FaCheck onClick={confirmTracking} />
                           </div>
                         </div>
@@ -452,7 +452,7 @@ const ReturnPage = () => {
                             (!loadingReturn ? (
                               <div
                                 onClick={updateTracking}
-                                className="p-2 self-start lg:self-end rounded-[0.2rem] cursor-pointer transition-all duration-300 bg-orange-color text-white hover:bg-malon-color"
+                                className="p-2 self-start lg:self-end rounded-[0.2rem] cursor-pointer transition-all duration-300 bg-orange-color text-white hover:bg-orange-color"
                               >
                                 {`Mark as ${
                                   showNextStatus(
