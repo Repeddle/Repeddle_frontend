@@ -260,7 +260,7 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
                   <select
                     value={reason}
                     onChange={(e) => setReason(e.target.value)}
-                    className="text-base m-0 pl-2.5 dark:bg-black border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                    className="m-0 pl-2.5 dark:bg-black border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-xs sm:text-base text-black-color dark:text-white-color"
                     onBlur={() => setError("")}
                   >
                     <option value="">--Select--</option>
@@ -283,7 +283,7 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
                   <select
                     value={sending}
                     onChange={(e) => setSending(e.target.value)}
-                    className="text-base m-0 pl-2.5 dark:bg-black border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                    className="m-0 pl-2.5 text-xs sm:text-base dark:bg-black border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                     onBlur={() => setError("")}
                   >
                     <option value="">--Select--</option>
@@ -300,7 +300,7 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
                   <select
                     value={refund}
                     onChange={(e) => setRefund(e.target.value)}
-                    className="text-base m-0 pl-2.5 dark:bg-black border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                    className="text-xs sm:text-base m-0 pl-2.5 dark:bg-black border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                     onBlur={() => setError("")}
                   >
                     <option value="">--Select--</option>
@@ -320,7 +320,10 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
                 />
               </div>
               <div className="m-2.5 w-full">
-                <label className="text-sm flex gap-2" htmlFor="return">
+                <label
+                  className="text-sm items-center flex gap-2"
+                  htmlFor="return"
+                >
                   <FaCamera /> Upload Image
                 </label>
                 {invalidImage && (
