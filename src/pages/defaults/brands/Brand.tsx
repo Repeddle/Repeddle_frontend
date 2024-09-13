@@ -30,6 +30,7 @@ import {
   numbers,
 } from "../../../components/constant";
 import React from "react";
+import { BiChevronUp } from "react-icons/bi";
 
 // Define the Brands interface with an index signature
 interface Brands {
@@ -82,7 +83,7 @@ const Brand = () => {
 
   const handleAlphabetClick = (alphabet: string) => {
     const element = document.getElementById(
-      alphabet === "#" ? "brandnumbers" : alphabet
+      alphabet === "#" ? "numbers" : alphabet
     );
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -103,7 +104,7 @@ const Brand = () => {
   );
 
   return (
-    <div className="container mx-auto max-w-7xl px-6 mb-10">
+    <div className="container relative mx-auto max-w-7xl px-6 mb-10">
       <h1 className="font-black text-3xl -mb-3 mt-5 lg:text-5xl lg:mt-12 lg:mb-6 text-center">
         Brands
       </h1>
@@ -161,45 +162,58 @@ const Brand = () => {
         />
       </div>
 
-      {Object.entries(filteredBrands).map(([brandKey, brandNames]) => (
-        <div
-          key={brandKey}
-          id={brandKey === "numbers" ? "numbers" : brandKey.toUpperCase()}
-        >
-          <div className="font-medium text-xl lg:text-3xl bg-light-ev2 dark:bg-dark-ev2 mb-3 mt-8 px-4 py-1 text-left rounded">
-            {brandKey}
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4 mx-auto max-w-6xl">
-            {brandNames.map((brandName: string) => (
-              <div
-                key={brandName}
-                className="border-b dark:border-dark-ev2 border-light-ev2 md:border-0 p-2 md:p-0 cursor-pointer hover:text-orange-color md:ml-10"
-              >
-                <Link
-                  to={`/product/${brandName}`}
-                  // onClick={async (e) => {
-                  //   try {
-                  //     const product = await fetchProduct(brandName);
-                  //     if (!product) {
-                  //       e.preventDefault();
-                  //       alert(
-                  //         "The product you're searching for is not available"
-                  //       );
-                  //     }
-                  //   } catch (error) {
-                  //     console.error(error);
-                  //     e.preventDefault();
-                  //     alert("An error occurred while fetching the product");
-                  //   }
-                  // }}
+      {Object.entries(filteredBrands).length > 0 ? (
+        Object.entries(filteredBrands).map(([brandKey, brandNames]) => (
+          <div
+            key={brandKey}
+            id={brandKey === "numbers" ? "numbers" : brandKey.toUpperCase()}
+          >
+            <div className="font-medium text-xl lg:text-3xl bg-light-ev2 dark:bg-dark-ev2 mb-3 mt-8 px-4 py-1 text-left rounded capitalize">
+              {brandKey}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 md:gap-4 mx-auto max-w-6xl">
+              {brandNames.map((brandName: string) => (
+                <div
+                  key={brandName}
+                  className="border-b dark:border-dark-ev2 border-light-ev2 md:border-0 p-2 md:p-0 cursor-pointer hover:text-orange-color md:ml-10"
                 >
-                  {brandName}
-                </Link>
+                  <Link
+                    to={`/search?brand=${brandName}`}
+                    // onClick={async (e) => {
+                    //   try {
+                    //     const product = await fetchProduct(brandName);
+                    //     if (!product) {
+                    //       e.preventDefault();
+                    //       alert(
+                    //         "The product you're searching for is not available"
+                    //       );
+                    //     }
+                    //   } catch (error) {
+                    //     console.error(error);
+                    //     e.preventDefault();
+                    //     alert("An error occurred while fetching the product");
+                    //   }
+                    // }}
+                  >
+                    {brandName}
+                  </Link>
+                </div>
+              ))}
+              <div className=" p-2 md:p-0 cursor-pointer text-orange-color md:ml-10">
+                <Link to={`/brands/${brandKey}`}>See more...</Link>
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <div>Currently not available</div>
+      )}
+      <div
+        onClick={() => window.scrollTo(0, 0)}
+        className="fixed dark:bg-white bg-black p-2 bottom-20 md:bottom-5 rounded-full right-5 z-20"
+      >
+        <BiChevronUp className="text-orange-color text-3xl" />
+      </div>
     </div>
   );
 };
