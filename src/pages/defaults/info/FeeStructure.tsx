@@ -159,8 +159,8 @@ const FeeStructure = () => {
       <h2 className="font-medium text-xl lg:text-2xl text-malon-color">
         WONDERING WHY YOU NEED TO PAY COMMISSION? HERE’S WHY
       </h2>
-      <section className="mb-8 text-justify mt-2">
-        <p className="mb-3">
+      <section className="mb-8 mt-2">
+        <p className="text-justify mb-3">
           <b className="font-black">App or Website Infrastructure: </b> Our
           infrastructure is built with tools to support your business growth, to
           maintain this infrastructure there’s a lot that goes on behind the
@@ -168,7 +168,7 @@ const FeeStructure = () => {
           maintenance fee that is required to keep these infrastructure running
           smoothly.
         </p>
-        <p className="mb-3">
+        <p className="text-justify mb-3">
           <b className="font-black">Marketing: </b> For a business to thrive, it
           requires aggressive consistent marketing, our aim is for your business
           to succeed, either you do it as a side hustle or fulltime. We
@@ -176,14 +176,14 @@ const FeeStructure = () => {
           so your store and real products gets to the right hand and find new
           home.
         </p>
-        <p className="mb-3">
+        <p className="text-justify mb-3">
           <b className="font-black">Support system: </b> Our customer support
           system is active and accessible at all times to you, so you get all
           the information, insights and education you need to scale your
           business while having great experience using Repeddle’s app and
           website.
         </p>
-        <p className="mb-3">
+        <p className="text-justify mb-3">
           <b className="font-black">Delivery: </b> Repeddle provides you with
           hassle free, easy and a click away delivery options integrated into
           our app and website to choose from. You have the choice to choose
@@ -192,7 +192,7 @@ const FeeStructure = () => {
           choose what’s also convenient for them, both in time and cost. These
           gives you more selling opportunities.
         </p>
-        <p className="mb-3">
+        <p className="text-justify mb-3">
           <b className="font-black">Payments: </b> Unlike other platforms,
           Repeddle offers you different payment options that’s convenient,
           secured and reliable for you to choose from. These payment processing
@@ -200,7 +200,7 @@ const FeeStructure = () => {
           that goes through your sellers account/dashboard. 5% of the 7.9% we
           charge covers this fee.
         </p>
-        <p className="mb-3">
+        <p className="text-justify mb-3">
           <b className="font-black">In Summary: </b> the more you sell, the
           better your opportunity and chances to earn more with our reward
           programs and free membership VIP prioritization. For you to make it to

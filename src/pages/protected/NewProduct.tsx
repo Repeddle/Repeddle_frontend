@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import useAuth from "../../hooks/useAuth"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import useCategory from "../../hooks/useCategory"
 import Details from "../../section/newProduct/Details"
 import { Helmet } from "react-helmet-async"
@@ -23,6 +23,7 @@ import Features from "../../section/newProduct/Features"
 import Modal from "../../components/ui/Modal"
 import { FaArrowRight, FaRegCheckCircle } from "react-icons/fa"
 import { Link } from "react-router-dom"
+import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
 
 const stepsItems = [
   {
@@ -66,8 +67,11 @@ type InputData = {
 }
 
 const NewProduct = () => {
+  const { id } = useParams()
+
   const { user } = useAuth()
   const { addNotification } = useToastNotification()
+  const { fetchProductById } = useProducts()
 
   const navigate = useNavigate()
 
@@ -91,7 +95,67 @@ const NewProduct = () => {
     fetchCategories()
   }, [])
 
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (id) {
+        setIsLoadingProduct(true)
+
+        const product = await fetchProductById(id)
+
+        if (typeof product === "string") {
+          addNotification(product, undefined, true)
+          return
+        }
+
+        setInput({
+          brand: product.brand || "",
+          category: product.category || "",
+          color: product.color || [],
+          condition: product.condition,
+          description: product.description,
+          image: "",
+          keyFeatures: product.keyFeatures || "",
+          material: product.material || "",
+          name: product.name,
+          price: product.sellingPrice.toString(),
+          product: product.mainCategory,
+          specification: product.specification || "",
+          subCategory: product.subCategory || "",
+          selectedSize: "",
+          tag: "",
+        })
+
+        setMediaInput({
+          image1: product.images[0] || "",
+          image2: product.images[1] || "",
+          image3: product.images[2] || "",
+          image4: product.images[3] || "",
+          luxury: product.luxury || false,
+          luxuryImage: product.luxuryImage || "",
+          video: product.video || "",
+          vintage: product.vintage || false,
+        })
+
+        setPriceInput({
+          costPrice: product.costPrice?.toString() || "",
+          deliveryOption: "",
+          sellingPrice: product.sellingPrice.toString(),
+          discount: "",
+        })
+
+        setTags(product.tags)
+        setSizes(product.sizes)
+        setCountInStock(product.countInStock)
+
+        setIsLoadingProduct(false)
+      }
+    }
+
+    fetchProduct()
+  }, [id])
+
   const [showModal, setShowModal] = useState(false)
+  const [isLoadingProduct, setIsLoadingProduct] = useState(false)
   const [createProductLoading, setCreateProductLoading] = useState(false)
   const [validationError, setValidationError] = useState({
     name: "",
@@ -448,6 +512,8 @@ const NewProduct = () => {
       <Helmet>
         <title>New Product</title>
       </Helmet>
+
+      {isLoadingProduct && <LoadingLogoModal />}
       <div className="pb-20 px-8 lg:pb-12">
         <div className="mb-1 mt-6 text-center flex flex-col gap-4" ref={topRef}>
           <h1 className="text-[28px]">New Product</h1>
