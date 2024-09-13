@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import useAuth from "../../hooks/useAuth"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import useCategory from "../../hooks/useCategory"
 import Details from "../../section/newProduct/Details"
 import { Helmet } from "react-helmet-async"
@@ -67,11 +67,11 @@ type InputData = {
 }
 
 const NewProduct = () => {
-  const { id } = useParams()
+  const [params] = useSearchParams()
 
   const { user } = useAuth()
   const { addNotification } = useToastNotification()
-  const { fetchProductById } = useProducts()
+  const { fetchProductBySlug } = useProducts()
 
   const navigate = useNavigate()
 
@@ -96,14 +96,15 @@ const NewProduct = () => {
   }, [])
 
   useEffect(() => {
+    const slug = params.get("slug")
     const fetchProduct = async () => {
-      if (id) {
+      if (slug) {
         setIsLoadingProduct(true)
 
-        const product = await fetchProductById(id)
+        const product = await fetchProductBySlug(slug)
 
-        if (typeof product === "string") {
-          addNotification(product, undefined, true)
+        if (!product) {
+          addNotification("Failed to get product details", undefined, true)
           return
         }
 
@@ -152,7 +153,7 @@ const NewProduct = () => {
     }
 
     fetchProduct()
-  }, [id])
+  }, [params])
 
   const [showModal, setShowModal] = useState(false)
   const [isLoadingProduct, setIsLoadingProduct] = useState(false)

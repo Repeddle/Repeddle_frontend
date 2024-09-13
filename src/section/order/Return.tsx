@@ -201,7 +201,7 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
             )}
             <h4>Preferred Resolution Method</h4>
             <div className="w-full lg:w-2/5">
-              <Link to={`/newproduct?id=${current?.product._id}`}>
+              <Link to={`/newproduct?slug=${current?.product.slug}`}>
                 <div className="cursor-pointer m-5 p-2.5 rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1">
                   Re-list and sell my product
                 </div>
