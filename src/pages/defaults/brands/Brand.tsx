@@ -1,106 +1,106 @@
-import { Link } from "react-router-dom"
-import { FaSearch } from "react-icons/fa"
+import { Link } from "react-router-dom";
+import { FaSearch } from "react-icons/fa";
 import {
-  brandA,
-  brandB,
-  brandC,
-  brandD,
-  brandE,
-  brandF,
-  brandG,
-  brandH,
-  brandI,
-  brandJ,
-  brandK,
-  brandL,
-  brandM,
-  brandN,
-  brandO,
-  brandP,
-  brandQ,
-  brandR,
-  brandS,
-  brandT,
-  brandU,
-  brandV,
-  brandW,
-  brandX,
-  brandY,
-  brandZ,
-  brandnumbers,
-} from "../../../components/constant"
-import React from "react"
+  A,
+  B,
+  C,
+  D,
+  E,
+  F,
+  G,
+  H,
+  I,
+  J,
+  K,
+  L,
+  M,
+  N,
+  O,
+  P,
+  Q,
+  R,
+  S,
+  T,
+  U,
+  V,
+  W,
+  X,
+  Y,
+  Z,
+  numbers,
+} from "../../../components/constant";
+import React from "react";
 
 // Define the Brands interface with an index signature
 interface Brands {
-  [key: string]: string[]
+  [key: string]: string[];
 }
 
 // Use the interface to type your brands object
 const brands: Brands = {
-  brandA,
-  brandB,
-  brandC,
-  brandD,
-  brandE,
-  brandF,
-  brandG,
-  brandH,
-  brandI,
-  brandJ,
-  brandK,
-  brandL,
-  brandM,
-  brandN,
-  brandO,
-  brandP,
-  brandQ,
-  brandR,
-  brandS,
-  brandT,
-  brandU,
-  brandV,
-  brandW,
-  brandX,
-  brandY,
-  brandZ,
-  brandnumbers,
-}
+  A,
+  B,
+  C,
+  D,
+  E,
+  F,
+  G,
+  H,
+  I,
+  J,
+  K,
+  L,
+  M,
+  N,
+  O,
+  P,
+  Q,
+  R,
+  S,
+  T,
+  U,
+  V,
+  W,
+  X,
+  Y,
+  Z,
+  numbers,
+};
 
 async function fetchProduct(brandName: string) {
   // Replace with your actual API endpoint
-  const response = await fetch(`/api/products/${brandName}`)
+  const response = await fetch(`/api/products/${brandName}`);
   if (!response.ok) {
-    throw new Error(`Error: ${response.statusText}`)
+    throw new Error(`Error: ${response.statusText}`);
   }
-  const product = await response.json()
-  return product
+  const product = await response.json();
+  return product;
 }
 
 const Brand = () => {
-  const [searchTerm, setSearchTerm] = React.useState("")
+  const [searchTerm, setSearchTerm] = React.useState("");
 
   const handleAlphabetClick = (alphabet: string) => {
     const element = document.getElementById(
       alphabet === "#" ? "brandnumbers" : alphabet
-    )
+    );
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      element.scrollIntoView({ behavior: "smooth" });
     }
-  }
+  };
 
   const filteredBrands = Object.entries(brands).reduce(
     (acc, [brandKey, brandNames]) => {
       const filteredBrandNames = brandNames.filter((brandName) =>
         brandName.toLowerCase().startsWith(searchTerm.toLowerCase())
-      )
+      );
       if (filteredBrandNames.length > 0) {
-        acc[brandKey] = filteredBrandNames
+        acc[brandKey] = filteredBrandNames;
       }
-      return acc
+      return acc;
     },
     {} as Brands
-  )
+  );
 
   return (
     <div className="container mx-auto max-w-7xl px-6 mb-10">
@@ -170,35 +170,32 @@ const Brand = () => {
               : brandKey.charAt(5).toUpperCase()
           }
         >
-          <h2
-            className="font-black text-xl lg:text-3xl bg-gray-300 mb-3 mt-8 p-1 text-center lg:text-left 
-          lg:w-9/12 w-60 mx-auto lg:pl-12 items-center justify-center rounded-xl"
-          >
+          <h2 className="font-medium text-xl lg:text-3xl bg-light-ev2 dark:bg-dark-ev2 mb-3 mt-8 p-4 text-left rounded">
             {brandKey}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 md:gap-4 mx-auto max-w-4xl">
             {brandNames.map((brandName: string) => (
               <div
                 key={brandName}
-                className="border-b border-gray-300 md:border-0 p-2 md:p-0 cursor-pointer hover:text-orange-color md:ml-10"
+                className="border-b dark:border-dark-ev2 border-light-ev2 md:border-0 p-2 md:p-0 cursor-pointer hover:text-orange-color md:ml-10"
               >
                 <Link
                   to={`/product/${brandName}`}
-                  onClick={async (e) => {
-                    try {
-                      const product = await fetchProduct(brandName)
-                      if (!product) {
-                        e.preventDefault()
-                        alert(
-                          "The product you're searching for is not available"
-                        )
-                      }
-                    } catch (error) {
-                      console.error(error)
-                      e.preventDefault()
-                      alert("An error occurred while fetching the product")
-                    }
-                  }}
+                  // onClick={async (e) => {
+                  //   try {
+                  //     const product = await fetchProduct(brandName);
+                  //     if (!product) {
+                  //       e.preventDefault();
+                  //       alert(
+                  //         "The product you're searching for is not available"
+                  //       );
+                  //     }
+                  //   } catch (error) {
+                  //     console.error(error);
+                  //     e.preventDefault();
+                  //     alert("An error occurred while fetching the product");
+                  //   }
+                  // }}
                 >
                   {brandName}
                 </Link>
@@ -208,7 +205,7 @@ const Brand = () => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default Brand
+export default Brand;

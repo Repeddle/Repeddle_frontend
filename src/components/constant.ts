@@ -1671,7 +1671,7 @@ export const states = {
     ],
   };
   
-  export const brandnumbers = [
+  export const numbers = [
     "& Other Stories",
     "@home",
     "1 Madison",
@@ -1733,7 +1733,7 @@ export const states = {
     "36 Point 5",
   ];
   
-  export const brandA = [
+  export const A = [
     "A Classy Chic Boutique",
     "A Fine Mess",
     "A Girl Thing",
@@ -1795,7 +1795,7 @@ export const states = {
     "Absolutely Famous",
   ];
   
-  export const brandB = [
+  export const B = [
     " B Brian Atwood",
     "B Darlin",
     "B Home Interiors",
@@ -1856,7 +1856,7 @@ export const states = {
     "BAGGU",
     "Bagutta",
   ];
-  export const brandC = [
+  export const C = [
     "C de C",
     "C Label",
     "C&C California",
@@ -1917,7 +1917,7 @@ export const states = {
     "Campana Brothers",
     "Camper",
   ];
-  export const brandD = [
+  export const D = [
     "D Celli",
     "D&G",
     "D&Y",
@@ -1978,7 +1978,7 @@ export const states = {
     "Dansk",
     "Danskin",
   ];
-  export const brandE = [
+  export const E = [
     "E-Land Kids",
     "E.Kammeyer Accessories",
     "Eachine",
@@ -2039,7 +2039,7 @@ export const states = {
     "Egg Collective",
     "EGO",
   ];
-  export const brandF = [
+  export const F = [
     "F&F",
     "FA",
     "fab'rik",
@@ -2101,7 +2101,7 @@ export const states = {
     "Fawn Design",
   ];
   
-  export const brandG = [
+  export const G = [
     "G by Giuliana",
     "G by Guess",
     "G Home Collection",
@@ -2162,7 +2162,7 @@ export const states = {
     "Genetic Denim",
     "Geneva",
   ];
-  export const brandH = [
+  export const H = [
     "H by Bordeaux",
     "H by Halston",
     "H By Hudson",
@@ -2223,7 +2223,7 @@ export const states = {
     "Hard Rock Café",
     "Hard Tail",
   ];
-  export const brandI = [
+  export const I = [
     "I Heart Ronson",
     "I jeans by Buffalo",
     "I Love Gorgeous",
@@ -2284,7 +2284,7 @@ export const states = {
     "In Bloom",
     "In2",
   ];
-  export const brandJ = [
+  export const J = [
     "J Brand",
     "J for Justify",
     "J KaraJ-41",
@@ -2345,7 +2345,7 @@ export const states = {
     "Jaipur",
     "Jamaica Jaxx",
   ];
-  export const brandK = [
+  export const K = [
     "K&K Interiors",
     "K-DEER",
     "K-Swiss",
@@ -2406,7 +2406,7 @@ export const states = {
     "Kate & Mallory",
     "Kate and Laurel",
   ];
-  export const brandL = [
+  export const L = [
     "L&B",
     "L'Academie",
     "L'AGENCE",
@@ -2467,7 +2467,7 @@ export const states = {
     "Lacey Ryan",
     "Lack Of Color",
   ];
-  export const brandM = [
+  export const M = [
     "M by Missoni",
     "M&M'S",
     "M. Gemi",
@@ -2528,7 +2528,7 @@ export const states = {
     "Maggy London",
     "Magic",
   ];
-  export const brandN = [
+  export const N = [
     "N.d.c.",
     "N.Y.L.A.",
     "n:PHILANTHROPY",
@@ -2590,7 +2590,7 @@ export const states = {
     "Nashelle",
   ];
   
-  export const brandO = [
+  export const O = [
     "O'2nd",
     "O'Neill",
     "OAK",
@@ -2651,7 +2651,7 @@ export const states = {
     "Oilo Studio",
     "OiOi Austral",
   ];
-  export const brandP = [
+  export const P = [
     "P L Designs and More",
     "P&Y Denim",
     "P'tula",
@@ -2712,7 +2712,7 @@ export const states = {
     "Paniz",
     "Panoply",
   ];
-  export const brandQ = [
+  export const Q = [
     "Q by Pasquale",
     "Q-T Intimates",
     "Q2",
@@ -2731,7 +2731,7 @@ export const states = {
     "Qupid",
     "QVC",
   ];
-  export const brandR = [
+  export const R = [
     "R & M Richards",
     "R 13",
     "R&K",
@@ -2792,7 +2792,7 @@ export const states = {
     "Ralph Lauren Black Label",
     "Ralph Lauren Blue La",
   ];
-  export const brandS = [
+  export const S = [
     "S by Serena",
     "S&D",
     "S&G Apparel Inc.",
@@ -2853,7 +2853,7 @@ export const states = {
     "Salt Life",
     "Salt Swimwear",
   ];
-  export const brandT = [
+  export const T = [
     "T by Alexander Wang",
     "T Party Fashion",
     "T Tahari",
@@ -2914,7 +2914,7 @@ export const states = {
     "Tangerine",
     "Tangerine NYC",
   ];
-  export const brandU = [
+  export const U = [
     "U Pak N Ship",
     "U-Boat",
     "U-Knit Dresses",
@@ -2975,7 +2975,7 @@ export const states = {
     "Unique Zone",
     "Unisa",
   ];
-  export const brandV = [
+  export const V = [
     "V By Eva",
     "V Cristina",
     "V Rugs & Home",
@@ -3036,7 +3036,7 @@ export const states = {
     "Vava by Joy Han",
     "Vavvoune",
   ];
-  export const brandW = [
+  export const W = [
     "W by Worth",
     "W for Women",
     "W. Kleinberg",
@@ -3097,7 +3097,7 @@ export const states = {
     "We Over Me",
     "We The Free",
   ];
-  export const brandX = [
+  export const X = [
     "X-appeal",
     "X2",
     "Xacus",
@@ -3120,7 +3120,7 @@ export const states = {
     "XYD",
   ];
   // Brands starting with Y
-  export const brandY = [
+  export const Y = [
     "Y&S Handbags",
     "Y's by Yohji Yamamoto",
     "Y-3",
@@ -3183,7 +3183,7 @@ export const states = {
   ];
   
   // Brands starting with Z
-  export const brandZ = [
+  export const Z = [
     "Z Gallerie",
     "Z Spoke by Zac Posen",
     "Z Supply",
