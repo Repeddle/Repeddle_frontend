@@ -313,14 +313,14 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
               <div className="m-2.5 w-full">
                 <label>Other Information</label>
                 <textarea
-                  className={`h-[100px] w-full p-2.5 rounded-[0.2rem] border focus-visible:outline focus-visible:outline-orange-color
+                  className={`h-[100px] bg-white dark:bg-black w-full p-2.5 rounded-[0.2rem] border focus-visible:outline focus-visible:outline-orange-color
                 text-black dark:text-white-color border-light-ev4 dark:border-dark-ev4`}
                   onChange={(e) => setDescription(e.target.value)}
                   value={description}
                 />
               </div>
               <div className="m-2.5 w-full">
-                <label className="text-sm" htmlFor="return">
+                <label className="text-sm flex gap-2" htmlFor="return">
                   <FaCamera /> Upload Image
                 </label>
                 {invalidImage && (

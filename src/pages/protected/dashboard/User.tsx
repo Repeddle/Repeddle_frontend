@@ -67,7 +67,6 @@ const User = () => {
       } else {
         user = await getUser()
       }
-      console.log(user)
 
       if (user && typeof user !== "string") setUser(user)
       else if (getUserError) {
