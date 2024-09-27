@@ -233,7 +233,7 @@ const User = () => {
 
     if (res) {
       addNotification("User updated")
-      navigate(id ? "/dashboard/userlist" : `../../seller/${id}`)
+      navigate(-1)
     } else {
       addNotification(error ? error : "failed to update user")
     }
