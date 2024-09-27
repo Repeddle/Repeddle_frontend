@@ -13,7 +13,7 @@ import { FaBolt, FaCalendarDays, FaLocationDot } from "react-icons/fa6"
 import useAuth from "../../hooks/useAuth"
 import Modal from "../../components/ui/Modal"
 import { banks, states } from "../../utils/constants"
-import { FormEvent, useState } from "react"
+import { FormEvent } from "react"
 import { InputType } from "../../pages/protected/dashboard/User"
 import Button from "../../components/ui/Button"
 
@@ -29,6 +29,10 @@ type Props = {
   addressValidate: (e: FormEvent) => void
   accountValidate: (e: FormEvent) => void
   loadingUpdate?: boolean
+  showModel: boolean
+  setShowModel: (val: boolean) => void
+  showModelAddress: boolean
+  setShowModelAddress: (val: boolean) => void
 }
 
 const UserLeftComp = ({
@@ -41,11 +45,12 @@ const UserLeftComp = ({
   addressValidate,
   accountValidate,
   loadingUpdate,
+  setShowModel,
+  setShowModelAddress,
+  showModel,
+  showModelAddress,
 }: Props) => {
   const { user: userInfo } = useAuth()
-
-  const [showModel, setShowModel] = useState(false)
-  const [showModelAddress, setShowModelAddress] = useState(false)
 
   return (
     <div className="flex-1 p-5 rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1">

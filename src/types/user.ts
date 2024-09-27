@@ -1,128 +1,128 @@
-import { IProduct, Pagination } from "./product";
+import { IProduct, Pagination } from "./product"
 
 export interface IAddress {
-  apartment?: string;
-  street?: string;
-  state?: string;
-  zipcode?: number;
+  apartment?: string
+  street?: string
+  state?: string
+  zipcode?: number
 }
 
 export interface IRebundle {
-  status: boolean;
-  count: number;
-  method?: string;
+  status: boolean
+  count: number
+  method?: string
 }
 
 export interface IGuestUser {
-  fullName: string;
-  email: string;
+  fullName: string
+  email: string
 }
 
 export interface IUser {
-  _id: string;
-  username: string;
-  firstName: string;
-  lastName: string;
-  image?: string;
-  email: string;
-  role: string;
-  followers: string[];
-  following: string[];
-  likes: IProduct[];
-  wishlist: string[];
-  sold: string[];
-  buyers: string[];
-  rating: number;
-  phone?: string;
-  isSeller: boolean;
-  allowNewsletter: boolean;
-  numReviews: number;
-  active: boolean;
-  isVerifiedEmail: boolean;
-  region: "NGN" | "ZAR";
-  socketId?: string;
-  activeLastUpdate: string;
-  usernameLastUpdate?: string;
-  createdAt: string;
-  updatedAt?: string;
-  about?: string;
-  dob?: string;
-  accountNumber?: number;
-  accountName?: string;
-  bankName?: string;
-  tokenVersion?: string;
-  address?: IAddress;
-  badge?: boolean;
-  delected?: boolean;
-  influencer?: boolean;
-  rebundle?: IRebundle;
-  earnings?: number;
-  balance?: number;
+  _id: string
+  username: string
+  firstName: string
+  lastName: string
+  image?: string
+  email: string
+  role: string
+  followers: string[]
+  following: string[]
+  likes: IProduct[]
+  wishlist: string[]
+  sold: string[]
+  buyers: string[]
+  rating: number
+  phone?: string
+  isSeller: boolean
+  allowNewsletter: boolean
+  numReviews: number
+  active: boolean
+  isVerifiedEmail: boolean
+  region: "NGN" | "ZAR"
+  socketId?: string
+  activeLastUpdate: string
+  usernameLastUpdated?: string
+  createdAt: string
+  updatedAt?: string
+  about?: string
+  dob?: string
+  accountNumber?: number
+  accountName?: string
+  bankName?: string
+  tokenVersion?: string
+  address?: IAddress
+  badge?: boolean
+  delected?: boolean
+  influencer?: boolean
+  rebundle?: IRebundle
+  earnings?: number
+  balance?: number
 }
 
-export type Wishlist = IProduct;
+export type Wishlist = IProduct
 
 export interface UpdateFields {
   // TODO: ask about username
   // username: string
-  firstName: string;
-  lastName: string;
-  image?: string;
-  about: string;
-  dob: string;
-  phone: string;
+  firstName: string
+  lastName: string
+  image?: string
+  about: string
+  dob: string
+  phone: string
   address: {
-    apartment: string;
-    street: string;
-    state: string;
-    zipcode: number;
-  };
+    apartment: string
+    street: string
+    state: string
+    zipcode: number
+  }
   rebundle: {
-    status: boolean;
-    count: number;
-  };
+    status: boolean
+    count: number
+  }
 }
 
-export type UpdateUser = Partial<IUser>;
+export type UpdateUser = Partial<IUser>
 
 export type UserBalance = {
-  currency: string;
-  balance: number;
-  userId: string;
-};
+  currency: string
+  balance: number
+  userId: string
+}
 
-export type IUsersWithPagination = Pagination & { users: IUser[] };
+export type IUsersWithPagination = Pagination & { users: IUser[] }
 
 export type TopSellers = {
-  username: string;
-  firstName: string;
-  lastName: string;
-  image: string;
-  sold: number;
-};
+  username: string
+  firstName: string
+  lastName: string
+  image: string
+  sold: number
+}
 
 export type UserByUsername = {
   user: {
-    _id: string;
-    username: string;
-    followers: string[];
-    following: string[];
-    likes: string[];
-    sold: Array<string>;
-    numReviews: number;
-    region: string;
-    createdAt: string;
-    image?: string;
-    badge?: boolean;
-    about?: string;
-    rating?: number;
-    buyers?: string[];
-    rebundle?: IRebundle;
-  };
+    _id: string
+    username: string
+    followers: string[]
+    following: string[]
+    likes: string[]
+    sold: Array<string>
+    numReviews: number
+    region: string
+    createdAt: string
+    image?: string
+    badge?: boolean
+    about?: string
+    rating?: number
+    buyers?: string[]
+    rebundle?: IRebundle
+  }
   products: {
-    all: IProduct[];
-    sold: IProduct[];
-    liked: IProduct[];
-    selling: IProduct[];
-  };
-};
+    all: IProduct[]
+    sold: IProduct[]
+    liked: IProduct[]
+    selling: IProduct[]
+  }
+}

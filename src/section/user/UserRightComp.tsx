@@ -7,6 +7,7 @@ import useAuth from "../../hooks/useAuth"
 import { IUser } from "../../types/user"
 import { timeDifference } from "../../utils/common"
 import { UserFormType } from "../../pages/protected/dashboard/User"
+import Button from "../../components/ui/Button"
 
 type Props = {
   user: IUser
@@ -54,8 +55,8 @@ const UserRightComp = ({
   // const [passwordType, setPasswordType] = useState("password")
 
   const daydiff =
-    (user.usernameLastUpdate &&
-      30 - timeDifference(new Date(user.usernameLastUpdate), new Date())) ??
+    (user.usernameLastUpdated &&
+      30 - timeDifference(new Date(user.usernameLastUpdated), new Date())) ??
     0
 
   return (
@@ -70,8 +71,8 @@ const UserRightComp = ({
             <label className="text-sm">Username</label>
             {+daydiff > 0 && (
               <div className="text-xs text-malon-color">
-                updated {moment(user.usernameLastUpdate).fromNow()}, next update
-                in {daydiff} days
+                updated {moment(user.usernameLastUpdated).fromNow()}, next
+                update in {daydiff} days
               </div>
             )}
             <input
@@ -416,12 +417,8 @@ const UserRightComp = ({
               </>
             )}
           </div>
-          <button
-            className="cursor-pointer text-white-color bg-orange-color mt-[5px] p-[5px] rounded-[0.2rem] border-none"
-            type="submit"
-          >
-            Update
-          </button>
+          <Button type="submit" text="Update" />
+
           {loadingUpdate ? <LoadingBox /> : ""}
         </div>
       </form>
