@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// FIXME: user details not complete
 import { ChangeEvent, FormEvent } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import { Link } from "react-router-dom"
@@ -319,7 +316,7 @@ const UserRightComp = ({
                   />
                 </div>
                 <div className="flex justify-between mx-0 my-2">
-                  <label className="text-sm">Subscribe to Newsletter</label>
+                  <label className="text-sm">Subscribe To Newsletter</label>
                   <input
                     className={`relative w-10 h-[15px] transition-[0.5s] rounded-[20px] checked:before:left-[25px] before:w-[15px] before:h-[15px]
               before:content-[""] before:absolute before:-translate-y-2/4 before:transition-[0.5s] before:rounded-[50%] before:left-0 before:top-2/4
@@ -333,17 +330,17 @@ const UserRightComp = ({
                 </div>
                 <div className="my-2.5 mx-0">
                   <div className="flex justify-between mx-0 my-2">
-                    <label className="text-sm">
+                    <label className="text-sm flex items-center gap-1.5">
                       <FaTruck />
                       <span className="font-semibold">Re:Bundle</span>
                       <div
                         data-content="Re:bundle allows buyers to shop multiple items from your store and only pay for delivery once! The buyer will be charged delivery on their first purchase, and, if they make any additional purchases within the next 2 hours, free delivery will then automatically apply. Shops who enable bundling sell more and faster."
-                        className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[30px] hover:after:text-justify 
-                  hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
-                  lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
+                        className={`relative lg:hover:after:w-[430px] hover:after:absolute lg:hover:after:left-[30px] hover:after:text-justify 
+                  hover:after:text-[13px] hover:after:z-[2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
+                  lg:hover:after:top-0 hover:after:leading-tight hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
                 hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
                       >
-                        <FaQuestionCircle className="text-neutral-300 ml-2.5" />
+                        <FaQuestionCircle className="text-neutral-300" />
                       </div>
                     </label>
                     <input
@@ -381,7 +378,7 @@ const UserRightComp = ({
                               className="w-full h-[30px] border mr-[5] pl-2.5 placeholder:text-sm focus:outline-none bg-transparent text-black dark:text-white focus:border-orange-color"
                               type="number"
                               onChange={(e) =>
-                                setRebundleCount(+e.target.value)
+                                setRebundleCount(parseInt(e.target.value))
                               }
                               onFocus={() => setRebundleError("")}
                             />
