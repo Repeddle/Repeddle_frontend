@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react"
+import { ChangeEvent, FormEvent } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import { Link } from "react-router-dom"
 import { FaCamera, FaCheck, FaQuestionCircle, FaTruck } from "react-icons/fa"
@@ -51,7 +51,7 @@ const UserRightComp = ({
 }: Props) => {
   const { user: userInfo } = useAuth()
 
-  const [passwordType, setPasswordType] = useState("password")
+  // const [passwordType, setPasswordType] = useState("password")
 
   const daydiff =
     (user.usernameLastUpdate &&
@@ -300,7 +300,8 @@ const UserRightComp = ({
                   <input
                     className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                     name="password"
-                    type={passwordType}
+                    // type={passwordType}
+                    type="password"
                     value={userForm.password}
                     onChange={(e) =>
                       handleOnUserChange(e.target.value, "password")
@@ -312,7 +313,8 @@ const UserRightComp = ({
                   <input
                     className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                     name="confirmPassword"
-                    type={passwordType}
+                    // type={passwordType}
+                    type="password"
                     onChange={(e) =>
                       handleOnUserChange(e.target.value, "confirmPassword")
                     }
