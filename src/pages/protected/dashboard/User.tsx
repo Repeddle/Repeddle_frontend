@@ -209,9 +209,33 @@ const User = () => {
   const submitHandler = async (e: FormEvent) => {
     e.preventDefault()
 
-    if (!id && userForm.password !== userForm.confirmPassword) {
-      addNotification("Password do not match")
-      return
+    if (!id && userForm.password.length) {
+      if (userForm.password.length < 6) {
+        addNotification("Password must be at least 6 characters")
+        return
+      }
+      if (userForm.password.search(/[a-z]/i) < 0) {
+        addNotification(
+          "Password must contain at least 1 lowercase alphabetical character"
+        )
+        return
+      }
+      if (userForm.password.search(/[A-Z]/) < 0) {
+        addNotification(
+          "Password must contain at least 1 uppercase alphabetical character"
+        )
+        return
+      }
+      if (userForm.password.search(/[0-9]/) < 0) {
+        addNotification("Password must contain at least 1 digit")
+        return
+      }
+
+      if (userForm.password !== userForm.confirmPassword) {
+        addNotification("Password do not match")
+
+        return
+      }
     }
     if (userForm.username.length > 0 && userForm.username !== user?.username) {
       const confirm = window.confirm(
@@ -229,7 +253,7 @@ const User = () => {
 
     setLoadingUpdate(true)
 
-    const res = await updateUser({
+    const data: Partial<IUser & { password?: string }> = {
       firstName: userForm.firstName,
       lastName: userForm.lastName,
       dob: userForm.dob,
@@ -238,11 +262,21 @@ const User = () => {
       address: {
         apartment: input.apartment,
         state: input.state,
-        street: input.state,
+        street: input.street,
         zipcode: +input.zipcode,
       },
       rebundle: { count: rebundleCount, status: rebundleStatus },
-    })
+    }
+
+    if (userForm.password.length) {
+      data["password"] = userForm.password
+    }
+
+    if (userForm.username.length) {
+      data["username"] = userForm.username
+    }
+
+    const res = await updateUser(data)
 
     if (res) {
       addNotification("User updated")
@@ -286,28 +320,24 @@ const User = () => {
       const resp = await unsubscribeNewsletter()
       if (resp.success) {
         addNotification(
-          resp.message ? resp.message : "Unsubscribed from newsletter"
+          resp.message ? resp.message : "Unsubscribed Successfully"
         )
         setNewsletterStatus(false)
         await updateUser({ allowNewsletter: true })
       } else {
         addNotification(
-          newsletterError
-            ? newsletterError
-            : "Failed to unsubscribe from newsletter"
+          newsletterError ? newsletterError : "Failed to unsubscribe"
         )
       }
     } else {
       const resp = await createNewsletter(user!.email)
       await updateUser({ allowNewsletter: false })
       if (resp) {
-        addNotification("Subscribed to newsletter")
+        addNotification("Subscribed Successfully")
         setNewsletterStatus(true)
       } else {
         addNotification(
-          newsletterError
-            ? newsletterError
-            : "Failed to subscribe to newsletter"
+          newsletterError ? newsletterError : "Failed to subscribe"
         )
       }
     }

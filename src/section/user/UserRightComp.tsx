@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent } from "react"
+import { ChangeEvent, FormEvent, useState } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import { Link } from "react-router-dom"
 import { FaCamera, FaCheck, FaQuestionCircle, FaTruck } from "react-icons/fa"
@@ -50,6 +50,8 @@ const UserRightComp = ({
   bundle,
 }: Props) => {
   const { user: userInfo } = useAuth()
+
+  const [passwordType, setPasswordType] = useState("password")
 
   const daydiff =
     (user.usernameLastUpdate &&
@@ -115,6 +117,7 @@ const UserRightComp = ({
               name="DOB"
               placeholder={user.dob && user.dob.toString().substring(0, 10)}
               onChange={(e) => handleOnUserChange(e.target.value, "dob")}
+              value={userForm.dob}
             />
           </div>
           <div className="flex flex-col mt-2.5">
@@ -297,7 +300,7 @@ const UserRightComp = ({
                   <input
                     className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                     name="password"
-                    type="password"
+                    type={passwordType}
                     value={userForm.password}
                     onChange={(e) =>
                       handleOnUserChange(e.target.value, "password")
@@ -309,7 +312,7 @@ const UserRightComp = ({
                   <input
                     className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                     name="confirmPassword"
-                    type="password"
+                    type={passwordType}
                     onChange={(e) =>
                       handleOnUserChange(e.target.value, "confirmPassword")
                     }
