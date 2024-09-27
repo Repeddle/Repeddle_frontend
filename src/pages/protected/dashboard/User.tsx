@@ -133,6 +133,8 @@ const User = () => {
 
   const [loadingUpload, setLoadingUpload] = useState(false)
   const [loadingUpdate, setLoadingUpdate] = useState(false)
+  const [showModel, setShowModel] = useState(false)
+  const [showModelAddress, setShowModelAddress] = useState(false)
   const balance = { balance: 500 }
 
   const handleOnChange = (text: string, input: keyof InputType) => {
@@ -199,7 +201,7 @@ const User = () => {
     })
     if (res) {
       addNotification("Account updated")
-      navigate("/newproduct")
+      setShowModel(false)
     } else {
       addNotification(error || "Failed to update account")
     }
@@ -284,6 +286,8 @@ const User = () => {
     } else {
       addNotification(error ? error : "failed to update user")
     }
+
+    setLoadingUpdate(false)
   }
 
   const uploadHandler = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -364,6 +368,10 @@ const User = () => {
             accountValidate={accountValidate}
             addressValidate={addressValidate}
             loadingUpdate={loadingUpdate}
+            setShowModel={setShowModel}
+            setShowModelAddress={setShowModelAddress}
+            showModel={showModel}
+            showModelAddress={showModelAddress}
           />
 
           <UserRightComp
