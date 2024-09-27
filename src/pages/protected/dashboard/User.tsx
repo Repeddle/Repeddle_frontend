@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, MouseEvent, useEffect, useState } from "react"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import useAuth from "../../../hooks/useAuth"
 import { useNavigate, useParams } from "react-router-dom"
 import { IUser } from "../../../types/user"
@@ -146,7 +146,7 @@ const User = () => {
     setUserForm((prevState) => ({ ...prevState, [input]: text }))
   }
 
-  const addressValidate = (e: MouseEvent) => {
+  const addressValidate = (e: FormEvent) => {
     e.preventDefault()
     let valid = true
     if (!input.street) {
@@ -168,7 +168,7 @@ const User = () => {
     }
   }
 
-  const accountValidate = (e: MouseEvent) => {
+  const accountValidate = (e: FormEvent) => {
     e.preventDefault()
     let valid = true
     if (!input.accountNumber) {
@@ -190,7 +190,20 @@ const User = () => {
   }
 
   const updateAccount = async () => {
-    // TODO:
+    setLoadingUpdate(true)
+
+    const res = await updateUser({
+      accountName: input.accountName,
+      accountNumber: +input.accountNumber,
+      bankName: input.bankName,
+    })
+    if (res) {
+      addNotification("Account updated")
+      navigate("/newproduct")
+    } else {
+      addNotification(error || "Failed to update account")
+    }
+    setLoadingUpdate(false)
   }
 
   const submitHandler = async (e: FormEvent) => {
@@ -200,7 +213,7 @@ const User = () => {
       addNotification("Password do not match")
       return
     }
-    if (userForm.username.length > 0) {
+    if (userForm.username.length > 0 && userForm.username !== user?.username) {
       const confirm = window.confirm(
         "Are you sure you want to edit your username? The next edit window  will be after 30 days"
       )
@@ -276,15 +289,17 @@ const User = () => {
           resp.message ? resp.message : "Unsubscribed from newsletter"
         )
         setNewsletterStatus(false)
+        await updateUser({ allowNewsletter: true })
       } else {
         addNotification(
           newsletterError
             ? newsletterError
-            : "failed to unsubscribe from newsletter"
+            : "Failed to unsubscribe from newsletter"
         )
       }
     } else {
       const resp = await createNewsletter(user!.email)
+      await updateUser({ allowNewsletter: false })
       if (resp) {
         addNotification("Subscribed to newsletter")
         setNewsletterStatus(true)
@@ -292,7 +307,7 @@ const User = () => {
         addNotification(
           newsletterError
             ? newsletterError
-            : "failed to subscribe to newsletter"
+            : "Failed to subscribe to newsletter"
         )
       }
     }
@@ -318,6 +333,7 @@ const User = () => {
             balance={balance}
             accountValidate={accountValidate}
             addressValidate={addressValidate}
+            loadingUpdate={loadingUpdate}
           />
 
           <UserRightComp

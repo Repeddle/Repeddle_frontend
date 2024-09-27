@@ -13,8 +13,9 @@ import { FaBolt, FaCalendarDays, FaLocationDot } from "react-icons/fa6"
 import useAuth from "../../hooks/useAuth"
 import Modal from "../../components/ui/Modal"
 import { banks, states } from "../../utils/constants"
-import { MouseEvent, useState } from "react"
+import { FormEvent, useState } from "react"
 import { InputType } from "../../pages/protected/dashboard/User"
+import Button from "../../components/ui/Button"
 
 type Props = {
   user: IUser
@@ -25,8 +26,9 @@ type Props = {
   handleOnChange: (val: string, key: keyof InputType) => void
   errorInput: InputType
   handleError: (val: string, key: keyof InputType) => void
-  addressValidate: (e: MouseEvent) => void
-  accountValidate: (e: MouseEvent) => void
+  addressValidate: (e: FormEvent) => void
+  accountValidate: (e: FormEvent) => void
+  loadingUpdate?: boolean
 }
 
 const UserLeftComp = ({
@@ -38,6 +40,7 @@ const UserLeftComp = ({
   handleError,
   addressValidate,
   accountValidate,
+  loadingUpdate,
 }: Props) => {
   const { user: userInfo } = useAuth()
 
@@ -172,7 +175,7 @@ const UserLeftComp = ({
             isOpen={showModel}
             onClose={() => setShowModel(false)}
           >
-            <form className="flex flex-col m-[30px]">
+            <form onSubmit={accountValidate} className="flex flex-col m-[30px]">
               <p>
                 To become a Seller, kindly provide your banking details where
                 you can transfer your earnings deposited in your Repeddle wallet
@@ -217,6 +220,7 @@ const UserLeftComp = ({
                     onFocus={() => handleError("", "bankName")}
                     className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                   >
+                    <option value="">Select Bank</option>
                     {region() === "NGN"
                       ? banks.Nigeria.map((x) => (
                           <option value={x.name}>{x.name}</option>
@@ -234,12 +238,8 @@ const UserLeftComp = ({
                 Note: This cannot be change once saved, contact support to make
                 any changes.
               </div>
-              <button
-                className="cursor-pointer text-white-color mt-[5px] p-[5px] rounded-[0.2rem] border-none"
-                onClick={accountValidate}
-              >
-                Update
-              </button>
+
+              <Button isLoading={loadingUpdate} type="submit" text="Update" />
             </form>
           </Modal>
         </div>
@@ -264,7 +264,7 @@ const UserLeftComp = ({
           onClose={() => setShowModelAddress(false)}
           size="sm"
         >
-          <form className="flex flex-col m-[30px]">
+          <form onSubmit={addressValidate} className="flex flex-col m-[30px]">
             <p>
               The provided address may be use for return should there be a need.
               This address is not displayed to buyers.
@@ -306,6 +306,7 @@ const UserLeftComp = ({
                   onFocus={() => handleError("", "state")}
                   className="text-base m-0 pl-2.5 border-light-ev4 dark:bg-dark-ev1 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                 >
+                  <option value="">Select State</option>
                   {region() === "NGN"
                     ? states.Nigeria.map((x) => <option value={x}>{x}</option>)
                     : states.SouthAfrican.map((x) => (
@@ -334,12 +335,7 @@ const UserLeftComp = ({
             {errorInput.zipcode && (
               <div className="text-[red]">{errorInput.zipcode}</div>
             )}
-            <button
-              className="cursor-pointer text-white-color mt-[5px] p-[5px] rounded-[0.2rem] border-none"
-              onClick={addressValidate}
-            >
-              Update
-            </button>
+            <Button isLoading={loadingUpdate} type="submit" text="Update" />
           </form>
         </Modal>
       </div>
