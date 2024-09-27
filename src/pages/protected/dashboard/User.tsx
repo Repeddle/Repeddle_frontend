@@ -10,6 +10,8 @@ import { compressImageUpload } from "../../../utils/common"
 import useUser from "../../../hooks/useUser"
 import LoadingLogoModal from "../../../components/ui/loadin/LoadingLogoModal"
 import MessageBox from "../../../components/MessageBox"
+import { getUserService } from "../../../services/auth"
+import { getBackendErrorMessage } from "../../../utils/error"
 
 export type InputType = {
   zipcode: string
@@ -39,7 +41,7 @@ export type UserFormType = {
 
 const User = () => {
   const { id } = useParams()
-  const { error, updateUser, getUser, user: usersData } = useAuth()
+  const { error, updateUser, user: usersData } = useAuth()
   const { getUserById, error: getUserError } = useUser()
   const { addNotification } = useToastNotification()
   const {
@@ -65,13 +67,17 @@ const User = () => {
         }
         user = await getUserById(id)
       } else {
-        user = await getUser()
+        try {
+          user = await getUserService()
+        } catch (error) {
+          user = getBackendErrorMessage(error)
+        }
       }
 
       if (user && typeof user !== "string") setUser(user)
-      else if (getUserError) {
-        addNotification(getUserError)
-        setErrors(user || "Failed to get user")
+      else if (getUserError || user || "Failed to get user") {
+        addNotification(getUserError || user || "Failed to get user")
+        setErrors(getUserError || user || "Failed to get user")
       }
       setLoading(false)
     }

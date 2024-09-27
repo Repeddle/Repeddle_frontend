@@ -19,6 +19,7 @@ const ProfileForm = ({ token }: Props) => {
   // when a user picks a suggested name no need to show suggest
   const [allowSuggest, setAllowSuggest] = useState(true)
   const [showModal, setShowModal] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const [firstInput, setFirstInput] = useState({
     firstName: "",
@@ -168,6 +169,8 @@ const ProfileForm = ({ token }: Props) => {
 
     if (!token) return addNotification("token not found")
 
+    setIsSubmitting(true)
+
     const res = await registerUser({
       ...firstInput,
       ...thirdInput,
@@ -178,6 +181,8 @@ const ProfileForm = ({ token }: Props) => {
       setShowModal(true)
     }
     if (error) addNotification(error)
+
+    setIsSubmitting(false)
   }
 
   const fetchSuggest = useCallback(async () => {
@@ -310,8 +315,8 @@ const ProfileForm = ({ token }: Props) => {
               <Button
                 text="Register"
                 type="submit"
-                isLoading={loading}
-                disabled={loading}
+                isLoading={loading || isSubmitting}
+                disabled={loading || isSubmitting}
               />
             )}
           </div>

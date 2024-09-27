@@ -436,7 +436,7 @@ const ReturnPage = () => {
                           </div>
                         </div>
                       ) : (
-                        <>
+                        <div className="flex flex-col sm:flex-row">
                           {returned?.trackingNumber && (
                             <div className="mr-5">
                               Tracking Number: {returned.trackingNumber}
@@ -464,7 +464,7 @@ const ReturnPage = () => {
                             ) : (
                               <LoadingBox />
                             ))}
-                        </>
+                        </div>
                       )
                     ) : (
                       ""
