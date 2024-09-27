@@ -282,7 +282,7 @@ const User = () => {
 
     if (res) {
       addNotification("User updated")
-      navigate(-1)
+      navigate(`/seller/${res.username}`)
     } else {
       addNotification(error ? error : "failed to update user")
     }
