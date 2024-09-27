@@ -83,7 +83,7 @@ export default function Support() {
   const handleToggle = () => {
     if (defaultUser && defaultUser.role === "Admin") {
       addNotification(
-        "Admin can't contact supporot, You are Suppport",
+        "Admin can't contact supporot, You are Suppport 😎",
         undefined,
         true
       );
