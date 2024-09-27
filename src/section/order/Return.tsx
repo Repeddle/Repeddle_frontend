@@ -305,7 +305,7 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
                   >
                     <option value="">--Select--</option>
                     <option value="Credit my Repeddle wallet">
-                      Credit my Repeddle wallet
+                      Credit My Repeddle Wallet
                     </option>
                   </select>
                 </div>
