@@ -9,7 +9,7 @@ type Props = {
 const NotificationList = ({ notifications }: Props) => {
   return (
     <div
-      className={`w-[270px] max-h-[70vh] overflow-auto absolute z-[9] -translate-x-2/4 p-2.5 rounded-[0.2rem] left-2/4 top-[50px] dark:bg-black 
+      className={`w-[290px] max-h-[70vh] overflow-auto absolute z-[9] -translate-x-2/4 p-2.5 rounded-[0.2rem] left-2/4 top-[50px] dark:bg-black 
                 dark:shadow-[0_5px_16px_rgba(225,225,225,0.2)] bg-white shadow-[0_5px_16px_rgba(0,0,0,0.2)]`}
     >
       <div className="font-bold mb-2.5 dark:text-white text-black">
