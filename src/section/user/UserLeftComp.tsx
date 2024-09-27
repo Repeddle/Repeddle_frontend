@@ -165,7 +165,7 @@ const UserLeftComp = ({
             data-content="Note: Your Account details cannot be changed once saved, please contact admin or support  center to make any change"
             className={`relative lg:hover:after:w-[400px] hover:after:absolute lg:hover:after:left-[30px] hover:after:text-justify 
                   hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg
-                  lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
+                  lg:hover:after:top-0 hover:after:text-[11px] hover:after:right-[-30px] hover:after:lg:right-auto hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
                 hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
           >
             <FaQuestionCircle className="text-neutral-300 ml-2.5" />
@@ -183,7 +183,7 @@ const UserLeftComp = ({
               <div className="flex flex-col mt-2.5">
                 <label className="text-sm">Account Name</label>
                 <input
-                  className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+                  className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none dark:bg-dark-ev1 placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                   name="accountName"
                   placeholder={user.accountName}
                   type="text"
@@ -199,7 +199,7 @@ const UserLeftComp = ({
               <div className="flex flex-col mt-2.5">
                 <label className="text-sm">Account Number</label>
                 <input
-                  className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+                  className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs dark:bg-dark-ev1 border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                   placeholder={user.accountNumber?.toString() ?? ""}
                   name="accountNumber"
                   type="number"
@@ -214,11 +214,11 @@ const UserLeftComp = ({
               )}
               <div className="flex flex-col mt-2.5">
                 <label className="text-sm">Bank Name</label>
-                <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
+                <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none dark:bg-dark-ev1 bg-light-ev1 overflow-hidden rounded-[0.2rem] w-[250px] border border-light-ev4 dark:border-dark-ev4">
                   <select
                     onChange={(e) => handleOnChange(e.target.value, "bankName")}
                     onFocus={() => handleError("", "bankName")}
-                    className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                    className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal dark:bg-dark-ev1 bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                   >
                     <option value="">Select Bank</option>
                     {region() === "NGN"
