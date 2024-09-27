@@ -14,6 +14,7 @@ import {
 import useReturn from "../../hooks/useReturn"
 import useToastNotification from "../../hooks/useToastNotification"
 import Modal from "../../components/ui/Modal"
+import useMessage from "../../hooks/useMessage"
 
 type TabTypes = "items" | "option" | "form"
 
@@ -28,6 +29,7 @@ type Props = {
 const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
   const { createReturns, error: creatingError } = useReturn()
   const { addNotification } = useToastNotification()
+  const { createMessage, error: messageError } = useMessage()
   const navigate = useNavigate()
 
   const [tab, setTab] = useState<TabTypes>("items")
@@ -41,9 +43,23 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
   const [sending, setSending] = useState("")
   const [loading, setLoading] = useState(false)
   const [loadingUpload, setLoadUpload] = useState(false)
+  const [messageLoading, setMessageLoading] = useState(false)
 
-  const addConversation = (sellerId?: string, userId?: string) => {
-    if (!sellerId || userId) return
+  const addConversation = async (sellerId?: string, userId?: string) => {
+    if (!sellerId || !userId) return
+
+    setMessageLoading(true)
+    try {
+      const convo = await createMessage({
+        participantId: sellerId,
+        type: "Chat",
+      })
+      navigate(`/message?conversation=${convo}`)
+    } catch (error) {
+      addNotification(messageError || (error as string))
+    }
+
+    setMessageLoading(false)
   }
 
   const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -206,14 +222,20 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
                   Re-list and sell my product
                 </div>
               </Link>
-              <div
-                className="cursor-pointer m-5 p-2.5 rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1"
-                onClick={() =>
-                  addConversation(current?.seller._id, current?._id)
-                }
-              >
-                Message seller
-              </div>
+              {messageLoading ? (
+                <div className="m-5">
+                  <LoadingBox />
+                </div>
+              ) : (
+                <div
+                  className="cursor-pointer m-5 p-2.5 rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1"
+                  onClick={() =>
+                    addConversation(current?.seller._id, current?._id)
+                  }
+                >
+                  Message seller
+                </div>
+              )}
               {current?.deliveryTracking.currentStatus.status &&
                 deliveryNumber(
                   current.deliveryTracking.currentStatus.status
