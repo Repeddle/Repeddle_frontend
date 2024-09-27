@@ -4,10 +4,18 @@ import Tabs from "../../section/message/Tabs";
 import Sidebar from "../../section/message/Sidebar";
 import MainChatArea from "../../section/message/MainChatArea";
 import useAuth from "../../hooks/useAuth";
+import { useSearchParams } from "react-router-dom";
 
 const Message: React.FC = () => {
   const { user } = useAuth();
-  const { currentTab, getConversations, setCurrentConversation } = useMessage();
+  const [searchParams] = useSearchParams();
+  const conversationId = searchParams.get("conversation");
+  const {
+    currentTab,
+    conversations,
+    getConversations,
+    setCurrentConversation,
+  } = useMessage();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   // Load initial messages or data on component mount
@@ -18,6 +26,16 @@ const Message: React.FC = () => {
       setCurrentConversation(null);
     };
   }, [currentTab]);
+  useEffect(() => {
+    if (conversationId) {
+      const currentConversation = conversations.find(
+        (conversation) => conversation._id.toString() === conversationId
+      );
+      if (currentConversation) {
+        setCurrentConversation(currentConversation);
+      }
+    }
+  }, [conversationId, conversations]);
 
   return (
     <div className="relative flex h-screen bg-light-ev4 dark:bg-dark-ev4 max-h-[calc(100vh-75px)] md:max-h-[calc(100vh-160px)]">
