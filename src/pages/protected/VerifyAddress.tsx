@@ -1,64 +1,64 @@
-import { FormEvent, useState } from "react";
-import { Helmet } from "react-helmet-async";
-import InputWithLabel2 from "../../components/ui/InputWithLabel2";
-import { region } from "../../utils/common";
-import { states } from "../../utils/constants";
-import Button from "../../components/ui/Button";
-import { useNavigate } from "react-router-dom";
-import useToastNotification from "../../hooks/useToastNotification";
-import useAuth from "../../hooks/useAuth";
+import { FormEvent, useState } from "react"
+import { Helmet } from "react-helmet-async"
+import InputWithLabel2 from "../../components/ui/InputWithLabel2"
+import { region } from "../../utils/common"
+import { states } from "../../utils/constants"
+import Button from "../../components/ui/Button"
+import { useNavigate } from "react-router-dom"
+import useToastNotification from "../../hooks/useToastNotification"
+import useAuth from "../../hooks/useAuth"
 
 const VerifyAddress = () => {
-  const { updateUser, loading, error: userError } = useAuth();
-  const { addNotification } = useToastNotification();
-  const navigate = useNavigate();
+  const { updateUser, loading, error: userError } = useAuth()
+  const { addNotification } = useToastNotification()
+  const navigate = useNavigate()
 
   const [input, setInput] = useState({
     street: "",
     apartment: "",
     zipcode: "",
     state: "",
-  });
+  })
 
   const [error, setError] = useState({
     street: "",
     apartment: "",
     zipcode: "",
     state: "",
-  });
+  })
 
   const handleOnChange = (text: string, inputVal: keyof typeof input) => {
-    setInput((prevState) => ({ ...prevState, [inputVal]: text }));
-  };
+    setInput((prevState) => ({ ...prevState, [inputVal]: text }))
+  }
 
   const handleError = (errorMessage: string, inputVal: keyof typeof error) => {
-    setError((prevState) => ({ ...prevState, [inputVal]: errorMessage }));
-  };
+    setError((prevState) => ({ ...prevState, [inputVal]: errorMessage }))
+  }
 
   const validate = (e: FormEvent) => {
-    e.preventDefault();
-    let valid = true;
+    e.preventDefault()
+    let valid = true
     if (!input.street) {
-      handleError("Enter your street", "street");
-      valid = false;
+      handleError("Enter your street", "street")
+      valid = false
     }
     if (!input.apartment) {
-      handleError("Enter your apartment", "apartment");
-      valid = false;
+      handleError("Enter your apartment", "apartment")
+      valid = false
     }
     if (!input.state) {
-      handleError("Select your state/province", "state");
-      valid = false;
+      handleError("Select your state/province", "state")
+      valid = false
     }
     if (!input.zipcode) {
-      handleError("Enter your zip code", "zipcode");
-      valid = false;
+      handleError("Enter your zip code", "zipcode")
+      valid = false
     }
 
     if (valid) {
-      submitHandler();
+      submitHandler()
     }
-  };
+  }
   const submitHandler = async () => {
     const res = await updateUser({
       address: {
@@ -67,16 +67,14 @@ const VerifyAddress = () => {
         apartment: input.apartment,
         zipcode: +input.zipcode,
       },
-    });
+    })
     if (res) {
-      addNotification("Address Verified Successfully");
-      navigate("/newproduct");
+      addNotification("Address Verified Successfully")
+      navigate("/newproduct")
     } else {
-
       addNotification(userError ? userError : "Failed to verify address")
-
     }
-  };
+  }
 
   return (
     <div className="max-w-[800px] bg-light-ev1 dark:bg-dark-ev1 mx-auto my-10 p-[50px] rounded-[10px]">
@@ -115,7 +113,7 @@ const VerifyAddress = () => {
 
         <div className="flex flex-col mt-2.5">
           <label className="text-sm">State</label>
-          <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 dark:bg-dark-ev1 overflow-hidden rounded-[0.2rem] my-2.5  border border-light-ev4 dark:border-dark-ev4">
+          <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none dark:bg-dark-ev1g-light-ev1 dark:bg-dark-ev1 overflow-hidden rounded-[0.2rem] my-2.5  border border-light-ev4 dark:border-dark-ev4">
             <select
               onChange={(e) => handleOnChange(e.target.value, "state")}
               onFocus={() => handleError("", "state")}
@@ -151,7 +149,7 @@ const VerifyAddress = () => {
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default VerifyAddress;
+export default VerifyAddress

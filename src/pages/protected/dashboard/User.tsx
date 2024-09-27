@@ -46,7 +46,7 @@ const User = () => {
   const { addNotification } = useToastNotification()
   const {
     createNewsletter,
-    deleteNewsletter,
+    unsubscribeNewsletter,
     error: newsletterError,
   } = useNewsletter()
 
@@ -270,7 +270,7 @@ const User = () => {
 
   const handleNewsletter = async () => {
     if (newsletterStatus) {
-      const resp = await deleteNewsletter(user?._id ?? "")
+      const resp = await unsubscribeNewsletter()
       if (resp.success) {
         addNotification(
           resp.message ? resp.message : "Unsubscribed from newsletter"
@@ -286,7 +286,7 @@ const User = () => {
     } else {
       const resp = await createNewsletter(user!.email)
       if (resp) {
-        addNotification("Subscribed from newsletter")
+        addNotification("Subscribed to newsletter")
         setNewsletterStatus(true)
       } else {
         addNotification(

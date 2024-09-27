@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-// FIXME: user details not complete
 import { IUser } from "../../types/user"
 import {
   FaDotCircle,
@@ -153,7 +150,7 @@ const UserLeftComp = ({
           <FaMoneyBill className="text-sm" />
           <div className="ml-2.5">Bank Account Detail</div>
           {(userInfo?.role === "Admin" ||
-            (!user.accountNumber && !userInfo?.role === "Admin")) && (
+            (!user.accountNumber && userInfo?.role !== "Admin")) && (
             <div
               className="cursor-pointer ml-[5px] p-[5px] rounded-[0.2rem] hover:bg-malon-color"
               onClick={() => setShowModel(!showModel)}
@@ -272,10 +269,10 @@ const UserLeftComp = ({
               The provided address may be use for return should there be a need.
               This address is not displayed to buyers.
             </p>
-            <div className="flex flex-col mt-2.5">
+            <div className="flex flex-col gap-1 mt-2.5">
               <label className="text-sm">Street</label>
               <input
-                className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+                className="w-[250px] dark:bg-dark-ev1 bg-light-ev1 h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                 name="street"
                 type="text"
                 onChange={(e) => handleOnChange(e.target.value, "street")}
@@ -285,10 +282,10 @@ const UserLeftComp = ({
             {errorInput.street && (
               <div className="text-[red]">{errorInput.street}</div>
             )}
-            <div className="flex flex-col mt-2.5">
+            <div className="flex flex-col gap-1 mt-2.5">
               <label className="text-sm">Apartment/Complex</label>
               <input
-                className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+                className="w-[250px] dark:bg-dark-ev1 bg-light-ev1 h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                 name="apartment"
                 type="text"
                 onChange={(e) => handleOnChange(e.target.value, "apartment")}
@@ -298,16 +295,16 @@ const UserLeftComp = ({
             {errorInput.apartment && (
               <div className="text-[red]">{errorInput.apartment}</div>
             )}
-            <div className="flex flex-col mt-2.5">
+            <div className="flex flex-col gap-1 mt-2.5">
               <label className="text-sm">
                 {region() === "NGN" ? "State" : "Province"}
               </label>
-              <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
+              <div className="block dark:bg-dark-ev1 relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] w-[250px] border border-light-ev4 dark:border-dark-ev4">
                 <select
                   value={input.state}
                   onChange={(e) => handleOnChange(e.target.value, "state")}
                   onFocus={() => handleError("", "state")}
-                  className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                  className="text-base m-0 pl-2.5 border-light-ev4 dark:bg-dark-ev1 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                 >
                   {region() === "NGN"
                     ? states.Nigeria.map((x) => <option value={x}>{x}</option>)
@@ -320,10 +317,10 @@ const UserLeftComp = ({
             {errorInput.state && (
               <div className="text-[red]">{errorInput.state}</div>
             )}
-            <div className="flex flex-col mt-2.5">
+            <div className="flex flex-col gap-1 mt-2.5">
               <label className="text-sm">Zip Code</label>
               <input
-                className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+                className="w-[250px] dark:bg-dark-ev1 bg-light-ev1 h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                 name="zipcode"
                 value={input.zipcode}
                 type="number"

@@ -319,7 +319,7 @@ const UserRightComp = ({
                   />
                 </div>
                 <div className="flex justify-between mx-0 my-2">
-                  <label className="text-sm">Subscribe to Newsletter</label>
+                  <label className="text-sm">Subscribe To Newsletter</label>
                   <input
                     className={`relative w-10 h-[15px] transition-[0.5s] rounded-[20px] checked:before:left-[25px] before:w-[15px] before:h-[15px]
               before:content-[""] before:absolute before:-translate-y-2/4 before:transition-[0.5s] before:rounded-[50%] before:left-0 before:top-2/4
@@ -333,7 +333,7 @@ const UserRightComp = ({
                 </div>
                 <div className="my-2.5 mx-0">
                   <div className="flex justify-between mx-0 my-2">
-                    <label className="text-sm">
+                    <label className="text-sm flex items-center gap-1.5">
                       <FaTruck />
                       <span className="font-semibold">Re:Bundle</span>
                       <div
@@ -343,7 +343,7 @@ const UserRightComp = ({
                   lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
                 hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
                       >
-                        <FaQuestionCircle className="text-neutral-300 ml-2.5" />
+                        <FaQuestionCircle className="text-neutral-300" />
                       </div>
                     </label>
                     <input
