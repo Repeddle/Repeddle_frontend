@@ -318,7 +318,7 @@ const User = () => {
       address.zipcode = parseInt(input.zipcode)
     }
 
-    data.address = address
+    if (Object.keys(address).length > 0) data.address = address
 
     const res = await updateUser(data)
 

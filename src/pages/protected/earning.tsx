@@ -15,9 +15,9 @@ const headers = [
   { title: "ID", hide: true },
   { title: "Order" },
   { title: "Delivery Status", hide: true },
-  { title: "Payment Status", hide: true },
+  { title: "Payment Status" },
   { title: "Date", hide: true },
-  { title: "Amount" },
+  { title: "Amount", hide: true },
 ]
 
 function Earning() {
