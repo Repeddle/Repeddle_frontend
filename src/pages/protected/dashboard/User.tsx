@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react"
 import useAuth from "../../../hooks/useAuth"
 import { useNavigate, useParams } from "react-router-dom"
-import { IUser } from "../../../types/user"
+import { IAddress, IUser } from "../../../types/user"
 import useToastNotification from "../../../hooks/useToastNotification"
 import UserLeftComp from "../../../section/user/UserLeftComp"
 import UserRightComp from "../../../section/user/UserRightComp"
@@ -74,8 +74,10 @@ const User = () => {
         }
       }
 
-      if (user && typeof user !== "string") setUser(user)
-      else if (getUserError || user || "Failed to get user") {
+      if (user && typeof user !== "string") {
+        setUser(user)
+        setBundle(user.rebundle?.status || false)
+      } else if (getUserError || user || "Failed to get user") {
         addNotification(getUserError || user || "Failed to get user")
         setErrors(getUserError || user || "Failed to get user")
       }
@@ -129,7 +131,7 @@ const User = () => {
     username: "",
   })
 
-  const [bundle, setBundle] = useState("")
+  const [bundle, setBundle] = useState(false)
 
   const [loadingUpload, setLoadingUpload] = useState(false)
   const [loadingUpdate, setLoadingUpdate] = useState(false)
@@ -267,22 +269,62 @@ const User = () => {
         street: input.street,
         zipcode: +input.zipcode,
       },
-      rebundle: { count: rebundleCount, status: rebundleStatus },
+      image: userForm.image,
+      username: userForm.username,
     }
 
-    if (userForm.password.length) {
+    if (userForm.firstName) {
+      data.firstName = userForm.firstName
+    }
+    if (userForm.lastName) {
+      data.lastName = userForm.lastName
+    }
+    if (userForm.dob) {
+      data.dob = userForm.dob
+    }
+    if (userForm.phone) {
+      data.phone = userForm.phone
+    }
+    if (userForm.about) {
+      data.about = userForm.about
+    }
+    if (userForm.email) {
+      data.email = userForm.email
+    }
+    if (userForm.image) {
+      data.image = userForm.image
+    }
+
+    if (userForm.password) {
       data["password"] = userForm.password
     }
 
-    if (userForm.username.length) {
+    if (userForm.username) {
       data["username"] = userForm.username
     }
+
+    const address: Partial<IAddress> = {}
+
+    if (input.apartment) {
+      address.apartment = input.apartment
+    }
+    if (input.state) {
+      address.state = input.state
+    }
+    if (input.street) {
+      address.street = input.street
+    }
+    if (input.zipcode) {
+      address.zipcode = parseInt(input.zipcode)
+    }
+
+    if (Object.keys(address).length > 0) data.address = address
 
     const res = await updateUser(data)
 
     if (res) {
       addNotification("User updated")
-      navigate(-1)
+      navigate(`/seller/${res.username}`)
     } else {
       addNotification(error ? error : "failed to update user")
     }
@@ -313,9 +355,25 @@ const User = () => {
   const handleRebundle = async (
     val: { status: boolean; count: number } | null
   ) => {
-    console.log(val)
-    setBundle("")
     setLoadingRebundle(true)
+
+    if (val) {
+      const data: Partial<IUser> = {
+        rebundle: val,
+      }
+
+      const res = await updateUser(data)
+
+      if (res) {
+        addNotification("User updated")
+        setBundle(val.status)
+      } else {
+        addNotification(error ? error : "failed to update user")
+      }
+    }
+
+    console.log(rebundleCount)
+
     setLoadingRebundle(false)
   }
 
