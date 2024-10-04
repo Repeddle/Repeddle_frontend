@@ -76,6 +76,7 @@ const User = () => {
 
       if (user && typeof user !== "string") {
         setUser(user)
+        setRebundleStatus(user.rebundle?.status || false)
         setBundle(user.rebundle?.status || false)
       } else if (getUserError || user || "Failed to get user") {
         addNotification(getUserError || user || "Failed to get user")
@@ -362,6 +363,7 @@ const User = () => {
       } else {
         addNotification("Rebundle deactivated")
       }
+      setRebundleStatus(data.rebundle?.status || false)
       setBundle(data.rebundle?.status || false)
     } else {
       addNotification(error ? error : "failed to update rebundle")
