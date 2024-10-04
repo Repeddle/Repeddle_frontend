@@ -54,6 +54,16 @@ export interface MessageStart {
   type: string
 }
 
+export interface MessageStartResponse {
+  participants: string[]
+  type: String
+  closed: boolean
+  isGuest: boolean
+  _id: string
+  createdAt: string
+  updatedAt: string
+}
+
 export interface ForwardData {
   receiver: string
   messageId: string
