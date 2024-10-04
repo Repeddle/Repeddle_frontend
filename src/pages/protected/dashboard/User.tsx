@@ -257,21 +257,7 @@ const User = () => {
 
     setLoadingUpdate(true)
 
-    const data: Partial<IUser & { password?: string }> = {
-      firstName: userForm.firstName,
-      lastName: userForm.lastName,
-      dob: userForm.dob,
-      phone: userForm.phone,
-      about: userForm.about,
-      address: {
-        apartment: input.apartment,
-        state: input.state,
-        street: input.street,
-        zipcode: +input.zipcode,
-      },
-      image: userForm.image,
-      username: userForm.username,
-    }
+    const data: Partial<IUser & { password?: string }> = {}
 
     if (userForm.firstName) {
       data.firstName = userForm.firstName
@@ -324,7 +310,7 @@ const User = () => {
 
     if (res) {
       addNotification("User updated")
-      navigate(`/seller/${res.username}`)
+      if (userForm.username) navigate(`/seller/${res.username}`)
     } else {
       addNotification(error ? error : "failed to update user")
     }
@@ -357,22 +343,29 @@ const User = () => {
   ) => {
     setLoadingRebundle(true)
 
+    let data: Partial<IUser> = {}
     if (val) {
-      const data: Partial<IUser> = {
+      data = {
         rebundle: val,
       }
-
-      const res = await updateUser(data)
-
-      if (res) {
-        addNotification("User updated")
-        setBundle(val.status)
-      } else {
-        addNotification(error ? error : "failed to update user")
+    } else {
+      data = {
+        rebundle: { count: rebundleCount, status: true },
       }
     }
 
-    console.log(rebundleCount)
+    const res = await updateUser(data)
+
+    if (res) {
+      if (data.rebundle?.status) {
+        addNotification("Rebundle activated")
+      } else {
+        addNotification("Rebundle deactivated")
+      }
+      setBundle(data.rebundle?.status || false)
+    } else {
+      addNotification(error ? error : "failed to update rebundle")
+    }
 
     setLoadingRebundle(false)
   }
