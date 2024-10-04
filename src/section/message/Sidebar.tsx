@@ -1,16 +1,16 @@
-import { useState } from "react";
-import useMessage from "../../hooks/useMessage";
-import { SkeletonConversationLoading } from "../../components/message/skeletonLoading";
-import moment from "moment";
-import useAuth from "../../hooks/useAuth";
-import { markMessagesAsRead } from "../../utils/socket";
+import { useState } from "react"
+import useMessage from "../../hooks/useMessage"
+import { SkeletonConversationLoading } from "../../components/message/skeletonLoading"
+import moment from "moment"
+import useAuth from "../../hooks/useAuth"
+import { markMessagesAsRead } from "../../utils/socket"
 
 interface Props {
-  setIsSidebarOpen: (value: boolean) => void;
+  setIsSidebarOpen: (value: boolean) => void
 }
 
 const Sidebar: React.FC<Props> = ({ setIsSidebarOpen }) => {
-  const { user } = useAuth();
+  const { user } = useAuth()
   const {
     currentTab,
     conversations,
@@ -18,14 +18,14 @@ const Sidebar: React.FC<Props> = ({ setIsSidebarOpen }) => {
     currentConversation,
     setCurrentConversation,
     isTypingList,
-  } = useMessage();
+  } = useMessage()
 
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("")
   const filteredConversations = conversations.filter((conversation) =>
     conversation.otherUser?.username
       .toLowerCase()
       .includes(searchQuery.toLowerCase())
-  );
+  )
 
   return (
     <div className="flex-1 bg-light-ev2 dark:bg-dark-ev2 ">
@@ -59,9 +59,9 @@ const Sidebar: React.FC<Props> = ({ setIsSidebarOpen }) => {
                   : "hover:bg-light-ev3 dark:hover:bg-dark-ev3"
               } `}
               onClick={() => {
-                setCurrentConversation(conversation);
-                markMessagesAsRead(conversation._id, user!._id);
-                setIsSidebarOpen(false);
+                setCurrentConversation(conversation)
+                markMessagesAsRead(conversation._id, user!._id)
+                setIsSidebarOpen(false)
               }}
             >
               {/* User image */}
@@ -88,17 +88,17 @@ const Sidebar: React.FC<Props> = ({ setIsSidebarOpen }) => {
                 <div className="text-sm text-gray-600 ">
                   {isTypingList.find((type) => type.id === conversation._id) ? (
                     <span className="text-orange-color">typing...</span>
-                  ) : conversation.lastMessage.content.length > 18 ? (
-                    conversation.lastMessage.content.slice(0, 18) + "..."
+                  ) : conversation.lastMessage?.content.length > 18 ? (
+                    conversation.lastMessage?.content.slice(0, 18) + "..."
                   ) : (
-                    conversation.lastMessage.content
+                    conversation.lastMessage?.content
                   )}
                 </div>
               </div>
               {/* Last message time and unread messages */}
               <div className="flex flex-col items-end">
                 <div className="text-sm text-gray-600">
-                  {moment(conversation.lastMessage.createdAt).calendar()}
+                  {moment(conversation.lastMessage?.createdAt).calendar()}
                 </div>
                 {conversation.unreadCount > 0 && (
                   <div className="bg-orange-color text-white text-xs rounded-full px-2 py-1 mt-1">
@@ -111,7 +111,7 @@ const Sidebar: React.FC<Props> = ({ setIsSidebarOpen }) => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar

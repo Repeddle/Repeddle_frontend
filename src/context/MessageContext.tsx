@@ -5,6 +5,7 @@ import {
   IMessage,
   MessageData,
   MessageStart,
+  MessageStartResponse,
   ReplyData,
 } from "../types/message"
 import {
@@ -36,7 +37,7 @@ interface MessageContextType {
   setIsAnimating: (conversation: boolean) => void
   handleTabChange: (conversation: string) => void
   setCurrentConversation: (conversation: IConversation | null) => void
-  createMessage: (message: MessageStart) => Promise<string>
+  createMessage: (message: MessageStart) => Promise<MessageStartResponse>
   sendMessage: (message: MessageData) => Promise<void>
   getMessages: (receiver: string) => Promise<void>
   forwardMessage: (message: ForwardData) => Promise<void>
