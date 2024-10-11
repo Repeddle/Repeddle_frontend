@@ -197,15 +197,13 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
                       )}
                     </div>
                     <div
-                      className={`p-1 rounded-lg  max-w-[70%]  ${
+                      className={`p-1 rounded-lg  max-w-[80%]  ${
                         message.sender === user?._id
                           ? "bg-orange-color text-white self-end"
                           : "bg-malon-color text-white self-start"
                       }`}
                     >
-                      <div className=" flex flex-wraptext-wrap break-all">
-                        {message.content}
-                      </div>
+                      <div className="break-words">{message.content}</div>
                       <span className="text-white text-opacity-75 w-full text-xs text-end">
                         <div>{moment(message.createdAt).format("LT")}</div>
                       </span>
