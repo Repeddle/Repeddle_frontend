@@ -75,7 +75,7 @@ const Sidebar: React.FC<Props> = ({ setIsSidebarOpen }) => {
                       Guest
                     </span>
                   )}
-                  {conversation.type !== "Chat" && conversation.closed ? (
+                  {conversation.type !== "Chat" && (conversation.closed ? (
                     <span className="text-malon-color text-xs uppercase">
                       closed
                     </span>
@@ -83,7 +83,7 @@ const Sidebar: React.FC<Props> = ({ setIsSidebarOpen }) => {
                     <span className="text-orange-color text-xs uppercase">
                       open
                     </span>
-                  )}
+                  ))}
                 </div>
                 <div className="text-sm text-gray-600 ">
                   {isTypingList.find((type) => type.id === conversation._id) ? (
