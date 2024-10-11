@@ -97,11 +97,11 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
         </div>
       </div>
 
-      <div className="absolute z-0 flex items-center justify-center top-20 opacity-40 gap-5 px-10 md:px-20">
+      <div className="absolute z-0 flex items-center justify-center top-16 opacity-40 gap-5 px-10 md:px-20">
         <div>
-          <FaShieldAlt size={40} />
+          <FaShieldAlt size={25} />
         </div>
-        <div className="text-center">
+        <div className="text-center text-xs ">
           Kind Reminder: To make sure you're covered by Repeddle Buyer's &
           Seller's Protection, all payments must be made using Repeddle's App
           and Website complete CHECKOUT system.
@@ -178,8 +178,10 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
               return (
                 <div key={message._id}>
                   {showDayLabel && (
-                    <div className="text-center my-2 text-gray-500">
-                      {getDayLabel(message.createdAt)}
+                    <div className="text-center my-2 flex justify-center items-center">
+                      <div className="bg-black dark:bg-white text-white dark:text-black p-1 rounded-md">
+                        {getDayLabel(message.createdAt)}
+                      </div>
                     </div>
                   )}
                   <div
@@ -195,13 +197,15 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
                       )}
                     </div>
                     <div
-                      className={`p-1 rounded-lg  ${
+                      className={`p-1 rounded-lg  max-w-[70%]  ${
                         message.sender === user?._id
                           ? "bg-orange-color text-white self-end"
                           : "bg-malon-color text-white self-start"
                       }`}
                     >
-                      <div className="flex-wrap">{message.content}</div>
+                      <div className=" flex flex-wraptext-wrap break-all">
+                        {message.content}
+                      </div>
                       <span className="text-white text-opacity-75 w-full text-xs text-end">
                         <div>{moment(message.createdAt).format("LT")}</div>
                       </span>
