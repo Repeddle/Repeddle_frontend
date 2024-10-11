@@ -10,6 +10,8 @@ const Message: React.FC = () => {
   const { user } = useAuth();
   const [searchParams] = useSearchParams();
   const conversationId = searchParams.get("conversation");
+  const productId = searchParams.get("product");
+  const userId = searchParams.get("user");
   const {
     currentTab,
     conversations,
@@ -18,7 +20,6 @@ const Message: React.FC = () => {
   } = useMessage();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-  // Load initial messages or data on component mount
   useEffect(() => {
     getConversations(currentTab);
 
@@ -26,6 +27,7 @@ const Message: React.FC = () => {
       setCurrentConversation(null);
     };
   }, [currentTab]);
+
   useEffect(() => {
     if (conversationId) {
       const currentConversation = conversations.find(
