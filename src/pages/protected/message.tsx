@@ -10,8 +10,8 @@ const Message: React.FC = () => {
   const { user } = useAuth();
   const [searchParams] = useSearchParams();
   const conversationId = searchParams.get("conversation");
-  const productId = searchParams.get("product");
-  const userId = searchParams.get("user");
+  // const productId = searchParams.get("product");
+  // const userId = searchParams.get("user");
   const {
     currentTab,
     conversations,
