@@ -112,7 +112,7 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
       )}
 
       <div
-        className={`flex-1 z-10 pbs-1 pt-20 px-10 overflow-y-auto flex flex-col-reverse transition-transform duration-500 ${
+        className={`flex-1 z-10 pbs-1 pt-20 px-4 md:px-10 overflow-y-auto flex flex-col-reverse transition-transform duration-500 ${
           isAnimating ? "-translate-y-7" : "translate-y-0"
         }`}
         style={{ scrollBehavior: "smooth" }}

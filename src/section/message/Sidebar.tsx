@@ -75,7 +75,7 @@ const Sidebar: React.FC<Props> = ({ setIsSidebarOpen }) => {
                       Guest
                     </span>
                   )}
-                  {conversation.closed ? (
+                  {conversation.type !== "Chat" && conversation.closed ? (
                     <span className="text-malon-color text-xs uppercase">
                       closed
                     </span>
@@ -88,17 +88,17 @@ const Sidebar: React.FC<Props> = ({ setIsSidebarOpen }) => {
                 <div className="text-sm text-gray-600 ">
                   {isTypingList.find((type) => type.id === conversation._id) ? (
                     <span className="text-orange-color">typing...</span>
-                  ) : conversation.lastMessage.content.length > 18 ? (
+                  ) : conversation.lastMessage?.content?.length > 18 ? (
                     conversation.lastMessage.content.slice(0, 18) + "..."
                   ) : (
-                    conversation.lastMessage.content
+                    conversation.lastMessage?.content
                   )}
                 </div>
               </div>
               {/* Last message time and unread messages */}
               <div className="flex flex-col items-end">
                 <div className="text-sm text-gray-600">
-                  {moment(conversation.lastMessage.createdAt).calendar()}
+                  {moment(conversation.lastMessage?.createdAt).calendar()}
                 </div>
                 {conversation.unreadCount > 0 && (
                   <div className="bg-orange-color text-white text-xs rounded-full px-2 py-1 mt-1">
