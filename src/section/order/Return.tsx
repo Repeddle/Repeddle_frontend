@@ -54,7 +54,7 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
         participantId: sellerId,
         type: "Chat",
       })
-      navigate(`/message?conversation=${convo}`)
+      navigate(`/messages?conversation=${convo._id}`)
     } catch (error) {
       addNotification(messageError || (error as string))
     }

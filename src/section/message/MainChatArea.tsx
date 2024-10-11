@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import moment from "moment";
-import { SkeletonMessageLoading } from "../../components/message/skeletonLoading";
-import useMessage from "../../hooks/useMessage";
-import useAuth from "../../hooks/useAuth";
-import { FaShieldAlt } from "react-icons/fa";
-import { RiImageAddFill } from "react-icons/ri";
-import { IoSend } from "react-icons/io5";
-import socket from "../../socket";
-import { CgChevronLeft } from "react-icons/cg";
-import { getDayLabel } from "../../utils/chat";
+import React, { useState } from "react"
+import moment from "moment"
+import { SkeletonMessageLoading } from "../../components/message/skeletonLoading"
+import useMessage from "../../hooks/useMessage"
+import useAuth from "../../hooks/useAuth"
+import { FaShieldAlt } from "react-icons/fa"
+import { RiImageAddFill } from "react-icons/ri"
+import { IoSend } from "react-icons/io5"
+import socket from "../../socket"
+import { CgChevronLeft } from "react-icons/cg"
+import { getDayLabel } from "../../utils/chat"
 
 interface Props {
-  setIsSidebarOpen: (value: boolean) => void;
+  setIsSidebarOpen: (value: boolean) => void
 }
 const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
-  const { user } = useAuth();
+  const { user } = useAuth()
   const {
     loadingMessage,
     messages,
@@ -23,59 +23,59 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
     setCurrentConversation,
     isAnimating,
     sendMessage,
-  } = useMessage();
-  const [messageInput, setMessageInput] = useState<string>("");
+  } = useMessage()
+  const [messageInput, setMessageInput] = useState<string>("")
   const [sending, setSending] = useState({
     value: false,
     message: "",
     failed: false,
-  });
+  })
 
   // Function to emit startTyping event
   const startTyping = () => {
     socket.emit("typing", {
       conversationId: currentConversation?._id,
       userId: user?._id,
-    });
-  };
+    })
+  }
 
   // Function to emit stopTyping event
   const stopTyping = () => {
     socket.emit("stopTyping", {
       conversationId: currentConversation?._id,
       userId: user?._id,
-    });
-  };
+    })
+  }
 
   const handleMessageSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
     // Handle sending message logic
-    if (!currentConversation) return;
-    if (!messageInput) return;
+    if (!currentConversation) return
+    if (!messageInput) return
     try {
-      setSending({ value: true, message: messageInput, failed: false });
-      setMessageInput("");
+      setSending({ value: true, message: messageInput, failed: false })
+      setMessageInput("")
       await sendMessage({
         content: messageInput,
         type: "Chat",
         conversationId: currentConversation._id,
-      });
-      setSending({ value: false, message: "", failed: false });
+      })
+      setSending({ value: false, message: "", failed: false })
     } catch (error) {
-      console.log(error);
-      setSending((prev) => ({ ...prev, value: true, failed: true }));
+      console.log(error)
+      setSending((prev) => ({ ...prev, value: true, failed: true }))
     }
-  };
+  }
 
   const handleRetry = () => {
-    setMessageInput(sending.message);
+    setMessageInput(sending.message)
     setSending((prev) => ({
       ...prev,
       value: false,
       failed: false,
       message: "",
-    }));
-  };
+    }))
+  }
 
   return currentConversation ? (
     <div className=" relative flex-1 flex flex-col bg-light-ev1 dark:bg-dark-ev1">
@@ -84,8 +84,8 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
         <CgChevronLeft
           size={30}
           onClick={() => {
-            setIsSidebarOpen(true);
-            setCurrentConversation(null);
+            setIsSidebarOpen(true)
+            setCurrentConversation(null)
           }}
           className="mr-4 md:hidden"
         />
@@ -167,11 +167,11 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
             .slice()
             .reverse()
             .map((message, index, array) => {
-              const prevMessage = array[index + 1];
+              const prevMessage = array[index + 1]
               const showDayLabel =
                 !prevMessage ||
                 getDayLabel(message.createdAt) !==
-                  getDayLabel(prevMessage.createdAt);
+                  getDayLabel(prevMessage.createdAt)
 
               return (
                 <div key={message._id}>
@@ -206,7 +206,7 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
                     </div>
                   </div>
                 </div>
-              );
+              )
             })
         )}
       </div>
@@ -221,8 +221,8 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
           type="text"
           value={messageInput}
           onChange={(e) => {
-            setMessageInput(e.target.value);
-            startTyping();
+            setMessageInput(e.target.value)
+            startTyping()
           }}
           placeholder="Type a message..."
           className="w-full border border-opacity-50 dark:bg-black rounded-lg p-3 border-gray-300  focus:outline-none focus:border-orange-color"
@@ -238,7 +238,7 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
     <div className="flex-1 flex justify-center items-center bg-light-ev1 dark:bg-dark-ev1 font-bold text-5xl opacity-30">
       Select a conversation to start a chat
     </div>
-  );
-};
+  )
+}
 
-export default MainChatArea;
+export default MainChatArea

@@ -63,18 +63,14 @@ const OrderList = () => {
                           <div>
                             <div className="text-sm">
                               {
-                                order.items[0].deliveryTracking.history[
-                                  order.items[0].deliveryTracking.history
-                                    .length - 1
-                                ].status
+                                order.items[0].deliveryTracking.currentStatus
+                                  .status
                               }
                             </div>
                             <div>
                               {moment(
-                                order.items[0].deliveryTracking.history[
-                                  order.items[0].deliveryTracking.history
-                                    .length - 1
-                                ].timestamp
+                                order.items[0].deliveryTracking.currentStatus
+                                  .timestamp
                               ).format("MMM DD YY, h:mm a")}
                             </div>
                           </div>

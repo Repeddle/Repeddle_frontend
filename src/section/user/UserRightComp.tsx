@@ -1,7 +1,14 @@
-import { ChangeEvent, FormEvent } from "react"
+import { ChangeEvent, FormEvent, useState } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import { Link } from "react-router-dom"
-import { FaCamera, FaCheck, FaQuestionCircle, FaTruck } from "react-icons/fa"
+import {
+  FaCamera,
+  FaCheck,
+  FaEye,
+  FaEyeSlash,
+  FaQuestionCircle,
+  FaTruck,
+} from "react-icons/fa"
 import moment from "moment"
 import useAuth from "../../hooks/useAuth"
 import { IUser } from "../../types/user"
@@ -27,7 +34,7 @@ type Props = {
   rebundleError?: string
   setRebundleError: (val: string) => void
   setRebundleCount: (val: number) => void
-  bundle: string
+  bundle: boolean
 }
 
 const UserRightComp = ({
@@ -52,7 +59,15 @@ const UserRightComp = ({
 }: Props) => {
   const { user: userInfo } = useAuth()
 
-  // const [passwordType, setPasswordType] = useState("password")
+  const [passwordType, setPasswordType] = useState("password")
+
+  const toggleType = () => {
+    if (passwordType === "password") {
+      setPasswordType("text")
+    } else {
+      setPasswordType("password")
+    }
+  }
 
   const daydiff =
     (user.usernameLastUpdated &&
@@ -298,28 +313,53 @@ const UserRightComp = ({
               <>
                 <div className="flex flex-col mt-2.5">
                   <label className="text-sm">Password</label>
-                  <input
-                    className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
-                    name="password"
-                    // type={passwordType}
-                    type="password"
-                    value={userForm.password}
-                    onChange={(e) =>
-                      handleOnUserChange(e.target.value, "password")
-                    }
-                  />
+                  <div className="relative">
+                    <input
+                      className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+                      name="password"
+                      type={passwordType}
+                      value={userForm.password}
+                      onChange={(e) =>
+                        handleOnUserChange(e.target.value, "password")
+                      }
+                    />
+                    {passwordType === "password" ? (
+                      <FaEye
+                        className="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-lg"
+                        onClick={toggleType}
+                      />
+                    ) : (
+                      <FaEyeSlash
+                        className="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-lg"
+                        onClick={toggleType}
+                      />
+                    )}
+                  </div>
                 </div>
                 <div className="flex flex-col mt-2.5">
                   <label className="text-sm">Confirm Password</label>
-                  <input
-                    className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
-                    name="confirmPassword"
-                    // type={passwordType}
-                    type="password"
-                    onChange={(e) =>
-                      handleOnUserChange(e.target.value, "confirmPassword")
-                    }
-                  />
+                  <div className="relative">
+                    <input
+                      className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+                      name="confirmPassword"
+                      type={passwordType}
+                      value={userForm.confirmPassword}
+                      onChange={(e) =>
+                        handleOnUserChange(e.target.value, "confirmPassword")
+                      }
+                    />
+                    {passwordType === "password" ? (
+                      <FaEye
+                        className="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-lg"
+                        onClick={toggleType}
+                      />
+                    ) : (
+                      <FaEyeSlash
+                        className="cursor-pointer absolute right-4 top-1/2 -translate-y-1/2 text-lg"
+                        onClick={toggleType}
+                      />
+                    )}
+                  </div>
                 </div>
                 <div className="flex justify-between mx-0 my-2">
                   <label className="text-sm">Subscribe To Newsletter</label>

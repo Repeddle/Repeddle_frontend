@@ -6,15 +6,16 @@ import {
   ReplyData,
   ConversationData,
   MessageStart,
+  MessageStartResponse,
 } from "../types/message"
 import { getBackendErrorMessage } from "../utils/error"
 import api from "./api"
 
 export const createMessageService = async (
   messageData: MessageStart
-): Promise<string> => {
+): Promise<MessageStartResponse> => {
   try {
-    const res: { conversation: string } = await api.post(
+    const res: { conversation: MessageStartResponse } = await api.post(
       `/messages/conversations/start`,
       messageData
     )
