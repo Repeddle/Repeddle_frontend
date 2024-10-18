@@ -79,7 +79,7 @@ function Earning() {
         onChange={(e) => {
           changeDate(e)
         }}
-        className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal dark:bg-dark-ev1 bg-light-ev1 focus-within:outline-orange-color min-w-[220px] appearance-none text-black-color dark:text-white-color"
+        className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal dark:bg-dark-ev1 bg-light-ev1 focus-within:outline-orange-color min-w-[220px] text-black-color dark:text-white-color"
       >
         <option value="Today">Today</option>
         <option value="This Week">This Week</option>
@@ -102,7 +102,7 @@ function Earning() {
                   relative lg:hover:after:w-[200px] hover:after:absolute lg:hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg lg:hover:after:left-[30px]`}
                   data-content="Your total earnings is the total (price) amount of your sold product inclusive expenses and net."
                 >
-                  <FaCircleQuestion className="text-orange-color" />
+                  <FaCircleQuestion className="text-black" />
                 </span>
               </div>
               <div className="text-[40px] pb-2 text-right">
@@ -122,7 +122,7 @@ function Earning() {
                   relative lg:hover:after:w-[200px] hover:after:absolute lg:hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg lg:hover:after:left-[30px]`}
                   data-content="Expenses is Repeddle commission charged against your total earnings that’s less when a sale is successfully completed and paid for."
                 >
-                  <FaCircleQuestion className="text-orange-color" />
+                  <FaCircleQuestion className="text-white" />
                 </span>
               </div>
               <div className="text-[40px] pb-2 text-right">
@@ -144,7 +144,7 @@ function Earning() {
                   relative lg:hover:after:w-[200px] hover:after:absolute lg:hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg lg:hover:after:left-[30px]`}
                   data-content="Net earnings is your actual withdrawable balance you receive into your Repeddle wallet. I.E. Total Earnings (- minus) Expenses (=) Net earnings."
                 >
-                  <FaCircleQuestion className="text-malon-color" />
+                  <FaCircleQuestion className="text-white" />
                 </span>
               </div>
               <div className="text-[40px] pb-2 text-right">
