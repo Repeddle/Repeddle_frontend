@@ -19,7 +19,7 @@ const BASE_KEY = "FLWPUBK_TEST-6a1e30713a8c6962ecb7d6cfbda2df69-X";
 
 type Props = {
   setShowModel: (val: boolean) => void;
-  setShowSuccess: (val: boolean) => void;
+  setShowSuccess?: (val: boolean) => void;
   setRefresh: (val: boolean) => void;
   refresh: boolean;
   currency: "NGN" | "ZAR";
@@ -35,7 +35,6 @@ const AddFund = ({
   const { addNotification } = useToastNotification();
 
   const [amount, setAmount] = useState(0);
-
   const { user } = useAuth();
 
   const config: FlutterwaveConfig = {
@@ -74,7 +73,7 @@ const AddFund = ({
     if (!error) {
       addNotification(result);
       setRefresh(true);
-      setShowSuccess(true);
+      if (setShowSuccess) setShowSuccess(true);
       setAmount(0);
       setShowModel(false);
     } else {
@@ -90,24 +89,24 @@ const AddFund = ({
       <input
         className="h-[45px] w-full border border-malon-color mx-0 my-[25px] p-[15px] numeric-arrow rounded-[5px] focus-within:border-orange-color focus-visible:outline-orange-color focus-visible:outline-1 text-black dark:text-white bg-white dark:bg-black placeholder:p-2"
         type="number"
-        value={amount}
+        value={`${amount}`}
         placeholder="Enter Amount to be Added in Wallet"
         onChange={(e) => {
-          const value = e.target.value;
+          let value = e.target.value;
 
-          const parsedValue =
-            value.startsWith("0") && value.length > 1
-              ? value.replace(/^0+/, "")
-              : value;
-
-          setAmount(parsedValue ? parseFloat(parsedValue) : 0);
+          const numericValue = parseFloat(value);
+          if (!isNaN(numericValue)) {
+            setAmount(numericValue);
+          } else {
+            setAmount(0);
+          }
         }}
       />
       {region() === "NGN" ? (
         <div
           className="flex items-center cursor-pointer font-bold hover:bg-malon-color bg-orange-color text-white-color mt-2.5 px-[50px] py-2.5 rounded-[0.2rem]"
           onClick={() => {
-            console.log(config);
+            if (amount <= 0) return;
             handleFlutterPayment({
               callback: async (response) => {
                 console.log(response);

@@ -71,7 +71,7 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
   const handleMessageSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle sending message logic
-    if (!messageInput) return;
+    if (!messageInput && !image) return;
     try {
       setSending({ value: true, image, message: messageInput, failed: false });
       setMessageInput("");
@@ -205,7 +205,6 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
                           : "bg-malon-color text-white self-start"
                       }`}
                     >
-                      {" "}
                       {message.image && (
                         <img
                           src={message.image}
@@ -224,7 +223,7 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
         )}
       </div>
       {image && (
-        <div className="flex items-center justify-between bg-light-ev4 dark:bg-dark-ev4 w-full z-20 p-2 px-4">
+        <div className="flex items-center bg-light-ev4 justify-between w-full z-20 p-2 px-4">
           <img src={baseURL + image} className="w-10 h-10 object-cover" />
 
           <IoMdClose
