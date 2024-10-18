@@ -89,7 +89,7 @@ const AddFund = ({
       <input
         className="h-[45px] w-full border border-malon-color mx-0 my-[25px] p-[15px] numeric-arrow rounded-[5px] focus-within:border-orange-color focus-visible:outline-orange-color focus-visible:outline-1 text-black dark:text-white bg-white dark:bg-black placeholder:p-2"
         type="number"
-        value={`${amount}`}
+        value={`${amount || ""}`}
         placeholder="Enter Amount to be Added in Wallet"
         onChange={(e) => {
           let value = e.target.value;

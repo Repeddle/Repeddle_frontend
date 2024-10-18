@@ -255,7 +255,11 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
                 type="file"
                 id="upload"
                 className="hidden"
-                onChange={handleImageUpload}
+                onChange={(e) => {
+                  handleImageUpload(e);
+
+                  e.target.value = "";
+                }}
               />
             </label>
           )}
