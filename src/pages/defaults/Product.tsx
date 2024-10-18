@@ -28,6 +28,8 @@ import useToastNotification from "../../hooks/useToastNotification"
 import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
 import { currency } from "../../utils/common"
 import moment from "moment"
+import useMessage from "../../hooks/useMessage"
+import LoadingBox from "../../components/LoadingBox"
 
 const Product = () => {
   const params = useParams()
@@ -47,10 +49,12 @@ const Product = () => {
     error: wishListError,
   } = useAuth()
   const { addToCart, cart } = useCart()
+  const { createMessage, error: messageError } = useMessage()
 
   const [selectedImage, setSelectedImage] = useState("")
   const [showModel, setShowModel] = useState(false)
   const [liking, setLiking] = useState(false)
+  const [messageLoading, setMessageLoading] = useState(false)
   const [addToWish, setAddToWish] = useState(false)
   const [loading, setLoading] = useState(true)
   const [addLoading, setAddLoading] = useState(false)
@@ -252,7 +256,22 @@ const Product = () => {
     return true
   }
 
-  const addConversation = () => {}
+  const addConversation = async () => {
+    if (!product?.seller._id || !user?._id) return
+
+    setMessageLoading(true)
+    try {
+      const convo = await createMessage({
+        participantId: product.seller._id,
+        type: "Chat",
+      })
+      navigate(`/messages?conversation=${convo._id}`)
+    } catch (error) {
+      addNotification(messageError || (error as string))
+    }
+
+    setMessageLoading(false)
+  }
 
   const toggleLikes = async () => {
     if (!user) {
@@ -526,17 +545,21 @@ const Product = () => {
                   />
                 </div>
 
-                <div className="relative mr-[30px] flex cursor-pointer text-lg group items-center">
-                  <FaMessage
-                    className="peer hover:text-orange-color"
-                    onClick={addConversation}
-                  />
-                  <IconsTooltips
-                    classNames="peer-hover:opacity-100"
-                    tips="Message Seller "
-                    tipClassName="-left-[50px] !-bottom-[50px] lg:left-auto lg:!-bottom-[30px]"
-                  />
-                </div>
+                {messageLoading ? (
+                  <LoadingBox size="sm" />
+                ) : (
+                  <div className="relative mr-[30px] flex cursor-pointer text-lg group items-center">
+                    <FaMessage
+                      className="peer hover:text-orange-color"
+                      onClick={addConversation}
+                    />
+                    <IconsTooltips
+                      classNames="peer-hover:opacity-100"
+                      tips="Message Seller "
+                      tipClassName="-left-[50px] !-bottom-[50px] lg:left-auto lg:!-bottom-[30px]"
+                    />
+                  </div>
+                )}
               </div>
               <div>Listed {moment(product.createdAt).fromNow()}</div>
 

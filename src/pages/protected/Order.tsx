@@ -158,10 +158,10 @@ const Order = () => {
                 {order.items.length} Item
                 {order.items.length > 1 ? "s" : ""}
               </div>
-              <Date>
+              <div>
                 Placed on{" "}
                 {moment(order.createdAt).format("MMMM Do YYYY, h:mm:ss a")}
-              </Date>
+              </div>
             </div>
             <div className="flex justify-between items-center mr-5">
               <div className="uppercase font-bold py-[15px] px-0">

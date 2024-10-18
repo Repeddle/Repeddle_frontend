@@ -16,7 +16,7 @@ const SalesList = () => {
 
   return (
     <div className="flex-[4] relative flex flex-col">
-      <div className="p-5 my-0 mx-5 min-h-[85vh] dark:bg-dark-ev1 bg-light-ev1">
+      <div className="p-2 pb-5 sm:p-5 my-0 mx-5 min-h-[85vh] dark:bg-dark-ev1 bg-light-ev1">
         <h1 className="text-xl py-5 pl-0 pr-5 lg:text-[calc(1.375rem_+_1.5vw)]">
           Sold Product History
         </h1>

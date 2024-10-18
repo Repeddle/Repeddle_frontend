@@ -44,7 +44,7 @@ const ToastNotification: React.FC = () => {
             >
               <AiFillBell className="text-lg" />
               <div className="space-y-4">
-                <div className="text-xs sm:text-sm md:text-base">
+                <div className="text-xs text-center sm:text-sm md:text-base">
                   {notification.message}
                 </div>
                 <button
@@ -74,7 +74,7 @@ const ToastNotification: React.FC = () => {
               key={notification.id}
               className={`${
                 notification.error ? "bg-malon-color" : "bg-orange-color"
-              } text-white text-xs sm:text-sm md:text-base rounded-lg py-2 px-4 my-2 shadow-md`}
+              } text-white text-xs text-center sm:text-sm md:text-base rounded-lg py-2 px-4 my-2 shadow-md`}
             >
               {notification.message}
             </div>

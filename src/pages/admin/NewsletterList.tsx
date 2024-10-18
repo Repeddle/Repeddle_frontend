@@ -224,7 +224,7 @@ const NewsletterList = () => {
                 />
                 <div className="flex-1">{rebatch.email}</div>
               </div>
-              <Date>{moment(rebatch.createdAt).format("LLL")}</Date>
+              <div>{moment(rebatch.createdAt).format("LLL")}</div>
               <FaTrash
                 onClick={() => deleteHandler(rebatch._id)}
                 className="text-[red] cursor-pointer ml-2.5"

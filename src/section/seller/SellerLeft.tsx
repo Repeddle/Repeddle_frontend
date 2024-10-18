@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import MessageBox from "../../components/MessageBox"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { FaGlobe, FaLink, FaPen, FaTag, FaUser } from "react-icons/fa"
 import ReviewLists from "../../components/ReviewLists"
 import WriteReview from "./WriteReview"
@@ -13,6 +13,7 @@ import { UserByUsername } from "../../types/user"
 import Modal from "../../components/ui/Modal"
 import useAuth from "../../hooks/useAuth"
 import useToastNotification from "../../hooks/useToastNotification"
+import useMessage from "../../hooks/useMessage"
 
 type Props = {
   loadingUser: boolean
@@ -28,8 +29,12 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
     error: followError,
   } = useAuth()
   const { addNotification } = useToastNotification()
+  const { createMessage, error: messageError } = useMessage()
+  const navigate = useNavigate()
+  const { user } = useAuth()
 
   const [showLoginModel, setShowLoginModel] = useState(false)
+  const [messageLoading, setMessageLoading] = useState(false)
   const [showModel, setShowModel] = useState(false)
   const [showWriteReview, setShowWriteReview] = useState(false)
 
@@ -84,8 +89,21 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
     }
   }
 
-  const addConversation = (id: string, type: string) => {
-    console.log(id, type)
+  const addConversation = async (sellerId?: string, userId?: string) => {
+    if (!sellerId || !userId) return
+
+    setMessageLoading(true)
+    try {
+      const convo = await createMessage({
+        participantId: sellerId,
+        type: "Chat",
+      })
+      navigate(`/messages?conversation=${convo._id}`)
+    } catch (error) {
+      addNotification(messageError || (error as string))
+    }
+
+    setMessageLoading(false)
   }
 
   const isFollowing = useMemo(
@@ -205,13 +223,19 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
                 </div>
                 <FaLink className="ml-[5px] text-base cursor-pointer text-malon-color" />
               </button>
-              <button
-                onClick={() => addConversation(usernameData.user._id, "user")}
-                type="button"
-                className="w-full text-white-color mb-5 px-0 py-1 rounded-[5px] border-0 bg-orange-color"
-              >
-                Message Me
-              </button>
+              {messageLoading ? (
+                <LoadingBox />
+              ) : (
+                <button
+                  onClick={() =>
+                    addConversation(usernameData.user._id, user?._id)
+                  }
+                  type="button"
+                  className="w-full text-white-color mb-5 px-0 py-1 rounded-[5px] border-0 bg-orange-color"
+                >
+                  Message Me
+                </button>
+              )}
               {usernameData.user?.rebundle?.status && <RebundlePoster />}
               <div className="border-t-border-color w-full mt-[5px] px-0 py-[15px] border-t ">
                 <div className="flex justify-between mb-2.5">
