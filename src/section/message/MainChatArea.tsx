@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import moment from "moment";
 import { SkeletonMessageLoading } from "../../components/message/skeletonLoading";
 import useMessage from "../../hooks/useMessage";
@@ -9,6 +9,11 @@ import { IoSend } from "react-icons/io5";
 import socket from "../../socket";
 import { CgChevronLeft } from "react-icons/cg";
 import { getDayLabel } from "../../utils/chat";
+import { compressImageUpload } from "../../utils/common";
+import useToastNotification from "../../hooks/useToastNotification";
+import { baseURL } from "../../services/api";
+import LoadingBox from "../../components/LoadingBox";
+import { IoMdClose } from "react-icons/io";
 
 interface Props {
   setIsSidebarOpen: (value: boolean) => void;
@@ -24,12 +29,16 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
     isAnimating,
     sendMessage,
   } = useMessage();
+  const { addNotification } = useToastNotification();
   const [messageInput, setMessageInput] = useState<string>("");
   const [sending, setSending] = useState({
     value: false,
+    image: "",
     message: "",
     failed: false,
   });
+  const [image, setImage] = useState<string>("");
+  const [uploading, setUploading] = useState(false);
 
   // Function to emit startTyping event
   const startTyping = () => {
@@ -51,16 +60,18 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
     e.preventDefault();
     // Handle sending message logic
     if (!currentConversation) return;
-    if (!messageInput) return;
+    if (!messageInput && !image) return;
     try {
-      setSending({ value: true, message: messageInput, failed: false });
+      setSending({ value: true, image, message: messageInput, failed: false });
       setMessageInput("");
+      setImage("");
       await sendMessage({
+        image: image,
         content: messageInput,
         type: "Chat",
         conversationId: currentConversation._id,
       });
-      setSending({ value: false, message: "", failed: false });
+      setSending({ value: false, image: "", message: "", failed: false });
     } catch (error) {
       console.log(error);
       setSending((prev) => ({ ...prev, value: true, failed: true }));
@@ -69,6 +80,7 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
 
   const handleRetry = () => {
     setMessageInput(sending.message);
+    setImage(sending.image);
     setSending((prev) => ({
       ...prev,
       value: false,
@@ -77,8 +89,27 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
     }));
   };
 
+  const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    try {
+      setUploading(true);
+
+      const file = e.target.files?.[0];
+      if (!file) throw Error("No image found");
+
+      const imageUrl = await compressImageUpload(file, 1024);
+
+      setImage(imageUrl);
+
+      addNotification("Image uploaded");
+    } catch (err) {
+      addNotification("Failed uploading image");
+    } finally {
+      setUploading(false);
+    }
+  };
+
   return currentConversation ? (
-    <div className=" relative flex-1 flex flex-col bg-light-ev1 dark:bg-dark-ev1">
+    <div className=" relative flex-1 w-screen overflow-x-hidden flex flex-col bg-light-ev1 dark:bg-dark-ev1">
       {/* Header */}
       <div className="bg-light-ev4 dark:bg-dark-ev4 px-4 py-2 flex items-center">
         <CgChevronLeft
@@ -138,6 +169,12 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
                 className={`p-3 rounded-lg bg-orange-color text-white self-end
                         `}
               >
+                {sending.image && (
+                  <img
+                    src={sending.image}
+                    className="object-contain max-w-full h-auto "
+                  />
+                )}
                 {sending.message}
                 <span className="text-white text-opacity-75  text-end w-full text-xs ">
                   {sending.failed ? (
@@ -203,6 +240,12 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
                           : "bg-malon-color text-white self-start"
                       }`}
                     >
+                      {message.image && (
+                        <img
+                          src={message.image}
+                          className="object-contain max-w-full h-auto "
+                        />
+                      )}
                       <div className="break-words">{message.content}</div>
                       <span className="text-white text-opacity-75 w-full text-xs text-end">
                         <div>{moment(message.createdAt).format("LT")}</div>
@@ -215,12 +258,35 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
         )}
       </div>
 
+      {image && (
+        <div className="flex items-center justify-between bg-light-ev4 dark:bg-dark-ev4 w-full z-20 p-2 px-4">
+          <img src={baseURL + image} className="w-10 h-10 object-cover" />
+
+          <IoMdClose
+            size={24}
+            className="cursor-pointer"
+            onClick={() => setImage("")}
+          />
+        </div>
+      )}
       {/* Message Input Box */}
       <form
         onSubmit={handleMessageSubmit}
-        className="p-4 border-t border-gray-300 flex items-center gap-4 border-opacity-50"
+        className="relative p-4 border-t border-gray-300 flex items-center gap-4 border-opacity-50"
       >
-        <RiImageAddFill size={30} className="cursor-pointer" />
+        <label htmlFor="upload">
+          {uploading ? (
+            <LoadingBox size="md" />
+          ) : (
+            <RiImageAddFill size={30} className="cursor-pointer" />
+          )}
+          <input
+            type="file"
+            id="upload"
+            className="hidden"
+            onChange={handleImageUpload}
+          />
+        </label>
         <input
           type="text"
           value={messageInput}
@@ -229,7 +295,7 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
             startTyping();
           }}
           placeholder="Type a message..."
-          className="w-full border border-opacity-50 dark:bg-black rounded-lg p-3 border-gray-300  focus:outline-none focus:border-orange-color"
+          className="border border-opacity-50 flex-1 dark:bg-black rounded-lg p-3 border-gray-300  focus:outline-none focus:border-orange-color"
           onFocus={startTyping}
           onBlur={stopTyping}
         />
