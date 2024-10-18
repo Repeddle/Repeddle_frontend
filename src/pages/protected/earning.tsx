@@ -102,7 +102,7 @@ function Earning() {
                   relative lg:hover:after:w-[200px] hover:after:absolute lg:hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg lg:hover:after:left-[30px]`}
                   data-content="Your total earnings is the total (price) amount of your sold product inclusive expenses and net."
                 >
-                  <FaCircleQuestion className="text-black" />
+                  <FaCircleQuestion className="text-black dark:text-white" />
                 </span>
               </div>
               <div className="text-[40px] pb-2 text-right">
