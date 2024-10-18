@@ -1,45 +1,45 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // TODO: remove this when it is resolved
-import { useEffect, useState } from "react"
-import LoadingBox from "../../components/LoadingBox"
-import useAuth from "../../hooks/useAuth"
-import { FaQuestionCircle, FaWallet } from "react-icons/fa"
-import { UserBalance } from "../../types/user"
-import { region } from "../../utils/common"
-import useWallet from "../../hooks/useWallet"
-import useToastNotification from "../../hooks/useToastNotification"
+import { useEffect, useState } from "react";
+import LoadingBox from "../../components/LoadingBox";
+import useAuth from "../../hooks/useAuth";
+import { FaQuestionCircle, FaWallet } from "react-icons/fa";
+import { UserBalance } from "../../types/user";
+import { region } from "../../utils/common";
+import useWallet from "../../hooks/useWallet";
+import useToastNotification from "../../hooks/useToastNotification";
 
 type Props = {
-  setShowModel: (val: boolean) => void
-  setRefresh: (val: boolean) => void
-  refresh: boolean
-  balance: UserBalance
-}
+  setShowModel: (val: boolean) => void;
+  setRefresh: (val: boolean) => void;
+  refresh: boolean;
+  balance: UserBalance;
+};
 
 // TODO: account information is not part of logged in data
 
 const Withdraw = ({ balance, refresh, setRefresh, setShowModel }: Props) => {
-  const { withdrawWalletFlutter, loading } = useWallet()
-  const { addNotification } = useToastNotification()
+  const { withdrawWalletFlutter, loading } = useWallet();
+  const { addNotification } = useToastNotification();
 
-  const { user } = useAuth()
+  const { user } = useAuth();
 
-  const [amount, setAmount] = useState(0)
-  const [fee, setFee] = useState(0)
-  const [errormsg, setErrormsg] = useState("")
+  const [amount, setAmount] = useState(0);
+  const [fee, setFee] = useState(0);
+  const [errormsg, setErrormsg] = useState("");
 
   const handleWithdraw = async () => {
-    const { error, result } = await withdrawWalletFlutter(amount)
+    const { error, result } = await withdrawWalletFlutter(amount);
 
     if (!error) {
-      addNotification(result)
-      setRefresh(!refresh)
-      setShowModel(false)
-      setAmount(0)
+      addNotification(result);
+      setRefresh(!refresh);
+      setShowModel(false);
+      setAmount(0);
     } else {
-      addNotification(result, undefined, true)
+      addNotification(result, undefined, true);
     }
-  }
+  };
 
   useEffect(() => {
     const fees =
@@ -49,22 +49,22 @@ const Withdraw = ({ balance, refresh, setRefresh, setShowModel }: Props) => {
         ? 10.75
         : amount > 5000 && amount <= 50000
         ? 26.88
-        : 53.75
-    setFee(fees)
-    const totalMoney = Number(amount) + Number(fees)
-    console.log("totalMoney", totalMoney, balance.balance)
+        : 53.75;
+    setFee(fees);
+    const totalMoney = Number(amount) + Number(fees);
+    console.log("totalMoney", totalMoney, balance.balance);
     if (totalMoney > balance.balance) {
       setErrormsg(
         "Insufficient funds, Please enter a lower amount to complete your withdrawal"
-      )
-      return
+      );
+      return;
     }
     if (!amount) {
-      setErrormsg("Please enter the amount you want to withdraw")
-      return
+      setErrormsg("Please enter the amount you want to withdraw");
+      return;
     }
-    setErrormsg("")
-  }, [amount, balance.balance])
+    setErrormsg("");
+  }, [amount, balance.balance]);
 
   return loading ? (
     <LoadingBox />
@@ -98,7 +98,17 @@ const Withdraw = ({ balance, refresh, setRefresh, setShowModel }: Props) => {
           type="number"
           value={amount}
           placeholder="Enter Amount to Withdraw"
-          onChange={(e) => setAmount(parseFloat(e.target.value))}
+          onChange={(e) => {
+            const value = e.target.value;
+
+            // Remove leading zeros
+            const parsedValue =
+              value.startsWith("0") && value.length > 1
+                ? value.replace(/^0+/, "")
+                : value;
+
+            setAmount(parsedValue ? parseFloat(parsedValue) : 0);
+          }}
         />
         <div
           className="text-orange-color font-bold cursor-pointer"
@@ -123,7 +133,7 @@ const Withdraw = ({ balance, refresh, setRefresh, setShowModel }: Props) => {
         Withdraw
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Withdraw
+export default Withdraw;
