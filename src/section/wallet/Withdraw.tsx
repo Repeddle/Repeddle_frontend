@@ -1,12 +1,11 @@
-
-import { useEffect, useState } from "react"
-import LoadingBox from "../../components/LoadingBox"
-import useAuth from "../../hooks/useAuth"
-import { FaQuestionCircle, FaWallet } from "react-icons/fa"
-import { UserBalance } from "../../types/user"
-import { region } from "../../utils/common"
-import useWallet from "../../hooks/useWallet"
-import useToastNotification from "../../hooks/useToastNotification"
+import { useEffect, useState } from "react";
+import LoadingBox from "../../components/LoadingBox";
+import useAuth from "../../hooks/useAuth";
+import { FaQuestionCircle, FaWallet } from "react-icons/fa";
+import { UserBalance } from "../../types/user";
+import { region } from "../../utils/common";
+import useWallet from "../../hooks/useWallet";
+import useToastNotification from "../../hooks/useToastNotification";
 
 type Props = {
   setShowModel: (val: boolean) => void;
@@ -95,7 +94,7 @@ const Withdraw = ({ balance, refresh, setRefresh, setShowModel }: Props) => {
         <input
           className="flex-1 numeric-arrow text-lg border-0 focus-visible:outline-none placeholder:p-2.5 text-black-color dark:text-white-color bg-white-color dark:bg-black-color"
           type="number"
-          value={`${amount || 0}`}
+          value={`${amount || ""}`}
           placeholder="Enter Amount to Withdraw"
           onChange={(e) => {
             let value = e.target.value;
