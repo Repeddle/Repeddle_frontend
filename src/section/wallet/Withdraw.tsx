@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// TODO: remove this when it is resolved
-import { useEffect, useState } from "react";
-import LoadingBox from "../../components/LoadingBox";
-import useAuth from "../../hooks/useAuth";
-import { FaQuestionCircle, FaWallet } from "react-icons/fa";
-import { UserBalance } from "../../types/user";
-import { region } from "../../utils/common";
-import useWallet from "../../hooks/useWallet";
-import useToastNotification from "../../hooks/useToastNotification";
+
+import { useEffect, useState } from "react"
+import LoadingBox from "../../components/LoadingBox"
+import useAuth from "../../hooks/useAuth"
+import { FaQuestionCircle, FaWallet } from "react-icons/fa"
+import { UserBalance } from "../../types/user"
+import { region } from "../../utils/common"
+import useWallet from "../../hooks/useWallet"
+import useToastNotification from "../../hooks/useToastNotification"
 
 type Props = {
   setShowModel: (val: boolean) => void;

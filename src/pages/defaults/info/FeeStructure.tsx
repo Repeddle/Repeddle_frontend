@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 const FeeStructure = () => {
   return (
-    <div className="container mx-auto max-w-7xl px-8">
+    <div className="container mx-auto max-w-7xl px-8 pt-6">
       <h2 className="font-medium text-xl lg:text-2xl text-center">
         HOW REPEDDLE COMMISSION WORKS
       </h2>
