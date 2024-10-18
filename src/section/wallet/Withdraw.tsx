@@ -95,7 +95,7 @@ const Withdraw = ({ balance, refresh, setRefresh, setShowModel }: Props) => {
         <input
           className="flex-1 numeric-arrow text-lg border-0 focus-visible:outline-none placeholder:p-2.5 text-black-color dark:text-white-color bg-white-color dark:bg-black-color"
           type="number"
-          value={`${amount}`}
+          value={`${amount || 0}`}
           placeholder="Enter Amount to Withdraw"
           onChange={(e) => {
             let value = e.target.value;
