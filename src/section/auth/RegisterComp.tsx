@@ -75,7 +75,6 @@ const RegisterComp = () => {
               <Link className="text-orange-color" to="/terms">
                 terms of use
               </Link>{" "}
-              .
             </div>
 
             <Button

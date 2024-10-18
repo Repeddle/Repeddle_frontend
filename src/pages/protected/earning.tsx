@@ -92,40 +92,40 @@ function Earning() {
       ) : (
         <>
           <div className="flex lg:flex-row flex-col gap-8 p-2.5">
-            <div className="flex-1 px-10 py-2.5 rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1">
+            <div className="flex-1 px-10 py-4 rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1">
               <div className="flex">
                 <div className="text-[13px] font-[bold] mr-10 mb-2.5">
                   Your Total Earnings
                 </div>
                 <span
-                  className={`hover:after:text-[11px] hover:after:left-[-70px] hover:after:w-[170px] hover:after:top-2.5 hover:after:content-[attr(data-content)]
+                  className={`hover:after:text-[11px] hover:after:left-[-70px] after:bg-white after:dark:bg-dark-ev1 hover:after:w-[170px] hover:after:top-2.5 hover:after:content-[attr(data-content)]
                   relative lg:hover:after:w-[200px] hover:after:absolute lg:hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg lg:hover:after:left-[30px]`}
                   data-content="Your total earnings is the total (price) amount of your sold product inclusive expenses and net."
                 >
                   <FaCircleQuestion className="text-orange-color" />
                 </span>
               </div>
-              <div className="text-[40px] text-right">
+              <div className="text-[40px] pb-2 text-right">
                 {currency(region())}
                 {(orderSummary ? orderSummary.soldOrders.numSales : 0).toFixed(
                   2
                 )}
               </div>
             </div>
-            <div className="flex-1 px-10 py-2.5 rounded-[0.2rem] bg-malon-color text-white">
+            <div className="flex-1 px-10 py-4 rounded-[0.2rem] bg-malon-color text-white">
               <div className="flex">
                 <div className="text-[13px] font-[bold] mr-10 mb-2.5">
                   Expenses (7.9%)
                 </div>
                 <span
-                  className={`hover:after:text-[11px] hover:after:left-[-70px] hover:after:w-[170px] hover:after:top-2.5 hover:after:content-[attr(data-content)]
+                  className={`hover:after:text-[11px] hover:after:left-[-70px] after:bg-white after:dark:bg-dark-ev1 hover:after:w-[170px] hover:after:top-2.5 hover:after:content-[attr(data-content)]
                   relative lg:hover:after:w-[200px] hover:after:absolute lg:hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg lg:hover:after:left-[30px]`}
                   data-content="Expenses is Repeddle commission charged against your total earnings that’s less when a sale is successfully completed and paid for."
                 >
                   <FaCircleQuestion className="text-orange-color" />
                 </span>
               </div>
-              <div className="text-[40px] text-right">
+              <div className="text-[40px] pb-2 text-right">
                 {currency(region())}
                 {(
                   ((orderSummary ? orderSummary.soldOrders.numOrders : 0) *
@@ -134,20 +134,20 @@ function Earning() {
                 ).toFixed(2)}
               </div>
             </div>
-            <div className="flex-1 px-10 py-2.5 rounded-[0.2rem] bg-orange-color text-white">
+            <div className="flex-1 px-10 py-4 rounded-[0.2rem] bg-orange-color text-white">
               <div className="flex">
                 <div className="text-[13px] font-[bold] mr-10 mb-2.5">
                   Your Net Earnings
                 </div>
                 <span
-                  className={`hover:after:text-[11px] hover:after:left-[-70px] hover:after:w-[170px] hover:after:top-2.5 hover:after:content-[attr(data-content)]
+                  className={`hover:after:text-[11px] hover:after:left-[-70px] after:bg-white after:dark:bg-dark-ev1 hover:after:w-[170px] hover:after:top-2.5 hover:after:content-[attr(data-content)]
                   relative lg:hover:after:w-[200px] hover:after:absolute lg:hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg lg:hover:after:left-[30px]`}
                   data-content="Net earnings is your actual withdrawable balance you receive into your Repeddle wallet. I.E. Total Earnings (- minus) Expenses (=) Net earnings."
                 >
-                  <FaCircleQuestion className="text-orange-color" />
+                  <FaCircleQuestion className="text-malon-color" />
                 </span>
               </div>
-              <div className="text-[40px] text-right">
+              <div className="text-[40px] pb-2 text-right">
                 {currency(region())}
                 {(
                   ((orderSummary ? orderSummary.soldOrders.numOrders : 0) *

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// TODO: remove this when it is resolved
 import { useEffect, useState } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import useAuth from "../../hooks/useAuth"

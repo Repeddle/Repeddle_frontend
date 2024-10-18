@@ -69,7 +69,7 @@ const AddFund = ({ currency, refresh, setRefresh, setShowModel }: Props) => {
       addNotification(result)
       setRefresh(true)
       setAmount(0)
-      setShowModel(!refresh)
+      setShowModel(false)
     } else {
       addNotification(result, undefined, true)
     }
