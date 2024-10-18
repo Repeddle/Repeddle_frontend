@@ -45,42 +45,22 @@ const SidebarItem = ({ item }: { item: ICategory | ISubCategory }) => {
         }`}
       >
         <div
-          className="flex text-[1em] capitalize justify-between"
+          className="flex text-[1em] capitalize cursor-pointer justify-between"
           onClick={() => setOpen(!open)}
         >
           <span>{item.name}</span>
-          <FaChevronDown className="group-has-[.open]:rotate-180 transition-all duration-300" />
+          <FaChevronDown
+            className={`transition-all duration-300 ${
+              open ? "rotate-180" : ""
+            }`}
+          />
         </div>
         {item?.subCategories?.length > 0 && (
-          <div className="h-0 overflow-hidden pt-[0.25em] group-has-[.open]:h-auto">
+          <div
+            className={`overflow-hidden pt-[0.25em] ${open ? "h-auto" : "h-0"}`}
+          >
             {item.subCategories.map((child, index) => (
               <SidebarItem key={index} item={child} />
-            ))}
-          </div>
-        )}
-      </div>
-    )
-  } else if (Array.isArray(item.items)) {
-    return (
-      <div
-        className={`block hover:bg-[#eb9f4015] transition-all group duration-[0.15s] px-[1em] py-[0.75em] rounded-[5px] ${
-          open ? "open" : ""
-        }`}
-      >
-        {item?.items?.length > 0 && (
-          <div className="h-0 overflow-hidden pt-[0.25em] group-has-[.open]:h-auto">
-            {item.items.map((child, index) => (
-              <div
-                className="text-[1em] capitalize px-[1em] py-[0.75em] hover:text-orange-color"
-                key={index}
-              >
-                <Link
-                  to={`/search?query=${child.name}`}
-                  className="font-medium"
-                >
-                  {child.name}
-                </Link>
-              </div>
             ))}
           </div>
         )}
