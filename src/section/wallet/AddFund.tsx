@@ -74,7 +74,7 @@ const AddFund = ({
     if (!error) {
       addNotification(result);
       setRefresh(true);
-      setShowSuccess(true);
+     if(setShowSuccess) setShowSuccess(true);
       setAmount(0);
       setShowModel(false);
     } else {
