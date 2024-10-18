@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import Textarea from "../Textarea";
 import { FaPaperPlane } from "react-icons/fa";
 import { GrAttachment } from "react-icons/gr";
@@ -8,6 +8,12 @@ import { getDayLabel } from "../../utils/chat";
 import moment from "moment";
 import { IUser } from "../../types/user";
 import { getConversationsService } from "../../services/message";
+import { compressImageUpload } from "../../utils/common";
+import useToastNotification from "../../hooks/useToastNotification";
+import { IoMdClose } from "react-icons/io";
+import { baseURL } from "../../services/api";
+import LoadingBox from "../LoadingBox";
+import useAuth from "../../hooks/useAuth";
 
 interface ChatProps {
   user: IUser | null;
@@ -23,14 +29,18 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
     isAnimating,
     sendMessage,
   } = useMessage();
+  const { user: loginUser } = useAuth();
+  const { addNotification } = useToastNotification();
   const [messageInput, setMessageInput] = useState<string>("");
   const [sending, setSending] = useState({
     value: false,
+    image: "",
     message: "",
     failed: false,
   });
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [image, setImage] = useState<string>("");
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     const getConversations = async () => {
@@ -41,7 +51,7 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        setError(error as string);
+        addNotification(error as string);
       }
     };
     getConversations();
@@ -49,6 +59,7 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
 
   const handleRetry = () => {
     setMessageInput(sending.message);
+    setImage(sending.image);
     setSending((prev) => ({
       ...prev,
       value: false,
@@ -62,20 +73,41 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
     // Handle sending message logic
     if (!messageInput) return;
     try {
-      setSending({ value: true, message: messageInput, failed: false });
+      setSending({ value: true, image, message: messageInput, failed: false });
       setMessageInput("");
+      setImage("");
       await sendMessage({
+        image,
         content: messageInput,
         type: "Support",
         conversationId: currentConversation?._id,
       });
-      setSending({ value: false, message: "", failed: false });
+      setSending({ value: false, image: "", message: "", failed: false });
     } catch (error) {
       console.log(error);
       setSending((prev) => ({ ...prev, value: true, failed: true }));
     }
   };
-  console.log(error);
+
+  const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+    try {
+      setUploading(true);
+
+      const file = e.target.files?.[0];
+      if (!file) throw Error("No image found");
+
+      const imageUrl = await compressImageUpload(file, 1024);
+
+      setImage(imageUrl);
+
+      addNotification("Image uploaded");
+    } catch (err) {
+      addNotification("Failed uploading image");
+    } finally {
+      setUploading(false);
+    }
+  };
+
   return (
     <div className="h-full flex flex-col overflow-hidden   text-black">
       <div
@@ -103,6 +135,13 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
                 className={`p-3 rounded-lg bg-orange-color text-white self-end
                         `}
               >
+                {" "}
+                {sending.image && (
+                  <img
+                    src={sending.image}
+                    className="object-contain max-w-full h-auto "
+                  />
+                )}
                 {sending.message}
                 <span className="text-white text-opacity-75  text-end w-full text-xs ">
                   {sending.failed ? (
@@ -166,6 +205,13 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
                           : "bg-malon-color text-white self-start"
                       }`}
                     >
+                      {" "}
+                      {message.image && (
+                        <img
+                          src={message.image}
+                          className="object-contain max-w-full h-auto "
+                        />
+                      )}
                       {message.content}
                       <span className="text-white text-opacity-75 w-full text-xs text-end">
                         <div>{moment(message.createdAt).format("LT")}</div>
@@ -177,6 +223,17 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
             })
         )}
       </div>
+      {image && (
+        <div className="flex items-center justify-between bg-light-ev4 dark:bg-dark-ev4 w-full z-20 p-2 px-4">
+          <img src={baseURL + image} className="w-10 h-10 object-cover" />
+
+          <IoMdClose
+            size={24}
+            className="cursor-pointer"
+            onClick={() => setImage("")}
+          />
+        </div>
+      )}
       <form
         onSubmit={handleMessageSubmit}
         className="flex flex-1 items-end p-1"
@@ -188,7 +245,21 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
           placeholder="Type here..."
         />
         <div className="p-2 flex items-center gap-3">
-          <GrAttachment className="cursor-pointer" />
+          {loginUser && (
+            <label htmlFor="upload">
+              {uploading ? (
+                <LoadingBox size="sm" />
+              ) : (
+                <GrAttachment className="cursor-pointer" />
+              )}
+              <input
+                type="file"
+                id="upload"
+                className="hidden"
+                onChange={handleImageUpload}
+              />
+            </label>
+          )}
           <button type="submit" className="">
             <FaPaperPlane className="cursor-pointer" />
           </button>
