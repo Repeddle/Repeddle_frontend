@@ -19,7 +19,7 @@ const BASE_KEY = "FLWPUBK_TEST-6a1e30713a8c6962ecb7d6cfbda2df69-X";
 
 type Props = {
   setShowModel: (val: boolean) => void;
-  setShowSuccess: (val: boolean) => void;
+  setShowSuccess?: (val: boolean) => void;
   setRefresh: (val: boolean) => void;
   refresh: boolean;
   currency: "NGN" | "ZAR";
