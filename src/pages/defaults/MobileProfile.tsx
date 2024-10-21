@@ -196,13 +196,13 @@ const MobileProfile = () => {
           <div className="p-2.5 uppercase bg-light-ev2 dark:bg-dark-ev2">
             Admin
           </div>
-          <Link to="/dashboard/analytics">
+          <Link to="/admin/analytics">
             <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
               <FaChartLine className="mr-2.5" />
               Analytics
             </div>
           </Link>
-          <Link to="/dashboard/userlist">
+          <Link to="/admin/userlist">
             <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
               <FaUser className="mr-2.5" />
               Users
@@ -214,61 +214,61 @@ const MobileProfile = () => {
               Reports
             </div>
           </Link>
-          <Link to="/dashboard/categories">
+          <Link to="/admin/categories">
             <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
               <FaListCheck className="mr-2.5" />
               Categories
             </div>
           </Link>
-          <Link to="/dashboard/articles">
+          <Link to="/admin/articles">
             <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
               <FaQuestion className="mr-2.5" />
               Articles
             </div>
           </Link>
-          <Link to="/dashboard/messages">
+          <Link to="/messages">
             <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
               <FaEnvelope className="mr-2.5" />
               All Messages
             </div>
           </Link>
-          <Link to="/dashboard/allreturns">
+          <Link to="/admin/allreturns">
             <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
               <FaArrowRotateLeft className="mr-2.5" />
               Return Querries
             </div>
           </Link>
-          <Link to="/dashboard/logreturns">
+          <Link to="/admin/logreturns">
             <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
               <FaArrowRotateLeft className="mr-2.5" />
               All Logged Returns
             </div>
           </Link>
-          <Link to="/dashboard/payments">
+          <Link to="/admin/payments">
             <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
               <FaMoneyBill className="mr-2.5" />
               Payments
             </div>
           </Link>
-          <Link to="/dashboard/transactionlist">
+          <Link to="/admin/transactionlist">
             <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
               <FaMoneyBill className="mr-2.5" />
               All Transactions
             </div>
           </Link>
-          <Link to="/dashboard/newsletter">
+          <Link to="/admin/newsletter">
             <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
               <FaMailBulk className="mr-2.5" />
               Collected Email
             </div>
           </Link>
-          <Link to="/dashboard/otherbrand">
+          <Link to="/admin/otherbrand">
             <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
               <FaQuestionCircle className="mr-2.5" />
-              Other Brand
+              Brand List
             </div>
           </Link>
-          <Link to="/dashboard/contact">
+          <Link to="/admin/contact">
             <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
               <FaEnvelope className="mr-2.5" />
               Contact Us
