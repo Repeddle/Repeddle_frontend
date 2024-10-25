@@ -21,7 +21,7 @@ type Props = {
   id?: string
   submitHandler: (e: FormEvent) => void
   userForm: UserFormType
-  handleOnUserChange: (val: string, key: keyof UserFormType) => void
+  handleOnUserChange: (val: string | boolean, key: keyof UserFormType) => void
   loadingUpload: boolean
   loadingUpdate: boolean
   uploadHandler: (e: ChangeEvent<HTMLInputElement>) => void
@@ -198,11 +198,11 @@ const UserRightComp = ({
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
                 after:bg-white dark:after:bg-black`}
-                    checked={userForm.active === "true"}
+                    checked={user.active}
                     type="radio"
                     name="gender"
                     id="yes"
-                    onChange={() => handleOnUserChange("true", "active")}
+                    onChange={() => handleOnUserChange(true, "active")}
                   />
                   <label
                     className="text-lg font-light mx-2.5 my-0"
@@ -216,11 +216,11 @@ const UserRightComp = ({
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
                 after:bg-white dark:after:bg-black`}
-                    checked={userForm.active === "false"}
+                    checked={!userForm.active}
                     type="radio"
                     name="gender"
                     id="no"
-                    onClick={() => handleOnUserChange("false", "active")}
+                    onClick={() => handleOnUserChange(false, "active")}
                   />
                   <label
                     className="text-lg font-light mx-2.5 my-0"
@@ -237,11 +237,11 @@ const UserRightComp = ({
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
                 after:bg-white dark:after:bg-black`}
-                    checked={userForm.badge === "true"}
+                    checked={userForm.badge}
                     type="radio"
                     name="badge"
                     id="badgeyes"
-                    onClick={() => handleOnUserChange("true", "badge")}
+                    onClick={() => handleOnUserChange(true, "badge")}
                   />
                   <label
                     className="text-lg font-light mx-2.5 my-0"
@@ -255,11 +255,11 @@ const UserRightComp = ({
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
                 after:bg-white dark:after:bg-black`}
-                    checked={userForm.badge === "false"}
+                    checked={!userForm.badge}
                     type="radio"
                     name="badge"
                     id="badgeno"
-                    onChange={() => handleOnUserChange("false", "badge")}
+                    onChange={() => handleOnUserChange(false, "badge")}
                   />
                   <label
                     className="text-lg font-light mx-2.5 my-0"
@@ -276,11 +276,11 @@ const UserRightComp = ({
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
                 after:bg-white dark:after:bg-black`}
-                    checked={userForm.influencer === "true"}
+                    checked={userForm.influencer}
                     type="radio"
                     name="influencer"
                     id="influenceryes"
-                    onClick={() => handleOnUserChange("true", "influencer")}
+                    onClick={() => handleOnUserChange(true, "influencer")}
                     value={"adsdssfd"}
                   />
                   <label
@@ -295,11 +295,11 @@ const UserRightComp = ({
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
                 after:bg-white dark:after:bg-black`}
-                    checked={userForm.influencer === "false"}
+                    checked={!userForm.influencer}
                     type="radio"
                     name="influencer"
                     id="influencerno"
-                    onChange={() => handleOnUserChange("false", "influencer")}
+                    onChange={() => handleOnUserChange(false, "influencer")}
                   />
                   <label
                     className="text-lg font-light mx-2.5 my-0"

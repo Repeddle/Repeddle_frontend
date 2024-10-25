@@ -147,7 +147,7 @@ const Sidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
               onClick={() => setSidebarOpen(false)}
             >
               <NavLink
-                to={"/admin/analytic"}
+                to={"/admin/analytics"}
                 className={`flex items-center justify-center gap-4 font-bold p-2`}
               >
                 Admin Dashboard <AiOutlineArrowRight />

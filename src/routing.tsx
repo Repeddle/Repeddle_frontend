@@ -1,80 +1,80 @@
-import Search from "./pages/defaults/Search";
-import { createBrowserRouter } from "react-router-dom";
-import App from "./App";
-import ErrorPage from "./pages/ErrorPage";
-import Default from "./pages/defaults";
-import Home from "./pages/defaults/Home";
-import Protected from "./pages/protected";
-import Cart from "./pages/defaults/Cart";
-import Login from "./pages/auth/login";
-import Auth from "./pages/auth";
-import Register from "./pages/auth/register";
-import About from "./pages/defaults/info/About";
-import Returns from "./pages/defaults/info/Returns";
-import Sell from "./pages/defaults/Sell";
-import Product from "./pages/defaults/Product";
-import Seller from "./pages/defaults/Seller";
-import PaymentMethod from "./pages/protected/PaymentMethod";
-import Order from "./pages/protected/Order";
-import PrivacyPolicy from "./pages/defaults/info/PrivacyPolicy";
-import Terms from "./pages/defaults/info/Terms";
-import Vipshield from "./pages/defaults/info/Vipshield";
-import SupportArticles from "./pages/defaults/info";
-import ContactUs from "./pages/defaults/ContactUs";
-import Sustainability from "./pages/defaults/info/sustainability";
-import Rebundle from "./pages/defaults/info/rebundle";
-import ForgetPassword from "./pages/auth/login/forgetPassword";
-import Verify from "./pages/auth/register/verify";
-import Articles from "./pages/defaults/articles";
-import ArticleContent from "./pages/defaults/articles/articleContent";
-import ResetPassword from "./pages/auth/login/resetPassword";
-import Wallet from "./pages/protected/dashboard/Wallet";
-import Analytics from "./pages/admin/Analytics";
-import Contact from "./pages/admin/Contact";
-import NewsletterList from "./pages/admin/NewsletterList";
-import OtherBrand from "./pages/admin/OtherBrand";
-import Message from "./pages/protected/message";
-import Condition from "./pages/defaults/info/Condition";
-import FeeStructure from "./pages/defaults/info/FeeStructure";
-import BuyersProtection from "./pages/defaults/info/BuyersProtection";
-import Brand from "./pages/defaults/brands/Brand";
-import HowToLogAreturn from "./pages/defaults/info/HowToLogAreturn";
-import Rebundlesimplified from "./pages/defaults/info/Rebundlesimplified";
-import Buyersguide from "./pages/defaults/info/Buyersguide";
-import Categories from "./pages/admin/Categories";
-import OrderList from "./pages/protected/dashboard/OrderList";
-import AddressBook from "./pages/protected/dashboard/AddressBook";
-import UserList from "./pages/admin/UserList";
-import ProductList from "./pages/protected/dashboard/ProductList";
-import TransactionList from "./pages/admin/TransactionList";
-import Payments from "./pages/admin/Payments";
-import AllReturnsLog from "./pages/admin/AllReturnsLog";
-import AllReturns from "./pages/admin/AllReturns";
-import SoldReturns from "./pages/protected/dashboard/SoldReturn";
-import PurchaseReturn from "./pages/protected/dashboard/PurchaseReturn";
-import TransactionListUser from "./pages/protected/dashboard/TransactionListUser";
-import ReturnPage from "./pages/protected/dashboard/ReturnPage";
-import User from "./pages/protected/dashboard/User";
-import Transaction from "./pages/protected/dashboard/Transaction";
-import AllMessage from "./pages/admin/message";
-import MobileProfile from "./pages/defaults/MobileProfile";
-import MobileNotification from "./pages/protected/MobileNotification";
-import CategoryMobile from "./pages/defaults/CategoryMobile";
-import EditProduct from "./pages/protected/EditProduct";
-import SalesList from "./pages/protected/dashboard/SalesList";
-import NewProduct from "./pages/protected/NewProduct";
-import VerifyAccount from "./pages/protected/VerifyAccount";
-import VerifyAddress from "./pages/protected/VerifyAddress";
-import HowRepeddleWork from "./pages/defaults/info/HowRepeddleWork";
-import Dashboard from "./pages/protected/dashboard";
-import Overview from "./pages/protected/dashboard/overview";
-import AdminLayout from "./pages/admin";
-import Earning from "./pages/protected/earning";
-import Wishlist from "./pages/protected/dashboard/Wishlist";
-import PlaceOrder from "./pages/protected/PlaceOrder";
-import ShopByOutfit from "./pages/defaults/ShopByOutfit";
-import Coupon from "./pages/admin/Coupon";
-import BrandMore from "./pages/defaults/brands/More";
+import Search from "./pages/defaults/Search"
+import { createBrowserRouter } from "react-router-dom"
+import App from "./App"
+import ErrorPage from "./pages/ErrorPage"
+import Default from "./pages/defaults"
+import Home from "./pages/defaults/Home"
+import Protected from "./pages/protected"
+import Cart from "./pages/defaults/Cart"
+import Login from "./pages/auth/login"
+import Auth from "./pages/auth"
+import Register from "./pages/auth/register"
+import About from "./pages/defaults/info/About"
+import Returns from "./pages/defaults/info/Returns"
+import Sell from "./pages/defaults/Sell"
+import Product from "./pages/defaults/Product"
+import Seller from "./pages/defaults/Seller"
+import PaymentMethod from "./pages/protected/PaymentMethod"
+import Order from "./pages/protected/Order"
+import PrivacyPolicy from "./pages/defaults/info/PrivacyPolicy"
+import Terms from "./pages/defaults/info/Terms"
+import Vipshield from "./pages/defaults/info/Vipshield"
+import SupportArticles from "./pages/defaults/info"
+import ContactUs from "./pages/defaults/ContactUs"
+import Sustainability from "./pages/defaults/info/sustainability"
+import Rebundle from "./pages/defaults/info/rebundle"
+import ForgetPassword from "./pages/auth/login/forgetPassword"
+import Verify from "./pages/auth/register/verify"
+import Articles from "./pages/defaults/articles"
+import ArticleContent from "./pages/defaults/articles/articleContent"
+import ResetPassword from "./pages/auth/login/resetPassword"
+import Wallet from "./pages/protected/dashboard/Wallet"
+import Analytics from "./pages/admin/Analytics"
+import Contact from "./pages/admin/Contact"
+import NewsletterList from "./pages/admin/NewsletterList"
+import OtherBrand from "./pages/admin/OtherBrand"
+import Message from "./pages/protected/message"
+import Condition from "./pages/defaults/info/Condition"
+import FeeStructure from "./pages/defaults/info/FeeStructure"
+import BuyersProtection from "./pages/defaults/info/BuyersProtection"
+import Brand from "./pages/defaults/brands/Brand"
+import HowToLogAreturn from "./pages/defaults/info/HowToLogAreturn"
+import Rebundlesimplified from "./pages/defaults/info/Rebundlesimplified"
+import Buyersguide from "./pages/defaults/info/Buyersguide"
+import Categories from "./pages/admin/Categories"
+import OrderList from "./pages/protected/dashboard/OrderList"
+import AddressBook from "./pages/protected/dashboard/AddressBook"
+import UserList from "./pages/admin/UserList"
+import ProductList from "./pages/protected/dashboard/ProductList"
+import TransactionList from "./pages/admin/TransactionList"
+import Payments from "./pages/admin/Payments"
+import AllReturnsLog from "./pages/admin/AllReturnsLog"
+import AllReturns from "./pages/admin/AllReturns"
+import SoldReturns from "./pages/protected/dashboard/SoldReturn"
+import PurchaseReturn from "./pages/protected/dashboard/PurchaseReturn"
+import TransactionListUser from "./pages/protected/dashboard/TransactionListUser"
+import ReturnPage from "./pages/protected/dashboard/ReturnPage"
+import User from "./pages/protected/dashboard/User"
+import Transaction from "./pages/protected/dashboard/Transaction"
+import AllMessage from "./pages/admin/message"
+import MobileProfile from "./pages/defaults/MobileProfile"
+import MobileNotification from "./pages/protected/MobileNotification"
+import CategoryMobile from "./pages/defaults/CategoryMobile"
+import EditProduct from "./pages/protected/EditProduct"
+import SalesList from "./pages/protected/dashboard/SalesList"
+import NewProduct from "./pages/protected/NewProduct"
+import VerifyAccount from "./pages/protected/VerifyAccount"
+import VerifyAddress from "./pages/protected/VerifyAddress"
+import HowRepeddleWork from "./pages/defaults/info/HowRepeddleWork"
+import Dashboard from "./pages/protected/dashboard"
+import Overview from "./pages/protected/dashboard/overview"
+import AdminLayout from "./pages/admin"
+import Earning from "./pages/protected/earning"
+import Wishlist from "./pages/protected/dashboard/Wishlist"
+import PlaceOrder from "./pages/protected/PlaceOrder"
+import ShopByOutfit from "./pages/defaults/ShopByOutfit"
+import Coupon from "./pages/admin/Coupon"
+import BrandMore from "./pages/defaults/brands/More"
 
 const router = createBrowserRouter([
   {
@@ -176,7 +176,7 @@ const router = createBrowserRouter([
         path: "admin",
         element: <AdminLayout />,
         children: [
-          { path: "analytic", element: <Analytics /> },
+          { path: "analytics", element: <Analytics /> },
           { path: "categories", element: <Categories /> },
           { path: "userlist", element: <UserList /> },
           { path: "messages", element: <AllMessage /> },
@@ -194,6 +194,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+])
 
-export default router;
+export default router
