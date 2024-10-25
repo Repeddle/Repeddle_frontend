@@ -34,15 +34,15 @@ export type UserFormType = {
   username: string
   confirmPassword: string
   password: string
-  influencer: string
-  badge: string
-  active: string
+  influencer: boolean
+  badge: boolean
+  active: boolean
 }
 
 const User = () => {
   const { id } = useParams()
   const { error, updateUser, user: usersData } = useAuth()
-  const { getUserById, error: getUserError } = useUser()
+  const { getUserById, error: getUserError, updateUserById } = useUser()
   const { addNotification } = useToastNotification()
   const {
     createNewsletter,
@@ -78,6 +78,9 @@ const User = () => {
         setUser(user)
         setRebundleStatus(user.rebundle?.status || false)
         setBundle(user.rebundle?.status || false)
+        userForm.active = user.active
+        userForm.influencer = user.influencer ?? false
+        userForm.badge = user.badge ?? false
       } else if (getUserError || user || "Failed to get user") {
         addNotification(getUserError || user || "Failed to get user")
         setErrors(getUserError || user || "Failed to get user")
@@ -118,14 +121,14 @@ const User = () => {
 
   const [userForm, setUserForm] = useState<UserFormType>({
     about: "",
-    active: "",
-    badge: "",
+    active: true,
+    badge: false,
     confirmPassword: "",
     dob: "",
     email: "",
     firstName: "",
     image: "",
-    influencer: "",
+    influencer: false,
     lastName: "",
     password: "",
     phone: "",
@@ -147,7 +150,10 @@ const User = () => {
     setErrorInput((prevState) => ({ ...prevState, [input]: errorMessage }))
   }
 
-  const handleOnUserChange = (text: string, input: keyof UserFormType) => {
+  const handleOnUserChange = (
+    text: string | boolean,
+    input: keyof UserFormType
+  ) => {
     setUserForm((prevState) => ({ ...prevState, [input]: text }))
   }
 
@@ -197,18 +203,26 @@ const User = () => {
   const updateAccount = async () => {
     setLoadingUpdate(true)
 
-    const res = await updateUser({
+    const data = {
       accountName: input.accountName,
       accountNumber: +input.accountNumber,
       bankName: input.bankName,
-    })
+    }
+
+    if (usersData?.role === "Admin" && !id) return
+
+    const res =
+      usersData?.role === "Admin"
+        ? await updateUserById(id!, data)
+        : await updateUser(data)
     if (res) {
       addNotification("Account updated")
       setShowModel(false)
     } else {
-      addNotification(error || "Failed to update account")
+      addNotification(error || "Failed to update account", undefined, true)
     }
     setLoadingUpdate(false)
+    setShowModel(false)
   }
 
   const submitHandler = async (e: FormEvent) => {
@@ -290,6 +304,12 @@ const User = () => {
       data["username"] = userForm.username
     }
 
+    if (usersData?.role === "Admin") {
+      data["active"] = userForm.active
+      data["badge"] = userForm.badge
+      data["influencer"] = true
+    }
+
     const address: Partial<IAddress> = {}
 
     if (input.apartment) {
@@ -307,16 +327,23 @@ const User = () => {
 
     if (Object.keys(address).length > 0) data.address = address
 
-    const res = await updateUser(data)
+    if (usersData?.role === "Admin" && !id) return
 
-    if (res) {
+    const res =
+      usersData?.role === "Admin"
+        ? await updateUserById(id!, data)
+        : await updateUser(data)
+
+    if (res && typeof res !== "string") {
       addNotification("User updated")
-      if (userForm.username) navigate(`/seller/${res.username}`)
+      if (userForm.username && usersData?.role !== "Admin")
+        navigate(`/seller/${res.username}`)
     } else {
       addNotification(error ? error : "failed to update user")
     }
 
     setLoadingUpdate(false)
+    setShowModelAddress(false)
   }
 
   const uploadHandler = async (e: ChangeEvent<HTMLInputElement>) => {
