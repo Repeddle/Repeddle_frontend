@@ -52,7 +52,7 @@ const ReturnPage = () => {
       if (res) {
         setReturned(res)
       } else {
-        addNotification(error)
+        addNotification(error,undefined,true)
       }
 
       setLoading(false)

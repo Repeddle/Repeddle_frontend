@@ -1,21 +1,20 @@
-import { Navigate, Outlet } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-import { useState } from "react";
-import { RiMenu2Fill } from "react-icons/ri";
-import Middlebar from "../../components/layout/navbar/Middlebar";
-import AdminSidebar from "../../components/layout/AdminSidebar";
+import { Navigate, Outlet } from "react-router-dom"
+import useAuth from "../../hooks/useAuth"
+import { useState } from "react"
+import Middlebar from "../../components/layout/navbar/Middlebar"
+import AdminSidebar from "../../components/layout/AdminSidebar"
 
 const AdminLayout: React.FC = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const { user } = useAuth();
+  const [isSidebarOpen, setSidebarOpen] = useState(false)
+  const { user } = useAuth()
   if (!user || user.role !== "Admin") {
     // user is not authenticated
-    return <Navigate to="/auth/login" />;
+    return <Navigate to="/auth/login" />
   }
 
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
-  };
+  // const toggleSidebar = () => {
+  //   setSidebarOpen(!isSidebarOpen)
+  // }
 
   return (
     <div>
@@ -33,11 +32,11 @@ const AdminLayout: React.FC = () => {
           }`}
         >
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          {/* <div className="md:hidden">
             <button onClick={toggleSidebar} className="">
               <RiMenu2Fill className="text-primary text-3xl" />
             </button>
-          </div>
+          </div> */}
 
           {/* Content */}
           <main className="">
@@ -46,7 +45,7 @@ const AdminLayout: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AdminLayout;
+export default AdminLayout
