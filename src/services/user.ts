@@ -132,7 +132,7 @@ export async function updateUserByIdService(
 ): Promise<IUser> {
   try {
     const response: { user: IUser; status: boolean; message: string } =
-      await api.put(`/users/update-profile/${id}`, userData)
+      await api.put(`/users/admin/${id}`, userData)
 
     console.log(response)
     if (!response.status) {
