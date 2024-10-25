@@ -8,7 +8,7 @@ const AllReturns = () => {
   const [query, setQuery] = useState("")
 
   useEffect(() => {
-    fetchAdminReturns()
+    fetchAdminReturns('active')
   }, [])
 
   return (

@@ -17,7 +17,7 @@ const Analytics = () => {
 
   const error = ""
 
-  const users = [userData]
+  const users = [userData, userData]
   const bestseller = [bestSeller]
   const products = [productDetails]
   const soldProducts = [productDetails]
@@ -25,13 +25,13 @@ const Analytics = () => {
   const users2 = []
 
   return (
-    <div className="flex-[4] min-w-0 px-5 py-0">
+    <div className="flex-[4] min-w-0 lg:px-5 py-0">
       {error ? (
         error
       ) : !summary ? (
         <LoadingBox />
       ) : (
-        <div className="flex gap-5 ml-0 mr-5 mt-0 mb-5 flex-wrap lg:flex-nowrap">
+        <div className="flex gap-5 ml-0 mt-0 mb-5 flex-wrap lg:flex-nowrap">
           {user?.role === "Admin" && summary.orders ? (
             <FeatureInfo type="user" number={summary.users[0].numUsers} />
           ) : (
@@ -66,7 +66,7 @@ const Analytics = () => {
         </div>
       )}
       <div className="min-w-0 flex-1 mb-5 p-5 rounded-[0.2rem] w-full lg:w-auto mr-0 bg-light-ev1 dark:bg-dark-ev1">
-        <div className="flex items-center justify-between w-full">
+        <div className="flex items-center mb-2 justify-between w-full">
           <div className="lg:text-[22px] font-semibold text-xl">
             New Joined Members
           </div>
@@ -109,7 +109,7 @@ const Analytics = () => {
         )}
       </div>
       <div className="min-w-0 flex-1 mb-5 p-5 rounded-[0.2rem] w-full lg:w-auto mr-0 bg-light-ev1 dark:bg-dark-ev1">
-        <div className="flex items-center justify-between w-full">
+        <div className="flex items-center mb-2 justify-between w-full">
           <div className="lg:text-[22px] font-semibold text-xl">
             Top Sellers
           </div>
@@ -155,11 +155,13 @@ const Analytics = () => {
         )}
       </div>
       <div className="min-w-0 flex-1 mb-5 p-5 rounded-[0.2rem] w-full lg:w-auto mr-0 bg-light-ev1 dark:bg-dark-ev1">
-        <div className="flex items-center justify-between w-full">
-          <div className="lg:text-[22px] font-semibold text-xl">
+        <div className="flex items-center gap-2 justify-between w-full">
+          <div className="lg:text-[22px] font-semibold text-xl truncate">
             Recently Added Products
           </div>
-          <Link to="/admin/allProductList/">See All</Link>
+          <Link to="/admin/allProductList/" className="text-nowrap">
+            See All
+          </Link>
         </div>
         {error ? (
           error
