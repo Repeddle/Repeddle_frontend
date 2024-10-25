@@ -336,7 +336,8 @@ const User = () => {
 
     if (res && typeof res !== "string") {
       addNotification("User updated")
-      if (userForm.username) navigate(`/seller/${res.username}`)
+      if (userForm.username && usersData?.role !== "Admin")
+        navigate(`/seller/${res.username}`)
     } else {
       addNotification(error ? error : "failed to update user")
     }
