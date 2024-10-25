@@ -1,7 +1,7 @@
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-# repeddle  
+# repeddle  v2
 
 Currently, two official plugins are available:
 
@@ -19,7 +19,7 @@ export default {
   // other rules...
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module',
+    sourceType: 'module', no
     project: ['./tsconfig.json', './tsconfig.node.json'],
     tsconfigRootDir: __dirname,
   },
