@@ -114,7 +114,7 @@ const UserRightComp = ({
               onChange={(e) => handleOnUserChange(e.target.value, "lastName")}
             />
           </div>
-          <div className="flex flex-col mt-2.5">
+          {/* <div className="flex flex-col mt-2.5">
             <label className="text-sm">Email</label>
             <input
               className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
@@ -124,7 +124,7 @@ const UserRightComp = ({
               placeholder={user.email}
               onChange={(e) => handleOnUserChange(e.target.value, "email")}
             />
-          </div>
+          </div> */}
           <div className="flex flex-col mt-2.5">
             <label className="text-sm">DOB</label>
             <input
@@ -197,7 +197,7 @@ const UserRightComp = ({
                 after:border-orange-color after:rounded-[15px] after:-left-px after:-top-0.5 checked:after:w-[15px] checked:after:h-[15px]
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
-                after:bg-white dark:after:bg-black`}
+                after:bg-white dark:after:bg-black checked:dark:after:bg-orange-color`}
                     checked={user.active}
                     type="radio"
                     name="gender"
@@ -215,7 +215,7 @@ const UserRightComp = ({
                 after:border-orange-color after:rounded-[15px] after:-left-px after:-top-0.5 checked:after:w-[15px] checked:after:h-[15px]
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
-                after:bg-white dark:after:bg-black`}
+                after:bg-white dark:after:bg-black checked:dark:after:bg-orange-color`}
                     checked={!userForm.active}
                     type="radio"
                     name="gender"
@@ -236,7 +236,7 @@ const UserRightComp = ({
                 after:border-orange-color after:rounded-[15px] after:-left-px after:-top-0.5 checked:after:w-[15px] checked:after:h-[15px]
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
-                after:bg-white dark:after:bg-black`}
+                after:bg-white dark:after:bg-black checked:dark:after:bg-orange-color`}
                     checked={userForm.badge}
                     type="radio"
                     name="badge"
@@ -254,7 +254,7 @@ const UserRightComp = ({
                 after:border-orange-color after:rounded-[15px] after:-left-px after:-top-0.5 checked:after:w-[15px] checked:after:h-[15px]
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
-                after:bg-white dark:after:bg-black`}
+                after:bg-white dark:after:bg-black checked:dark:after:bg-orange-color`}
                     checked={!userForm.badge}
                     type="radio"
                     name="badge"
@@ -275,7 +275,7 @@ const UserRightComp = ({
                 after:border-orange-color after:rounded-[15px] after:-left-px after:-top-0.5 checked:after:w-[15px] checked:after:h-[15px]
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
-                after:bg-white dark:after:bg-black`}
+                after:bg-white dark:after:bg-black checked:dark:after:bg-orange-color`}
                     checked={userForm.influencer}
                     type="radio"
                     name="influencer"
@@ -294,7 +294,7 @@ const UserRightComp = ({
                 after:border-orange-color after:rounded-[15px] after:-left-px after:-top-0.5 checked:after:w-[15px] checked:after:h-[15px]
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
-                after:bg-white dark:after:bg-black`}
+                after:bg-white dark:after:bg-black checked:dark:after:bg-orange-color`}
                     checked={!userForm.influencer}
                     type="radio"
                     name="influencer"
