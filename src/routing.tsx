@@ -148,6 +148,7 @@ const router = createBrowserRouter([
           { path: "verifyaccount", element: <VerifyAccount /> },
           { path: "verifyaddress", element: <VerifyAddress /> },
           { path: "earning", element: <Earning /> },
+          { path: "transaction/:id", element: <Transaction /> },
         ],
       },
       {
@@ -167,7 +168,6 @@ const router = createBrowserRouter([
           { path: "buyerreturns", element: <PurchaseReturn /> },
           { path: "return/:id", element: <ReturnPage /> },
           { path: "user/:id", element: <User /> },
-          { path: "transaction/:id", element: <Transaction /> },
           { path: "product/:id", element: <EditProduct /> },
         ],
       },
