@@ -3,10 +3,16 @@ import useAuth from "../../hooks/useAuth"
 import { useState } from "react"
 import Middlebar from "../../components/layout/navbar/Middlebar"
 import AdminSidebar from "../../components/layout/AdminSidebar"
+import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
 
 const AdminLayout: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false)
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
+
+  if (loading) {
+    return <LoadingLogoModal />
+  }
+
   if (!user || user.role !== "Admin") {
     // user is not authenticated
     return <Navigate to="/auth/login" />
