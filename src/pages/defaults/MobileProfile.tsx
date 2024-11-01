@@ -17,7 +17,6 @@ import RedirectButton from "../../components/RedirectButton"
 import {
   FaArrowRotateLeft,
   FaBasketShopping,
-  FaChartColumn,
   FaListCheck,
   FaMessage,
   FaMoneyBillTransfer,
