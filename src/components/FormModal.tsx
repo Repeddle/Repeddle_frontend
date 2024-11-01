@@ -65,7 +65,7 @@ const FormModal = ({
   }
 
   return (
-    <div className="bg-white p-5">
+    <div className="bg-white dark:bg-black p-5">
       <form className="flex flex-col gap-2.5" onSubmit={handleSubmit}>
         {nameLabel && (
           <>

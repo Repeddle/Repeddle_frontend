@@ -1,48 +1,48 @@
-import { ChangeEvent, MouseEvent, useRef, useState } from "react";
-import { FaAngleLeft, FaSearch } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { FaMessage } from "react-icons/fa6";
+import { ChangeEvent, MouseEvent, useRef, useState } from "react"
+import { FaAngleLeft, FaSearch } from "react-icons/fa"
+import { Link } from "react-router-dom"
+import { FaMessage } from "react-icons/fa6"
 import {
   conversationData,
   conversationMessageData,
   productDetails,
   searchResultData,
   user as userData,
-} from "../../utils/data";
-import { IConversation } from "../../types/conversation";
-import MessageItem from "../../components/ui/MessageItem";
-import useAuth from "../../hooks/useAuth";
-import Conversation from "../../components/Conversation";
+} from "../../utils/data"
+import { IConversation } from "../../types/conversation"
+import MessageItem from "../../components/ui/MessageItem"
+import useAuth from "../../hooks/useAuth"
+import Conversation from "../../components/Conversation"
 
 function AllMessage() {
-  const { user: userInfo } = useAuth();
+  const { user: userInfo } = useAuth()
 
-  const user1 = userData;
-  const user2 = userData;
-  const conversations = conversationData;
-  const loadingx = false;
+  const user1 = userData
+  const user2 = userData
+  const conversations = conversationData
+  const loadingx = false
 
-  const [currentChat, setCurrentChat] = useState<IConversation>();
-  const [showLeft, setShowLeft] = useState(true);
-  const [searchResult, setSearchResult] = useState(searchResultData);
-  const product = productDetails;
-  const messages = conversationMessageData;
+  const [currentChat, setCurrentChat] = useState<IConversation>()
+  const [showLeft, setShowLeft] = useState(true)
+  const [searchResult, setSearchResult] = useState(searchResultData)
+  const product = productDetails
+  const messages = conversationMessageData
 
-  const scrollref = useRef(null);
-  const searchRef = useRef(null);
+  const scrollref = useRef(null)
+  const searchRef = useRef(null)
 
   const closeModel = (e: MouseEvent<HTMLDivElement>) => {
     // TODO:
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (searchRef !== e.target) {
-      setSearchResult([]);
+      setSearchResult([])
     }
-  };
+  }
 
   const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-  };
+    e.preventDefault()
+  }
 
   return (
     <div
@@ -69,6 +69,7 @@ function AllMessage() {
                 className="absolute w-full z-[9] p-[15px] left-0 top-5 bg-white dark:bg-black"
                 ref={searchRef}
               >
+                e
                 {searchResult.map(
                   (u) =>
                     u._id !== userInfo?._id && (
@@ -98,8 +99,8 @@ function AllMessage() {
             : conversations.map((c, index) => (
                 <div
                   onClick={() => {
-                    setShowLeft(false);
-                    setCurrentChat(c);
+                    setShowLeft(false)
+                    setCurrentChat(c)
                   }}
                   key={index}
                 >
@@ -196,7 +197,7 @@ function AllMessage() {
         )}
       </div>
     </div>
-  );
+  )
 }
 
-export default AllMessage;
+export default AllMessage

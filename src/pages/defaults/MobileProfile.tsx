@@ -208,12 +208,12 @@ const MobileProfile = () => {
               Users
             </div>
           </Link>{" "}
-          <Link to="/messages">
+          {/* <Link to="/messages">
             <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
               <FaChartColumn className="mr-2.5" />
               Reports
             </div>
-          </Link>
+          </Link> */}
           <Link to="/admin/categories">
             <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
               <FaListCheck className="mr-2.5" />

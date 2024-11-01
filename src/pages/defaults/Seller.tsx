@@ -13,7 +13,7 @@ const Seller = () => {
 
   const [user, setUser] = useState<UserByUsername>()
 
-  const { getUserByUsername, loading: loadingUser } = useUser()
+  const { getUserByUsername, loading, error } = useUser()
   const { addNotification } = useToastNotification()
 
   useEffect(() => {
@@ -31,19 +31,12 @@ const Seller = () => {
     fetUser()
   }, [slug])
 
-  const loading = false
-  const error = null
-
   return (
     <div className="flex lg:mx-[1vw] lg:my-0 lg:flex-row flex-col mx-2.5 my-[30px]">
-      {loadingUser && <LoadingLogoModal />}
+      {loading && <LoadingLogoModal />}
 
       <>
-        <SellerLeft
-          loadingUser={loadingUser}
-          error={error}
-          usernameData={user}
-        />
+        <SellerLeft loadingUser={loading} error={error} usernameData={user} />
 
         <SellerRight usernameData={user} loading={loading} error={error} />
       </>

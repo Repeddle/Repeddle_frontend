@@ -20,7 +20,7 @@ import { IReview } from "../types/product"
 type ContextType = {
   error: string | null
   loading: boolean
-  getAllUserAdmin: () => Promise<IUsersWithPagination | null>
+  getAllUserAdmin: (search?: string) => Promise<IUsersWithPagination | null>
   getTopSellers: () => Promise<TopSellers[] | string>
   getUserByUsername: (username: string) => Promise<UserByUsername | string>
   getUserById: (userId: string) => Promise<IUser | string>
@@ -56,11 +56,11 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
-  const getAllUserAdmin = async () => {
+  const getAllUserAdmin = async (search?: string) => {
     try {
       setError("")
       setLoading(true)
-      const result = await getAllUserAdminService()
+      const result = await getAllUserAdminService(search)
 
       setLoading(false)
       return result

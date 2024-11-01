@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import useAuth from "../../hooks/useAuth"
 import useProducts from "../../hooks/useProducts"
 import useToastNotification from "../../hooks/useToastNotification"
-import { currency } from "../../utils/common"
+import { createSearchParam, currency } from "../../utils/common"
 import MessageBox from "../../components/MessageBox"
 import Table from "../../components/table/Table"
 
@@ -27,9 +27,9 @@ const AllProductList = () => {
   const [productQuery, setProductQuery] = useState("")
 
   useEffect(() => {
-    // const string = createSearchParam([["search", productQuery]])
+    const string = createSearchParam([["search", productQuery]])
 
-    fetchProducts()
+    fetchProducts(string)
   }, [productQuery, user?.role])
 
   const deleteHandler = async (id: string) => {
@@ -43,7 +43,7 @@ const AllProductList = () => {
     <div className="flex-[4] relative overflow-x-hidden mb-5 min-h-[85vh] h-full flex flex-col lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
       <div className="pt-5 pb-0 px-5 mb-6 flex flex-col items-start md:items-center md:flex-row gap-6 md:justify-between">
         <h1 className="text-[calc(1.375rem_+_1.5vw)] font-medium leading-tight">
-          My Products
+          All Products
         </h1>
       </div>
       <div className="flex mx-2.5 ml-6 gap-3 mb-2.5 justify-between">

@@ -64,6 +64,8 @@ const Product = () => {
 
   // update product TODO:
   // FIXME: add view count and share update route
+  // FIXME: payment route with payment page
+  // FIXME: create modal for report and use the send message route, type should be Report
 
   useEffect(() => {
     const viewItem = async () => {
