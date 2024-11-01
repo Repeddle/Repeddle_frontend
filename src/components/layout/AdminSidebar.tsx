@@ -6,8 +6,18 @@ import { Link } from "react-router-dom"
 import useAuth from "../../hooks/useAuth"
 import useTheme from "../../hooks/useTheme"
 import { BiChart } from "react-icons/bi"
-import { FaEnvelope, FaQuestionCircle, FaUser } from "react-icons/fa"
-import { FaArrowRotateLeft, FaListCheck, FaMoneyBill } from "react-icons/fa6"
+import {
+  FaChartBar,
+  FaEnvelope,
+  FaQuestionCircle,
+  FaUser,
+} from "react-icons/fa"
+import {
+  FaArrowRotateLeft,
+  FaBasketShopping,
+  FaListCheck,
+  FaMoneyBill,
+} from "react-icons/fa6"
 
 const sidebarLinks = [
   {
@@ -21,6 +31,16 @@ const sidebarLinks = [
     path: "/admin/categories",
     text: "Categories",
     icon: <FaListCheck />,
+  },
+  {
+    path: "/admin/allproducts",
+    text: "All Products",
+    icon: <FaBasketShopping />,
+  },
+  {
+    path: "/admin/allorders",
+    text: "All Orders",
+    icon: <FaChartBar />,
   },
   {
     path: "/admin/messages",

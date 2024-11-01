@@ -13,7 +13,7 @@ const featureTypes = {
     title: " TOTAL USERS",
     isMoney: false,
     link: "See all users",
-    to: "/dashboard/userlist",
+    to: "/admin/userlist",
     icon: (
       <div className="bg-[#ecdada] dark:bg-[#332021] self-end p-[5px] rounded-[0.2rem]">
         <FaUser className="text-lg text-malon-color" />
@@ -23,7 +23,7 @@ const featureTypes = {
   order: {
     title: " TOTAL ORDERS",
     isMoney: false,
-    to: "/admin/allOrderList/",
+    to: "/admin/allorders",
     link: "view all orders",
     icon: (
       <div className="bg-[#fcf0e0] dark:bg-[#473527] self-end p-[5px] rounded-[0.2rem]">
@@ -34,7 +34,7 @@ const featureTypes = {
   earning: {
     title: " TOTAL EARNINGS",
     isMoney: true,
-    to: "/dashboard/earning",
+    to: "/admin/transactionlist",
     link: "view all net earning",
     icon: (
       <div className="bg-[#d6f5dc] dark:bg-[#1d3b23] self-end p-[5px] rounded-[0.2rem]">
@@ -56,7 +56,7 @@ const featureTypes = {
   product: {
     title: " TOTAL PRODUCTS",
     isMoney: false,
-    to: "/admin/allProductList/",
+    to: "/admin/allproducts",
     link: "View product list",
     icon: (
       <div className="bg-[#d9d9d9] dark:bg-[#464646] self-end p-[5px] rounded-[0.2rem]">

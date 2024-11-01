@@ -70,7 +70,7 @@ const Analytics = () => {
           <div className="lg:text-[22px] font-semibold text-xl">
             New Joined Members
           </div>
-          <Link to="/dashboard/userlist">See All</Link>
+          <Link to="/admin/userlist">See All</Link>
         </div>
         {!users ? (
           <LoadingBox />
@@ -159,7 +159,7 @@ const Analytics = () => {
           <div className="lg:text-[22px] font-semibold text-xl truncate">
             Recently Added Products
           </div>
-          <Link to="/admin/allProductList/" className="text-nowrap">
+          <Link to="/admin/allproducts/" className="text-nowrap">
             See All
           </Link>
         </div>
@@ -206,7 +206,7 @@ const Analytics = () => {
           <div className="lg:text-[22px] font-semibold text-xl">
             Out Of Stock Products
           </div>
-          <Link to="/admin/outofstock">See All</Link>
+          <Link to="/admin/allproducts">See All</Link>
         </div>
         {error ? (
           error
@@ -256,7 +256,7 @@ const Analytics = () => {
           <div className="lg:text-[22px] font-semibold text-xl">
             Most Viewed Products
           </div>
-          <Link to="/dashboard/productlist">See All</Link>
+          <Link to="/dashboard/allproducts">See All</Link>
         </div>
         {error ? (
           error

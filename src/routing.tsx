@@ -75,6 +75,8 @@ import PlaceOrder from "./pages/protected/PlaceOrder"
 import ShopByOutfit from "./pages/defaults/ShopByOutfit"
 import Coupon from "./pages/admin/Coupon"
 import BrandMore from "./pages/defaults/brands/More"
+import AllProductList from "./pages/admin/AllProductList"
+import AllOrders from "./pages/admin/AllOrders"
 
 const router = createBrowserRouter([
   {
@@ -181,6 +183,8 @@ const router = createBrowserRouter([
           { path: "userlist", element: <UserList /> },
           { path: "messages", element: <AllMessage /> },
           { path: "allreturns", element: <AllReturns /> },
+          { path: "allproducts", element: <AllProductList /> },
+          { path: "allorders", element: <AllOrders /> },
           { path: "payments", element: <Payments /> },
           { path: "transactionlist", element: <TransactionList /> },
           { path: "newsletter", element: <NewsletterList /> },

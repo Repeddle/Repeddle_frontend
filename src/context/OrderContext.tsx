@@ -3,6 +3,7 @@ import useAuth from "../hooks/useAuth"
 import { ICreateOrder, IOrder, IOrderSummary } from "../types/order"
 import {
   createOrderService,
+  fetchAllOrdersService,
   fetchOrderByIdService,
   fetchOrdersService,
   fetchSoldOrdersService,
@@ -15,6 +16,7 @@ type ContextType = {
   loading: boolean
   error: string
   fetchOrders: (orderId?: string) => Promise<boolean>
+  fetchAllOrders: (orderId?: string) => Promise<boolean>
   fetchOrderById: (id: string) => Promise<IOrder | null>
   fetchSoldOrders: () => Promise<boolean>
   createOrder: (
@@ -60,6 +62,21 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
       setError("")
       setLoading(true)
       const result = await fetchOrdersService(orderId)
+      setOrders(result)
+      setLoading(false)
+      return true
+    } catch (error) {
+      handleError(error as string)
+      setLoading(false)
+      return false
+    }
+  }
+
+  const fetchAllOrders = async (orderId?: string) => {
+    try {
+      setError("")
+      setLoading(true)
+      const result = await fetchAllOrdersService(orderId)
       setOrders(result)
       setLoading(false)
       return true
@@ -175,7 +192,7 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
         createOrder,
         fetchOrderById,
         getOrdersSummary,
-
+        fetchAllOrders,
         updateOrderItemTracking,
       }}
     >
