@@ -231,9 +231,11 @@ const IsSeller = ({
         </div>
 
         <div className="flex-[2] print:hidden print:mb-2.5">
-          <button className="bg-[#0d6efd] w-full px-3 py-[0.375rem] text-base leading-normal border-none">
-            <Link to={`/product/${orderItem.product.slug}`}>Buy Again</Link>
-          </button>
+          <Link to={`/product/${orderItem.product.slug}`}>
+            <button className="bg-[#0d6efd] w-full px-3 py-[0.375rem] text-base leading-normal border-none">
+              Buy Again
+            </button>
+          </Link>
           {user?.role === "Admin" &&
             daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) <=
               0 &&

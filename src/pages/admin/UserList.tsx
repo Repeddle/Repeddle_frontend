@@ -71,7 +71,7 @@ const UserList = () => {
           className={`w-2/5 h-[45px] border border-malon-color focus-visible:outline focus-visible:outline-orange-color p-[15px] rounded-[5px]
           placeholder:p-2.5 text-black dark:text-white bg-white dark:bg-black`}
           onChange={(e) => setUserQuery(e.target.value)}
-          placeholder="Search by id"
+          placeholder="Search by username"
           type="search"
           value={userQuery}
         />

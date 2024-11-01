@@ -103,7 +103,7 @@ const UserLeftComp = ({
         </div>
         <div className="flex items-center mx-0 my-5">
           <FaDotCircle className="text-sm" />
-          <div className="ml-2.5">@{user._id}</div>
+          <div className="ml-2.5">{user._id}</div>
         </div>
         <div className="flex items-center mx-0 my-5">
           <FaCalendarDays className="text-sm" />

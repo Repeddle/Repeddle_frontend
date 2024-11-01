@@ -41,7 +41,7 @@ export interface IUser {
   isVerifiedEmail: boolean
   region: "NGN" | "ZAR"
   socketId?: string
-  activeLastUpdate: string
+  activeLastUpdated?: string
   usernameLastUpdated?: string
   createdAt: string
   updatedAt?: string

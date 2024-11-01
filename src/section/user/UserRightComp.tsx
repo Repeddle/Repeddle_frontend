@@ -189,7 +189,7 @@ const UserRightComp = ({
               <>
                 <label className="text-sm">Active</label>
                 <div className="text-sm text-malon-color">
-                  updated {moment(user.activeLastUpdate).fromNow()}
+                  updated {moment(user.activeLastUpdated).fromNow()}
                 </div>
                 <div className="flex items-center">
                   <input
@@ -198,7 +198,7 @@ const UserRightComp = ({
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
                 after:bg-white dark:after:bg-black checked:dark:after:bg-orange-color`}
-                    checked={user.active}
+                    checked={userForm.active}
                     type="radio"
                     name="gender"
                     id="yes"
