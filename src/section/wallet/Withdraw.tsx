@@ -1,12 +1,11 @@
-
-import { useEffect, useState } from "react"
-import LoadingBox from "../../components/LoadingBox"
-import useAuth from "../../hooks/useAuth"
-import { FaQuestionCircle, FaWallet } from "react-icons/fa"
-import { UserBalance } from "../../types/user"
-import { region } from "../../utils/common"
-import useWallet from "../../hooks/useWallet"
-import useToastNotification from "../../hooks/useToastNotification"
+import { useEffect, useState } from "react";
+import LoadingBox from "../../components/LoadingBox";
+import useAuth from "../../hooks/useAuth";
+import { FaQuestionCircle, FaWallet } from "react-icons/fa";
+import { UserBalance } from "../../types/user";
+import { region } from "../../utils/common";
+import useWallet from "../../hooks/useWallet";
+import useToastNotification from "../../hooks/useToastNotification";
 
 type Props = {
   setShowModel: (val: boolean) => void;
@@ -95,18 +94,17 @@ const Withdraw = ({ balance, refresh, setRefresh, setShowModel }: Props) => {
         <input
           className="flex-1 numeric-arrow text-lg border-0 focus-visible:outline-none placeholder:p-2.5 text-black-color dark:text-white-color bg-white-color dark:bg-black-color"
           type="number"
-          value={amount}
+          value={`${amount || ""}`}
           placeholder="Enter Amount to Withdraw"
           onChange={(e) => {
-            const value = e.target.value;
+            let value = e.target.value;
 
-            // Remove leading zeros
-            const parsedValue =
-              value.startsWith("0") && value.length > 1
-                ? value.replace(/^0+/, "")
-                : value;
-
-            setAmount(parsedValue ? parseFloat(parsedValue) : 0);
+            const numericValue = parseFloat(value);
+            if (!isNaN(numericValue)) {
+              setAmount(numericValue);
+            } else {
+              setAmount(0);
+            }
           }}
         />
         <div
