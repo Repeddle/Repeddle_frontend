@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import ReturnTable from "../../components/table/ReturnTable"
 import useReturn from "../../hooks/useReturn"
+import { createSearchParam } from "../../utils/common"
 
 const AllReturns = () => {
   const { fetchAdminReturns, error, loading, returns } = useReturn()
@@ -8,13 +9,17 @@ const AllReturns = () => {
   const [query, setQuery] = useState("")
 
   useEffect(() => {
-    fetchAdminReturns('active')
-  }, [])
+    const search = createSearchParam([
+      ["status", "active"],
+      ["search", query],
+    ])
+    fetchAdminReturns(search)
+  }, [query])
 
   return (
     <div className="flex-[4] overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
       <h1 className="pt-5 pb-0 px-5 text-[calc(1.375rem_+_1.5vw)] font-medium leading-tight mb-2">
-        Return Queries
+        All Return Queries
       </h1>
       <div className="flex mr-2.5 mb-2.5 justify-end">
         <input

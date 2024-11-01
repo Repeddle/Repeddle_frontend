@@ -18,7 +18,7 @@ type ContextType = {
   error: string
   fetchSoldReturns: () => Promise<boolean>
   fetchPurchaseReturns: () => Promise<boolean>
-  fetchAdminReturns: (status?: string) => Promise<boolean>
+  fetchAdminReturns: (search?: string) => Promise<boolean>
   createReturns: (body: CreateReturn) => Promise<IReturn | null>
   fetchReturnById: (id: string) => Promise<IReturn | null>
   updateReturnStatusAdmin: (
@@ -88,11 +88,11 @@ export const ReturnProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
-  const fetchAdminReturns = async (status?: string) => {
+  const fetchAdminReturns = async (search?: string) => {
     try {
       setError("")
       setLoading(true)
-      const result = await fetchAdminReturnService(status)
+      const result = await fetchAdminReturnService(search)
       setReturns(result)
       setLoading(false)
       return true

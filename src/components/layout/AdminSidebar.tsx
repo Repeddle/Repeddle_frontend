@@ -43,13 +43,18 @@ const sidebarLinks = [
     icon: <FaChartBar />,
   },
   {
-    path: "/admin/messages",
+    path: "/messages",
     text: "All Messages",
     icon: <FaListCheck />,
   },
   {
     path: "/admin/allreturns",
-    text: "Return Queries",
+    text: "All Queries",
+    icon: <FaArrowRotateLeft />,
+  },
+  {
+    path: "/admin/logreturns",
+    text: "All Log returns",
     icon: <FaArrowRotateLeft />,
   },
   { path: "/admin/payments", text: "Payments", icon: <FaMoneyBill /> },
