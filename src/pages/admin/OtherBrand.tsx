@@ -61,8 +61,15 @@ const OtherBrandRow = ({ brand, refresh, setRefresh }: Props) => {
     setIsEdit(false)
   }
 
-  // TODO:
-  const handleSave = async () => {}
+  const handleSave = async () => {
+    const data = await updateBrand(brand._id, {
+      name: newName,
+      published: true,
+    })
+    if (data) addNotification("Brand published")
+    setRefresh(!refresh)
+    setIsEdit(false)
+  }
 
   const deleteHandler = async () => {
     const confirm = window.confirm(
@@ -92,7 +99,7 @@ const OtherBrandRow = ({ brand, refresh, setRefresh }: Props) => {
       {isEdit ? (
         <>
           <input
-            className="w-[250px] h-[30px] border pl-2.5 focus:outline-none placeholder:text-xs border-light-ev3 dark:border-dark-ev3 text-black-color dark:text-white-color   focus:border focus:border-orange-color"
+            className="w-[250px] h-[30px] bg-light-ev1 dark:bg-dark-ev1 border pl-2.5 focus:outline-none placeholder:text-xs border-light-ev3 dark:border-dark-ev3 text-black-color dark:text-white-color   focus:border focus:border-orange-color"
             name="brand"
             type="text"
             onChange={(e) => setNewName(e.target.value)}
@@ -124,12 +131,14 @@ const OtherBrandRow = ({ brand, refresh, setRefresh }: Props) => {
             >
               Edit
             </button>
-            <button
-              className="text-sm text-orange-color px-[5px] mr-2.5 py-0.5 rounded-[0.2rem] border-0 bg-[#fcf0e0] dark:bg-dark-ev3"
-              onClick={handleSave}
-            >
-              Save
-            </button>
+            {!brand.published && (
+              <button
+                className="text-sm text-orange-color px-[5px] mr-2.5 py-0.5 rounded-[0.2rem] border-0 bg-[#fcf0e0] dark:bg-dark-ev3"
+                onClick={handleSave}
+              >
+                Publish
+              </button>
+            )}
             <button
               className="text-sm text-red-color px-[5px] py-0.5 rounded-[0.2rem] border-0 bg-[#f8d6d6] dark:bg-[#211111]"
               onClick={deleteHandler}

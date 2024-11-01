@@ -52,11 +52,11 @@ export const fetchSoldReturnService = async () => {
   }
 }
 
-export const fetchAdminReturnService = async (status?: string) => {
+export const fetchAdminReturnService = async (search?: string) => {
   try {
     let url = "/returns/admin"
 
-    if (status) url = url + `?status=${status}`
+    if (search) url = url + `?${search}`
 
     const resp: {
       returns: IReturn[]

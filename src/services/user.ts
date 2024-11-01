@@ -12,11 +12,16 @@ import api from "./api"
 
 // User UserList
 
-export async function getAllUserAdminService(): Promise<IUsersWithPagination> {
+export async function getAllUserAdminService(
+  search?: string
+): Promise<IUsersWithPagination> {
   try {
-    const data: IUsersWithPagination & { status: boolean } = await api.get(
-      "/users/admin"
-    )
+    let url = "/users/admin"
+
+    if (search) {
+      url = url + "?" + search
+    }
+    const data: IUsersWithPagination & { status: boolean } = await api.get(url)
 
     if (!data.status) {
       // Handle all users error, e.g., display an error message to the user

@@ -74,7 +74,7 @@ const sidebarLinks = [
   },
 
   {
-    path: "/dashboard/messages",
+    path: "/messages",
     text: "Messages",
     icon: <FaComment />,
   },

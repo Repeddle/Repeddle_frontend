@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import ReturnTable from "../../components/table/ReturnTable"
 import useReturn from "../../hooks/useReturn"
+import { createSearchParam } from "../../utils/common"
 
 const AllReturnsLogs = () => {
   const { fetchAdminReturns, error, loading, returns } = useReturn()
@@ -8,8 +9,10 @@ const AllReturnsLogs = () => {
   const [query, setQuery] = useState("")
 
   useEffect(() => {
-    fetchAdminReturns()
-  }, [])
+    const search = createSearchParam([["search", query]])
+
+    fetchAdminReturns(search)
+  }, [query])
 
   return (
     <div className="flex-[4] overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
