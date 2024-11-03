@@ -24,7 +24,7 @@ const OrderList = () => {
 
         <div className="flex mr-2.5 mb-2.5 justify-end">
           <input
-            className={`w-3/5 md:w-2/5 h-[45px] border border-malon-color focus-visible:outline focus-visible:outline-orange-color p-[15px] rounded-[5px]
+            className={`w-3/5 px-1 md:w-2/5 h-[45px] border border-malon-color focus-visible:outline focus-visible:outline-orange-color p-[15px] rounded-[5px]
             placeholder:p-2.5 text-black dark:text-white bg-white dark:bg-black`}
             onChange={(e) => setOrderQuery(e.target.value)}
             placeholder="Search by order id"

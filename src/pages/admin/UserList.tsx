@@ -68,7 +68,7 @@ const UserList = () => {
       </h1>
       <div className="flex mr-2.5 mb-2.5 justify-end">
         <input
-          className={`w-2/5 h-[45px] border border-malon-color focus-visible:outline focus-visible:outline-orange-color p-[15px] rounded-[5px]
+          className={`w-2/5 h-[45px] px-1 border border-malon-color focus-visible:outline focus-visible:outline-orange-color p-[15px] rounded-[5px]
           placeholder:p-2.5 text-black dark:text-white bg-white dark:bg-black`}
           onChange={(e) => setUserQuery(e.target.value)}
           placeholder="Search by username"
