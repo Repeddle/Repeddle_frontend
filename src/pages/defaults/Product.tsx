@@ -58,14 +58,13 @@ const Product = () => {
   const [addToWish, setAddToWish] = useState(false)
   const [loading, setLoading] = useState(true)
   const [addLoading, setAddLoading] = useState(false)
+  const [showReport, setShowReport] = useState(false)
   const [size, setSize] = useState("")
   const [selectSize, setSelectSize] = useState("")
   const [product, setProduct] = useState<IProduct>()
 
   // update product TODO:
   // FIXME: add view count and share update route
-  // FIXME: payment route with payment page
-  // FIXME: create modal for report and use the send message route, type should be Report
 
   useEffect(() => {
     const viewItem = async () => {
@@ -675,16 +674,21 @@ const Product = () => {
                   )}
                   <div
                     className="cursor-pointer text-malon-color text-right"
-                    // TODO:
-                    // onClick={() => handlereport(product.seller._id, product._id)}
+                    onClick={() => setShowReport(true)}
                   >
                     Report Item
                   </div>
                 </div>
 
                 <Report
-                  reportedUser={product.seller._id}
-                  productName={product.name}
+                  reportItem={{
+                    id: product._id,
+                    image: product.images[0],
+                    name: product.name,
+                  }}
+                  refs="product"
+                  setShowModel={setShowReport}
+                  showModel={showReport}
                 />
               </div>
             </div>

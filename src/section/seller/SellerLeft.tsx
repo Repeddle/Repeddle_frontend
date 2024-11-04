@@ -35,9 +35,9 @@ const SellerLeft = ({ loadingUser, error, usernameData, addReview }: Props) => {
   const navigate = useNavigate()
   const { user } = useAuth()
 
-  const [showLoginModel, setShowLoginModel] = useState(false)
   const [messageLoading, setMessageLoading] = useState(false)
   const [showModel, setShowModel] = useState(false)
+  const [showReport, setShowReport] = useState(false)
   const [showWriteReview, setShowWriteReview] = useState(false)
 
   const isOnlineCon = (c: string) => {
@@ -296,12 +296,17 @@ const SellerLeft = ({ loadingUser, error, usernameData, addReview }: Props) => {
             >
               Report Seller
             </button>
-            <Modal
-              isOpen={showLoginModel}
-              onClose={() => setShowLoginModel(false)}
-            >
-              <Report reportedUser={usernameData.user._id} />
-            </Modal>
+
+            <Report
+              refs="user"
+              reportItem={{
+                id: usernameData.user._id,
+                image: usernameData.user.image,
+                name: usernameData.user.username,
+              }}
+              setShowModel={setShowReport}
+              showModel={showReport}
+            />
           </div>
         )
       )}
