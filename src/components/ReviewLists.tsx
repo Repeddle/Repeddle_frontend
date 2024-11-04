@@ -9,19 +9,21 @@ import moment from "moment"
 
 type Props = {
   setShowModel: (val: boolean) => void
+  reviews?: IReview[]
 }
 
-const ReviewLists = ({ setShowModel }: Props) => {
-  const [reviews] = useState<IReview[]>([])
-
+const ReviewLists = ({ setShowModel, reviews }: Props) => {
   return (
     <div className="p-[30px]">
       <div className="text-3xl font-bold mb-5">Reviews</div>
       <div className="mb-5">
-        {reviews.length === 0 && <MessageBox>There is no reviews</MessageBox>}
-        {reviews.map((item) => (
-          <ReviewItem item={item} setShowModel={setShowModel} />
-        ))}
+        {!reviews || reviews.length === 0 ? (
+          <MessageBox>There is no reviews</MessageBox>
+        ) : (
+          reviews.map((item) => (
+            <ReviewItem item={item} setShowModel={setShowModel} />
+          ))
+        )}
       </div>
     </div>
   )

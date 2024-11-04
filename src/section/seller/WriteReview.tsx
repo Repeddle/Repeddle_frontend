@@ -4,13 +4,15 @@ import LoadingBox from "../../components/LoadingBox"
 import Button from "../../components/ui/Button"
 import useUser from "../../hooks/useUser"
 import useToastNotification from "../../hooks/useToastNotification"
+import { IReview } from "../../types/product"
 
 type Props = {
   setShowModel: (val: boolean) => void
   userId: string
+  addReview: (review: IReview) => void
 }
 
-const WriteReview = ({ setShowModel, userId }: Props) => {
+const WriteReview = ({ setShowModel, userId, addReview }: Props) => {
   const { error, reviewSeller } = useUser()
   const { addNotification } = useToastNotification()
 
@@ -42,7 +44,7 @@ const WriteReview = ({ setShowModel, userId }: Props) => {
       setComment("")
       setRating("")
       setLike(undefined)
-      // TODO: update seller
+      addReview(res.review)
 
       setShowModel(false)
     } else addNotification(error || "Failed to create review", undefined, true)

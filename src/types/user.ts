@@ -1,4 +1,4 @@
-import { IProduct, Pagination } from "./product"
+import { IProduct, IReview, Pagination } from "./product"
 
 export interface IAddress {
   apartment?: string
@@ -95,10 +95,8 @@ export type IUsersWithPagination = Pagination & { users: IUser[] }
 
 export type TopSellers = {
   username: string
-  firstName: string
-  lastName: string
   image: string
-  sold: number
+  badge?: boolean
 }
 
 export type UserByUsername = {
@@ -118,6 +116,7 @@ export type UserByUsername = {
     rating?: number
     buyers?: string[]
     rebundle?: IRebundle
+    reviews?: IReview[]
   }
   products: {
     all: IProduct[]

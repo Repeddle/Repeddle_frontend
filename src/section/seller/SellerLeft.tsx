@@ -14,14 +14,16 @@ import Modal from "../../components/ui/Modal"
 import useAuth from "../../hooks/useAuth"
 import useToastNotification from "../../hooks/useToastNotification"
 import useMessage from "../../hooks/useMessage"
+import { IReview } from "../../types/product"
 
 type Props = {
   loadingUser: boolean
   error?: string | null
   usernameData?: UserByUsername
+  addReview: (review: IReview) => void
 }
 
-const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
+const SellerLeft = ({ loadingUser, error, usernameData, addReview }: Props) => {
   const {
     user: userInfo,
     followUser,
@@ -201,7 +203,10 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
               )}
 
               <Modal isOpen={showModel} onClose={() => setShowModel(false)}>
-                <ReviewLists setShowModel={setShowModel} />
+                <ReviewLists
+                  setShowModel={setShowModel}
+                  reviews={usernameData.user.reviews}
+                />
               </Modal>
               <Modal
                 isOpen={showWriteReview}
@@ -210,6 +215,7 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
                 <WriteReview
                   userId={usernameData.user._id}
                   setShowModel={setShowWriteReview}
+                  addReview={addReview}
                 />
               </Modal>
               <button

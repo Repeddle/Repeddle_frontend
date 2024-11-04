@@ -244,8 +244,6 @@ function Cart() {
                               </div>
                             </div>
                             <div className="flex-[3]">
-                              {/* TODO: */}
-                              {/* {` =  ${currency}` + c.quantity * c.actualPrice} */}
                               {` =  ${currency(c.region)} ` +
                                 c.quantity * c.sellingPrice}
                             </div>
@@ -266,11 +264,7 @@ function Cart() {
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">Shipping</div>
-                    <div className="flex-1">
-                      {currency(region())}
-                      {/* TODO: */}
-                      {/* {currentCart.shippingPrice.toFixed(2)} */} 0.00
-                    </div>
+                    <div className="flex-1">{currency(region())} 0.00</div>
                   </div>
                 </div>
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">

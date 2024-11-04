@@ -42,16 +42,19 @@ type ContextType = {
     message: string
     likes: string[]
   } | null>
+
   unlikeProduct: (id: string) => Promise<{
     message: string
     likes: string[]
   } | null>
+
   commentProduct: (
     id: string,
-    comment: string
+    comment: { comment: string; image?: string }
   ) => Promise<{
     comment: IComment
   } | null>
+
   likeProductComment: (
     id: string,
     commentId: string
@@ -59,6 +62,7 @@ type ContextType = {
     message: string
     comment: IComment
   } | null>
+
   unlikeProductComment: (
     id: string,
     commentId: string
@@ -66,6 +70,7 @@ type ContextType = {
     message: string
     comment: IComment
   } | null>
+
   replyProductComment: (
     id: string,
     commentId: string,
@@ -74,6 +79,7 @@ type ContextType = {
     message: string
     comment: IComment
   } | null>
+
   likeProductCommentReply: (
     id: string,
     commentId: string,
@@ -82,6 +88,7 @@ type ContextType = {
     message: string
     reply: ICommentReply
   } | null>
+
   unlikeProductCommentReply: (
     id: string,
     commentId: string,
@@ -90,6 +97,7 @@ type ContextType = {
     message: string
     reply: ICommentReply
   } | null>
+
   createProductReview: (
     id: string,
     review: {
@@ -308,7 +316,10 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
-  const commentProduct = async (id: string, comment: string) => {
+  const commentProduct = async (
+    id: string,
+    comment: { comment: string; image?: string }
+  ) => {
     try {
       setError("")
       // setLoading(true)

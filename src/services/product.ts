@@ -236,11 +236,14 @@ export const unlikeProductService = async (id: string) => {
   }
 }
 
-export const commentProductService = async (id: string, comment: string) => {
+export const commentProductService = async (
+  id: string,
+  comment: { comment: string; image?: string }
+) => {
   try {
     const data: { comment: IComment } = await api.post(
       `/products/${id}/comments`,
-      { comment }
+      comment
     )
 
     // if (!data.status) {
