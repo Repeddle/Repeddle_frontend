@@ -9,6 +9,8 @@ import {
 } from "../types/product"
 import useAuth from "../hooks/useAuth"
 import {
+  addProductShareCountService,
+  addProductViewCountService,
   commentProductService,
   createProductReviewService,
   createProductService,
@@ -109,6 +111,9 @@ type ContextType = {
     message: string
     review: IReview
   } | null>
+
+  addProductViewCount: (id: string) => void
+  addProductShareCount: (id: string, userId: string) => void
 }
 
 // Create product context
@@ -543,6 +548,21 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
+  const addProductShareCount = async (id: string, userId: string) => {
+    try {
+      await addProductShareCountService(id, userId)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const addProductViewCount = async (id: string) => {
+    try {
+      await addProductViewCountService(id)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <ProductContext.Provider
       value={{
@@ -565,6 +585,8 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         unlikeProduct,
         unlikeProductComment,
         unlikeProductCommentReply,
+        addProductShareCount,
+        addProductViewCount,
       }}
     >
       {children}

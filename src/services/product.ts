@@ -421,3 +421,55 @@ export const createProductReviewService = async (
     throw getBackendErrorMessage(error)
   }
 }
+
+export const addProductViewCountService = async (id: string) => {
+  try {
+    await api.post(`/products/${id}/view`, {
+      hashed: Math.random().toString().slice(2),
+    })
+
+    // if (!data.status) {
+    //   // Handle Create review product error, e.g., display an error message to the user
+    //   throw new Error(
+    //     "Create review product failed: " + getBackendErrorMessage(data)
+    //   )
+    // }
+
+    return true
+  } catch (error) {
+    // Handle network errors or other exceptions
+    // You can log the error or perform other error-handling actions
+    console.error("Create review product error:", getBackendErrorMessage(error))
+
+    // Re-throw the error to propagate it up the call stack if needed
+    throw getBackendErrorMessage(error)
+  }
+}
+
+export const addProductShareCountService = async (
+  id: string,
+  userId: string
+) => {
+  try {
+    await api.post(`/products/${id}/view`, {
+      hashed: Math.random().toString().slice(2),
+      user: userId,
+    })
+
+    // if (!data.status) {
+    //   // Handle Create review product error, e.g., display an error message to the user
+    //   throw new Error(
+    //     "Create review product failed: " + getBackendErrorMessage(data)
+    //   )
+    // }
+
+    return true
+  } catch (error) {
+    // Handle network errors or other exceptions
+    // You can log the error or perform other error-handling actions
+    console.error("Create review product error:", getBackendErrorMessage(error))
+
+    // Re-throw the error to propagate it up the call stack if needed
+    throw getBackendErrorMessage(error)
+  }
+}

@@ -7,6 +7,7 @@ import { IUser } from "../../types/user"
 import { currency, daydiff, deliveryNumber, region } from "../../utils/common"
 import Modal from "../../components/ui/Modal"
 import DeliveryStatus from "../../components/DeliveryStatus"
+import LoadingBox from "../../components/LoadingBox"
 
 type Props = {
   orderItem: OrderItem
@@ -113,23 +114,29 @@ const IsUser = ({
                 >
                   <div className="flex flex-col justify-center items-center gap-2.5 h-full pt-10 md:pt-8 p-2.5">
                     <div className="flex justify-between gap-1.5 sm:gap-2.5 w-full max-w-sm">
-                      <div
-                        className="cursor-pointer text-white-color bg-orange-color sm:h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
-                        onClick={() => !updatingStatus && paymentRequest()}
-                      >
-                        Confirm you have received order
-                      </div>
-                      <div
-                        className="cursor-pointer bg-malon-color hover:bg-orange-color text-white-color sm:h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
-                        onClick={() => {
-                          if (!updatingStatus) {
-                            setShowReturn(true)
-                            setAfterAction(false)
-                          }
-                        }}
-                      >
-                        Log a return
-                      </div>
+                      {updatingStatus ? (
+                        <LoadingBox />
+                      ) : (
+                        <>
+                          <div
+                            className="cursor-pointer text-white-color bg-orange-color sm:h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
+                            onClick={() => !updatingStatus && paymentRequest()}
+                          >
+                            Confirm you have received order
+                          </div>
+                          <div
+                            className="cursor-pointer bg-malon-color hover:bg-orange-color text-white-color sm:h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
+                            onClick={() => {
+                              if (!updatingStatus) {
+                                setShowReturn(true)
+                                setAfterAction(false)
+                              }
+                            }}
+                          >
+                            Log a return
+                          </div>
+                        </>
+                      )}
                     </div>
                     <div className="text-[13px] max-w-[400px]">
                       Please inspect your order before confirming receipt.
@@ -223,22 +230,20 @@ const IsUser = ({
             daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) <=
               0 &&
             deliveryNumber(orderItem.deliveryTracking.currentStatus.status) ===
-              4 && (
+              4 &&
+            (updatingStatus ? (
+              <LoadingBox />
+            ) : (
               <button
                 onClick={() => {
-                  if (!updatingStatus) {
-                    paySeller(orderItem)
-                    deliverOrderHandler(
-                      "Payment To Seller Initiated",
-                      orderItem
-                    )
-                  }
+                  paySeller(orderItem)
+                  deliverOrderHandler("Payment To Seller Initiated", orderItem)
                 }}
                 className="w-full px-3 py-[0.375rem] text-base leading-normal border-none bg-malon-color mt-2.5"
               >
                 Pay Seller
               </button>
-            )}
+            ))}
         </div>
       </div>
       {Object.entries(orderItem.deliveryOption).map(([key, value]) =>

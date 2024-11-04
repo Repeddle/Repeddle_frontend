@@ -16,12 +16,14 @@ import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
 import useOrder from "../../hooks/useOrder"
 import { deliveryNumber, deliveryStatusMap } from "../../utils/common"
 import useToastNotification from "../../hooks/useToastNotification"
+import usePayments from "../../hooks/usePayment"
 
 const Order = () => {
   const { id: orderId } = useParams()
   const { fetchOrderById, error, loading, updateOrderItemTracking } = useOrder()
   const { addNotification } = useToastNotification()
   const { user } = useAuth()
+  const { paySeller, refundBuyer } = usePayments()
 
   const [isSeller, setIsSeller] = useState(false)
   const [showReturn, setShowReturn] = useState(false)
@@ -100,8 +102,6 @@ const Order = () => {
       addNotification("Item status has been updated")
       setOrder(res)
     } else {
-      console.log(error)
-      console.log(!!error)
       addNotification(error || "Failed to update status", undefined, true)
     }
 
@@ -112,12 +112,28 @@ const Order = () => {
     console.log(item)
   }
 
-  const refund = (item: OrderItem) => {
-    console.log(item)
+  const onRefund = async (item: OrderItem) => {
+    if (!order) return
+    setUpdatingStatus(true)
+    const data = await refundBuyer(order._id, item._id, order.buyer._id)
+
+    if (typeof data !== "string") {
+      addNotification(data.message)
+    } else addNotification(data, undefined, true)
+
+    setUpdatingStatus(false)
   }
 
-  const paySeller = (item: OrderItem) => {
-    console.log(item)
+  const onPaySeller = async (item: OrderItem) => {
+    if (!order) return
+    setUpdatingStatus(true)
+    const data = await paySeller(order._id, item._id, item.seller._id)
+
+    if (typeof data !== "string") {
+      addNotification(data.message)
+    } else addNotification(data, undefined, true)
+
+    setUpdatingStatus(false)
   }
 
   return !loading && showError ? (
@@ -186,8 +202,8 @@ const Order = () => {
                   shippingPrice={shippingPrice}
                   deliverOrderHandler={deliverOrderHandler}
                   handleCancelOrder={handleCancelOrder}
-                  paySeller={paySeller}
-                  refund={refund}
+                  paySeller={onPaySeller}
+                  refund={onRefund}
                   setCurrentDeliveryHistory={setCurrentDeliveryHistory}
                   setShowDeliveryHistory={setShowDeliveryHistory}
                   updatingStatus={updatingStatus}
@@ -198,8 +214,8 @@ const Order = () => {
                   userOrdered={order.buyer}
                   deliverOrderHandler={deliverOrderHandler}
                   handleCancelOrder={handleCancelOrder}
-                  paySeller={paySeller}
-                  refund={refund}
+                  paySeller={onPaySeller}
+                  refund={onRefund}
                   setCurrentDeliveryHistory={setCurrentDeliveryHistory}
                   setShowDeliveryHistory={setShowDeliveryHistory}
                   setShowReturn={setShowReturn}

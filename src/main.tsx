@@ -21,6 +21,7 @@ import { UserProvider } from "./context/UserContext.tsx"
 import { WalletProvider } from "./context/WalletContext.tsx"
 import { NotificationProvider } from "./context/NotificationContext.tsx"
 import { ReturnProvider } from "./context/ReturnContext.tsx"
+import { PaymentProvider } from "./context/PaymentContext.tsx"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -41,11 +42,13 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                                 <UserProvider>
                                   <WalletProvider>
                                     <MessageProvider>
-                                      <NotificationProvider>
-                                        <ReturnProvider>
-                                          <RouterProvider router={router} />
-                                        </ReturnProvider>
-                                      </NotificationProvider>
+                                      <PaymentProvider>
+                                        <NotificationProvider>
+                                          <ReturnProvider>
+                                            <RouterProvider router={router} />
+                                          </ReturnProvider>
+                                        </NotificationProvider>
+                                      </PaymentProvider>
                                     </MessageProvider>
                                   </WalletProvider>
                                 </UserProvider>
