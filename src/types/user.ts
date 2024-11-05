@@ -106,7 +106,7 @@ export type UserByUsername = {
     followers: string[]
     following: string[]
     likes: string[]
-    sold: Array<string>
+    sold: string[]
     numReviews: number
     region: string
     createdAt: string
@@ -124,4 +124,40 @@ export type UserByUsername = {
     liked: IProduct[]
     selling: IProduct[]
   }
+}
+
+export type Analytics = {
+  totalUsers: number
+  totalOrders: number
+  totalProducts: number
+  totalEarnings: number
+  newMembers: {
+    _id: string
+    email: string
+    createdAt: string
+    image: string
+    username: string
+  }[]
+  recentProducts: {
+    _id: string
+    name: string
+    images: string[]
+    createdAt: string
+  }[]
+  topSellers: {
+    _id: string
+    username: string
+    totalSales: number
+  }[]
+  mostViewedProducts: {
+    _id: string
+    name: string
+    viewcount: any[]
+  }[]
+  outOfStockProducts: {
+    _id: string
+    name: string
+    images: string[]
+    createdAt: string
+  }[]
 }

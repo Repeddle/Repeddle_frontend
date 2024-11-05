@@ -6,8 +6,10 @@ import {
   TopSellers,
   UserByUsername,
   UpdateUser,
+  Analytics,
 } from "../types/user"
 import {
+  fetchAnalyticsService,
   getAllUserAdminService,
   getTopSellersService,
   getUserByIdService,
@@ -32,6 +34,7 @@ type ContextType = {
     id: string,
     review: { comment: string; rating: number; like: boolean }
   ) => Promise<{ review: IReview; message: string } | null>
+  fetchAnalytics(): Promise<Analytics | string>
 }
 
 // Create user context
@@ -149,6 +152,20 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
+  const fetchAnalytics = async () => {
+    try {
+      setError("")
+      setLoading(true)
+      const result = await fetchAnalyticsService()
+      setLoading(false)
+      return result
+    } catch (error) {
+      handleError(error as string)
+      setLoading(false)
+      return error as string
+    }
+  }
+
   return (
     <UserContext.Provider
       value={{
@@ -160,6 +177,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
         getUserById,
         updateUserById,
         reviewSeller,
+        fetchAnalytics,
       }}
     >
       {children}
