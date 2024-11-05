@@ -260,7 +260,7 @@ const Analytics = () => {
                   {product.name}
                 </div>
                 <div className="mx-0.5 my-0">
-                  {product.viewcount.length} Views
+                  {product.viewcount?.length} Views
                 </div>
                 <div className="flex justify-between items-center w-[170px] m-[5px]">
                   <Link to={`/product/${product.slug}`}>

@@ -30,6 +30,7 @@ import { currency } from "../../utils/common"
 import moment from "moment"
 import useMessage from "../../hooks/useMessage"
 import LoadingBox from "../../components/LoadingBox"
+import { MD5 } from "crypto-js"
 
 const Product = () => {
   const params = useParams()
@@ -37,8 +38,13 @@ const Product = () => {
 
   const navigate = useNavigate()
 
-  const { fetchProductBySlug, error, likeProduct, unlikeProduct } =
-    useProducts()
+  const {
+    fetchProductBySlug,
+    error,
+    likeProduct,
+    unlikeProduct,
+    addProductViewCount,
+  } = useProducts()
   const { addNotification } = useToastNotification()
 
   const {
@@ -129,6 +135,24 @@ const Product = () => {
     }
     viewItem()
   }, [slug])
+
+  useEffect(() => {
+    const retrieveDeviceInfo = async () => {
+      if (!product) {
+        return
+      }
+      const userAgent = navigator.userAgent
+      const screenWidth = window.screen.width
+      const screenHeight = window.screen.height
+
+      // Concatenate and hash the device information
+      const combinedInfo = userAgent + screenWidth + screenHeight
+      const hashed = MD5(combinedInfo).toString()
+      await addProductViewCount(product._id, hashed)
+    }
+
+    // retrieveDeviceInfo()
+  }, [product])
 
   const following = useMemo(() => {
     if (user?.following.find((x) => x === product?.seller._id))

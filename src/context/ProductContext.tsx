@@ -112,8 +112,8 @@ type ContextType = {
     review: IReview
   } | null>
 
-  addProductViewCount: (id: string) => void
-  addProductShareCount: (id: string, userId: string) => void
+  addProductViewCount: (id: string, hashed: string) => Promise<void>
+  addProductShareCount: (id: string, userId: string) => Promise<void>
 }
 
 // Create product context
@@ -555,9 +555,9 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
       console.log(error)
     }
   }
-  const addProductViewCount = async (id: string) => {
+  const addProductViewCount = async (id: string, hashed: string) => {
     try {
-      await addProductViewCountService(id)
+      await addProductViewCountService(id, hashed)
     } catch (error) {
       console.log(error)
     }

@@ -422,11 +422,12 @@ export const createProductReviewService = async (
   }
 }
 
-export const addProductViewCountService = async (id: string) => {
+export const addProductViewCountService = async (
+  id: string,
+  hashed: string
+) => {
   try {
-    await api.post(`/products/${id}/view`, {
-      hashed: Math.random().toString().slice(2),
-    })
+    await api.post(`/products/${id}/view`, { hashed })
 
     // if (!data.status) {
     //   // Handle Create review product error, e.g., display an error message to the user
