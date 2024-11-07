@@ -2,7 +2,6 @@ import moment from "moment"
 import { useEffect, useState } from "react"
 import { FaCheckCircle, FaTrash } from "react-icons/fa"
 import { INewsletter } from "../../types/message"
-import { emailList as emailListData } from "../../utils/data"
 import useNewsletter from "../../hooks/useNewsletter"
 import useToastNotification from "../../hooks/useToastNotification"
 import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo"
@@ -44,7 +43,7 @@ const NewsletterList = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const rebatchs: any[] = []
-  const emailLists = [emailListData]
+  const [emailLists] = useState<{ name: string }[]>([])
 
   const deleteHandler = async (id: string) => {
     if (window.confirm("Are you sure to delete")) {
