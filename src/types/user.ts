@@ -135,29 +135,38 @@ export type Analytics = {
     _id: string
     email: string
     createdAt: string
+    firstName: string
     image: string
+    lastName: string
     username: string
   }[]
   recentProducts: {
     _id: string
     name: string
+    slug: string
     images: string[]
     createdAt: string
   }[]
   topSellers: {
     _id: string
     username: string
+    image: string
     totalSales: number
+    createdAt?: string
   }[]
   mostViewedProducts: {
     _id: string
     name: string
-    viewcount: any[]
+    slug: string
+    images: string[]
+    viewcount: string[]
   }[]
   outOfStockProducts: {
     _id: string
     name: string
+    slug: string
     images: string[]
-    createdAt: string
+    viewcount: string[]
+    createdAt?: string
   }[]
 }

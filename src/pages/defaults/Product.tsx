@@ -151,7 +151,7 @@ const Product = () => {
       await addProductViewCount(product._id, hashed)
     }
 
-    // retrieveDeviceInfo()
+    retrieveDeviceInfo()
   }, [product])
 
   const following = useMemo(() => {

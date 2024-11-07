@@ -4,7 +4,7 @@ import moment from "moment"
 import { FaEye, FaPen } from "react-icons/fa"
 import FeatureInfo from "../../components/FeatureInfo"
 import { useEffect, useState } from "react"
-import { Analytics } from "../../types/user"
+import { Analytics as AnalyticsType } from "../../types/user"
 import useUser from "../../hooks/useUser"
 import useToastNotification from "../../hooks/useToastNotification"
 import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
@@ -14,7 +14,7 @@ const Analytics = () => {
   const { addNotification } = useToastNotification()
   const { fetchAnalytics } = useUser()
 
-  const [analytics, setAnalytics] = useState<Analytics>()
+  const [analytics, setAnalytics] = useState<AnalyticsType>()
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
@@ -64,7 +64,10 @@ const Analytics = () => {
         <div className="flex scroll-smooth gap-5 overflow-x-auto scrollbar-hide snap">
           {analytics && analytics.newMembers.length ? (
             analytics.newMembers.map((user) => (
-              <div className="relative w-[180px] bg-light-ev2 dark:bg-dark-ev2">
+              <div
+                key={user._id}
+                className="relative w-[180px] bg-light-ev2 dark:bg-dark-ev2"
+              >
                 <img
                   className="w-[180px] h-[180px] object-cover rounded-[0.2rem]"
                   src={user.image}
@@ -109,7 +112,10 @@ const Analytics = () => {
         <div className="flex scroll-smooth gap-5 overflow-x-auto scrollbar-hide snap">
           {analytics && analytics.topSellers.length ? (
             analytics.topSellers.map((user) => (
-              <div className="relative w-[180px] bg-light-ev2 dark:bg-dark-ev2">
+              <div
+                key={user._id}
+                className="relative w-[180px] bg-light-ev2 dark:bg-dark-ev2"
+              >
                 <img
                   className="w-[180px] h-[180px] object-cover rounded-[0.2rem]"
                   src={user.image}
@@ -156,7 +162,10 @@ const Analytics = () => {
         <div className="flex scroll-smooth gap-5 overflow-x-auto scrollbar-hide snap">
           {analytics && analytics.recentProducts.length ? (
             analytics.recentProducts.map((product) => (
-              <div className="relative w-[180px] bg-light-ev2 dark:bg-dark-ev2">
+              <div
+                key={product._id}
+                className="relative w-[180px] bg-light-ev2 dark:bg-dark-ev2"
+              >
                 <img
                   className="w-[180px] h-[180px] object-cover rounded-[0.2rem]"
                   src={product.images[0]}
@@ -200,7 +209,10 @@ const Analytics = () => {
         <div className="flex scroll-smooth gap-5 overflow-x-auto scrollbar-hide snap">
           {analytics && analytics.outOfStockProducts.length ? (
             analytics.outOfStockProducts.map((product) => (
-              <div className="relative w-[180px] bg-light-ev2 dark:bg-dark-ev2">
+              <div
+                key={product._id}
+                className="relative w-[180px] bg-light-ev2 dark:bg-dark-ev2"
+              >
                 <img
                   className="w-[180px] h-[180px] object-cover rounded-[0.2rem]"
                   src={product.images[0]}
@@ -249,7 +261,10 @@ const Analytics = () => {
         <div className="flex scroll-smooth gap-5 overflow-x-auto scrollbar-hide snap">
           {analytics && analytics.mostViewedProducts.length ? (
             analytics.mostViewedProducts.map((product) => (
-              <div className="relative w-[180px] bg-light-ev2 dark:bg-dark-ev2">
+              <div
+                key={product._id}
+                className="relative w-[180px] bg-light-ev2 dark:bg-dark-ev2"
+              >
                 <img
                   className="w-[180px] h-[180px] object-cover rounded-[0.2rem]"
                   src={product.images[0]}
