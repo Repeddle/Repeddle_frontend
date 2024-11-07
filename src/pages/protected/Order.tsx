@@ -121,7 +121,7 @@ const Order = () => {
   const onRefund = async (item: OrderItem) => {
     if (!order) return
     setUpdatingStatus(true)
-    const data = await refundBuyer(order._id, item._id, order.buyer._id)
+    const data = await refundBuyer(order._id, item.product._id, order.buyer._id)
 
     if (typeof data !== "string") {
       addNotification(data.message)
@@ -133,7 +133,7 @@ const Order = () => {
   const onPaySeller = async (item: OrderItem) => {
     if (!order) return
     setUpdatingStatus(true)
-    const data = await paySeller(order._id, item._id, item.seller._id)
+    const data = await paySeller(order._id, item.product._id, item.seller._id)
 
     if (typeof data !== "string") {
       addNotification(data.message)
