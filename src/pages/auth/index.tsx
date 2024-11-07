@@ -1,19 +1,21 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
+
+import { Navigate, Outlet, useSearchParams } from "react-router-dom"
+import useAuth from "../../hooks/useAuth"
+import { useMemo } from "react"
+import AuthNav from "../../components/layout/AuthNav"
 
 export default function Auth() {
-  const { loading, user } = useAuth();
-
-  if (loading) {
-    return <div>Loading</div>;
-  }
+  const { user } = useAuth()
+  const [searchParam] = useSearchParams()
+  const redirectUrl = useMemo(() => searchParam.get("redirect"), [searchParam])
 
   if (user) {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to={redirectUrl ? `/${redirectUrl}` : "/"} />;
   }
 
   return (
     <div>
+      <AuthNav />
       <Outlet />
     </div>
   );

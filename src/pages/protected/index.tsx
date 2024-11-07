@@ -1,11 +1,16 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import StickyNav from "../../components/layout/StickyNav";
+import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal";
+import Footer from "../../components/layout/footer";
+import Navbar from "../../components/layout/navbar";
 
 function Protected() {
   const { user, loading } = useAuth();
+  const location = useLocation();
 
   if (loading) {
-    return <div>Loading</div>;
+    return <LoadingLogoModal />;
   }
 
   if (!user) {
@@ -13,9 +18,13 @@ function Protected() {
     return <Navigate to="/auth/login" />;
   }
 
+  const notAllowedRoutes = ["/messages"];
   return (
     <main className="">
+      <Navbar />
       <Outlet />
+      {!notAllowedRoutes.includes(location.pathname) && <Footer />}
+      {!notAllowedRoutes.includes(location.pathname) && <StickyNav />}
     </main>
   );
 }
