@@ -118,7 +118,7 @@ const router = createBrowserRouter([
           { path: "howtologreturn", element: <HowToLogAreturn /> },
           { path: "articles", element: <Articles /> },
           { path: "articles/:id", element: <ArticleContent /> },
-          { path: "Contact-Us", element: <ContactUs /> },
+          { path: "contact-Us", element: <ContactUs /> },
           { path: "feestructure", element: <FeeStructure /> },
           { path: "buyerprotection", element: <BuyersProtection /> },
           { path: "how-repeddle-work", element: <HowRepeddleWork /> },

@@ -1,5 +1,8 @@
 //import React from "react";
 import { Link } from "react-router-dom"
+import Leaf from "../../../assets/icons/Leaf.svg"
+import Globe from "../../../assets/icons/Globe.svg"
+import House from "../../../assets/icons/House.svg"
 
 const About = () => {
   return (
@@ -146,21 +149,21 @@ const About = () => {
         </p>
       </section>
       <section className="mb-8">
-        <div className="flex flex-col md:flex-row items-center justify-between">
+        <div className="flex flex-col lg:flex-row items-center justify-between">
           {/* Image icon on the left side */}
-          <div className="md:w-1/3 mb-8 md:mb-0">
-            <img src="img.png" alt="img" />
+          <div className="w-20 lg:w-52">
+            <img src={House} alt="img" />
           </div>
           {/* Text on the right side */}
-          <div className="md:w-2/3">
+          <div className="lg:w-2/3">
             <div className="flex flex-col justify-center items-center">
-              <h4 className="p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+              <h4 className="p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center lg:text-left">
                 REUSE &amp; SECOND-HAND
               </h4>
-              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center lg:text-left">
                 POSITIVE IMPACT OF USING PRE-LOVED GARMENT
               </h4>
-              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center lg:text-left">
                 SECOND-HAND = SECOND-CHANCE
               </h4>
             </div>
@@ -186,21 +189,21 @@ const About = () => {
         </div>
       </section>
       <section className="mb-8">
-        <div className="flex flex-col md:flex-row items-center justify-between">
+        <div className="flex flex-col lg:flex-row items-center justify-between">
           {/* Image icon on the left side */}
-          <div className="md:w-1/3 mb-8 md:mb-0">
-            <img src="img.png" alt="img" />
+          <div className="w-20 lg:w-52">
+            <img src={Globe} alt="img" />
           </div>
           {/* Text on the right side */}
-          <div className="md:w-2/3">
+          <div className="lg:w-2/3">
             <div className="flex flex-col justify-center items-center">
-              <h4 className="p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+              <h4 className="p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center lg:text-left">
                 IT STARTS WITH LESS -
               </h4>
-              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center lg:text-left">
                 MAKING IT BETTER FOR AFRICA
               </h4>
-              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center lg:text-left">
                 +THE PLANET
               </h4>
             </div>
@@ -226,21 +229,21 @@ const About = () => {
         </div>
       </section>
       <section className="mb-8">
-        <div className="flex flex-col md:flex-row items-center justify-between">
+        <div className="flex flex-col lg:flex-row items-center justify-between">
           {/* Image icon on the left side */}
-          <div className="md:w-1/3 mb-8 md:mb-0">
-            <img src="img.png" alt="img" />
+          <div className="w-20 lg:w-52">
+            <img src={Leaf} alt="img" />
           </div>
           {/* Text on the right side */}
-          <div className="md:w-2/3">
+          <div className="lg:w-2/3">
             <div className="flex flex-col justify-center items-center">
-              <h4 className="p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+              <h4 className="p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center lg:text-left">
                 UPCYLE. RECYCLE. REUSE. RESELL
               </h4>
-              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center lg:text-left">
                 MAKING SUSTAINABILITY MORE IMPACTFUL IN THREE EASY WAYS
               </h4>
-              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center md:text-left">
+              <h4 className="box-border p-0 leading-tight m-0 mx-1 font-bold text-2xl text-center lg:text-left">
                 THE REPEDDLE VIP SHIELD
               </h4>
             </div>
