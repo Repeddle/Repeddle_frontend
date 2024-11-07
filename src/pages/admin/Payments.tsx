@@ -1,11 +1,11 @@
-import { useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { FaSortDown, FaSortUp } from "react-icons/fa"
-import { payments } from "../../utils/data"
 import moment from "moment"
 import { Link } from "react-router-dom"
-import { IPayment } from "../../types/transactions"
 import Modal from "../../components/ui/Modal"
 import PayUsers from "../../components/PayUsers"
+import usePayments from "../../hooks/usePayment"
+import useToastNotification from "../../hooks/useToastNotification"
 
 const headers = [
   { title: "ID", key: "_id", hide: true },
@@ -16,9 +16,12 @@ const headers = [
   { title: "Date", key: "createdAt", hide: true },
 ]
 
-type PayKey = keyof IPayment
+// type PayKey = keyof IPayment
 
 const Payments = () => {
+  const { fetchPayments, payments, error } = usePayments()
+  const { addNotification } = useToastNotification()
+
   const [productQuery, setProductQuery] = useState("")
   const [showModelWallet, setShowModelWallet] = useState(false)
   const [refresh, setRefresh] = useState(true)
@@ -34,22 +37,34 @@ const Payments = () => {
     else setSortKey({ key, sort: "asc" })
   }
 
-  const sortedPayments = useMemo(() => {
-    if (sortKey && payments[0][sortKey.key as PayKey]) {
-      return payments.sort((a, b) => {
-        const aVal = a[sortKey.key as PayKey] ?? ""
-        const bVal = b[sortKey.key as PayKey] ?? ""
-        if (typeof aVal === "number" && typeof bVal === "number") {
-          return sortKey.sort === "asc" ? aVal - bVal : bVal - aVal
-        }
+  useEffect(() => {
+    const getPayment = async () => {
+      const res = await fetchPayments()
 
-        return sortKey.sort === "asc"
-          ? aVal.toString().localeCompare(bVal.toString())
-          : bVal.toString().localeCompare(aVal.toString())
-      })
+      if (!res)
+        addNotification(error || "Failed to fetch payments", undefined, true)
     }
-    return payments
-  }, [sortKey])
+
+    getPayment()
+  }, [])
+
+  // TODO: check if this is still needed
+  // const sortedPayments = useMemo(() => {
+  //   if (sortKey && payments[0][sortKey.key as PayKey]) {
+  //     return payments.sort((a, b) => {
+  //       const aVal = a[sortKey.key as PayKey] ?? ""
+  //       const bVal = b[sortKey.key as PayKey] ?? ""
+  //       if (typeof aVal === "number" && typeof bVal === "number") {
+  //         return sortKey.sort === "asc" ? aVal - bVal : bVal - aVal
+  //       }
+
+  //       return sortKey.sort === "asc"
+  //         ? aVal.toString().localeCompare(bVal.toString())
+  //         : bVal.toString().localeCompare(aVal.toString())
+  //     })
+  //   }
+  //   return payments
+  // }, [sortKey])
 
   return (
     <div className="flex-[4] overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
@@ -120,7 +135,7 @@ const Payments = () => {
                 </tr>
               </thead>
               <tbody className="text-sm">
-                {sortedPayments.map((pay) => (
+                {payments.map((pay) => (
                   <tr key={pay._id}>
                     <td className="px-3 hidden lg:table-cell h-[52px] whitespace-nowrap w-auto overflow-hidden text-ellipsis">
                       {pay._id}
@@ -144,7 +159,7 @@ const Payments = () => {
                     </td>
 
                     <td className="px-3 h-[52px] whitespace-nowrap w-auto overflow-hidden text-ellipsis">
-                      {pay.meta.Type}
+                      {pay.reason}
                     </td>
 
                     <td className="px-3 hidden lg:table-cell h-[52px] whitespace-nowrap w-auto overflow-hidden text-ellipsis">
