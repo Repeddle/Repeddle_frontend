@@ -8,6 +8,7 @@ import {
   fetchOrdersService,
   fetchSoldOrdersService,
   getOrdersSummaryService,
+  updateOrderItemStatusService,
   updateOrderItemTrackingService,
 } from "../services/order"
 
@@ -31,6 +32,11 @@ type ContextType = {
     endDate?: string
     startDate?: string
   }) => Promise<IOrderSummary | null>
+  updateOrderItemStatus: (
+    orderId: string,
+    itemId: string,
+    action: "hold" | "unhold"
+  ) => Promise<IOrder | null>
 }
 
 // Create order context
@@ -181,6 +187,27 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
+  const updateOrderItemStatus = async (
+    orderId: string,
+    itemId: string,
+    action: "hold" | "unhold"
+  ) => {
+    try {
+      setError("")
+      setLoading(true)
+      const result = await updateOrderItemStatusService(orderId, itemId, action)
+      setOrders((prevOrders) =>
+        prevOrders.map((p) => (p._id === orderId ? result : p))
+      )
+      setLoading(false)
+      return result
+    } catch (error) {
+      handleError(error as string)
+      setLoading(false)
+      return null
+    }
+  }
+
   return (
     <OrderContext.Provider
       value={{
@@ -194,6 +221,7 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
         getOrdersSummary,
         fetchAllOrders,
         updateOrderItemTracking,
+        updateOrderItemStatus,
       }}
     >
       {children}

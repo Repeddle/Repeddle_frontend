@@ -20,7 +20,13 @@ import usePayments from "../../hooks/usePayment"
 
 const Order = () => {
   const { id: orderId } = useParams()
-  const { fetchOrderById, error, loading, updateOrderItemTracking } = useOrder()
+  const {
+    fetchOrderById,
+    error,
+    loading,
+    updateOrderItemTracking,
+    updateOrderItemStatus,
+  } = useOrder()
   const { addNotification } = useToastNotification()
   const { user } = useAuth()
   const { paySeller, refundBuyer } = usePayments()
@@ -136,6 +142,22 @@ const Order = () => {
     setUpdatingStatus(false)
   }
 
+  const toggleOrderHoldStatus = async (item: OrderItem) => {
+    if (!orderId) return
+
+    const res = await updateOrderItemStatus(
+      orderId,
+      item._id,
+      item.isHold ? "unhold" : "hold"
+    )
+    if (res) {
+      setOrder(res)
+      addNotification("Item status has been updated")
+    } else {
+      addNotification("Failed to update status", undefined, true)
+    }
+  }
+
   return !loading && showError ? (
     <MessageBox className="text-[red]">{error}</MessageBox>
   ) : (
@@ -207,6 +229,7 @@ const Order = () => {
                   setCurrentDeliveryHistory={setCurrentDeliveryHistory}
                   setShowDeliveryHistory={setShowDeliveryHistory}
                   updatingStatus={updatingStatus}
+                  toggleOrderHoldStatus={toggleOrderHoldStatus}
                 />
               ) : (
                 <IsUser
@@ -220,6 +243,7 @@ const Order = () => {
                   setShowDeliveryHistory={setShowDeliveryHistory}
                   setShowReturn={setShowReturn}
                   updatingStatus={updatingStatus}
+                  toggleOrderHoldStatus={toggleOrderHoldStatus}
                 />
               )
             )}

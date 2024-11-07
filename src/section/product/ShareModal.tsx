@@ -19,6 +19,8 @@ import {
   PinterestIcon,
   LinkedinIcon,
 } from "react-share"
+import useProducts from "../../hooks/useProducts"
+import useAuth from "../../hooks/useAuth"
 
 type Props = {
   product: IProduct
@@ -26,6 +28,9 @@ type Props = {
 }
 
 const ShareModal = ({ product, url: shareUrl }: Props) => {
+  const { addProductShareCount } = useProducts()
+  const { user } = useAuth()
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   const toggleDropdown = () => {
@@ -39,13 +44,15 @@ const ShareModal = ({ product, url: shareUrl }: Props) => {
         url: shareUrl,
       })
       console.log("Shared successfully")
-      handleShare()
+      await handleShare()
     } catch (error) {
       console.error("Error sharing:", error)
     }
   }
 
-  const handleShare = () => {}
+  const handleShare = async () => {
+    if (user) await addProductShareCount(product._id, user._id)
+  }
 
   const shareButtons = [
     {
