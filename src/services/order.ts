@@ -160,6 +160,32 @@ export const updateOrderItemTrackingService = async (
     throw getBackendErrorMessage(error)
   }
 }
+export const updateOrderItemStatusService = async (
+  orderId: string,
+  itemId: string,
+  action: "hold" | "unhold"
+): Promise<IOrder> => {
+  try {
+    const data: {
+      status: boolean
+      order: IOrder
+    } = await api.put(`/orders/hold/${orderId}/${itemId}?action=${action}`)
+
+    // if (!data.status) {
+    //   // Handle Update order error, e.g., display an error message to the user
+    //   throw new Error("Update order failed: " + getBackendErrorMessage(data))
+    // }
+
+    return data.order
+  } catch (error) {
+    // Handle network errors or other exceptions
+    // You can log the error or perform other error-handling actions
+    console.error("Update order error:", getBackendErrorMessage(error))
+
+    // Re-throw the error to propagate it up the call stack if needed
+    throw getBackendErrorMessage(error)
+  }
+}
 
 export const getOrdersSummaryService = async (
   params?: string
