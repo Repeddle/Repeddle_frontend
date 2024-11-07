@@ -109,7 +109,7 @@ const ReturnPage = () => {
     setRefunding(true)
     const data = await refundBuyer(
       returned.orderId._id,
-      item._id,
+      item.product._id,
       returned.orderId.buyer._id
     )
 
@@ -125,7 +125,7 @@ const ReturnPage = () => {
     setRefunding(true)
     const data = await paySeller(
       returned.orderId._id,
-      item._id,
+      item.product._id,
       returned.productId.seller._id
     )
 
