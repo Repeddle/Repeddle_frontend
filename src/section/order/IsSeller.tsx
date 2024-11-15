@@ -238,12 +238,13 @@ const IsSeller = ({
               Buy Again
             </button>
           </Link>
+          {/* {deliveryNumber(orderItem.deliveryTracking.currentStatus.status)} */}
           {user?.role === "Admin" &&
             daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) <=
               0 &&
             !orderItem.isHold &&
-            deliveryNumber(orderItem.deliveryTracking.currentStatus.status) <
-              4 && (
+            deliveryNumber(orderItem.deliveryTracking.currentStatus.status) ===
+              11 && (
               <button
                 onClick={() => refund(orderItem)}
                 className="inline-block bg-malon-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"

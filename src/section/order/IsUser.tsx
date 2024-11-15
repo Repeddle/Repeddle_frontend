@@ -212,8 +212,8 @@ const IsUser = ({
             daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) <=
               0 &&
             !orderItem.isHold &&
-            deliveryNumber(orderItem.deliveryTracking.currentStatus.status) <
-              4 && (
+            deliveryNumber(orderItem.deliveryTracking.currentStatus.status) ===
+              11 && (
               <button
                 onClick={() => refund(orderItem)}
                 className="w-full px-3 py-[0.375rem] text-base leading-normal border-none bg-malon-color mt-2.5"
