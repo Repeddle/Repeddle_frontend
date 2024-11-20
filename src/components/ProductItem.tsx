@@ -1,101 +1,106 @@
-import { useMemo, useState } from "react"
-import { IProduct } from "../types/product"
-import { Link } from "react-router-dom"
-import { FaArrowsAlt, FaHeart, FaThumbsUp } from "react-icons/fa"
-import Modal from "./ui/Modal"
-import { currency } from "../utils/common"
-import useAuth from "../hooks/useAuth"
-import useProducts from "../hooks/useProducts"
-import useToastNotification from "../hooks/useToastNotification"
+import { useMemo, useState } from "react";
+import { IProduct } from "../types/product";
+import { Link } from "react-router-dom";
+import { FaArrowsAlt, FaHeart, FaThumbsUp } from "react-icons/fa";
+import Modal from "./ui/Modal";
+import { currency } from "../utils/common";
+import useAuth from "../hooks/useAuth";
+import useProducts from "../hooks/useProducts";
+import useToastNotification from "../hooks/useToastNotification";
+import { imageUrl } from "../services/api";
 
 type Props = {
-  product: IProduct
-}
+  product: IProduct;
+};
 
 const ProductItem = ({ product }: Props) => {
-  const { user, addToWishlist, error: wishlistError } = useAuth()
-  const { likeProduct, unlikeProduct, error } = useProducts()
-  const { addNotification } = useToastNotification()
+  const { user, addToWishlist, error: wishlistError } = useAuth();
+  const { likeProduct, unlikeProduct, error } = useProducts();
+  const { addNotification } = useToastNotification();
 
-  const [showModel, setShowModel] = useState(false)
-  const [liking, setLiking] = useState(false)
-  const [addToWish, setAddToWish] = useState(false)
+  const [showModel, setShowModel] = useState(false);
+  const [liking, setLiking] = useState(false);
+  const [addToWish, setAddToWish] = useState(false);
 
   const discount = useMemo(() => {
     if (!product.costPrice || product.sellingPrice) {
-      return null
+      return null;
     }
     if (product.costPrice < product.sellingPrice) {
-      return null
+      return null;
     }
 
     return (
       ((product.costPrice - product.sellingPrice) / product.costPrice) * 100
-    )
-  }, [product.costPrice, product.sellingPrice])
+    );
+  }, [product.costPrice, product.sellingPrice]);
 
   const liked = useMemo(() => {
-    return !!product?.likes.find((like) => like === user?._id)
-  }, [product?.likes, user?._id])
+    return !!product?.likes.find((like) => like === user?._id);
+  }, [product?.likes, user?._id]);
 
   const toggleLikes = async () => {
     if (!user) {
-      addNotification("Sign in /  Sign Up to like", undefined, true)
-      return
+      addNotification("Sign in /  Sign Up to like", undefined, true);
+      return;
     }
 
-    if (!product) return
+    if (!product) return;
 
     if (product.seller._id === user._id) {
-      addNotification("You can't like your product", undefined, true)
-      return
+      addNotification("You can't like your product", undefined, true);
+      return;
     }
 
-    setLiking(true)
+    setLiking(true);
 
     if (liked) {
-      const res = await unlikeProduct(product._id)
-      if (res) addNotification(res.message)
-      else addNotification(error, undefined, true)
+      const res = await unlikeProduct(product._id);
+      if (res) addNotification(res.message);
+      else addNotification(error, undefined, true);
     } else {
-      const res = await likeProduct(product._id)
-      if (res) addNotification(res.message)
-      else addNotification(error, undefined, true)
+      const res = await likeProduct(product._id);
+      if (res) addNotification(res.message);
+      else addNotification(error, undefined, true);
     }
 
-    setLiking(false)
-  }
+    setLiking(false);
+  };
 
   const saveItem = async () => {
-    if (!product) return
+    if (!product) return;
 
     if (!user) {
       addNotification(
         "Sign In/ Sign Up to add an item to wishlist",
         undefined,
         true
-      )
-      return
+      );
+      return;
     }
 
     if (product.seller._id === user._id) {
-      addNotification("You can't add your product to wishlist", undefined, true)
-      return
+      addNotification(
+        "You can't add your product to wishlist",
+        undefined,
+        true
+      );
+      return;
     }
 
-    setAddToWish(true)
+    setAddToWish(true);
 
-    const res = await addToWishlist(product._id)
-    if (res) addNotification(res)
+    const res = await addToWishlist(product._id);
+    if (res) addNotification(res);
     else
       addNotification(
         wishlistError ? wishlistError : "Failed to add to wishlist",
         undefined,
         true
-      )
+      );
 
-    setAddToWish(false)
-  }
+    setAddToWish(false);
+  };
 
   return (
     <div className="h-[342px] w-[162px] mr-2.5 lg:mr-auto mb-2.5 lg:h-[500px] lg:w-60 lg:flex-[0_0_auto] cursor-pointer">
@@ -106,7 +111,7 @@ const ProductItem = ({ product }: Props) => {
         <div className="flex justify-center h-full">
           <img
             className="w-auto h-full"
-            src={product.images[0]}
+            src={imageUrl + product.images[0]}
             alt={product.name}
           />
         </div>
@@ -127,7 +132,7 @@ const ProductItem = ({ product }: Props) => {
           )}
 
           <img
-            src={product.images[0]}
+            src={imageUrl + product.images[0]}
             className="h-[270px] object-cover w-full lg:h-[400px]"
             alt={product.name}
           />
@@ -180,7 +185,7 @@ const ProductItem = ({ product }: Props) => {
           ) : null)}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductItem
+export default ProductItem;

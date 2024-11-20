@@ -1,50 +1,76 @@
 import { useState, useEffect } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import useArticle from "../../../hooks/useArticle";
 import { Article } from "../../../types/article";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import useToastNotification from "../../../hooks/useToastNotification";
+import LoadingBox from "../../../components/LoadingBox";
 
-const CreateArticle = ({
-  onCancel,
-  // onArticleCreated,
-  article,
-}: {
-  onCancel: () => void;
-  // onArticleCreated: (article: Article) => void;
-  article: Article | null;
-}) => {
-  // const { updateArticle, createArticle } = useArticle();
+const CreateArticle = () => {
+  const { updateArticle, createArticle, fetchArticleById, categories } =
+    useArticle();
   const [value, setValue] = useState("");
+  const { addNotification } = useToastNotification();
   const [category, setCategory] = useState("");
+  const [topic, setTopic] = useState("");
+  const [article, setArticle] = useState<Article | null>(null);
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get("id");
+  const [showNew, setShowNew] = useState(false);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (article) {
-      setValue(article.content);
-      setCategory(article.topic);
-    }
-  }, [article]);
+    const fetchArticle = async () => {
+      if (!id) return;
+      try {
+        const res = await fetchArticleById(id);
+        setArticle(res);
+        setValue(res.content);
+        setCategory(res.category);
+        setTopic(res.topic);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchArticle();
+  }, [id]);
 
   const handleContinueClick = async () => {
-    // let newArticle;
-    if (article) {
-      // newArticle = await updateArticle(article._id, {
-      //   topic: category,
-      //   content: value,
-      // });
-    } else {
-      // newArticle = await createArticle({
-      //   topic: category,
-      //   content: value,
-      //   id: undefined,
-      //   title: undefined,
-      //   _id: 0,
-      //   category: "",
-      // });
+    if (!topic) {
+      addNotification("Please enter a topic", undefined, true);
+      return;
     }
-    // onArticleCreated(newArticle);
-  };
-
-  const handleCancelClick = () => {
-    onCancel(); // Use the passed function to handle cancel
+    if (!category) {
+      addNotification("Please select a category", undefined, true);
+      return;
+    }
+    if (!value) {
+      addNotification("Please enter an article content", undefined, true);
+      return;
+    }
+    try {
+      setLoading(true);
+      if (article) {
+        await updateArticle(article._id, {
+          topic,
+          category,
+          content: value,
+        });
+      } else {
+        await createArticle({
+          topic,
+          category,
+          content: value,
+        });
+      }
+      navigate("/admin/articlelist");
+    } catch (error: any) {
+      addNotification(error, undefined, true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -54,35 +80,70 @@ const CreateArticle = ({
           {article ? "Edit Article" : "Create Article"}
         </h2>
         <div className="flex space-x-3">
+          {loading && <LoadingBox />}
           <button
             onClick={handleContinueClick}
-            className="p-2 text-lg flex text-white bg-orange-400 rounded hover:bg-red-800"
+            className="p-1 px-4  text-lg flex text-white bg-orange-400 rounded hover:bg-red-800"
+            disabled={loading}
           >
             Submit
           </button>
           <button
-            onClick={handleCancelClick}
-            className="p-2 text-lg flex text-white bg-orange-400 rounded hover:bg-red-800"
+            onClick={() => navigate(-1)}
+            className="p-1 px-4 text-lg flex hover:text-white border border-malon-color text-malon-color rounded hover:bg-red-800"
           >
-            Back
+            Cancel
           </button>
         </div>
       </div>
+      <div className="block text-sm font-medium text-gray-700 mb-2">
+        Select Category
+      </div>
+      <div className="flex gap-3 items-center flex-wrap mb-4">
+        {categories.map((cat) => (
+          <div
+            onClick={() => setCategory(cat)}
+            className={`border border-malon-color text-malon-color px-3 py-1 rounded-md cursor-pointer ${
+              cat === category ? "bg-malon-color text-white" : ""
+            }`}
+          >
+            {cat}
+          </div>
+        ))}
+        <div
+          onClick={() => {
+            setShowNew(!showNew);
+            setCategory("");
+          }}
+          className="font-bold text-malon-color cursor-pointer"
+        >
+          + Add New
+        </div>
+      </div>
+      {showNew && (
+        <input
+          type="text"
+          className=" block py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-400 focus:border-red-700 sm:text-sm mb-4 -mt-2"
+          placeholder="Enter new category"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        />
+      )}
       <div className="mb-4">
         <label
-          htmlFor="category"
-          className="block text-sm font-medium text-gray-700"
+          htmlFor="topic"
+          className="block text-sm font-medium text-gray-700 mb-2"
         >
-          Category
+          Topic
         </label>
         <input
           type="text"
-          name="category"
-          id="category"
+          name="topic"
+          id="topic"
           className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-400 focus:border-red-700 sm:text-sm"
-          placeholder="Enter category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          placeholder="Enter topic"
+          value={topic}
+          onChange={(e) => setTopic(e.target.value)}
         />
       </div>
       <div>

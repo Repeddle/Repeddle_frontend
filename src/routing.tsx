@@ -75,6 +75,8 @@ import PlaceOrder from "./pages/protected/PlaceOrder";
 import ShopByOutfit from "./pages/defaults/ShopByOutfit";
 import Coupon from "./pages/admin/Coupon";
 import BrandMore from "./pages/defaults/brands/More";
+import ArticleList from "./pages/protected/articles";
+import CreateArticle from "./pages/protected/articles/CreateArticles";
 
 const router = createBrowserRouter([
   {
@@ -188,8 +190,8 @@ const router = createBrowserRouter([
           { path: "logreturns", element: <AllReturnsLog /> },
           { path: "contact", element: <Contact /> },
           { path: "coupon", element: <Coupon /> },
-          // { path: "articlelist", element: <ArticleList /> },
-          // { path: "createarticle", element: <CreateArticle onCancel={() => {}} /> },
+          { path: "articlelist", element: <ArticleList /> },
+          { path: "create-article", element: <CreateArticle /> },
         ],
       },
     ],

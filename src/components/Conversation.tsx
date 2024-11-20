@@ -1,19 +1,20 @@
-import LoadingBox from "./LoadingBox"
-import { FaRightLeft } from "react-icons/fa6"
-import { IConversation } from "../types/conversation"
-import { productDetails, user as userData } from "../utils/data"
+import LoadingBox from "./LoadingBox";
+import { FaRightLeft } from "react-icons/fa6";
+import { IConversation } from "../types/conversation";
+import { productDetails, user as userData } from "../utils/data";
+import { imageUrl } from "../services/api";
 
 type Props = {
-  conversation: IConversation
-  currentChat?: string
-}
+  conversation: IConversation;
+  currentChat?: string;
+};
 
 const Conversation = ({ conversation, currentChat }: Props) => {
-  const loading = false
+  const loading = false;
 
-  const user1 = userData
-  const user2 = userData
-  const product = productDetails
+  const user1 = userData;
+  const user2 = userData;
+  const product = productDetails;
 
   return loading ? (
     <LoadingBox />
@@ -29,7 +30,7 @@ const Conversation = ({ conversation, currentChat }: Props) => {
         <div className="flex flex-col items-center">
           <img
             className="w-[60px] h-[60px] object-cover object-top mx-2.5 my-0 rounded-[50%]"
-            src={user1.image}
+            src={imageUrl + user1.image}
           />
           <div className="font-bold text-orange-color capitalize">
             {user1.username}
@@ -39,7 +40,7 @@ const Conversation = ({ conversation, currentChat }: Props) => {
         <div className="flex flex-col items-center">
           <img
             className="w-[60px] h-[60px] object-cover object-top mx-2.5 my-0 rounded-[50%]"
-            src={user2.image}
+            src={imageUrl + user2.image}
           />
           <div className="font-bold text-orange-color capitalize">
             {user2.username}
@@ -53,13 +54,13 @@ const Conversation = ({ conversation, currentChat }: Props) => {
             On{" "}
             <img
               className="w-[60px] h-[60px] object-cover ml-2.5"
-              src={product.images[0]}
+              src={imageUrl + product.images[0]}
             />
           </>
         )}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Conversation
+export default Conversation;

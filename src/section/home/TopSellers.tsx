@@ -1,28 +1,29 @@
-import LoadingBox from "../../components/LoadingBox"
-import MessageBox from "../../components/MessageBox"
-import { Link } from "react-router-dom"
-import { TopSellers as TopSellersType } from "../../types/user"
-import useUser from "../../hooks/useUser"
-import { useEffect, useState } from "react"
+import LoadingBox from "../../components/LoadingBox";
+import MessageBox from "../../components/MessageBox";
+import { Link } from "react-router-dom";
+import { TopSellers as TopSellersType } from "../../types/user";
+import useUser from "../../hooks/useUser";
+import { useEffect, useState } from "react";
+import { imageUrl } from "../../services/api";
 
 const TopSellers = () => {
-  const { getTopSellers } = useUser()
+  const { getTopSellers } = useUser();
 
-  const [sellers, setSellers] = useState<TopSellersType[]>([])
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState("")
+  const [sellers, setSellers] = useState<TopSellersType[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const getSeller = async () => {
-      setLoading(true)
-      const sellers = await getTopSellers()
-      if (typeof sellers !== "string") setSellers(sellers)
-      else setError(sellers)
+      setLoading(true);
+      const sellers = await getTopSellers();
+      if (typeof sellers !== "string") setSellers(sellers);
+      else setError(sellers);
 
-      setLoading(false)
-    }
-    getSeller()
-  }, [])
+      setLoading(false);
+    };
+    getSeller();
+  }, []);
 
   return (
     <section id="top_seller_carousel">
@@ -50,7 +51,7 @@ const TopSellers = () => {
                     <div className="items-center flex flex-col mr-[30px]">
                       <div className="relative">
                         <img
-                          src={seller.image}
+                          src={imageUrl + seller.image}
                           alt={seller.username}
                           className="lg:h-[200px] object-cover object-top lg:w-[200px] rounded-[50%] h-[150px] w-[150px]"
                         />
@@ -74,7 +75,7 @@ const TopSellers = () => {
         )}
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default TopSellers
+export default TopSellers;

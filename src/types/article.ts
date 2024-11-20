@@ -1,12 +1,9 @@
-import { Key, ReactNode } from "react";
-
 export interface Article {
-  id: Key | null | undefined;
-  title: ReactNode;
   _id: string;
   topic: string;
   category: string;
   content: string;
+  createdAt: string;
 }
 
 export interface ArticleData {

@@ -1,7 +1,69 @@
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import { FiImage } from "react-icons/fi";
+import useContact from "../../hooks/useContact";
+import { ChangeEvent, useState } from "react";
+import { compressImageUpload } from "../../utils/common";
+import useAuth from "../../hooks/useAuth";
+import useToastNotification from "../../hooks/useToastNotification";
+import { imageUrl } from "../../services/api";
+import LoadingBox from "../../components/LoadingBox";
+import Modal from "../../components/ui/Modal";
 
 function ContactUs() {
+  const { createContact } = useContact();
+  const { user } = useAuth();
+  const { addNotification } = useToastNotification();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [category, setCategory] = useState("");
+  const [message, setMessage] = useState("");
+  const [image, setImage] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
+
+  const handleSend = async () => {
+    setLoading(true);
+    try {
+      const response = await createContact({
+        name,
+        email,
+        subject,
+        message,
+        file: [image],
+        category,
+      });
+      if (response) {
+        setSuccess(true);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const uploadHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const bodyFormData = new FormData();
+    bodyFormData.append("file", file);
+    setUploading(true);
+    try {
+      const compressImage = await compressImageUpload(file, 1024, image);
+
+      setImage(compressImage);
+
+      addNotification("Image Uploaded");
+    } catch (err) {
+      addNotification("Failed uploading image");
+    }
+
+    setUploading(false);
+  };
+
   return (
     <div className="container mx-auto max-w-7xl w-full flex-col md:gap-24 lg:flex-row  lg:mt-14 flex p-8 lg:rounded-xl mb-10">
       <div className="lg:w-1/2 w-full p-5 rounded-lg mb-4 lg:mb-0">
@@ -50,7 +112,7 @@ function ContactUs() {
       </div>
 
       <div className="lg:w-1/2 w-full p-4 lg:p-12 bg-malon-color rounded-lg">
-        <form className="space-y-6  w-full text-white">
+        <form className="space-y-6  w-full text-white" onSubmit={handleSend}>
           <div>
             <input
               type="text"
@@ -58,6 +120,7 @@ function ContactUs() {
               name="name"
               placeholder="Your Name"
               className="block w-full px-4 py-4 border border-gray-300 rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none text-black"
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div>
@@ -67,6 +130,7 @@ function ContactUs() {
               id="email"
               name="email"
               className="block w-full px-4 py-4 border border-gray-300 rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none text-black"
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div>
@@ -74,6 +138,7 @@ function ContactUs() {
               id="category"
               name="category"
               className="block w-full px-4 py-4 border rounded-md focus:border-orange-300 focus:ring-orange-300 text-black focus:outline-none border-gray-300"
+              onChange={(e) => setCategory(e.target.value)}
             >
               <option value="" className="text-black ">
                 Select a category
@@ -99,6 +164,7 @@ function ContactUs() {
               id="subject"
               name="subject"
               className="block w-full px-4 py-4 border border-gray-300 rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none text-black"
+              onChange={(e) => setSubject(e.target.value)}
             />
           </div>
           <div>
@@ -107,30 +173,49 @@ function ContactUs() {
               placeholder="Message"
               name="message"
               className="block w-full px-4 py-4 border border-gray-300 rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none text-black"
+              onChange={(e) => setMessage(e.target.value)}
               rows={4}
             ></textarea>
           </div>
-          <div className="flex justify-center">
-            <label
-              htmlFor="file"
-              className="mb-2 font-medium cursor-pointer flex items-center gap-2 "
-            >
-              <FiImage className="text-2xl" /> Add Image{" "}
-              <span className="opacity-50">(optional)</span>
-            </label>
-            <input type="file" id="file" name="file" className="sr-only" />
-          </div>
+          {user &&
+            (uploading ? (
+              <LoadingBox size="sm" />
+            ) : image ? (
+              <img src={imageUrl + image} className="w-4 h-4" />
+            ) : (
+              <div className="flex justify-center">
+                <label
+                  htmlFor="file"
+                  className="mb-2 font-medium cursor-pointer flex items-center gap-2 "
+                >
+                  <FiImage className="text-2xl" /> Add Image{" "}
+                  <span className="opacity-50">(optional)</span>
+                </label>
+                <input
+                  type="file"
+                  id="file"
+                  name="file"
+                  className="sr-only"
+                  onChange={uploadHandler}
+                />
+              </div>
+            ))}
           <div className="flex justify-center items-center w-full">
             <button
               type="submit"
+              disabled={loading}
               className="block justify-center align-middle items-center w-full px-4 py-3  font-medium text-white bg-orange-color 
             rounded-md  uppercase focus:outline-none focus:ring-2 focus:ring-orange-color  "
             >
               Send Message
             </button>
+            {loading && <LoadingBox />}
           </div>
         </form>
       </div>
+      <Modal isOpen={success} onClose={() => setSuccess(false)}>
+        <div>Message submitted successfully</div>
+      </Modal>
     </div>
   );
 }
