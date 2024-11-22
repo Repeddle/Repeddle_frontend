@@ -30,6 +30,7 @@ import { currency } from "../../utils/common";
 import moment from "moment";
 import useMessage from "../../hooks/useMessage";
 import LoadingBox from "../../components/LoadingBox";
+import { MD5 } from "crypto-js";
 import { imageUrl } from "../../services/api";
 import useUser from "../../hooks/useUser";
 
@@ -39,8 +40,13 @@ const Product = () => {
 
   const navigate = useNavigate();
 
-  const { fetchProductBySlug, error, likeProduct, unlikeProduct } =
-    useProducts();
+  const {
+    fetchProductBySlug,
+    error,
+    likeProduct,
+    unlikeProduct,
+    addProductViewCount,
+  } = useProducts();
   const { addNotification } = useToastNotification();
 
   const {
@@ -61,11 +67,13 @@ const Product = () => {
   const [addToWish, setAddToWish] = useState(false);
   const [loading, setLoading] = useState(true);
   const [addLoading, setAddLoading] = useState(false);
+  const [showReport, setShowReport] = useState(false);
   const [size, setSize] = useState("");
   const [selectSize, setSelectSize] = useState("");
   const [product, setProduct] = useState<IProduct>();
 
   // update product TODO:
+  // FIXME: add view count and share update route
 
   useEffect(() => {
     const viewItem = async () => {
@@ -130,6 +138,24 @@ const Product = () => {
     };
     viewItem();
   }, [slug]);
+
+  useEffect(() => {
+    const retrieveDeviceInfo = async () => {
+      if (!product) {
+        return;
+      }
+      const userAgent = navigator.userAgent;
+      const screenWidth = window.screen.width;
+      const screenHeight = window.screen.height;
+
+      // Concatenate and hash the device information
+      const combinedInfo = userAgent + screenWidth + screenHeight;
+      const hashed = MD5(combinedInfo).toString();
+      await addProductViewCount(product._id, hashed);
+    };
+
+    retrieveDeviceInfo();
+  }, [product]);
 
   const following = useMemo(() => {
     if (user?.following.find((x) => x === product?.seller._id))
@@ -674,16 +700,21 @@ const Product = () => {
                   )}
                   <div
                     className="cursor-pointer text-malon-color text-right"
-                    // TODO:
-                    // onClick={() => handlereport(product.seller._id, product._id)}
+                    onClick={() => setShowReport(true)}
                   >
                     Report Item
                   </div>
                 </div>
 
                 <Report
-                  reportedUser={product.seller._id}
-                  productName={product.name}
+                  reportItem={{
+                    id: product._id,
+                    image: product.images[0],
+                    name: product.name,
+                  }}
+                  refs="product"
+                  setShowModel={setShowReport}
+                  showModel={showReport}
                 />
               </div>
             </div>

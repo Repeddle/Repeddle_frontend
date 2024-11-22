@@ -21,7 +21,7 @@ type Props = {
   id?: string
   submitHandler: (e: FormEvent) => void
   userForm: UserFormType
-  handleOnUserChange: (val: string, key: keyof UserFormType) => void
+  handleOnUserChange: (val: string | boolean, key: keyof UserFormType) => void
   loadingUpload: boolean
   loadingUpdate: boolean
   uploadHandler: (e: ChangeEvent<HTMLInputElement>) => void
@@ -114,7 +114,7 @@ const UserRightComp = ({
               onChange={(e) => handleOnUserChange(e.target.value, "lastName")}
             />
           </div>
-          <div className="flex flex-col mt-2.5">
+          {/* <div className="flex flex-col mt-2.5">
             <label className="text-sm">Email</label>
             <input
               className="w-[250px] h-[30px] pl-2.5 bg-transparent focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
@@ -124,7 +124,7 @@ const UserRightComp = ({
               placeholder={user.email}
               onChange={(e) => handleOnUserChange(e.target.value, "email")}
             />
-          </div>
+          </div> */}
           <div className="flex flex-col mt-2.5">
             <label className="text-sm">DOB</label>
             <input
@@ -189,7 +189,7 @@ const UserRightComp = ({
               <>
                 <label className="text-sm">Active</label>
                 <div className="text-sm text-malon-color">
-                  updated {moment(user.activeLastUpdate).fromNow()}
+                  updated {moment(user.activeLastUpdated).fromNow()}
                 </div>
                 <div className="flex items-center">
                   <input
@@ -197,12 +197,12 @@ const UserRightComp = ({
                 after:border-orange-color after:rounded-[15px] after:-left-px after:-top-0.5 checked:after:w-[15px] checked:after:h-[15px]
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
-                after:bg-white dark:after:bg-black`}
-                    checked={userForm.active === "true"}
+                after:bg-white dark:after:bg-black checked:dark:after:bg-orange-color`}
+                    checked={userForm.active}
                     type="radio"
                     name="gender"
                     id="yes"
-                    onChange={() => handleOnUserChange("true", "active")}
+                    onChange={() => handleOnUserChange(true, "active")}
                   />
                   <label
                     className="text-lg font-light mx-2.5 my-0"
@@ -215,12 +215,12 @@ const UserRightComp = ({
                 after:border-orange-color after:rounded-[15px] after:-left-px after:-top-0.5 checked:after:w-[15px] checked:after:h-[15px]
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
-                after:bg-white dark:after:bg-black`}
-                    checked={userForm.active === "false"}
+                after:bg-white dark:after:bg-black checked:dark:after:bg-orange-color`}
+                    checked={!userForm.active}
                     type="radio"
                     name="gender"
                     id="no"
-                    onClick={() => handleOnUserChange("false", "active")}
+                    onClick={() => handleOnUserChange(false, "active")}
                   />
                   <label
                     className="text-lg font-light mx-2.5 my-0"
@@ -236,12 +236,12 @@ const UserRightComp = ({
                 after:border-orange-color after:rounded-[15px] after:-left-px after:-top-0.5 checked:after:w-[15px] checked:after:h-[15px]
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
-                after:bg-white dark:after:bg-black`}
-                    checked={userForm.badge === "true"}
+                after:bg-white dark:after:bg-black checked:dark:after:bg-orange-color`}
+                    checked={userForm.badge}
                     type="radio"
                     name="badge"
                     id="badgeyes"
-                    onClick={() => handleOnUserChange("true", "badge")}
+                    onClick={() => handleOnUserChange(true, "badge")}
                   />
                   <label
                     className="text-lg font-light mx-2.5 my-0"
@@ -254,12 +254,12 @@ const UserRightComp = ({
                 after:border-orange-color after:rounded-[15px] after:-left-px after:-top-0.5 checked:after:w-[15px] checked:after:h-[15px]
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
-                after:bg-white dark:after:bg-black`}
-                    checked={userForm.badge === "false"}
+                after:bg-white dark:after:bg-black checked:dark:after:bg-orange-color`}
+                    checked={!userForm.badge}
                     type="radio"
                     name="badge"
                     id="badgeno"
-                    onChange={() => handleOnUserChange("false", "badge")}
+                    onChange={() => handleOnUserChange(false, "badge")}
                   />
                   <label
                     className="text-lg font-light mx-2.5 my-0"
@@ -275,12 +275,12 @@ const UserRightComp = ({
                 after:border-orange-color after:rounded-[15px] after:-left-px after:-top-0.5 checked:after:w-[15px] checked:after:h-[15px]
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
-                after:bg-white dark:after:bg-black`}
-                    checked={userForm.influencer === "true"}
+                after:bg-white dark:after:bg-black checked:dark:after:bg-orange-color`}
+                    checked={userForm.influencer}
                     type="radio"
                     name="influencer"
                     id="influenceryes"
-                    onClick={() => handleOnUserChange("true", "influencer")}
+                    onClick={() => handleOnUserChange(true, "influencer")}
                     value={"adsdssfd"}
                   />
                   <label
@@ -294,12 +294,12 @@ const UserRightComp = ({
                 after:border-orange-color after:rounded-[15px] after:-left-px after:-top-0.5 checked:after:w-[15px] checked:after:h-[15px]
                 checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                 checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
-                after:bg-white dark:after:bg-black`}
-                    checked={userForm.influencer === "false"}
+                after:bg-white dark:after:bg-black checked:dark:after:bg-orange-color`}
+                    checked={!userForm.influencer}
                     type="radio"
                     name="influencer"
                     id="influencerno"
-                    onChange={() => handleOnUserChange("false", "influencer")}
+                    onChange={() => handleOnUserChange(false, "influencer")}
                   />
                   <label
                     className="text-lg font-light mx-2.5 my-0"

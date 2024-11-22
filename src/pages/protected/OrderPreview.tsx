@@ -16,7 +16,7 @@ const OrderPreview = () => {
   const [coupon, setCoupon] = useState({ code: "" })
   const [showModel, setShowModel] = useState(false)
 
-  const { cart, total, subtotal } = useCart()
+  const { cart, total, subtotal, paymentMethod } = useCart()
 
   const loadingPay = false
 
@@ -122,11 +122,7 @@ const OrderPreview = () => {
               <p>
                 <div className="ml-2.5 flex">
                   <div className="flex-[2] lg:flex-1">Method</div>
-                  <div className="flex-[5]">
-                    paypal
-                    {/* TODO: */}
-                    {/* {cart.paymentMethod} */}
-                  </div>
+                  <div className="flex-[5]">{paymentMethod}</div>
                 </div>
               </p>
               <Link
@@ -181,22 +177,14 @@ const OrderPreview = () => {
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">Shipping</div>
-                    <div className="flex-1">
-                      {currency(region())}
-                      {/* TODO: */}
-                      {/* {cart.shippingPrice.toFixed(2)} */} N 0.00
-                    </div>
+                    <div className="flex-1">{currency(region())} N 0.00</div>
                   </div>
                 </div>
 
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">Tax</div>
-                    <div className="flex-1">
-                      {currency(region())}
-                      {/* TODO: */}
-                      {/* {cart.taxPrice.toFixed(2)} */} N 0.00
-                    </div>
+                    <div className="flex-1">{currency(region())} N 0.00</div>
                   </div>
                 </div>
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">
@@ -210,7 +198,7 @@ const OrderPreview = () => {
                       )}
                     </div>
                     <div className="flex-1">
-                      - N {/* {currency} */}
+                      - {currency(region())}
                       {discount}
                     </div>
                   </div>

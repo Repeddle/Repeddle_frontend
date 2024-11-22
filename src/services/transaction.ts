@@ -71,7 +71,7 @@ export const fetchTransactionByIdService = async (
 ): Promise<ITransaction> => {
   try {
     const resp: { transaction: ITransaction; status: boolean } = await api.get(
-      `/transactions/user/${id}`
+      `/transactions/${id}`
     )
 
     if (!resp.status) {

@@ -104,7 +104,7 @@ const UserLeftComp = ({
         </div>
         <div className="flex items-center mx-0 my-5">
           <FaDotCircle className="text-sm" />
-          <div className="ml-2.5">@{user._id}</div>
+          <div className="ml-2.5">{user._id}</div>
         </div>
         <div className="flex items-center mx-0 my-5">
           <FaCalendarDays className="text-sm" />
@@ -189,7 +189,7 @@ const UserLeftComp = ({
               <div className="flex flex-col mt-2.5">
                 <label className="text-sm">Account Name</label>
                 <input
-                  className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none dark:bg-dark-ev1 placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+                  className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none dark:bg-dark-ev2 placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                   name="accountName"
                   placeholder={user.accountName}
                   type="text"
@@ -205,7 +205,7 @@ const UserLeftComp = ({
               <div className="flex flex-col mt-2.5">
                 <label className="text-sm">Account Number</label>
                 <input
-                  className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs dark:bg-dark-ev1 border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+                  className="w-[250px] h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs dark:bg-dark-ev2 border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                   placeholder={user.accountNumber?.toString() ?? ""}
                   name="accountNumber"
                   type="number"
@@ -220,11 +220,11 @@ const UserLeftComp = ({
               )}
               <div className="flex flex-col mt-2.5">
                 <label className="text-sm">Bank Name</label>
-                <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none dark:bg-dark-ev1 bg-light-ev1 overflow-hidden rounded-[0.2rem] w-[250px] border border-light-ev4 dark:border-dark-ev4">
+                <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none dark:bg-dark-ev2 bg-light-ev1 overflow-hidden rounded-[0.2rem] w-[250px] border border-light-ev4 dark:border-dark-ev4">
                   <select
                     onChange={(e) => handleOnChange(e.target.value, "bankName")}
                     onFocus={() => handleError("", "bankName")}
-                    className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal dark:bg-dark-ev1 bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                    className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal dark:bg-dark-ev2 bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                   >
                     <option value="">Select Bank</option>
                     {region() === "NGN"
@@ -240,7 +240,7 @@ const UserLeftComp = ({
               {errorInput.bankName && (
                 <div className="text-[red]">{errorInput.bankName}</div>
               )}
-              <div className="text-malon-color">
+              <div className="text-malon-color my-2">
                 Note: This cannot be change once saved, contact support to make
                 any changes.
               </div>
@@ -278,7 +278,7 @@ const UserLeftComp = ({
             <div className="flex flex-col gap-1 mt-2.5">
               <label className="text-sm">Street</label>
               <input
-                className="w-[250px] dark:bg-dark-ev1 bg-light-ev1 h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+                className="w-[250px] dark:bg-dark-ev2 bg-light-ev1 h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                 name="street"
                 type="text"
                 onChange={(e) => handleOnChange(e.target.value, "street")}
@@ -291,7 +291,7 @@ const UserLeftComp = ({
             <div className="flex flex-col gap-1 mt-2.5">
               <label className="text-sm">Apartment/Complex</label>
               <input
-                className="w-[250px] dark:bg-dark-ev1 bg-light-ev1 h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+                className="w-[250px] dark:bg-dark-ev2 bg-light-ev1 h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                 name="apartment"
                 type="text"
                 onChange={(e) => handleOnChange(e.target.value, "apartment")}
@@ -305,12 +305,12 @@ const UserLeftComp = ({
               <label className="text-sm">
                 {region() === "NGN" ? "State" : "Province"}
               </label>
-              <div className="block dark:bg-dark-ev1 relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] w-[250px] border border-light-ev4 dark:border-dark-ev4">
+              <div className="block dark:bg-dark-ev2 relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] w-[250px] border border-light-ev4 dark:border-dark-ev4">
                 <select
                   value={input.state}
                   onChange={(e) => handleOnChange(e.target.value, "state")}
                   onFocus={() => handleError("", "state")}
-                  className="text-base m-0 pl-2.5 border-light-ev4 dark:bg-dark-ev1 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                  className="text-base m-0 pl-2.5 border-light-ev4 dark:bg-dark-ev2 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                 >
                   <option value="">Select State</option>
                   {region() === "NGN"
@@ -327,7 +327,7 @@ const UserLeftComp = ({
             <div className="flex flex-col gap-1 mt-2.5">
               <label className="text-sm">Zip Code</label>
               <input
-                className="w-[250px] dark:bg-dark-ev1 bg-light-ev1 h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
+                className="w-[250px] dark:bg-dark-ev2 bg-light-ev1 h-[30px] pl-2.5 border-none focus:outline-none placeholder:text-xs border-b-light-ev3 text-black dark:text-white dark:border-b-dark-ev3 border-b focus:border-b-orange-color focus:border-b"
                 name="zipcode"
                 value={input.zipcode}
                 type="number"
@@ -335,7 +335,7 @@ const UserLeftComp = ({
                 onFocus={() => handleError("", "zipcode")}
               />
             </div>
-            <div className="text-malon-color">
+            <div className="text-malon-color my-2">
               Note: This can be edited later in your profile screen
             </div>
             {errorInput.zipcode && (

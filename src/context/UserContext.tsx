@@ -6,8 +6,10 @@ import {
   TopSellers,
   UserByUsername,
   UpdateUser,
+  Analytics,
 } from "../types/user";
 import {
+  fetchAnalyticsService,
   getAllUserAdminService,
   getTopSellersService,
   getUserByIdService,
@@ -21,7 +23,7 @@ import socket from "../socket";
 type ContextType = {
   error: string | null;
   loading: boolean;
-  getAllUserAdmin: () => Promise<IUsersWithPagination | null>;
+  getAllUserAdmin: (search?: string) => Promise<IUsersWithPagination | null>;
   getTopSellers: () => Promise<TopSellers[] | string>;
   getUserByUsername: (username: string) => Promise<UserByUsername | string>;
   getUserById: (userId: string) => Promise<IUser | string>;
@@ -33,6 +35,7 @@ type ContextType = {
     id: string,
     review: { comment: string; rating: number; like: boolean }
   ) => Promise<{ review: IReview; message: string } | null>;
+  fetchAnalytics(): Promise<Analytics | string>;
   isOnline: (id: string) => boolean;
 };
 
@@ -61,11 +64,11 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
-  const getAllUserAdmin = async () => {
+  const getAllUserAdmin = async (search?: string) => {
     try {
       setError("");
       setLoading(true);
-      const result = await getAllUserAdminService();
+      const result = await getAllUserAdminService(search);
 
       setLoading(false);
       return result;
@@ -153,6 +156,21 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
       return null;
     }
   };
+
+  const fetchAnalytics = async () => {
+    try {
+      setError("");
+      setLoading(true);
+      const result = await fetchAnalyticsService();
+      setLoading(false);
+      return result;
+    } catch (error) {
+      handleError(error as string);
+      setLoading(false);
+      return error as string;
+    }
+  };
+
   const isOnline = (userId: string) => {
     return onlineUsers.some((user) => user._id === userId);
   };
@@ -176,6 +194,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
         getUserById,
         updateUserById,
         reviewSeller,
+        fetchAnalytics,
         isOnline,
       }}
     >

@@ -55,9 +55,8 @@ const TopSellers = () => {
                           alt={seller.username}
                           className="lg:h-[200px] object-cover object-top lg:w-[200px] rounded-[50%] h-[150px] w-[150px]"
                         />
-                        {/* TODO:  */}
-                        {/* {seller.badge && ( */}
-                        {seller.image && (
+
+                        {seller.badge && (
                           <div className="seller_profile_badge">
                             <img
                               className="w-5 object-cover"

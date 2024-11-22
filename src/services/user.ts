@@ -1,5 +1,6 @@
 import { IReview } from "../types/product"
 import {
+  Analytics,
   IGuestUser,
   IUser,
   IUsersWithPagination,
@@ -12,11 +13,16 @@ import api from "./api"
 
 // User UserList
 
-export async function getAllUserAdminService(): Promise<IUsersWithPagination> {
+export async function getAllUserAdminService(
+  search?: string
+): Promise<IUsersWithPagination> {
   try {
-    const data: IUsersWithPagination & { status: boolean } = await api.get(
-      "/users/admin"
-    )
+    let url = "/users/admin"
+
+    if (search) {
+      url = url + "?" + search
+    }
+    const data: IUsersWithPagination & { status: boolean } = await api.get(url)
 
     if (!data.status) {
       // Handle all users error, e.g., display an error message to the user
@@ -132,7 +138,7 @@ export async function updateUserByIdService(
 ): Promise<IUser> {
   try {
     const response: { user: IUser; status: boolean; message: string } =
-      await api.put(`/users/update-profile/${id}`, userData)
+      await api.put(`/users/admin/${id}`, userData)
 
     console.log(response)
     if (!response.status) {
@@ -199,6 +205,29 @@ export async function reviewSellerService(
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions
     console.error("Update user error:", getBackendErrorMessage(error))
+
+    // Re-throw the error to propagate it up the call stack if needed
+    throw getBackendErrorMessage(error)
+  }
+}
+
+export async function fetchAnalyticsService() {
+  try {
+    const response: { status: boolean; data: Analytics } = await api.get(
+      `/users/admin/analytics`
+    )
+
+    // console.log(response)
+    if (!response.status) {
+      // Handle all users error, e.g., display an error message to the user
+      throw new Error("Get analytics fail: " + getBackendErrorMessage(response))
+    }
+
+    return response.data
+  } catch (error) {
+    // Handle network errors or other exceptions
+    // You can log the error or perform other error-handling actions
+    console.error("Get analytics fail:", getBackendErrorMessage(error))
 
     // Re-throw the error to propagate it up the call stack if needed
     throw getBackendErrorMessage(error)

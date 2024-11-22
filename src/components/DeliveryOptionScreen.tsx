@@ -73,49 +73,6 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
     setLocation()
   }, [setLocation])
 
-  // TODO:
-  // useEffect(() => {
-  //   const getRebundleList = async () => {
-  //     const valid = true
-  //     const data = await rebundleIsActive(user, item.seller._id, cart, valid)
-  //     setIsRebundle({
-  //       status: data.countAllow > 0,
-  //       method: data.seller.deliveryMethod,
-  //       count: data.countAllow,
-  //     })
-  //   }
-  //   getRebundleList()
-  // }, [user])
-
-  // TODO:
-  // useEffect(() => {
-  //   dispatch({ type: "FETCH_ADDRESS_REQUEST" })
-  //   const getAddress = async () => {
-  //     try {
-  //       const { data } = await axios.get(`/api/addresses/${user._id}`, {
-  //         headers: { Authorization: `Bearer ${user.token}` },
-  //       })
-  //       dispatch({ type: "FETCH_ADDRESS_SUCCESS", payload: data })
-  //     } catch (err) {
-  //       dispatch({ type: "FETCH_ADDRESS_FAILED" })
-  //       console.log(getError(err))
-  //     }
-  //   }
-  //   getAddress()
-  // }, [])
-
-  // TODO:
-  // useEffect(() => {
-  //   console.log(addresses)
-  //   if (addresses && addresses.length > 0) {
-  //     addresses.map((d) => {
-  //       if (d.meta.deliveryOption === deliveryOption) {
-  //         setMeta(d.meta)
-  //       }
-  //     })
-  //   }
-  // }, [addresses, deliveryOption])
-
   const submitHandler = async () => {
     let deliverySelect = {}
 
@@ -134,7 +91,6 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
 
         const data = await getGigPrice(item, meta, location.coordinates, token)
 
-        console.log(data)
         if (data) {
           deliverySelect = {
             "delivery Option": deliveryOption,

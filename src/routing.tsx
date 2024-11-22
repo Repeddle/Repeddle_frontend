@@ -56,7 +56,6 @@ import TransactionListUser from "./pages/protected/dashboard/TransactionListUser
 import ReturnPage from "./pages/protected/dashboard/ReturnPage";
 import User from "./pages/protected/dashboard/User";
 import Transaction from "./pages/protected/dashboard/Transaction";
-import AllMessage from "./pages/admin/message";
 import MobileProfile from "./pages/defaults/MobileProfile";
 import MobileNotification from "./pages/protected/MobileNotification";
 import CategoryMobile from "./pages/defaults/CategoryMobile";
@@ -75,6 +74,8 @@ import PlaceOrder from "./pages/protected/PlaceOrder";
 import ShopByOutfit from "./pages/defaults/ShopByOutfit";
 import Coupon from "./pages/admin/Coupon";
 import BrandMore from "./pages/defaults/brands/More";
+import AllProductList from "./pages/admin/AllProductList";
+import AllOrders from "./pages/admin/AllOrders";
 import ArticleList from "./pages/protected/articles";
 import CreateArticle from "./pages/protected/articles/CreateArticles";
 
@@ -119,7 +120,7 @@ const router = createBrowserRouter([
           { path: "howtologreturn", element: <HowToLogAreturn /> },
           { path: "articles", element: <Articles /> },
           { path: "articles/:id", element: <ArticleContent /> },
-          { path: "Contact-Us", element: <ContactUs /> },
+          { path: "contact-Us", element: <ContactUs /> },
           { path: "feestructure", element: <FeeStructure /> },
           { path: "buyerprotection", element: <BuyersProtection /> },
           { path: "how-repeddle-work", element: <HowRepeddleWork /> },
@@ -150,6 +151,7 @@ const router = createBrowserRouter([
           { path: "verifyaccount", element: <VerifyAccount /> },
           { path: "verifyaddress", element: <VerifyAddress /> },
           { path: "earning", element: <Earning /> },
+          { path: "transaction/:id", element: <Transaction /> },
         ],
       },
       {
@@ -158,7 +160,6 @@ const router = createBrowserRouter([
         children: [
           { path: "", element: <Overview /> },
           { path: "wallet", element: <Wallet /> },
-          { path: "messages", element: <AllMessage /> },
           { path: "orderlist", element: <OrderList /> },
           { path: "wishlist", element: <Wishlist /> },
           { path: "salesList", element: <SalesList /> },
@@ -169,7 +170,6 @@ const router = createBrowserRouter([
           { path: "buyerreturns", element: <PurchaseReturn /> },
           { path: "return/:id", element: <ReturnPage /> },
           { path: "user/:id", element: <User /> },
-          { path: "transaction/:id", element: <Transaction /> },
           { path: "product/:id", element: <EditProduct /> },
         ],
       },
@@ -178,11 +178,12 @@ const router = createBrowserRouter([
         path: "admin",
         element: <AdminLayout />,
         children: [
-          { path: "analytic", element: <Analytics /> },
+          { path: "analytics", element: <Analytics /> },
           { path: "categories", element: <Categories /> },
           { path: "userlist", element: <UserList /> },
-          { path: "messages", element: <AllMessage /> },
           { path: "allreturns", element: <AllReturns /> },
+          { path: "allproducts", element: <AllProductList /> },
+          { path: "allorders", element: <AllOrders /> },
           { path: "payments", element: <Payments /> },
           { path: "transactionlist", element: <TransactionList /> },
           { path: "newsletter", element: <NewsletterList /> },

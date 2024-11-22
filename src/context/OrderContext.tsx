@@ -3,10 +3,12 @@ import useAuth from "../hooks/useAuth"
 import { ICreateOrder, IOrder, IOrderSummary } from "../types/order"
 import {
   createOrderService,
+  fetchAllOrdersService,
   fetchOrderByIdService,
   fetchOrdersService,
   fetchSoldOrdersService,
   getOrdersSummaryService,
+  updateOrderItemStatusService,
   updateOrderItemTrackingService,
 } from "../services/order"
 
@@ -15,6 +17,7 @@ type ContextType = {
   loading: boolean
   error: string
   fetchOrders: (orderId?: string) => Promise<boolean>
+  fetchAllOrders: (orderId?: string) => Promise<boolean>
   fetchOrderById: (id: string) => Promise<IOrder | null>
   fetchSoldOrders: () => Promise<boolean>
   createOrder: (
@@ -29,6 +32,11 @@ type ContextType = {
     endDate?: string
     startDate?: string
   }) => Promise<IOrderSummary | null>
+  updateOrderItemStatus: (
+    orderId: string,
+    itemId: string,
+    action: "hold" | "unhold"
+  ) => Promise<IOrder | null>
 }
 
 // Create order context
@@ -60,6 +68,21 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
       setError("")
       setLoading(true)
       const result = await fetchOrdersService(orderId)
+      setOrders(result)
+      setLoading(false)
+      return true
+    } catch (error) {
+      handleError(error as string)
+      setLoading(false)
+      return false
+    }
+  }
+
+  const fetchAllOrders = async (orderId?: string) => {
+    try {
+      setError("")
+      setLoading(true)
+      const result = await fetchAllOrdersService(orderId)
       setOrders(result)
       setLoading(false)
       return true
@@ -164,6 +187,27 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
+  const updateOrderItemStatus = async (
+    orderId: string,
+    itemId: string,
+    action: "hold" | "unhold"
+  ) => {
+    try {
+      setError("")
+      setLoading(true)
+      const result = await updateOrderItemStatusService(orderId, itemId, action)
+      setOrders((prevOrders) =>
+        prevOrders.map((p) => (p._id === orderId ? result : p))
+      )
+      setLoading(false)
+      return result
+    } catch (error) {
+      handleError(error as string)
+      setLoading(false)
+      return null
+    }
+  }
+
   return (
     <OrderContext.Provider
       value={{
@@ -175,8 +219,9 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
         createOrder,
         fetchOrderById,
         getOrdersSummary,
-
+        fetchAllOrders,
         updateOrderItemTracking,
+        updateOrderItemStatus,
       }}
     >
       {children}

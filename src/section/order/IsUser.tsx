@@ -7,6 +7,7 @@ import { IUser } from "../../types/user"
 import { currency, daydiff, deliveryNumber, region } from "../../utils/common"
 import Modal from "../../components/ui/Modal"
 import DeliveryStatus from "../../components/DeliveryStatus"
+import LoadingBox from "../../components/LoadingBox"
 
 type Props = {
   orderItem: OrderItem
@@ -22,6 +23,7 @@ type Props = {
     orderItem: OrderItem
   ) => Promise<void>
   updatingStatus: boolean
+  toggleOrderHoldStatus: (item: OrderItem) => Promise<void>
 }
 
 const IsUser = ({
@@ -35,14 +37,13 @@ const IsUser = ({
   paySeller,
   deliverOrderHandler,
   updatingStatus,
+  toggleOrderHoldStatus,
 }: Props) => {
   const { user } = useAuth()
 
   const [afterAction, setAfterAction] = useState(true)
 
   const placeOrderOnHold = () => {}
-
-  const toggleOrderHoldStatus = () => {}
 
   const paymentRequest = async () => {
     // the below function accepts the current status then uses the next function to update
@@ -60,7 +61,7 @@ const IsUser = ({
           <div className="flex text-center">
             <DeliveryStatus
               status={
-                orderItem.onHold
+                orderItem.isHold
                   ? "Hold"
                   : (orderItem.deliveryTracking.currentStatus
                       .status as DeliverStatus)
@@ -96,12 +97,13 @@ const IsUser = ({
           )}
           {user &&
             userOrdered._id === user._id &&
+            !orderItem.isHold &&
             orderItem.deliveryTracking.currentStatus.status === "Delivered" && (
               <>
                 <div
                   className="cursor-pointer text-white-color bg-orange-color hover:bg-malon-color h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
                   onClick={() => {
-                    orderItem.onHold ? placeOrderOnHold() : setAfterAction(true)
+                    orderItem.isHold ? placeOrderOnHold() : setAfterAction(true)
                   }}
                 >
                   Confirm you have received your order
@@ -113,23 +115,29 @@ const IsUser = ({
                 >
                   <div className="flex flex-col justify-center items-center gap-2.5 h-full pt-10 md:pt-8 p-2.5">
                     <div className="flex justify-between gap-1.5 sm:gap-2.5 w-full max-w-sm">
-                      <div
-                        className="cursor-pointer text-white-color bg-orange-color sm:h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
-                        onClick={() => !updatingStatus && paymentRequest()}
-                      >
-                        Confirm you have received order
-                      </div>
-                      <div
-                        className="cursor-pointer bg-malon-color hover:bg-orange-color text-white-color sm:h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
-                        onClick={() => {
-                          if (!updatingStatus) {
-                            setShowReturn(true)
-                            setAfterAction(false)
-                          }
-                        }}
-                      >
-                        Log a return
-                      </div>
+                      {updatingStatus ? (
+                        <LoadingBox />
+                      ) : (
+                        <>
+                          <div
+                            className="cursor-pointer text-white-color bg-orange-color sm:h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
+                            onClick={() => !updatingStatus && paymentRequest()}
+                          >
+                            Confirm you have received order
+                          </div>
+                          <div
+                            className="cursor-pointer bg-malon-color hover:bg-orange-color text-white-color sm:h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
+                            onClick={() => {
+                              if (!updatingStatus) {
+                                setShowReturn(true)
+                                setAfterAction(false)
+                              }
+                            }}
+                          >
+                            Log a return
+                          </div>
+                        </>
+                      )}
                     </div>
                     <div className="text-[13px] max-w-[400px]">
                       Please inspect your order before confirming receipt.
@@ -144,6 +152,7 @@ const IsUser = ({
         </div>
       </div>
       {deliveryNumber(orderItem.deliveryTracking.currentStatus.status) >= 4 &&
+        !orderItem.isHold &&
         daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) >= 0 && (
           <div className="flex gap-1 items-center justify-center">
             <div
@@ -194,14 +203,17 @@ const IsUser = ({
           </div>
         </div>
         <div className="flex-[2] print:hidden print:mb-2.5">
-          <button className="bg-orange-color text-white w-full px-3 py-[0.375rem] text-base leading-normal border-none">
-            <Link to={`/product/${orderItem.product.slug}`}>Buy Again</Link>
-          </button>
+          <Link to={`/product/${orderItem.product.slug}`}>
+            <button className="bg-orange-color text-white w-full px-3 py-[0.375rem] text-base leading-normal border-none">
+              Buy Again
+            </button>
+          </Link>
           {user?.role === "Admin" &&
             daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) <=
               0 &&
-            deliveryNumber(orderItem.deliveryTracking.currentStatus.status) <
-              4 && (
+            !orderItem.isHold &&
+            deliveryNumber(orderItem.deliveryTracking.currentStatus.status) ===
+              11 && (
               <button
                 onClick={() => refund(orderItem)}
                 className="w-full px-3 py-[0.375rem] text-base leading-normal border-none bg-malon-color mt-2.5"
@@ -211,32 +223,31 @@ const IsUser = ({
             )}
           {user?.role === "Admin" && (
             <button
-              onClick={() => toggleOrderHoldStatus()}
+              onClick={() => toggleOrderHoldStatus(orderItem)}
               className="w-full px-3 py-[0.375rem] text-white text-base leading-normal border-none bg-malon-color mt-2.5"
             >
-              {orderItem.onHold ? "UnHold" : "Hold"}
+              {orderItem.isHold ? "UnHold" : "Hold"}
             </button>
           )}
           {user?.role === "Admin" &&
             daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) <=
               0 &&
+            !orderItem.isHold &&
             deliveryNumber(orderItem.deliveryTracking.currentStatus.status) ===
-              4 && (
+              4 &&
+            (updatingStatus ? (
+              <LoadingBox />
+            ) : (
               <button
                 onClick={() => {
-                  if (!updatingStatus) {
-                    paySeller(orderItem)
-                    deliverOrderHandler(
-                      "Payment To Seller Initiated",
-                      orderItem
-                    )
-                  }
+                  paySeller(orderItem)
+                  deliverOrderHandler("Payment To Seller Initiated", orderItem)
                 }}
                 className="w-full px-3 py-[0.375rem] text-base leading-normal border-none bg-malon-color mt-2.5"
               >
                 Pay Seller
               </button>
-            )}
+            ))}
         </div>
       </div>
       {Object.entries(orderItem.deliveryOption).map(([key, value]) =>

@@ -34,15 +34,15 @@ export type UserFormType = {
   username: string
   confirmPassword: string
   password: string
-  influencer: string
-  badge: string
-  active: string
+  influencer: boolean
+  badge: boolean
+  active: boolean
 }
 
 const User = () => {
   const { id } = useParams()
   const { error, updateUser, user: usersData } = useAuth()
-  const { getUserById, error: getUserError } = useUser()
+  const { getUserById, error: getUserError, updateUserById } = useUser()
   const { addNotification } = useToastNotification()
   const {
     createNewsletter,
@@ -78,6 +78,9 @@ const User = () => {
         setUser(user)
         setRebundleStatus(user.rebundle?.status || false)
         setBundle(user.rebundle?.status || false)
+        userForm.active = user.active
+        userForm.influencer = user.influencer ?? false
+        userForm.badge = user.badge ?? false
       } else if (getUserError || user || "Failed to get user") {
         addNotification(getUserError || user || "Failed to get user")
         setErrors(getUserError || user || "Failed to get user")
@@ -118,14 +121,14 @@ const User = () => {
 
   const [userForm, setUserForm] = useState<UserFormType>({
     about: "",
-    active: "",
-    badge: "",
+    active: true,
+    badge: false,
     confirmPassword: "",
     dob: "",
     email: "",
     firstName: "",
     image: "",
-    influencer: "",
+    influencer: false,
     lastName: "",
     password: "",
     phone: "",
@@ -147,7 +150,10 @@ const User = () => {
     setErrorInput((prevState) => ({ ...prevState, [input]: errorMessage }))
   }
 
-  const handleOnUserChange = (text: string, input: keyof UserFormType) => {
+  const handleOnUserChange = (
+    text: string | boolean,
+    input: keyof UserFormType
+  ) => {
     setUserForm((prevState) => ({ ...prevState, [input]: text }))
   }
 
@@ -197,18 +203,31 @@ const User = () => {
   const updateAccount = async () => {
     setLoadingUpdate(true)
 
-    const res = await updateUser({
+    const data = {
       accountName: input.accountName,
       accountNumber: +input.accountNumber,
       bankName: input.bankName,
-    })
-    if (res) {
+    }
+
+    if (usersData?.role === "Admin" && !id) return
+
+    const res =
+      usersData?.role === "Admin"
+        ? await updateUserById(id!, data)
+        : await updateUser(data)
+    if (res && typeof res !== "string") {
       addNotification("Account updated")
       setShowModel(false)
+      setUser(res)
     } else {
-      addNotification(error || "Failed to update account")
+      addNotification(
+        error || res || "Failed to update account",
+        undefined,
+        true
+      )
     }
     setLoadingUpdate(false)
+    setShowModel(false)
   }
 
   const submitHandler = async (e: FormEvent) => {
@@ -290,6 +309,12 @@ const User = () => {
       data["username"] = userForm.username
     }
 
+    if (usersData?.role === "Admin") {
+      data["active"] = userForm.active
+      data["badge"] = userForm.badge
+      data["influencer"] = true
+    }
+
     const address: Partial<IAddress> = {}
 
     if (input.apartment) {
@@ -307,16 +332,24 @@ const User = () => {
 
     if (Object.keys(address).length > 0) data.address = address
 
-    const res = await updateUser(data)
+    if (usersData?.role === "Admin" && !id) return
 
-    if (res) {
+    const res =
+      usersData?.role === "Admin"
+        ? await updateUserById(id!, data)
+        : await updateUser(data)
+
+    if (res && typeof res !== "string") {
       addNotification("User updated")
-      if (userForm.username) navigate(`/seller/${res.username}`)
+      setUser(res)
+      if (userForm.username && usersData?.role !== "Admin")
+        navigate(`/seller/${res.username}`)
     } else {
-      addNotification(error ? error : "failed to update user")
+      addNotification(error || res || "failed to update user")
     }
 
     setLoadingUpdate(false)
+    setShowModelAddress(false)
   }
 
   const uploadHandler = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -355,18 +388,24 @@ const User = () => {
       }
     }
 
-    const res = await updateUser(data)
+    if (usersData?.role === "Admin" && !id) return
 
-    if (res) {
+    const res =
+      usersData?.role === "Admin"
+        ? await updateUserById(id!, data)
+        : await updateUser(data)
+
+    if (res && typeof res !== "string") {
       if (data.rebundle?.status) {
         addNotification("Rebundle activated")
       } else {
         addNotification("Rebundle deactivated")
       }
+      setUser(res)
       setRebundleStatus(data.rebundle?.status || false)
       setBundle(data.rebundle?.status || false)
     } else {
-      addNotification(error ? error : "failed to update rebundle")
+      addNotification(error || res || "failed to update rebundle")
     }
 
     setLoadingRebundle(false)
@@ -380,15 +419,35 @@ const User = () => {
           resp.message ? resp.message : "Unsubscribed Successfully"
         )
         setNewsletterStatus(false)
-        await updateUser({ allowNewsletter: true })
+        if (usersData?.role === "Admin" && !id) return
+
+        const res =
+          usersData?.role === "Admin"
+            ? await updateUserById(id!, { allowNewsletter: false })
+            : await updateUser({ allowNewsletter: false })
+
+        if (res && typeof res !== "string") {
+          setUser(res)
+        }
       } else {
         addNotification(
-          newsletterError ? newsletterError : "Failed to unsubscribe"
+          newsletterError ? newsletterError : "Failed to unsubscribe",
+          undefined,
+          true
         )
       }
     } else {
       const resp = await createNewsletter(user!.email)
-      await updateUser({ allowNewsletter: false })
+      if (usersData?.role === "Admin" && !id) return
+
+      const res =
+        usersData?.role === "Admin"
+          ? await updateUserById(id!, { allowNewsletter: true })
+          : await updateUser({ allowNewsletter: true })
+
+      if (res && typeof res !== "string") {
+        setUser(res)
+      }
       if (resp) {
         addNotification("Subscribed Successfully")
         setNewsletterStatus(true)

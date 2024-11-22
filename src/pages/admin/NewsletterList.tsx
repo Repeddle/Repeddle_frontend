@@ -2,7 +2,6 @@ import moment from "moment"
 import { useEffect, useState } from "react"
 import { FaCheckCircle, FaTrash } from "react-icons/fa"
 import { INewsletter } from "../../types/message"
-import { emailList as emailListData } from "../../utils/data"
 import useNewsletter from "../../hooks/useNewsletter"
 import useToastNotification from "../../hooks/useToastNotification"
 import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo"
@@ -44,7 +43,7 @@ const NewsletterList = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const rebatchs: any[] = []
-  const emailLists = [emailListData]
+  const [emailLists] = useState<{ name: string }[]>([])
 
   const deleteHandler = async (id: string) => {
     if (window.confirm("Are you sure to delete")) {
@@ -63,16 +62,21 @@ const NewsletterList = () => {
   }
 
   const handleSelectAll = () => {
-    const selectedEmailSet = new Set(
-      newsletters
-        .filter(
-          (newsletter) =>
-            !newsletter.isDeleted && !hasMatchingEmailName(newsletter)
-        )
-        .map((newsletter) => newsletter.email)
-    )
-    setSelectedEmails([...selectedEmailSet])
-    setSelectAll(true)
+    if (!selectAll) {
+      const selectedEmailSet = new Set(
+        newsletters
+          .filter(
+            (newsletter) =>
+              !newsletter.isDeleted && !hasMatchingEmailName(newsletter)
+          )
+          .map((newsletter) => newsletter.email)
+      )
+      setSelectedEmails([...selectedEmailSet])
+      setSelectAll(true)
+    } else {
+      setSelectedEmails([])
+      setSelectAll(false)
+    }
   }
 
   const handleEmailSelection = (newsletter: INewsletter) => {
@@ -106,18 +110,18 @@ const NewsletterList = () => {
               className={`mr-2.5 after:w-[15px] after:h-[15px] after:content-[""] after:inline-block
               after:visible after:relative after:border after:border-orange-color after:-left-px after:-top-0.5
               checked:after:w-[15px] checked:after:h-[15px] checked:after:content-[""] checked:after:inline-block
-              checked:after:visible checked:after:relative checked:after:bg-orange-color checked:after:border
+              checked:after:visible checked:after:relative checked:after:bg-orange-color checked:after:border checked:after:dark:bg-orange-color
               checked:after:border-orange-color checked:after:-left-px checked:after:-top-0.5 after:bg-white-color after:dark:bg-black-color`}
               type="checkbox"
               checked={selectAll}
               onChange={handleSelectAll}
             />
             <label htmlFor="select-all">Select All</label>
-            <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
+            <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 dark:bg-dark-ev2 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
               <select
                 value={emailName}
                 onChange={(e) => setEmailName(e.target.value)}
-                className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev2 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
               >
                 <option value="">-- select --</option>
 
@@ -171,7 +175,7 @@ const NewsletterList = () => {
                   after:visible after:relative after:border after:border-orange-color after:-left-px after:-top-0.5
                   checked:after:w-[15px] checked:after:h-[15px] checked:after:content-[""] checked:after:inline-block
                   checked:after:visible checked:after:relative checked:after:bg-orange-color checked:after:border
-                  checked:after:border-orange-color checked:after:-left-px checked:after:-top-0.5 after:bg-white-color after:dark:bg-black-color`}
+                  checked:after:border-orange-color checked:after:-left-px checked:after:-top-0.5 after:bg-white-color after:dark:bg-black-color checked:after:dark:bg-orange-color`}
                     type="checkbox"
                     checked={selectedEmails.includes(newsletter.email)}
                     onChange={() => handleEmailSelection(newsletter)}
@@ -216,7 +220,7 @@ const NewsletterList = () => {
                   className={`mr-2.5 after:w-[15px] after:h-[15px] after:content-[""] after:inline-block
                   after:visible after:relative after:border after:border-orange-color after:-left-px after:-top-0.5
                   checked:after:w-[15px] checked:after:h-[15px] checked:after:content-[""] checked:after:inline-block
-                  checked:after:visible checked:after:relative checked:after:bg-orange-color checked:after:border
+                  checked:after:visible checked:after:relative checked:after:bg-orange-color checked:after:border checked:after:dark:bg-orange-color
                   checked:after:border-orange-color checked:after:-left-px checked:after:-top-0.5 after:bg-white-color after:dark:bg-black-color`}
                   type="checkbox"
                   checked={selectedEmails.includes(rebatch.email)}

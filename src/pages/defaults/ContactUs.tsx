@@ -36,9 +36,19 @@ function ContactUs() {
       });
       if (response) {
         setSuccess(true);
+        addNotification(
+          "Message has been sent and you will receive a reply soon"
+        );
+        setName("");
+        setCategory("");
+        setEmail("");
+        setMessage("");
+        setSubject("");
+        setImage("");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      addNotification(error || "Failed to send message", undefined, true);
     } finally {
       setLoading(false);
     }
@@ -118,9 +128,11 @@ function ContactUs() {
               type="text"
               id="name"
               name="name"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               placeholder="Your Name"
               className="block w-full px-4 py-4 border border-gray-300 rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none text-black"
-              onChange={(e) => setName(e.target.value)}
             />
           </div>
           <div>
@@ -129,16 +141,20 @@ function ContactUs() {
               placeholder="Your Email"
               id="email"
               name="email"
-              className="block w-full px-4 py-4 border border-gray-300 rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none text-black"
+              required
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="block w-full px-4 py-4 border border-gray-300 rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none text-black"
             />
           </div>
           <div>
             <select
               id="category"
               name="category"
-              className="block w-full px-4 py-4 border rounded-md focus:border-orange-300 focus:ring-orange-300 text-black focus:outline-none border-gray-300"
+              required
+              value={category}
               onChange={(e) => setCategory(e.target.value)}
+              className="block w-full px-4 py-4 border rounded-md focus:border-orange-300 focus:ring-orange-300 text-black focus:outline-none border-gray-300"
             >
               <option value="" className="text-black ">
                 Select a category
@@ -163,8 +179,10 @@ function ContactUs() {
               placeholder="Subject"
               id="subject"
               name="subject"
-              className="block w-full px-4 py-4 border border-gray-300 rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none text-black"
+              required
+              value={subject}
               onChange={(e) => setSubject(e.target.value)}
+              className="block w-full px-4 py-4 border border-gray-300 rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none text-black"
             />
           </div>
           <div>
@@ -172,10 +190,12 @@ function ContactUs() {
               id="message"
               placeholder="Message"
               name="message"
-              className="block w-full px-4 py-4 border border-gray-300 rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none text-black"
+              required
+              value={message}
               onChange={(e) => setMessage(e.target.value)}
+              className="block w-full px-4 py-4 border border-gray-300 rounded-md focus:border-orange-300 focus:ring-orange-300 focus:outline-none text-black"
               rows={4}
-            ></textarea>
+            />
           </div>
           {user &&
             (uploading ? (

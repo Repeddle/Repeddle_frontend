@@ -9,6 +9,8 @@ import {
 } from "../types/product"
 import useAuth from "../hooks/useAuth"
 import {
+  addProductShareCountService,
+  addProductViewCountService,
   commentProductService,
   createProductReviewService,
   createProductService,
@@ -42,16 +44,19 @@ type ContextType = {
     message: string
     likes: string[]
   } | null>
+
   unlikeProduct: (id: string) => Promise<{
     message: string
     likes: string[]
   } | null>
+
   commentProduct: (
     id: string,
-    comment: string
+    comment: { comment: string; image?: string }
   ) => Promise<{
     comment: IComment
   } | null>
+
   likeProductComment: (
     id: string,
     commentId: string
@@ -59,6 +64,7 @@ type ContextType = {
     message: string
     comment: IComment
   } | null>
+
   unlikeProductComment: (
     id: string,
     commentId: string
@@ -66,6 +72,7 @@ type ContextType = {
     message: string
     comment: IComment
   } | null>
+
   replyProductComment: (
     id: string,
     commentId: string,
@@ -74,6 +81,7 @@ type ContextType = {
     message: string
     comment: IComment
   } | null>
+
   likeProductCommentReply: (
     id: string,
     commentId: string,
@@ -82,6 +90,7 @@ type ContextType = {
     message: string
     reply: ICommentReply
   } | null>
+
   unlikeProductCommentReply: (
     id: string,
     commentId: string,
@@ -90,6 +99,7 @@ type ContextType = {
     message: string
     reply: ICommentReply
   } | null>
+
   createProductReview: (
     id: string,
     review: {
@@ -101,6 +111,9 @@ type ContextType = {
     message: string
     review: IReview
   } | null>
+
+  addProductViewCount: (id: string, hashed: string) => Promise<void>
+  addProductShareCount: (id: string, userId: string) => Promise<void>
 }
 
 // Create product context
@@ -308,7 +321,10 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
-  const commentProduct = async (id: string, comment: string) => {
+  const commentProduct = async (
+    id: string,
+    comment: { comment: string; image?: string }
+  ) => {
     try {
       setError("")
       // setLoading(true)
@@ -532,6 +548,21 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
+  const addProductShareCount = async (id: string, userId: string) => {
+    try {
+      await addProductShareCountService(id, userId)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const addProductViewCount = async (id: string, hashed: string) => {
+    try {
+      await addProductViewCountService(id, hashed)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <ProductContext.Provider
       value={{
@@ -554,6 +585,8 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         unlikeProduct,
         unlikeProductComment,
         unlikeProductCommentReply,
+        addProductShareCount,
+        addProductViewCount,
       }}
     >
       {children}

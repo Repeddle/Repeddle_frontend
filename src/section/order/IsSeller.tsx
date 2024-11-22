@@ -31,6 +31,7 @@ type Props = {
     trackingNumber?: string
   ) => Promise<void>
   updatingStatus: boolean
+  toggleOrderHoldStatus: (item: OrderItem) => Promise<void>
 }
 
 const IsSeller = ({
@@ -45,6 +46,7 @@ const IsSeller = ({
   paySeller,
   deliverOrderHandler,
   updatingStatus,
+  toggleOrderHoldStatus,
 }: Props) => {
   const { user } = useAuth()
 
@@ -59,8 +61,6 @@ const IsSeller = ({
     await updateTracking()
     setShowTracking(false)
   }
-
-  const toggleOrderHoldStatus = () => {}
 
   const showNextStatus = (status: string) => {
     const entries = Object.entries(deliveryStatusMap)
@@ -104,7 +104,7 @@ const IsSeller = ({
           <div className="flex text-center">
             <DeliveryStatus
               status={
-                orderItem.onHold
+                orderItem.isHold
                   ? "Hold"
                   : (orderItem.deliveryTracking.currentStatus
                       .status as DeliverStatus)
@@ -133,6 +133,7 @@ const IsSeller = ({
         </div>
         {user &&
           userOrdered._id === user._id &&
+          !orderItem.isHold &&
           orderItem.deliveryTracking.currentStatus.status === "Delivered" && (
             <div
               className="cursor-pointer text-white-color bg-orange-color hover:bg-malon-color h-[30px] mr-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
@@ -177,6 +178,7 @@ const IsSeller = ({
                 {deliveryNumber(
                   orderItem.deliveryTracking.currentStatus.status
                 ) < 4 &&
+                  !orderItem.isHold &&
                   (!updatingStatus ? (
                     <div
                       onClick={updateTracking}
@@ -231,14 +233,18 @@ const IsSeller = ({
         </div>
 
         <div className="flex-[2] print:hidden print:mb-2.5">
-          <button className="bg-[#0d6efd] w-full px-3 py-[0.375rem] text-base leading-normal border-none">
-            <Link to={`/product/${orderItem.product.slug}`}>Buy Again</Link>
-          </button>
+          <Link to={`/product/${orderItem.product.slug}`}>
+            <button className="bg-[#0d6efd] w-full px-3 py-[0.375rem] text-base leading-normal border-none">
+              Buy Again
+            </button>
+          </Link>
+          {/* {deliveryNumber(orderItem.deliveryTracking.currentStatus.status)} */}
           {user?.role === "Admin" &&
             daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) <=
               0 &&
-            deliveryNumber(orderItem.deliveryTracking.currentStatus.status) <
-              4 && (
+            !orderItem.isHold &&
+            deliveryNumber(orderItem.deliveryTracking.currentStatus.status) ===
+              11 && (
               <button
                 onClick={() => refund(orderItem)}
                 className="inline-block bg-malon-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
@@ -249,16 +255,17 @@ const IsSeller = ({
 
           {user?.role === "Admin" && (
             <button
-              onClick={() => toggleOrderHoldStatus()}
+              onClick={() => toggleOrderHoldStatus(orderItem)}
               className="w-full px-3 py-[0.375rem] text-base leading-normal border-none bg-malon-color mt-2.5"
             >
-              {orderItem?.onHold ? "UnHold" : "Hold"}
+              {orderItem?.isHold ? "UnHold" : "Hold"}
             </button>
           )}
 
           {user?.role === "Admin" &&
             daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) <=
               0 &&
+            !orderItem.isHold &&
             deliveryNumber(orderItem.deliveryTracking.currentStatus.status) ===
               4 && (
               <button

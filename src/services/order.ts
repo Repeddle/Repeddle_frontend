@@ -29,6 +29,33 @@ export const fetchOrdersService = async (
     throw getBackendErrorMessage(error)
   }
 }
+export const fetchAllOrdersService = async (
+  orderId?: string
+): Promise<IOrder[]> => {
+  try {
+    let url = "/orders/admin"
+
+    if (orderId) {
+      url = url + `?orderId=${orderId}`
+    }
+
+    const resp: { orders: IOrder[]; status: boolean } = await api.get(url)
+
+    if (!resp.status) {
+      // Handle Fetch orders error, e.g., display an error message to the user
+      throw new Error("Fetch orders failed: " + getBackendErrorMessage(resp))
+    }
+
+    return resp.orders
+  } catch (error) {
+    // Handle network errors or other exceptions
+    // You can log the error or perform other error-handling actions
+    console.error("Fetch orders error:", getBackendErrorMessage(error))
+
+    // Re-throw the error to propagate it up the call stack if needed
+    throw getBackendErrorMessage(error)
+  }
+}
 
 export const fetchOrderByIdService = async (id: string): Promise<IOrder> => {
   try {
@@ -122,6 +149,32 @@ export const updateOrderItemTrackingService = async (
       // Handle Update order error, e.g., display an error message to the user
       throw new Error("Update order failed: " + getBackendErrorMessage(data))
     }
+
+    return data.order
+  } catch (error) {
+    // Handle network errors or other exceptions
+    // You can log the error or perform other error-handling actions
+    console.error("Update order error:", getBackendErrorMessage(error))
+
+    // Re-throw the error to propagate it up the call stack if needed
+    throw getBackendErrorMessage(error)
+  }
+}
+export const updateOrderItemStatusService = async (
+  orderId: string,
+  itemId: string,
+  action: "hold" | "unhold"
+): Promise<IOrder> => {
+  try {
+    const data: {
+      status: boolean
+      order: IOrder
+    } = await api.put(`/orders/hold/${orderId}/${itemId}?action=${action}`)
+
+    // if (!data.status) {
+    //   // Handle Update order error, e.g., display an error message to the user
+    //   throw new Error("Update order failed: " + getBackendErrorMessage(data))
+    // }
 
     return data.order
   } catch (error) {

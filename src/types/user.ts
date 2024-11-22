@@ -1,4 +1,4 @@
-import { IProduct, Pagination } from "./product"
+import { IProduct, IReview, Pagination } from "./product"
 
 export interface IAddress {
   apartment?: string
@@ -41,7 +41,7 @@ export interface IUser {
   isVerifiedEmail: boolean
   region: "NGN" | "ZAR"
   socketId?: string
-  activeLastUpdate: string
+  activeLastUpdated?: string
   usernameLastUpdated?: string
   createdAt: string
   updatedAt?: string
@@ -95,10 +95,8 @@ export type IUsersWithPagination = Pagination & { users: IUser[] }
 
 export type TopSellers = {
   username: string
-  firstName: string
-  lastName: string
   image: string
-  sold: number
+  badge?: boolean
 }
 
 export type UserByUsername = {
@@ -108,7 +106,7 @@ export type UserByUsername = {
     followers: string[]
     following: string[]
     likes: string[]
-    sold: Array<string>
+    sold: string[]
     numReviews: number
     region: string
     createdAt: string
@@ -118,6 +116,7 @@ export type UserByUsername = {
     rating?: number
     buyers?: string[]
     rebundle?: IRebundle
+    reviews?: IReview[]
   }
   products: {
     all: IProduct[]
@@ -125,4 +124,49 @@ export type UserByUsername = {
     liked: IProduct[]
     selling: IProduct[]
   }
+}
+
+export type Analytics = {
+  totalUsers: number
+  totalOrders: number
+  totalProducts: number
+  totalEarnings: number
+  newMembers: {
+    _id: string
+    email: string
+    createdAt: string
+    firstName: string
+    image: string
+    lastName: string
+    username: string
+  }[]
+  recentProducts: {
+    _id: string
+    name: string
+    slug: string
+    images: string[]
+    createdAt: string
+  }[]
+  topSellers: {
+    _id: string
+    username: string
+    image: string
+    totalSales: number
+    createdAt?: string
+  }[]
+  mostViewedProducts: {
+    _id: string
+    name: string
+    slug: string
+    images: string[]
+    viewcount: string[]
+  }[]
+  outOfStockProducts: {
+    _id: string
+    name: string
+    slug: string
+    images: string[]
+    viewcount: string[]
+    createdAt?: string
+  }[]
 }

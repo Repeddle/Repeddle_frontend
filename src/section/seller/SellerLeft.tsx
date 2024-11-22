@@ -16,14 +16,16 @@ import useToastNotification from "../../hooks/useToastNotification";
 import useMessage from "../../hooks/useMessage";
 import useUser from "../../hooks/useUser";
 import { imageUrl } from "../../services/api";
+import { IReview } from "../../types/product";
 
 type Props = {
   loadingUser: boolean;
   error?: string | null;
   usernameData?: UserByUsername;
+  addReview: (review: IReview) => void;
 };
 
-const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
+const SellerLeft = ({ loadingUser, error, usernameData, addReview }: Props) => {
   const {
     user: userInfo,
     followUser,
@@ -36,9 +38,9 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
   const { user } = useAuth();
   const { isOnline } = useUser();
 
-  const [showLoginModel, setShowLoginModel] = useState(false);
   const [messageLoading, setMessageLoading] = useState(false);
   const [showModel, setShowModel] = useState(false);
+  const [showReport, setShowReport] = useState(false);
   const [showWriteReview, setShowWriteReview] = useState(false);
 
   const toggleFollow = async () => {
@@ -199,7 +201,10 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
               )}
 
               <Modal isOpen={showModel} onClose={() => setShowModel(false)}>
-                <ReviewLists setShowModel={setShowModel} />
+                <ReviewLists
+                  setShowModel={setShowModel}
+                  reviews={usernameData.user.reviews}
+                />
               </Modal>
               <Modal
                 isOpen={showWriteReview}
@@ -208,6 +213,7 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
                 <WriteReview
                   userId={usernameData.user._id}
                   setShowModel={setShowWriteReview}
+                  addReview={addReview}
                 />
               </Modal>
               <button
@@ -288,12 +294,17 @@ const SellerLeft = ({ loadingUser, error, usernameData }: Props) => {
             >
               Report Seller
             </button>
-            <Modal
-              isOpen={showLoginModel}
-              onClose={() => setShowLoginModel(false)}
-            >
-              <Report reportedUser={usernameData.user._id} />
-            </Modal>
+
+            <Report
+              refs="user"
+              reportItem={{
+                id: usernameData.user._id,
+                image: usernameData.user.image,
+                name: usernameData.user.username,
+              }}
+              setShowModel={setShowReport}
+              showModel={showReport}
+            />
           </div>
         )
       )}

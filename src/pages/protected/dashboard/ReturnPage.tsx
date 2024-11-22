@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// TODO: remove this
 import { useEffect, useState } from "react"
 import {
   currency,
-  // daydiff,
+  daydiff,
   deliveryNumber,
   deliveryStatusMap,
   region,
@@ -13,16 +11,15 @@ import useAuth from "../../../hooks/useAuth"
 import moment from "moment"
 import MessageImage from "../../../components/ui/MessageImage"
 import Modal from "../../../components/ui/Modal"
-// import { FaCheck } from "react-icons/fa"
 import DeliveryReturn from "../../../components/DeliveryReturn"
 import useReturn from "../../../hooks/useReturn"
-import { IReturn } from "../../../types/order"
+import { IReturn, OrderItem } from "../../../types/order"
 import useToastNotification from "../../../hooks/useToastNotification"
 import LoadingControlModal from "../../../components/ui/loadin/LoadingControlLogo"
 import LoadingBox from "../../../components/LoadingBox"
 import { FaCheck } from "react-icons/fa"
 import DeliveryHistoryReturn from "../../../components/DeliveryHistoryReturn"
-// import { IUser } from "../../../types/user"
+import usePayments from "../../../hooks/usePayment"
 
 const ReturnPage = () => {
   const { id: returnId } = useParams()
@@ -33,6 +30,7 @@ const ReturnPage = () => {
     updateReturnStatus,
   } = useReturn()
   const { addNotification } = useToastNotification()
+  const { paySeller, refundBuyer } = usePayments()
 
   const { user } = useAuth()
 
@@ -43,6 +41,7 @@ const ReturnPage = () => {
   const [returned, setReturned] = useState<IReturn>()
   const [showTracking, setShowTracking] = useState(false)
   const [trackingNumber, setTrackingNumber] = useState("")
+  const [refunding, setRefunding] = useState(false)
 
   useEffect(() => {
     const getData = async () => {
@@ -52,7 +51,7 @@ const ReturnPage = () => {
       if (res) {
         setReturned(res)
       } else {
-        addNotification(error)
+        addNotification(error, undefined, true)
       }
 
       setLoading(false)
@@ -105,13 +104,37 @@ const ReturnPage = () => {
     setLoadingReturn(false)
   }
 
-  // const refund = (val: any) => {
-  //   console.log(val)
-  // }
+  const onRefund = async (item: OrderItem) => {
+    if (!returned) return
+    setRefunding(true)
+    const data = await refundBuyer(
+      returned.orderId._id,
+      item.product._id,
+      returned.orderId.buyer._id
+    )
 
-  // const paySeller = (val: any) => {
-  //   console.log(val)
-  // }
+    if (typeof data !== "string") {
+      addNotification(data.message)
+    } else addNotification(data, undefined, true)
+
+    setRefunding(false)
+  }
+
+  const onPaySeller = async (item: OrderItem) => {
+    if (!returned) return
+    setRefunding(true)
+    const data = await paySeller(
+      returned.orderId._id,
+      item.product._id,
+      returned.productId.seller._id
+    )
+
+    if (typeof data !== "string") {
+      addNotification(data.message)
+    } else addNotification(data, undefined, true)
+
+    setRefunding(false)
+  }
 
   // const paymentRequest = async (user: IUser, cost: number, type: string) => {
   //   console.log(user, cost, type)
@@ -341,67 +364,82 @@ const ReturnPage = () => {
               (orderitem.product as unknown as string) ===
                 returned.productId._id && (
                 <>
-                  {/* {user?.role === "Admin" &&
-                  daydiff(orderitem.deliveredAt, 3) <= 0 &&
-                  deliveryNumber(
-                    orderitem.deliveryTracking.currentStatus.status
-                  ) === 8 &&
-                  !returned.returnDelivery &&
-                  (refunding ? (
-                    <LoadingBox />
-                  ) : (
-                    <button
-                      onClick={() => refund(orderitem)}
-                      className="inline-block bg-orange-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
-                    >
-                      Refund
-                    </button>
-                  ))} */}
-                  {/* {user?.role === "Admin" &&
-                  daydiff(orderitem.deliveredAt, 3) <= 0 &&
-                  deliveryNumber(
-                    orderitem.deliveryTracking.currentStatus.status
-                  ) === 10 &&
-                  (refunding ? (
-                    <LoadingBox />
-                  ) : (
-                    <button
-                      onClick={() => refund(orderitem)}
-                      className="inline-block bg-orange-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
-                    >
-                      Refund
-                    </button>
-                  ))} */}
-                  {/* {user?.role === "Admin" &&
-                  daydiff(orderitem.deliveredAt, 3) <= 0 &&
-                  deliveryNumber(
-                    orderitem.deliveryTracking.currentStatus.status
-                  ) === 8 &&
-                  returned.returnDelivery && (
-                    <button
-                      onClick={() => {
-                        paySeller(orderitem)
-                      }}
-                      className="inline-block bg-orange-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
-                    >
-                      Pay Seller
-                    </button>
-                  )} */}
-                  {/* {user?.role === "Admin" &&
-                  daydiff(orderitem.deliveredAt, 7) <= 0 &&
-                  deliveryNumber(
-                    orderitem.deliveryTracking.currentStatus.status
-                  ) === 9 &&
-                  returned.returnDelivery && (
-                    <button
-                      onClick={() => {
-                        paySeller(orderitem)
-                      }}
-                      className="inline-block bg-orange-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
-                    >
-                      Pay Seller
-                    </button>
-                  )} */}
+                  {user?.role === "Admin" &&
+                    daydiff(
+                      orderitem.deliveryTracking.currentStatus.status,
+                      3
+                    ) <= 0 &&
+                    deliveryNumber(
+                      orderitem.deliveryTracking.currentStatus.status
+                    ) === 8 &&
+                    returned.deliveryTracking.currentStatus.status !==
+                      "Return Delivered" &&
+                    (refunding ? (
+                      <LoadingBox />
+                    ) : (
+                      <button
+                        onClick={() => onRefund(orderitem)}
+                        className="inline-block bg-orange-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
+                      >
+                        Refund
+                      </button>
+                    ))}
+                  {user?.role === "Admin" &&
+                    daydiff(
+                      orderitem.deliveryTracking.currentStatus.status,
+                      3
+                    ) <= 0 &&
+                    deliveryNumber(
+                      orderitem.deliveryTracking.currentStatus.status
+                    ) === 10 &&
+                    (refunding ? (
+                      <LoadingBox />
+                    ) : (
+                      <button
+                        onClick={() => onRefund(orderitem)}
+                        className="inline-block bg-orange-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
+                      >
+                        Refund
+                      </button>
+                    ))}
+                  {user?.role === "Admin" &&
+                    daydiff(
+                      orderitem.deliveryTracking.currentStatus.timestamp,
+                      3
+                    ) <= 0 &&
+                    deliveryNumber(
+                      orderitem.deliveryTracking.currentStatus.status
+                    ) === 8 &&
+                    returned.deliveryTracking.currentStatus.status ===
+                      "Return Delivered" && (
+                      <button
+                        onClick={() => {
+                          onPaySeller(orderitem)
+                        }}
+                        className="inline-block bg-orange-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
+                      >
+                        Pay Seller
+                      </button>
+                    )}
+                  {user?.role === "Admin" &&
+                    daydiff(
+                      orderitem.deliveryTracking.currentStatus.timestamp,
+                      7
+                    ) <= 0 &&
+                    deliveryNumber(
+                      orderitem.deliveryTracking.currentStatus.status
+                    ) === 9 &&
+                    returned.deliveryTracking.currentStatus.status ===
+                      "Return Delivered" && (
+                      <button
+                        onClick={() => {
+                          onPaySeller(orderitem)
+                        }}
+                        className="inline-block bg-orange-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
+                      >
+                        Pay Seller
+                      </button>
+                    )}
                   <div className="flex justify-center mx-0 my-5">
                     {returned.productId.seller._id === user?._id ? (
                       deliveryNumber(

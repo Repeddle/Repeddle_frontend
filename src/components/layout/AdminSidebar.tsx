@@ -6,8 +6,18 @@ import { Link } from "react-router-dom"
 import useAuth from "../../hooks/useAuth"
 import useTheme from "../../hooks/useTheme"
 import { BiChart } from "react-icons/bi"
-import { FaEnvelope, FaQuestionCircle, FaUser } from "react-icons/fa"
-import { FaArrowRotateLeft, FaListCheck, FaMoneyBill } from "react-icons/fa6"
+import {
+  FaChartBar,
+  FaEnvelope,
+  FaQuestionCircle,
+  FaUser,
+} from "react-icons/fa"
+import {
+  FaArrowRotateLeft,
+  FaBasketShopping,
+  FaListCheck,
+  FaMoneyBill,
+} from "react-icons/fa6"
 
 const sidebarLinks = [
   {
@@ -23,13 +33,28 @@ const sidebarLinks = [
     icon: <FaListCheck />,
   },
   {
-    path: "/admin/messages",
+    path: "/admin/allproducts",
+    text: "All Products",
+    icon: <FaBasketShopping />,
+  },
+  {
+    path: "/admin/allorders",
+    text: "All Orders",
+    icon: <FaChartBar />,
+  },
+  {
+    path: "/messages",
     text: "All Messages",
     icon: <FaListCheck />,
   },
   {
     path: "/admin/allreturns",
-    text: "Return Queries",
+    text: "All Queries",
+    icon: <FaArrowRotateLeft />,
+  },
+  {
+    path: "/admin/logreturns",
+    text: "All Log returns",
     icon: <FaArrowRotateLeft />,
   },
   { path: "/admin/payments", text: "Payments", icon: <FaMoneyBill /> },

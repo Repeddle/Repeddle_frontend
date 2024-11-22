@@ -10,7 +10,6 @@ import useToastNotification from "../../hooks/useToastNotification"
 import { compressImageUpload } from "../../utils/common"
 
 type Props = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   comments?: IComment[]
   product: IProduct
   setProduct: (val: IProduct) => void
@@ -22,6 +21,7 @@ const ProductComment = ({ comments, product, setProduct }: Props) => {
   const { addNotification } = useToastNotification()
 
   const [comment, setComment] = useState("")
+  const [imageUrl, setImageUrl] = useState("")
   const [loadingCreateReview, setLoadingCreateReview] = useState(false)
 
   const reviewRef = useRef(null)
@@ -33,9 +33,16 @@ const ProductComment = ({ comments, product, setProduct }: Props) => {
       addNotification("Enter a comment")
       return
     }
+
+    const data: { comment: string; image?: string } = { comment }
+
+    if (imageUrl) {
+      data["image"] = imageUrl
+    }
+
     setLoadingCreateReview(true)
 
-    const res = await commentProduct(product._id, comment)
+    const res = await commentProduct(product._id, data)
 
     if (res) {
       const newProd = product
@@ -48,12 +55,11 @@ const ProductComment = ({ comments, product, setProduct }: Props) => {
   }
 
   const uploadImageHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-    // TODO: are we using image
     const file = e.target.files?.[0]
     if (!file) throw Error("No image found")
 
     const imageUrl = await compressImageUpload(file, 1024)
-    console.log(imageUrl)
+    setImageUrl(imageUrl)
   }
 
   return (

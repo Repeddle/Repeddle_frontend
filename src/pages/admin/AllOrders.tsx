@@ -1,24 +1,24 @@
 import { Link } from "react-router-dom"
-import MessageBox from "../../../components/MessageBox"
-import useOrder from "../../../hooks/useOrder"
 import { useEffect, useState } from "react"
-import LoadingControlModal from "../../../components/ui/loadin/LoadingControlLogo"
 import moment from "moment"
+import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo"
+import useOrder from "../../hooks/useOrder"
+import MessageBox from "../../components/MessageBox"
 
-const OrderList = () => {
-  const { fetchOrders, loading, error, orders } = useOrder()
+const AllOrders = () => {
+  const { fetchAllOrders, loading, error, orders } = useOrder()
 
   const [orderQuery, setOrderQuery] = useState("")
 
   useEffect(() => {
-    fetchOrders(orderQuery)
+    fetchAllOrders(orderQuery)
   }, [orderQuery])
 
   return (
     <div className="flex-[4] relative flex flex-col">
       <div className="p-2 pb-5 sm:p-5 my-0 min-h-[85vh] dark:bg-dark-ev1 bg-light-ev1">
         <h1 className="text-xl py-5 pl-0 lg:text-[calc(1.375rem_+_1.5vw)]">
-          Purchase Product History
+          All Orders
         </h1>
         {loading && <LoadingControlModal />}
 
@@ -100,4 +100,4 @@ const OrderList = () => {
   )
 }
 
-export default OrderList
+export default AllOrders
