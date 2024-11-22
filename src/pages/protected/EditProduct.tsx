@@ -32,6 +32,7 @@ import {
 import { colors } from "../../utils/constants"
 import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
 import MessageBox from "../../components/MessageBox"
+import Button from "../../components/ui/Button"
 
 const EditProduct = () => {
   const params = useParams()
@@ -40,7 +41,7 @@ const EditProduct = () => {
   const { user } = useAuth()
   const { fetchCategories, categories } = useCategory()
   const { fetchBrands, brands: searchBrand } = useBrands()
-  const { fetchProductById } = useProducts()
+  const { fetchProductById, makeUnavailable, updateProduct } = useProducts()
   const { addNotification } = useToastNotification()
 
   useEffect(() => {
@@ -116,6 +117,8 @@ const EditProduct = () => {
   const [product, setProduct] = useState<IProduct>()
   const [tags, setTags] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
+  const [availableLoading, setAvailableLoading] = useState(false)
+  const [soldLoading, setSoldLoading] = useState(false)
   const [error, setError] = useState("")
 
   useEffect(() => {
@@ -171,9 +174,36 @@ const EditProduct = () => {
     e.preventDefault()
   }
 
-  const notAvailable = async () => {}
+  const notAvailable = async () => {
+    if (!product) return
+    setAvailableLoading(true)
 
-  const handleSold = async () => {}
+    const res = await makeUnavailable(product._id)
+    if (typeof res !== "string") {
+      if (res.message) addNotification(res.message)
+      setProduct({ ...product, isAvailable: res.product.isAvailable })
+    } else {
+      addNotification(error as string, undefined, true)
+    }
+
+    setAvailableLoading(false)
+  }
+
+  const handleSold = async () => {
+    if (!product) return
+    setSoldLoading(true)
+
+    const sold = product.sold !== true ? false : true
+
+    const res = await updateProduct(product._id, { sold })
+    if (typeof res !== "string") {
+      setProduct({ ...product, sold })
+    } else {
+      addNotification(error as string, undefined, true)
+    }
+
+    setSoldLoading(false)
+  }
 
   const handleOnChange = (text: string, inputVal: keyof typeof input) => {
     setInput((prevState) => ({ ...prevState, [inputVal]: text }))
@@ -233,8 +263,10 @@ const EditProduct = () => {
       const res = await uploadImage(file)
       handleOnChange(res, fileType as keyof typeof input)
     } catch (error) {
-      addNotification(error as string)
+      addNotification(error as string, undefined, true)
     }
+
+    setLoadingUpload(false)
   }
 
   const sizeHandler = (sizenow: string) => {
@@ -289,22 +321,18 @@ const EditProduct = () => {
       {product && (
         <>
           <div className="flex items-start max-w-[1190px] justify-between my-2.5">
-            {!product.sold &&
-              (product.isAvailable ? (
-                <button
-                  className="text-white bg-malon-color cursor-pointer mb-2.5 px-5 py-[5px] rounded-[0.2rem] border-none"
-                  onClick={notAvailable}
-                >
-                  No Longer Available
-                </button>
-              ) : (
-                <button
-                  className="text-white bg-malon-color cursor-pointer mb-2.5 px-5 py-[5px] rounded-[0.2rem] border-none"
-                  onClick={notAvailable}
-                >
-                  Mark as Available
-                </button>
-              ))}
+            {!product.sold && (
+              <Button
+                className="text-white !bg-malon-color cursor-pointer mb-2.5 px-5 py-[5px] rounded-[0.2rem] border-none"
+                onClick={notAvailable}
+                text={
+                  product.isAvailable
+                    ? "No Longer Available"
+                    : "Mark as Available"
+                }
+                isLoading={availableLoading}
+              />
+            )}
 
             <Link to="/newproduct" className="justify-self-end">
               <button className="w-20 text-white-color bg-orange-color cursor-pointer p-[5px] rounded-[0.2rem] border-none">
@@ -390,7 +418,7 @@ const EditProduct = () => {
                   after:border-orange-color after:rounded-[15px] after:-left-px after:-top-0.5 checked:after:w-[15px] checked:after:h-[15px]
                   checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                   checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
-                  after:bg-white dark:after:bg-black p-[5px]`}
+                  after:bg-white dark:after:bg-black after:dark:checked:bg-orange-color p-[5px]`}
                         type="radio"
                         name="active"
                         id="active"
@@ -411,7 +439,7 @@ const EditProduct = () => {
                     after:border-orange-color after:rounded-[15px] after:-left-px after:-top-0.5 checked:after:w-[15px] checked:after:h-[15px]
                     checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                     checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
-                    after:bg-white dark:after:bg-black p-[5px]`}
+                    after:bg-white dark:after:bg-black after:dark:checked:bg-orange-color p-[5px]`}
                         type="radio"
                         name="active"
                         id="active2"
@@ -433,7 +461,7 @@ const EditProduct = () => {
                     after:border-orange-color after:rounded-[15px] after:-left-px after:-top-0.5 checked:after:w-[15px] checked:after:h-[15px]
                     checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                     checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
-                    after:bg-white dark:after:bg-black p-[5px]`}
+                    after:bg-white dark:after:bg-black after:dark:checked:bg-orange-color p-[5px]`}
                         type="radio"
                         name="badge"
                         id="badgeyes"
@@ -452,7 +480,7 @@ const EditProduct = () => {
                     after:border-orange-color after:rounded-[15px] after:-left-px after:-top-0.5 checked:after:w-[15px] checked:after:h-[15px]
                     checked:after:content-[""] checked:after:inline-block checked:after:visible checked:after:relative checked:after:bg-orange-color
                     checked:after:border checked:after:border-orange-color checked:after:rounded-[15px] checked:after:-left-px checked:after:-top-0.5
-                    after:bg-white dark:after:bg-black p-[5px]`}
+                    after:bg-white dark:after:bg-black after:dark:checked:bg-orange-color p-[5px]`}
                         type="radio"
                         name="badge"
                         id="badgeno"
@@ -469,20 +497,23 @@ const EditProduct = () => {
                     </div>
                   </>
                 )}
-                {user?.role === "Admin" && (
-                  <div
-                    className={`w-6/12 flex items-center justify-center mx-0 my-2.5 p-[5px] rounded-[0.2rem]
+                {user?.role === "Admin" &&
+                  (soldLoading ? (
+                    <LoadingBox />
+                  ) : (
+                    <div
+                      className={`w-6/12 flex items-center justify-center mx-0 my-2.5 p-[5px] rounded-[0.2rem]
                 ${
                   product.sold
                     ? "text-white bg-malon-color cursor-not-allowed"
                     : "text-white bg-orange-color cursor-pointer"
                 }`}
-                    onClick={!product.sold ? handleSold : undefined}
-                  >
-                    <FaCheckCircle className="mr-[5px]" /> Mark
-                    {product.sold ? "ed" : ""} as sold
-                  </div>
-                )}
+                      onClick={handleSold}
+                    >
+                      <FaCheckCircle className="mr-[5px]" /> Mark
+                      {product.sold ? "ed" : ""} as sold
+                    </div>
+                  ))}
                 <div className="relative flex flex-col lg:w-[400px] mr-5 mt-2.5 w-full">
                   <label className="text-sm mt-[15px] mb-2.5">
                     Main Category

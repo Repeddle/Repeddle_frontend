@@ -162,27 +162,7 @@ export interface CostPriceHistory {
   updatedAt: string
 }
 
-export type ICreateProduct = Omit<
-  IProduct,
-  | "_id"
-  | "seller"
-  | "slug"
-  | "buyers"
-  | "rating"
-  | "likes"
-  | "shares"
-  | "viewcount"
-  | "sold"
-  | "badge"
-  | "active"
-  | "region"
-  | "isAvailable"
-  | "sellingPriceHistory"
-  | "costPriceHistory"
-  | "createdAt"
-  | "updatedAt"
-  | "reviews"
->
+export type ICreateProduct = Partial<IProduct>
 
 export type IBrand = {
   name: string
