@@ -2,9 +2,11 @@ import { CreateReturn, IReturn } from "../types/order"
 import { getBackendErrorMessage } from "../utils/error"
 import api from "./api"
 
-export const fetchPurchaseReturnService = async () => {
+export const fetchPurchaseReturnService = async (search?: string) => {
   try {
-    const url = "/returns/purchase"
+    let url = "/returns/purchase"
+
+    if (search) url = `${url}?${search}`
 
     const resp: {
       returns: IReturn[]
@@ -27,9 +29,11 @@ export const fetchPurchaseReturnService = async () => {
   }
 }
 
-export const fetchSoldReturnService = async () => {
+export const fetchSoldReturnService = async (search?: string) => {
   try {
-    const url = "/returns/sold"
+    let url = "/returns/sold"
+
+    if (search) url = `${url}?${search}`
 
     const resp: {
       returns: IReturn[]

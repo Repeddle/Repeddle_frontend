@@ -9,10 +9,21 @@ const OrderList = () => {
   const { fetchOrders, loading, error, orders } = useOrder()
 
   const [orderQuery, setOrderQuery] = useState("")
+  const [debouncedQuery, setDebouncedQuery] = useState(orderQuery)
 
   useEffect(() => {
-    fetchOrders(orderQuery)
+    const handler = setTimeout(() => {
+      setDebouncedQuery(orderQuery)
+    }, 500)
+
+    return () => {
+      clearTimeout(handler)
+    }
   }, [orderQuery])
+
+  useEffect(() => {
+    fetchOrders(debouncedQuery)
+  }, [debouncedQuery])
 
   return (
     <div className="flex-[4] relative flex flex-col">

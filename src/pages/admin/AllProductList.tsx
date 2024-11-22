@@ -25,12 +25,23 @@ const AllProductList = () => {
   const { addNotification } = useToastNotification()
 
   const [productQuery, setProductQuery] = useState("")
+  const [debouncedQuery, setDebouncedQuery] = useState(productQuery)
 
   useEffect(() => {
-    const string = createSearchParam([["search", productQuery]])
+    const handler = setTimeout(() => {
+      setDebouncedQuery(productQuery)
+    }, 500)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [productQuery])
+
+  useEffect(() => {
+    const string = createSearchParam([["search", debouncedQuery]])
 
     fetchProducts(string)
-  }, [productQuery, user?.role])
+  }, [debouncedQuery, user?.role])
 
   const deleteHandler = async (id: string) => {
     if (window.confirm("Are you sure to delete")) {
@@ -70,7 +81,6 @@ const AllProductList = () => {
 
         <Table
           headers={headers}
-          loading={loading}
           message={
             productQuery.length && !products.products.length
               ? "No product matches search"
