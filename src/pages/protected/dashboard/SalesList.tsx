@@ -50,10 +50,10 @@ const SalesList = () => {
                         </div>
                         <div>
                           <div className="text-sm">
-                            {
-                              order.items[0].deliveryTracking.currentStatus
-                                .status
-                            }
+                            {order.items[0].isHold
+                              ? "On Hold"
+                              : order.items[0].deliveryTracking.currentStatus
+                                  .status}
                           </div>
                           <div>
                             {moment(

@@ -16,6 +16,7 @@ import {
   createProductService,
   deleteProductService,
   fetchProductByIdService,
+  makeUnavailableService,
   fetchProductBySlugService,
   fetchProductsService,
   fetchUserProductsService,
@@ -37,6 +38,9 @@ type ContextType = {
   fetchUserProducts: (params?: string) => Promise<boolean>
   fetchProductBySlug: (slug: string) => Promise<IProduct | null>
   fetchProductById: (id: string) => Promise<IProduct | string>
+  makeUnavailable: (
+    id: string
+  ) => Promise<{ product: IProduct; message?: string } | string>
   createProduct: (product: ICreateProduct) => Promise<IProduct | null>
   updateProduct: (id: string, product: ICreateProduct) => Promise<boolean>
   deleteProduct: (id: string) => Promise<{ message?: string }>
@@ -196,6 +200,20 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
       setError("")
       setLoading(true)
       const result = await fetchProductByIdService(id)
+      setLoading(false)
+      return result
+    } catch (error) {
+      handleError(error as string)
+      setLoading(false)
+      return error as string
+    }
+  }
+
+  const makeUnavailable = async (id: string) => {
+    try {
+      setError("")
+      setLoading(true)
+      const result = await makeUnavailableService(id)
       setLoading(false)
       return result
     } catch (error) {
@@ -575,6 +593,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         deleteProduct,
         fetchProductBySlug,
         fetchProductById,
+        makeUnavailable,
         updateProduct,
         commentProduct,
         createProductReview,

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import moment from "moment"
-import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo"
 import useOrder from "../../hooks/useOrder"
 import MessageBox from "../../components/MessageBox"
 
@@ -9,10 +8,21 @@ const AllOrders = () => {
   const { fetchAllOrders, loading, error, orders } = useOrder()
 
   const [orderQuery, setOrderQuery] = useState("")
+  const [debouncedQuery, setDebouncedQuery] = useState(orderQuery)
 
   useEffect(() => {
-    fetchAllOrders(orderQuery)
+    const handler = setTimeout(() => {
+      setDebouncedQuery(orderQuery)
+    }, 500)
+
+    return () => {
+      clearTimeout(handler)
+    }
   }, [orderQuery])
+
+  useEffect(() => {
+    fetchAllOrders(debouncedQuery)
+  }, [debouncedQuery])
 
   return (
     <div className="flex-[4] relative flex flex-col">
@@ -20,7 +30,7 @@ const AllOrders = () => {
         <h1 className="text-xl py-5 pl-0 lg:text-[calc(1.375rem_+_1.5vw)]">
           All Orders
         </h1>
-        {loading && <LoadingControlModal />}
+        {/* {loading && <LoadingControlModal />} */}
 
         <div className="flex mr-2.5 mb-2.5 justify-end">
           <input
