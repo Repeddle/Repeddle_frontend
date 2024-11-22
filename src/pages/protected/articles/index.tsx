@@ -26,13 +26,13 @@ const ArticleList = () => {
   };
 
   return (
-    <div className="container mx-auto max-w-4xl px-8 mb-4 mt-10">
+    <div className=" px-4 md:px-8 mb-4 mt-4 md:mt-10">
       {activeComponent === "list" && (
         <>
           <section className="mt-10">
-            <div className="flex flex-col sm:flex-row justify-between items-center">
-              <h2 className="font-bold text-2xl mb-6 sm:mb-0">Article List</h2>
-              <div className="flex flex-row space-x-4 mt-4 sm:mt-0">
+            <div className="flex flex-row mb-4 justify-between items-center">
+              <h2 className="font-bold text-2xl ">Article List</h2>
+              <div className=" ">
                 <Link
                   to="/admin/create-article"
                   className="p-2 text-lg flex text-white bg-orange-400 rounded hover:bg-red-800"
@@ -43,7 +43,7 @@ const ArticleList = () => {
             </div>
           </section>
 
-          <section className="container mx-auto max-w-4xl px-8 mb-4 mt-10">
+          <section className="  px-4 md:px-8 mt-4 md:mt-10">
             <div className="mb-4">
               {loading ? (
                 <div className="grid md:grid-cols-2 gap-4">
