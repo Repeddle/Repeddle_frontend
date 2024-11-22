@@ -11,7 +11,7 @@ import { getConversationsService } from "../../services/message";
 import { compressImageUpload } from "../../utils/common";
 import useToastNotification from "../../hooks/useToastNotification";
 import { IoMdClose } from "react-icons/io";
-import { baseURL } from "../../services/api";
+import { baseURL, imageUrl } from "../../services/api";
 import LoadingBox from "../LoadingBox";
 import useAuth from "../../hooks/useAuth";
 
@@ -138,7 +138,7 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
                 {" "}
                 {sending.image && (
                   <img
-                    src={sending.image}
+                    src={imageUrl + sending.image}
                     className="object-contain max-w-full h-auto "
                   />
                 )}
@@ -207,7 +207,7 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
                     >
                       {message.image && (
                         <img
-                          src={message.image}
+                          src={imageUrl + message.image}
                           className="object-contain max-w-full h-auto "
                         />
                       )}

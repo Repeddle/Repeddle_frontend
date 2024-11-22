@@ -1,4 +1,4 @@
-import { IUser } from "../../types/user"
+import { IUser } from "../../types/user";
 import {
   FaDotCircle,
   FaEnvelope,
@@ -7,33 +7,34 @@ import {
   FaPlus,
   FaQuestionCircle,
   FaUser,
-} from "react-icons/fa"
-import { currency, region } from "../../utils/common"
-import { FaBolt, FaCalendarDays, FaLocationDot } from "react-icons/fa6"
-import useAuth from "../../hooks/useAuth"
-import Modal from "../../components/ui/Modal"
-import { banks, states } from "../../utils/constants"
-import { FormEvent } from "react"
-import { InputType } from "../../pages/protected/dashboard/User"
-import Button from "../../components/ui/Button"
+} from "react-icons/fa";
+import { currency, region } from "../../utils/common";
+import { FaBolt, FaCalendarDays, FaLocationDot } from "react-icons/fa6";
+import useAuth from "../../hooks/useAuth";
+import Modal from "../../components/ui/Modal";
+import { banks, states } from "../../utils/constants";
+import { FormEvent } from "react";
+import { InputType } from "../../pages/protected/dashboard/User";
+import Button from "../../components/ui/Button";
+import { imageUrl } from "../../services/api";
 
 type Props = {
-  user: IUser
+  user: IUser;
   balance?: {
-    balance: number
-  }
-  input: InputType
-  handleOnChange: (val: string, key: keyof InputType) => void
-  errorInput: InputType
-  handleError: (val: string, key: keyof InputType) => void
-  addressValidate: (e: FormEvent) => void
-  accountValidate: (e: FormEvent) => void
-  loadingUpdate?: boolean
-  showModel: boolean
-  setShowModel: (val: boolean) => void
-  showModelAddress: boolean
-  setShowModelAddress: (val: boolean) => void
-}
+    balance: number;
+  };
+  input: InputType;
+  handleOnChange: (val: string, key: keyof InputType) => void;
+  errorInput: InputType;
+  handleError: (val: string, key: keyof InputType) => void;
+  addressValidate: (e: FormEvent) => void;
+  accountValidate: (e: FormEvent) => void;
+  loadingUpdate?: boolean;
+  showModel: boolean;
+  setShowModel: (val: boolean) => void;
+  showModelAddress: boolean;
+  setShowModelAddress: (val: boolean) => void;
+};
 
 const UserLeftComp = ({
   user,
@@ -50,7 +51,7 @@ const UserLeftComp = ({
   showModel,
   showModelAddress,
 }: Props) => {
-  const { user: userInfo } = useAuth()
+  const { user: userInfo } = useAuth();
 
   return (
     <div className="flex-1 p-5 rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1">
@@ -59,7 +60,7 @@ const UserLeftComp = ({
           <div className="relative">
             <img
               className="w-10 h-10 object-cover object-top rounded-[50%]"
-              src={user.image}
+              src={imageUrl + user.image}
               alt="p"
             />
             {user.badge && (
@@ -128,7 +129,7 @@ const UserLeftComp = ({
           <div
             className="cursor-pointer ml-[5px] p-[5px] rounded-[0.2rem] hover:bg-malon-color"
             onClick={() => {
-              setShowModelAddress(!showModelAddress)
+              setShowModelAddress(!showModelAddress);
             }}
           >
             <FaPlus />
@@ -345,7 +346,7 @@ const UserLeftComp = ({
         </Modal>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserLeftComp
+export default UserLeftComp;

@@ -1,6 +1,8 @@
-import useArticle from "../../../hooks/useArticle"
-import { FaEdit, FaTrash } from "react-icons/fa"
-import { useState } from "react"
+import useArticle from "../../../hooks/useArticle";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Article } from "../../../types/article";
 
 const SkeletonLoader = () => (
   <div className="animate-pulse bg-gray-200 rounded-lg p-4">
@@ -8,27 +10,20 @@ const SkeletonLoader = () => (
     <div className="h-4 w-full mb-2 bg-gray-300 rounded"></div>
     <div className="h-4 w-5/6 mb-2 bg-gray-300 rounded"></div>
   </div>
-)
+);
 
 const ArticleList = () => {
-  const { articles, loading } = useArticle()
-  const [activeComponent] = useState("list")
+  const { articles, loading, deleteArticle } = useArticle();
+  const [activeComponent] = useState("list");
 
-  // const handleCreateArticleClick = () => {
-  //   setActiveComponent('createArticle');
-  // };
-
-  // const handleEditClick = (article: Article) => {
-  //   setActiveComponent('editArticle');
-  // };
-
-  // const handleDeleteClick = async (article: Article) => {
-  //   const confirmDelete = window.confirm('Do you really want to delete this article?');
-  //   if (confirmDelete) {
-  //     deleteArticle(article._id);
-
-  //   }
-  // }
+  const handleDeleteClick = async (article: Article) => {
+    const confirmDelete = window.confirm(
+      "Do you really want to delete this article?"
+    );
+    if (confirmDelete) {
+      deleteArticle(article._id);
+    }
+  };
 
   return (
     <div className="container mx-auto max-w-4xl px-8 mb-4 mt-10">
@@ -38,12 +33,12 @@ const ArticleList = () => {
             <div className="flex flex-col sm:flex-row justify-between items-center">
               <h2 className="font-bold text-2xl mb-6 sm:mb-0">Article List</h2>
               <div className="flex flex-row space-x-4 mt-4 sm:mt-0">
-                <button
-                  // onClick={handleCreateArticleClick}
+                <Link
+                  to="/admin/create-article"
                   className="p-2 text-lg flex text-white bg-orange-400 rounded hover:bg-red-800"
                 >
                   Create Article
-                </button>
+                </Link>
               </div>
             </div>
           </section>
@@ -71,14 +66,14 @@ const ArticleList = () => {
                         }}
                       />
                       <div className="flex items-center mt-2">
-                        <div
-                          // onClick={() => handleEditClick(article)}
+                        <Link
+                          to={`/admin/create-article?id=${article._id}`}
                           className="flex items-center text-black hover:text-malon-color mr-4 cursor-pointer"
                         >
                           <FaEdit className="mr-2" /> Edit
-                        </div>
+                        </Link>
                         <div
-                          // onClick={() => handleDeleteClick(article)}
+                          onClick={() => handleDeleteClick(article)}
                           className="flex items-center text-black hover:text-malon-color cursor-pointer"
                         >
                           <FaTrash className="mr-2" /> Delete
@@ -95,7 +90,7 @@ const ArticleList = () => {
 
       {/* {(activeComponent === 'createArticle' || activeComponent === 'editArticle') && <CreateArticle onCancel={handleCancelCreateArticle} onArticleCreated={handleArticleCreated} article={selectedArticle} />} */}
     </div>
-  )
-}
+  );
+};
 
-export default ArticleList
+export default ArticleList;

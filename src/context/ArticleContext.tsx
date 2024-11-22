@@ -23,7 +23,7 @@ interface ArticleContextData {
   error: string;
   fetchArticleById: (id: string) => Promise<Article>;
   fetchArticles: (search?: string) => Promise<Article[]>;
-  createArticle: (articleData: Article) => Promise<boolean>;
+  createArticle: (articleData: ArticleData) => Promise<boolean>;
   updateArticle: (
     _id: string,
     articleData: Partial<Article>
@@ -76,6 +76,8 @@ const ArticleProvider: React.FC<Props> = ({ children }) => {
     try {
       const createdArticle = await createArticleService(articleData);
       setArticles([...articles, createdArticle]);
+      const fetchedCategories = await fetchCategories();
+      setCategories(fetchedCategories);
       return true;
     } catch (error) {
       handleError(error);
@@ -105,6 +107,9 @@ const ArticleProvider: React.FC<Props> = ({ children }) => {
         article._id === _id ? { ...article, ...articleData } : article
       );
       setArticles(updatedArticles);
+
+      const fetchedCategories = await fetchCategories();
+      setCategories(fetchedCategories);
       return true;
     } catch (error) {
       handleError(error);

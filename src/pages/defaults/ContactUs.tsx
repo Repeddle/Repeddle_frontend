@@ -1,62 +1,78 @@
-import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa"
-import { FiImage } from "react-icons/fi"
-import useContact from "../../hooks/useContact"
-import { ChangeEvent, FormEvent, useState } from "react"
-import useToastNotification from "../../hooks/useToastNotification"
-import { compressImageUpload } from "../../utils/common"
+import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import { FiImage } from "react-icons/fi";
+import useContact from "../../hooks/useContact";
+import { ChangeEvent, useState } from "react";
+import { compressImageUpload } from "../../utils/common";
+import useAuth from "../../hooks/useAuth";
+import useToastNotification from "../../hooks/useToastNotification";
+import { imageUrl } from "../../services/api";
+import LoadingBox from "../../components/LoadingBox";
+import Modal from "../../components/ui/Modal";
 
 function ContactUs() {
-  const { createContact, error } = useContact()
-  const { addNotification } = useToastNotification()
+  const { createContact } = useContact();
+  const { user } = useAuth();
+  const { addNotification } = useToastNotification();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [category, setCategory] = useState("");
+  const [message, setMessage] = useState("");
+  const [image, setImage] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [category, setCategory] = useState("")
-  const [message, setMessage] = useState("")
-  const [subject, setSubject] = useState("")
-  const [file, setFile] = useState<string[]>([])
-
-  const sendMessage = async (e: FormEvent) => {
-    e.preventDefault()
-
-    const res = await createContact({
-      name,
-      category,
-      email,
-      message,
-      subject,
-      file: [],
-    })
-
-    if (res) {
-      addNotification("Message has been sent and you will receive a reply soon")
-      setName("")
-      setCategory("")
-      setEmail("")
-      setMessage("")
-      setSubject("")
-      setFile([])
-    } else {
-      addNotification(error || "Failed to send message", undefined, true)
-    }
-  }
-
-  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.length) {
-      try {
-        const res = await Promise.all(
-          Array.from({ length: e.target.files.length }).map((_, i) =>
-            compressImageUpload(e.target.files![i], 1024)
-          )
-        )
-
-        setFile([...file, ...res])
-      } catch (error) {
-        console.log(error)
-        addNotification("Failed to upload image", undefined, true)
+  const handleSend = async () => {
+    setLoading(true);
+    try {
+      const response = await createContact({
+        name,
+        email,
+        subject,
+        message,
+        file: [image],
+        category,
+      });
+      if (response) {
+        setSuccess(true);
+        addNotification(
+          "Message has been sent and you will receive a reply soon"
+        );
+        setName("");
+        setCategory("");
+        setEmail("");
+        setMessage("");
+        setSubject("");
+        setImage("");
       }
+    } catch (error: any) {
+      console.log(error);
+      addNotification(error || "Failed to send message", undefined, true);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
+
+  const uploadHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const bodyFormData = new FormData();
+    bodyFormData.append("file", file);
+    setUploading(true);
+    try {
+      const compressImage = await compressImageUpload(file, 1024, image);
+
+      setImage(compressImage);
+
+      addNotification("Image Uploaded");
+    } catch (err) {
+      addNotification("Failed uploading image");
+    }
+
+    setUploading(false);
+  };
 
   return (
     <div className="container mx-auto max-w-7xl w-full flex-col md:gap-24 lg:flex-row  lg:mt-14 flex p-8 lg:rounded-xl mb-10">
@@ -106,7 +122,7 @@ function ContactUs() {
       </div>
 
       <div className="lg:w-1/2 w-full p-4 lg:p-12 bg-malon-color rounded-lg">
-        <form onSubmit={sendMessage} className="space-y-6  w-full text-white">
+        <form className="space-y-6  w-full text-white" onSubmit={handleSend}>
           <div>
             <input
               type="text"
@@ -181,37 +197,47 @@ function ContactUs() {
               rows={4}
             />
           </div>
-          <div className="flex justify-center">
-            <label
-              htmlFor="file"
-              className="mb-2 font-medium cursor-pointer flex items-center gap-2 "
-            >
-              <FiImage className="text-2xl" /> Add Image{" "}
-              <span className="opacity-50">(optional)</span>
-            </label>
-            <input
-              onChange={handleFileChange}
-              multiple
-              type="file"
-              id="file"
-              name="file"
-              className="sr-only"
-              accept="image/*"
-            />
-          </div>
+          {user &&
+            (uploading ? (
+              <LoadingBox size="sm" />
+            ) : image ? (
+              <img src={imageUrl + image} className="w-4 h-4" />
+            ) : (
+              <div className="flex justify-center">
+                <label
+                  htmlFor="file"
+                  className="mb-2 font-medium cursor-pointer flex items-center gap-2 "
+                >
+                  <FiImage className="text-2xl" /> Add Image{" "}
+                  <span className="opacity-50">(optional)</span>
+                </label>
+                <input
+                  type="file"
+                  id="file"
+                  name="file"
+                  className="sr-only"
+                  onChange={uploadHandler}
+                />
+              </div>
+            ))}
           <div className="flex justify-center items-center w-full">
             <button
               type="submit"
+              disabled={loading}
               className="block justify-center align-middle items-center w-full px-4 py-3  font-medium text-white bg-orange-color 
             rounded-md  uppercase focus:outline-none focus:ring-2 focus:ring-orange-color  "
             >
               Send Message
             </button>
+            {loading && <LoadingBox />}
           </div>
         </form>
       </div>
+      <Modal isOpen={success} onClose={() => setSuccess(false)}>
+        <div>Message submitted successfully</div>
+      </Modal>
     </div>
-  )
+  );
 }
 
-export default ContactUs
+export default ContactUs;

@@ -7,9 +7,10 @@ import axios, {
 // export const baseURL = "http://localhost:5000";
 export const baseURL = "https://repeddle-backend.onrender.com";
 
+export const imageUrl = baseURL;
 const api = axios.create({
   baseURL: baseURL + "/api",
-  timeout: 10000,
+  // timeout: 10000,
   headers: {
     "Content-Type": "application/json",
   },

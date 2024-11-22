@@ -1,18 +1,19 @@
-import { useState } from "react"
-import { FaTimes } from "react-icons/fa"
+import { useState } from "react";
+import { FaTimes } from "react-icons/fa";
+import { imageUrl } from "../../services/api";
 
 type Props = {
-  url: string
-}
+  url: string;
+};
 
 const MessageImage = ({ url }: Props) => {
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
 
   return (
     <div>
       <img
         className="block max-w-[150px]"
-        src={url}
+        src={imageUrl + url}
         alt="img"
         onClick={() => setShow(true)}
       />
@@ -21,20 +22,20 @@ const MessageImage = ({ url }: Props) => {
           <div
             className="absolute w-10 h-10 flex justify-center items-center cursor-pointer rounded-[50%] right-5 top-5"
             onClick={() => {
-              setShow(false)
+              setShow(false);
             }}
           >
             <FaTimes className="text-black" />
           </div>
           <img
             className="lg:max-h-full max-h-[auto] max-w-full"
-            src={url}
+            src={imageUrl + url}
             alt="img"
           />
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default MessageImage
+export default MessageImage;

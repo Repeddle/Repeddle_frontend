@@ -1,27 +1,29 @@
-import { useMemo, useState } from "react"
-import LoadingBox from "../../components/LoadingBox"
-import MessageBox from "../../components/MessageBox"
-import { Link, useNavigate } from "react-router-dom"
-import { FaGlobe, FaLink, FaPen, FaTag, FaUser } from "react-icons/fa"
-import ReviewLists from "../../components/ReviewLists"
-import WriteReview from "./WriteReview"
-import RebundlePoster from "../../components/RebundlePoster"
-import { FaLocationDot } from "react-icons/fa6"
-import Report from "../product/Report"
-import Rating from "../../components/Rating"
-import { UserByUsername } from "../../types/user"
-import Modal from "../../components/ui/Modal"
-import useAuth from "../../hooks/useAuth"
-import useToastNotification from "../../hooks/useToastNotification"
-import useMessage from "../../hooks/useMessage"
-import { IReview } from "../../types/product"
+import { useMemo, useState } from "react";
+import LoadingBox from "../../components/LoadingBox";
+import MessageBox from "../../components/MessageBox";
+import { Link, useNavigate } from "react-router-dom";
+import { FaGlobe, FaLink, FaPen, FaTag, FaUser } from "react-icons/fa";
+import ReviewLists from "../../components/ReviewLists";
+import WriteReview from "./WriteReview";
+import RebundlePoster from "../../components/RebundlePoster";
+import { FaLocationDot } from "react-icons/fa6";
+import Report from "../product/Report";
+import Rating from "../../components/Rating";
+import { UserByUsername } from "../../types/user";
+import Modal from "../../components/ui/Modal";
+import useAuth from "../../hooks/useAuth";
+import useToastNotification from "../../hooks/useToastNotification";
+import useMessage from "../../hooks/useMessage";
+import useUser from "../../hooks/useUser";
+import { imageUrl } from "../../services/api";
+import { IReview } from "../../types/product";
 
 type Props = {
-  loadingUser: boolean
-  error?: string | null
-  usernameData?: UserByUsername
-  addReview: (review: IReview) => void
-}
+  loadingUser: boolean;
+  error?: string | null;
+  usernameData?: UserByUsername;
+  addReview: (review: IReview) => void;
+};
 
 const SellerLeft = ({ loadingUser, error, usernameData, addReview }: Props) => {
   const {
@@ -29,50 +31,46 @@ const SellerLeft = ({ loadingUser, error, usernameData, addReview }: Props) => {
     followUser,
     unFollowUser,
     error: followError,
-  } = useAuth()
-  const { addNotification } = useToastNotification()
-  const { createMessage, error: messageError } = useMessage()
-  const navigate = useNavigate()
-  const { user } = useAuth()
+  } = useAuth();
+  const { addNotification } = useToastNotification();
+  const { createMessage, error: messageError } = useMessage();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { isOnline } = useUser();
 
-  const [messageLoading, setMessageLoading] = useState(false)
-  const [showModel, setShowModel] = useState(false)
-  const [showReport, setShowReport] = useState(false)
-  const [showWriteReview, setShowWriteReview] = useState(false)
-
-  const isOnlineCon = (c: string) => {
-    console.log(c)
-    return false
-  }
+  const [messageLoading, setMessageLoading] = useState(false);
+  const [showModel, setShowModel] = useState(false);
+  const [showReport, setShowReport] = useState(false);
+  const [showWriteReview, setShowWriteReview] = useState(false);
 
   const toggleFollow = async () => {
-    if (!usernameData) return
+    if (!usernameData) return;
     if (usernameData.user.username === userInfo?.username) {
-      addNotification("You can't follow yourself")
-      return
+      addNotification("You can't follow yourself");
+      return;
     }
 
     if (!userInfo) {
-      addNotification("Login to follow")
-      return
+      addNotification("Login to follow");
+      return;
     }
 
     if (isFollowing) {
-      const res = await unFollowUser(usernameData.user._id)
+      const res = await unFollowUser(usernameData.user._id);
 
-      if (res) addNotification(res)
-      else addNotification(followError ? followError : "")
+      if (res) addNotification(res);
+      else addNotification(followError ? followError : "");
     } else {
-      const res = await followUser(usernameData.user._id)
+      const res = await followUser(usernameData.user._id);
 
-      if (res) addNotification(res)
-      else addNotification(followError ? followError : "")
+      if (res) addNotification(res);
+      else addNotification(followError ? followError : "");
     }
-  }
+  };
 
   const handleReport = (id: string) => {
-    console.log(id)
-  }
+    console.log(id);
+  };
 
   const handleShare = async () => {
     try {
@@ -84,29 +82,29 @@ const SellerLeft = ({ loadingUser, error, usernameData, addReview }: Props) => {
         url: ` ${window.location.protocol}//${window.location.hostname}${
           usernameData?.user.region === "NGN" ? "/ng/" : "/za/"
         }${usernameData?.user.username}`,
-      })
-      console.log("Shared successfully")
+      });
+      console.log("Shared successfully");
     } catch (error) {
-      console.error("Error sharing:", error)
+      console.error("Error sharing:", error);
     }
-  }
+  };
 
   const addConversation = async (sellerId?: string, userId?: string) => {
-    if (!sellerId || !userId) return
+    if (!sellerId || !userId) return;
 
-    setMessageLoading(true)
+    setMessageLoading(true);
     try {
       const convo = await createMessage({
         participantId: sellerId,
         type: "Chat",
-      })
-      navigate(`/messages?conversation=${convo._id}`)
+      });
+      navigate(`/messages?conversation=${convo._id}`);
     } catch (error) {
-      addNotification(messageError || (error as string))
+      addNotification(messageError || (error as string));
     }
 
-    setMessageLoading(false)
-  }
+    setMessageLoading(false);
+  };
 
   const isFollowing = useMemo(
     () =>
@@ -115,7 +113,7 @@ const SellerLeft = ({ loadingUser, error, usernameData, addReview }: Props) => {
         usernameData.user.followers.find((x) => x === userInfo?._id)
       ),
     [userInfo?._id, usernameData?.user.followers]
-  )
+  );
 
   return (
     <div className="flex-[2]">
@@ -129,7 +127,7 @@ const SellerLeft = ({ loadingUser, error, usernameData, addReview }: Props) => {
             <div className="relative flex flex-col items-center mb-2.5 px-[15px] py-0 rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1">
               <div className="relative">
                 <img
-                  src={usernameData.user.image}
+                  src={imageUrl + usernameData.user.image}
                   className="relative w-[150px] h-[150px] object-cover object-top mt-[60px] rounded-[50%]"
                   alt={usernameData.user.username}
                 />
@@ -147,7 +145,7 @@ const SellerLeft = ({ loadingUser, error, usernameData, addReview }: Props) => {
                   <FaPen className="absolute left-[30px] top-[30px]" />
                 )}
               </Link>
-              {isOnlineCon(usernameData.user._id) ? (
+              {isOnline(usernameData.user._id) ? (
                 <div className="border-orange-color text-orange-color absolute capitalize px-2.5 py-0 rounded-[15px] border-[0.1rem]  right-[30px] top-[30px]">
                   online
                 </div>
@@ -311,7 +309,7 @@ const SellerLeft = ({ loadingUser, error, usernameData, addReview }: Props) => {
         )
       )}
     </div>
-  )
-}
+  );
+};
 
-export default SellerLeft
+export default SellerLeft;
