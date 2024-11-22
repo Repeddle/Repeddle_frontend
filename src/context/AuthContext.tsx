@@ -257,6 +257,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
       const result = await deleteUserService(id)
       if (result) {
         // getAllUser();
+        await logout()
         return result
       }
       return null
@@ -321,8 +322,8 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     }
   }
 
-  const logout = () => {
-    logoutUser()
+  const logout = async () => {
+    await logoutUser()
     setUser(null)
     localStorage.removeItem("authToken")
   }

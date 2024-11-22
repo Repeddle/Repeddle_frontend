@@ -4,17 +4,29 @@ import useReturn from "../../hooks/useReturn"
 import { createSearchParam } from "../../utils/common"
 
 const AllReturns = () => {
+  // FIXME: pagination on admin
   const { fetchAdminReturns, error, loading, returns } = useReturn()
 
   const [query, setQuery] = useState("")
+  const [debouncedQuery, setDebouncedQuery] = useState(query)
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query)
+    }, 500)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [query])
 
   useEffect(() => {
     const search = createSearchParam([
       ["status", "active"],
-      ["search", query],
+      ["search", debouncedQuery],
     ])
     fetchAdminReturns(search)
-  }, [query])
+  }, [debouncedQuery])
 
   return (
     <div className="flex-[4] overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">

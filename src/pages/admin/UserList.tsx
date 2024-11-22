@@ -19,6 +19,17 @@ const headers = [
 
 const UserList = () => {
   const [userQuery, setUserQuery] = useState("")
+  const [debouncedQuery, setDebouncedQuery] = useState(userQuery)
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(userQuery)
+    }, 500)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [userQuery])
   const [users, setUsers] = useState<IUsersWithPagination>({
     currentPage: 0,
     totalCount: 0,
@@ -37,7 +48,7 @@ const UserList = () => {
       setLoading(true)
       const search = createSearchParam([
         ["page", `${page}`],
-        ["search", userQuery],
+        ["search", debouncedQuery],
       ])
       const allUsers = await getAllUserAdmin(search)
 
@@ -49,7 +60,7 @@ const UserList = () => {
     }
 
     fetchUsers()
-  }, [page, userQuery])
+  }, [page, debouncedQuery])
 
   useEffect(() => {
     if (error) addNotification(error)

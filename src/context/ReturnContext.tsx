@@ -16,8 +16,8 @@ type ContextType = {
   returns: IReturn[]
   loading: boolean
   error: string
-  fetchSoldReturns: () => Promise<boolean>
-  fetchPurchaseReturns: () => Promise<boolean>
+  fetchSoldReturns: (search?: string) => Promise<boolean>
+  fetchPurchaseReturns: (search?: string) => Promise<boolean>
   fetchAdminReturns: (search?: string) => Promise<boolean>
   createReturns: (body: CreateReturn) => Promise<IReturn | null>
   fetchReturnById: (id: string) => Promise<IReturn | null>
@@ -59,11 +59,11 @@ export const ReturnProvider = ({ children }: PropsWithChildren) => {
   }
 
   // Function to fetch returns
-  const fetchSoldReturns = async () => {
+  const fetchSoldReturns = async (search?: string) => {
     try {
       setError("")
       setLoading(true)
-      const result = await fetchSoldReturnService()
+      const result = await fetchSoldReturnService(search)
       setReturns(result)
       setLoading(false)
       return true
@@ -73,11 +73,11 @@ export const ReturnProvider = ({ children }: PropsWithChildren) => {
       return false
     }
   }
-  const fetchPurchaseReturns = async () => {
+  const fetchPurchaseReturns = async (search?: string) => {
     try {
       setError("")
       setLoading(true)
-      const result = await fetchPurchaseReturnService()
+      const result = await fetchPurchaseReturnService(search)
       setReturns(result)
       setLoading(false)
       return true

@@ -10,7 +10,7 @@ type Props = {
 }
 
 const headers = [
-  { title: "ID", hide: true },
+  { title: "ID" },
   { title: "Product" },
   { title: "Buyer", hide: true },
   { title: "Seller", hide: true },

@@ -81,6 +81,7 @@ const User = () => {
         userForm.active = user.active
         userForm.influencer = user.influencer ?? false
         userForm.badge = user.badge ?? false
+        // eslint-disable-next-line no-constant-condition
       } else if (getUserError || user || "Failed to get user") {
         addNotification(getUserError || user || "Failed to get user")
         setErrors(getUserError || user || "Failed to get user")

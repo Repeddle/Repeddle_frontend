@@ -1,15 +1,28 @@
 import { useEffect, useState } from "react"
 import UserReturnTable from "../../../components/table/UserReturnTable"
 import useReturn from "../../../hooks/useReturn"
+import { createSearchParam } from "../../../utils/common"
 
 const SoldReturns = () => {
   const { fetchSoldReturns, error, loading, returns } = useReturn()
 
   const [query, setQuery] = useState("")
+  const [debouncedQuery, setDebouncedQuery] = useState(query)
 
   useEffect(() => {
-    fetchSoldReturns()
-  }, [])
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query)
+    }, 500)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [query])
+
+  useEffect(() => {
+    const string = createSearchParam([["search", debouncedQuery]])
+    fetchSoldReturns(string)
+  }, [debouncedQuery])
 
   console.log(returns)
 

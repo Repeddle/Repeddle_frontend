@@ -25,12 +25,23 @@ const ProductList = () => {
   const { addNotification } = useToastNotification()
 
   const [productQuery, setProductQuery] = useState("")
+  const [debouncedQuery, setDebouncedQuery] = useState(productQuery)
 
   useEffect(() => {
-    const string = createSearchParam([["search", productQuery]])
+    const handler = setTimeout(() => {
+      setDebouncedQuery(productQuery)
+    }, 500)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [productQuery])
+
+  useEffect(() => {
+    const string = createSearchParam([["search", debouncedQuery]])
 
     fetchUserProducts(string)
-  }, [productQuery, user?.role])
+  }, [debouncedQuery, user?.role])
 
   const deleteHandler = async (id: string) => {
     if (window.confirm("Are you sure to delete")) {

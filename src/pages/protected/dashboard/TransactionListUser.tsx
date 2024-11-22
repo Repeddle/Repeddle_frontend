@@ -7,6 +7,17 @@ import { createSearchParam } from "../../../utils/common"
 
 const TransactionListUser = () => {
   const [query, setQuery] = useState("")
+  const [debouncedQuery, setDebouncedQuery] = useState(query)
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query)
+    }, 500)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [query])
   const [page, setPage] = useState(1)
 
   const {
@@ -21,11 +32,11 @@ const TransactionListUser = () => {
   useEffect(() => {
     const string = createSearchParam([
       ["page", page.toString()],
-      ["transactionId", query],
+      ["transactionId", debouncedQuery],
     ])
 
     fetchUserTransactions(string)
-  }, [page, query])
+  }, [page, debouncedQuery])
 
   useEffect(() => {
     if (error) addNotification(error)
