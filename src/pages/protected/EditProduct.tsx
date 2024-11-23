@@ -1,21 +1,11 @@
 import { FormEvent, useEffect, useMemo, useState } from "react"
 import { Link, useParams } from "react-router-dom"
-import { currency, region, uploadImage } from "../../utils/common"
-import useAuth from "../../hooks/useAuth"
-import Modal from "../../components/ui/Modal"
-import FeeStructure from "../defaults/info/FeeStructure"
-import { FaQuestionCircle, FaUpload } from "react-icons/fa"
-import Condition from "../defaults/info/Condition"
-import MessageImage from "../../components/ui/MessageImage"
-import LoadingBox from "../../components/LoadingBox"
+import { currency, region } from "../../utils/common"
 import useCategory from "../../hooks/useCategory"
 import useToastNotification from "../../hooks/useToastNotification"
-import CropImage from "../../components/cropImage/CropImage"
 import Chart from "../../components/Chart"
-import AddOtherBrand from "../../components/AddOtherBrand"
 import useBrands from "../../hooks/useBrand"
 import useProducts from "../../hooks/useProducts"
-import DeliveryOption from "../../components/DeliveryOption"
 import {
   IDeliveryOption,
   IProduct,
@@ -23,7 +13,6 @@ import {
   InputData,
   ProductMeta,
 } from "../../types/product"
-import { colors } from "../../utils/constants"
 import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
 import MessageBox from "../../components/MessageBox"
 import Button from "../../components/ui/Button"
@@ -35,9 +24,8 @@ const EditProduct = () => {
   const params = useParams()
   const { id } = params
 
-  const { user } = useAuth()
   const { fetchCategories } = useCategory()
-  const { fetchBrands, brands: searchBrand } = useBrands()
+  const { fetchBrands } = useBrands()
   const { fetchProductById, makeUnavailable, updateProduct } = useProducts()
   const { addNotification } = useToastNotification()
 
@@ -84,11 +72,9 @@ const EditProduct = () => {
     material: "",
     description: "",
     price: "",
-    color: [],
     selectedSize: "",
     specification: "",
     keyFeatures: "",
-    image: "",
   })
 
   const [paxi, setPaxi] = useState(region() === "ZAR")
@@ -100,7 +86,9 @@ const EditProduct = () => {
   const [pickup, setPickup] = useState(true)
   const [bundle, setBundle] = useState(false)
   const [meta, setMeta] = useState<ProductMeta>({})
-  const [currentImage, setCurrentImage] = useState("image1")
+  const [currentImage, setCurrentImage] = useState("")
+  const [images, setImages] = useState<string[]>([])
+  const [color, setColor] = useState<string[]>([])
   const [product, setProduct] = useState<IProduct>()
   const [tags, setTags] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
@@ -128,11 +116,12 @@ const EditProduct = () => {
         if (typeof data !== "string") {
           setProduct(data)
           setCurrentImage(data.images[0])
+          setImages(data.images)
+          setColor(data.color ?? [])
           setInput({
             ...input,
             brand: data.brand ?? input.brand,
             category: data.category ?? input.category,
-            color: data.color ?? input.color,
             condition: data.condition ?? input.condition,
             description: data.description ?? input.description,
             keyFeatures: data.keyFeatures ?? input.keyFeatures,
@@ -184,9 +173,11 @@ const EditProduct = () => {
       validateDetails(),
       validateFeatures(),
       validatePrice(),
+      validateMedia(),
     ].every((val) => val)
 
     if (valid) await handleCreate()
+    else notifyError()
   }
 
   const notAvailable = async () => {
@@ -278,6 +269,15 @@ const EditProduct = () => {
     return true
   }
 
+  const validateMedia = () => {
+    if (images.length < 1) {
+      handleError("There must be at least one image", "image")
+      return false
+    }
+
+    return true
+  }
+
   const validateDescription = () => {
     if (!input.brand) {
       handleError("Select brand", "brand")
@@ -309,7 +309,7 @@ const EditProduct = () => {
       return false
     }
 
-    if (!input.color) {
+    if (!color.length) {
       handleError("Select color", "color")
       return false
     }
@@ -320,18 +320,12 @@ const EditProduct = () => {
   const handleCreate = async () => {
     if (!product) return
 
-    const images: string[] = []
-    if (mediaInput.image1) images.push(mediaInput.image1)
-    if (mediaInput.image2) images.push(mediaInput.image2)
-    if (mediaInput.image3) images.push(mediaInput.image3)
-    if (mediaInput.image4) images.push(mediaInput.image4)
-
     setUpdateLoading(true)
 
     const res = await updateProduct(product._id, {
       name: input.name,
       images,
-      video,
+      video: product.video,
       mainCategory: input.product,
       subCategory: input.subCategory,
       category: input.category,
@@ -346,11 +340,11 @@ const EditProduct = () => {
       sizes,
       condition: input.condition,
       keyFeatures: input.keyFeatures,
-      luxury: mediaInput.luxury,
-      vintage: mediaInput.vintage,
+      luxury: product.luxury,
+      vintage: product.vintage,
       material: input.material,
-      color: input.color,
-      luxuryImage: mediaInput.luxuryImage,
+      color,
+      luxuryImage: product.luxuryImage,
       active,
       badge,
       // addSize,
@@ -385,6 +379,9 @@ const EditProduct = () => {
 
   const handleOnChange = (text: string, inputVal: keyof typeof input) => {
     setInput((prevState) => ({ ...prevState, [inputVal]: text }))
+    if (validationError[inputVal]) {
+      removeError(inputVal)
+    }
   }
 
   const handleError = (
@@ -572,7 +569,7 @@ const EditProduct = () => {
                 removeTags={removeTags}
                 setActive={setActive}
                 setBadge={setBadge}
-                setShowConditionModal={setShowComissionModal}
+                setShowConditionModal={setShowConditionModal}
                 setShowDelivery={setShowDelivery}
                 showConditionModal={showConditionModal}
                 showDelivery={showDelivery}
@@ -629,12 +626,15 @@ const EditProduct = () => {
                 sizes={sizes}
                 smallSizeHandler={smallSizeHandler}
                 validationError={validationError}
+                color={color}
+                setColor={setColor}
               />
 
               <div className="flex flex-col justify-between flex-1">
                 <ImageUploadEditProduct
                   currentImage={currentImage}
-                  handleOnChange={handleOnChange}
+                  setImages={setImages}
+                  images={images}
                   product={product}
                   setCurrentImage={setCurrentImage}
                   setShowUploadingImage={setShowUploadingImage}

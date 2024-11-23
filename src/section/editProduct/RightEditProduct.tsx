@@ -6,6 +6,7 @@ import FeeStructure from "../../pages/defaults/info/FeeStructure"
 import AddOtherBrand from "../../components/AddOtherBrand"
 import useBrands from "../../hooks/useBrand"
 import { colors } from "../../utils/constants"
+import { ChangeEvent } from "react"
 
 type Props = {
   product: IProduct
@@ -34,6 +35,8 @@ type Props = {
   smallSizeHandler: (label: string, value: string) => void
   handleError: (errorMessage: string, input: string | number) => void
   sizeHandler: (sizenow: string) => void
+  color: string[]
+  setColor: (val: string[]) => void
 }
 
 const RightEditProduct = ({
@@ -63,8 +66,18 @@ const RightEditProduct = ({
   handleError,
   smallSizeHandler,
   sizeHandler,
+  color,
+  setColor,
 }: Props) => {
   const { brands: searchBrand } = useBrands()
+
+  const handleColorChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const selectedOptions = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    )
+    setColor(selectedOptions)
+  }
 
   return (
     <div className="flex flex-col flex-1">
@@ -82,7 +95,7 @@ const RightEditProduct = ({
           <label className="text-sm mt-[15px] mb-2.5">Selling Price</label>
           <div className="flex items-center">
             <input
-              className="border h-10 bg-transparent p-2.5 w-[100px] mr-[5px] rounded-[0.2rem] focus-visible:outline focus-visible:outline-orange-color border-light-ev4 dark:border-dark-ev4 text-black dark:text-white"
+              className="border h-10 bg-transparent p-2.5 w-full lg:w-[100px] mr-[5px] rounded-[0.2rem] focus-visible:outline focus-visible:outline-orange-color border-light-ev4 dark:border-dark-ev4 text-black dark:text-white"
               placeholder={product.sellingPrice.toString()}
               type="number"
               onChange={(e) => {
@@ -95,6 +108,9 @@ const RightEditProduct = ({
           </div>
         </div>
       </div>
+      {validationError.sellingPrice && (
+        <div className="text-[red] text-xs">{validationError.sellingPrice}</div>
+      )}
       <div className="flex gap-2.5">
         <div
           className={`text-2xl text-malon-color mt-3 ${
@@ -157,6 +173,9 @@ const RightEditProduct = ({
           }}
           onBlur={() => input.brand.length > 0 && setBrandQuery("")}
         />
+        {validationError.brand && (
+          <div className="text-[red] text-xs">{validationError.brand}</div>
+        )}
         <div className="absolute max-h-[300px] overflow-auto z-[9] rounded-br-[0.2rem] rounded-bl-[0.2rem] top-[120px] bg-light-ev2 dark:bg-dark-ev2">
           {searchBrand &&
             brandQuery.length > 0 &&
@@ -212,9 +231,9 @@ const RightEditProduct = ({
 
         <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 dark:bg-dark-ev1 overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
           <select
-            value={input.color}
+            value={color}
             multiple
-            onChange={(e) => handleOnChange(e.target.value, "color")}
+            onChange={handleColorChange}
             className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
           >
             <option value="">-- select --</option>

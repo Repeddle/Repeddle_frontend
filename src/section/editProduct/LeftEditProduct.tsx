@@ -108,6 +108,9 @@ const LeftEditProduct = ({
         value={input.name}
         onChange={(e) => handleOnChange(e.target.value, "name")}
       />
+      {validationError.name && (
+        <div className="text-[red] text-xs">{validationError.name}</div>
+      )}
       {user?.role === "Admin" && (
         <>
           <label className="text-sm mt-[15px] mb-2.5">Active</label>
@@ -219,6 +222,9 @@ const LeftEditProduct = ({
               ))}
           </select>
         </div>
+        {validationError.product && (
+          <div className="text-[red] text-xs">{validationError.product}</div>
+        )}
       </div>
 
       <div className="relative flex flex-col lg:w-[400px] mr-5 mt-2.5 w-full">
@@ -240,6 +246,9 @@ const LeftEditProduct = ({
               )}
           </select>
         </div>
+        {validationError.category && (
+          <div className="text-[red] text-xs">{validationError.category}</div>
+        )}
       </div>
 
       <div className="relative flex flex-col lg:w-[400px] mr-5 mt-2.5 w-full">
@@ -265,6 +274,11 @@ const LeftEditProduct = ({
               )}
           </select>
         </div>
+        {validationError.subCategory && (
+          <div className="text-[red] text-xs">
+            {validationError.subCategory}
+          </div>
+        )}
       </div>
       <div className="relative flex flex-col lg:w-[400px] mr-5 mt-2.5 w-full">
         <label className="text-sm mt-[15px] flex mb-2.5 items-center">
@@ -441,6 +455,9 @@ Be concise and only use relevant keywords."
               Add
             </div>
           </div>
+          {validationError.tag && (
+            <div className="text-[red] text-xs">{validationError.tag}</div>
+          )}
           <div className="flex flex-wrap">
             {tags.map((t, i) => (
               <div

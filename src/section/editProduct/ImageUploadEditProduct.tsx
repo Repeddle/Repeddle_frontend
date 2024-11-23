@@ -5,7 +5,7 @@ import CropImage from "../../components/cropImage/CropImage"
 import MessageImage from "../../components/ui/MessageImage"
 import useAuth from "../../hooks/useAuth"
 import useToastNotification from "../../hooks/useToastNotification"
-import { InputData, IProduct } from "../../types/product"
+import { IProduct } from "../../types/product"
 import { uploadImage } from "../../utils/common"
 import { useState } from "react"
 
@@ -16,7 +16,8 @@ type Props = {
   showUploadingImage: boolean
   setShowUploadingImage: (val: boolean) => void
   setCurrentImage: (val: string) => void
-  handleOnChange: (text: string, inputVal: keyof InputData) => void
+  images: string[]
+  setImages: (val: string[]) => void
 }
 
 const ImageUploadEditProduct = ({
@@ -24,8 +25,9 @@ const ImageUploadEditProduct = ({
   setShowUploadingImage,
   showUploadingImage,
   currentImage,
-  handleOnChange,
   product,
+  images,
+  setImages,
   setCurrentImage,
 }: Props) => {
   const { user } = useAuth()
@@ -33,11 +35,13 @@ const ImageUploadEditProduct = ({
 
   const [loadingUpload, setLoadingUpload] = useState(false)
 
-  const uploadHandler = async (file: File, fileType: string) => {
+  const uploadHandler = async (file: File, url: string) => {
     setLoadingUpload(true)
     try {
       const res = await uploadImage(file)
-      handleOnChange(res, fileType as keyof InputData)
+      if (url) {
+        setImages(images.map((val) => (val === url ? res : val)))
+      } else setImages([...images, res])
     } catch (error) {
       addNotification(error as string, undefined, true)
     }
