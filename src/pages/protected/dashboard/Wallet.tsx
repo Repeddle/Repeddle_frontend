@@ -1,38 +1,46 @@
-import { useEffect, useState } from "react";
-import WidgetLarge from "../../../components/WidgetLarge";
-import { FaPlus } from "react-icons/fa";
-import Modal from "../../../components/ui/Modal";
-import Withdraw from "../../../section/wallet/Withdraw";
-import AddFund from "../../../section/wallet/AddFund";
-import useWallet from "../../../hooks/useWallet";
-import useToastNotification from "../../../hooks/useToastNotification";
-import LoadingControlModal from "../../../components/ui/loadin/LoadingControlLogo";
-import useAuth from "../../../hooks/useAuth";
-import useTransactions from "../../../hooks/useTransaction";
-import Success from "../../../section/wallet/Success";
+import { useEffect, useState } from "react"
+import WidgetLarge from "../../../components/WidgetLarge"
+import { FaPlus } from "react-icons/fa"
+import Modal from "../../../components/ui/Modal"
+import Withdraw from "../../../section/wallet/Withdraw"
+import AddFund from "../../../section/wallet/AddFund"
+import useWallet from "../../../hooks/useWallet"
+import useToastNotification from "../../../hooks/useToastNotification"
+import LoadingControlModal from "../../../components/ui/loadin/LoadingControlLogo"
+import useAuth from "../../../hooks/useAuth"
+import useTransactions from "../../../hooks/useTransaction"
+import Success from "../../../section/wallet/Success"
+import { createSearchParam } from "../../../utils/common"
 
 const Wallet = () => {
-  const { error, fetchWallet, loading, wallet } = useWallet();
-  const { user } = useAuth();
-  const { addNotification } = useToastNotification();
-  const { fetchUserTransactions, transactions } = useTransactions();
+  const { error, fetchWallet, loading, wallet } = useWallet()
+  const { user } = useAuth()
+  const { addNotification } = useToastNotification()
+  const {
+    fetchUserTransactions,
+    transactions,
+    transactionsPagination,
+    loading: loadingTrans,
+  } = useTransactions()
 
-  const [refresh, setRefresh] = useState(false);
-  const [showModel, setShowModel] = useState(false);
-  const [withdrawShowModel, setWithdrawShowModel] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-
-  useEffect(() => {
-    fetchWallet();
-  }, [refresh]);
-
-  useEffect(() => {
-    fetchUserTransactions();
-  }, [refresh]);
+  const [refresh, setRefresh] = useState(false)
+  const [showModel, setShowModel] = useState(false)
+  const [withdrawShowModel, setWithdrawShowModel] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
-    if (error) addNotification(error);
-  }, []);
+    fetchWallet()
+  }, [refresh])
+
+  useEffect(() => {
+    const string = createSearchParam([["page", page.toString()]])
+    fetchUserTransactions(string)
+  }, [refresh, page])
+
+  useEffect(() => {
+    if (error) addNotification(error)
+  }, [])
 
   return (
     <div className="flex-[4] relative lg:ml-5 min-h-[85vh] lg:p-5 rounded-[0.2rem] mb-2.5 m-0 p-2.5 bg-light-ev1 dark:bg-dark-ev1">
@@ -88,9 +96,15 @@ const Wallet = () => {
       <Modal isOpen={showSuccess} onClose={() => setShowSuccess(false)}>
         <Success onClose={() => setShowSuccess(false)} />
       </Modal>
-      <WidgetLarge refresh={refresh} transactions={transactions} />
+      <WidgetLarge
+        refresh={refresh}
+        loading={loadingTrans}
+        transactions={transactions}
+        transactionsPagination={transactionsPagination}
+        onPageChange={setPage}
+      />
     </div>
-  );
-};
+  )
+}
 
-export default Wallet;
+export default Wallet

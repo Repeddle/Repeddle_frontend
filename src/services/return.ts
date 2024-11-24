@@ -11,6 +11,9 @@ export const fetchPurchaseReturnService = async (search?: string) => {
     const resp: {
       returns: IReturn[]
       status: boolean
+      totalPages: number
+      currentPage: number
+      total: number
     } = await api.get(url)
 
     if (!resp.status) {
@@ -18,7 +21,7 @@ export const fetchPurchaseReturnService = async (search?: string) => {
       throw new Error("Fetch return failed: " + getBackendErrorMessage(resp))
     }
 
-    return resp.returns
+    return resp
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions
@@ -38,6 +41,9 @@ export const fetchSoldReturnService = async (search?: string) => {
     const resp: {
       returns: IReturn[]
       status: boolean
+      totalPages: number
+      currentPage: number
+      total: number
     } = await api.get(url)
 
     if (!resp.status) {
@@ -45,7 +51,7 @@ export const fetchSoldReturnService = async (search?: string) => {
       throw new Error("Fetch return failed: " + getBackendErrorMessage(resp))
     }
 
-    return resp.returns
+    return resp
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions
@@ -64,6 +70,9 @@ export const fetchAdminReturnService = async (search?: string) => {
 
     const resp: {
       returns: IReturn[]
+      totalPages: number
+      currentPage: number
+      total: number
       status: boolean
     } = await api.get(url)
 
@@ -72,7 +81,7 @@ export const fetchAdminReturnService = async (search?: string) => {
       throw new Error("Fetch return failed: " + getBackendErrorMessage(resp))
     }
 
-    return resp.returns
+    return resp
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions

@@ -1,9 +1,31 @@
 import { useState } from "react"
+import useNewsletter from "../../hooks/useNewsletter"
+import useToastNotification from "../../hooks/useToastNotification"
 
 const SellRebatch = () => {
-  const [input, setInput] = useState("")
+  const { createNewsletter } = useNewsletter()
+  const { addNotification } = useToastNotification()
 
-  const handleSubmit = () => {}
+  const [input, setInput] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async () => {
+    if (!input)
+      return addNotification(
+        "Please enter your email to get updates",
+        undefined,
+        true
+      )
+
+    if (!loading) {
+      setLoading(true)
+      const data = await createNewsletter(input)
+      if (data) addNotification("Thank You For Submitting Your Email")
+      else addNotification("Failed to add email", undefined, true)
+
+      setLoading(false)
+    }
+  }
 
   return (
     <div className="flex flex-col items-center mx-0 lg:my-10 my-5">
@@ -50,6 +72,7 @@ const SellRebatch = () => {
               value={input}
               placeholder="Email:"
               onChange={(e) => setInput(e.target.value)}
+              required
             />
             <div className="cursor-pointer flex-1" onClick={handleSubmit}>
               SUBMIT

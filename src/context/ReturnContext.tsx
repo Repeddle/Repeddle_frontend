@@ -19,6 +19,11 @@ type ContextType = {
   fetchSoldReturns: (search?: string) => Promise<boolean>
   fetchPurchaseReturns: (search?: string) => Promise<boolean>
   fetchAdminReturns: (search?: string) => Promise<boolean>
+  returnsPaginate: {
+    totalPages: number
+    currentPage: number
+    total: number
+  }
   createReturns: (body: CreateReturn) => Promise<IReturn | null>
   fetchReturnById: (id: string) => Promise<IReturn | null>
   updateReturnStatusAdmin: (
@@ -41,6 +46,11 @@ export const ReturnContext = createContext<ContextType | undefined>(undefined)
 export const ReturnProvider = ({ children }: PropsWithChildren) => {
   const { setAuthErrorModalOpen } = useAuth()
   const [returns, setReturns] = useState<IReturn[]>([])
+  const [returnsPaginate, setReturnsPaginate] = useState({
+    totalPages: 0,
+    currentPage: 0,
+    total: 0,
+  })
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
@@ -64,7 +74,12 @@ export const ReturnProvider = ({ children }: PropsWithChildren) => {
       setError("")
       setLoading(true)
       const result = await fetchSoldReturnService(search)
-      setReturns(result)
+      setReturns(result.returns)
+      setReturnsPaginate({
+        currentPage: result.currentPage,
+        total: result.total,
+        totalPages: result.totalPages,
+      })
       setLoading(false)
       return true
     } catch (error) {
@@ -78,7 +93,12 @@ export const ReturnProvider = ({ children }: PropsWithChildren) => {
       setError("")
       setLoading(true)
       const result = await fetchPurchaseReturnService(search)
-      setReturns(result)
+      setReturns(result.returns)
+      setReturnsPaginate({
+        currentPage: result.currentPage,
+        total: result.total,
+        totalPages: result.totalPages,
+      })
       setLoading(false)
       return true
     } catch (error) {
@@ -93,7 +113,12 @@ export const ReturnProvider = ({ children }: PropsWithChildren) => {
       setError("")
       setLoading(true)
       const result = await fetchAdminReturnService(search)
-      setReturns(result)
+      setReturns(result.returns)
+      setReturnsPaginate({
+        currentPage: result.currentPage,
+        total: result.total,
+        totalPages: result.totalPages,
+      })
       setLoading(false)
       return true
     } catch (error) {
@@ -189,6 +214,7 @@ export const ReturnProvider = ({ children }: PropsWithChildren) => {
         updateReturnStatusAdmin,
         updateReturnStatus,
         updateReturnAddress,
+        returnsPaginate,
       }}
     >
       {children}
