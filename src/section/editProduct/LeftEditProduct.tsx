@@ -291,7 +291,7 @@ const LeftEditProduct = ({
     lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
   hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
           >
-            <FaQuestionCircle className="text-black ml-2.5" />
+            <FaQuestionCircle className="text-black ml-2.5 dark:text-white" />
           </div>{" "}
           <span
             className="underline text-[11px] font-normal cursor-pointer ml-2.5 hover:text-orange-color"
@@ -335,7 +335,7 @@ const LeftEditProduct = ({
     lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
   hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
           >
-            <FaQuestionCircle className="text-black ml-2.5" />
+            <FaQuestionCircle className="text-black ml-2.5 dark:text-white" />
           </div>
         </label>
 

@@ -556,7 +556,7 @@ const EditProduct = () => {
           </div>
           <div className="lg:m-5 bg-light-ev1 dark:bg-dark-ev1 p-5 rounded-[0.2rem] mx-[5px] my-5">
             <form
-              className="flex justify-between flex-col lg:flex-row"
+              className="flex justify-between gap-10 flex-col lg:flex-row"
               onSubmit={validation}
             >
               <LeftEditProduct
