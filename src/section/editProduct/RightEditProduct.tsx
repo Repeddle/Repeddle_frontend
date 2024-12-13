@@ -130,10 +130,12 @@ const RightEditProduct = ({
         ) : null}
       </div>
       <div className="flex m-2.5">
-        <div className="text-[25px] font-light mr-5 text-orange-color">
-          {currency(product.region)}
-          {discount || price}
-        </div>
+        {discount || price ? (
+          <div className="text-[25px] font-light mr-5 text-orange-color">
+            {currency(product.region)}
+            {discount || price}
+          </div>
+        ) : null}
         <div className="text-[25px] font-light line-through text-malon-color">
           {discount
             ? discount < parseInt(price)
@@ -222,7 +224,7 @@ const RightEditProduct = ({
     lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
   hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
           >
-            <FaQuestionCircle className="text-black ml-2.5" />
+            <FaQuestionCircle className="text-black ml-2.5 dark:text-white" />
           </div>
         </label>
         <div className="w-auto lg:w-[70%] text-sm leading-[1.2] mb-[5px]">
@@ -259,6 +261,7 @@ const RightEditProduct = ({
           onChange={(e) => {
             setSizes([])
             setAddSize(e.target.checked)
+            handleError("", "selectedSize")
           }}
         />
       </div>
@@ -277,7 +280,7 @@ const RightEditProduct = ({
             lg:hover:after:top-0 hover:after:text-[11px] hover:after:left-[-30px] hover:after:w-[200px] hover:after:top-5 hover:after:bg-black
           hover:after:dark:bg-white hover:after:text-white dark:hover:after:text-black hover:after:content-[attr(data-content)]`}
                   >
-                    <FaQuestionCircle className="text-black ml-2.5" />
+                    <FaQuestionCircle className="text-black ml-2.5 dark:text-white" />
                   </div>
                 </label>
 
