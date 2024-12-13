@@ -1,96 +1,97 @@
-import { useState, useEffect } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import useArticle from "../../../hooks/useArticle";
-import { Article } from "../../../types/article";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import useToastNotification from "../../../hooks/useToastNotification";
-import LoadingBox from "../../../components/LoadingBox";
+import { useState, useEffect } from "react"
+import ReactQuill from "react-quill"
+import "react-quill/dist/quill.snow.css"
+import useArticle from "../../../hooks/useArticle"
+import { Article } from "../../../types/article"
+import { useNavigate, useSearchParams } from "react-router-dom"
+import useToastNotification from "../../../hooks/useToastNotification"
+import LoadingBox from "../../../components/LoadingBox"
 
 const CreateArticle = () => {
   const { updateArticle, createArticle, fetchArticleById, categories } =
-    useArticle();
-  const [value, setValue] = useState("");
-  const { addNotification } = useToastNotification();
-  const [category, setCategory] = useState("");
-  const [topic, setTopic] = useState("");
-  const [article, setArticle] = useState<Article | null>(null);
-  const [searchParams] = useSearchParams();
-  const id = searchParams.get("id");
-  const [showNew, setShowNew] = useState(false);
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+    useArticle()
+  const [value, setValue] = useState("")
+  const { addNotification } = useToastNotification()
+  const [category, setCategory] = useState("")
+  const [topic, setTopic] = useState("")
+  const [article, setArticle] = useState<Article | null>(null)
+  const [searchParams] = useSearchParams()
+  const id = searchParams.get("id")
+  const [showNew, setShowNew] = useState(false)
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const fetchArticle = async () => {
-      if (!id) return;
+      if (!id) return
       try {
-        const res = await fetchArticleById(id);
-        setArticle(res);
-        setValue(res.content);
-        setCategory(res.category);
-        setTopic(res.topic);
+        const res = await fetchArticleById(id)
+        setArticle(res)
+        setValue(res.content)
+        setCategory(res.category)
+        setTopic(res.topic)
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
-    };
-    fetchArticle();
-  }, [id]);
+    }
+    fetchArticle()
+  }, [id])
 
   const handleContinueClick = async () => {
     if (!topic) {
-      addNotification("Please enter a topic", undefined, true);
-      return;
+      addNotification("Please enter a topic", undefined, true)
+      return
     }
     if (!category) {
-      addNotification("Please select a category", undefined, true);
-      return;
+      addNotification("Please select a category", undefined, true)
+      return
     }
     if (!value) {
-      addNotification("Please enter an article content", undefined, true);
-      return;
+      addNotification("Please enter an article content", undefined, true)
+      return
     }
     try {
-      setLoading(true);
+      setLoading(true)
       if (article) {
         await updateArticle(article._id, {
           topic,
           category,
           content: value,
-        });
+        })
       } else {
         await createArticle({
           topic,
           category,
           content: value,
-        });
+        })
       }
-      navigate("/admin/articlelist");
+      navigate("/admin/articlelist")
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      addNotification(error, undefined, true);
+      addNotification(error, undefined, true)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <div className="container mx-auto max-w-4xl px-8 mb-4 mt-10 ">
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between gap-4 flex-col lg:flex-row lg:items-center mb-4">
         <h2 className="font-medium text-2xl mb-6 sm:mb-0">
           {article ? "Edit Article" : "Create Article"}
         </h2>
-        <div className="flex space-x-3">
+        <div className="flex self-end space-x-3">
           {loading && <LoadingBox />}
           <button
             onClick={handleContinueClick}
-            className="p-1 px-4  text-lg flex text-white bg-orange-400 rounded hover:bg-red-800"
+            className="p-1 px-2 lg:px-4 text-base lg:text-lg flex text-white bg-orange-400 rounded hover:bg-red-800"
             disabled={loading}
           >
             Submit
           </button>
           <button
             onClick={() => navigate(-1)}
-            className="p-1 px-4 text-lg flex hover:text-white border border-malon-color text-malon-color rounded hover:bg-red-800"
+            className="p-1 px-2 lg:px-4 text-base lg:text-lg flex hover:text-white border border-malon-color text-malon-color rounded hover:bg-red-800"
           >
             Cancel
           </button>
@@ -112,8 +113,8 @@ const CreateArticle = () => {
         ))}
         <div
           onClick={() => {
-            setShowNew(!showNew);
-            setCategory("");
+            setShowNew(!showNew)
+            setCategory("")
           }}
           className="font-bold text-malon-color cursor-pointer"
         >
@@ -123,7 +124,7 @@ const CreateArticle = () => {
       {showNew && (
         <input
           type="text"
-          className=" block py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-400 focus:border-red-700 sm:text-sm mb-4 -mt-2"
+          className=" block py-2 px-3 border border-gray-300 dark:bg-dark-ev1 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-400 focus:border-red-700 sm:text-sm mb-4 -mt-2"
           placeholder="Enter new category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
@@ -140,7 +141,7 @@ const CreateArticle = () => {
           type="text"
           name="topic"
           id="topic"
-          className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-400 focus:border-red-700 sm:text-sm"
+          className="mt-1 block w-full py-2 px-3 border border-gray-300 dark:bg-dark-ev1 bg-white rounded-md shadow-sm focus:outline-none focus:ring-orange-400 focus:border-red-700 sm:text-sm"
           placeholder="Enter topic"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
@@ -150,7 +151,7 @@ const CreateArticle = () => {
         <ReactQuill theme="snow" value={value} onChange={setValue} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CreateArticle;
+export default CreateArticle

@@ -93,6 +93,10 @@ const NewsletterList = () => {
   const sendEmails = async () => {}
 
   const handleAddEmail = async () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const isValid = emailRegex.test(inputEmail)
+
+    if (!isValid) addNotification("Please enter a valid email", undefined, true)
     setLoadingAdd(true)
     const data = await createNewsletter(inputEmail)
     if (data) addNotification("Emails added successfully")

@@ -1,7 +1,7 @@
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa"
 import { FiImage } from "react-icons/fi"
 import useContact from "../../hooks/useContact"
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, FormEvent, useState } from "react"
 import { compressImageUpload } from "../../utils/common"
 import useAuth from "../../hooks/useAuth"
 import useToastNotification from "../../hooks/useToastNotification"
@@ -23,7 +23,8 @@ function ContactUs() {
   const [loading, setLoading] = useState(false)
   const [uploading, setUploading] = useState(false)
 
-  const handleSend = async () => {
+  const handleSend = async (e: FormEvent) => {
+    e.preventDefault()
     setLoading(true)
     try {
       const response = await createContact({

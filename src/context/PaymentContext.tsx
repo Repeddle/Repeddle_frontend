@@ -1,6 +1,6 @@
 import { createContext, PropsWithChildren, useState } from "react"
 import useAuth from "../hooks/useAuth"
-import { Payments } from "../types/payments"
+import { Payments, PaymentWithPagination } from "../types/payments"
 import {
   approvePaymentWalletService,
   declinePaymentWalletService,
@@ -11,10 +11,10 @@ import {
 } from "../services/payment"
 
 type ContextType = {
-  payments: Payments[]
+  payments: PaymentWithPagination
   loading: boolean
   error: string
-  fetchPayments: () => Promise<boolean>
+  fetchPayments: (params?: string) => Promise<boolean>
   fetchPaymentById: (id: string) => Promise<Payments | string>
   paySeller: (
     orderId: string,
@@ -68,7 +68,10 @@ export const PaymentContext = createContext<ContextType | undefined>(undefined)
 
 export const PaymentProvider = ({ children }: PropsWithChildren) => {
   const { setAuthErrorModalOpen } = useAuth()
-  const [payments, setPayments] = useState<Payments[]>([])
+  const [payments, setPayments] = useState<PaymentWithPagination>({
+    pagination: { currentPage: 0, totalItems: 0, totalPages: 0 },
+    payments: [],
+  })
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
 
@@ -87,11 +90,11 @@ export const PaymentProvider = ({ children }: PropsWithChildren) => {
   }
 
   // Function to fetch payments
-  const fetchPayments = async () => {
+  const fetchPayments = async (params?: string) => {
     try {
       setError("")
       setLoading(true)
-      const result = await fetchPaymentsService()
+      const result = await fetchPaymentsService(params)
       setPayments(result)
       setLoading(false)
       return true
