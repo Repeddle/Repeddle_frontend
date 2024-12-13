@@ -2,9 +2,9 @@ import { IReview } from "../types/product"
 import {
   Analytics,
   IGuestUser,
+  ITopSellersWithPagination,
   IUser,
   IUsersWithPagination,
-  TopSellers,
   UpdateUser,
   UserByUsername,
 } from "../types/user"
@@ -40,10 +40,18 @@ export async function getAllUserAdminService(
   }
 }
 
-export async function getTopSellersService(): Promise<TopSellers[]> {
+export async function getTopSellersService(
+  search?: string
+): Promise<ITopSellersWithPagination> {
   try {
-    const data: { topSellers: TopSellers[]; status: boolean } = await api.get(
-      "/users/top-sellers"
+    let url = "/users/top-sellers"
+
+    if (search) {
+      url = url + "?" + search
+    }
+
+    const data: ITopSellersWithPagination & { status: boolean } = await api.get(
+      url
     )
 
     if (!data.status) {
@@ -51,7 +59,7 @@ export async function getTopSellersService(): Promise<TopSellers[]> {
       throw new Error("Get top sellers failed: " + getBackendErrorMessage(data))
     }
 
-    return data.topSellers
+    return data
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions
@@ -90,6 +98,7 @@ export async function getUserByUsernameService(
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function getUserProfileService(_: string): Promise<IUser> {
   try {
     const data: { user: IUser; status: boolean; message: string } =
@@ -159,6 +168,7 @@ export async function updateUserByIdService(
 
 export async function loginGuestService(userData: IGuestUser): Promise<IUser> {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response: { guestUser: any; status: boolean } = await api.post(
       `/users/login-guest`,
       userData

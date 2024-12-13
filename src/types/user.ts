@@ -92,11 +92,19 @@ export type UserBalance = {
 }
 
 export type IUsersWithPagination = Pagination & { users: IUser[] }
+export type ITopSellersWithPagination = {
+  sellers: TopSellers[]
+  currentPage: number
+  totalPages: number
+  totalSellers: number
+}
 
 export type TopSellers = {
+  _id: string
   username: string
   image: string
   badge?: boolean
+  totalEarnings: number
 }
 
 export type UserByUsername = {

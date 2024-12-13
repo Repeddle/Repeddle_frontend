@@ -78,7 +78,7 @@ import AllProductList from "./pages/admin/AllProductList"
 import AllOrders from "./pages/admin/AllOrders"
 import ArticleList from "./pages/protected/articles"
 import CreateArticle from "./pages/protected/articles/CreateArticles"
-import TopSellers from "./section/home/TopSellers"
+import TopSellersPage from "./pages/admin/TopSellers"
 
 const router = createBrowserRouter([
   {
@@ -194,7 +194,7 @@ const router = createBrowserRouter([
           { path: "coupon", element: <Coupon /> },
           { path: "articlelist", element: <ArticleList /> },
           { path: "create-article", element: <CreateArticle /> },
-          { path: "topsellers", element: <TopSellers /> },
+          { path: "topsellers", element: <TopSellersPage /> },
         ],
       },
     ],
