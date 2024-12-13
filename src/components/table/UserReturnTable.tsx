@@ -2,6 +2,7 @@ import { Link } from "react-router-dom"
 import moment from "moment"
 import { IReturn } from "../../types/order"
 import Table from "./Table"
+import { imageUrl } from "../../services/api"
 
 type Props = {
   returns: IReturn[]
@@ -39,7 +40,7 @@ const UserReturnTable = ({ returns, error, loading }: Props) => {
               >
                 <img
                   className="w-8 h-8 object-cover rounded-[50%]"
-                  src={ret.productId.images[0]}
+                  src={imageUrl + ret.productId.images[0]}
                   alt={ret.productId.name}
                 />
                 {ret.productId.name}

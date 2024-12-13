@@ -19,6 +19,7 @@ import Button from "../../components/ui/Button"
 import LeftEditProduct from "../../section/editProduct/LeftEditProduct"
 import RightEditProduct from "../../section/editProduct/RightEditProduct"
 import ImageUploadEditProduct from "../../section/editProduct/ImageUploadEditProduct"
+import { imageUrl } from "../../services/api"
 
 const EditProduct = () => {
   const params = useParams()
@@ -353,6 +354,7 @@ const EditProduct = () => {
 
     if (typeof res !== "string") {
       setProduct(res)
+      addNotification("Product has been updated")
     } else {
       addNotification(res, undefined, true)
     }
@@ -511,7 +513,7 @@ const EditProduct = () => {
               <div className="flex items-center">
                 <img
                   className="w-10 h-10 object-cover mr-5 rounded-[50%]"
-                  src={product.images[0]}
+                  src={imageUrl + product.images[0]}
                   alt=""
                 />
                 <div className="font-semibold">{product.name}</div>

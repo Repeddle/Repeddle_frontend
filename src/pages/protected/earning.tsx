@@ -8,6 +8,7 @@ import useOrder from "../../hooks/useOrder"
 import Chart from "../../components/Chart"
 import Table from "../../components/table/Table"
 import { Link } from "react-router-dom"
+import { imageUrl } from "../../services/api"
 
 const today = moment().startOf("day")
 
@@ -190,7 +191,7 @@ function Earning() {
                     >
                       <img
                         className="w-8 h-8 object-cover rounded-[50%]"
-                        src={order.items[0].product.images[0]}
+                        src={imageUrl + order.items[0].product.images[0]}
                         alt={order.items[0].product.name}
                       />
 

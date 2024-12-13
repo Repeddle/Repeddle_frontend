@@ -43,7 +43,7 @@ const TransactionList = () => {
   }, [error])
 
   return (
-    <div className="flex-[4] flex flex-col overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
+    <div className="flex-[4] flex flex-col overflow-x-hidden mb-5 min-h-[85vh] pb-4 lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
       <h1 className="pt-5 pb-0 px-5 text-[calc(1.375rem_+_1.5vw)] font-medium leading-tight mb-2">
         Transactions
       </h1>

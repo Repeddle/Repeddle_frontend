@@ -14,6 +14,7 @@ import {
   region,
 } from "../../utils/common"
 import DeliveryStatus from "../../components/DeliveryStatus"
+import { imageUrl } from "../../services/api"
 
 type Props = {
   orderItem: OrderItem
@@ -213,7 +214,7 @@ const IsSeller = ({
         <div className="flex mb-2.5 flex-[8]">
           <img
             className="object-cover object-top w-[100px] h-[130px]"
-            src={orderItem.product.images[0]}
+            src={imageUrl + orderItem.product.images[0]}
             alt={orderItem.product.name}
           />
           <div className="flex flex-col justify-center px-5 py-0">
@@ -307,7 +308,7 @@ const IsSeller = ({
           <Link to={`/seller/${userOrdered._id}`}>
             <img
               className="w-10 h-10 object-cover rounded-[50%]"
-              src={userOrdered.image}
+              src={imageUrl + userOrdered.image}
               alt="img"
             />
           </Link>
@@ -333,7 +334,7 @@ const IsSeller = ({
             <Link to={`/seller/${orderItem.seller._id}`}>
               <img
                 className="w-10 h-10 object-cover rounded-[50%]"
-                src={orderItem.seller.image}
+                src={imageUrl + orderItem.seller.image}
                 alt="img"
               />
             </Link>

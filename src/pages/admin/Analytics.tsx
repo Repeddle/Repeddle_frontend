@@ -8,6 +8,7 @@ import { Analytics as AnalyticsType } from "../../types/user"
 import useUser from "../../hooks/useUser"
 import useToastNotification from "../../hooks/useToastNotification"
 import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
+import { imageUrl } from "../../services/api"
 
 const Analytics = () => {
   const { user } = useAuth()
@@ -70,7 +71,7 @@ const Analytics = () => {
               >
                 <img
                   className="w-[180px] h-[180px] object-cover rounded-[0.2rem]"
-                  src={user.image}
+                  src={imageUrl + user.image}
                   alt="item"
                 />
 
@@ -118,7 +119,7 @@ const Analytics = () => {
               >
                 <img
                   className="w-[180px] h-[180px] object-cover rounded-[0.2rem]"
-                  src={user.image}
+                  src={imageUrl + user.image}
                   alt="item"
                 />
 
@@ -168,7 +169,7 @@ const Analytics = () => {
               >
                 <img
                   className="w-[180px] h-[180px] object-cover rounded-[0.2rem]"
-                  src={product.images[0]}
+                  src={imageUrl + product.images[0]}
                   alt="item"
                 />
 
@@ -215,7 +216,7 @@ const Analytics = () => {
               >
                 <img
                   className="w-[180px] h-[180px] object-cover rounded-[0.2rem]"
-                  src={product.images[0]}
+                  src={imageUrl + product.images[0]}
                   alt="item"
                 />
                 <div className="flex items-center justify-center opacity-50 w-[180px] h-[180px] absolute rounded-[0%] left-0 top-0 bg-white-color dark:bg-black-color">
@@ -255,7 +256,7 @@ const Analytics = () => {
           <div className="lg:text-[22px] font-semibold text-xl">
             Most Viewed Products
           </div>
-          <Link to="/dashboard/allproducts">See All</Link>
+          <Link to="/admin/allproducts">See All</Link>
         </div>
 
         <div className="flex scroll-smooth gap-5 overflow-x-auto scrollbar-hide snap">
@@ -267,7 +268,7 @@ const Analytics = () => {
               >
                 <img
                   className="w-[180px] h-[180px] object-cover rounded-[0.2rem]"
-                  src={product.images[0]}
+                  src={imageUrl + product.images[0]}
                   alt="item"
                 />
 

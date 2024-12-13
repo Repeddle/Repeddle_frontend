@@ -15,6 +15,7 @@ import { IUser } from "../../types/user"
 import { timeDifference } from "../../utils/common"
 import { UserFormType } from "../../pages/protected/dashboard/User"
 import Button from "../../components/ui/Button"
+import { imageUrl } from "../../services/api"
 
 type Props = {
   user: IUser
@@ -166,9 +167,9 @@ const UserRightComp = ({
                 className="w-[100px] h-[100px] object-cover mr-5 rounded-[10px]"
                 src={
                   userForm.image
-                    ? userForm.image
+                    ? imageUrl + userForm.image
                     : user.image
-                    ? user.image
+                    ? imageUrl + user.image
                     : "/images/pimage.png"
                 }
                 alt=""

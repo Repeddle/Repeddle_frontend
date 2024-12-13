@@ -21,7 +21,7 @@ import {
 
 const sidebarLinks = [
   {
-    path: "/admin/analytic",
+    path: "/admin/analytics",
     text: "Analytic",
     icon: <BiChart />,
     end: true,

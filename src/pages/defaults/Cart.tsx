@@ -192,7 +192,7 @@ function Cart() {
                           <div className="flex flex-wrap gap-4 items-center justify-between">
                             <div className="flex flex-[7] items-center col-7">
                               <img
-                                src={product.images[0]}
+                                src={imageUrl +product.images[0]}
                                 alt={product.name}
                                 className="max-w-full bg-white border rounded h-[100px] p-1 border-[#dee2e6]"
                               />

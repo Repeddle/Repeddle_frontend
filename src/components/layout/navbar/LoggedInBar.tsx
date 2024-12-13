@@ -4,6 +4,7 @@ import { IUser } from "../../../types/user"
 import { Link } from "react-router-dom"
 import useAuth from "../../../hooks/useAuth"
 import RedirectButton from "../../RedirectButton"
+import { imageUrl } from "../../../services/api"
 
 type Props = {
   user: IUser
@@ -47,7 +48,7 @@ const LoggedInBar = ({
     <>
       <div className="relative">
         <img
-          src={user.image}
+          src={imageUrl + user.image}
           className="w-10 h-10 cursor-pointer object-cover ml-5 rounded-[50%] hidden lg:block"
           onClick={() => setMenu(!menu)}
         />

@@ -10,6 +10,7 @@ import PayStack from "../../components/gateway/PayStack"
 import { PayStackCallback } from "../../types/gateway"
 import FlutterWave from "../../components/gateway/FlutterWave"
 import PayFund from "../../components/gateway/PayFund"
+import { imageUrl } from "../../services/api"
 
 const OrderPreview = () => {
   const [code, setCode] = useState("")
@@ -63,7 +64,7 @@ const OrderPreview = () => {
                     <div className="flex flex-wrap gap-4 items-center">
                       <div className="mb-2.5 flex items-center flex-[7]">
                         <img
-                          src={item.images[0]}
+                          src={imageUrl + item.images[0]}
                           alt={item.name}
                           className="max-w-full bg-white border rounded h-[100px] p-1 border-[#dee2e6]"
                         />

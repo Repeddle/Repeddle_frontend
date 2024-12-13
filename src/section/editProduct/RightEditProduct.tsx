@@ -130,12 +130,6 @@ const RightEditProduct = ({
         ) : null}
       </div>
       <div className="flex m-2.5">
-        {discount || price ? (
-          <div className="text-[25px] font-light mr-5 text-orange-color">
-            {currency(product.region)}
-            {discount || price}
-          </div>
-        ) : null}
         <div className="text-[25px] font-light line-through text-malon-color">
           {discount
             ? discount < parseInt(price)

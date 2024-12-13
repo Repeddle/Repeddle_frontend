@@ -4,6 +4,7 @@ import useOrder from "../../../hooks/useOrder"
 import { useEffect, useState } from "react"
 import LoadingControlModal from "../../../components/ui/loadin/LoadingControlLogo"
 import moment from "moment"
+import { imageUrl } from "../../../services/api"
 
 const OrderList = () => {
   const { fetchOrders, loading, error, orders } = useOrder()
@@ -57,7 +58,7 @@ const OrderList = () => {
                       className="flex mt-2 sm:mt-5 flex-1 gap-2.5 bg-white dark:bg-black md:flex-row p-2.5"
                     >
                       <img
-                        src={order.items[0].product.images[0]}
+                        src={imageUrl + order.items[0].product.images[0]}
                         alt={order.items[0].product.name}
                         className="aspect-square self-center h-[75px] sm:h-[104px]"
                       />

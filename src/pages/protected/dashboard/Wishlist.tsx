@@ -11,6 +11,7 @@ import Modal from "../../../components/ui/Modal"
 import { Wishlist as WishlistType } from "../../../types/user"
 import { Link } from "react-router-dom"
 import { FaCartPlus, FaTrash } from "react-icons/fa"
+import { imageUrl } from "../../../services/api"
 
 const headers = [
   // { title: "ID", hide: true },
@@ -176,7 +177,7 @@ const Wishlist = () => {
               <div className="flex flex-1 gap-2.5 items-center">
                 <img
                   className="w-8 h-8 object-cover rounded-[50%]"
-                  src={wish.images[0]}
+                  src={imageUrl + wish.images[0]}
                   alt={wish.name}
                 />
                 <Link

@@ -4,6 +4,7 @@ import { FaMinus, FaPlus, FaTrash } from "react-icons/fa"
 import useCart from "../../hooks/useCart"
 import { currency } from "../../utils/common"
 import useToastNotification from "../../hooks/useToastNotification"
+import { imageUrl } from "../../services/api"
 
 type Props = {
   item: CartItem
@@ -27,7 +28,7 @@ const CartItems = ({
       <div className="flex items-center mb-5">
         <img
           className="flex w-10 h-10 object-cover rounded-[50%]"
-          src={item.seller.image}
+          src={imageUrl + item.seller.image}
           alt="img"
         />
         <div className="font-bold mx-5 my-0 text-malon-color cursor-pointer">
@@ -40,7 +41,7 @@ const CartItems = ({
       {item.sold && <div className="text-[red]">Product out stock</div>}
       <div className="flex md:hidden">
         <img
-          src={item.images[0]}
+          src={imageUrl + item.images[0]}
           alt={item.name}
           className={`max-w-full bg-white border rounded h-[100px] p-1 border-[#dee2e6] ${
             item.sold ? "opacity-50" : ""
@@ -92,7 +93,7 @@ const CartItems = ({
       <div className="items-center hidden md:flex justify-between">
         <div className="col-5 flex flex-[5] items-center">
           <img
-            src={item.images[0]}
+            src={imageUrl + item.images[0]}
             alt={item.name}
             className={`max-w-full bg-white border rounded h-[100px] p-1 border-[#dee2e6] ${
               item.sold ? "opacity-50" : ""
