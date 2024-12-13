@@ -12,3 +12,12 @@ export type Payments = {
   createdAt: string
   updatedAt: string
 }
+
+export type PaymentWithPagination = {
+  payments: Payments[]
+  pagination: {
+    currentPage: number
+    totalPages: number
+    totalItems: number
+  }
+}

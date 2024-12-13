@@ -1,21 +1,21 @@
-import { Payments } from "../types/payments"
+import { Payments, PaymentWithPagination } from "../types/payments"
 import { getBackendErrorMessage } from "../utils/error"
 import api from "./api"
 
-export const fetchPaymentsService = async () => {
+export const fetchPaymentsService = async (params?: string) => {
   try {
     let url = "/payments"
 
-    // if (params && params.length) {
-    //   url = url + `?${params}`
-    // }
+    if (params && params.length) {
+      url = url + `?${params}`
+    }
 
-    const resp: Payments[] = await api.get(url)
+    const resp: PaymentWithPagination & { status: boolean } = await api.get(url)
 
-    // if (!resp.status) {
-    //   // Handle Fetch payments error, e.g., display an error message to the user
-    //   throw new Error("Fetch payments failed: " + getBackendErrorMessage(resp))
-    // }
+    if (!resp.status) {
+      // Handle Fetch payments error, e.g., display an error message to the user
+      throw new Error("Fetch payments failed: " + getBackendErrorMessage(resp))
+    }
 
     return resp
   } catch (error) {
