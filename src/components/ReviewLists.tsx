@@ -6,6 +6,7 @@ import { IReview } from "../types/product"
 import MessageBox from "./MessageBox"
 import { FaThumbsDown, FaThumbsUp } from "react-icons/fa"
 import moment from "moment"
+import { imageUrl } from "../services/api"
 
 type Props = {
   setShowModel: (val: boolean) => void
@@ -106,7 +107,7 @@ const ReviewItem = ({ setShowModel, item }: ReviewItemProps) => {
         >
           <img
             className="w-[50px] h-[50px] mr-0 rounded-[25px]"
-            src={currentReview?.user?.image}
+            src={imageUrl + currentReview?.user?.image}
             alt="Reviewer"
           />
         </Link>
@@ -146,7 +147,7 @@ const ReviewItem = ({ setShowModel, item }: ReviewItemProps) => {
                 className="w-5 h-5 mr-2.5 rounded-[25px]"
                 // TODO:
                 // src={currentReview?.sellerId?.image}
-                src={currentReview?.user?.image}
+                src={imageUrl + currentReview?.user?.image}
                 alt="Reviewer"
               />
               <div className="text-xs text-malon-color">

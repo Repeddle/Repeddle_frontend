@@ -15,6 +15,7 @@ import { Coupon } from "../../types/product"
 import { PayStackCallback } from "../../types/gateway"
 import useOrder from "../../hooks/useOrder"
 import useToastNotification from "../../hooks/useToastNotification"
+import { imageUrl } from "../../services/api"
 
 const PlaceOrder = () => {
   const { cart, subtotal, total, paymentMethod, clearCart } = useCart()
@@ -128,7 +129,7 @@ const PlaceOrder = () => {
                     <div className="flex flex-wrap mr-[-15px] ml-[-15px]">
                       <div className="flex-[0_0_58.333333%] max-w-[58.333333%] flex items-center mb-2.5 relative w-full px-[15px]">
                         <img
-                          src={item.images[0]}
+                          src={imageUrl + item.images[0]}
                           alt={item.name}
                           className="rounded bg-white border max-w-full h-auto p-1 border-solid border-[#dee2e6]"
                         />

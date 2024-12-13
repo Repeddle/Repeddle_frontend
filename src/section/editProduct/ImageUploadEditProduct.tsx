@@ -8,6 +8,7 @@ import useToastNotification from "../../hooks/useToastNotification"
 import { IProduct } from "../../types/product"
 import { uploadImage } from "../../utils/common"
 import { useState } from "react"
+import { imageUrl } from "../../services/api"
 
 type Props = {
   product: IProduct
@@ -55,7 +56,7 @@ const ImageUploadEditProduct = ({
         {!loadingUpload ? (
           <img
             className="w-[100px] h-[100px] object-cover object-top mr-5 rounded-[10px]"
-            src={currentImage}
+            src={imageUrl + currentImage}
             alt=""
           />
         ) : (

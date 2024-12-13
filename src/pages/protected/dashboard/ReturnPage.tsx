@@ -20,6 +20,7 @@ import LoadingBox from "../../../components/LoadingBox"
 import { FaCheck } from "react-icons/fa"
 import DeliveryHistoryReturn from "../../../components/DeliveryHistoryReturn"
 import usePayments from "../../../hooks/usePayment"
+import { imageUrl } from "../../../services/api"
 
 const ReturnPage = () => {
   const { id: returnId } = useParams()
@@ -194,7 +195,7 @@ const ReturnPage = () => {
           <div className="capitalize font-semibold mb-2.5">Product</div>
           <div className="flex items-center">
             <img
-              src={returned.productId.images[0]}
+              src={imageUrl + returned.productId.images[0]}
               alt={returned.productId.name}
               className="w-[100px] h-[100px] rounded-[50%] object-cover object-top"
             />

@@ -8,6 +8,7 @@ import MessageBox from "../../../components/MessageBox"
 import { createSearchParam, currency } from "../../../utils/common"
 import useToastNotification from "../../../hooks/useToastNotification"
 import Table from "../../../components/table/Table"
+import { imageUrl } from "../../../services/api"
 
 const headers = [
   { title: "ID", hide: true },
@@ -105,7 +106,7 @@ const ProductList = () => {
                 <div className="flex gap-2.5 items-center">
                   <img
                     className="w-8 h-8 object-cover rounded-[50%]"
-                    src={prod.images[0]}
+                    src={imageUrl + prod.images[0]}
                     alt={prod.name}
                   />
                   <Link

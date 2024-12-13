@@ -3,6 +3,7 @@ import { useNavigate } from "react-router"
 import useNotification from "../../hooks/useNotification"
 import { useEffect } from "react"
 import { Notification } from "../../types/conversation"
+import { imageUrl } from "../../services/api"
 
 const MobileNotification = () => {
   const navigate = useNavigate()
@@ -35,7 +36,7 @@ const MobileNotification = () => {
             >
               <img
                 className="w-[50px] h-[50px] rounded-[50%]"
-                src={not.user.image}
+                src={imageUrl + not.user.image}
                 alt="img"
               />
               <div className="flex-1 ml-[5px] text-sm">

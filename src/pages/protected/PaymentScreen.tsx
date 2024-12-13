@@ -2,6 +2,7 @@ import { useState } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import moment from "moment"
 import { Link } from "react-router-dom"
+import { imageUrl } from "../../services/api"
 
 const PaymentScreen = () => {
   const [loading] = useState(false)
@@ -49,7 +50,7 @@ const PaymentScreen = () => {
         <div className="capitalize font-semibold mb-2.5">User</div>
         <img
           className="w-[50px] h-[50px] rounded-[50%]"
-          src={payment.userId.image}
+          src={imageUrl + payment.userId.image}
           alt="img"
         />
         <div className="flex">{payment.userId.username}</div>

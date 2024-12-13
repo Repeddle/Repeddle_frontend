@@ -7,6 +7,7 @@ import useAuth from "../../../hooks/useAuth"
 import useTransactions from "../../../hooks/useTransaction"
 import { useEffect, useState } from "react"
 import { ITransaction } from "../../../types/transactions"
+import { imageUrl } from "../../../services/api"
 
 const Transaction = () => {
   const params = useParams()
@@ -97,7 +98,7 @@ const Transaction = () => {
                 <>
                   <img
                     className="w-[100px] h-[100px] rounded-[50%]"
-                    src={user?.image}
+                    src={imageUrl + user?.image}
                     alt="img"
                   />
                   <div>

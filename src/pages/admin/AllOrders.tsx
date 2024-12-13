@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import moment from "moment"
 import useOrder from "../../hooks/useOrder"
 import MessageBox from "../../components/MessageBox"
+import { imageUrl } from "../../services/api"
 
 const AllOrders = () => {
   const { fetchAllOrders, loading, error, orders } = useOrder()
@@ -56,7 +57,7 @@ const AllOrders = () => {
                       className="flex mt-2 sm:mt-5 flex-1 gap-2.5 bg-white dark:bg-black md:flex-row p-2.5"
                     >
                       <img
-                        src={order.items[0].product.images[0]}
+                        src={imageUrl + order.items[0].product.images[0]}
                         alt={order.items[0].product.name}
                         className="aspect-square self-center h-[75px] sm:h-[104px]"
                       />

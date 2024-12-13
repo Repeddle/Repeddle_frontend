@@ -6,6 +6,7 @@ import { MessageData } from "../../types/message"
 import { compressImageUpload } from "../../utils/common"
 import useToastNotification from "../../hooks/useToastNotification"
 import LoadingBox from "../../components/LoadingBox"
+import { imageUrl } from "../../services/api"
 
 type Props = {
   reportItem: { name: string; id: string; image?: string }
@@ -69,7 +70,7 @@ const Report = ({ reportItem, refs, setShowModel, showModel }: Props) => {
             <div className="flex flex-col items-center justify-center gap-4">
               {reportItem.image ? (
                 <img
-                  src={reportItem.image}
+                  src={imageUrl + reportItem.image}
                   alt={`report ${reportItem.name}`}
                   className="rounded-full h-20 w-20 object-cover"
                 />
@@ -96,7 +97,7 @@ const Report = ({ reportItem, refs, setShowModel, showModel }: Props) => {
             </div> */}
             {image ? (
               <img
-                src={image}
+                src={imageUrl + image}
                 alt={`report image`}
                 className="rounded-full h-20 w-20 object-cover"
               />

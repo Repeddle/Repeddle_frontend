@@ -11,6 +11,7 @@ import Modal from "../../components/ui/Modal"
 import LoadingBox from "../../components/LoadingBox"
 import { resizeImage, uploadImage } from "../../utils/common"
 import useToastNotification from "../../hooks/useToastNotification"
+import { imageUrl } from "../../services/api"
 
 type InputProps = {
   image1: string
@@ -126,7 +127,7 @@ const Media = ({ input, setInput, setVideo, video }: Props) => {
               </div>
               <img
                 className="w-full h-full object-cover object-top rounded-[0.2rem]"
-                src={input.image1}
+                src={imageUrl + input.image1}
                 alt="product image"
               />
             </div>
@@ -162,7 +163,7 @@ const Media = ({ input, setInput, setVideo, video }: Props) => {
               </div>
               <img
                 className="w-full h-full object-cover object-top rounded-[0.2rem]"
-                src={input.image2}
+                src={imageUrl + input.image2}
                 alt="product image"
               />
             </div>
@@ -199,7 +200,7 @@ const Media = ({ input, setInput, setVideo, video }: Props) => {
                 </div>
                 <img
                   className="w-full h-full object-top object-cover rounded-[0.2rem]"
-                  src={input.image3}
+                  src={imageUrl + input.image3}
                   alt="product image"
                 />
               </div>
@@ -235,7 +236,7 @@ const Media = ({ input, setInput, setVideo, video }: Props) => {
                 </div>
                 <img
                   className="w-full h-full object-top object-cover rounded-[0.2rem]"
-                  src={input.image4}
+                  src={imageUrl + input.image4}
                   alt="product image"
                 />
               </div>
@@ -371,7 +372,7 @@ const Media = ({ input, setInput, setVideo, video }: Props) => {
                   </div>
                   <img
                     className="w-full h-full object-cover object-top rounded-[0.2rem]"
-                    src={input.luxuryImage}
+                    src={imageUrl + input.luxuryImage}
                     alt="product image"
                   />
                 </div>

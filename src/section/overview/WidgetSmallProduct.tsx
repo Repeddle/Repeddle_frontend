@@ -2,6 +2,7 @@ import { IProduct } from "../../types/product"
 import { FaEye } from "react-icons/fa"
 import { Link } from "react-router-dom"
 import Button from "../../components/ui/Button"
+import { imageUrl } from "../../services/api"
 
 type Props = {
   products?: IProduct[]
@@ -20,7 +21,7 @@ const WidgetSmallProduct = ({ products }: Props) => {
             >
               <img
                 className="w-10 h-10 object-cover rounded-[50%]"
-                src={u.images[0]}
+                src={imageUrl + u.images[0]}
                 alt="profile"
               />
               <div className="flex flex-col">

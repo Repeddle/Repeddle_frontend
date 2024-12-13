@@ -7,6 +7,7 @@ import { createSearchParam, currency, region } from "../../utils/common"
 import useToastNotification from "../../hooks/useToastNotification"
 import useUser from "../../hooks/useUser"
 import Table from "../../components/table/Table"
+import { imageUrl } from "../../services/api"
 
 const headers = [
   { title: "ID", hide: true },
@@ -104,7 +105,7 @@ const UserList = () => {
               <div className="flex items-center gap-2.5">
                 <img
                   className="w-8 h-8 object-cover rounded-[50%]"
-                  src={user.image}
+                  src={imageUrl + user.image}
                   alt={user.username}
                 />
                 <span>@{user.username}</span>

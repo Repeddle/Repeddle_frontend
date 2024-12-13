@@ -1,22 +1,22 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
-import Textarea from "../Textarea";
-import { FaPaperPlane } from "react-icons/fa";
-import { GrAttachment } from "react-icons/gr";
-import { SkeletonMessageLoading } from "../message/skeletonLoading";
-import useMessage from "../../hooks/useMessage";
-import { getDayLabel } from "../../utils/chat";
-import moment from "moment";
-import { IUser } from "../../types/user";
-import { getConversationsService } from "../../services/message";
-import { compressImageUpload } from "../../utils/common";
-import useToastNotification from "../../hooks/useToastNotification";
-import { IoMdClose } from "react-icons/io";
-import { baseURL, imageUrl } from "../../services/api";
-import LoadingBox from "../LoadingBox";
-import useAuth from "../../hooks/useAuth";
+import React, { ChangeEvent, useEffect, useState } from "react"
+import Textarea from "../Textarea"
+import { FaPaperPlane } from "react-icons/fa"
+import { GrAttachment } from "react-icons/gr"
+import { SkeletonMessageLoading } from "../message/skeletonLoading"
+import useMessage from "../../hooks/useMessage"
+import { getDayLabel } from "../../utils/chat"
+import moment from "moment"
+import { IUser } from "../../types/user"
+import { getConversationsService } from "../../services/message"
+import { compressImageUpload } from "../../utils/common"
+import useToastNotification from "../../hooks/useToastNotification"
+import { IoMdClose } from "react-icons/io"
+import { imageUrl } from "../../services/api"
+import LoadingBox from "../LoadingBox"
+import useAuth from "../../hooks/useAuth"
 
 interface ChatProps {
-  user: IUser | null;
+  user: IUser | null
 }
 
 const Chat: React.FC<ChatProps> = ({ user }) => {
@@ -28,85 +28,85 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
     setCurrentConversation,
     isAnimating,
     sendMessage,
-  } = useMessage();
-  const { user: loginUser } = useAuth();
-  const { addNotification } = useToastNotification();
-  const [messageInput, setMessageInput] = useState<string>("");
+  } = useMessage()
+  const { user: loginUser } = useAuth()
+  const { addNotification } = useToastNotification()
+  const [messageInput, setMessageInput] = useState<string>("")
   const [sending, setSending] = useState({
     value: false,
     image: "",
     message: "",
     failed: false,
-  });
-  const [loading, setLoading] = useState(true);
-  const [image, setImage] = useState<string>("");
-  const [uploading, setUploading] = useState(false);
+  })
+  const [loading, setLoading] = useState(true)
+  const [image, setImage] = useState<string>("")
+  const [uploading, setUploading] = useState(false)
 
   useEffect(() => {
     const getConversations = async () => {
       try {
-        setLoading(true);
-        const res = await getConversationsService("Support");
-        setCurrentConversation(res[0] || null);
-        setLoading(false);
+        setLoading(true)
+        const res = await getConversationsService("Support")
+        setCurrentConversation(res[0] || null)
+        setLoading(false)
       } catch (error) {
-        setLoading(false);
-        addNotification(error as string);
+        setLoading(false)
+        addNotification(error as string)
       }
-    };
-    getConversations();
-  }, []);
+    }
+    getConversations()
+  }, [])
 
   const handleRetry = () => {
-    setMessageInput(sending.message);
-    setImage(sending.image);
+    setMessageInput(sending.message)
+    setImage(sending.image)
     setSending((prev) => ({
       ...prev,
       value: false,
       failed: false,
       message: "",
-    }));
-  };
+    }))
+  }
 
   const handleMessageSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
     // Handle sending message logic
-    if (!messageInput && !image) return;
+    if (!messageInput && !image) return
     try {
-      setSending({ value: true, image, message: messageInput, failed: false });
-      setMessageInput("");
-      setImage("");
+      setSending({ value: true, image, message: messageInput, failed: false })
+      setMessageInput("")
+      setImage("")
       await sendMessage({
         image,
         content: messageInput,
         type: "Support",
         conversationId: currentConversation?._id,
-      });
-      setSending({ value: false, image: "", message: "", failed: false });
+      })
+      setSending({ value: false, image: "", message: "", failed: false })
     } catch (error) {
-      console.log(error);
-      setSending((prev) => ({ ...prev, value: true, failed: true }));
+      console.log(error)
+      setSending((prev) => ({ ...prev, value: true, failed: true }))
     }
-  };
+  }
 
   const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     try {
-      setUploading(true);
+      setUploading(true)
 
-      const file = e.target.files?.[0];
-      if (!file) throw Error("No image found");
+      const file = e.target.files?.[0]
+      if (!file) throw Error("No image found")
 
-      const imageUrl = await compressImageUpload(file, 1024);
+      const imageUrl = await compressImageUpload(file, 1024)
 
-      setImage(imageUrl);
+      setImage(imageUrl)
 
-      addNotification("Image uploaded");
+      addNotification("Image uploaded")
     } catch (err) {
-      addNotification("Failed uploading image");
+      addNotification("Failed uploading image")
     } finally {
-      setUploading(false);
+      setUploading(false)
     }
-  };
+  }
 
   return (
     <div className="h-full flex flex-col overflow-hidden   text-black">
@@ -173,11 +173,11 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
             .slice()
             .reverse()
             .map((message, index, array) => {
-              const prevMessage = array[index + 1];
+              const prevMessage = array[index + 1]
               const showDayLabel =
                 !prevMessage ||
                 getDayLabel(message.createdAt) !==
-                  getDayLabel(prevMessage.createdAt);
+                  getDayLabel(prevMessage.createdAt)
 
               return (
                 <div key={message._id}>
@@ -218,13 +218,13 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
                     </div>
                   </div>
                 </div>
-              );
+              )
             })
         )}
       </div>
       {image && (
         <div className="flex items-center bg-light-ev4 justify-between w-full z-20 p-2 px-4">
-          <img src={baseURL + image} className="w-10 h-10 object-cover" />
+          <img src={imageUrl + image} className="w-10 h-10 object-cover" />
 
           <IoMdClose
             size={24}
@@ -256,9 +256,9 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
                 id="upload"
                 className="hidden"
                 onChange={(e) => {
-                  handleImageUpload(e);
+                  handleImageUpload(e)
 
-                  e.target.value = "";
+                  e.target.value = ""
                 }}
               />
             </label>
@@ -269,7 +269,7 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default Chat;
+export default Chat

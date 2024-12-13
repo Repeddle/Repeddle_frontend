@@ -1,5 +1,6 @@
 import { ChangeEvent } from "react"
 import LoadingBox from "../../components/LoadingBox"
+import { imageUrl } from "../../services/api"
 
 type Props = {
   imageUpload: {
@@ -20,7 +21,7 @@ const CategoriesImageUpload = ({ imageUpload, uploadImageHandler }: Props) => {
         <div className="text-[red]">{imageUpload.error}</div>
       ) : imageUpload.image ? (
         <img
-          src={imageUpload.image}
+          src={imageUrl + imageUpload.image}
           alt="imageupload"
           className="object-contain w-[200px] h-[200px]"
         />

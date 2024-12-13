@@ -5,6 +5,7 @@ import moment from "moment"
 import { IComment, ICommentReply, IProduct } from "../../types/product"
 import useProducts from "../../hooks/useProducts"
 import useToastNotification from "../../hooks/useToastNotification"
+import { imageUrl } from "../../services/api"
 
 type Props = {
   comment: IComment
@@ -165,7 +166,7 @@ const Comment = ({ comment, product, setProduct }: Props) => {
       <div className="flex mt-[15px] p-2.5 lg:p-5 rounded-[0.2rem] dark:bg-dark-ev1 bg-light-ev1">
         <img
           className="w-[50px] h-[50px] object-cover rounded-[50%]"
-          src={comment.userId.image}
+          src={imageUrl + comment.userId.image}
           alt="pimage"
         />
         <div className="ml-5">
@@ -201,7 +202,7 @@ const Comment = ({ comment, product, setProduct }: Props) => {
           </div>
           <div>
             {/* {comment.image && <MessageImage url={comment.image} />} */}
-            {/* {comment.image && <CommentImg src={comment.image} alt="d" />}*/}
+            {/* {comment.image && <CommentImg src={imageUrl +comment.image} alt="d" />}*/}
           </div>
         </div>
       </div>
@@ -211,7 +212,7 @@ const Comment = ({ comment, product, setProduct }: Props) => {
             <div className="ml-[25px] mr-0 my-[5px] p-2.5 dark:bg-dark-ev1 bg-light-ev1 flex lg:ml-[90px] lg:mr-0 lg:my-[5px] lg:p-5 rounded-[0.2rem]">
               <img
                 className="w-[30px] h-[30px] object-cover rounded-[50%]"
-                src={r.userId.image}
+                src={imageUrl + r.userId.image}
                 alt="pimage"
               />
               <div className="ml-5">

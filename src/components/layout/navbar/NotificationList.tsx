@@ -1,6 +1,7 @@
 import moment from "moment"
 import { Link } from "react-router-dom"
 import { Notification } from "../../../types/conversation"
+import { imageUrl } from "../../../services/api"
 
 type Props = {
   notifications: Notification[]
@@ -31,7 +32,7 @@ const NotificationList = ({ notifications }: Props) => {
             >
               <img
                 className="w-[50px] h-[50px] rounded-[50%]"
-                src={not.user.image}
+                src={imageUrl + not.user.image}
                 alt="img"
               />
               <div className="text-sm flex-1 ml-[5px]">

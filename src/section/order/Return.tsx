@@ -15,6 +15,7 @@ import useReturn from "../../hooks/useReturn"
 import useToastNotification from "../../hooks/useToastNotification"
 import Modal from "../../components/ui/Modal"
 import useMessage from "../../hooks/useMessage"
+import { imageUrl } from "../../services/api"
 
 type TabTypes = "items" | "option" | "form"
 
@@ -173,7 +174,7 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
                   <div className="flex flex-[8] mb-2.5">
                     <img
                       className="object-cover object-top w-[100px] bg-black h-[130px]"
-                      src={orderItem.product.images[0]}
+                      src={imageUrl + orderItem.product.images[0]}
                       alt={orderItem.product.name}
                     />
                     <div className="flex flex-col justify-center p-5">
@@ -201,7 +202,7 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
               <div className="flex flex-[8] mb-2.5">
                 <img
                   className="object-cover object-top w-[100px] h-[130px]"
-                  src={current.product.images[0]}
+                  src={imageUrl + current.product.images[0]}
                   alt={current.product.name}
                 />
                 <div className="flex flex-col justify-center p-5">
@@ -259,7 +260,7 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
               <div className="flex flex-[8] mb-2.5">
                 <img
                   className="object-cover object-top w-[100px] h-[130px]"
-                  src={current.product.images[0]}
+                  src={imageUrl + current.product.images[0]}
                   alt={current.product.name}
                 />
                 <div className="flex flex-col justify-center p-5">
