@@ -8,6 +8,7 @@ import { currency, daydiff, deliveryNumber, region } from "../../utils/common"
 import Modal from "../../components/ui/Modal"
 import DeliveryStatus from "../../components/DeliveryStatus"
 import LoadingBox from "../../components/LoadingBox"
+import useToastNotification from "../../hooks/useToastNotification"
 
 type Props = {
   orderItem: OrderItem
@@ -40,10 +41,13 @@ const IsUser = ({
   toggleOrderHoldStatus,
 }: Props) => {
   const { user } = useAuth()
+  const { addNotification } = useToastNotification()
 
   const [afterAction, setAfterAction] = useState(true)
 
-  const placeOrderOnHold = () => {}
+  const placeOrderOnHold = () => {
+    addNotification("Order placed on Hold", undefined, true)
+  }
 
   const paymentRequest = async () => {
     // the below function accepts the current status then uses the next function to update

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import useAuth from "../../hooks/useAuth"
 import { useNavigate, useSearchParams } from "react-router-dom"
 import useCategory from "../../hooks/useCategory"
@@ -298,7 +298,7 @@ const NewProduct = () => {
     topRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
-  const discount = () => {
+  const discount = useMemo(() => {
     if (
       parseInt(priceInput.costPrice) < parseInt(priceInput?.sellingPrice ?? "0")
     )
@@ -309,23 +309,35 @@ const NewProduct = () => {
         parseInt(priceInput.costPrice)) *
       100
     )
-  }
+  }, [priceInput.costPrice, priceInput?.sellingPrice])
 
-  const costPrice = priceInput.sellingPrice
-    ? parseInt(priceInput.sellingPrice) < parseInt(priceInput.costPrice)
-      ? `${currency(region())}${priceInput.costPrice}`
-      : null
-    : null
+  const costPrice = useMemo(
+    () =>
+      priceInput.sellingPrice
+        ? parseInt(priceInput.sellingPrice) < parseInt(priceInput.costPrice)
+          ? `${currency(region())}${priceInput.costPrice}`
+          : null
+        : null,
+    [priceInput.costPrice, priceInput.sellingPrice]
+  )
 
-  const costPriceNumber = priceInput.sellingPrice
-    ? parseInt(priceInput.sellingPrice) < parseInt(priceInput.costPrice)
-      ? parseInt(priceInput.costPrice)
-      : parseInt(priceInput.sellingPrice)
-    : parseInt(priceInput.costPrice)
+  const costPriceNumber = useMemo(
+    () =>
+      priceInput.sellingPrice
+        ? parseInt(priceInput.sellingPrice) < parseInt(priceInput.costPrice)
+          ? parseInt(priceInput.costPrice)
+          : parseInt(priceInput.sellingPrice)
+        : parseInt(priceInput.costPrice),
+    [priceInput.costPrice, priceInput.sellingPrice]
+  )
 
-  const sellingPrice = priceInput.sellingPrice
-    ? parseInt(priceInput.sellingPrice)
-    : parseInt(priceInput.costPrice)
+  const sellingPrice = useMemo(
+    () =>
+      priceInput.sellingPrice
+        ? parseInt(priceInput.sellingPrice)
+        : parseInt(priceInput.costPrice),
+    [priceInput.costPrice, priceInput.sellingPrice]
+  )
 
   const validateDetails = () => {
     if (input.name.length === 0) {

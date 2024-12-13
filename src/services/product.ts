@@ -150,12 +150,12 @@ export const makeUnavailableService = async (
       status: boolean
       product: IProduct
       message?: string
-    } = await api.get(`/products/${id}/unavailable`)
+    } = await api.patch(`/products/${id}/unavailable`)
 
-    if (!data.status) {
-      // Handle Fetch product error, e.g., display an error message to the user
-      throw new Error("Fetch product failed: " + getBackendErrorMessage(data))
-    }
+    // if (!data.status) {
+    //   // Handle Fetch product error, e.g., display an error message to the user
+    //   throw new Error("Fetch product failed: " + getBackendErrorMessage(data))
+    // }
 
     return data
   } catch (error) {
@@ -178,10 +178,10 @@ export const updateProductService = async (
       product: IProduct
     } = await api.put(`/products/${id}`, product)
 
-    if (!data.status) {
-      // Handle Update product error, e.g., display an error message to the user
-      throw new Error("Update product failed: " + getBackendErrorMessage(data))
-    }
+    // if (!data.status) {
+    //   // Handle Update product error, e.g., display an error message to the user
+    //   throw new Error("Update product failed: " + getBackendErrorMessage(data))
+    // }
 
     return data.product
   } catch (error) {

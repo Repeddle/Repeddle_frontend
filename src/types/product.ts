@@ -205,9 +205,7 @@ export type InputData = {
   material: string
   description: string
   price: string
-  color: string[] | string
   keyFeatures: string
-  image: string
   selectedSize: string
   specification: string
   brand: string

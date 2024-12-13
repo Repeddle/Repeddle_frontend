@@ -26,6 +26,7 @@ const ProductList = () => {
 
   const [productQuery, setProductQuery] = useState("")
   const [debouncedQuery, setDebouncedQuery] = useState(productQuery)
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -38,10 +39,13 @@ const ProductList = () => {
   }, [productQuery])
 
   useEffect(() => {
-    const string = createSearchParam([["search", debouncedQuery]])
+    const string = createSearchParam([
+      ["search", debouncedQuery],
+      ["page", page.toString()],
+    ])
 
     fetchUserProducts(string)
-  }, [debouncedQuery, user?.role])
+  }, [debouncedQuery, page])
 
   const deleteHandler = async (id: string) => {
     if (window.confirm("Are you sure to delete")) {
@@ -82,6 +86,10 @@ const ProductList = () => {
         <Table
           headers={headers}
           loading={loading}
+          currentPage={products.currentPage}
+          totalCount={products.totalCount}
+          totalPages={products.totalPages}
+          onPageChange={setPage}
           message={
             productQuery.length && !products.products.length
               ? "No product matches search"

@@ -7,6 +7,10 @@ type Props = {
   returns: IReturn[]
   error?: string
   loading?: boolean
+  totalPages?: number
+  currentPage?: number
+  totalCount?: number
+  onPageChange?: (val: number) => void
 }
 
 const headers = [

@@ -4,9 +4,11 @@ import useReturn from "../../../hooks/useReturn"
 import { createSearchParam } from "../../../utils/common"
 
 const SoldReturns = () => {
-  const { fetchSoldReturns, error, loading, returns } = useReturn()
+  const { fetchSoldReturns, returnsPaginate, error, loading, returns } =
+    useReturn()
 
   const [query, setQuery] = useState("")
+  const [page, setPage] = useState(1)
   const [debouncedQuery, setDebouncedQuery] = useState(query)
 
   useEffect(() => {
@@ -20,9 +22,12 @@ const SoldReturns = () => {
   }, [query])
 
   useEffect(() => {
-    const string = createSearchParam([["search", debouncedQuery]])
+    const string = createSearchParam([
+      ["search", debouncedQuery],
+      ["page", page.toString()],
+    ])
     fetchSoldReturns(string)
-  }, [debouncedQuery])
+  }, [debouncedQuery, page])
 
   console.log(returns)
 
@@ -42,7 +47,15 @@ const SoldReturns = () => {
         />
       </div>
 
-      <UserReturnTable returns={returns} loading={loading} error={error} />
+      <UserReturnTable
+        onPageChange={setPage}
+        currentPage={returnsPaginate.currentPage}
+        totalCount={returnsPaginate.total}
+        totalPages={returnsPaginate.totalPages}
+        returns={returns}
+        loading={loading}
+        error={error}
+      />
     </div>
   )
 }

@@ -42,7 +42,10 @@ type ContextType = {
     id: string
   ) => Promise<{ product: IProduct; message?: string } | string>
   createProduct: (product: ICreateProduct) => Promise<IProduct | null>
-  updateProduct: (id: string, product: ICreateProduct) => Promise<boolean>
+  updateProduct: (
+    id: string,
+    product: ICreateProduct
+  ) => Promise<IProduct | string>
   deleteProduct: (id: string) => Promise<{ message?: string }>
   likeProduct: (id: string) => Promise<{
     message: string
@@ -259,11 +262,11 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         return newProd
       })
       setLoading(false)
-      return true
+      return result
     } catch (error) {
       handleError(error as string)
       setLoading(false)
-      return false
+      return error as string
     }
   }
 

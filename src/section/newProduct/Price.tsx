@@ -22,7 +22,7 @@ type Props = {
   handleError: (text: string, key: keyof InputProps) => void
   costPrice?: string | null
   sellingPrice: number
-  discount: () => number
+  discount: number
   meta: ProductMeta
   setMeta: (val: ProductMeta) => void
 }
@@ -87,9 +87,9 @@ const Price = ({
               {sellingPrice}
             </div>
           </div>{" "}
-          {discount() ? (
+          {discount ? (
             <span className="text-[11px] text-center">
-              {discount().toFixed(0)}% discount
+              {discount.toFixed(0)}% discount
             </span>
           ) : null}
           <div className="text-xs flex flex-col gap-1">

@@ -4,10 +4,12 @@ import useReturn from "../../../hooks/useReturn"
 import { createSearchParam } from "../../../utils/common"
 
 const PurchaseReturn = () => {
-  const { fetchPurchaseReturns, error, loading, returns } = useReturn()
+  const { fetchPurchaseReturns, returnsPaginate, error, loading, returns } =
+    useReturn()
 
   const [query, setQuery] = useState("")
   const [debouncedQuery, setDebouncedQuery] = useState(query)
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -20,9 +22,12 @@ const PurchaseReturn = () => {
   }, [query])
 
   useEffect(() => {
-    const string = createSearchParam([["search", debouncedQuery]])
+    const string = createSearchParam([
+      ["search", debouncedQuery],
+      ["page", page.toString()],
+    ])
     fetchPurchaseReturns(string)
-  }, [debouncedQuery])
+  }, [debouncedQuery, page])
 
   return (
     <div className="flex-[4] overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
@@ -40,7 +45,15 @@ const PurchaseReturn = () => {
         />
       </div>
 
-      <UserReturnTable returns={returns} loading={loading} error={error} />
+      <UserReturnTable
+        onPageChange={setPage}
+        currentPage={returnsPaginate.currentPage}
+        totalCount={returnsPaginate.total}
+        totalPages={returnsPaginate.totalPages}
+        returns={returns}
+        loading={loading}
+        error={error}
+      />
     </div>
   )
 }

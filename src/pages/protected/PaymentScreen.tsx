@@ -36,7 +36,7 @@ const PaymentScreen = () => {
     <LoadingBox />
   ) : (
     <div className="m-0 p-2.5 bg-light-ev1 dark:bg-dark-ev1 flex-[4] lg:mx-[10vw] lg:my-0 lg:p-5 rounded-[0.2rem]">
-      <h1 className="text-[28px]">Comfirm Payment</h1>
+      <h1 className="text-[28px]">Confirm Payment</h1>
       <div className="px-[15px] py-2.5 h-full mb-[15px] lg:px-5 lg:py-[15px] rounded-[5px] bg-light-ev2 dark:bg-dark-ev2">
         <div className="capitalize font-semibold mb-2.5">ID</div>{" "}
         <div className="flex">{payment._id}</div>

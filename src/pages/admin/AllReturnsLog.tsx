@@ -4,9 +4,11 @@ import useReturn from "../../hooks/useReturn"
 import { createSearchParam } from "../../utils/common"
 
 const AllReturnsLogs = () => {
-  const { fetchAdminReturns, error, loading, returns } = useReturn()
+  const { fetchAdminReturns, returnsPaginate, error, loading, returns } =
+    useReturn()
 
   const [query, setQuery] = useState("")
+  const [page, setPage] = useState(1)
   const [debouncedQuery, setDebouncedQuery] = useState(query)
 
   useEffect(() => {
@@ -20,10 +22,13 @@ const AllReturnsLogs = () => {
   }, [query])
 
   useEffect(() => {
-    const search = createSearchParam([["search", debouncedQuery]])
+    const search = createSearchParam([
+      ["search", debouncedQuery],
+      ["page", page.toString()],
+    ])
 
     fetchAdminReturns(search)
-  }, [debouncedQuery])
+  }, [debouncedQuery, page])
 
   return (
     <div className="flex-[4] overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
@@ -41,7 +46,15 @@ const AllReturnsLogs = () => {
         />
       </div>
 
-      <ReturnTable returns={returns} error={error} loading={loading} />
+      <ReturnTable
+        currentPage={returnsPaginate.currentPage}
+        totalCount={returnsPaginate.total}
+        totalPages={returnsPaginate.totalPages}
+        onPageChange={setPage}
+        returns={returns}
+        error={error}
+        loading={loading}
+      />
     </div>
   )
 }
