@@ -18,6 +18,8 @@ const ContactMessageDetail = ({ message, handleClick }: Props) => {
     assignTo,
   } = message
 
+  console.log(message)
+
   return (
     <div className="mb-5 p-5">
       <div className="mb-2.5">
@@ -44,11 +46,14 @@ const ContactMessageDetail = ({ message, handleClick }: Props) => {
         <strong className="font-bold">Asigned to:</strong>{" "}
         <div>{assignTo ? assignTo : "None"}</div>
       </div>
-      {file && (
-        <div>
-          <MessageImage url={file} />
-        </div>
-      )}
+      {file?.length &&
+        file.map((it) =>
+          it ? (
+            <div key={it}>
+              <MessageImage url={it} />
+            </div>
+          ) : null
+        )}
     </div>
   )
 }
