@@ -26,12 +26,16 @@ export async function sendVerifyEmailService(userData: {
   }
 }
 
-export async function forgetPasswordService(userData: {
+export async function forgetPasswordService({
+  email,
+}: {
   email: string
 }): Promise<any> {
   try {
-    console.log(userData, "body")
-    const data = await api.post("/users/forgot-password", userData)
+    const data = await api.post("/users/forgot-password", {
+      email,
+      mode: "token",
+    })
 
     if (!data.status) {
       const errorMessage = getBackendErrorMessage(data.data)
