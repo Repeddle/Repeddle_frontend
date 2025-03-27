@@ -218,10 +218,8 @@ const Order = () => {
             {order.items.map((orderItem) =>
               orderItem.seller._id === user?._id ? (
                 <IsSeller
-                  itemsPrice={itemsPrice}
                   userOrdered={order.buyer}
                   orderItem={orderItem}
-                  shippingPrice={shippingPrice}
                   deliverOrderHandler={deliverOrderHandler}
                   handleCancelOrder={handleCancelOrder}
                   paySeller={onPaySeller}

@@ -19,8 +19,6 @@ import { imageUrl } from "../../services/api"
 type Props = {
   orderItem: OrderItem
   userOrdered: IUser
-  itemsPrice: number
-  shippingPrice: number
   setShowDeliveryHistory: (val: boolean) => void
   setCurrentDeliveryHistory: (val: number) => void
   handleCancelOrder: (val: OrderItem) => void
@@ -38,8 +36,6 @@ type Props = {
 const IsSeller = ({
   orderItem,
   userOrdered,
-  itemsPrice,
-  shippingPrice,
   setCurrentDeliveryHistory,
   setShowDeliveryHistory,
   handleCancelOrder,
@@ -95,11 +91,8 @@ const IsSeller = ({
     >
       <div className="flex justify-between w-full flex-col lg:flex-row">
         <div className="hidden">
-          {(itemsPrice = itemsPrice + orderItem.price * orderItem.quantity)}
-          {
-            (shippingPrice =
-              shippingPrice + Number(orderItem.deliveryOption.fee))
-          }
+          {orderItem.price * orderItem.quantity}
+          {orderItem.deliveryOption.fee}
         </div>
         <div>
           <div className="flex text-center">
@@ -134,7 +127,6 @@ const IsSeller = ({
         </div>
         {user &&
           userOrdered._id === user._id &&
-          !orderItem.isHold &&
           orderItem.deliveryTracking.currentStatus.status === "Delivered" && (
             <div
               className="cursor-pointer text-white-color bg-orange-color hover:bg-malon-color h-[30px] mr-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
