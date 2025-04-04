@@ -1,40 +1,57 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import moment from "moment"
-import { Link } from "react-router-dom"
-import { imageUrl } from "../../services/api"
+import { useParams } from "react-router-dom"
+import usePayments from "../../hooks/usePayment"
+import { Payments } from "../../types/payments"
+import useToastNotification from "../../hooks/useToastNotification"
+import { currency, region } from "../../utils/common"
+import Button from "../../components/ui/Button"
 
 const PaymentScreen = () => {
-  const [loading] = useState(false)
+  const params = useParams()
+  const { id } = params
+  const [loading, setLoading] = useState(false)
+  const [payment, setPayment] = useState<Payments>()
+  const [approving, setApproving] = useState(false)
 
-  const payment = {
-    _id: "",
-    createdAt: "",
-    meta: {
-      type: "",
-      typeName: "",
-      id: "",
-      currency: "",
-      from: "",
-      to: "",
-      detail: {
-        bankName: "",
-        accountNumber: "",
-        accountName: "",
-      },
-    },
-    userId: {
-      image: "",
-      username: "",
-    },
-    amount: 0,
-    status: "",
+  const { approvePaymentWallet, fetchPaymentById } = usePayments()
+  const { addNotification } = useToastNotification()
+
+  useEffect(() => {
+    const getPay = async () => {
+      setLoading(true)
+
+      const res = await fetchPaymentById(id!)
+
+      if (typeof res === "string") {
+        addNotification(res, undefined, true)
+      } else {
+        setPayment(res)
+      }
+
+      setLoading(false)
+    }
+
+    getPay()
+  }, [id])
+
+  const handlePayment = async () => {
+    if (!payment) return
+    setApproving(true)
+    const res = await approvePaymentWallet(payment._id, payment.userId._id)
+
+    if (typeof res === "string") {
+      addNotification(res, undefined, true)
+    }
+
+    setApproving(false)
   }
-
-  const handlePayment = () => {}
 
   return loading ? (
     <LoadingBox />
+  ) : !payment ? (
+    <div className="text-red-500">Failed to get error message</div>
   ) : (
     <div className="m-0 p-2.5 bg-light-ev1 dark:bg-dark-ev1 flex-[4] lg:mx-[10vw] lg:my-0 lg:p-5 rounded-[0.2rem]">
       <h1 className="text-[28px]">Confirm Payment</h1>
@@ -48,35 +65,35 @@ const PaymentScreen = () => {
         </div>
         <hr />
         <div className="capitalize font-semibold mb-2.5">User</div>
-        <img
+        {/* <img
           className="w-[50px] h-[50px] rounded-[50%]"
           src={imageUrl + payment.userId.image}
           alt="img"
-        />
+        /> */}
         <div className="flex">{payment.userId.username}</div>
         <hr />
         <div className="capitalize font-semibold mb-2.5">Type</div>
-        <div className="flex">{payment.meta.type}</div>
-        <div className="flex text-malon-color">
+        <div className="flex">{payment.reason}</div>
+        {/* <div className="flex text-malon-color">
           <span className="mr-5">
             {payment.meta.typeName} {payment.meta.id && "id"}
           </span>
           <Link to={`/order/${payment.meta.id}`}>{payment.meta.id}</Link>
-        </div>
+        </div> */}
         <hr />
         <div className="capitalize font-semibold mb-2.5">Amount</div>
         <div className="flex">
-          {payment.meta.currency}
+          {currency(region())}
           {payment.amount}
         </div>
         <hr />
         <div className="capitalize font-semibold mb-2.5">From</div>
-        <div className="flex">{payment.meta.from}</div>
+        <div className="flex">{payment.userId.username}</div>
         <hr />
         <div className="capitalize font-semibold mb-2.5">To</div>
-        <div className="flex">{payment.meta.to}</div>
+        <div className="flex">{payment.to}</div>
         <hr />
-        {payment.meta.to === "Account" && (
+        {/* {payment.to === "Account" && (
           <>
             <div className="capitalize font-semibold mb-2.5">
               Bank Account Details
@@ -97,7 +114,7 @@ const PaymentScreen = () => {
             </div>
             <hr />
           </>
-        )}
+        )} */}
         {payment.status !== "Pending" ? (
           <>
             <div
@@ -114,12 +131,12 @@ const PaymentScreen = () => {
             </div>
           </>
         ) : (
-          <button
+          <Button
             className="w-[200px] text-white bg-orange-color hover:bg-malon-color cursor-pointer mr-5 mt-[30px] px-2.5 py-[7px] rounded-[0.2rem] border-none"
             onClick={() => handlePayment()}
-          >
-            Confirm Payment
-          </button>
+            isLoading={approving}
+            text="Confirm Payment"
+          />
         )}
       </div>
     </div>

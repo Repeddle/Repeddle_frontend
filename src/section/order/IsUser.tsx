@@ -235,11 +235,15 @@ const IsUser = ({
             </button>
           )}
           {user?.role === "Admin" &&
-            daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) <=
+            ((daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) <=
               0 &&
+              deliveryNumber(
+                orderItem.deliveryTracking.currentStatus.status
+              ) === 4) ||
+              deliveryNumber(
+                orderItem.deliveryTracking.currentStatus.status
+              ) === 5) &&
             !orderItem.isHold &&
-            deliveryNumber(orderItem.deliveryTracking.currentStatus.status) ===
-              4 &&
             (updatingStatus ? (
               <LoadingBox />
             ) : (

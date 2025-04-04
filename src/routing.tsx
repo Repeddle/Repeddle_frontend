@@ -79,6 +79,7 @@ import AllOrders from "./pages/admin/AllOrders"
 import ArticleList from "./pages/protected/articles"
 import CreateArticle from "./pages/protected/articles/CreateArticles"
 import TopSellersPage from "./pages/admin/TopSellers"
+import PaymentScreen from "./pages/admin/PaymentScreen"
 
 const router = createBrowserRouter([
   {
@@ -186,6 +187,7 @@ const router = createBrowserRouter([
           { path: "allproducts", element: <AllProductList /> },
           { path: "allorders", element: <AllOrders /> },
           { path: "payments", element: <Payments /> },
+          { path: "payments/:id", element: <PaymentScreen /> },
           { path: "transactionlist", element: <TransactionList /> },
           { path: "newsletter", element: <NewsletterList /> },
           { path: "otherbrand", element: <OtherBrand /> },
