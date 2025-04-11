@@ -18,8 +18,7 @@ const PaymentScreen = () => {
   const { approvePaymentWallet, fetchPaymentById } = usePayments()
   const { addNotification } = useToastNotification()
 
-  useEffect(() => {
-    const getPay = async () => {
+  const getPay = async () => {
       setLoading(true)
 
       const res = await fetchPaymentById(id!)
@@ -32,8 +31,9 @@ const PaymentScreen = () => {
 
       setLoading(false)
     }
-
-    getPay()
+  
+  useEffect(() => {
+        getPay()
   }, [id])
 
   const handlePayment = async () => {
@@ -43,8 +43,10 @@ const PaymentScreen = () => {
 
     if (typeof res === "string") {
       addNotification(res, undefined, true)
+    }else{
+    getPay()
+      addNotification('Payment status updated', undefined,false)
     }
-
     setApproving(false)
   }
 
