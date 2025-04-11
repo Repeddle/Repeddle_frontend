@@ -3,37 +3,38 @@ import LoadingBox from "../../components/LoadingBox"
 import moment from "moment"
 import { useParams } from "react-router-dom"
 import usePayments from "../../hooks/usePayment"
-import { Payments } from "../../types/payments"
+import { PaymentResponse } from "../../types/payments"
 import useToastNotification from "../../hooks/useToastNotification"
 import { currency, region } from "../../utils/common"
 import Button from "../../components/ui/Button"
+import { imageUrl } from "../../services/api"
 
 const PaymentScreen = () => {
   const params = useParams()
   const { id } = params
   const [loading, setLoading] = useState(false)
-  const [payment, setPayment] = useState<Payments>()
+  const [payment, setPayment] = useState<PaymentResponse>()
   const [approving, setApproving] = useState(false)
 
   const { approvePaymentWallet, fetchPaymentById } = usePayments()
   const { addNotification } = useToastNotification()
 
   const getPay = async () => {
-      setLoading(true)
+    setLoading(true)
 
-      const res = await fetchPaymentById(id!)
+    const res = await fetchPaymentById(id!)
 
-      if (typeof res === "string") {
-        addNotification(res, undefined, true)
-      } else {
-        setPayment(res)
-      }
-
-      setLoading(false)
+    if (typeof res === "string") {
+      addNotification(res, undefined, true)
+    } else {
+      setPayment(res)
     }
-  
+
+    setLoading(false)
+  }
+
   useEffect(() => {
-        getPay()
+    getPay()
   }, [id])
 
   const handlePayment = async () => {
@@ -43,9 +44,9 @@ const PaymentScreen = () => {
 
     if (typeof res === "string") {
       addNotification(res, undefined, true)
-    }else{
-    getPay()
-      addNotification('Payment status updated', undefined,false)
+    } else {
+      getPay()
+      addNotification("Payment status updated", undefined, false)
     }
     setApproving(false)
   }
@@ -67,11 +68,11 @@ const PaymentScreen = () => {
         </div>
         <hr />
         <div className="capitalize font-semibold mb-2.5">User</div>
-        {/* <img
+        <img
           className="w-[50px] h-[50px] rounded-[50%]"
           src={imageUrl + payment.userId.image}
           alt="img"
-        /> */}
+        />
         <div className="flex">{payment.userId.username}</div>
         <hr />
         <div className="capitalize font-semibold mb-2.5">Type</div>
@@ -95,28 +96,30 @@ const PaymentScreen = () => {
         <div className="capitalize font-semibold mb-2.5">To</div>
         <div className="flex">{payment.to}</div>
         <hr />
-        {/* {payment.to === "Account" && (
+        {payment.to.toLowerCase() !== "account" && (
           <>
             <div className="capitalize font-semibold mb-2.5">
               Bank Account Details
             </div>
             <div className="flex capitalize text-[13px]">
               <div>Account Name:</div>{" "}
-              <div className="ml-[5px]">{payment.meta.detail.accountName}</div>
+              <div className="ml-[5px]">
+                {payment.meta?.detail?.accountName}
+              </div>
             </div>
             <div className="flex capitalize text-[13px]">
               <div>Account Number:</div>{" "}
               <div className="ml-[5px]">
-                {payment.meta.detail.accountNumber}
+                {payment.meta?.detail?.accountNumber}
               </div>
             </div>
             <div className="flex capitalize text-[13px]">
               <div>Bank Name:</div>{" "}
-              <div className="ml-[5px]">{payment.meta.detail.bankName}</div>
+              <div className="ml-[5px]">{payment.meta?.detail?.bankName}</div>
             </div>
             <hr />
           </>
-        )} */}
+        )}
         {payment.status !== "Pending" ? (
           <>
             <div

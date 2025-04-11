@@ -1,4 +1,8 @@
-import { Payments, PaymentWithPagination } from "../types/payments"
+import {
+  PaymentResponse,
+  Payments,
+  PaymentWithPagination,
+} from "../types/payments"
 import { getBackendErrorMessage } from "../utils/error"
 import api from "./api"
 
@@ -30,7 +34,7 @@ export const fetchPaymentsService = async (params?: string) => {
 
 export const fetchPaymentByIdService = async (id: string) => {
   try {
-    const resp: Payments = await api.get(`/payments/${id}`)
+    const resp: PaymentResponse = await api.get(`/payments/${id}`)
 
     // if (!resp.status) {
     //   // Handle Fetch payments error, e.g., display an error message to the user
