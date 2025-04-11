@@ -114,7 +114,7 @@ const Payments = () => {
             Date: moment(pay.createdAt).format("MMM DD YY, h:mm a"),
           },
           action: (
-            <Link to={`/admin/payment/${pay._id}`}>
+            <Link to={`/admin/payments/${pay._id}`}>
               <button className="text-orange-color dark:bg-dark-ev3 bg-[#fcf0e0] cursor-pointer mr-2.5 px-3 py-[5px] rounded-[0.2rem] border-none">
                 View
               </button>
