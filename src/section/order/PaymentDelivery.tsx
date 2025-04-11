@@ -50,7 +50,12 @@ const PaymentDelivery = ({
                 <div className="flex-1">Shipping Fee:</div>
                 <div className="flex-1 lg:flex-[5]">
                   {currency(region())}{" "}
-                  {isSeller ? shippingPrice : order.items[0].deliveryOption.fee}
+                  {isSeller
+                    ? shippingPrice
+                    : order.items.reduce(
+                        (prev, curr) => prev + curr.deliveryOption.fee,
+                        0
+                      )}
                 </div>
               </div>
               <div className="flex capitalize">
@@ -58,7 +63,13 @@ const PaymentDelivery = ({
                 <div className="flex-1 lg:flex-[5]">
                   <div className="font-bold">
                     {currency(region())}
-                    {isSeller ? itemsPrice + shippingPrice : order.totalAmount}
+                    {isSeller
+                      ? itemsPrice +
+                        order.items.reduce(
+                          (prev, curr) => prev + curr.deliveryOption.fee,
+                          0
+                        )
+                      : order.totalAmount}
                   </div>
                 </div>
               </div>
@@ -71,7 +82,11 @@ const PaymentDelivery = ({
                     <div className="flex-1 lg:flex-[2]">Total cost:</div>
                     <div className="flex-1 lg:flex-[3]">
                       {currency(region())}
-                      {itemsPrice + shippingPrice}
+                      {itemsPrice +
+                        order.items.reduce(
+                          (prev, curr) => prev + curr.deliveryOption.fee,
+                          0
+                        )}
                     </div>
                   </div>
                   <div className="flex">
@@ -80,7 +95,14 @@ const PaymentDelivery = ({
                     </div>
                     <div className="flex-1 lg:flex-[3]">
                       {currency(region())}
-                      {((7.9 / 100) * (itemsPrice + shippingPrice)).toFixed(2)}
+                      {(
+                        (7.9 / 100) *
+                        (itemsPrice +
+                          order.items.reduce(
+                            (prev, curr) => prev + curr.deliveryOption.fee,
+                            0
+                          ))
+                      ).toFixed(2)}
                     </div>
                   </div>
                   <div className="flex">
@@ -89,8 +111,16 @@ const PaymentDelivery = ({
                       {currency(region())}
                       {(
                         itemsPrice +
-                        shippingPrice -
-                        (7.9 / 100) * (itemsPrice + shippingPrice)
+                        order.items.reduce(
+                          (prev, curr) => prev + curr.deliveryOption.fee,
+                          0
+                        ) -
+                        (7.9 / 100) *
+                          (itemsPrice +
+                            order.items.reduce(
+                              (prev, curr) => prev + curr.deliveryOption.fee,
+                              0
+                            ))
                       ).toFixed(2)}
                     </div>
                   </div>
