@@ -103,7 +103,7 @@ export const approvePaymentWalletService = async (
 ) => {
   try {
     const resp: { message: string; status: boolean; payment: Payments } =
-      await api.post(`/products/approve/${paymentId}`, { userId })
+      await api.post(`/payments/approve/${paymentId}`, { userId })
 
     if (!resp.status) {
       // Handle Fetch payments error, e.g., display an error message to the user
@@ -126,7 +126,7 @@ export const declinePaymentWalletService = async (
 ) => {
   try {
     const resp: { message: string; status: boolean; payment: Payments } =
-      await api.post(`/products/decline/${paymentId}`, { userId })
+      await api.post(`/payments/decline/${paymentId}`, { userId })
 
     if (!resp.status) {
       // Handle Fetch payments error, e.g., display an error message to the user
