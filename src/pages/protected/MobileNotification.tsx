@@ -36,7 +36,7 @@ const MobileNotification = () => {
             >
               <img
                 className="w-[50px] h-[50px] rounded-[50%]"
-                src={imageUrl + not.user.image}
+                src={imageUrl + not.image}
                 alt="img"
               />
               <div className="flex-1 ml-[5px] text-sm">
