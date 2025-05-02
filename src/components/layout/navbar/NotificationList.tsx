@@ -32,7 +32,7 @@ const NotificationList = ({ notifications }: Props) => {
             >
               <img
                 className="w-[50px] h-[50px] rounded-[50%]"
-                src={imageUrl + not.user.image}
+                src={imageUrl + not.image}
                 alt="img"
               />
               <div className="text-sm flex-1 ml-[5px]">

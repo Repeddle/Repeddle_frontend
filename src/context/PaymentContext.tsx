@@ -1,6 +1,10 @@
 import { createContext, PropsWithChildren, useState } from "react"
 import useAuth from "../hooks/useAuth"
-import { Payments, PaymentWithPagination } from "../types/payments"
+import {
+  PaymentResponse,
+  Payments,
+  PaymentWithPagination,
+} from "../types/payments"
 import {
   approvePaymentWalletService,
   declinePaymentWalletService,
@@ -15,7 +19,7 @@ type ContextType = {
   loading: boolean
   error: string
   fetchPayments: (params?: string) => Promise<boolean>
-  fetchPaymentById: (id: string) => Promise<Payments | string>
+  fetchPaymentById: (id: string) => Promise<string | PaymentResponse>
   paySeller: (
     orderId: string,
     itemId: string,
