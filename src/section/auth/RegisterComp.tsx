@@ -1,53 +1,54 @@
-import InputWithLabel from "../../components/ui/InputWithLabel"
-import Button from "../../components/ui/Button"
-import { FaFacebookF, FaGoogle } from "react-icons/fa"
-import { FormEvent, useState } from "react"
-import useAuth from "../../hooks/useAuth"
-import { emailRegex } from "../../utils/constants"
-import useToastNotification from "../../hooks/useToastNotification"
-import { Link } from "react-router-dom"
-import Modal from "../../components/ui/Modal"
+import InputWithLabel from "../../components/ui/InputWithLabel";
+import Button from "../../components/ui/Button";
+import { FormEvent, useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import { emailRegex } from "../../utils/constants";
+import useToastNotification from "../../hooks/useToastNotification";
+import { Link } from "react-router-dom";
+import Modal from "../../components/ui/Modal";
+import GoogleLoginButton from "./GoogleLoginButton";
+import FacebookLoginButton from "./FacebookLoginButton";
 
 const RegisterComp = () => {
-  const [email, setEmail] = useState("")
-  const [showEmail, setShowEmail] = useState("")
-  const [formError, setFormError] = useState("")
-  const [showModal, setShowModal] = useState(false)
+  const [email, setEmail] = useState("");
+  const [showEmail, setShowEmail] = useState("");
+  const [formError, setFormError] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
-  const { sendVerifyEmail, loading, error } = useAuth()
-  const { addNotification } = useToastNotification()
+  const { sendVerifyEmail, loading, error } = useAuth();
+  const { addNotification } = useToastNotification();
 
   const validateEmail = () => {
     if (email.trim().length === 0) {
-      setFormError("Email field must not be empty")
-      return false
+      setFormError("Email field must not be empty");
+      return false;
     }
 
     if (!email.toLocaleLowerCase().match(emailRegex)) {
-      setFormError("Please enter a valid email")
-      return false
+      setFormError("Please enter a valid email");
+      return false;
     }
 
-    setFormError("")
-    return true
-  }
+    setFormError("");
+    return true;
+  };
 
   const submitHandler = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (validateEmail()) {
-      const value = await sendVerifyEmail({ email: email.trim() })
+      const value = await sendVerifyEmail({ email: email.trim() });
 
       if (value) {
-        setShowModal(true)
-        setShowEmail(email)
-        setEmail("")
-        setFormError("")
+        setShowModal(true);
+        setShowEmail(email);
+        setEmail("");
+        setFormError("");
       } else {
-        addNotification(error ? error : "An error occurred")
+        addNotification(error ? error : "An error occurred");
       }
     }
-  }
+  };
 
   return (
     <>
@@ -103,8 +104,8 @@ const RegisterComp = () => {
             <div className="absolute w-full max-w-[500px] h-0.5 z-[1] top-2/4 bg-orange-color" />
           </div>
           <div className="flex justify-center items-center gap-6">
-            <FaGoogle className="text-4xl cursor-pointer hover:bg-malon-color/10 transition-all duration-300 hover:text-malon-color bg-orange-color text-orange-color bg-opacity-10 p-1.5 rounded " />
-            <FaFacebookF className="text-4xl cursor-pointer hover:bg-malon-color/10 transition-all duration-300 hover:text-malon-color bg-orange-color text-orange-color bg-opacity-10 p-1.5 rounded " />
+            <GoogleLoginButton />
+            <FacebookLoginButton />{" "}
           </div>
         </div>
       </div>
@@ -135,7 +136,7 @@ const RegisterComp = () => {
         </div>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default RegisterComp
+export default RegisterComp;
