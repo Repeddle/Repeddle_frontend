@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
 const HowRepeddleWork = () => {
   return (
     <div className="container mx-auto max-w-6xl">
@@ -104,7 +104,7 @@ const HowRepeddleWork = () => {
               </h2>
               <p className="text-center">
                 {" "}
-                <Link to="/newproduct" className="text-malon-color underline">
+                <Link to="/search" className="text-malon-color underline">
                   Shop
                 </Link>{" "}
                 the trill. No guilt..!!
@@ -182,7 +182,7 @@ const HowRepeddleWork = () => {
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default HowRepeddleWork;
+export default HowRepeddleWork
