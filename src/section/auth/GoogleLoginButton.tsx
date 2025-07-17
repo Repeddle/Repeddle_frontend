@@ -9,26 +9,27 @@ function GoogleLoginButton() {
   const [searchParams] = useSearchParams();
   const { getUser } = useAuth();
   const { addNotification } = useToastNotification();
+  const redirectUri = `${window.location.origin}${window.location.pathname}?provider=google`;
+  const provider = searchParams.get("provider");
+  const code = searchParams.get("code");
 
   useEffect(() => {
-    const code = searchParams.get("code");
-    if (code) {
-      api
-        .post("/auth/google/callback", { code })
-        .then((response: any) => {
-          localStorage.setItem("authToken", response.token);
-          getUser();
-          window.location.href = "/";
-        })
-        .catch((error) => {
-          addNotification(error ? error : "An error occurred");
-        });
-    }
-  }, [searchParams]);
+    if (provider !== "google" || !code) return;
+
+    api
+      .get(`/auth/google/callback?code=${code}&redirect=${redirectUri}`)
+      .then((response: any) => {
+        localStorage.setItem("authToken", response.token);
+        getUser();
+        window.location.href = "/";
+      })
+      .catch((error) => {
+        console.log(error ? error : "An error occurred");
+      });
+  }, [searchParams, redirectUri]);
 
   const signIn = async () => {
     try {
-      const redirectUri = `${window.location.origin}${window.location.pathname}${window.location.search}`;
       console.log("Redirect URI:", redirectUri);
       const res: any = await api.get(`/auth/google?redirect=${redirectUri}`);
       window.location.href = `${res.authUrl}`;

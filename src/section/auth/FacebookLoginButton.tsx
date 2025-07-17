@@ -9,28 +9,28 @@ function FacebookLoginButton() {
   const [searchParams] = useSearchParams();
   const { getUser } = useAuth();
   const { addNotification } = useToastNotification();
+  const provider = searchParams.get("provider");
+  const code = searchParams.get("code");
+  const redirectUri = `${window.location.origin}${window.location.pathname}?provider=facebook`;
 
   useEffect(() => {
-    const code = searchParams.get("code");
-    if (code) {
-      api
-        .post("/auth/facebook/callback", { code })
-        .then((response: any) => {
-          localStorage.setItem("authToken", response.token);
-          getUser();
-          window.location.href = "/";
-        })
-        .catch((error) => {
-          // Handle error during login
-          console.error("Login failed:", error);
-          addNotification(error ? error : "An error occurred");
-        });
-    }
+    if (provider !== "facebook" || !code) return;
+    api
+      .get(`/auth/facebook/callback?code=${code}&redirect=${redirectUri}`)
+      .then((response: any) => {
+        localStorage.setItem("authToken", response.token);
+        getUser();
+        window.location.href = "/";
+      })
+      .catch((error) => {
+        // Handle error during login
+        console.error("Login failed:", error);
+        addNotification(error ? error : "An error occurred");
+      });
   }, [searchParams]);
 
   const signIn = async () => {
     try {
-      const redirectUri = `${window.location.origin}${window.location.pathname}${window.location.search}`;
       console.log("Redirect URI:", redirectUri);
       const res: any = await api.get(`/auth/facebook?redirect=${redirectUri}`);
       window.location.href = `${res.authUrl}`;
