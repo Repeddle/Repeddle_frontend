@@ -127,7 +127,8 @@ const ReturnPage = () => {
     const data = await paySeller(
       returned.orderId._id,
       item.product._id,
-      returned.productId.seller._id
+      //  for a return we should pay the buyer
+      returned.orderId.buyer._id
     )
 
     if (typeof data !== "string") {
@@ -155,7 +156,11 @@ const ReturnPage = () => {
       returned.deliveryTracking.currentStatus.status
     )
 
-    if (nextStatus[1] === 9 && !trackingNumber) {
+    if (
+      nextStatus[1] === 9 &&
+      returned.deliveryOption.method !== "Pick up from Seller" &&
+      !trackingNumber
+    ) {
       setShowTracking(true)
     } else {
       setLoadingReturn(true)
@@ -485,10 +490,11 @@ const ReturnPage = () => {
                           {deliveryNumber(
                             returned.deliveryTracking.currentStatus.status
                           ) > 7 &&
-                            deliveryNumber(
-                              returned.deliveryTracking.currentStatus.status
-                            ) < 10 &&
-                            (!loadingReturn ? (
+                          deliveryNumber(
+                            returned.deliveryTracking.currentStatus.status
+                          ) < 10 &&
+                          returned.deliverySelected ? (
+                            !loadingReturn ? (
                               <div
                                 onClick={updateTracking}
                                 className="p-2 self-start lg:self-end rounded-[0.2rem] cursor-pointer transition-all duration-300 bg-orange-color text-white hover:bg-orange-color"
@@ -502,7 +508,12 @@ const ReturnPage = () => {
                               </div>
                             ) : (
                               <LoadingBox />
-                            ))}
+                            )
+                          ) : (
+                            <div className="text-red-500 text-sm">
+                              Waiting for seller to provide delivery address
+                            </div>
+                          )}
                         </div>
                       )
                     ) : (
