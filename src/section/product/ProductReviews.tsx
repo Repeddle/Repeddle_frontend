@@ -1,77 +1,77 @@
-import { FormEvent, useRef, useState } from "react"
-import { Link } from "react-router-dom"
-import LoadingBox from "../../components/LoadingBox"
-import { IProduct } from "../../types/product"
-import MessageBox from "../../components/MessageBox"
-import useAuth from "../../hooks/useAuth"
-import { FaThumbsDown, FaThumbsUp } from "react-icons/fa"
-import Button from "../../components/ui/Button"
-import Rating from "../../components/Rating"
-import { FaFaceSmile } from "react-icons/fa6"
-import useToastNotification from "../../hooks/useToastNotification"
-import useProducts from "../../hooks/useProducts"
+import { FormEvent, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import LoadingBox from "../../components/LoadingBox";
+import { IProduct } from "../../types/product";
+import MessageBox from "../../components/MessageBox";
+import useAuth from "../../hooks/useAuth";
+import { FaThumbsDown, FaThumbsUp } from "react-icons/fa";
+import Button from "../../components/ui/Button";
+import Rating from "../../components/Rating";
+import { FaFaceSmile } from "react-icons/fa6";
+import useToastNotification from "../../hooks/useToastNotification";
+import useProducts from "../../hooks/useProducts";
 
 type Props = {
-  product: IProduct
-  setProduct: (val: IProduct) => void
-}
+  product: IProduct;
+  setProduct: (val: IProduct) => void;
+};
 
 const ProductReviews = ({ product, setProduct }: Props) => {
-  const { user } = useAuth()
-  const { addNotification } = useToastNotification()
-  const { createProductReview, error } = useProducts()
+  const { user } = useAuth();
+  const { addNotification } = useToastNotification();
+  const { createProductReview, error } = useProducts();
 
-  const [comment, setComment] = useState("")
-  const [like, setLike] = useState<boolean>()
-  const [rating, setRating] = useState("")
-  const [loadingCreateReview, setLoadingCreateReview] = useState(false)
+  const [comment, setComment] = useState("");
+  const [like, setLike] = useState<boolean>();
+  const [rating, setRating] = useState("");
+  const [loadingCreateReview, setLoadingCreateReview] = useState(false);
 
-  const reviewRef = useRef(null)
+  const reviewRef = useRef(null);
 
   const submitHandler = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!comment) {
-      addNotification("Please enter review")
-      return
+      addNotification("Please enter review");
+      return;
     }
 
     if (!rating) {
-      addNotification("Please select rating")
-      return
+      addNotification("Please select rating");
+      return;
     }
 
     if (!like) {
-      addNotification("Give review a thumb up or thumb down")
-      return
+      addNotification("Give review a thumb up or thumb down");
+      return;
     }
 
-    setLoadingCreateReview(true)
+    setLoadingCreateReview(true);
 
     const res = await createProductReview(product._id, {
       comment,
       like: like,
       rating: +rating,
-    })
+    });
 
     if (res) {
-      const newProd = product
-      newProd.reviews = [...newProd.reviews, res.review]
-      setProduct(newProd)
+      const newProd = product;
+      newProd.reviews = [...newProd.reviews, res.review];
+      setProduct(newProd);
     } else {
-      addNotification(error)
+      addNotification(error);
     }
 
-    setLoadingCreateReview(false)
-  }
+    setLoadingCreateReview(false);
+  };
 
   const deleteReview = async (id: string) => {
-    console.log(id)
-  }
+    console.log(id);
+  };
 
   return (
     <>
-      <div className="my-3 mx-4 bs-container">
+      <div id="reviews" className="my-3 mx-4 bs-container">
         <div className="my-3" ref={reviewRef}>
           {product.reviews.length === 0 && (
             <MessageBox>There is no reviews</MessageBox>
@@ -182,7 +182,7 @@ const ProductReviews = ({ product, setProduct }: Props) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ProductReviews
+export default ProductReviews;
