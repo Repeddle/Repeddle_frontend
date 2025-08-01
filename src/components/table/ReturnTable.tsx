@@ -19,7 +19,7 @@ const headers = [
   { title: "Product" },
   { title: "Buyer", hide: true },
   { title: "Seller", hide: true },
-  { title: "Order", hide: true },
+  { title: "Status", hide: true },
   { title: "Date" },
 ]
 
@@ -50,7 +50,7 @@ const ReturnTable = ({ returns, error, loading }: Props) => {
           ),
           Buyer: ret.orderId.buyer?.username ?? "",
           Seller: ret.productId.seller.username,
-          Order: ret.orderId._id,
+          Status: ret.status,
           Date: moment(ret.createdAt).format("MMM DD YY, h:mm a"),
         },
         action: (

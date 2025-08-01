@@ -49,11 +49,11 @@ const TopSellers = () => {
                 sellers.map((seller, index) => (
                   <Link to={`/seller/${seller.username}`} key={index}>
                     <div className="items-center flex flex-col mr-[30px]">
-                      <div className="relative">
+                      <div className="relative lg:w-[200px] lg:h-[200px] sm:w-[150px] sm:h-[150px] w-[100px] h-[100px]">
                         <img
                           src={imageUrl + seller.image}
                           alt={seller.username}
-                          className="lg:h-[200px] object-cover object-top lg:w-[200px] rounded-[50%] h-[150px] w-[150px]"
+                          className="h-full w-full object-cover object-top rounded-[50%]"
                         />
 
                         {seller.badge && (
