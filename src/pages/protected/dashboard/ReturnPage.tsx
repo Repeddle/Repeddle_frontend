@@ -322,7 +322,7 @@ const ReturnPage = () => {
               )}
             </>
           ) : (
-            <p className="text-[red]">Waiting Admin Approver/Decline</p>
+            <p className="text-[red]">Waiting Admin Approval/Decline</p>
           )}
 
           {returned.status === "Approved" && (
@@ -509,11 +509,10 @@ const ReturnPage = () => {
                             ) : (
                               <LoadingBox />
                             )
-                          ) : (
-                            <div className="text-red-500 text-sm">
-                              Waiting for seller to provide delivery address
-                            </div>
-                          )}
+                          ) : // <div className="text-red-500 text-sm">
+                          //   Waiting for seller to provide delivery address
+                          // </div>
+                          null}
                         </div>
                       )
                     ) : (
