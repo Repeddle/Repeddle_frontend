@@ -8,16 +8,23 @@ type Props = {
     name: string
     isCategory: boolean
     path: string
+    mobile_path?: string
   }
   nameLabel?: string
   linkLabel: string
   itemIndex: number | null
-  handleAdd?: (name: string, isCategory: boolean, link: string) => void
+  handleAdd?: (
+    name: string,
+    isCategory: boolean,
+    link: string,
+    mobile_path?: string
+  ) => void
   handleSubAdd?: (
     index: number,
     name: string,
     isCategory: boolean,
-    link: string
+    link: string,
+    mobile_path?: string
   ) => void
   handleChange?: (
     subIndex: number,
@@ -41,6 +48,9 @@ const FormModal = ({
 }: Props) => {
   const [link, setLink] = useState(category.path || "")
   const [name, setName] = useState(category.name || "")
+  const [mobile_path, setMobile_path] = useState<string | undefined>(
+    category.mobile_path
+  )
   const [isCategory, setIsCategory] = useState(category.isCategory)
 
   const { addNotification } = useToastNotification()
@@ -56,10 +66,10 @@ const FormModal = ({
       if (itemIndex !== null && itemIndex >= 0) {
         handleChange?.(index, itemIndex, name, isCategory, link)
       } else {
-        handleSubAdd?.(index, name, isCategory, link)
+        handleSubAdd?.(index, name, isCategory, link, mobile_path)
       }
     } else {
-      handleAdd?.(name, isCategory, link)
+      handleAdd?.(name, isCategory, link, mobile_path)
     }
     onClose?.()
   }
@@ -89,6 +99,14 @@ const FormModal = ({
               type="text"
               value={link}
               onChange={(e) => setLink(e.target.value)}
+            />
+            <label className="text-sm font-semibold mb-2.5">Mobile Path</label>
+            <input
+              className={`h-10 p-2.5 rounded-[0.2rem] focus-visible:outline focus-visible:outline-orange-color border-light-ev3
+          dark:border-dark-ev3 border text-black-color dark:text-white-color bg-transparent`}
+              type="text"
+              value={mobile_path}
+              onChange={(e) => setMobile_path(e.target.value)}
             />
           </>
         )}
