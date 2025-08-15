@@ -1,23 +1,27 @@
-import moment from "moment"
-import { useNavigate } from "react-router"
-import useNotification from "../../hooks/useNotification"
-import { useEffect } from "react"
-import { Notification } from "../../types/conversation"
-import { imageUrl } from "../../services/api"
+import moment from "moment";
+import { useNavigate } from "react-router";
+import useNotification from "../../hooks/useNotification";
+import { useEffect } from "react";
+import { Notification } from "../../types/conversation";
+import { imageUrl } from "../../services/api";
+import useAuth from "../../hooks/useAuth";
 
 const MobileNotification = () => {
-  const navigate = useNavigate()
-  const { fetchNotifications, notifications } = useNotification()
+  const navigate = useNavigate();
+  const { fetchNotifications, notifications } = useNotification();
+  const { user } = useAuth();
 
   useEffect(() => {
-    fetchNotifications()
-  }, [])
+    if (user) {
+      fetchNotifications();
+    }
+  }, [user]);
 
   const handleOnClick = (not: Notification) => {
     // console.log("not", not)
     // socket.emit("remove_id_notifications", not._id)
-    navigate(not.link)
-  }
+    navigate(not.link);
+  };
 
   return (
     <div>
@@ -53,7 +57,7 @@ const MobileNotification = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MobileNotification
+export default MobileNotification;
