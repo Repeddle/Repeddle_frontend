@@ -73,9 +73,6 @@ const Product = () => {
   const [selectSize, setSelectSize] = useState("")
   const [product, setProduct] = useState<IProduct>()
 
-  // update product TODO:
-  // FIXME: add view count and share update route
-
   useEffect(() => {
     const viewItem = async () => {
       setLoading(true)

@@ -28,7 +28,12 @@ const Categories = () => {
   const { addNotification } = useToastNotification()
 
   const [refresh, setrefresh] = useState(false)
-  const [category, setCategory] = useState({
+  const [category, setCategory] = useState<{
+    name: string
+    isCategory: boolean
+    path: string
+    mobile_path?: string
+  }>({
     name: "",
     isCategory: true,
     path: "",
@@ -108,13 +113,14 @@ const Categories = () => {
     subcategoryIndex: number,
     name: string,
     isCategory: boolean,
-    path: string
+    path: string,
+    mobile_path?: string
   ) => {
     const newSubCategories = subCategories.map((subcategory, index) => {
       if (index === subcategoryIndex) {
         const updatedItems: ISubCategoryItem[] = [
           ...subcategory.items,
-          { name, isCategory, path },
+          { name, isCategory, path, mobile_path },
         ]
 
         return {
@@ -131,7 +137,11 @@ const Categories = () => {
   const handleEdit = async (cat: ICategory) => {
     setEditCat(true)
     setEditCurrentCat(cat)
-    setCategory({ name: cat.name, path: cat.path, isCategory: true })
+    setCategory({
+      name: cat.name,
+      path: cat.path,
+      isCategory: true,
+    })
     setImageUpload({
       loading: false,
       image: cat.image,
@@ -155,12 +165,14 @@ const Categories = () => {
   const handleCategoryPathChange = (
     name: string,
     isCategory: boolean,
-    path: string
+    path: string,
+    mobile_path?: string
   ) => {
     const newCategory = {
       name,
       isCategory,
       path,
+      mobile_path,
     }
     setCategory(newCategory)
   }
@@ -184,13 +196,15 @@ const Categories = () => {
   const handleAddSubcategory = (
     name: string,
     isCategory: boolean,
-    path: string
+    path: string,
+    mobile_path?: string
   ) => {
     const newSubcategory: ISubCategory = {
       name,
       isCategory,
       path,
       items: [],
+      mobile_path,
     }
     setSubCategories([...subCategories, newSubcategory])
   }

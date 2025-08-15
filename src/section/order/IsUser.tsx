@@ -119,6 +119,12 @@ const IsUser = ({
                   size="lg"
                 >
                   <div className="flex flex-col justify-center items-center gap-2.5 h-full pt-10 md:pt-8 p-2.5">
+                    <div className="text-[13px] max-w-[400px]">
+                      Please inspect your order before confirming receipt.
+                      Kindly know that you can't LOG A RETURN after order
+                      receipt confirmation. However, you can re-list your
+                      product for sale at this point
+                    </div>
                     <div className="flex justify-between gap-1.5 sm:gap-2.5 w-full max-w-sm">
                       {updatingStatus ? (
                         <LoadingBox />
@@ -143,12 +149,6 @@ const IsUser = ({
                           </div>
                         </>
                       )}
-                    </div>
-                    <div className="text-[13px] max-w-[400px]">
-                      Please inspect your order before confirming receipt.
-                      Kindly know that you can't LOG A RETURN after order
-                      receipt confirmation. However, you can re-list your
-                      product for sale at this point
                     </div>
                   </div>
                 </Modal>

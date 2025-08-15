@@ -43,7 +43,7 @@ const PlaceOrder = () => {
     [coupon]
   )
 
-  const placeOrderHandler = async (paymentMet: string, transId: string) => {
+  const placeOrderHandler = async (paymentMet: string, transId?: string) => {
     const res = await createOrder({
       items: cart,
       paymentMethod: paymentMet,
@@ -59,7 +59,7 @@ const PlaceOrder = () => {
     }
   }
 
-  const processOrder = async (paymentMethod: string, transId: string) => {
+  const processOrder = async (paymentMethod: string, transId?: string) => {
     setLoadingPay(true)
     const order1 = await placeOrderHandler(paymentMethod, transId)
     if (!order1) {
@@ -309,9 +309,11 @@ const PlaceOrder = () => {
                   ) : paymentMethod === "Wallet" ? (
                     <div
                       className="cursor-pointer text-white w-full uppercase flex items-center justify-center h-10 rounded-[0.2rem] bg-orange-color"
-                      onClick={() => setShowModel(true)}
+                      onClick={async () =>
+                        await placeOrderHandler(paymentMethod)
+                      }
                     >
-                      Proceed to Payment
+                      Place Order
                     </div>
                   ) : region() === "ZAR" ? (
                     // <PayFast
