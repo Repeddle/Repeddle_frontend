@@ -15,6 +15,7 @@ import {
   FaHeart,
   FaHome,
   FaMoneyBill,
+  FaRegStar,
 } from "react-icons/fa"
 import {
   FaArrowRotateLeft,
@@ -71,6 +72,11 @@ const sidebarLinks = [
     path: "/dashboard/address",
     text: "Address Book",
     icon: <FaHome />,
+  },
+  {
+    path: "/dashboard/userreviews",
+    text: "My Reviews",
+    icon: <FaRegStar />,
   },
 
   {

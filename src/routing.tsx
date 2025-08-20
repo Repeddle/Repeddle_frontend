@@ -80,6 +80,7 @@ import ArticleList from "./pages/protected/articles"
 import CreateArticle from "./pages/protected/articles/CreateArticles"
 import TopSellersPage from "./pages/admin/TopSellers"
 import PaymentScreen from "./pages/admin/PaymentScreen"
+import UserReviews from "./pages/protected/dashboard/UserReviews"
 
 const router = createBrowserRouter([
   {
@@ -173,6 +174,7 @@ const router = createBrowserRouter([
           { path: "return/:id", element: <ReturnPage /> },
           { path: "user/:id", element: <User /> },
           { path: "product/:id", element: <EditProduct /> },
+          { path: "userreviews", element: <UserReviews /> },
         ],
       },
 
