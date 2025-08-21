@@ -475,11 +475,12 @@ export const addProductViewCountService = async (
 
 export const addProductShareCountService = async (
   id: string,
-  userId: string
+  userId: string,
+  hashed: string
 ) => {
   try {
     await api.post(`/products/${id}/share`, {
-      hashed: Math.random().toString().slice(2),
+      hashed,
       user: userId,
     })
 

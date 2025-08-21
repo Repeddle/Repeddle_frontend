@@ -30,7 +30,7 @@ export const markNotificationService = async (id: string) => {
   try {
     const url = `/notifications/${id}/mark-read`
 
-    const resp: Notification = await api.post(url)
+    const resp: Notification = await api.put(url)
 
     // if (!resp.status) {
     //   // Handle Fetch products error, e.g., display an error message to the user

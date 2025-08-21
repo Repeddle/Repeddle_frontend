@@ -1,7 +1,7 @@
-import { FormEvent, useRef, useState } from "react"
+import { FormEvent, useMemo, useRef, useState } from "react"
 import { Link } from "react-router-dom"
 import LoadingBox from "../../components/LoadingBox"
-import { IProduct } from "../../types/product"
+import { IProduct, IReview } from "../../types/product"
 import MessageBox from "../../components/MessageBox"
 import useAuth from "../../hooks/useAuth"
 import { FaThumbsDown, FaThumbsUp } from "react-icons/fa"
@@ -10,6 +10,7 @@ import Rating from "../../components/Rating"
 import { FaFaceSmile } from "react-icons/fa6"
 import useToastNotification from "../../hooks/useToastNotification"
 import useProducts from "../../hooks/useProducts"
+import useReviews from "../../hooks/useReviews"
 
 type Props = {
   product: IProduct
@@ -20,11 +21,15 @@ const ProductReviews = ({ product, setProduct }: Props) => {
   const { user } = useAuth()
   const { addNotification } = useToastNotification()
   const { createProductReview, error } = useProducts()
+  const { deleteProductReview, editProductReview } = useReviews()
 
+  const [editReviewItem, setEditReviewItem] = useState<IReview | null>(null)
   const [comment, setComment] = useState("")
   const [like, setLike] = useState<boolean>()
   const [rating, setRating] = useState("")
   const [loadingCreateReview, setLoadingCreateReview] = useState(false)
+  const [loadingDeleteReview, setLoadingDeleteReview] = useState(false)
+  const [showForm, setShowForm] = useState(false)
 
   const reviewRef = useRef(null)
 
@@ -48,25 +53,89 @@ const ProductReviews = ({ product, setProduct }: Props) => {
 
     setLoadingCreateReview(true)
 
-    const res = await createProductReview(product._id, {
-      comment,
-      like: like,
-      rating: +rating,
-    })
-
-    if (res) {
-      const newProd = product
-      newProd.reviews = [...newProd.reviews, res.review]
-      setProduct(newProd)
+    if (!showForm) {
+      const res = await editProductReview(product._id, {
+        comment,
+        like: like,
+        rating: +rating,
+        _id: editReviewItem?._id || "",
+        itemType: "Product",
+      })
+      if (res) {
+        const newProd = product
+        newProd.reviews = newProd.reviews.map((review) =>
+          review._id === editReviewItem?._id
+            ? {
+                ...review,
+                comment,
+                like: like,
+                rating: +rating,
+              }
+            : review
+        )
+        setProduct(newProd)
+      } else {
+        addNotification(error)
+      }
     } else {
-      addNotification(error)
+      const res = await createProductReview(product._id, {
+        comment,
+        like: like,
+        rating: +rating,
+      })
+
+      if (res) {
+        const newProd = product
+        newProd.reviews = [...newProd.reviews, res.review]
+        setProduct(newProd)
+      } else {
+        addNotification(error)
+      }
     }
 
     setLoadingCreateReview(false)
   }
 
+  const editReview = async (review: IReview) => {
+    setComment(review.comment)
+    setLike(review.like)
+    setRating(review.rating.toString())
+    setEditReviewItem(review)
+    setShowForm(true)
+  }
+
   const deleteReview = async (id: string) => {
-    console.log(id)
+    if (loadingDeleteReview) return
+
+    setLoadingDeleteReview(true)
+    const res = await deleteProductReview(id)
+    if (res) {
+      const newProd = product
+      newProd.reviews = newProd.reviews.filter((review) => review._id !== id)
+      setProduct(newProd)
+    } else {
+      addNotification(error)
+    }
+    setLoadingDeleteReview(false)
+  }
+
+  const hasWrittenReview = useMemo(() => {
+    if (!user) return false
+    return product.reviews.some((review) => review.user._id === user._id)
+  }, [user, product])
+
+  const showReviewForm = useMemo(() => {
+    if (!user) return false
+    if (!product?.buyers.includes(user._id)) return false
+    if (showForm) return true
+    return !hasWrittenReview
+  }, [user, product, showForm, hasWrittenReview])
+
+  const clearForm = () => {
+    setComment("")
+    setLike(undefined)
+    setRating("")
+    setShowForm(false)
   }
 
   return (
@@ -94,20 +163,30 @@ const ProductReviews = ({ product, setProduct }: Props) => {
               <Rating rating={review.rating} caption=" " />
               <p>{review.createdAt.substring(0, 10)}</p>
               <p>{review.comment}</p>
-              {user?.role === "Admin" && (
-                <div
-                  className="text-[red] cursor-pointer"
-                  onClick={() => deleteReview(review._id)}
-                >
-                  delete
-                </div>
-              )}
+              {user?.role === "Admin" ||
+                (user?._id === review.user._id && (
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="text-[red] cursor-pointer"
+                      onClick={() => editReview(review)}
+                    >
+                      edit
+                    </div>
+
+                    <div
+                      className="text-[red] cursor-pointer"
+                      onClick={() => deleteReview(review._id)}
+                    >
+                      delete
+                    </div>
+                  </div>
+                ))}
             </div>
           ))}
         </div>
         <div className="my-3">
           {user ? (
-            product?.buyers.includes(user._id) ? (
+            showReviewForm ? (
               <form onSubmit={submitHandler}>
                 <h2>Write a customer review</h2>
                 <div className="my-4">
@@ -163,6 +242,14 @@ const ProductReviews = ({ product, setProduct }: Props) => {
                     type="submit"
                     disabled={loadingCreateReview}
                   />
+                  {showForm ? (
+                    <Button
+                      text="Cancel"
+                      type="button"
+                      onClick={clearForm}
+                      className="bg-secondary-color text-white"
+                    />
+                  ) : null}
                   {loadingCreateReview && <LoadingBox></LoadingBox>}
                 </div>
               </form>

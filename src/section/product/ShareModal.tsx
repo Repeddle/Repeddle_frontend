@@ -21,6 +21,7 @@ import {
 } from "react-share"
 import useProducts from "../../hooks/useProducts"
 import useAuth from "../../hooks/useAuth"
+import { MD5 } from "crypto-js"
 
 type Props = {
   product: IProduct
@@ -51,7 +52,14 @@ const ShareModal = ({ product, url: shareUrl }: Props) => {
   }
 
   const handleShare = async () => {
-    if (user) await addProductShareCount(product._id, user._id)
+    if (user) {
+      const userAgent = navigator.userAgent
+      const screenWidth = window.screen.width
+      const screenHeight = window.screen.height
+      const combinedInfo = userAgent + screenWidth + screenHeight
+      const hashed = MD5(combinedInfo).toString()
+      await addProductShareCount(product._id, user._id, hashed)
+    }
   }
 
   const shareButtons = [
