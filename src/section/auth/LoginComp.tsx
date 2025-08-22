@@ -1,27 +1,28 @@
-import InputWithLabel from "../../components/ui/InputWithLabel"
-import Button from "../../components/ui/Button"
-import { FaFacebookF, FaGoogle } from "react-icons/fa"
-import { Link } from "react-router-dom"
-import { FormEvent, useState } from "react"
-import useAuth from "../../hooks/useAuth"
-import useToastNotification from "../../hooks/useToastNotification"
+import InputWithLabel from "../../components/ui/InputWithLabel";
+import Button from "../../components/ui/Button";
+import { Link } from "react-router-dom";
+import { FormEvent, useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import useToastNotification from "../../hooks/useToastNotification";
+import GoogleLoginButton from "./GoogleLoginButton";
+import FacebookLoginButton from "./FacebookLoginButton";
 
 const LoginComp = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const { login, getUser, loading } = useAuth()
-  const { addNotification } = useToastNotification()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login, getUser, loading } = useAuth();
+  const { addNotification } = useToastNotification();
 
   const submitHandler = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const { isError, error } = await login({ email: email.trim(), password })
+    const { isError, error } = await login({ email: email.trim(), password });
     if (!isError) {
-      await getUser()
+      await getUser();
     } else {
-      addNotification(error ? error : "An error occurred")
+      addNotification(error ? error : "An error occurred");
     }
-  }
+  };
 
   return (
     <div className="flex h-full bg-white dark:bg-black w-full justify-center items-center flex-col">
@@ -81,12 +82,12 @@ const LoginComp = () => {
           <div className="absolute w-full max-w-[500px] h-0.5 z-[1] top-2/4 bg-orange-color" />
         </div>
         <div className="flex justify-center items-center gap-6">
-          <FaGoogle className="text-4xl cursor-pointer hover:bg-malon-color/10 transition-all duration-300 hover:text-malon-color bg-orange-color text-orange-color bg-opacity-10 p-1.5 rounded " />
-          <FaFacebookF className="text-4xl cursor-pointer hover:bg-malon-color/10 transition-all duration-300 hover:text-malon-color bg-orange-color text-orange-color bg-opacity-10 p-1.5 rounded " />
+          <GoogleLoginButton />
+          <FacebookLoginButton />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginComp
+export default LoginComp;

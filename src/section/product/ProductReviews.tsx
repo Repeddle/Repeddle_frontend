@@ -13,9 +13,9 @@ import useProducts from "../../hooks/useProducts"
 import useReviews from "../../hooks/useReviews"
 
 type Props = {
-  product: IProduct
-  setProduct: (val: IProduct) => void
-}
+  product: IProduct;
+  setProduct: (val: IProduct) => void;
+};
 
 const ProductReviews = ({ product, setProduct }: Props) => {
   const { user } = useAuth()
@@ -31,27 +31,27 @@ const ProductReviews = ({ product, setProduct }: Props) => {
   const [loadingDeleteReview, setLoadingDeleteReview] = useState(false)
   const [showForm, setShowForm] = useState(false)
 
-  const reviewRef = useRef(null)
+  const reviewRef = useRef(null);
 
   const submitHandler = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!comment) {
-      addNotification("Please enter review")
-      return
+      addNotification("Please enter review");
+      return;
     }
 
     if (!rating) {
-      addNotification("Please select rating")
-      return
+      addNotification("Please select rating");
+      return;
     }
 
     if (!like) {
-      addNotification("Give review a thumb up or thumb down")
-      return
+      addNotification("Give review a thumb up or thumb down");
+      return;
     }
 
-    setLoadingCreateReview(true)
+    setLoadingCreateReview(true);
 
     if (!showForm) {
       const res = await editProductReview(product._id, {
@@ -114,7 +114,7 @@ const ProductReviews = ({ product, setProduct }: Props) => {
       newProd.reviews = newProd.reviews.filter((review) => review._id !== id)
       setProduct(newProd)
     } else {
-      addNotification(error)
+      addNotification(error);
     }
     setLoadingDeleteReview(false)
   }
@@ -140,7 +140,7 @@ const ProductReviews = ({ product, setProduct }: Props) => {
 
   return (
     <>
-      <div className="my-3 mx-4 bs-container">
+      <div id="reviews" className="my-3 mx-4 bs-container">
         <div className="my-3" ref={reviewRef}>
           {product.reviews.length === 0 && (
             <MessageBox>There is no reviews</MessageBox>
@@ -269,7 +269,7 @@ const ProductReviews = ({ product, setProduct }: Props) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ProductReviews
+export default ProductReviews;

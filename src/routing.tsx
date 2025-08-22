@@ -81,6 +81,7 @@ import CreateArticle from "./pages/protected/articles/CreateArticles"
 import TopSellersPage from "./pages/admin/TopSellers"
 import PaymentScreen from "./pages/admin/PaymentScreen"
 import UserReviews from "./pages/protected/dashboard/UserReviews"
+import ReviewForm from "./pages/protected/ReviewForm";
 
 const router = createBrowserRouter([
   {
@@ -155,6 +156,7 @@ const router = createBrowserRouter([
           { path: "verifyaddress", element: <VerifyAddress /> },
           { path: "earning", element: <Earning /> },
           { path: "transaction/:id", element: <Transaction /> },
+          { path: "review", element: <ReviewForm /> },
         ],
       },
       {
@@ -203,6 +205,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-])
+]);
 
-export default router
+export default router;
