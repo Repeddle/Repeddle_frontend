@@ -1,39 +1,39 @@
-import { FormEvent, useState } from "react"
-import useToastNotification from "../hooks/useToastNotification"
+import { FormEvent, useState } from "react";
+import useToastNotification from "../hooks/useToastNotification";
 
 type Props = {
-  index: number | null
-  onClose?: () => void
+  index: number | null;
+  onClose?: () => void;
   category: {
-    name: string
-    isCategory: boolean
-    path: string
-    mobile_path?: string
-  }
-  nameLabel?: string
-  linkLabel: string
-  itemIndex: number | null
+    name: string;
+    isCategory: boolean;
+    path: string;
+    mobile_path?: string | object;
+  };
+  nameLabel?: string;
+  linkLabel: string;
+  itemIndex: number | null;
   handleAdd?: (
     name: string,
     isCategory: boolean,
     link: string,
-    mobile_path?: string
-  ) => void
+    mobile_path?: string | object
+  ) => void;
   handleSubAdd?: (
     index: number,
     name: string,
     isCategory: boolean,
     link: string,
-    mobile_path?: string
-  ) => void
+    mobile_path?: string | object
+  ) => void;
   handleChange?: (
     subIndex: number,
     index: number,
     name: string,
     isCategory: boolean,
     link: string
-  ) => void
-}
+  ) => void;
+};
 
 const FormModal = ({
   category,
@@ -46,33 +46,33 @@ const FormModal = ({
   handleChange,
   handleSubAdd,
 }: Props) => {
-  const [link, setLink] = useState(category.path || "")
-  const [name, setName] = useState(category.name || "")
-  const [mobile_path, setMobile_path] = useState<string | undefined>(
+  const [link, setLink] = useState(category.path || "");
+  const [name, setName] = useState(category.name || "");
+  const [mobile_path, setMobile_path] = useState<string | object | undefined>(
     category.mobile_path
-  )
-  const [isCategory, setIsCategory] = useState(category.isCategory)
+  );
+  const [isCategory, setIsCategory] = useState(category.isCategory);
 
-  const { addNotification } = useToastNotification()
+  const { addNotification } = useToastNotification();
 
   const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!name) {
-      addNotification("Name is required")
-      return
+      addNotification("Name is required");
+      return;
     }
 
     if (index !== null && index >= 0) {
       if (itemIndex !== null && itemIndex >= 0) {
-        handleChange?.(index, itemIndex, name, isCategory, link)
+        handleChange?.(index, itemIndex, name, isCategory, link);
       } else {
-        handleSubAdd?.(index, name, isCategory, link, mobile_path)
+        handleSubAdd?.(index, name, isCategory, link, mobile_path);
       }
     } else {
-      handleAdd?.(name, isCategory, link, mobile_path)
+      handleAdd?.(name, isCategory, link, mobile_path);
     }
-    onClose?.()
-  }
+    onClose?.();
+  };
 
   return (
     <div className="bg-white dark:bg-black p-5">
@@ -101,12 +101,14 @@ const FormModal = ({
               onChange={(e) => setLink(e.target.value)}
             />
             <label className="text-sm font-semibold mb-2.5">Mobile Path</label>
+
             <input
               className={`h-10 p-2.5 rounded-[0.2rem] focus-visible:outline focus-visible:outline-orange-color border-light-ev3
           dark:border-dark-ev3 border text-black-color dark:text-white-color bg-transparent`}
               type="text"
-              value={mobile_path}
+              value={JSON.stringify(mobile_path)}
               onChange={(e) => setMobile_path(e.target.value)}
+              placeholder="{'name': 'value'}"
             />
           </>
         )}
@@ -133,7 +135,7 @@ const FormModal = ({
         </button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default FormModal
+export default FormModal;

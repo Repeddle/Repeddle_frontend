@@ -4,7 +4,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
-export const baseURL = "";
+export const baseURL = "https://repeddle-backend.onrender.com";
 
 export const imageUrl = baseURL;
 const api = axios.create({
