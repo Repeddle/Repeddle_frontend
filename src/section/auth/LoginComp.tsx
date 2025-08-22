@@ -56,6 +56,17 @@ const LoginComp = () => {
             Forget password
           </Link>
 
+          <div className="text-center">
+            By signing up, you are agreeing to our{" "}
+            <Link className="text-orange-color" to="/privacypolicy">
+              privacy policy
+            </Link>{" "}
+            and{" "}
+            <Link className="text-orange-color" to="/terms">
+              terms of use
+            </Link>{" "}
+          </div>
+
           <Button
             text="Login"
             type="submit"
