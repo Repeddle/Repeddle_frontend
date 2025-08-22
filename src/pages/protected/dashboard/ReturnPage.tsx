@@ -266,11 +266,18 @@ const ReturnPage = () => {
           <hr />
           <div className="capitalize font-semibold mb-2.5">Image</div>
           <div className="flex">
-            {returned.image && (
+            {returned.image ? (
               <>
-                <MessageImage url={returned.image} />
+                <MessageImage url={imageUrl + returned.image} />
               </>
-            )}
+            ) : null}
+            {returned.images ? (
+              <>
+                {returned.images.map((image) => (
+                  <MessageImage url={imageUrl + image} key={image} />
+                ))}
+              </>
+            ) : null}
           </div>
           {returned.status !== "Pending" ? (
             <>

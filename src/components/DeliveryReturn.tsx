@@ -49,6 +49,7 @@ const DeliveryReturn = ({ setShowModel, returned, setReturned }: Props) => {
       const res = await updateReturnAddress(returned._id, {
         method: deliveryOption,
         fee: value ?? 0,
+        meta,
       })
 
       if (res) {

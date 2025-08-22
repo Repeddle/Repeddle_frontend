@@ -1,5 +1,3 @@
-
-
 export type IConversation = {
   _id: string
   members: string[]
@@ -39,4 +37,5 @@ export type Notification = {
   _id: string
   createdAt: string
   updatedAt: string
+  mobileLink?: { name: string; params: object }
 }

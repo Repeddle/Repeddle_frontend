@@ -11,6 +11,8 @@ export type ICategory = {
   _id: string
   createdAt: string
   updatedAt: string
+} & {
+  mobile_path?: string | object
 }
 
 export type ISubCategory = {
@@ -18,7 +20,7 @@ export type ISubCategory = {
   items: ISubCategoryItem[]
   isCategory: boolean
   path: string
-  mobile_path?: string
+  mobile_path?: string | object
   _id?: string
 }
 
@@ -26,7 +28,7 @@ export type ISubCategoryItem = {
   name: string
   isCategory: boolean
   path: string
-  mobile_path?: string
+  mobile_path?: string | object
   _id?: string
 }
 

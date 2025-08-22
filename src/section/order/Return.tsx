@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react"
 import LoadingBox from "../../components/LoadingBox"
 import { OrderItem } from "../../types/order"
-import { FaCamera, FaChevronCircleRight } from "react-icons/fa"
+import { FaCamera, FaChevronCircleRight, FaTrash } from "react-icons/fa"
 import { Link, useNavigate } from "react-router-dom"
 import MessageBox from "../../components/MessageBox"
 import Button from "../../components/ui/Button"
@@ -39,7 +39,7 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
   const [description, setDescription] = useState("")
   const [refund, setRefund] = useState("")
   const [reason, setReason] = useState("")
-  const [image, setImage] = useState("")
+  const [images, setImages] = useState<string[]>([])
   const [error, setError] = useState("")
   const [sending, setSending] = useState("")
   const [loading, setLoading] = useState(false)
@@ -63,16 +63,23 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
     setMessageLoading(false)
   }
 
-  const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (
+    e: ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     try {
       setLoadUpload(true)
 
       const file = e.target.files?.[0]
       if (!file) throw Error("No image found")
 
-      const imageUrl = await compressImageUpload(file, 1024, image)
+      const imageUrl = await compressImageUpload(file, 1024, images[index])
 
-      setImage(imageUrl)
+      setImages([
+        ...images.slice(0, index),
+        imageUrl,
+        ...images.slice(index + 1),
+      ])
       setLoadUpload(false)
 
       addNotification("Image uploaded")
@@ -103,7 +110,8 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
     setLoading(true)
 
     const res = await createReturns({
-      image,
+      images,
+      image: images[0],
       reason,
       refund,
       productId: current.product._id, //fix
@@ -117,7 +125,7 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
 
     if (res) {
       addNotification("Return logged successfully")
-      setImage("")
+      setImages([])
       setReason("")
       setDescription("")
       setSending("")
@@ -138,7 +146,7 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
   const onClose = () => {
     setShowReturn(false)
     setTab("items")
-    setImage("")
+    setImages([])
     setReason("")
     setDescription("")
     setSending("")
@@ -154,6 +162,10 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
       setTab("items")
     }
   }, [current, tab])
+
+  const onDeleteImage = (index: number) => {
+    setImages([...images.slice(0, index), ...images.slice(index + 1)])
+  }
 
   return (
     <Modal isOpen={showReturn} onClose={onClose} size="lg">
@@ -342,26 +354,43 @@ const Return = ({ orderItems, orderId, setShowReturn, showReturn }: Props) => {
                   value={description}
                 />
               </div>
-              <div className="m-2.5 w-full">
-                <label
-                  className="text-sm items-center flex gap-2"
-                  htmlFor="return"
-                >
-                  <FaCamera /> Upload Image
-                </label>
-                {invalidImage && (
-                  <div className="text-[red]">{invalidImage}</div>
-                )}
-                {loadingUpload && <LoadingBox />}
-                {image.length !== 0 && (
-                  <span className="ml-2.5 text-sm">Image Uploaded</span>
-                )}
-                <input
-                  type="file"
-                  id="return"
-                  className="hidden"
-                  onChange={handleImageUpload}
-                />
+              <div className="flex gap-2.5 m-2.5 flex-wrap">
+                {images.map((image, index) => (
+                  <div key={index} className="relative">
+                    <img
+                      src={imageUrl + image}
+                      alt="return"
+                      className="w-[100px] h-[130px]"
+                    />
+                    <div
+                      className="absolute top-1 right-1"
+                      onClick={() => onDeleteImage(index)}
+                    >
+                      <FaTrash className="text-red-500" />
+                    </div>
+                  </div>
+                ))}
+                {images.length < 3 ? (
+                  <div className="flex gap-2.5">
+                    <label
+                      className="text-sm items-center flex gap-2"
+                      htmlFor="return"
+                    >
+                      <FaCamera /> Upload Image
+                    </label>
+                    {invalidImage && (
+                      <div className="text-[red]">{invalidImage}</div>
+                    )}
+                    {loadingUpload && <LoadingBox />}
+
+                    <input
+                      type="file"
+                      id="return"
+                      className="hidden"
+                      onChange={(e) => handleImageUpload(e, images.length)}
+                    />
+                  </div>
+                ) : null}
               </div>
               <Button
                 text="Submit"

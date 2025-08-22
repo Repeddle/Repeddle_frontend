@@ -1,6 +1,6 @@
 import { createContext, PropsWithChildren, useState } from "react"
 import useAuth from "../hooks/useAuth"
-import { CreateReturn, IReturn } from "../types/order"
+import { CreateReturn, IDeliveryMeta, IReturn } from "../types/order"
 import {
   createReturnService,
   fetchAdminReturnService,
@@ -36,7 +36,7 @@ type ContextType = {
   ) => Promise<IReturn | null>
   updateReturnAddress: (
     id: string,
-    body: { method: string; fee: number }
+    body: { method: string; fee: number; meta?: IDeliveryMeta }
   ) => Promise<IReturn | null>
 }
 
@@ -188,7 +188,7 @@ export const ReturnProvider = ({ children }: PropsWithChildren) => {
 
   const updateReturnAddress = async (
     id: string,
-    body: { method: string; fee: number }
+    body: { method: string; fee: number; meta?: IDeliveryMeta }
   ) => {
     try {
       const result = await updateReturnAddressService(id, body)

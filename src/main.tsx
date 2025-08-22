@@ -22,6 +22,7 @@ import { WalletProvider } from "./context/WalletContext.tsx"
 import { NotificationProvider } from "./context/NotificationContext.tsx"
 import { ReturnProvider } from "./context/ReturnContext.tsx"
 import { PaymentProvider } from "./context/PaymentContext.tsx"
+import { ReviewProvider } from "./context/ReviewContext.tsx"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -41,15 +42,17 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                               <ArticleProvider>
                                 <UserProvider>
                                   <WalletProvider>
-                                    <MessageProvider>
-                                      <PaymentProvider>
-                                        <NotificationProvider>
-                                          <ReturnProvider>
-                                            <RouterProvider router={router} />
-                                          </ReturnProvider>
-                                        </NotificationProvider>
-                                      </PaymentProvider>
-                                    </MessageProvider>
+                                    <ReviewProvider>
+                                      <MessageProvider>
+                                        <PaymentProvider>
+                                          <NotificationProvider>
+                                            <ReturnProvider>
+                                              <RouterProvider router={router} />
+                                            </ReturnProvider>
+                                          </NotificationProvider>
+                                        </PaymentProvider>
+                                      </MessageProvider>
+                                    </ReviewProvider>
                                   </WalletProvider>
                                 </UserProvider>
                               </ArticleProvider>
