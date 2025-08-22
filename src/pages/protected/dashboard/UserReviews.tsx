@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback } from "react";
 import {
   FaStar,
   FaRegStar,
@@ -8,77 +8,77 @@ import {
   FaEdit,
   FaEllipsisV,
   FaTrash,
-} from "react-icons/fa"
-import moment from "moment"
-import useAuth from "../../../hooks/useAuth"
-import { IReview } from "../../../types/product"
-import { IUser } from "../../../types/user"
-import { imageUrl } from "../../../services/api"
-import { deleteUserReviewService } from "../../../services/review"
-import useToastNotification from "../../../hooks/useToastNotification"
-import LoadingModal from "../../../components/ui/loadin/LoadingModal"
-import useReviews from "../../../hooks/useReviews"
+} from "react-icons/fa";
+import moment from "moment";
+import useAuth from "../../../hooks/useAuth";
+import { IReview } from "../../../types/product";
+import { IUser } from "../../../types/user";
+import { imageUrl } from "../../../services/api";
+import { deleteUserReviewService } from "../../../services/review";
+import useToastNotification from "../../../hooks/useToastNotification";
+import LoadingModal from "../../../components/ui/loadin/LoadingModal";
+import useReviews from "../../../hooks/useReviews";
 
 const UserReviews = () => {
-  const { user } = useAuth()
-  const { addNotification } = useToastNotification()
-  const { fetchUserReviews } = useReviews()
+  const { user } = useAuth();
+  const { addNotification } = useToastNotification();
+  const { fetchUserReviews } = useReviews();
 
   // State management
-  const [reviews, setReviews] = useState<IReview[]>([])
-  const [numReviews, setNumReviews] = useState(0)
-  const [rating, setRating] = useState(0)
-  const [loading, setLoading] = useState(true)
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false)
-  const [reviewToDelete, setReviewToDelete] = useState<IReview | null>(null)
+  const [reviews, setReviews] = useState<IReview[]>([]);
+  const [numReviews, setNumReviews] = useState(0);
+  const [rating, setRating] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [reviewToDelete, setReviewToDelete] = useState<IReview | null>(null);
 
   const loadReviews = useCallback(async () => {
-    setLoading(true)
-    const result = await fetchUserReviews()
+    setLoading(true);
+    const result = await fetchUserReviews();
     if (typeof result === "string") {
-      addNotification(result, undefined, true)
+      addNotification(result, undefined, true);
     } else {
-      setReviews(result.reviews || [])
-      setNumReviews(result.numReviews || 0)
-      setRating(result.rating || 0)
+      setReviews(result.reviews || []);
+      setNumReviews(result.numReviews || 0);
+      setRating(result.rating || 0);
     }
-    setLoading(false)
-  }, [])
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
-    loadReviews()
-  }, [loadReviews])
+    loadReviews();
+  }, [loadReviews]);
 
   const handleEditReview = (review: IReview) => {
     // Navigate to edit review page - you can implement this navigation
-    console.log("Edit review:", review)
-    addNotification("Edit functionality will be implemented", undefined, false)
-  }
+    console.log("Edit review:", review);
+    addNotification("Edit functionality will be implemented", undefined, false);
+  };
 
   const handleDeleteReview = (review: IReview) => {
-    setReviewToDelete(review)
-    setDeleteModalOpen(true)
-  }
+    setReviewToDelete(review);
+    setDeleteModalOpen(true);
+  };
 
   const confirmDelete = async () => {
     if (reviewToDelete) {
       try {
-        await deleteUserReviewService(reviewToDelete._id)
-        addNotification("Review deleted successfully")
-        loadReviews() // Reload reviews after deletion
+        await deleteUserReviewService(reviewToDelete._id);
+        addNotification("Review deleted successfully");
+        loadReviews(); // Reload reviews after deletion
       } catch (error) {
-        addNotification(error as string, undefined, true)
+        addNotification(error as string, undefined, true);
       } finally {
-        setDeleteModalOpen(false)
-        setReviewToDelete(null)
+        setDeleteModalOpen(false);
+        setReviewToDelete(null);
       }
     }
-  }
+  };
 
   const cancelDelete = () => {
-    setDeleteModalOpen(false)
-    setReviewToDelete(null)
-  }
+    setDeleteModalOpen(false);
+    setReviewToDelete(null);
+  };
 
   return (
     <div className="flex-[4] flex flex-col overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
@@ -198,8 +198,8 @@ const UserReviews = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 // Rating Component
 const Rating = ({ rating, caption }: { rating: number; caption: string }) => {
@@ -218,8 +218,8 @@ const Rating = ({ rating, caption }: { rating: number; caption: string }) => {
       </div>
       <span className="text-gray-600 dark:text-gray-400">{caption}</span>
     </div>
-  )
-}
+  );
+};
 
 // Review Item Component
 const ReviewItem = ({
@@ -228,13 +228,13 @@ const ReviewItem = ({
   onEdit,
   onDelete,
 }: {
-  review: IReview
-  currentUser: IUser | null
-  onEdit: (review: IReview) => void
-  onDelete: (review: IReview) => void
+  review: IReview;
+  currentUser: IUser | null;
+  onEdit: (review: IReview) => void;
+  onDelete: (review: IReview) => void;
 }) => {
-  const [showMenu, setShowMenu] = useState(false)
-  const isOwnReview = currentUser?._id === review.user._id
+  const [showMenu, setShowMenu] = useState(false);
+  const isOwnReview = currentUser?._id === review.user._id;
 
   return (
     <div className="p-6 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
@@ -250,7 +250,7 @@ const ReviewItem = ({
             }
             alt={review.user.username}
             onError={(e) => {
-              e.currentTarget.src = "/default-avatar.png"
+              e.currentTarget.src = "/default-avatar.png";
             }}
           />
         </div>
@@ -321,8 +321,8 @@ const ReviewItem = ({
                         <div className="py-1">
                           <button
                             onClick={() => {
-                              onEdit(review)
-                              setShowMenu(false)
+                              onEdit(review);
+                              setShowMenu(false);
                             }}
                             className="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                           >
@@ -331,8 +331,8 @@ const ReviewItem = ({
                           </button>
                           <button
                             onClick={() => {
-                              onDelete(review)
-                              setShowMenu(false)
+                              onDelete(review);
+                              setShowMenu(false);
                             }}
                             className="flex items-center w-full px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700"
                           >
@@ -350,7 +350,7 @@ const ReviewItem = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserReviews
+export default UserReviews;
