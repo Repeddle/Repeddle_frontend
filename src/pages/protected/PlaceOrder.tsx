@@ -44,6 +44,7 @@ const PlaceOrder = () => {
   )
 
   const placeOrderHandler = async (paymentMet: string, transId?: string) => {
+    setLoadingPay(true)
     const res = await createOrder({
       items: cart,
       paymentMethod: paymentMet,
@@ -53,41 +54,13 @@ const PlaceOrder = () => {
 
     if (res) {
       addNotification(res.message)
+      setLoadingPay(false)
+      clearCart()
+      navigate(`/order/${res.order._id}`)
       return res.order
     } else {
       addNotification(error)
     }
-  }
-
-  const processOrder = async (paymentMethod: string, transId?: string) => {
-    setLoadingPay(true)
-    const order1 = await placeOrderHandler(paymentMethod, transId)
-    if (!order1) {
-      setLoadingPay(false)
-      return
-    }
-
-    // await Promise.all(
-    //   order1.order.seller.map((x) =>
-    //     axios.put(`api/bestsellers/${region()}/${x}`)
-    //   )
-    // )
-
-    // order1.order.seller.forEach((s) => {
-    //   socket.emit("post_data", {
-    //     userId: s,
-    //     itemId: order1.order._id,
-    //     notifyType: "sold",
-    //     msg: `${userInfo.username} ordered your product`,
-    //     link: `/order/${order1.order._id}`,
-    //     mobile: { path: "OrderScreen", id: order1.order._id },
-    //     userImage: userInfo.image,
-    //   })
-    // })
-
-    clearCart()
-    setLoadingPay(false)
-    navigate(`/order/${order1._id}`)
   }
 
   const WalletSuccess = async (
@@ -95,7 +68,7 @@ const PlaceOrder = () => {
     paymentMethod: string
   ) => {
     console.log(response)
-    await processOrder(paymentMethod, response.transaction_id)
+    await placeOrderHandler(paymentMethod, response.transaction_id)
   }
 
   const onApprove = async (
@@ -106,7 +79,7 @@ const PlaceOrder = () => {
     paymentMethod: string
   ) => {
     console.log(response)
-    await processOrder(paymentMethod, response.transaction_id)
+    await placeOrderHandler(paymentMethod, response.transaction_id)
   }
 
   return (
@@ -131,7 +104,7 @@ const PlaceOrder = () => {
                         <img
                           src={imageUrl + item.images[0]}
                           alt={item.name}
-                          className="rounded bg-white border max-w-full h-auto p-1 border-solid border-[#dee2e6]"
+                          className="rounded bg-white border max-w-full h-auto max-h-[100px] p-1 border-solid border-[#dee2e6]"
                         />
                         <div className="ml-5">
                           <div>

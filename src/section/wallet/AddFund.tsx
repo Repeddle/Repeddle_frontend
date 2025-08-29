@@ -32,13 +32,12 @@ const AddFund = ({
   setShowModel,
 }: Props) => {
   const { fundWalletFlutter, loading } = useWallet()
+  const [loadingPay, setLoadingPay] = useState(false)
   const { addNotification } = useToastNotification()
-
 
   const [amount, setAmount] = useState(0)
 
   const { user } = useAuth()
-
 
   const config: FlutterwaveConfig = {
     public_key: BASE_KEY!,
@@ -74,13 +73,11 @@ const AddFund = ({
     })
 
     if (!error) {
-
       addNotification(result)
       setRefresh(true)
       setShowSuccess && setShowSuccess(true)
       setAmount(0)
       setShowModel(false)
-
     } else {
       addNotification(result, undefined, true)
     }
@@ -97,7 +94,6 @@ const AddFund = ({
         value={`${amount || ""}`}
         placeholder="Enter Amount to be Added in Wallet"
         onChange={(e) => {
-
           const value = e.target.value
 
           const parsedValue =
@@ -106,25 +102,36 @@ const AddFund = ({
               : value
 
           setAmount(parsedValue ? parseFloat(parsedValue) : 0)
-
         }}
       />
       {region() === "NGN" ? (
-        <div
-          className="flex items-center cursor-pointer font-bold hover:bg-malon-color bg-orange-color text-white-color mt-2.5 px-[50px] py-2.5 rounded-[0.2rem]"
-          onClick={() => {
-            handleFlutterPayment({
-              callback: async (response) => {
-                console.log(response)
-                onApprove({ ...response, type: "flutterwave" })
-                closePaymentModal() // this will close the modal programmatically
-              },
-              onClose: () => {},
-            })
-          }}
-        >
-          Continue
-        </div>
+        loadingPay ? (
+          <div className="flex items-center justify-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-orange-color"></div>
+          </div>
+        ) : (
+          <div
+            className="flex items-center cursor-pointer font-bold hover:bg-malon-color bg-orange-color text-white-color mt-2.5 px-[50px] py-2.5 rounded-[0.2rem]"
+            onClick={() => {
+              if (!amount) {
+                addNotification("Please enter an amount", undefined, true)
+                return
+              }
+              if (loadingPay) return
+              setLoadingPay(true)
+              handleFlutterPayment({
+                callback: async (response) => {
+                  console.log(response)
+                  onApprove({ ...response, type: "flutterwave" })
+                  closePaymentModal() // this will close the modal programmatically
+                },
+                onClose: () => {},
+              })
+            }}
+          >
+            Continue
+          </div>
+        )
       ) : (
         <PayStack amount={amount} onApprove={onApprove} />
       )}

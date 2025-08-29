@@ -1,22 +1,27 @@
-import { FormEvent, useMemo } from "react"
+import { FormEvent, useEffect, useMemo } from "react"
 import { Helmet } from "react-helmet-async"
 import { Link, useNavigate } from "react-router-dom"
 import useCart from "../../hooks/useCart"
 import Button from "../../components/ui/Button"
 import { currency, region } from "../../utils/common"
-import useAuth from "../../hooks/useAuth"
+import useWallet from "../../hooks/useWallet"
 
 const PaymentMethod = () => {
   const { total, paymentMethod, changePaymentMethod } = useCart()
-  const { user } = useAuth()
   const navigate = useNavigate()
+
+  const { wallet, fetchWallet } = useWallet()
+
+  useEffect(() => {
+    fetchWallet()
+  }, [])
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault()
     navigate("/placeorder")
   }
 
-  const balance = useMemo(() => user?.balance ?? 0, [user?.balance])
+  const balance = useMemo(() => wallet?.balance ?? 0, [wallet?.balance])
 
   return (
     <div className="bs-container">
