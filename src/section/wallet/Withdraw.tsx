@@ -1,43 +1,52 @@
-import { useEffect, useState } from "react";
-import LoadingBox from "../../components/LoadingBox";
-import useAuth from "../../hooks/useAuth";
-import { FaQuestionCircle, FaWallet } from "react-icons/fa";
-import { UserBalance } from "../../types/user";
-import { region } from "../../utils/common";
-import useWallet from "../../hooks/useWallet";
-import useToastNotification from "../../hooks/useToastNotification";
+import { useEffect, useState } from "react"
+import LoadingBox from "../../components/LoadingBox"
+import useAuth from "../../hooks/useAuth"
+import { FaQuestionCircle, FaWallet } from "react-icons/fa"
+import { UserBalance } from "../../types/user"
+import { region } from "../../utils/common"
+import useWallet from "../../hooks/useWallet"
+import useToastNotification from "../../hooks/useToastNotification"
 
 type Props = {
-  setShowModel: (val: boolean) => void;
-  setRefresh: (val: boolean) => void;
-  refresh: boolean;
-  balance: UserBalance;
-};
+  setShowModel: (val: boolean) => void
+  setRefresh: (val: boolean) => void
+  refresh: boolean
+  balance: UserBalance
+}
 
 // TODO: account information is not part of logged in data
 
 const Withdraw = ({ balance, refresh, setRefresh, setShowModel }: Props) => {
-  const { withdrawWalletFlutter, loading } = useWallet();
-  const { addNotification } = useToastNotification();
+  const { withdrawWalletFlutter, loading } = useWallet()
+  const { addNotification } = useToastNotification()
 
-  const { user } = useAuth();
+  const [loadingWithdraw, setLoadingWithdraw] = useState(false)
 
-  const [amount, setAmount] = useState(0);
-  const [fee, setFee] = useState(0);
-  const [errormsg, setErrormsg] = useState("");
+  const { user } = useAuth()
+
+  const [amount, setAmount] = useState(0)
+  const [fee, setFee] = useState(0)
+  const [errormsg, setErrormsg] = useState("")
 
   const handleWithdraw = async () => {
-    const { error, result } = await withdrawWalletFlutter(amount);
+    if (loadingWithdraw) return
+    if (!amount) {
+      addNotification("Please enter an amount", undefined, true)
+      return
+    }
+    setLoadingWithdraw(true)
+    const { error, result } = await withdrawWalletFlutter(amount)
 
     if (!error) {
-      addNotification(result);
-      setRefresh(!refresh);
-      setShowModel(false);
-      setAmount(0);
+      addNotification(result)
+      setRefresh(!refresh)
+      setShowModel(false)
+      setAmount(0)
     } else {
-      addNotification(result, undefined, true);
+      addNotification(result, undefined, true)
     }
-  };
+    setLoadingWithdraw(false)
+  }
 
   useEffect(() => {
     const fees =
@@ -47,27 +56,26 @@ const Withdraw = ({ balance, refresh, setRefresh, setShowModel }: Props) => {
         ? 10.75
         : amount > 5000 && amount <= 50000
         ? 26.88
-        : 53.75;
-    setFee(fees);
-    const totalMoney = Number(amount) + Number(fees);
-    console.log("totalMoney", totalMoney, balance.balance);
+        : 53.75
+    setFee(fees)
+    const totalMoney = Number(amount) + Number(fees)
+    console.log("totalMoney", totalMoney, balance.balance)
     if (totalMoney > balance.balance) {
       setErrormsg(
         "Insufficient funds, Please enter a lower amount to complete your withdrawal"
-      );
-      return;
+      )
+      return
     }
     if (!amount) {
-      setErrormsg("Please enter the amount you want to withdraw");
-      return;
+      setErrormsg("Please enter the amount you want to withdraw")
+      return
     }
-    setErrormsg("");
-  }, [amount, balance.balance]);
+    setErrormsg("")
+  }, [amount, balance.balance])
 
   return loading ? (
     <LoadingBox />
-  ) : // @ts-ignore
-  !user?.accountName ? (
+  ) : !user?.accountName ? (
     <div className="w-full h-full flex justify-center items-center p-10">
       <div className="text-center">
         <h5>ADD A BANK ACCOUNT DETAILS</h5>
@@ -97,13 +105,13 @@ const Withdraw = ({ balance, refresh, setRefresh, setShowModel }: Props) => {
           value={`${amount || ""}`}
           placeholder="Enter Amount to Withdraw"
           onChange={(e) => {
-            let value = e.target.value;
+            const value = e.target.value
 
-            const numericValue = parseFloat(value);
+            const numericValue = parseFloat(value)
             if (!isNaN(numericValue)) {
-              setAmount(numericValue);
+              setAmount(numericValue)
             } else {
-              setAmount(0);
+              setAmount(0)
             }
           }}
         />
@@ -130,7 +138,7 @@ const Withdraw = ({ balance, refresh, setRefresh, setShowModel }: Props) => {
         Withdraw
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Withdraw;
+export default Withdraw

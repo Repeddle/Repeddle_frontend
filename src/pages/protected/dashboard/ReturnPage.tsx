@@ -366,7 +366,7 @@ const ReturnPage = () => {
                 </button>
               ) : (
                 <div className="text-red-color">
-                  Waiting Seller's delivery address
+                  Waiting for Seller's delivery address
                 </div>
               )}
             </>
