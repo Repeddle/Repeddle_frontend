@@ -81,7 +81,8 @@ import CreateArticle from "./pages/protected/articles/CreateArticles"
 import TopSellersPage from "./pages/admin/TopSellers"
 import PaymentScreen from "./pages/admin/PaymentScreen"
 import UserReviews from "./pages/protected/dashboard/UserReviews"
-import ReviewForm from "./pages/protected/ReviewForm";
+import ReviewForm from "./pages/protected/ReviewForm"
+import NotFoundPage from "./pages/404"
 
 const router = createBrowserRouter([
   {
@@ -203,8 +204,13 @@ const router = createBrowserRouter([
           { path: "topsellers", element: <TopSellersPage /> },
         ],
       },
+      {
+        path: "*",
+        element: <Default />,
+        children: [{ path: "*", element: <NotFoundPage /> }],
+      },
     ],
   },
-]);
+])
 
-export default router;
+export default router
