@@ -1,48 +1,50 @@
-import { Helmet } from "react-helmet-async"
-import useCart from "../../hooks/useCart"
-import { Link } from "react-router-dom"
-import LoadingBox from "../../components/LoadingBox"
-import { FaTimes } from "react-icons/fa"
-import { useMemo, useState } from "react"
-import WalletModel from "../../components/WalletModel"
-import { currency, region } from "../../utils/common"
-import PayStack from "../../components/gateway/PayStack"
-import { PayStackCallback } from "../../types/gateway"
-import FlutterWave from "../../components/gateway/FlutterWave"
-import PayFund from "../../components/gateway/PayFund"
-import { imageUrl } from "../../services/api"
+import { Helmet } from "react-helmet-async";
+import useCart from "../../hooks/useCart";
+import { Link } from "react-router-dom";
+import LoadingBox from "../../components/LoadingBox";
+import { FaTimes } from "react-icons/fa";
+import { useMemo, useState } from "react";
+import WalletModel from "../../components/WalletModel";
+import { currency } from "../../utils/common";
+import PayStack from "../../components/gateway/PayStack";
+import { PayStackCallback } from "../../types/gateway";
+import FlutterWave from "../../components/gateway/FlutterWave";
+import PayFund from "../../components/gateway/PayFund";
+import { imageUrl } from "../../services/api";
+import useRegion from "../../hooks/useRegion";
 
 const OrderPreview = () => {
-  const [code, setCode] = useState("")
-  const [coupon, setCoupon] = useState({ code: "" })
-  const [showModel, setShowModel] = useState(false)
+  const [code, setCode] = useState("");
+  const [coupon, setCoupon] = useState({ code: "" });
+  const [showModel, setShowModel] = useState(false);
+  const { region } = useRegion();
 
-  const { cart, total, subtotal, paymentMethod } = useCart()
+  const { cart, total, subtotal, paymentMethod } = useCart();
 
-  const loadingPay = false
+  const loadingPay = false;
 
   const removeCoupon = () => {
-    setCoupon({ code: "" })
-  }
+    setCoupon({ code: "" });
+  };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const couponDiscount = (coupon: any, total: number) => {
-    console.log(coupon, total)
-    return 0
-  }
+    console.log(coupon, total);
+    return 0;
+  };
 
   const discount = useMemo(
     () => (coupon ? couponDiscount(coupon, total) : 0),
     [coupon, total]
-  )
+  );
 
-  const handleCoupon = () => {}
+  const handleCoupon = () => {};
 
-  const WalletSuccess = () => {}
+  const WalletSuccess = () => {};
 
   const onApprove = (val: PayStackCallback) => {
-    console.log(val)
-  }
+    console.log(val);
+  };
 
   return (
     <div className="mx-0 my-2.5 pt-5 pb-0 px-[5px] lg:mx-0 lg:my-2.5 lg:pt-5 lg:pb-0 lg:px-[5px] bg-light-ev1 dark:bg-dark-ev1">
@@ -171,21 +173,21 @@ const OrderPreview = () => {
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">Subtotal</div>
                     <div className="flex-1">
-                      {currency(region())} {subtotal.toFixed(2)}
+                      {currency(region)} {subtotal.toFixed(2)}
                     </div>
                   </div>
                 </div>
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">Shipping</div>
-                    <div className="flex-1">{currency(region())} N 0.00</div>
+                    <div className="flex-1">{currency(region)} N 0.00</div>
                   </div>
                 </div>
 
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">Tax</div>
-                    <div className="flex-1">{currency(region())} N 0.00</div>
+                    <div className="flex-1">{currency(region)} N 0.00</div>
                   </div>
                 </div>
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">
@@ -199,7 +201,7 @@ const OrderPreview = () => {
                       )}
                     </div>
                     <div className="flex-1">
-                      - {currency(region())}
+                      - {currency(region)}
                       {discount}
                     </div>
                   </div>
@@ -211,7 +213,7 @@ const OrderPreview = () => {
                     </div>
                     <div className="flex-1">
                       <b>
-                        {currency(region())} {(total - discount).toFixed(2)}
+                        {currency(region)} {(total - discount).toFixed(2)}
                       </b>
                     </div>
                   </div>
@@ -245,7 +247,7 @@ const OrderPreview = () => {
                     >
                       Proceed to Payment
                     </div>
-                  ) : region() === "ZAR" ? (
+                  ) : region === "ZA" ? (
                     // Did not write this
                     // <PayFast
                     //   user={user}
@@ -256,7 +258,7 @@ const OrderPreview = () => {
                   ) : (
                     <FlutterWave
                       amount={total}
-                      currency={region()}
+                      currency={region}
                       onApprove={onApprove}
                     />
                   )}
@@ -275,7 +277,7 @@ const OrderPreview = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default OrderPreview
+export default OrderPreview;

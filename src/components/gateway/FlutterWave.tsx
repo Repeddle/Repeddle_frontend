@@ -1,15 +1,14 @@
-import { useState } from "react"
-import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3"
-import useAuth from "../../hooks/useAuth"
-import { FlutterwaveConfig } from "flutterwave-react-v3/dist/types"
-import { IUser } from "../../types/user"
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+import useAuth from "../../hooks/useAuth";
+import { FlutterwaveConfig } from "flutterwave-react-v3/dist/types";
+import { IUser } from "../../types/user";
 
 type Props = {
-  amount: number
-  currency: string
-  onApprove: (val: { transaction_id: string; type: string }) => void
-  user?: IUser | { email: string; name: string; phone: string }
-}
+  amount: number;
+  currency: string;
+  onApprove: (val: { transaction_id: string; type: string }) => void;
+  user?: IUser | { email: string; name: string; phone: string };
+};
 
 const FlutterWave = ({
   amount,
@@ -17,15 +16,13 @@ const FlutterWave = ({
   onApprove,
   user: userData,
 }: Props) => {
-  const [baseKey] = useState("FLWPUBK_TEST-6a1e30713a8c6962ecb7d6cfbda2df69-X")
+  const { user } = useAuth();
 
-  const { user } = useAuth()
-
-  const usedUser = userData ?? user
+  const usedUser = userData ?? user;
 
   //   TODO: Take customer info from shipping address ??
   const config: FlutterwaveConfig = {
-    public_key: baseKey,
+    public_key: "FLWPUBK-77eeceda5d0c57d39a5458b8701f6798-X",
     tx_ref: Date.now().toString(),
     amount,
     currency,
@@ -44,9 +41,9 @@ const FlutterWave = ({
       description: "Payment for items in cart",
       logo: "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
     },
-  }
+  };
 
-  const handleFlutterPayment = useFlutterwave(config)
+  const handleFlutterPayment = useFlutterwave(config);
 
   return (
     <div className="App">
@@ -58,17 +55,17 @@ const FlutterWave = ({
               onApprove({
                 transaction_id: response.transaction_id.toString(),
                 type: "flutterwave",
-              })
-              closePaymentModal() // this will close the modal programmatically
+              });
+              closePaymentModal(); // this will close the modal programmatically
             },
             onClose: () => {},
-          })
+          });
         }}
       >
         Proceed to Payment
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FlutterWave
+export default FlutterWave;

@@ -1,12 +1,13 @@
-import { IOrder } from "../../types/order"
-import { currency, region } from "../../utils/common"
+import useRegion from "../../hooks/useRegion";
+import { IOrder } from "../../types/order";
+import { currency } from "../../utils/common";
 
 type Props = {
-  order: IOrder
-  isSeller: boolean
-  shippingPrice: number
-  itemsPrice: number
-}
+  order: IOrder;
+  isSeller: boolean;
+  shippingPrice: number;
+  itemsPrice: number;
+};
 
 const PaymentDelivery = ({
   order,
@@ -14,6 +15,8 @@ const PaymentDelivery = ({
   itemsPrice,
   shippingPrice,
 }: Props) => {
+  const { region } = useRegion();
+
   return (
     <div className="flex flex-col lg:flex-row">
       <div className="flex-1 m-[5px] h-full">
@@ -42,14 +45,14 @@ const PaymentDelivery = ({
               <div className="flex capitalize">
                 <div className="flex-1">Item Total:</div>
                 <div className="flex-1 lg:flex-[5]">
-                  {currency(region())}
+                  {currency(region)}
                   {isSeller ? itemsPrice : order.totalAmount}
                 </div>
               </div>
               <div className="flex capitalize">
                 <div className="flex-1">Shipping Fee:</div>
                 <div className="flex-1 lg:flex-[5]">
-                  {currency(region())}{" "}
+                  {currency(region)}{" "}
                   {isSeller
                     ? shippingPrice
                     : order.items.reduce(
@@ -62,7 +65,7 @@ const PaymentDelivery = ({
                 <div className="flex-1">Total:</div>
                 <div className="flex-1 lg:flex-[5]">
                   <div className="font-bold">
-                    {currency(region())}
+                    {currency(region)}
                     {isSeller
                       ? itemsPrice +
                         order.items.reduce(
@@ -81,7 +84,7 @@ const PaymentDelivery = ({
                   <div className="flex">
                     <div className="flex-1 lg:flex-[2]">Total cost:</div>
                     <div className="flex-1 lg:flex-[3]">
-                      {currency(region())}
+                      {currency(region)}
                       {itemsPrice +
                         order.items.reduce(
                           (prev, curr) => prev + curr.deliveryOption.fee,
@@ -94,7 +97,7 @@ const PaymentDelivery = ({
                       Repeddle Commision (7.9%):
                     </div>
                     <div className="flex-1 lg:flex-[3]">
-                      {currency(region())}
+                      {currency(region)}
                       {(
                         (7.9 / 100) *
                         (itemsPrice +
@@ -108,7 +111,7 @@ const PaymentDelivery = ({
                   <div className="flex">
                     <div className="flex-1 lg:flex-[2]">You will Receive:</div>
                     <div className="flex-1 lg:flex-[3]">
-                      {currency(region())}
+                      {currency(region)}
                       {(
                         itemsPrice +
                         order.items.reduce(
@@ -131,7 +134,7 @@ const PaymentDelivery = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PaymentDelivery
+export default PaymentDelivery;

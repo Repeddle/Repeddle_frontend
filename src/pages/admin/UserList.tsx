@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react"
-import { FaTrash } from "react-icons/fa"
-import moment from "moment"
-import { Link } from "react-router-dom"
-import { IUsersWithPagination } from "../../types/user"
-import { createSearchParam, currency, region } from "../../utils/common"
-import useToastNotification from "../../hooks/useToastNotification"
-import useUser from "../../hooks/useUser"
-import Table from "../../components/table/Table"
-import { imageUrl } from "../../services/api"
+import { useEffect, useState } from "react";
+import { FaTrash } from "react-icons/fa";
+import moment from "moment";
+import { Link } from "react-router-dom";
+import { IUsersWithPagination } from "../../types/user";
+import { createSearchParam, currency } from "../../utils/common";
+import useToastNotification from "../../hooks/useToastNotification";
+import useUser from "../../hooks/useUser";
+import Table from "../../components/table/Table";
+import { imageUrl } from "../../services/api";
+import useRegion from "../../hooks/useRegion";
 
 const headers = [
   { title: "ID", hide: true },
@@ -16,62 +17,64 @@ const headers = [
   { title: "Date", hide: true },
   { title: "Status" },
   { title: "Earnings" },
-]
+];
 
 const UserList = () => {
-  const [userQuery, setUserQuery] = useState("")
-  const [debouncedQuery, setDebouncedQuery] = useState(userQuery)
+  const { region } = useRegion();
+
+  const [userQuery, setUserQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState(userQuery);
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedQuery(userQuery)
-    }, 500)
+      setDebouncedQuery(userQuery);
+    }, 500);
 
     return () => {
-      clearTimeout(handler)
-    }
-  }, [userQuery])
+      clearTimeout(handler);
+    };
+  }, [userQuery]);
   const [users, setUsers] = useState<IUsersWithPagination>({
     currentPage: 0,
     totalCount: 0,
     totalPages: 0,
     users: [],
-  })
-  const [loading, setLoading] = useState(false)
-  const [page, setPage] = useState(1)
+  });
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
   // const [limit, setLimit] = useState(20)
 
-  const { getAllUserAdmin, error } = useUser()
-  const { addNotification } = useToastNotification()
+  const { getAllUserAdmin, error } = useUser();
+  const { addNotification } = useToastNotification();
 
   useEffect(() => {
     const fetchUsers = async () => {
-      setLoading(true)
+      setLoading(true);
       const search = createSearchParam([
         ["page", `${page}`],
         ["search", debouncedQuery],
-      ])
-      const allUsers = await getAllUserAdmin(search)
+      ]);
+      const allUsers = await getAllUserAdmin(search);
 
       if (allUsers) {
-        setUsers(allUsers)
+        setUsers(allUsers);
       }
 
-      setLoading(false)
-    }
+      setLoading(false);
+    };
 
-    fetchUsers()
-  }, [page, debouncedQuery])
+    fetchUsers();
+  }, [page, debouncedQuery]);
 
   useEffect(() => {
-    if (error) addNotification(error)
-  }, [error])
+    if (error) addNotification(error);
+  }, [error]);
 
   const deleteHandler = async (userId: string) => {
     if (window.confirm("Are you sure to delete")) {
-      console.log(userId)
+      console.log(userId);
     }
-  }
+  };
 
   return (
     <div className="flex-[4] overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
@@ -114,7 +117,7 @@ const UserList = () => {
             Email: user.email,
             Date: moment(user.createdAt).format("MMM DD YY, h:mm a"),
             Status: user.active ? "active" : "banned",
-            Earnings: currency(region()) + " " + (user.earnings ?? 0),
+            Earnings: currency(region) + " " + (user.earnings ?? 0),
           },
           action: (
             <div className="flex items-center gap-2.5">
@@ -133,7 +136,7 @@ const UserList = () => {
         }))}
       />
     </div>
-  )
-}
+  );
+};
 
-export default UserList
+export default UserList;

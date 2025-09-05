@@ -1,47 +1,50 @@
-import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-import { ITopSellersWithPagination } from "../../types/user"
-import { createSearchParam, currency, region } from "../../utils/common"
-import useToastNotification from "../../hooks/useToastNotification"
-import useUser from "../../hooks/useUser"
-import Table from "../../components/table/Table"
-import { imageUrl } from "../../services/api"
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { ITopSellersWithPagination } from "../../types/user";
+import { createSearchParam, currency } from "../../utils/common";
+import useToastNotification from "../../hooks/useToastNotification";
+import useUser from "../../hooks/useUser";
+import Table from "../../components/table/Table";
+import { imageUrl } from "../../services/api";
+import useRegion from "../../hooks/useRegion";
 
 const headers = [
   { title: "ID" },
   { title: "User" },
   { title: "Date" },
   { title: "Earnings" },
-]
+];
 
 const TopSellersPage = () => {
-  const [users, setUsers] = useState<ITopSellersWithPagination>()
-  const [loading, setLoading] = useState(false)
-  const [page, setPage] = useState(1)
+  const { region } = useRegion();
+
+  const [users, setUsers] = useState<ITopSellersWithPagination>();
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
   // const [limit, setLimit] = useState(20)
 
-  const { getTopSellers, error } = useUser()
-  const { addNotification } = useToastNotification()
+  const { getTopSellers, error } = useUser();
+  const { addNotification } = useToastNotification();
 
   useEffect(() => {
     const fetchUsers = async () => {
-      setLoading(true)
-      const search = createSearchParam([["page", `${page}`]])
-      const allUsers = await getTopSellers(search)
+      setLoading(true);
+      const search = createSearchParam([["page", `${page}`]]);
+      const allUsers = await getTopSellers(search);
 
       if (typeof allUsers !== "string") {
-        setUsers(allUsers)
+        setUsers(allUsers);
       }
 
-      setLoading(false)
-    }
+      setLoading(false);
+    };
 
-    fetchUsers()
-  }, [page])
+    fetchUsers();
+  }, [page]);
 
   useEffect(() => {
-    if (error) addNotification(error)
-  }, [error])
+    if (error) addNotification(error);
+  }, [error]);
 
   return (
     <div className="flex-[4] overflow-x-hidden mb-5 min-h-[85vh] lg:mx-5 lg:my-0 bg-light-ev1 dark:bg-dark-ev1 rounded-[0.2rem] mx-[5px] my-5">
@@ -76,8 +79,7 @@ const TopSellersPage = () => {
                     </div>
                   ),
                   Date: "",
-                  Earnings:
-                    currency(region()) + " " + (user.totalEarnings ?? 0),
+                  Earnings: currency(region) + " " + (user.totalEarnings ?? 0),
                 },
                 action: (
                   <div className="flex items-center gap-2.5">
@@ -92,7 +94,7 @@ const TopSellersPage = () => {
         }
       />
     </div>
-  )
-}
+  );
+};
 
-export default TopSellersPage
+export default TopSellersPage;

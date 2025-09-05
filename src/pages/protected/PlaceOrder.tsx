@@ -1,86 +1,88 @@
-import { useMemo, useState } from "react"
-import useCart from "../../hooks/useCart"
-import { useNavigate } from "react-router-dom"
-import { Link } from "react-router-dom"
-import { Helmet } from "react-helmet-async"
-import LoadingBox from "../../components/LoadingBox"
-import { couponDiscount, currency, region } from "../../utils/common"
-import PayStack from "../../components/gateway/PayStack"
-import FlutterWave from "../../components/gateway/FlutterWave"
-import Modal from "../../components/ui/Modal"
-import PayFund from "../../components/gateway/PayFund"
-import { FaTimes } from "react-icons/fa"
-import useAuth from "../../hooks/useAuth"
-import { Coupon } from "../../types/product"
-import { PayStackCallback } from "../../types/gateway"
-import useOrder from "../../hooks/useOrder"
-import useToastNotification from "../../hooks/useToastNotification"
-import { imageUrl } from "../../services/api"
+import { useMemo, useState } from "react";
+import useCart from "../../hooks/useCart";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
+import LoadingBox from "../../components/LoadingBox";
+import { couponDiscount, currency } from "../../utils/common";
+import PayStack from "../../components/gateway/PayStack";
+import FlutterWave from "../../components/gateway/FlutterWave";
+import Modal from "../../components/ui/Modal";
+import PayFund from "../../components/gateway/PayFund";
+import { FaTimes } from "react-icons/fa";
+import useAuth from "../../hooks/useAuth";
+import { Coupon } from "../../types/product";
+import { PayStackCallback } from "../../types/gateway";
+import useOrder from "../../hooks/useOrder";
+import useToastNotification from "../../hooks/useToastNotification";
+import { imageUrl } from "../../services/api";
+import useRegion from "../../hooks/useRegion";
 
 const PlaceOrder = () => {
-  const { cart, subtotal, total, paymentMethod, clearCart } = useCart()
-  const { createOrder, error } = useOrder()
-  const { user } = useAuth()
-  const { addNotification } = useToastNotification()
+  const { cart, subtotal, total, paymentMethod, clearCart } = useCart();
+  const { createOrder, error } = useOrder();
+  const { user } = useAuth();
+  const { addNotification } = useToastNotification();
+  const { region } = useRegion();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const [code, setCode] = useState("")
-  const [coupon, setCoupon] = useState<Coupon | null>(null)
-  const [showModel, setShowModel] = useState(false)
-  const [loadingPay, setLoadingPay] = useState(false)
+  const [code, setCode] = useState("");
+  const [coupon, setCoupon] = useState<Coupon | null>(null);
+  const [showModel, setShowModel] = useState(false);
+  const [loadingPay, setLoadingPay] = useState(false);
 
   const handleCoupon = async () => {
-    console.log(code)
-  }
+    console.log(code);
+  };
 
   const removeCoupon = () => {
-    setCoupon(null)
-  }
+    setCoupon(null);
+  };
 
   const discount = useMemo(
     () => (coupon ? couponDiscount(coupon, total) : 0),
     [coupon]
-  )
+  );
 
   const placeOrderHandler = async (paymentMet: string, transId?: string) => {
-    setLoadingPay(true)
+    setLoadingPay(true);
     const res = await createOrder({
       items: cart,
       paymentMethod: paymentMet,
       totalAmount: total,
       transactionId: transId,
-    })
+    });
 
     if (res) {
-      addNotification(res.message)
-      setLoadingPay(false)
-      clearCart()
-      navigate(`/order/${res.order._id}`)
-      return res.order
+      addNotification(res.message);
+      setLoadingPay(false);
+      clearCart();
+      navigate(`/order/${res.order._id}`);
+      return res.order;
     } else {
-      addNotification(error)
+      addNotification(error);
     }
-  }
+  };
 
   const WalletSuccess = async (
     response: PayStackCallback,
     paymentMethod: string
   ) => {
-    console.log(response)
-    await placeOrderHandler(paymentMethod, response.transaction_id)
-  }
+    console.log(response);
+    await placeOrderHandler(paymentMethod, response.transaction_id);
+  };
 
   const onApprove = async (
     response: {
-      transaction_id: string
-      type: string
+      transaction_id: string;
+      type: string;
     },
     paymentMethod: string
   ) => {
-    console.log(response)
-    await placeOrderHandler(paymentMethod, response.transaction_id)
-  }
+    console.log(response);
+    await placeOrderHandler(paymentMethod, response.transaction_id);
+  };
 
   return (
     <div className="mx-0 my-2.5 pt-5 pb-0 px-[5px] lg:m-5 lg:pt-5 lg:pb-0 lg:px-[3vw] bg-light-ev1 dark:bg-dark-ev1">
@@ -288,7 +290,7 @@ const PlaceOrder = () => {
                     >
                       Place Order
                     </div>
-                  ) : region() === "ZAR" ? (
+                  ) : region === "ZA" ? (
                     // <PayFast
                     //   user={user}
                     //   placeOrderHandler={placeOrderHandler}
@@ -330,7 +332,7 @@ const PlaceOrder = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PlaceOrder
+export default PlaceOrder;

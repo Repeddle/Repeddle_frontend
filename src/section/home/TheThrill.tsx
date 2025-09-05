@@ -4,6 +4,7 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import MessageBox from "../../components/MessageBox";
 import useProducts from "../../hooks/useProducts";
 import { imageUrl } from "../../services/api";
+import { currency } from "../../utils/common";
 
 const SkeletonProduct = () => (
   <div className="flex-[0_0_calc(33%_-_10px)] bg-light-ev1 dark:bg-dark-ev1 p-2.5 md:max-w-[240px]">
@@ -106,7 +107,7 @@ const TheThrill = () => {
               </h3>
               <p className="text-base font-bold mb-0">
                 <span className="text-sm">
-                  {/* {product.currency} */}
+                  {currency(product.region)}
                   {product.sellingPrice}
                 </span>
                 {discount(product) && (

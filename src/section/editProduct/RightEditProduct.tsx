@@ -1,43 +1,44 @@
-import { FaQuestionCircle } from "react-icons/fa"
-import { InputData, IProduct, ISize } from "../../types/product"
-import { currency, region } from "../../utils/common"
-import Modal from "../../components/ui/Modal"
-import FeeStructure from "../../pages/defaults/info/FeeStructure"
-import AddOtherBrand from "../../components/AddOtherBrand"
-import useBrands from "../../hooks/useBrand"
-import { colors } from "../../utils/constants"
-import { ChangeEvent } from "react"
+import { FaQuestionCircle } from "react-icons/fa";
+import { InputData, IProduct, ISize } from "../../types/product";
+import { currency } from "../../utils/common";
+import Modal from "../../components/ui/Modal";
+import FeeStructure from "../../pages/defaults/info/FeeStructure";
+import AddOtherBrand from "../../components/AddOtherBrand";
+import useBrands from "../../hooks/useBrand";
+import { colors } from "../../utils/constants";
+import { ChangeEvent } from "react";
+import useRegion from "../../hooks/useRegion";
 
 type Props = {
-  product: IProduct
-  price: string
-  setPrice: (val: string) => void
-  priceInput: { costPrice: string; sellingPrice: string }
-  setPriceInput: (val: { costPrice: string; sellingPrice: string }) => void
-  sellingPrice: number
-  costPrice: string | null
-  discount: number
-  validationError: { [key: string]: string }
-  input: InputData
-  showComissionModal: boolean
-  setShowComissionModal: (val: boolean) => void
-  addSize: boolean
-  setAddSize: (val: boolean) => void
-  showOtherBrand: boolean
-  setShowOtherBrand: (val: boolean) => void
-  brandQuery: string
-  setBrandQuery: (val: string) => void
-  handleOnChange: (text: string, inputVal: keyof InputData) => void
-  sizes: ISize[]
-  setSizes: (val: ISize[]) => void
-  countInStock: number
-  setCountInStock: (val: number) => void
-  smallSizeHandler: (label: string, value: string) => void
-  handleError: (errorMessage: string, input: string | number) => void
-  sizeHandler: (sizenow: string) => void
-  color: string[]
-  setColor: (val: string[]) => void
-}
+  product: IProduct;
+  price: string;
+  setPrice: (val: string) => void;
+  priceInput: { costPrice: string; sellingPrice: string };
+  setPriceInput: (val: { costPrice: string; sellingPrice: string }) => void;
+  sellingPrice: number;
+  costPrice: string | null;
+  discount: number;
+  validationError: { [key: string]: string };
+  input: InputData;
+  showComissionModal: boolean;
+  setShowComissionModal: (val: boolean) => void;
+  addSize: boolean;
+  setAddSize: (val: boolean) => void;
+  showOtherBrand: boolean;
+  setShowOtherBrand: (val: boolean) => void;
+  brandQuery: string;
+  setBrandQuery: (val: string) => void;
+  handleOnChange: (text: string, inputVal: keyof InputData) => void;
+  sizes: ISize[];
+  setSizes: (val: ISize[]) => void;
+  countInStock: number;
+  setCountInStock: (val: number) => void;
+  smallSizeHandler: (label: string, value: string) => void;
+  handleError: (errorMessage: string, input: string | number) => void;
+  sizeHandler: (sizenow: string) => void;
+  color: string[];
+  setColor: (val: string[]) => void;
+};
 
 const RightEditProduct = ({
   product,
@@ -69,15 +70,16 @@ const RightEditProduct = ({
   color,
   setColor,
 }: Props) => {
-  const { brands: searchBrand } = useBrands()
+  const { brands: searchBrand } = useBrands();
+  const { region } = useRegion();
 
   const handleColorChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedOptions = Array.from(
       e.target.selectedOptions,
       (option) => option.value
-    )
-    setColor(selectedOptions)
-  }
+    );
+    setColor(selectedOptions);
+  };
 
   return (
     <div className="flex flex-col flex-1">
@@ -102,7 +104,7 @@ const RightEditProduct = ({
                 setPriceInput({
                   ...priceInput,
                   sellingPrice: e.target.value,
-                })
+                });
               }}
             />
           </div>
@@ -120,7 +122,7 @@ const RightEditProduct = ({
           {costPrice}
         </div>
         <div className="text-2xl text-orange-color mt-3 font-light">
-          {currency(region())}
+          {currency(region)}
           {sellingPrice}
         </div>
         {discount ? (
@@ -164,8 +166,8 @@ const RightEditProduct = ({
           type="search"
           value={input.brand.length > 0 ? input.brand : brandQuery}
           onChange={(e) => {
-            handleOnChange("", "brand")
-            setBrandQuery(e.target.value)
+            handleOnChange("", "brand");
+            setBrandQuery(e.target.value);
           }}
           onBlur={() => input.brand.length > 0 && setBrandQuery("")}
         />
@@ -181,11 +183,11 @@ const RightEditProduct = ({
                 key={b._id}
                 onClick={() => {
                   if (b.name === "Other") {
-                    setShowOtherBrand(true)
+                    setShowOtherBrand(true);
                   } else {
-                    handleOnChange(b.name, "brand")
+                    handleOnChange(b.name, "brand");
                   }
-                  setBrandQuery("")
+                  setBrandQuery("");
                 }}
               >
                 {b.name}
@@ -253,9 +255,9 @@ const RightEditProduct = ({
   appearance-none bg-[#d4d4d4] outline-0 checked:before:bg-orange-color before:bg-[grey] dark:checked:bg-dark-ev4 checked:bg-[#fcf0e0]`}
           checked={addSize}
           onChange={(e) => {
-            setSizes([])
-            setAddSize(e.target.checked)
-            handleError("", "selectedSize")
+            setSizes([]);
+            setAddSize(e.target.checked);
+            handleError("", "selectedSize");
           }}
         />
       </div>
@@ -286,8 +288,11 @@ const RightEditProduct = ({
                     maxLength={4}
                     placeholder="Add size"
                     onChange={(e) => {
-                      handleOnChange(e.target.value.slice(0, 4), "selectedSize")
-                      handleError("", "selectedSize")
+                      handleOnChange(
+                        e.target.value.slice(0, 4),
+                        "selectedSize"
+                      );
+                      handleError("", "selectedSize");
                     }}
                   />
                   <div
@@ -313,8 +318,8 @@ const RightEditProduct = ({
                       maxLength={4}
                       value={s.quantity}
                       onChange={(e) => {
-                        smallSizeHandler(s.size, e.target.value.slice(0, 4))
-                        handleError("", "selectedSize")
+                        smallSizeHandler(s.size, e.target.value.slice(0, 4));
+                        handleError("", "selectedSize");
                       }}
                     />
                   </div>
@@ -394,7 +399,7 @@ brackets as shown on the label of clothes/shoes"
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RightEditProduct
+export default RightEditProduct;

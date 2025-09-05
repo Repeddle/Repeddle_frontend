@@ -1,22 +1,25 @@
-import useTheme from "../../hooks/useTheme"
-import { FaWallet } from "react-icons/fa"
-import MessageBox from "../MessageBox"
-import LoadingBox from "../LoadingBox"
-import { PayStackCallback } from "../../types/gateway"
-import { currency, region } from "../../utils/common"
+import useTheme from "../../hooks/useTheme";
+import { FaWallet } from "react-icons/fa";
+import MessageBox from "../MessageBox";
+import LoadingBox from "../LoadingBox";
+import { PayStackCallback } from "../../types/gateway";
+import { currency } from "../../utils/common";
+import useRegion from "../../hooks/useRegion";
 
 type Props = {
-  amount: number
-  onApprove: (val: PayStackCallback) => void
-  setShowModel: (val: boolean) => void
-}
+  amount: number;
+  onApprove: (val: PayStackCallback) => void;
+  setShowModel: (val: boolean) => void;
+};
 
 const PayFund = ({ amount }: Props) => {
-  const { isDarkMode } = useTheme()
-  const error = null
-  const loading = false
+  const { isDarkMode } = useTheme();
+  const { region } = useRegion();
 
-  const handlePayment = () => {}
+  const error = null;
+  const loading = false;
+
+  const handlePayment = () => {};
 
   return (
     <div className="mt-[30px]">
@@ -35,7 +38,7 @@ const PayFund = ({ amount }: Props) => {
         </div>
         {error && <MessageBox className="text-[red]">{error}</MessageBox>}
         <div className="font-bold my-5 mx-0 text-orange-color text-[40px]">
-          {currency(region())} {amount}
+          {currency(region)} {amount}
         </div>
         {loading ? (
           <LoadingBox />
@@ -43,7 +46,7 @@ const PayFund = ({ amount }: Props) => {
           <div
             className="flex items-center cursor-pointer font-bold bg-orange-color hover:bg-malon-color text-white-color px-[50px] py-2.5 rounded-[0.2rem]"
             onClick={() => {
-              handlePayment()
+              handlePayment();
             }}
           >
             Continue
@@ -51,7 +54,7 @@ const PayFund = ({ amount }: Props) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PayFund
+export default PayFund;

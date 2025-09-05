@@ -1,64 +1,65 @@
-import { FormEvent, useState } from "react"
-import { Helmet } from "react-helmet-async"
-import InputWithLabel2 from "../../components/ui/InputWithLabel2"
-import { region } from "../../utils/common"
-import { states } from "../../utils/constants"
-import Button from "../../components/ui/Button"
-import { useNavigate } from "react-router-dom"
-import useToastNotification from "../../hooks/useToastNotification"
-import useAuth from "../../hooks/useAuth"
+import { FormEvent, useState } from "react";
+import { Helmet } from "react-helmet-async";
+import InputWithLabel2 from "../../components/ui/InputWithLabel2";
+import { states } from "../../utils/constants";
+import Button from "../../components/ui/Button";
+import { useNavigate } from "react-router-dom";
+import useToastNotification from "../../hooks/useToastNotification";
+import useAuth from "../../hooks/useAuth";
+import useRegion from "../../hooks/useRegion";
 
 const VerifyAddress = () => {
-  const { updateUser, loading, error: userError } = useAuth()
-  const { addNotification } = useToastNotification()
-  const navigate = useNavigate()
+  const { updateUser, loading, error: userError } = useAuth();
+  const { addNotification } = useToastNotification();
+  const navigate = useNavigate();
+  const { region } = useRegion();
 
   const [input, setInput] = useState({
     street: "",
     apartment: "",
     zipcode: "",
     state: "",
-  })
+  });
 
   const [error, setError] = useState({
     street: "",
     apartment: "",
     zipcode: "",
     state: "",
-  })
+  });
 
   const handleOnChange = (text: string, inputVal: keyof typeof input) => {
-    setInput((prevState) => ({ ...prevState, [inputVal]: text }))
-  }
+    setInput((prevState) => ({ ...prevState, [inputVal]: text }));
+  };
 
   const handleError = (errorMessage: string, inputVal: keyof typeof error) => {
-    setError((prevState) => ({ ...prevState, [inputVal]: errorMessage }))
-  }
+    setError((prevState) => ({ ...prevState, [inputVal]: errorMessage }));
+  };
 
   const validate = (e: FormEvent) => {
-    e.preventDefault()
-    let valid = true
+    e.preventDefault();
+    let valid = true;
     if (!input.street) {
-      handleError("Enter your street", "street")
-      valid = false
+      handleError("Enter your street", "street");
+      valid = false;
     }
     if (!input.apartment) {
-      handleError("Enter your apartment", "apartment")
-      valid = false
+      handleError("Enter your apartment", "apartment");
+      valid = false;
     }
     if (!input.state) {
-      handleError("Select your state/province", "state")
-      valid = false
+      handleError("Select your state/province", "state");
+      valid = false;
     }
     if (!input.zipcode) {
-      handleError("Enter your zip code", "zipcode")
-      valid = false
+      handleError("Enter your zip code", "zipcode");
+      valid = false;
     }
 
     if (valid) {
-      submitHandler()
+      submitHandler();
     }
-  }
+  };
   const submitHandler = async () => {
     const res = await updateUser({
       address: {
@@ -67,14 +68,14 @@ const VerifyAddress = () => {
         apartment: input.apartment,
         zipcode: +input.zipcode,
       },
-    })
+    });
     if (res) {
-      addNotification("Address Verified Successfully")
-      navigate("/newproduct")
+      addNotification("Address Verified Successfully");
+      navigate("/newproduct");
     } else {
-      addNotification(userError ? userError : "Failed to verify address")
+      addNotification(userError ? userError : "Failed to verify address");
     }
-  }
+  };
 
   return (
     <div className="max-w-[800px] bg-light-ev1 dark:bg-dark-ev1 mx-auto my-10 p-[50px] rounded-[10px]">
@@ -120,7 +121,7 @@ const VerifyAddress = () => {
               className="text-base m-0 pl-2.5 border-light-ev4 dark:border-[grey] outline-[grey] pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
             >
               <option value="">-- Select --</option>
-              {region() === "NGN"
+              {region === "NG"
                 ? states.Nigeria.map((x) => <option value={x}>{x}</option>)
                 : states.SouthAfrican.map((x) => (
                     <option value={x}>{x}</option>
@@ -149,7 +150,7 @@ const VerifyAddress = () => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default VerifyAddress
+export default VerifyAddress;

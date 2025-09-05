@@ -1,32 +1,32 @@
-import { useState } from "react"
-import { IProduct } from "../../types/product"
-import { currency } from "../../utils/common"
+import { useState } from "react";
+import { IProduct } from "../../types/product";
+import { currency } from "../../utils/common";
 
-type Props = { product: IProduct }
+type Props = { product: IProduct };
 
 const ProductDetails = ({ product }: Props) => {
-  const [openOverview, setOpenOverview] = useState(false)
-  const [openItemDetail, setOpenItemDetail] = useState(false)
-  const [openCondition, setOpenCondition] = useState(false)
-  const [openShipping, setOpenShipping] = useState(false)
-  const [openFeatures, setOpenFeatures] = useState(false)
-  const [openSpecifications, setOpenSpecifications] = useState(false)
+  const [openOverview, setOpenOverview] = useState(false);
+  const [openItemDetail, setOpenItemDetail] = useState(false);
+  const [openCondition, setOpenCondition] = useState(false);
+  const [openShipping, setOpenShipping] = useState(false);
+  const [openFeatures, setOpenFeatures] = useState(false);
+  const [openSpecifications, setOpenSpecifications] = useState(false);
 
   const conditionDetails = (item: string) => {
     if (item === "New with Tags") {
-      return "New with Tags: A preowned secondhand product that has never been worn or used. These products reflect no sign of use and has its original purchase tags on it. This product shows no alterations, no defects and comes with Original purchase tags."
+      return "New with Tags: A preowned secondhand product that has never been worn or used. These products reflect no sign of use and has its original purchase tags on it. This product shows no alterations, no defects and comes with Original purchase tags.";
     } else if (item === "New with No Tags") {
-      return "A preowned secondhand product that has never been worn or use but doesn’t have original purchase tags. This product should show no defects or alterations."
+      return "A preowned secondhand product that has never been worn or use but doesn’t have original purchase tags. This product should show no defects or alterations.";
     } else if (item === "Excellent Condition") {
-      return "A preowned secondhand Product still in an excellent condition that has only been used or worn very slightly, (perhaps 1–3 times) and carefully maintained. These Product may reflect very minimal worn or usage sign. Product do not have any damage on the fabric or material, no worn smell and no missing accessory, button or pieces. "
+      return "A preowned secondhand Product still in an excellent condition that has only been used or worn very slightly, (perhaps 1–3 times) and carefully maintained. These Product may reflect very minimal worn or usage sign. Product do not have any damage on the fabric or material, no worn smell and no missing accessory, button or pieces. ";
     } else if (item === "Good Condition") {
-      return "A preowned secondhand product in a very good condition which has been used or worn and properly maintained. No remarkable defects (Tear, Hole or Rust) expected."
+      return "A preowned secondhand product in a very good condition which has been used or worn and properly maintained. No remarkable defects (Tear, Hole or Rust) expected.";
     } else if (item === "Fair Condition") {
-      return "A preowned secondhand product which has been frequently used or worn. Products may show reasonable defects signs, scratches, worn corners or interior wear. Defects are shown on product photos and mentioned in description."
+      return "A preowned secondhand product which has been frequently used or worn. Products may show reasonable defects signs, scratches, worn corners or interior wear. Defects are shown on product photos and mentioned in description.";
     } else {
-      return "No condition Selected"
+      return "No condition Selected";
     }
-  }
+  };
 
   return (
     <div className="flex flex-col p-[15px]">
@@ -137,7 +137,7 @@ const ProductDetails = ({ product }: Props) => {
             openShipping ? "h-auto ml-5 mb-5" : "h-0"
           }`}
         >
-          {product.region === "NGN" ? "Nigeria" : "South Africa"}
+          {product.region === "NG" ? "Nigeria" : "South Africa"}
         </div>
       </div>
       {product.keyFeatures && product.keyFeatures !== "Other" && (
@@ -189,7 +189,7 @@ const ProductDetails = ({ product }: Props) => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ProductDetails
+export default ProductDetails;

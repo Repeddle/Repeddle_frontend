@@ -1,33 +1,35 @@
-import { useState } from "react"
-import LoadingBox from "../../components/LoadingBox"
-import { Helmet } from "react-helmet-async"
-import useCart from "../../hooks/useCart"
-import MessageBox from "../../components/MessageBox"
-import { Link, useNavigate } from "react-router-dom"
-import useAuth from "../../hooks/useAuth"
-import Button from "../../components/ui/Button"
-import { IProduct } from "../../types/product"
-import CartItems from "../../section/cart/CartItems"
-import { CartItem } from "../../context/CartContext"
-import AlertComponent from "../../section/cart/AlertComponent"
-import Modal from "../../components/ui/Modal"
-import { checkDeliverySelect, currency, region } from "../../utils/common"
-import DeliveryOptionScreen from "../../components/DeliveryOptionScreen"
-import useToastNotification from "../../hooks/useToastNotification"
+import { useState } from "react";
+import LoadingBox from "../../components/LoadingBox";
+import { Helmet } from "react-helmet-async";
+import useCart from "../../hooks/useCart";
+import MessageBox from "../../components/MessageBox";
+import { Link, useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import Button from "../../components/ui/Button";
+import { IProduct } from "../../types/product";
+import CartItems from "../../section/cart/CartItems";
+import { CartItem } from "../../context/CartContext";
+import AlertComponent from "../../section/cart/AlertComponent";
+import Modal from "../../components/ui/Modal";
+import { checkDeliverySelect, currency } from "../../utils/common";
+import DeliveryOptionScreen from "../../components/DeliveryOptionScreen";
+import useToastNotification from "../../hooks/useToastNotification";
+import useRegion from "../../hooks/useRegion";
 
 function Cart() {
-  const { cart, removeFromCart, subtotal, total } = useCart()
-  const { user, addToWishlist, error } = useAuth()
-  const { addNotification } = useToastNotification()
+  const { cart, removeFromCart, subtotal, total } = useCart();
+  const { user, addToWishlist, error } = useAuth();
+  const { addNotification } = useToastNotification();
+  const { region } = useRegion();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const loading = false
+  const loading = false;
 
-  const [showModel, setShowModel] = useState(false)
-  const [currentItem, setCurrentItem] = useState<CartItem | null>(null)
-  const [remove, setRemove] = useState(false)
-  const [addToWish, setAddToWish] = useState(false)
+  const [showModel, setShowModel] = useState(false);
+  const [currentItem, setCurrentItem] = useState<CartItem | null>(null);
+  const [remove, setRemove] = useState(false);
+  const [addToWish, setAddToWish] = useState(false);
 
   // const scrollref = useRef(null)
 
@@ -37,56 +39,60 @@ function Cart() {
         "Sign In/ Sign Up to add an item to wishlist",
         undefined,
         true
-      )
-      return
+      );
+      return;
     }
 
     if (product.seller._id === user._id) {
-      addNotification("You can't add your product to wishlist", undefined, true)
-      return
+      addNotification(
+        "You can't add your product to wishlist",
+        undefined,
+        true
+      );
+      return;
     }
 
-    setAddToWish(true)
+    setAddToWish(true);
 
-    const res = await addToWishlist(product._id)
+    const res = await addToWishlist(product._id);
     if (res) {
-      addNotification(res)
-      removeFromCart(product._id)
-      setRemove(false)
+      addNotification(res);
+      removeFromCart(product._id);
+      setRemove(false);
     } else
       addNotification(
         error ? error : "Failed to add to wishlist",
         undefined,
         true
-      )
+      );
 
-    setAddToWish(false)
-  }
+    setAddToWish(false);
+  };
 
   const checkoutHandler = () => {
     if (!user) {
-      addNotification("Login to continue")
-      navigate("/auth/login?redirect=cart")
-      return
+      addNotification("Login to continue");
+      navigate("/auth/login?redirect=cart");
+      return;
     }
 
     if (!checkDeliverySelect(cart)) {
-      addNotification("Select delivery method")
-      return
+      addNotification("Select delivery method");
+      return;
     }
 
     if (cart.length === 0) {
-      return addNotification("Cart is empty")
+      return addNotification("Cart is empty");
     } else {
       if (user.isVerifiedEmail) {
-        navigate("/payment")
+        navigate("/payment");
       } else {
-        navigate("/verifyemail")
+        navigate("/verifyemail");
       }
     }
 
-    navigate("/payment")
-  }
+    navigate("/payment");
+  };
 
   return loading ? (
     <LoadingBox />
@@ -148,8 +154,8 @@ function Cart() {
                   message="Are you sure you want to remove item from cart?"
                   onConfirm={() => {
                     if (currentItem && !addToWish) {
-                      removeFromCart(currentItem?._id)
-                      setRemove(false)
+                      removeFromCart(currentItem?._id);
+                      setRemove(false);
                     }
                   }}
                   onWishlist={() =>
@@ -257,14 +263,14 @@ function Cart() {
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">SubTotal</div>
                     <div className="flex-1">
-                      {currency(region())} {subtotal}
+                      {currency(region)} {subtotal}
                     </div>
                   </div>
                 </div>
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">Shipping</div>
-                    <div className="flex-1">{currency(region())} 0.00</div>
+                    <div className="flex-1">{currency(region)} 0.00</div>
                   </div>
                 </div>
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">
@@ -274,7 +280,7 @@ function Cart() {
                     </div>
                     <div className="flex-1">
                       <b>
-                        {currency(region())}N {total}.00
+                        {currency(region)}N {total}.00
                       </b>
                     </div>
                   </div>
@@ -296,7 +302,7 @@ function Cart() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Cart
+export default Cart;

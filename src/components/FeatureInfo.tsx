@@ -3,10 +3,11 @@ import {
   FaMoneyBill,
   FaShoppingBasket,
   FaUser,
-} from "react-icons/fa"
-import { FaBagShopping } from "react-icons/fa6"
-import { Link } from "react-router-dom"
-import { currency, region } from "../utils/common"
+} from "react-icons/fa";
+import { FaBagShopping } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+import { currency } from "../utils/common";
+import useRegion from "../hooks/useRegion";
 
 const featureTypes = {
   user: {
@@ -64,15 +65,17 @@ const featureTypes = {
       </div>
     ),
   },
-}
+};
 
 type Props = {
-  type: keyof typeof featureTypes
-  number: number
-}
+  type: keyof typeof featureTypes;
+  number: number;
+};
 
 const FeatureInfo = ({ number, type }: Props) => {
-  const currencyVal = currency(region())
+  const { region } = useRegion();
+
+  const currencyVal = currency(region);
 
   return (
     <div className="w-full flex justify-between">
@@ -100,7 +103,7 @@ const FeatureInfo = ({ number, type }: Props) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FeatureInfo
+export default FeatureInfo;

@@ -1,27 +1,29 @@
-import { FormEvent, useEffect, useMemo } from "react"
-import { Helmet } from "react-helmet-async"
-import { Link, useNavigate } from "react-router-dom"
-import useCart from "../../hooks/useCart"
-import Button from "../../components/ui/Button"
-import { currency, region } from "../../utils/common"
-import useWallet from "../../hooks/useWallet"
+import { FormEvent, useEffect, useMemo } from "react";
+import { Helmet } from "react-helmet-async";
+import { Link, useNavigate } from "react-router-dom";
+import useCart from "../../hooks/useCart";
+import Button from "../../components/ui/Button";
+import { currency } from "../../utils/common";
+import useWallet from "../../hooks/useWallet";
+import useRegion from "../../hooks/useRegion";
 
 const PaymentMethod = () => {
-  const { total, paymentMethod, changePaymentMethod } = useCart()
-  const navigate = useNavigate()
+  const { total, paymentMethod, changePaymentMethod } = useCart();
+  const navigate = useNavigate();
+  const { region } = useRegion();
 
-  const { wallet, fetchWallet } = useWallet()
+  const { wallet, fetchWallet } = useWallet();
 
   useEffect(() => {
-    fetchWallet()
-  }, [])
+    fetchWallet();
+  }, []);
 
   const submitHandler = (e: FormEvent) => {
-    e.preventDefault()
-    navigate("/placeorder")
-  }
+    e.preventDefault();
+    navigate("/placeorder");
+  };
 
-  const balance = useMemo(() => wallet?.balance ?? 0, [wallet?.balance])
+  const balance = useMemo(() => wallet?.balance ?? 0, [wallet?.balance]);
 
   return (
     <div className="bs-container">
@@ -56,7 +58,7 @@ const PaymentMethod = () => {
               onChange={() => changePaymentMethod("Wallet")}
             />
             <label htmlFor="wallet">
-              {`Wallet (${currency(region())} ${balance.toFixed(2)})`}
+              {`Wallet (${currency(region)} ${balance.toFixed(2)})`}
             </label>
           </div>
           {balance <= total && (
@@ -76,7 +78,7 @@ const PaymentMethod = () => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default PaymentMethod
+export default PaymentMethod;

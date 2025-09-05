@@ -1,192 +1,193 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import {
   currency,
   daydiff,
   deliveryNumber,
   deliveryStatusMap,
-  region,
-} from "../../../utils/common"
-import { Link, useParams } from "react-router-dom"
-import useAuth from "../../../hooks/useAuth"
-import moment from "moment"
-import MessageImage from "../../../components/ui/MessageImage"
-import Modal from "../../../components/ui/Modal"
-import DeliveryReturn from "../../../components/DeliveryReturn"
-import useReturn from "../../../hooks/useReturn"
-import { IReturn, OrderItem } from "../../../types/order"
-import useToastNotification from "../../../hooks/useToastNotification"
-import LoadingControlModal from "../../../components/ui/loadin/LoadingControlLogo"
-import LoadingBox from "../../../components/LoadingBox"
-import { FaCheck } from "react-icons/fa"
-import DeliveryHistoryReturn from "../../../components/DeliveryHistoryReturn"
-import usePayments from "../../../hooks/usePayment"
-import { imageUrl } from "../../../services/api"
+} from "../../../utils/common";
+import { Link, useParams } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
+import moment from "moment";
+import MessageImage from "../../../components/ui/MessageImage";
+import Modal from "../../../components/ui/Modal";
+import DeliveryReturn from "../../../components/DeliveryReturn";
+import useReturn from "../../../hooks/useReturn";
+import { IReturn, OrderItem } from "../../../types/order";
+import useToastNotification from "../../../hooks/useToastNotification";
+import LoadingControlModal from "../../../components/ui/loadin/LoadingControlLogo";
+import LoadingBox from "../../../components/LoadingBox";
+import { FaCheck } from "react-icons/fa";
+import DeliveryHistoryReturn from "../../../components/DeliveryHistoryReturn";
+import usePayments from "../../../hooks/usePayment";
+import { imageUrl } from "../../../services/api";
+import useRegion from "../../../hooks/useRegion";
 
 const ReturnPage = () => {
-  const { id: returnId } = useParams()
+  const { id: returnId } = useParams();
   const {
     fetchReturnById,
     error,
     updateReturnStatusAdmin,
     updateReturnStatus,
-  } = useReturn()
-  const { addNotification } = useToastNotification()
-  const { paySeller, refundBuyer } = usePayments()
+  } = useReturn();
+  const { addNotification } = useToastNotification();
+  const { paySeller, refundBuyer } = usePayments();
 
-  const { user } = useAuth()
+  const { user } = useAuth();
+  const { region } = useRegion();
 
-  const [reasonText, setReasonText] = useState("")
-  const [showModel, setShowModel] = useState(false)
-  const [loading, setLoading] = useState(true)
-  const [loadingReturn, setLoadingReturn] = useState(false)
-  const [returned, setReturned] = useState<IReturn>()
-  const [showTracking, setShowTracking] = useState(false)
-  const [trackingNumber, setTrackingNumber] = useState("")
-  const [refunding, setRefunding] = useState(false)
+  const [reasonText, setReasonText] = useState("");
+  const [showModel, setShowModel] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [loadingReturn, setLoadingReturn] = useState(false);
+  const [returned, setReturned] = useState<IReturn>();
+  const [showTracking, setShowTracking] = useState(false);
+  const [trackingNumber, setTrackingNumber] = useState("");
+  const [refunding, setRefunding] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
-      setLoading(true)
-      if (!returnId) return addNotification("Id not found")
-      const res = await fetchReturnById(returnId)
+      setLoading(true);
+      if (!returnId) return addNotification("Id not found");
+      const res = await fetchReturnById(returnId);
       if (res) {
-        setReturned(res)
+        setReturned(res);
       } else {
-        addNotification(error, undefined, true)
+        addNotification(error, undefined, true);
       }
 
-      setLoading(false)
-    }
+      setLoading(false);
+    };
 
-    getData()
-  }, [])
+    getData();
+  }, []);
 
   const handleReturn = async (type: string) => {
     if (type === "Declined") {
       if (!reasonText.length) {
-        addNotification("Enter Reason for Decline", undefined, true)
-        return
+        addNotification("Enter Reason for Decline", undefined, true);
+        return;
       }
-      setLoadingReturn(true)
+      setLoadingReturn(true);
 
       const res = await updateReturnStatusAdmin(returnId ?? "", {
         adminReason: reasonText,
         status: type,
-      })
+      });
 
       if (res) {
-        setReturned(res)
+        setReturned(res);
       } else {
         addNotification(
           error ? error : "failed to update status",
           undefined,
           true
-        )
+        );
       }
     } else {
-      setLoadingReturn(true)
+      setLoadingReturn(true);
 
       const res = await updateReturnStatusAdmin(returnId ?? "", {
         adminReason: reasonText,
         status: type,
-      })
+      });
 
       if (res) {
-        setReturned(res)
+        setReturned(res);
       } else {
         addNotification(
           error ? error : "failed to update status",
           undefined,
           true
-        )
+        );
       }
     }
 
-    setLoadingReturn(false)
-  }
+    setLoadingReturn(false);
+  };
 
   const onRefund = async (item: OrderItem) => {
-    if (!returned) return
-    setRefunding(true)
+    if (!returned) return;
+    setRefunding(true);
     const data = await refundBuyer(
       returned.orderId._id,
       item.product._id,
       returned.orderId.buyer._id
-    )
+    );
 
     if (typeof data !== "string") {
-      addNotification(data.message)
-    } else addNotification(data, undefined, true)
+      addNotification(data.message);
+    } else addNotification(data, undefined, true);
 
-    setRefunding(false)
-  }
+    setRefunding(false);
+  };
 
   const onPaySeller = async (item: OrderItem) => {
-    if (!returned) return
-    setRefunding(true)
+    if (!returned) return;
+    setRefunding(true);
     const data = await paySeller(
       returned.orderId._id,
       item.product._id,
       //  for a return we should pay the buyer
       returned.orderId.buyer._id
-    )
+    );
 
     if (typeof data !== "string") {
-      addNotification(data.message)
-    } else addNotification(data, undefined, true)
+      addNotification(data.message);
+    } else addNotification(data, undefined, true);
 
-    setRefunding(false)
-  }
+    setRefunding(false);
+  };
 
   // const paymentRequest = async (user: IUser, cost: number, type: string) => {
   //   console.log(user, cost, type)
   // }
 
   const showNextStatus = (status: string) => {
-    const entries = Object.entries(deliveryStatusMap)
-    const currentNumber = deliveryNumber(status)
+    const entries = Object.entries(deliveryStatusMap);
+    const currentNumber = deliveryNumber(status);
 
-    return entries[currentNumber]
-  }
+    return entries[currentNumber];
+  };
 
   const updateTracking = async () => {
-    if (!returned) return
+    if (!returned) return;
 
     const nextStatus = showNextStatus(
       returned.deliveryTracking.currentStatus.status
-    )
+    );
 
     if (
       nextStatus[1] === 9 &&
       returned.deliveryOption.method !== "Pick up from Seller" &&
       !trackingNumber
     ) {
-      setShowTracking(true)
+      setShowTracking(true);
     } else {
-      setLoadingReturn(true)
+      setLoadingReturn(true);
       const body: { status: string; trackingNumber?: string } = {
         status: nextStatus[0],
-      }
+      };
 
-      if (trackingNumber) body["trackingNumber"] = trackingNumber
+      if (trackingNumber) body["trackingNumber"] = trackingNumber;
 
-      const res = await updateReturnStatus(returned._id, body)
+      const res = await updateReturnStatus(returned._id, body);
 
-      if (res) setReturned(res)
-      else addNotification(error || "Failed to update status", undefined, true)
+      if (res) setReturned(res);
+      else addNotification(error || "Failed to update status", undefined, true);
 
-      setLoadingReturn(false)
+      setLoadingReturn(false);
     }
-  }
+  };
 
   const confirmTracking = async () => {
-    if (!trackingNumber) addNotification("Tracking number is required")
+    if (!trackingNumber) addNotification("Tracking number is required");
 
-    await updateTracking()
+    await updateTracking();
 
-    setShowTracking(false)
-    setTrackingNumber("")
-  }
+    setShowTracking(false);
+    setTrackingNumber("");
+  };
 
   return loading ? (
     <LoadingControlModal />
@@ -345,7 +346,7 @@ const ReturnPage = () => {
                         <>
                           <div className="flex-[3]">{key}:</div>
                           <div className="flex-[5]">
-                            {currency(region())} {value}
+                            {currency(region)} {value}
                           </div>
                         </>
                       ) : (
@@ -427,7 +428,7 @@ const ReturnPage = () => {
                       "Return Delivered" && (
                       <button
                         onClick={() => {
-                          onPaySeller(orderitem)
+                          onPaySeller(orderitem);
                         }}
                         className="inline-block bg-orange-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
                       >
@@ -446,7 +447,7 @@ const ReturnPage = () => {
                       "Return Delivered" && (
                       <button
                         onClick={() => {
-                          onPaySeller(orderitem)
+                          onPaySeller(orderitem);
                         }}
                         className="inline-block bg-orange-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
                       >
@@ -545,7 +546,7 @@ const ReturnPage = () => {
         </Modal>
       </div>
     )
-  )
-}
+  );
+};
 
-export default ReturnPage
+export default ReturnPage;

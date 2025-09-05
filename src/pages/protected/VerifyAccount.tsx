@@ -1,17 +1,18 @@
 import { FormEvent, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import { region } from "../../utils/common";
 import { banks } from "../../utils/constants";
 import Button from "../../components/ui/Button";
 import InputWithLabel2 from "../../components/ui/InputWithLabel2";
 import useAuth from "../../hooks/useAuth";
 import useToastNotification from "../../hooks/useToastNotification";
 import { useNavigate } from "react-router-dom";
+import useRegion from "../../hooks/useRegion";
 
 const VerifyAccount = () => {
   const { updateUser, loading, error: userError } = useAuth();
   const { addNotification } = useToastNotification();
   const navigate = useNavigate();
+  const { region } = useRegion();
 
   const [input, setInput] = useState({
     accountName: "",
@@ -43,8 +44,7 @@ const VerifyAccount = () => {
       addNotification("Account Verified Successfully");
       navigate("/newproduct");
     } else {
-      addNotification(userError ? userError : "Failed to verify account")
-
+      addNotification(userError ? userError : "Failed to verify account");
     }
   };
 
@@ -114,7 +114,7 @@ const VerifyAccount = () => {
               className="text-base m-0 pl-2.5 border-light-ev4 dark:border-[grey] pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
             >
               <option value="">-- Select --</option>
-              {region() === "NGN"
+              {region === "NG"
                 ? banks.Nigeria.map((x) => (
                     <option value={x.name}>{x.name}</option>
                   ))

@@ -1,42 +1,44 @@
-import LoadingBox from "../../../components/LoadingBox"
-import MessageBox from "../../../components/MessageBox"
-import { useParams } from "react-router-dom"
-import { currency, region } from "../../../utils/common"
-import moment from "moment"
-import useAuth from "../../../hooks/useAuth"
-import useTransactions from "../../../hooks/useTransaction"
-import { useEffect, useState } from "react"
-import { ITransaction } from "../../../types/transactions"
-import { imageUrl } from "../../../services/api"
+import LoadingBox from "../../../components/LoadingBox";
+import MessageBox from "../../../components/MessageBox";
+import { useParams } from "react-router-dom";
+import { currency } from "../../../utils/common";
+import moment from "moment";
+import useAuth from "../../../hooks/useAuth";
+import useTransactions from "../../../hooks/useTransaction";
+import { useEffect, useState } from "react";
+import { ITransaction } from "../../../types/transactions";
+import { imageUrl } from "../../../services/api";
+import useRegion from "../../../hooks/useRegion";
 
 const Transaction = () => {
-  const params = useParams()
-  const { id: transactionId } = params
+  const params = useParams();
+  const { id: transactionId } = params;
+  const { region } = useRegion();
 
-  const [transaction, setTransaction] = useState<ITransaction>()
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState("")
+  const [transaction, setTransaction] = useState<ITransaction>();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const { user, loading: loadingUser } = useAuth()
-  const { fetchTransactionById } = useTransactions()
+  const { user, loading: loadingUser } = useAuth();
+  const { fetchTransactionById } = useTransactions();
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!transactionId) return
+      if (!transactionId) return;
 
-      setLoading(true)
+      setLoading(true);
 
-      const data = await fetchTransactionById(transactionId)
+      const data = await fetchTransactionById(transactionId);
 
       if (typeof data !== "string") {
-        setTransaction(data)
-      } else setError(data)
+        setTransaction(data);
+      } else setError(data);
 
-      setLoading(false)
-    }
+      setLoading(false);
+    };
 
-    fetchData()
-  }, [transactionId])
+    fetchData();
+  }, [transactionId]);
 
   return loading ? (
     <LoadingBox />
@@ -67,11 +69,11 @@ const Transaction = () => {
               <div className="flex items-center">
                 <div className="font-semibold flex-1 mx-0 my-2.5">Amount</div>
                 <div className="flex-[2] mx-0 my-2.">
-                  {currency(region())}
+                  {currency(region)}
                   {transaction.amount}{" "}
                   {/* {transaction?.metadata?.purpose === "Withdrawal Request" && (
                   <span className="text-[red]" >
-                    (fee: {currency(region())}10 )
+                    (fee: {currency(region)}10 )
                   </span>
                 )} */}
                 </div>
@@ -121,7 +123,7 @@ const Transaction = () => {
         </div>
       </div>
     )
-  )
-}
+  );
+};
 
-export default Transaction
+export default Transaction;

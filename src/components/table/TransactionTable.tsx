@@ -1,16 +1,17 @@
-import { Link } from "react-router-dom"
-import { ITransaction, TransactionPagination } from "../../types/transactions"
-import moment from "moment"
-import { currency, region } from "../../utils/common"
-import Table from "./Table"
+import { Link } from "react-router-dom";
+import { ITransaction, TransactionPagination } from "../../types/transactions";
+import moment from "moment";
+import { currency } from "../../utils/common";
+import Table from "./Table";
+import useRegion from "../../hooks/useRegion";
 
 type Props = {
-  transactions: ITransaction[]
-  loading?: boolean
-  error?: string
-  onPageChange?: (val: number) => void
-  transactionPagination?: TransactionPagination
-}
+  transactions: ITransaction[];
+  loading?: boolean;
+  error?: string;
+  onPageChange?: (val: number) => void;
+  transactionPagination?: TransactionPagination;
+};
 
 const headers = [
   { title: "ID" },
@@ -19,7 +20,7 @@ const headers = [
   { title: "Type", hide: true },
   { title: "Amount", hide: true },
   { title: "Status" },
-]
+];
 
 const TransactionTable = ({
   transactions,
@@ -28,6 +29,8 @@ const TransactionTable = ({
   onPageChange,
   transactionPagination,
 }: Props) => {
+  const { region } = useRegion();
+
   return (
     <Table
       headers={headers}
@@ -44,7 +47,7 @@ const TransactionTable = ({
           Purpose: tran.description,
           Date: moment(tran.createdAt).format("MMM DD YY, h:mm a"),
           Type: tran.type,
-          Amount: currency(region()) + " " + tran.amount,
+          Amount: currency(region) + " " + tran.amount,
           Status: "Done",
         },
         action: (
@@ -56,7 +59,7 @@ const TransactionTable = ({
         ),
       }))}
     />
-  )
-}
+  );
+};
 
-export default TransactionTable
+export default TransactionTable;

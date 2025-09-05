@@ -8,7 +8,7 @@ import {
   FaQuestionCircle,
   FaUser,
 } from "react-icons/fa";
-import { currency, region } from "../../utils/common";
+import { currency } from "../../utils/common";
 import { FaBolt, FaCalendarDays, FaLocationDot } from "react-icons/fa6";
 import useAuth from "../../hooks/useAuth";
 import Modal from "../../components/ui/Modal";
@@ -17,6 +17,7 @@ import { FormEvent } from "react";
 import { InputType } from "../../pages/protected/dashboard/User";
 import Button from "../../components/ui/Button";
 import { imageUrl } from "../../services/api";
+import useRegion from "../../hooks/useRegion";
 
 type Props = {
   user: IUser;
@@ -52,6 +53,7 @@ const UserLeftComp = ({
   showModelAddress,
 }: Props) => {
   const { user: userInfo } = useAuth();
+  const { region } = useRegion();
 
   return (
     <div className="flex-1 p-5 rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1">
@@ -91,7 +93,7 @@ const UserLeftComp = ({
         <div className="flex-row m-2.5 px-2.5 py-0 lg:absolute flex lg:flex-col items-center bg-light-ev3 dark:bg-dark-ev3 lg:p-2.5 rounded-[0.2rem] right-5 top-[30px]">
           <div className="text-[10px]">Wallet Balance</div>
           <div className="text-xl ml-2.5 lg:ml-0 lg:text-[25px] font-light">
-            {currency(region())}
+            {currency(region)}
             {balance && balance.balance.toFixed(2)}
           </div>
         </div>
@@ -227,7 +229,7 @@ const UserLeftComp = ({
                     className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal dark:bg-dark-ev2 bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                   >
                     <option value="">Select Bank</option>
-                    {region() === "NGN"
+                    {region === "NG"
                       ? banks.Nigeria.map((x) => (
                           <option value={x.name}>{x.name}</option>
                         ))
@@ -303,7 +305,7 @@ const UserLeftComp = ({
             )}
             <div className="flex flex-col gap-1 mt-2.5">
               <label className="text-sm">
-                {region() === "NGN" ? "State" : "Province"}
+                {region === "NG" ? "State" : "Province"}
               </label>
               <div className="block dark:bg-dark-ev2 relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] w-[250px] border border-light-ev4 dark:border-dark-ev4">
                 <select
@@ -313,7 +315,7 @@ const UserLeftComp = ({
                   className="text-base m-0 pl-2.5 border-light-ev4 dark:bg-dark-ev2 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                 >
                   <option value="">Select State</option>
-                  {region() === "NGN"
+                  {region === "NG"
                     ? states.Nigeria.map((x) => <option value={x}>{x}</option>)
                     : states.SouthAfrican.map((x) => (
                         <option value={x}>{x}</option>

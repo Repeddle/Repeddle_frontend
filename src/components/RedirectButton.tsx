@@ -1,41 +1,25 @@
-import useAuth from "../hooks/useAuth"
-import useCart from "../hooks/useCart"
+import useAuth from "../hooks/useAuth";
+import useCart from "../hooks/useCart";
+import useRegion from "../hooks/useRegion";
+import useToastNotification from "../hooks/useToastNotification";
 
 const RedirectButton = () => {
-  const { user, logout } = useAuth()
-  const { clearCart } = useCart()
-
-  const signoutHandler = () => {
-    logout()
-    clearCart()
-    localStorage.removeItem("userInfo")
-    localStorage.removeItem("shippingAddress")
-    localStorage.removeItem("paymentMethod")
-    // mixpanel.reset();
-  }
+  const { user } = useAuth();
+  const { clearCart } = useCart();
+  const { region, changeRegion } = useRegion();
+  const { addNotification } = useToastNotification();
 
   const redirect = async () => {
-    // try {
-    //     const { data } = await axios.get("api/redirects", {
-    //       headers: { Authorization: `Bearer ${userInfo.token}` },
-    //     });
-    //     if (data.success) {
-    //       if (region() === "ZAR") {
-    signoutHandler()
-    //         window.location.replace(
-    //           `https://repeddle.com?redirecttoken=${data.token}`
-    //           // `http://localhost:3000?redirecttoken=${data.token}&url=com`
-    //         );
-    //       } else {
-    //         signoutHandler();
-    //         window.location.replace(
-    //           `https://repeddle.co.za?redirecttoken=${data.token}`
-    //           // `http://localhost:3000?redirecttoken=${data.token}&url=coza`
-    //         );
-    //       }
-    //     }
-    //   } catch (err) {}
-  }
+    try {
+      await changeRegion(region === "NG" ? "ZA" : "NG");
+      localStorage.removeItem("shippingAddress");
+      localStorage.removeItem("paymentMethod");
+      clearCart();
+      window.location.replace(window.location.href);
+    } catch (err) {
+      addNotification("Fail to redirect", "", false);
+    }
+  };
 
   return user?.role === "Admin" ? (
     <div
@@ -46,7 +30,7 @@ const RedirectButton = () => {
     </div>
   ) : (
     ""
-  )
-}
+  );
+};
 
-export default RedirectButton
+export default RedirectButton;

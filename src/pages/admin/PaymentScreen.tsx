@@ -1,55 +1,58 @@
-import { useEffect, useState } from "react"
-import LoadingBox from "../../components/LoadingBox"
-import moment from "moment"
-import { useParams } from "react-router-dom"
-import usePayments from "../../hooks/usePayment"
-import { PaymentResponse } from "../../types/payments"
-import useToastNotification from "../../hooks/useToastNotification"
-import { currency, region } from "../../utils/common"
-import Button from "../../components/ui/Button"
-import { imageUrl } from "../../services/api"
+import { useEffect, useState } from "react";
+import LoadingBox from "../../components/LoadingBox";
+import moment from "moment";
+import { useParams } from "react-router-dom";
+import usePayments from "../../hooks/usePayment";
+import { PaymentResponse } from "../../types/payments";
+import useToastNotification from "../../hooks/useToastNotification";
+import { currency } from "../../utils/common";
+import Button from "../../components/ui/Button";
+import { imageUrl } from "../../services/api";
+import useRegion from "../../hooks/useRegion";
 
 const PaymentScreen = () => {
-  const params = useParams()
-  const { id } = params
-  const [loading, setLoading] = useState(false)
-  const [payment, setPayment] = useState<PaymentResponse>()
-  const [approving, setApproving] = useState(false)
+  const params = useParams();
+  const { id } = params;
+  const { region } = useRegion();
 
-  const { approvePaymentWallet, fetchPaymentById } = usePayments()
-  const { addNotification } = useToastNotification()
+  const [loading, setLoading] = useState(false);
+  const [payment, setPayment] = useState<PaymentResponse>();
+  const [approving, setApproving] = useState(false);
+
+  const { approvePaymentWallet, fetchPaymentById } = usePayments();
+  const { addNotification } = useToastNotification();
 
   const getPay = async () => {
-    setLoading(true)
+    setLoading(true);
 
-    const res = await fetchPaymentById(id!)
+    const res = await fetchPaymentById(id!);
 
     if (typeof res === "string") {
-      addNotification(res, undefined, true)
+      addNotification(res, undefined, true);
     } else {
-      setPayment(res)
+      setPayment(res);
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   useEffect(() => {
-    getPay()
-  }, [id])
+    getPay();
+  }, [id]);
 
   const handlePayment = async () => {
-    if (!payment) return
-    setApproving(true)
-    const res = await approvePaymentWallet(payment._id, payment.userId._id)
+    if (!payment) return;
+    setApproving(true);
+    const res = await approvePaymentWallet(payment._id, payment.userId._id);
 
     if (typeof res === "string") {
-      addNotification(res, undefined, true)
+      addNotification(res, undefined, true);
     } else {
-      getPay()
-      addNotification("Payment status updated", undefined, false)
+      getPay();
+      addNotification("Payment status updated", undefined, false);
     }
-    setApproving(false)
-  }
+    setApproving(false);
+  };
 
   return loading ? (
     <LoadingBox />
@@ -86,7 +89,7 @@ const PaymentScreen = () => {
         <hr />
         <div className="capitalize font-semibold mb-2.5">Amount</div>
         <div className="flex">
-          {currency(region())}
+          {currency(region)}
           {payment.amount}
         </div>
         <hr />
@@ -145,7 +148,7 @@ const PaymentScreen = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PaymentScreen
+export default PaymentScreen;

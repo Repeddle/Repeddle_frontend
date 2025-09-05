@@ -1,44 +1,46 @@
-import { FormEvent, useState } from "react"
-import { IReturn } from "../types/order"
-import { Helmet } from "react-helmet-async"
-import Modal from "./ui/Modal"
-import AddFund from "../section/wallet/AddFund"
-import { currency, region } from "../utils/common"
-import { postnet, pudo, states } from "../utils/constants"
-import Button from "./ui/Button"
-import useToastNotification from "../hooks/useToastNotification"
-import useReturn from "../hooks/useReturn"
+import { FormEvent, useState } from "react";
+import { IReturn } from "../types/order";
+import { Helmet } from "react-helmet-async";
+import Modal from "./ui/Modal";
+import AddFund from "../section/wallet/AddFund";
+import { currency } from "../utils/common";
+import { postnet, pudo, states } from "../utils/constants";
+import Button from "./ui/Button";
+import useToastNotification from "../hooks/useToastNotification";
+import useReturn from "../hooks/useReturn";
+import useRegion from "../hooks/useRegion";
 
 type Props = {
-  returned: IReturn
-  setReturned: (val: IReturn) => void
-  setShowModel: (val: boolean) => void
-}
+  returned: IReturn;
+  setReturned: (val: IReturn) => void;
+  setShowModel: (val: boolean) => void;
+};
 
 const DeliveryReturn = ({ setShowModel, returned, setReturned }: Props) => {
-  const { addNotification } = useToastNotification()
-  const { updateReturnAddress, error } = useReturn()
+  const { addNotification } = useToastNotification();
+  const { updateReturnAddress, error } = useReturn();
+  const { region } = useRegion();
 
-  const [deliveryOption, setDeliveryOption] = useState("")
-  const [showMap, setShowMap] = useState(false)
-  const [meta, setMeta] = useState<{ [key: string]: string | number }>({})
-  const [value, setValue] = useState<number>()
-  const [showModel, setShowModel1] = useState(false)
-  const [refresh, setRefresh] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [deliveryOption, setDeliveryOption] = useState("");
+  const [showMap, setShowMap] = useState(false);
+  const [meta, setMeta] = useState<{ [key: string]: string | number }>({});
+  const [value, setValue] = useState<number>();
+  const [showModel, setShowModel1] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const error1 = ""
-  const currencys = currency(region())
+  const error1 = "";
+  const currencys = currency(region);
 
   const submitHandler = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!deliveryOption) {
-      addNotification("Select a method of delivery", undefined, true)
-      return
+      addNotification("Select a method of delivery", undefined, true);
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
 
     if (
       !returned.deliverySelected &&
@@ -50,19 +52,19 @@ const DeliveryReturn = ({ setShowModel, returned, setReturned }: Props) => {
         method: deliveryOption,
         fee: value ?? 0,
         meta,
-      })
+      });
 
       if (res) {
-        setReturned(res)
-        setShowModel(false)
-        addNotification("address added")
+        setReturned(res);
+        setShowModel(false);
+        addNotification("address added");
       } else {
-        addNotification(error || "Failed to update address", undefined, true)
+        addNotification(error || "Failed to update address", undefined, true);
       }
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <div className="m-[30px]">
@@ -107,10 +109,10 @@ const DeliveryReturn = ({ setShowModel, returned, setReturned }: Props) => {
                         ...meta,
                         deliveryOption: e.target.value,
                         fee: +x.value,
-                      })
-                      setDeliveryOption(e.target.value)
-                      setValue(x.value)
-                      setMeta({})
+                      });
+                      setDeliveryOption(e.target.value);
+                      setValue(x.value);
+                      setMeta({});
                     }}
                   />
                   <label className="ml-2.5 capitalize" htmlFor={x.name}>
@@ -165,11 +167,11 @@ const DeliveryReturn = ({ setShowModel, returned, setReturned }: Props) => {
                         <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
                           <select
                             onChange={(e) => {
-                              setMeta({ ...meta, province: e.target.value })
+                              setMeta({ ...meta, province: e.target.value });
                             }}
                             className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                           >
-                            {region() === "NGN"
+                            {region === "NG"
                               ? states.Nigeria.map((x) => (
                                   <option value={x}>{x}</option>
                                 ))
@@ -195,7 +197,7 @@ const DeliveryReturn = ({ setShowModel, returned, setReturned }: Props) => {
                         <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
                           <select
                             onChange={(e) => {
-                              setMeta({ ...meta, shortName: e.target.value })
+                              setMeta({ ...meta, shortName: e.target.value });
                             }}
                             className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                           >
@@ -244,11 +246,11 @@ const DeliveryReturn = ({ setShowModel, returned, setReturned }: Props) => {
                         <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
                           <select
                             onChange={(e) => {
-                              setMeta({ ...meta, province: e.target.value })
+                              setMeta({ ...meta, province: e.target.value });
                             }}
                             className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                           >
-                            {region() === "NGN"
+                            {region === "NG"
                               ? states.Nigeria.map((x) => (
                                   <option value={x}>{x}</option>
                                 ))
@@ -274,7 +276,7 @@ const DeliveryReturn = ({ setShowModel, returned, setReturned }: Props) => {
                         <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
                           <select
                             onChange={(e) => {
-                              setMeta({ ...meta, pickUp: e.target.value })
+                              setMeta({ ...meta, pickUp: e.target.value });
                             }}
                             className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                           >
@@ -402,11 +404,11 @@ const DeliveryReturn = ({ setShowModel, returned, setReturned }: Props) => {
                         <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
                           <select
                             onChange={(e) => {
-                              setMeta({ ...meta, province: e.target.value })
+                              setMeta({ ...meta, province: e.target.value });
                             }}
                             className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                           >
-                            {region() === "NGN"
+                            {region === "NG"
                               ? states.Nigeria.map((x) => (
                                   <option value={x}>{x}</option>
                                 ))
@@ -453,7 +455,7 @@ const DeliveryReturn = ({ setShowModel, returned, setReturned }: Props) => {
         </Modal>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DeliveryReturn
+export default DeliveryReturn;

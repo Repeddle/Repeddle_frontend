@@ -14,8 +14,6 @@ function App() {
       <div className="dark:bg-black-color font-medium dark:text-white-color text-sm md:text-base transition-colors duration-300 ease-in-out">
         <ToastNotification />
         <ArticleProvider>
-          {" "}
-          {/* Wrap the Outlet with ArticleProvider */}
           <Outlet />
         </ArticleProvider>
       </div>
