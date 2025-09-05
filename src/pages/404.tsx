@@ -49,7 +49,7 @@ const NotFoundPage = () => {
           <p className="text-sm text-gray-500 dark:text-gray-400">
             Need help?{" "}
             <Link
-              to="/contact"
+              to="/contact-Us"
               className="text-orange-color hover:text-malon-color underline"
             >
               Contact Support

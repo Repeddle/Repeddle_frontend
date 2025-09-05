@@ -1,14 +1,14 @@
-import { FiSearch } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
-import { BiChevronRight } from "react-icons/bi";
-import { FaPaperPlane } from "react-icons/fa";
-import { IUser } from "../../types/user";
+import { FiSearch } from "react-icons/fi"
+import { useNavigate } from "react-router-dom"
+import { BiChevronRight } from "react-icons/bi"
+import { FaPaperPlane } from "react-icons/fa"
+import { IUser } from "../../types/user"
 
 interface FAQProps {
-  articles: { _id: string; topic: string }[];
-  setScreen: (screen: string) => void;
-  setShowSupport: (screen: boolean) => void;
-  user: IUser | null;
+  articles: { _id: string; topic: string }[]
+  setScreen: (screen: string) => void
+  setShowSupport: (screen: boolean) => void
+  user: IUser | null
 }
 
 const FAQ: React.FC<FAQProps> = ({
@@ -17,19 +17,19 @@ const FAQ: React.FC<FAQProps> = ({
   setShowSupport,
   user,
 }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const handleContinue = () => {
     if (user) {
-      setScreen("chat");
+      setScreen("chat")
     } else {
-      setScreen("form");
+      setScreen("form")
     }
-  };
+  }
   return (
     <div className="absolute top-0 bottom-0 right-0 left-0 overflow-y-auto z-10 text-black">
       <div className="p-4">
         <div className="h-32 " />
-        <div className="border-t border-orange-color shadow-lg p-4 h-40 mb-5 bg-white rounded-md">
+        <div className="border-t border-orange-color shadow-lg p-4 min-h-40 mb-5 bg-white rounded-md">
           <div className="font-semibold mb-4">FAQ</div>
           <div className="flex items-center border border-black p-2 py-1 rounded-full">
             <FiSearch className="text-lg" />
@@ -43,8 +43,8 @@ const FAQ: React.FC<FAQProps> = ({
               <div
                 key={article._id}
                 onClick={() => {
-                  setShowSupport(false);
-                  navigate(`/articles/${article._id}`);
+                  setShowSupport(false)
+                  navigate(`/articles/${article._id}`)
                 }}
                 className="flex items-center justify-between p-3 hover:text-orange-color cursor-pointer"
               >
@@ -70,7 +70,7 @@ const FAQ: React.FC<FAQProps> = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default FAQ;
+export default FAQ

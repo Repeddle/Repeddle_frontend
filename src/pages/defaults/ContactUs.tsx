@@ -99,7 +99,7 @@ function ContactUs() {
             </div>
             <div className="ml-4">
               <h4 className="font- text-lg">Our Phone</h4>
-              <p className="text-sm text-gray-500">Phone Number</p>
+              <p className="text-sm text-gray-500">0816491244</p>
             </div>
           </div>
           <div className="flex items-start mt-4">
@@ -108,7 +108,7 @@ function ContactUs() {
             </div>
             <div className="ml-4">
               <h4 className="font- text-lg">Our Email</h4>
-              <p className="text-sm text-gray-500">Email Address</p>
+              <p className="text-sm text-gray-500"> support@repeddle.com</p>
             </div>
           </div>
           <div className="flex items-start mt-4">
@@ -117,7 +117,7 @@ function ContactUs() {
             </div>
             <div className="ml-4">
               <h4 className="font- text-lg">Our Location</h4>
-              <p className="text-sm text-gray-500">Physical Address</p>
+              <p className="text-sm text-gray-500">Nigeria & South Africa</p>
             </div>
           </div>
         </div>
