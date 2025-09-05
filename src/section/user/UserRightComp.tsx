@@ -1,6 +1,6 @@
-import { ChangeEvent, FormEvent, useState } from "react"
-import LoadingBox from "../../components/LoadingBox"
-import { Link } from "react-router-dom"
+import { ChangeEvent, FormEvent, useState } from "react";
+import LoadingBox from "../../components/LoadingBox";
+import { Link } from "react-router-dom";
 import {
   FaCamera,
   FaCheck,
@@ -8,35 +8,39 @@ import {
   FaEyeSlash,
   FaQuestionCircle,
   FaTruck,
-} from "react-icons/fa"
-import moment from "moment"
-import useAuth from "../../hooks/useAuth"
-import { IUser } from "../../types/user"
-import { timeDifference } from "../../utils/common"
-import { UserFormType } from "../../pages/protected/dashboard/User"
-import Button from "../../components/ui/Button"
-import { imageUrl } from "../../services/api"
+} from "react-icons/fa";
+import moment from "moment";
+import useAuth from "../../hooks/useAuth";
+import { IUser } from "../../types/user";
+import { timeDifference } from "../../utils/common";
+import { UserFormType } from "../../pages/protected/dashboard/User";
+import Button from "../../components/ui/Button";
+import { imageUrl } from "../../services/api";
+import Modal from "../../components/ui/Modal";
+import { deleteAccount } from "../../services/user";
+import useToastNotification from "../../hooks/useToastNotification";
+import useCart from "../../hooks/useCart";
 
 type Props = {
-  user: IUser
-  id?: string
-  submitHandler: (e: FormEvent) => void
-  userForm: UserFormType
-  handleOnUserChange: (val: string | boolean, key: keyof UserFormType) => void
-  loadingUpload: boolean
-  loadingUpdate: boolean
-  uploadHandler: (e: ChangeEvent<HTMLInputElement>) => void
-  handleNewsletter: (e: ChangeEvent) => void
-  newsletterStatus: boolean
-  rebundleStatus: boolean
-  handleRebundle: (val: { status: boolean; count: number } | null) => void
-  setRebundleStatus: (val: boolean) => void
-  loadingRebundle?: boolean
-  rebundleError?: string
-  setRebundleError: (val: string) => void
-  setRebundleCount: (val: number) => void
-  bundle: boolean
-}
+  user: IUser;
+  id?: string;
+  submitHandler: (e: FormEvent) => void;
+  userForm: UserFormType;
+  handleOnUserChange: (val: string | boolean, key: keyof UserFormType) => void;
+  loadingUpload: boolean;
+  loadingUpdate: boolean;
+  uploadHandler: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleNewsletter: (e: ChangeEvent) => void;
+  newsletterStatus: boolean;
+  rebundleStatus: boolean;
+  handleRebundle: (val: { status: boolean; count: number } | null) => void;
+  setRebundleStatus: (val: boolean) => void;
+  loadingRebundle?: boolean;
+  rebundleError?: string;
+  setRebundleError: (val: string) => void;
+  setRebundleCount: (val: number) => void;
+  bundle: boolean;
+};
 
 const UserRightComp = ({
   user,
@@ -58,31 +62,53 @@ const UserRightComp = ({
   rebundleError,
   bundle,
 }: Props) => {
-  const { user: userInfo } = useAuth()
+  const { user: userInfo, logout } = useAuth();
+  const { addNotification } = useToastNotification();
+  const { clearCart } = useCart();
 
-  const [passwordType, setPasswordType] = useState("password")
+  const [passwordType, setPasswordType] = useState("password");
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleType = () => {
     if (passwordType === "password") {
-      setPasswordType("text")
+      setPasswordType("text");
     } else {
-      setPasswordType("password")
+      setPasswordType("password");
     }
-  }
+  };
 
   const daydiff =
     (user.usernameLastUpdated &&
       30 - timeDifference(new Date(user.usernameLastUpdated), new Date())) ??
-    0
+    0;
+
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
+
+  const handleDelete = async () => {
+    try {
+      await deleteAccount();
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("shippingAddress");
+      localStorage.removeItem("paymentMethod");
+      clearCart();
+      logout();
+      window.location.replace(window.location.href);
+      closeModal();
+      addNotification("Account delected successfully");
+    } catch (error) {
+      addNotification("Fail to delete, contact support");
+    }
+  };
 
   return (
-    <div className="flex-[2] ml-5 p-5 rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1">
-      <span className="text-[22px] font-semibold">Edit</span>
+    <div className="flex-[2] flex justify-between flex-col ml-5 p-5 rounded-[0.2rem] bg-light-ev1 dark:bg-dark-ev1">
       <form
         className="flex justify-between mt-5 lg:flex-row flex-col lg:gap-0 lg:w-auto gap-5 w-full"
         onSubmit={submitHandler}
       >
         <div>
+          <span className="text-[22px] font-semibold">Edit</span>
           <div className="flex flex-col mt-2.5 ml-0">
             <label className="text-sm">Username</label>
             {+daydiff > 0 && (
@@ -398,10 +424,10 @@ const UserRightComp = ({
                       type="checkbox"
                       onChange={(e) => {
                         if (e.target.checked) {
-                          setRebundleStatus(e.target.checked)
+                          setRebundleStatus(e.target.checked);
                         } else {
-                          setRebundleStatus(e.target.checked)
-                          handleRebundle({ status: false, count: 0 })
+                          setRebundleStatus(e.target.checked);
+                          handleRebundle({ status: false, count: 0 });
                         }
                       }}
                     />
@@ -463,8 +489,38 @@ const UserRightComp = ({
           {loadingUpdate ? <LoadingBox /> : ""}
         </div>
       </form>
-    </div>
-  )
-}
+      <div
+        onClick={openModal}
+        className="text-red-500 text-center mt-10 cursor-pointer"
+      >
+        Delete my Account
+      </div>
+      <Modal isOpen={isOpen} onClose={closeModal}>
+        <h2 className="text-xl font-semibold text-red-600 mb-4 text-center">
+          Are you sure?
+        </h2>
+        <p className="text-gray-600 text-center mb-6">
+          This action will permanently delete your account. You cannot undo
+          this.
+        </p>
 
-export default UserRightComp
+        <div className="flex justify-around">
+          <button
+            onClick={closeModal}
+            className="px-4 py-2 rounded-lg bg-gray-200 hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleDelete}
+            className="px-4 py-2 rounded-lg bg-malon-color text-white hover:bg-opacity-90"
+          >
+            Yes, Delete
+          </button>
+        </div>
+      </Modal>
+    </div>
+  );
+};
+
+export default UserRightComp;

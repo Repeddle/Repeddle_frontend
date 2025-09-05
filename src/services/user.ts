@@ -232,3 +232,20 @@ export async function fetchAnalyticsService() {
     throw getBackendErrorMessage(error);
   }
 }
+
+export async function deleteAccount() {
+  try {
+    const response = await api.delete(`/users/profile`);
+
+    if (!response.status) {
+      throw new Error(
+        "delete aacount fail: " + getBackendErrorMessage(response)
+      );
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error("delete aacount fail:", getBackendErrorMessage(error));
+    throw getBackendErrorMessage(error);
+  }
+}

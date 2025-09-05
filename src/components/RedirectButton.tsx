@@ -26,7 +26,7 @@ const RedirectButton = () => {
       onClick={redirect}
       className="text-[white] text-center cursor-pointer rounded-[0.2rem] p-2.5 lg:p-0 bg-orange-color hover:bg-malon-color"
     >
-      Redirect
+      Redirect ({region})
     </div>
   ) : (
     ""

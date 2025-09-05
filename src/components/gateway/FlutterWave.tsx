@@ -5,7 +5,7 @@ import { IUser } from "../../types/user";
 
 type Props = {
   amount: number;
-  currency: string;
+  currency: "ZAR" | "NGN";
   onApprove: (val: { transaction_id: string; type: string }) => void;
   user?: IUser | { email: string; name: string; phone: string };
 };

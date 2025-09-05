@@ -258,7 +258,7 @@ const OrderPreview = () => {
                   ) : (
                     <FlutterWave
                       amount={total}
-                      currency={region}
+                      currency={region === "NG" ? "NGN" : "ZAR"}
                       onApprove={onApprove}
                     />
                   )}
