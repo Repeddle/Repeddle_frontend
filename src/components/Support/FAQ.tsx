@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { BiChevronRight } from "react-icons/bi"
 import { FaPaperPlane } from "react-icons/fa"
 import { IUser } from "../../types/user"
+import { useMemo, useState } from "react"
 
 interface FAQProps {
   articles: { _id: string; topic: string }[]
@@ -18,6 +19,17 @@ const FAQ: React.FC<FAQProps> = ({
   user,
 }) => {
   const navigate = useNavigate()
+  const [searchQuery, setSearchQuery] = useState("")
+  const filteredArticles = useMemo(
+    () =>
+      articles
+        .filter((article) =>
+          article.topic.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        .slice(0, 5),
+    [articles, searchQuery]
+  )
+
   const handleContinue = () => {
     if (user) {
       setScreen("chat")
@@ -36,10 +48,13 @@ const FAQ: React.FC<FAQProps> = ({
             <input
               className="flex-1 px-2 focus:bottom-0 focus:outline-none"
               placeholder="Search question"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
           <div>
-            {articles.map((article) => (
+            {filteredArticles.length <= 0 && <div>No articles available</div>}
+            {filteredArticles.map((article) => (
               <div
                 key={article._id}
                 onClick={() => {

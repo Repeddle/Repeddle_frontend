@@ -292,7 +292,7 @@ const Search = () => {
                     Previous
                   </p>
                 )}
-                {products.totalPages > 1 && products.products.length === 40 && (
+                {products.totalPages > 1 && (
                   <p
                     className="border w-[100px] text-center font-medium p-1 rounded-[0.2rem]  hover:bg-light-ev3 dark:hover:bg-dark-ev2"
                     onClick={() =>
