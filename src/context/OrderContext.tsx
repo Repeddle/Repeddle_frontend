@@ -11,15 +11,17 @@ import {
   updateOrderItemStatusService,
   updateOrderItemTrackingService,
 } from "../services/order"
+import { Pagination } from "../types/product"
 
 type ContextType = {
   orders: IOrder[]
   loading: boolean
   error: string
-  fetchOrders: (orderId?: string) => Promise<boolean>
-  fetchAllOrders: (orderId?: string) => Promise<boolean>
+  pagination: Pagination
+  fetchOrders: (orderId?: string, page?: string) => Promise<boolean>
+  fetchAllOrders: (orderId?: string, page?: string) => Promise<boolean>
   fetchOrderById: (id: string) => Promise<IOrder | null>
-  fetchSoldOrders: () => Promise<boolean>
+  fetchSoldOrders: (page: string) => Promise<boolean>
   createOrder: (
     order: ICreateOrder
   ) => Promise<null | { order: IOrder; message: string }>
@@ -47,6 +49,11 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
   const [orders, setOrders] = useState<IOrder[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  const [pagination, setPagination] = useState<Pagination>({
+    currentPage: 1,
+    totalCount: 0,
+    totalPages: 1,
+  })
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleError = (error: any) => {
@@ -63,12 +70,13 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
   }
 
   // Function to fetch orders
-  const fetchOrders = async (orderId?: string) => {
+  const fetchOrders = async (orderId?: string, page?: string) => {
     try {
       setError("")
       setLoading(true)
-      const result = await fetchOrdersService(orderId)
-      setOrders(result)
+      const result = await fetchOrdersService(orderId, page)
+      setOrders(result.orders)
+      setPagination(result.pagination)
       setLoading(false)
       return true
     } catch (error) {
@@ -78,12 +86,13 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
-  const fetchAllOrders = async (orderId?: string) => {
+  const fetchAllOrders = async (orderId?: string, page?: string) => {
     try {
       setError("")
       setLoading(true)
-      const result = await fetchAllOrdersService(orderId)
-      setOrders(result)
+      const result = await fetchAllOrdersService(orderId, page)
+      setOrders(result.orders)
+      setPagination(result.pagination)
       setLoading(false)
       return true
     } catch (error) {
@@ -94,12 +103,13 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
   }
 
   // Function to fetch orders
-  const fetchSoldOrders = async () => {
+  const fetchSoldOrders = async (page: string) => {
     try {
       setError("")
       setLoading(true)
-      const result = await fetchSoldOrdersService()
-      setOrders(result)
+      const result = await fetchSoldOrdersService(page)
+      setOrders(result.orders)
+      setPagination(result.pagination)
       setLoading(false)
       return true
     } catch (error) {
@@ -222,6 +232,7 @@ export const OrderProvider = ({ children }: PropsWithChildren) => {
         fetchAllOrders,
         updateOrderItemTracking,
         updateOrderItemStatus,
+        pagination,
       }}
     >
       {children}

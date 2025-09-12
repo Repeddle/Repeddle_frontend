@@ -70,7 +70,7 @@ const Table = ({
   }, [sortKey, body])
 
   return (
-    <div className="relative w-full min-h-[65vh] h-full flex-1">
+    <div className="relative overflow-x-hidden overflow-y-hidden w-full min-h-[65vh] h-full flex-1">
       {loading && <LoadingControlModal />}
 
       <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">

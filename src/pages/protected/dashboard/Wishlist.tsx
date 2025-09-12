@@ -4,7 +4,7 @@ import Table from "../../../components/table/Table";
 import { currency } from "../../../utils/common";
 import useCart from "../../../hooks/useCart";
 import useProducts from "../../../hooks/useProducts";
-import { IProduct } from "../../../types/product";
+import { IProduct, Pagination } from "../../../types/product";
 import useToastNotification from "../../../hooks/useToastNotification";
 import { useNavigate } from "react-router-dom";
 import Modal from "../../../components/ui/Modal";
@@ -37,21 +37,25 @@ const Wishlist = () => {
   const [showSize, setShowSize] = useState(false);
   const [loading, setLoading] = useState(false);
   const [refresh, setRefresh] = useState(false);
-  const [wishlist, setWishlist] = useState<WishlistType[]>([]);
+  const [wishlist, setWishlist] = useState<{
+    wishlist: WishlistType[];
+    pagination: Pagination;
+  } | null>(null);
   const [selectSize, setSelectSize] = useState<string>();
   const [size, setSize] = useState("");
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     const getList = async () => {
       setLoading(true);
-      const res = await getWishlist();
+      const res = await getWishlist(page.toString());
       if (res) setWishlist(res);
       else addNotification(error ? error : "An error occurred");
       setLoading(false);
     };
 
     getList();
-  }, [refresh]);
+  }, [refresh, page]);
 
   const openRemove = (item: IProduct) => {
     setRemoveItem(item);
@@ -172,7 +176,11 @@ const Wishlist = () => {
         headers={headers}
         itemName="product"
         loading={loading || removeFromWish}
-        body={(wishlist ?? []).map((wish) => ({
+        totalPages={wishlist?.pagination.totalPages}
+        currentPage={wishlist?.pagination.currentPage}
+        onPageChange={setPage}
+        totalCount={wishlist?.pagination.totalCount}
+        body={(wishlist?.wishlist ?? []).map((wish) => ({
           keys: {
             ID: wish._id,
             Product: (

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { IProduct } from "../../types/product";
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+// import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import MessageBox from "../../components/MessageBox";
 import useProducts from "../../hooks/useProducts";
 import { imageUrl } from "../../services/api";
@@ -20,17 +20,17 @@ const TheThrill = () => {
 
   const { products, loading, error } = useProducts();
 
-  const sliderHandler = (direction: "right" | "left") => {
-    const slider = document.getElementById("slider");
-    if (slider) {
-      if (direction === "left") {
-        slider.scrollBy(-200, 0);
-        // setSliderIndex(sliderIndex > 0 ? sliderIndex - 1 : products.length - 5);
-      } else {
-        slider.scrollBy(200, 0);
-      }
-    }
-  };
+  // const sliderHandler = (direction: "right" | "left") => {
+  //   const slider = document.getElementById("slider")
+  //   if (slider) {
+  //     if (direction === "left") {
+  //       slider.scrollBy(-200, 0)
+  //       // setSliderIndex(sliderIndex > 0 ? sliderIndex - 1 : products.length - 5);
+  //     } else {
+  //       slider.scrollBy(200, 0)
+  //     }
+  //   }
+  // }
 
   const handleViewMore = () => {
     navigate("/search");
@@ -64,7 +64,7 @@ const TheThrill = () => {
           Shop The Thrill
         </h2>
       </div>
-      {products.products.length > 0 && (
+      {/* {products.products.length > 0 && (
         <>
           <button
             onClick={() => sliderHandler("left")}
@@ -80,7 +80,7 @@ const TheThrill = () => {
             <FaAngleRight size={40} opacity={0.2} />
           </button>
         </>
-      )}
+      )} */}
       {loading ? (
         <div className="flex scrollbar-hide flex-wrap w-full gap-2.5 p-2.5 md:flex-nowrap md:overflow-x-auto md:px-[5vw] md:py-2.5">
           {Array.from({ length: 6 }).map((_, index) => (

@@ -48,7 +48,7 @@ function Earning() {
   }, [from, to]);
 
   useEffect(() => {
-    fetchSoldOrders();
+    fetchSoldOrders("1");
   }, []);
 
   const changeDate = (e: ChangeEvent<HTMLSelectElement>) => {

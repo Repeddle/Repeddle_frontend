@@ -1,25 +1,36 @@
 import { ICreateOrder, IOrder, IOrderSummary } from "../types/order"
+import { Pagination } from "../types/product"
 import { getBackendErrorMessage } from "../utils/error"
 import api from "./api"
 
 export const fetchOrdersService = async (
-  orderId?: string
-): Promise<IOrder[]> => {
+  orderId?: string,
+  page?: string
+): Promise<{ orders: IOrder[]; pagination: Pagination }> => {
   try {
     let url = "/orders"
 
-    if (orderId) {
-      url = url + `?orderId=${orderId}`
+    const params = new URLSearchParams()
+
+    if (page) {
+      params.set("page", page)
     }
 
-    const resp: { orders: IOrder[]; status: boolean } = await api.get(url)
+    if (orderId) {
+      params.set("orderId", orderId)
+    }
+
+    url = url + `?${params.toString()}`
+
+    const resp: { orders: IOrder[]; pagination: Pagination; status: boolean } =
+      await api.get(url)
 
     if (!resp.status) {
       // Handle Fetch orders error, e.g., display an error message to the user
       throw new Error("Fetch orders failed: " + getBackendErrorMessage(resp))
     }
 
-    return resp.orders
+    return { orders: resp.orders, pagination: resp.pagination }
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions
@@ -30,23 +41,36 @@ export const fetchOrdersService = async (
   }
 }
 export const fetchAllOrdersService = async (
-  orderId?: string
-): Promise<IOrder[]> => {
+  orderId?: string,
+  page?: string
+): Promise<{ orders: IOrder[]; pagination: Pagination }> => {
   try {
     let url = "/orders/admin"
 
-    if (orderId) {
-      url = url + `?orderId=${orderId}`
+    const params = new URLSearchParams()
+
+    if (page) {
+      params.set("page", page)
     }
 
-    const resp: { orders: IOrder[]; status: boolean } = await api.get(url)
+    if (orderId) {
+      params.set("orderId", orderId)
+    }
+
+    url = url + `?${params.toString()}`
+
+    const resp: {
+      orders: IOrder[]
+      pagination: Pagination
+      status: boolean
+    } = await api.get(url)
 
     if (!resp.status) {
       // Handle Fetch orders error, e.g., display an error message to the user
       throw new Error("Fetch orders failed: " + getBackendErrorMessage(resp))
     }
 
-    return resp.orders
+    return { orders: resp.orders, pagination: resp.pagination }
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions
@@ -105,20 +129,23 @@ export const createOrderService = async (
   }
 }
 
-export const fetchSoldOrdersService = async (): Promise<IOrder[]> => {
+export const fetchSoldOrdersService = async (
+  page: string
+): Promise<{ orders: IOrder[]; pagination: Pagination }> => {
   try {
     const data: {
       status: boolean
       orders: IOrder[]
+      pagination: Pagination
       message: string
-    } = await api.get(`/orders/sold`)
+    } = await api.get(`/orders/sold?page=${page}`)
 
     if (!data.status) {
       // Handle Fetch order error, e.g., display an error message to the user
       throw new Error("Fetch order failed: " + getBackendErrorMessage(data))
     }
 
-    return data.orders
+    return { orders: data.orders, pagination: data.pagination }
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions

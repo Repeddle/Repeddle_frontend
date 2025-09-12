@@ -22,13 +22,25 @@ const headers = [
   { title: "Date" },
 ]
 
-const UserReturnTable = ({ returns, error, loading }: Props) => {
+const UserReturnTable = ({
+  returns,
+  error,
+  loading,
+  totalPages,
+  currentPage,
+  totalCount,
+  onPageChange,
+}: Props) => {
   return (
     <Table
       headers={headers}
       error={error}
       itemName="return"
       loading={loading}
+      totalPages={totalPages}
+      currentPage={currentPage}
+      onPageChange={onPageChange}
+      totalCount={totalCount}
       body={returns.map((ret) => ({
         keys: {
           ID: ret._id,

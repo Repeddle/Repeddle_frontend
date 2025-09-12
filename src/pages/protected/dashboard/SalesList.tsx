@@ -1,19 +1,18 @@
 import { Link } from "react-router-dom"
 import MessageBox from "../../../components/MessageBox"
 import useOrder from "../../../hooks/useOrder"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import moment from "moment"
 import LoadingControlModal from "../../../components/ui/loadin/LoadingControlLogo"
 import { imageUrl } from "../../../services/api"
 
 const SalesList = () => {
-  const { fetchSoldOrders, loading, error, orders } = useOrder()
+  const { fetchSoldOrders, loading, error, orders, pagination } = useOrder()
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
-    fetchSoldOrders()
-  }, [])
-
-  console.log(orders)
+    fetchSoldOrders(page.toString())
+  }, [page])
 
   return (
     <div className="flex-[4] relative flex flex-col">
@@ -72,6 +71,26 @@ const SalesList = () => {
                       </Link>
                     </div>
                   ))}
+
+                <div className="flex gap-2.5 justify-center items-center mt-5">
+                  {pagination.currentPage > 1 && (
+                    <p
+                      className="border w-[100px] text-center font-medium p-1 rounded-[0.2rem]  hover:bg-light-ev3 dark:hover:bg-dark-ev2"
+                      onClick={() => setPage(pagination.currentPage - 1)}
+                    >
+                      Previous
+                    </p>
+                  )}
+                  {pagination.totalPages > 1 &&
+                    pagination.currentPage < pagination.totalPages && (
+                      <p
+                        className="border w-[100px] text-center font-medium p-1 rounded-[0.2rem]  hover:bg-light-ev3 dark:hover:bg-dark-ev2"
+                        onClick={() => setPage(pagination.currentPage + 1)}
+                      >
+                        Next
+                      </p>
+                    )}
+                </div>
               </div>
 
               {orders.length === 0 && <MessageBox>No orders yet</MessageBox>}
