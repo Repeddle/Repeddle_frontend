@@ -12,6 +12,7 @@ import LoadingLogoModal from "../../../components/ui/loadin/LoadingLogoModal"
 import MessageBox from "../../../components/MessageBox"
 import { getUserService } from "../../../services/auth"
 import { getBackendErrorMessage } from "../../../utils/error"
+import useWallet from "../../../hooks/useWallet"
 
 export type InputType = {
   zipcode: string
@@ -142,7 +143,11 @@ const User = () => {
   const [loadingUpdate, setLoadingUpdate] = useState(false)
   const [showModel, setShowModel] = useState(false)
   const [showModelAddress, setShowModelAddress] = useState(false)
-  const balance = { balance: 500 }
+  const { wallet, fetchWallet } = useWallet()
+
+  useEffect(() => {
+    fetchWallet()
+  }, [])
 
   const handleOnChange = (text: string, input: keyof InputType) => {
     setInput((prevState) => ({ ...prevState, [input]: text }))
@@ -477,7 +482,7 @@ const User = () => {
             handleError={handleError}
             handleOnChange={handleOnChange}
             input={input}
-            balance={balance}
+            balance={wallet}
             accountValidate={accountValidate}
             addressValidate={addressValidate}
             loadingUpdate={loadingUpdate}

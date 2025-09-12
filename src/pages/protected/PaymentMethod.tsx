@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useMemo } from "react";
+import { FormEvent, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
 import useCart from "../../hooks/useCart";
@@ -22,8 +22,6 @@ const PaymentMethod = () => {
     e.preventDefault();
     navigate("/placeorder");
   };
-
-  const balance = useMemo(() => wallet?.balance ?? 0, [wallet?.balance]);
 
   return (
     <div className="bs-container">
@@ -50,7 +48,7 @@ const PaymentMethod = () => {
         <div className="mb-4">
           <div className="flex items-center gap-2.5 min-h-[1.5rem] mb-4 pl-[1.5em]">
             <input
-              disabled={balance === 0 || balance <= total}
+              disabled={wallet.balance === 0 || wallet.balance <= total}
               type="radio"
               id="wallet"
               value="Wallet"
@@ -58,10 +56,10 @@ const PaymentMethod = () => {
               onChange={() => changePaymentMethod("Wallet")}
             />
             <label htmlFor="wallet">
-              {`Wallet (${currency(region)} ${balance.toFixed(2)})`}
+              {`Wallet (${currency(region)} ${wallet.balance.toFixed(2)})`}
             </label>
           </div>
-          {balance <= total && (
+          {wallet.balance <= total && (
             <div className="text-[red] text-[13px] pl-[2em]">
               Insufficient balance{" "}
               <Link

@@ -11,9 +11,9 @@ import {
   FaQuestion,
   FaQuestionCircle,
   FaUser,
-} from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
-import RedirectButton from "../../components/RedirectButton";
+} from "react-icons/fa"
+import { Link, useNavigate } from "react-router-dom"
+import RedirectButton from "../../components/RedirectButton"
 import {
   FaArrowRotateLeft,
   FaBasketShopping,
@@ -21,34 +21,34 @@ import {
   FaMessage,
   FaMoneyBillTransfer,
   FaRightFromBracket,
-} from "react-icons/fa6";
-import useTheme from "../../hooks/useTheme";
-import useAuth from "../../hooks/useAuth";
-import { GrDashboard } from "react-icons/gr";
+} from "react-icons/fa6"
+import useTheme from "../../hooks/useTheme"
+import useAuth from "../../hooks/useAuth"
+import { GrDashboard } from "react-icons/gr"
 
 const MobileProfile = () => {
-  const { isDarkMode, toggleTheme } = useTheme();
+  const { isDarkMode, toggleTheme } = useTheme()
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuth()
 
-  const productNotification = [];
-  const soldNotification = [];
-  const purchaseNotification = [];
-  const sellerReturnNotification = [];
-  const buyerReturnNotification = [];
-  const contactNotification = [];
+  const productNotification = []
+  const soldNotification = []
+  const purchaseNotification = []
+  const sellerReturnNotification = []
+  const buyerReturnNotification = []
+  const contactNotification = []
 
   const signoutHandler = () => {
-    logout();
-    localStorage.removeItem("userInfo");
-    localStorage.removeItem("cartItems");
-    localStorage.removeItem("shippingAddress");
-    localStorage.removeItem("paymentMethod");
+    logout()
+    localStorage.removeItem("userInfo")
+    localStorage.removeItem("cartItems")
+    localStorage.removeItem("shippingAddress")
+    localStorage.removeItem("paymentMethod")
 
-    navigate("/auth/login");
-  };
+    navigate("/auth/login")
+  }
 
   return (
     <div className="lg:hidden fixed bg-white dark:bg-black overflow-auto block z-[8] pt-[100px] pb-[55px] px-[15px] inset-0">
@@ -219,6 +219,12 @@ const MobileProfile = () => {
               Categories
             </div>
           </Link>
+          <Link to="/admin/allproducts">
+            <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
+              <FaBasketShopping className="mr-2.5" />
+              All Products
+            </div>
+          </Link>
           <Link to="/admin/articlelist">
             <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
               <FaQuestion className="mr-2.5" />
@@ -304,7 +310,7 @@ const MobileProfile = () => {
         Logout
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MobileProfile;
+export default MobileProfile
