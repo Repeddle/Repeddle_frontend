@@ -19,6 +19,7 @@ import {
 } from "../services/auth"
 import { IUser, UpdateUser, Wishlist } from "../types/user"
 import socket from "../socket"
+import { Pagination } from "../types/product"
 
 interface Props {
   children?: ReactNode
@@ -59,7 +60,10 @@ export const AuthContext = createContext<{
   followUser: (userId: string) => Promise<string | null>
   addToWishlist: (productId: string) => Promise<string | null>
   removeFromWishlist: (productId: string) => Promise<string | null>
-  getWishlist: () => Promise<Wishlist[] | null>
+  getWishlist: (page: string) => Promise<{
+    wishlist: Wishlist[]
+    pagination: Pagination
+  } | null>
 } | null>(null)
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
@@ -309,10 +313,10 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     }
   }
 
-  const getWishlist = async () => {
+  const getWishlist = async (page: string) => {
     try {
       setError("")
-      const result = await getWishlistService()
+      const result = await getWishlistService(page)
 
       return result
     } catch (error) {

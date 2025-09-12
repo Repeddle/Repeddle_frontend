@@ -292,16 +292,20 @@ const Search = () => {
                     Previous
                   </p>
                 )}
-                {products.totalPages > 1 && (
-                  <p
-                    className="border w-[100px] text-center font-medium p-1 rounded-[0.2rem]  hover:bg-light-ev3 dark:hover:bg-dark-ev2"
-                    onClick={() =>
-                      changeParam("page", +(searchParams.get("page") ?? 1) + 1)
-                    }
-                  >
-                    Next
-                  </p>
-                )}
+                {products.totalPages > 1 &&
+                  products.currentPage < products.totalPages && (
+                    <p
+                      className="border w-[100px] text-center font-medium p-1 rounded-[0.2rem]  hover:bg-light-ev3 dark:hover:bg-dark-ev2"
+                      onClick={() =>
+                        changeParam(
+                          "page",
+                          +(searchParams.get("page") ?? 1) + 1
+                        )
+                      }
+                    >
+                      Next
+                    </p>
+                  )}
               </div>
             </>
           )}

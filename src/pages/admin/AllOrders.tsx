@@ -6,14 +6,16 @@ import MessageBox from "../../components/MessageBox"
 import { imageUrl } from "../../services/api"
 
 const AllOrders = () => {
-  const { fetchAllOrders, loading, error, orders } = useOrder()
+  const { fetchAllOrders, loading, error, orders, pagination } = useOrder()
 
   const [orderQuery, setOrderQuery] = useState("")
   const [debouncedQuery, setDebouncedQuery] = useState(orderQuery)
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedQuery(orderQuery)
+      setPage(1)
     }, 500)
 
     return () => {
@@ -22,8 +24,8 @@ const AllOrders = () => {
   }, [orderQuery])
 
   useEffect(() => {
-    fetchAllOrders(debouncedQuery)
-  }, [debouncedQuery])
+    fetchAllOrders(debouncedQuery, page.toString())
+  }, [debouncedQuery, page])
 
   return (
     <div className="flex-[4] relative flex flex-col">
@@ -95,6 +97,26 @@ const AllOrders = () => {
                       </div>
                     </div>
                   ))}
+
+                <div className="flex gap-2.5 justify-center items-center mt-5">
+                  {pagination.currentPage > 1 && (
+                    <p
+                      className="border w-[100px] text-center font-medium p-1 rounded-[0.2rem]  hover:bg-light-ev3 dark:hover:bg-dark-ev2"
+                      onClick={() => setPage(pagination.currentPage - 1)}
+                    >
+                      Previous
+                    </p>
+                  )}
+                  {pagination.totalPages > 1 &&
+                    pagination.currentPage < pagination.totalPages && (
+                      <p
+                        className="border w-[100px] text-center font-medium p-1 rounded-[0.2rem]  hover:bg-light-ev3 dark:hover:bg-dark-ev2"
+                        onClick={() => setPage(pagination.currentPage + 1)}
+                      >
+                        Next
+                      </p>
+                    )}
+                </div>
               </div>
 
               {orders.length === 0 && (
