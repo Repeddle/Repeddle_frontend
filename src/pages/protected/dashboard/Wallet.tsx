@@ -10,7 +10,8 @@ import LoadingControlModal from "../../../components/ui/loadin/LoadingControlLog
 import useAuth from "../../../hooks/useAuth"
 import useTransactions from "../../../hooks/useTransaction"
 import Success from "../../../section/wallet/Success"
-import { createSearchParam } from "../../../utils/common"
+import { createSearchParam, currency } from "../../../utils/common"
+import useRegion from "../../../hooks/useRegion"
 
 const Wallet = () => {
   const { error, fetchWallet, loading, wallet } = useWallet()
@@ -28,6 +29,10 @@ const Wallet = () => {
   const [withdrawShowModel, setWithdrawShowModel] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
   const [page, setPage] = useState(1)
+
+  const { region } = useRegion()
+
+  const currencyValue = currency(region)
 
   useEffect(() => {
     fetchWallet()
@@ -50,7 +55,7 @@ const Wallet = () => {
             <LoadingControlModal />
           ) : (
             <div className="font-bold leading-tight text-xl font-sans lg:text-[50px] text-orange-color">
-              {`${wallet.currency} ${Math.floor(wallet.balance * 100) / 100}`}
+              {`${currencyValue} ${Math.floor(wallet.balance * 100) / 100}`}
             </div>
           )}
           <div className="font-bold text-orange-color text-[11px] lg:text-base">

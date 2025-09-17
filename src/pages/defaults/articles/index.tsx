@@ -79,7 +79,7 @@ function Articles() {
             </div>
           ) : (
             <div className="grid md:grid-cols-2 gap-2.5">
-              {articles.map((article) => (
+              {articles.slice(0, 6).map((article) => (
                 <div key={article._id} className="mb-1.5">
                   <Link to={`/articles/${article._id}`}>
                     <h3 className="text-xl hover:text-orange-color mb-2">
@@ -111,12 +111,13 @@ function Articles() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 md:gap-5">
               {categories.map((category: string) => (
-                <h3
+                <Link
+                  to={`/articles/topic/${category}`}
                   key={category}
                   className="text-xl rounded shadow-[2px_2px_10px_-5px_grey] text-center capitalize mb-2.5 p-5 hover:text-orange-color"
                 >
                   {category}
-                </h3>
+                </Link>
               ))}
             </div>
           )}

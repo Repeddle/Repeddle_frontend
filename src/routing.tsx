@@ -27,6 +27,7 @@ import ForgetPassword from "./pages/auth/login/forgetPassword"
 import Verify from "./pages/auth/register/verify"
 import Articles from "./pages/defaults/articles"
 import ArticleContent from "./pages/defaults/articles/articleContent"
+import ArticleTopicList from "./pages/defaults/articles/articleTopicList"
 import ResetPassword from "./pages/auth/login/resetPassword"
 import Wallet from "./pages/protected/dashboard/Wallet"
 import Analytics from "./pages/admin/Analytics"
@@ -124,6 +125,7 @@ const router = createBrowserRouter([
           { path: "rebundle-simplified", element: <Rebundlesimplified /> },
           { path: "howtologreturn", element: <HowToLogAreturn /> },
           { path: "articles", element: <Articles /> },
+          { path: "articles/topic/:topic", element: <ArticleTopicList /> },
           { path: "articles/:id", element: <ArticleContent /> },
           { path: "contact-Us", element: <ContactUs /> },
           { path: "feestructure", element: <FeeStructure /> },

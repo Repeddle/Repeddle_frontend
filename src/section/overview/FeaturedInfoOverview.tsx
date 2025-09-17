@@ -1,5 +1,8 @@
 import { FaArrowDown, FaMoneyBill, FaUser } from "react-icons/fa"
 import { FaBagShopping, FaBasketShopping } from "react-icons/fa6"
+import useRegion from "../../hooks/useRegion"
+import { useMemo } from "react"
+import { currency } from "../../utils/common"
 
 const featureType = {
   user: {
@@ -68,7 +71,8 @@ type Props = {
 }
 
 const FeaturedInfoOverview = ({ type, number }: Props) => {
-  const currency = "N"
+  const { region } = useRegion()
+  const currencyValue = useMemo(() => currency(region), [])
 
   return (
     <div className="w-full flex justify-between">
@@ -76,7 +80,7 @@ const FeaturedInfoOverview = ({ type, number }: Props) => {
         <div className="flex flex-col justify-between">
           <span className="text-sm font-light">{featureType[type].title}</span>
           <span className="text-[28px] font-light">
-            {featureType[type].isMoney && currency} {number}
+            {featureType[type].isMoney && currencyValue} {number}
           </span>
         </div>
         <div className="flex flex-col justify-between">

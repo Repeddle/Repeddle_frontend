@@ -4,6 +4,8 @@ import { BiChevronRight } from "react-icons/bi"
 import { FaPaperPlane } from "react-icons/fa"
 import { IUser } from "../../types/user"
 import { useMemo, useState } from "react"
+import { FaMessage } from "react-icons/fa6"
+import { Link } from "react-router-dom"
 
 interface FAQProps {
   articles: { _id: string; topic: string }[]
@@ -82,6 +84,16 @@ const FAQ: React.FC<FAQProps> = ({
             <FaPaperPlane />
             <div>Send us a message</div>
           </div>
+        </div>
+        <div className="p-4 mt-5 mb-2 border-t border-orange-color shadow-lg bg-white rounded-md">
+          <Link
+            to={"/contact-us"}
+            onClick={() => setShowSupport(false)}
+            className="border mt-4 border-black p-2 rounded-md flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <FaMessage />
+            <div>Contact Us</div>
+          </Link>
         </div>
       </div>
     </div>

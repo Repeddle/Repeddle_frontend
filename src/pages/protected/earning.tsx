@@ -1,17 +1,17 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import moment from "moment";
-import { currency, getMonday } from "../../utils/common";
-import LoadingBox from "../../components/LoadingBox";
-import { FaCircleQuestion } from "react-icons/fa6";
-import { IOrderSummary } from "../../types/order";
-import useOrder from "../../hooks/useOrder";
-import Chart from "../../components/Chart";
-import Table from "../../components/table/Table";
-import { Link } from "react-router-dom";
-import { imageUrl } from "../../services/api";
-import useRegion from "../../hooks/useRegion";
+import { ChangeEvent, useEffect, useState } from "react"
+import moment from "moment"
+import { currency, getMonday } from "../../utils/common"
+import LoadingBox from "../../components/LoadingBox"
+import { FaCircleQuestion } from "react-icons/fa6"
+import { IOrderSummary } from "../../types/order"
+import useOrder from "../../hooks/useOrder"
+import Chart from "../../components/Chart"
+import Table from "../../components/table/Table"
+import { Link } from "react-router-dom"
+import { imageUrl } from "../../services/api"
+import useRegion from "../../hooks/useRegion"
 
-const today = moment().startOf("day");
+const today = moment().startOf("day")
 
 const headers = [
   { title: "ID", hide: true },
@@ -20,57 +20,57 @@ const headers = [
   { title: "Payment Status" },
   { title: "Date", hide: true },
   { title: "Amount", hide: true },
-];
+]
 
 function Earning() {
-  const now = new window.Date();
-  const firstDay = new window.Date(now.getFullYear(), now.getMonth(), 1);
+  const now = new window.Date()
+  const firstDay = new window.Date(now.getFullYear(), now.getMonth(), 1)
 
-  const { getOrdersSummary, loading, fetchSoldOrders, orders } = useOrder();
-  const { region } = useRegion();
+  const { getOrdersSummary, loading, fetchSoldOrders, orders } = useOrder()
+  const { region } = useRegion()
 
-  const [from, setFrom] = useState("2022-04-24");
-  const [to, setTo] = useState(now);
-  const [select, setSelect] = useState("All");
+  const [from, setFrom] = useState("2022-04-24")
+  const [to, setTo] = useState(now)
+  const [select, setSelect] = useState("All")
 
-  const [orderSummary, setOrderSummary] = useState<IOrderSummary>();
+  const [orderSummary, setOrderSummary] = useState<IOrderSummary>()
 
   useEffect(() => {
     const getSummary = async () => {
       const res = await getOrdersSummary({
         startDate: from,
         endDate: to.toString(),
-      });
-      if (res) setOrderSummary(res);
-    };
+      })
+      if (res) setOrderSummary(res)
+    }
 
-    getSummary();
-  }, [from, to]);
+    getSummary()
+  }, [from, to])
 
   useEffect(() => {
-    fetchSoldOrders("1");
-  }, []);
+    fetchSoldOrders("1")
+  }, [])
 
   const changeDate = (e: ChangeEvent<HTMLSelectElement>) => {
-    console.log(select);
+    console.log(select)
     if (e.target.value === "Today") {
-      setFrom(today.toDate().toString());
-      setTo(moment(today).endOf("day").toDate());
-      setSelect("Today");
+      setFrom(today.toDate().toString())
+      setTo(moment(today).endOf("day").toDate())
+      setSelect("Today")
     } else if (e.target.value === "This Week") {
-      setFrom(getMonday(today.toDate()).toString());
-      setTo(moment(today).endOf("day").toDate());
-      setSelect("This Week");
+      setFrom(getMonday(today.toDate()).toString())
+      setTo(moment(today).endOf("day").toDate())
+      setSelect("This Week")
     } else if (e.target.value === "This Month") {
-      setFrom(firstDay.toString());
-      setTo(moment(today).endOf("day").toDate());
-      setSelect("This Month");
+      setFrom(firstDay.toString())
+      setTo(moment(today).endOf("day").toDate())
+      setSelect("This Month")
     } else if (e.target.value === "All") {
-      setFrom("2022-04-24");
-      setTo(moment(today).endOf("day").toDate());
-      setSelect("All");
+      setFrom("2022-04-24")
+      setTo(moment(today).endOf("day").toDate())
+      setSelect("All")
     }
-  };
+  }
 
   return (
     <div className="flex-[4] min-w-0 px-5 py-0">
@@ -80,7 +80,7 @@ function Earning() {
 
       <select
         onChange={(e) => {
-          changeDate(e);
+          changeDate(e)
         }}
         className="text-base m-0 pl-2.5 border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal dark:bg-dark-ev1 bg-light-ev1 focus-within:outline-orange-color min-w-[220px] text-black-color dark:text-white-color"
       >
@@ -122,7 +122,7 @@ function Earning() {
                 </div>
                 <span
                   className={`hover:after:text-[11px] hover:after:left-[-70px] after:bg-white after:dark:bg-dark-ev1 hover:after:w-[170px] hover:after:top-2.5 hover:after:content-[attr(data-content)]
-                  relative lg:hover:after:w-[200px] hover:after:absolute lg:hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg lg:hover:after:left-[30px]`}
+                  relative lg:hover:after:w-[200px] hover:after:absolute after:dark:text-white after:text-black lg:hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg lg:hover:after:left-[30px]`}
                   data-content="Expenses is Repeddle commission charged against your total earnings that’s less when a sale is successfully completed and paid for."
                 >
                   <FaCircleQuestion className="text-white" />
@@ -144,7 +144,7 @@ function Earning() {
                 </div>
                 <span
                   className={`hover:after:text-[11px] hover:after:left-[-70px] after:bg-white after:dark:bg-dark-ev1 hover:after:w-[170px] hover:after:top-2.5 hover:after:content-[attr(data-content)]
-                  relative lg:hover:after:w-[200px] hover:after:absolute lg:hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg lg:hover:after:left-[30px]`}
+                  relative lg:hover:after:w-[200px] hover:after:absolute after:text-black after:dark:text-white lg:hover:after:text-sm hover:after:z-[2] hover:after:leading-[1.2] hover:after:font-normal hover:after:p-2.5 hover:after:rounded-lg lg:hover:after:left-[30px]`}
                   data-content="Net earnings is your actual withdrawable balance you receive into your Repeddle wallet. I.E. Total Earnings (- minus) Expenses (=) Net earnings."
                 >
                   <FaCircleQuestion className="text-white" />
@@ -168,7 +168,7 @@ function Earning() {
               )} ${orderSummary?.soldOrders.numSales.toFixed(2)}`}
               data={
                 orderSummary?.dailySoldOrders.map((x) => {
-                  return { name: `${x._id}`, order: x.sales };
+                  return { name: `${x._id}`, order: x.sales }
                 }) ?? []
               }
               dataKey="order"
@@ -221,7 +221,7 @@ function Earning() {
         </>
       )}
     </div>
-  );
+  )
 }
 
-export default Earning;
+export default Earning

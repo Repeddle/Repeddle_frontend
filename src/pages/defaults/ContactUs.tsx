@@ -1,4 +1,4 @@
-import { FaPhone, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa"
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaTrash } from "react-icons/fa"
 import { FiImage } from "react-icons/fi"
 import useContact from "../../hooks/useContact"
 import { ChangeEvent, FormEvent, useState } from "react"
@@ -8,6 +8,7 @@ import useToastNotification from "../../hooks/useToastNotification"
 import { imageUrl } from "../../services/api"
 import LoadingBox from "../../components/LoadingBox"
 import Modal from "../../components/ui/Modal"
+import { deleteImageService } from "../../services/image"
 
 function ContactUs() {
   const { createContact } = useContact()
@@ -22,6 +23,7 @@ function ContactUs() {
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
   const [uploading, setUploading] = useState(false)
+  const [showImageModal, setShowImageModal] = useState(false)
 
   const handleSend = async (e: FormEvent) => {
     e.preventDefault()
@@ -74,6 +76,26 @@ function ContactUs() {
     }
 
     setUploading(false)
+  }
+
+  const deleteImage = async (url: string) => {
+    if (!url) return
+
+    setLoading(true)
+
+    try {
+      const names = url.split("/")
+
+      const name = names[names.length - 1]
+
+      const res = await deleteImageService(name)
+      console.log(res)
+      setImage("")
+    } catch (error) {
+      addNotification("Failed to delete image", undefined, true)
+    }
+
+    setLoading(false)
   }
 
   return (
@@ -203,7 +225,21 @@ function ContactUs() {
             (uploading ? (
               <LoadingBox size="sm" />
             ) : image ? (
-              <img src={imageUrl + image} className="w-4 h-4" />
+              <div className="relative inline-block">
+                <img
+                  src={imageUrl + image}
+                  className="w-24 h-24 object-cover rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
+                  onClick={() => setShowImageModal(true)}
+                  alt="Uploaded image"
+                />
+                <button
+                  onClick={() => deleteImage(image)}
+                  className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 transition-colors"
+                  disabled={loading}
+                >
+                  <FaTrash size={12} />
+                </button>
+              </div>
             ) : (
               <div className="flex justify-center">
                 <label
@@ -214,6 +250,7 @@ function ContactUs() {
                   <span className="opacity-50">(optional)</span>
                 </label>
                 <input
+                  accept="image/*"
                   type="file"
                   id="file"
                   name="file"
@@ -237,6 +274,20 @@ function ContactUs() {
       </div>
       <Modal isOpen={success} onClose={() => setSuccess(false)}>
         <div>Message submitted successfully</div>
+      </Modal>
+
+      <Modal
+        isOpen={showImageModal}
+        onClose={() => setShowImageModal(false)}
+        size="lg"
+      >
+        <div className="flex justify-center">
+          <img
+            src={imageUrl + image}
+            className="max-w-full max-h-[80vh] object-contain rounded-lg"
+            alt="Full size image"
+          />
+        </div>
       </Modal>
     </div>
   )
