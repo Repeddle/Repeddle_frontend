@@ -1,32 +1,34 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import InputWithLabel2 from "../../components/ui/InputWithLabel2";
-import Modal from "../../components/ui/Modal";
-import DeliveryOption from "../../components/DeliveryOption";
-import { currency } from "../../utils/common";
-import { IDeliveryOption, ProductMeta } from "../../types/product";
-import { FaCheck, FaQuestionCircle } from "react-icons/fa";
-import FeeStructure from "../../pages/defaults/info/FeeStructure";
-import useRegion from "../../hooks/useRegion";
+import { Dispatch, SetStateAction, useState } from "react"
+import InputWithLabel2 from "../../components/ui/InputWithLabel2"
+import Modal from "../../components/ui/Modal"
+import DeliveryOption from "../../components/DeliveryOption"
+import { currency } from "../../utils/common"
+import { IDeliveryOption, ProductMeta } from "../../types/product"
+import { FaCheck, FaQuestionCircle } from "react-icons/fa"
+import FeeStructure from "../../pages/defaults/info/FeeStructure"
+import useRegion from "../../hooks/useRegion"
+import { IUser } from "../../types/user"
 
 type InputProps = {
-  costPrice: string;
-  sellingPrice: string;
-  discount: string;
-  deliveryOption: string;
-};
+  costPrice: string
+  sellingPrice: string
+  discount: string
+  deliveryOption: string
+}
 
 type Props = {
-  setDeliveryOption: (val: IDeliveryOption[]) => void;
-  deliveryOption: IDeliveryOption[];
-  setInput: Dispatch<SetStateAction<InputProps>>;
-  validationError: InputProps;
-  handleError: (text: string, key: keyof InputProps) => void;
-  costPrice?: string | null;
-  sellingPrice: number;
-  discount: number;
-  meta: ProductMeta;
-  setMeta: (val: ProductMeta) => void;
-};
+  setDeliveryOption: (val: IDeliveryOption[]) => void
+  deliveryOption: IDeliveryOption[]
+  setInput: Dispatch<SetStateAction<InputProps>>
+  validationError: InputProps
+  handleError: (text: string, key: keyof InputProps) => void
+  costPrice?: string | null
+  sellingPrice: number
+  discount: number
+  meta: ProductMeta
+  setMeta: (val: ProductMeta) => void
+  user: IUser | null
+}
 
 const Price = ({
   deliveryOption,
@@ -39,23 +41,24 @@ const Price = ({
   costPrice,
   meta,
   setMeta,
+  user,
 }: Props) => {
-  const { region } = useRegion();
+  const { region } = useRegion()
 
-  const [showDelivery, setShowDelivery] = useState(false);
-  const [showComissionModal, setShowComissionModal] = useState(false);
-  const [paxi, setPaxi] = useState(region === "ZA");
-  const [gig, setGig] = useState(false);
-  const [pudoLocker, setPudoLocker] = useState(false);
-  const [pudoDoor, setPudoDoor] = useState(false);
-  const [postnet, setPostnet] = useState(false);
-  const [aramex, setAramex] = useState(false);
-  const [pickup, setPickup] = useState(false);
-  const [bundle, setBundle] = useState(false);
+  const [showDelivery, setShowDelivery] = useState(false)
+  const [showComissionModal, setShowComissionModal] = useState(false)
+  const [paxi, setPaxi] = useState(region === "ZA")
+  const [gig, setGig] = useState(false)
+  const [pudoLocker, setPudoLocker] = useState(false)
+  const [pudoDoor, setPudoDoor] = useState(false)
+  const [postnet, setPostnet] = useState(false)
+  const [aramex, setAramex] = useState(false)
+  const [pickup, setPickup] = useState(false)
+  const [bundle, setBundle] = useState(!!user?.rebundle?.status)
 
   const handleOnChange = (text: string, input: keyof InputProps) => {
-    setInput((prevState) => ({ ...prevState, [input]: text }));
-  };
+    setInput((prevState) => ({ ...prevState, [input]: text }))
+  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -198,7 +201,7 @@ const Price = ({
         </Modal>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Price;
+export default Price

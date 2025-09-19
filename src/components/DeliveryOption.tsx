@@ -8,6 +8,7 @@ import useGeoLocation from "../hooks/useGeoLocation"
 import { pudoOptions } from "../utils/constants"
 import { fetchStations } from "../services/others"
 import useRegion from "../hooks/useRegion"
+import useAuth from "../hooks/useAuth"
 
 type InputProps = {
   costPrice: string
@@ -39,6 +40,7 @@ type Props = {
   meta: ProductMeta
   setMeta: (val: ProductMeta) => void
   handleError?: (text: string, key: keyof InputProps) => void
+  rebundleValue?: { status: boolean; count: number }
 }
 
 const DeliveryOption = ({
@@ -64,16 +66,21 @@ const DeliveryOption = ({
   bundle,
   setBundle,
   handleError,
+  rebundleValue,
 }: Props) => {
   const { region } = useRegion()
   const [error1, setError1] = useState("")
-  const [rebundleStatus, setRebundleStatus] = useState(false)
-  const [rebundleCount, setRebundleCount] = useState(0)
+  const [rebundleStatus, setRebundleStatus] = useState(
+    rebundleValue?.status || false
+  )
+  const [rebundleCount, setRebundleCount] = useState(rebundleValue?.count || 0)
   const [loadingRebundle, setLoadingRebundle] = useState(false)
   const [rebundleError, setRebundleError] = useState("")
   const [loadingStations, setLoadingStations] = useState(false)
   const [locationerror, setLocationerror] = useState("")
   const [stations, setStations] = useState<Stations[]>([])
+
+  const { updateUser } = useAuth()
 
   const location = useGeoLocation(gig)
 
@@ -204,19 +211,19 @@ const DeliveryOption = ({
   }
 
   const handleRebundle = async (value?: { status: boolean; count: number }) => {
-    if (value) {
-      // TODO: handle bundle
-      setBundle(value.status)
-      return
-    }
     if (!rebundleCount) {
       setRebundleError("Enter the quantity of item(s) for Rebundle")
       return
     }
     try {
       setLoadingRebundle(true)
-      // TODO: handle bundle
-      // setBundle(data.status)
+      await updateUser({
+        rebundle: {
+          status: value ? value.status : rebundleStatus || false,
+          count: value ? value.count : rebundleStatus ? rebundleCount : 0,
+        },
+      })
+      setBundle(rebundleStatus)
       setLoadingRebundle(false)
     } catch (err) {
       setLoadingRebundle(false)
@@ -882,8 +889,12 @@ const DeliveryOption = ({
         {rebundleStatus && (
           <div>
             {bundle ? (
-              <div>
-                <FaCheck className="text-orange-color" />
+              <div className="flex items-center justify-between mx-0 my-2">
+                <div className="flex items-center gap-2">
+                  <div className="text-[11px]">Re:Bundle is active</div>
+                  <FaCheck className="text-orange-color" />
+                </div>
+                <div className="text-[11px]">{rebundleCount} item(s)</div>
               </div>
             ) : (
               <>
@@ -900,6 +911,7 @@ const DeliveryOption = ({
                       setRebundleCount(+e.target.value)
                     }}
                     onFocus={() => setRebundleError("")}
+                    value={rebundleCount}
                   />
                   {loadingRebundle ? (
                     <LoadingBox />
