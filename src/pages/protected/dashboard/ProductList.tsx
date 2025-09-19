@@ -98,7 +98,7 @@ const ProductList = () => {
           }
           error={error}
           itemName="products"
-          body={[...products.products, ...products.products].map((prod) => ({
+          body={products.products.map((prod) => ({
             key: prod._id,
             keys: {
               ID: prod._id,

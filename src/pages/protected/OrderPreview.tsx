@@ -1,50 +1,69 @@
-import { Helmet } from "react-helmet-async";
-import useCart from "../../hooks/useCart";
-import { Link } from "react-router-dom";
-import LoadingBox from "../../components/LoadingBox";
-import { FaTimes } from "react-icons/fa";
-import { useMemo, useState } from "react";
-import WalletModel from "../../components/WalletModel";
-import { currency } from "../../utils/common";
-import PayStack from "../../components/gateway/PayStack";
-import { PayStackCallback } from "../../types/gateway";
-import FlutterWave from "../../components/gateway/FlutterWave";
-import PayFund from "../../components/gateway/PayFund";
-import { imageUrl } from "../../services/api";
-import useRegion from "../../hooks/useRegion";
+import { Helmet } from "react-helmet-async"
+import useCart from "../../hooks/useCart"
+import { Link } from "react-router-dom"
+import LoadingBox from "../../components/LoadingBox"
+import { FaTimes } from "react-icons/fa"
+import { useMemo, useState } from "react"
+import WalletModel from "../../components/WalletModel"
+import { currency } from "../../utils/common"
+import PayStack from "../../components/gateway/PayStack"
+import { PayStackCallback } from "../../types/gateway"
+import FlutterWave from "../../components/gateway/FlutterWave"
+import PayFund from "../../components/gateway/PayFund"
+import { imageUrl } from "../../services/api"
+import useRegion from "../../hooks/useRegion"
+import { FlutterWaveResponse } from "flutterwave-react-v3/dist/types"
+import useWallet from "../../hooks/useWallet"
+import useToastNotification from "../../hooks/useToastNotification"
 
 const OrderPreview = () => {
-  const [code, setCode] = useState("");
-  const [coupon, setCoupon] = useState({ code: "" });
-  const [showModel, setShowModel] = useState(false);
-  const { region } = useRegion();
+  const [code, setCode] = useState("")
+  const [coupon, setCoupon] = useState({ code: "" })
+  const [showModel, setShowModel] = useState(false)
+  const [loadingPay, setLoadingPay] = useState(false)
+  const { region } = useRegion()
 
-  const { cart, total, subtotal, paymentMethod } = useCart();
+  const { fundWalletFlutter } = useWallet()
+  const { addNotification } = useToastNotification()
 
-  const loadingPay = false;
+  const { cart, total, subtotal, paymentMethod } = useCart()
 
   const removeCoupon = () => {
-    setCoupon({ code: "" });
-  };
+    setCoupon({ code: "" })
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const couponDiscount = (coupon: any, total: number) => {
-    console.log(coupon, total);
-    return 0;
-  };
+    console.log(coupon, total)
+    return 0
+  }
 
   const discount = useMemo(
     () => (coupon ? couponDiscount(coupon, total) : 0),
     [coupon, total]
-  );
+  )
 
-  const handleCoupon = () => {};
+  const handleCoupon = () => {}
 
-  const WalletSuccess = () => {};
+  const WalletSuccess = () => {}
 
-  const onApprove = (val: PayStackCallback) => {
-    console.log(val);
-  };
+  const onApprove = async (
+    val: (FlutterWaveResponse & { type: string }) | PayStackCallback
+  ) => {
+    const { error, result } = await fundWalletFlutter({
+      amount: total,
+      paymentProvider: "Flutterwave",
+      transactionId: val.transaction_id.toString(),
+    })
+
+    setLoadingPay(false)
+    if (!error) {
+      addNotification(result)
+      setShowModel(false)
+    } else {
+      addNotification(result, undefined, true)
+    }
+  }
 
   return (
     <div className="mx-0 my-2.5 pt-5 pb-0 px-[5px] lg:mx-0 lg:my-2.5 lg:pt-5 lg:pb-0 lg:px-[5px] bg-light-ev1 dark:bg-dark-ev1">
@@ -254,7 +273,12 @@ const OrderPreview = () => {
                     //   placeOrderHandler={placeOrderHandler}
                     //   totalPrice={cart.totalPrice}
                     // />
-                    <PayStack amount={total} onApprove={onApprove} />
+                    <PayStack
+                      amount={total}
+                      onApprove={onApprove}
+                      isLoading={loadingPay}
+                      setIsLoading={setLoadingPay}
+                    />
                   ) : (
                     <FlutterWave
                       amount={total}
@@ -277,7 +301,7 @@ const OrderPreview = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default OrderPreview;
+export default OrderPreview
