@@ -16,7 +16,7 @@ const Sell = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (user && user.role === "Seller") {
+    if (user && user.isSeller) {
       navigate("/newProduct")
     }
   }, [navigate, user])

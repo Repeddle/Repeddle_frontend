@@ -23,7 +23,7 @@ const SellerTabItems = ({ displayTab, loading, error, user }: Props) => {
     <div className="grid grid-cols-[repeat(2,1fr)] bg-light-ev1 dark:bg-dark-ev1 p-0 lg:grid-cols-[repeat(4,1fr)] gap-2 lg:p-2.5 rounded-[0.2rem]">
       {displayTab === "all" && userInfo && (
         <div className="relative flex justify-center w-[162px] h-[342px] mx-[3px] my-[5px] lg:w-auto lg:h-auto lg:m-0">
-          <Link to={userInfo.role === "seller" ? "/newproduct" : "/sell"}>
+          <Link to={userInfo.isSeller ? "/newproduct" : "/sell"}>
             <div
               className={`flex lg:w-60 lg:h-[500px] cursor-pointer justify-center items-center flex-col rounded-[0.2rem]
               w-[162px] h-[342px] mx-[3px] my-[5px] lg:m-0 bg-light-ev2 dark:bg-dark-ev2 hover:bg-light-ev4 dark:hover:bg-dark-ev4`}

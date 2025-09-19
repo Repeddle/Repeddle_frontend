@@ -42,6 +42,19 @@ const Details = ({
     setInput((prevState) => ({ ...prevState, [inputVal]: text }))
   }
 
+  const clearPreviousMain = () =>
+    setInput((prevState) => ({
+      ...prevState,
+      category: "",
+      subCategory: "",
+    }))
+
+  const clearPreviousCategory = () =>
+    setInput((prevState) => ({
+      ...prevState,
+      subCategory: "",
+    }))
+
   return (
     <div className="flex flex-col gap-3">
       <InputWithLabel2
@@ -57,15 +70,18 @@ const Details = ({
         <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
           <select
             value={input.product}
-            onChange={(e) => handleOnChange(e.target.value, "product")}
+            onChange={(e) => {
+              handleOnChange(e.target.value, "product")
+              clearPreviousMain()
+            }}
             className="text-base m-0 pl-2.5 dark:bg-black border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
             onBlur={() => handleError("", "product")}
           >
-            <option disabled></option>
+            <option>---Select a main category---</option>
             {categories.length > 0 &&
-              categories.map((cat) => (
-                <option value={cat.name}>{cat.name}</option>
-              ))}
+              categories
+                .filter((cat) => cat.isCategory)
+                .map((cat) => <option value={cat.name}>{cat.name}</option>)}
           </select>
         </div>
         {validationError.product && (
@@ -79,17 +95,20 @@ const Details = ({
         <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
           <select
             value={input.category}
-            onChange={(e) => handleOnChange(e.target.value, "category")}
+            onChange={(e) => {
+              handleOnChange(e.target.value, "category")
+              clearPreviousCategory()
+            }}
             className="text-base m-0 pl-2.5 dark:bg-black border-light-ev4 dark:border-dark-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
           >
-            <option disabled></option>
+            <option>---Select a category---</option>
             {categories.length > 0 &&
               categories.map(
                 (cat) =>
                   cat.name === input.product &&
-                  cat.subCategories.map((sub) => (
-                    <option value={sub.name}>{sub.name}</option>
-                  ))
+                  cat.subCategories
+                    .filter((cat) => cat.isCategory)
+                    .map((sub) => <option value={sub.name}>{sub.name}</option>)
               )}
           </select>
         </div>
@@ -104,7 +123,7 @@ const Details = ({
             onChange={(e) => handleOnChange(e.target.value, "subCategory")}
             className="text-base m-0 pl-2.5 dark:bg-black border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
           >
-            <option disabled></option>
+            <option>---Select a sub category---</option>
             {categories.length > 0 &&
               categories.map(
                 (cat) =>
@@ -112,9 +131,11 @@ const Details = ({
                   cat.subCategories.map(
                     (sub) =>
                       sub.name === input.category &&
-                      sub.items.map((item) => (
-                        <option value={item.name}>{item.name}</option>
-                      ))
+                      sub.items
+                        .filter((item) => item.isCategory)
+                        .map((item) => (
+                          <option value={item.name}>{item.name}</option>
+                        ))
                   )
               )}
           </select>
