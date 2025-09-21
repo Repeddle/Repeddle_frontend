@@ -38,6 +38,7 @@ const PayStack = ({ amount, onApprove, isLoading, setIsLoading }: Props) => {
   const onClose = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
     console.log("closed");
+    setIsLoading(false);
     // onClose();
   };
 

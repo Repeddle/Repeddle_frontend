@@ -306,6 +306,8 @@ const PlaceOrder = () => {
                     <PayStack
                       amount={total}
                       onApprove={(res) => onApprove(res, "Paystack")}
+                      isLoading={loadingPay}
+                      setIsLoading={setLoadingPay}
                     />
                     // <FlutterWave
                     //   amount={total}

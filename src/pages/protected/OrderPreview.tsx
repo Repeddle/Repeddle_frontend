@@ -45,7 +45,7 @@ const OrderPreview = () => {
 
   const handleCoupon = () => {};
 
-  const WalletSuccess = () => {};
+  const WalletSuccess = async () => {};
 
   const onApprove = async (
     val: (FlutterWaveResponse & { type: string }) | PayStackCallback
