@@ -12,16 +12,21 @@ import FlutterWave from "../../components/gateway/FlutterWave";
 import PayFund from "../../components/gateway/PayFund";
 import { imageUrl } from "../../services/api";
 import useRegion from "../../hooks/useRegion";
+import { FlutterWaveResponse } from "flutterwave-react-v3/dist/types";
+import useWallet from "../../hooks/useWallet";
+import useToastNotification from "../../hooks/useToastNotification";
 
 const OrderPreview = () => {
   const [code, setCode] = useState("");
   const [coupon, setCoupon] = useState({ code: "" });
   const [showModel, setShowModel] = useState(false);
+  const [loadingPay, setLoadingPay] = useState(false);
   const { region } = useRegion();
 
-  const { cart, total, subtotal, paymentMethod } = useCart();
+  const { fundWalletFlutter } = useWallet();
+  const { addNotification } = useToastNotification();
 
-  const loadingPay = false;
+  const { cart, total, subtotal, paymentMethod } = useCart();
 
   const removeCoupon = () => {
     setCoupon({ code: "" });
@@ -40,10 +45,24 @@ const OrderPreview = () => {
 
   const handleCoupon = () => {};
 
-  const WalletSuccess = async () => {};
+  const WalletSuccess = () => {};
 
-  const onApprove = (val: PayStackCallback) => {
-    console.log(val);
+  const onApprove = async (
+    val: (FlutterWaveResponse & { type: string }) | PayStackCallback
+  ) => {
+    const { error, result } = await fundWalletFlutter({
+      amount: total,
+      paymentProvider: "Flutterwave",
+      transactionId: val.transaction_id.toString(),
+    });
+
+    setLoadingPay(false);
+    if (!error) {
+      addNotification(result);
+      setShowModel(false);
+    } else {
+      addNotification(result, undefined, true);
+    }
   };
 
   return (
@@ -254,7 +273,12 @@ const OrderPreview = () => {
                     //   placeOrderHandler={placeOrderHandler}
                     //   totalPrice={cart.totalPrice}
                     // />
-                    <PayStack amount={total} onApprove={onApprove} />
+                    <PayStack
+                      amount={total}
+                      onApprove={onApprove}
+                      isLoading={loadingPay}
+                      setIsLoading={setLoadingPay}
+                    />
                   ) : (
                     <FlutterWave
                       amount={total}

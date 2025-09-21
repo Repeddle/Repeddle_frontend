@@ -135,7 +135,12 @@ const AddFund = ({
           </div>
         )
       ) : (
-        <PayStack amount={amount} onApprove={onApprove} />
+        <PayStack
+          amount={amount}
+          onApprove={onApprove}
+          isLoading={loadingPay}
+          setIsLoading={setLoadingPay}
+        />
       )}
     </div>
   );

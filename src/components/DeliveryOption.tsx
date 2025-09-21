@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { FaCheck, FaQuestionCircle, FaTruck } from "react-icons/fa"
+import { FaCheck, FaPen, FaQuestionCircle, FaTruck } from "react-icons/fa"
 import LoadingBox from "./LoadingBox"
 import { IDeliveryOption, ProductMeta, Stations } from "../types/product"
 import { getBackendErrorMessage } from "../utils/error"
@@ -77,6 +77,7 @@ const DeliveryOption = ({
   const [loadingRebundle, setLoadingRebundle] = useState(false)
   const [rebundleError, setRebundleError] = useState("")
   const [loadingStations, setLoadingStations] = useState(false)
+  const [isEditRebundle, setIsEditRebundle] = useState(false)
   const [locationerror, setLocationerror] = useState("")
   const [stations, setStations] = useState<Stations[]>([])
 
@@ -224,6 +225,7 @@ const DeliveryOption = ({
         },
       })
       setBundle(rebundleStatus)
+      setIsEditRebundle(false)
       setLoadingRebundle(false)
     } catch (err) {
       setLoadingRebundle(false)
@@ -888,13 +890,19 @@ const DeliveryOption = ({
         <div className="w-full h-px bg-[#d4d4d4]" />
         {rebundleStatus && (
           <div>
-            {bundle ? (
+            {bundle && !isEditRebundle ? (
               <div className="flex items-center justify-between mx-0 my-2">
                 <div className="flex items-center gap-2">
                   <div className="text-[11px]">Re:Bundle is active</div>
                   <FaCheck className="text-orange-color" />
                 </div>
-                <div className="text-[11px]">{rebundleCount} item(s)</div>
+                <div className="flex items-center gap-2">
+                  <div className="text-[11px]">{rebundleCount} item(s)</div>
+                  <FaPen
+                    className="text-orange-color cursor-pointer"
+                    onClick={() => setIsEditRebundle(true)}
+                  />
+                </div>
               </div>
             ) : (
               <>
@@ -908,7 +916,7 @@ const DeliveryOption = ({
                     type="number"
                     onChange={(e) => {
                       handleError?.("", "deliveryOption")
-                      setRebundleCount(+e.target.value)
+                      setRebundleCount(Number(e.target.value))
                     }}
                     onFocus={() => setRebundleError("")}
                     value={rebundleCount}
@@ -916,12 +924,22 @@ const DeliveryOption = ({
                   {loadingRebundle ? (
                     <LoadingBox />
                   ) : (
-                    <div
-                      className="cursor-pointer text-white-color text-center px-[7px] py-[5px] rounded-[0.2rem] bg-orange-color hover:bg-malon-color"
-                      onClick={() => handleRebundle()}
-                    >
-                      Activate
-                    </div>
+                    <>
+                      <div
+                        className="cursor-pointer text-white-color text-center ml-2 px-[7px] py-[5px] rounded-[0.2rem] bg-orange-color hover:bg-malon-color"
+                        onClick={() => handleRebundle()}
+                      >
+                        Activate
+                      </div>
+                      {isEditRebundle && (
+                        <div
+                          className="cursor-pointer text-white-color text-center px-[7px] ml-2 py-[5px] rounded-[0.2rem] bg-malon-color"
+                          onClick={() => setIsEditRebundle(false)}
+                        >
+                          Cancel
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
                 {rebundleError && (

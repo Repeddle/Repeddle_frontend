@@ -197,6 +197,10 @@ const Price = ({
             setMeta={setMeta}
             deliveryOption={deliveryOption}
             handleError={handleError}
+            rebundleValue={{
+              status: bundle,
+              count: user?.rebundle?.count || 0,
+            }}
           />
         </Modal>
       </div>

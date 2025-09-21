@@ -1,82 +1,82 @@
-import { FormEvent, useCallback, useEffect, useState } from "react";
-import { Helmet } from "react-helmet-async";
-import { CartItem } from "../context/CartContext";
-import RebundlePoster from "./RebundlePoster";
-import { currency } from "../utils/common";
-import { postnet, pudo, states } from "../utils/constants";
-import Button from "./ui/Button";
-import { IDeliveryMeta } from "../types/order";
-import useGeoLocation from "../hooks/useGeoLocation";
-import { IRebundle } from "../types/user";
-import { fetchStations, getGigPrice } from "../services/others";
-import { Stations } from "../types/product";
-import useToastNotification from "../hooks/useToastNotification";
-import useCart from "../hooks/useCart";
-import useRegion from "../hooks/useRegion";
+import { FormEvent, useCallback, useEffect, useState } from "react"
+import { Helmet } from "react-helmet-async"
+import { CartItem } from "../context/CartContext"
+import RebundlePoster from "./RebundlePoster"
+import { currency } from "../utils/common"
+import { postnet, pudo, states } from "../utils/constants"
+import Button from "./ui/Button"
+import { IDeliveryMeta } from "../types/order"
+import useGeoLocation from "../hooks/useGeoLocation"
+import { IRebundle } from "../types/user"
+import { fetchStations, getGigPrice } from "../services/others"
+import { Stations } from "../types/product"
+import useToastNotification from "../hooks/useToastNotification"
+import useCart from "../hooks/useCart"
+import useRegion from "../hooks/useRegion"
 
 type Props = {
-  setShowModel: (val: boolean) => void;
-  item: CartItem;
-};
+  setShowModel: (val: boolean) => void
+  item: CartItem
+}
 
 const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
-  const { addNotification } = useToastNotification();
-  const { addToCart } = useCart();
-  const { region } = useRegion();
+  const { addNotification } = useToastNotification()
+  const { addToCart } = useCart()
+  const { region } = useRegion()
 
-  const [loadingStations, setLoadingStations] = useState(false);
-  const [stations, setStations] = useState<Stations[]>([]);
-  const [deliveryOption, setDeliveryOption] = useState("");
-  const [showMap, setShowMap] = useState(false);
-  const [meta, setMeta] = useState<IDeliveryMeta>({});
-  const [value, setValue] = useState(0);
-  const [token, setToken] = useState({ userId: "", token: "", username: "" });
-  const location = useGeoLocation();
-  const [locationerror, setLocationerror] = useState("");
-  const [loadingGig, setLoadingGig] = useState(false);
+  const [loadingStations, setLoadingStations] = useState(false)
+  const [stations, setStations] = useState<Stations[]>([])
+  const [deliveryOption, setDeliveryOption] = useState("")
+  const [showMap, setShowMap] = useState(false)
+  const [meta, setMeta] = useState<IDeliveryMeta>({})
+  const [value, setValue] = useState(0)
+  const [token, setToken] = useState({ userId: "", token: "", username: "" })
+  const location = useGeoLocation()
+  const [locationerror, setLocationerror] = useState("")
+  const [loadingGig, setLoadingGig] = useState(false)
   const [isRebundle] = useState<IRebundle>({
     count: 0,
     status: false,
-  });
+  })
   const [validationError, setValidationError] = useState<{
-    [key in keyof IDeliveryMeta]: string;
-  }>({});
+    [key in keyof IDeliveryMeta]: string
+  }>({})
 
   useEffect(() => {
     const getStations = async () => {
-      setLoadingStations(true);
-      const data = await fetchStations();
+      setLoadingStations(true)
+      const data = await fetchStations()
       if (data) {
-        setStations(data.stations);
-        setToken(data.token);
+        setStations(data.stations)
+        setToken(data.token)
       }
 
-      setLoadingStations(false);
-    };
+      setLoadingStations(false)
+    }
 
-    getStations();
-  }, []);
+    getStations()
+  }, [])
 
   const setLocation = useCallback(() => {
     if (deliveryOption === "GIG Logistics") {
       if (location.error) {
-        setLocationerror("Location is require for proper delivery");
+        setLocationerror("Location is require for proper delivery")
       } else if (location.coordinates) {
         setMeta({
           ...meta,
           lat: location.coordinates.lat,
           lng: location.coordinates.lng,
-        });
+        })
       }
     }
-  }, [deliveryOption, location.coordinates, location.error, meta]);
+  }, [deliveryOption, location.coordinates, location.error, meta])
 
   useEffect(() => {
-    setLocation();
-  }, [setLocation]);
+    setLocation()
+  }, [setLocation])
 
   const submitHandler = async () => {
-    let deliverySelect = {};
+    let deliverySelect = {}
 
     if (deliveryOption === "GIG Logistics") {
       if (
@@ -84,14 +84,14 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
         !location.coordinates?.lat ||
         !location.coordinates?.lng
       ) {
-        setLocationerror("Location is require for proper delivery");
-        addNotification("Location is require for proper delivery");
-        return;
+        setLocationerror("Location is require for proper delivery")
+        addNotification("Location is require for proper delivery")
+        return
       }
       try {
-        setLoadingGig(true);
+        setLoadingGig(true)
 
-        const data = await getGigPrice(item, meta, location.coordinates, token);
+        const data = await getGigPrice(item, meta, location.coordinates, token)
 
         if (data) {
           deliverySelect = {
@@ -101,17 +101,17 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
             lat: location.coordinates.lat,
             lng: location.coordinates.lng,
             total: { status: true, cost: data.DeliveryPrice },
-          };
+          }
         } else {
-          setLoadingGig(false);
+          setLoadingGig(false)
           setLocationerror(
             "Error selecting delivery method, try again later or try other delivery method"
-          );
-          return;
+          )
+          return
         }
       } catch (err) {
-        setLoadingGig(false);
-        console.log(err);
+        setLoadingGig(false)
+        console.log(err)
       }
     } else {
       deliverySelect = {
@@ -119,7 +119,7 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
         cost: value,
         ...meta,
         total: { status: true, cost: value },
-      };
+      }
     }
 
     // const valid = true
@@ -138,32 +138,32 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
     addToCart({
       ...item,
       deliverySelect,
-    });
-    setShowModel(false);
+    })
+    setShowModel(false)
     // navigate("/placeorder");
-    setLoadingGig(false);
-  };
+    setLoadingGig(false)
+  }
 
   const validation = (e: FormEvent) => {
-    e.preventDefault();
-    let valid = true;
+    e.preventDefault()
+    let valid = true
     if (!deliveryOption) {
-      valid = false;
+      valid = false
     }
     if (deliveryOption === "Paxi PEP store") {
       if (!meta.shortName) {
         setValidationError({
           ...validationError,
           shortName: "Select a pick up point ",
-        });
-        valid = false;
+        })
+        valid = false
       }
       if (!meta.phone) {
         setValidationError({
           ...validationError,
           phone: "Enter a valid phone number ",
-        });
-        valid = false;
+        })
+        valid = false
       }
     }
     if (deliveryOption === "PUDO Locker-to-Locker") {
@@ -171,22 +171,22 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
         setValidationError({
           ...validationError,
           phone: "Enter a valid phone number ",
-        });
-        valid = false;
+        })
+        valid = false
       }
       if (!meta.province) {
         setValidationError({
           ...validationError,
           province: "Select province",
-        });
-        valid = false;
+        })
+        valid = false
       }
       if (!meta.shortName) {
         setValidationError({
           ...validationError,
           shortName: "Select a pick up point ",
-        });
-        valid = false;
+        })
+        valid = false
       }
     }
     if (deliveryOption === "PUDO Locker-to-Door") {
@@ -194,22 +194,22 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
         setValidationError({
           ...validationError,
           phone: "Enter a valid phone number ",
-        });
-        valid = false;
+        })
+        valid = false
       }
       if (!meta.province) {
         setValidationError({
           ...validationError,
           province: "Select province",
-        });
-        valid = false;
+        })
+        valid = false
       }
       if (!meta.address) {
         setValidationError({
           ...validationError,
           address: "Enter a delivery address ",
-        });
-        valid = false;
+        })
+        valid = false
       }
     }
     if (deliveryOption === "PostNet-to-PostNet") {
@@ -217,23 +217,23 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
         setValidationError({
           ...validationError,
           phone: "Enter a valid phone number ",
-        });
-        valid = false;
+        })
+        valid = false
       }
 
       if (!meta.province) {
         setValidationError({
           ...validationError,
           province: "Select province",
-        });
-        valid = false;
+        })
+        valid = false
       }
       if (!meta.pickUp) {
         setValidationError({
           ...validationError,
           pickUp: "Select a pick up locker ",
-        });
-        valid = false;
+        })
+        valid = false
       }
     }
     if (deliveryOption === "Aramex Store-to-Door") {
@@ -241,57 +241,57 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
         setValidationError({
           ...validationError,
           province: "Select province",
-        });
-        valid = false;
+        })
+        valid = false
       }
       if (!meta.postalcode) {
         setValidationError({
           ...validationError,
           postalcode: "Enter your postal code ",
-        });
-        valid = false;
+        })
+        valid = false
       }
       if (!meta.city) {
         setValidationError({
           ...validationError,
           city: "Enter your city ",
-        });
-        valid = false;
+        })
+        valid = false
       }
       if (!meta.suburb) {
         setValidationError({
           ...validationError,
           suburb: "Enter your suburb ",
-        });
-        valid = false;
+        })
+        valid = false
       }
       if (!meta.address) {
         setValidationError({
           ...validationError,
           address: "Enter your address ",
-        });
-        valid = false;
+        })
+        valid = false
       }
       if (!meta.email) {
         setValidationError({
           ...validationError,
           email: "Enter your email ",
-        });
-        valid = false;
+        })
+        valid = false
       }
       if (!meta.name) {
         setValidationError({
           ...validationError,
           name: "Enter your name ",
-        });
-        valid = false;
+        })
+        valid = false
       }
       if (!meta.phone) {
         setValidationError({
           ...validationError,
           phone: "Enter a valid phone number ",
-        });
-        valid = false;
+        })
+        valid = false
       }
     }
     if (deliveryOption === "GIG Logistics") {
@@ -299,38 +299,38 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
         setValidationError({
           ...validationError,
           stationId: "Select a station ",
-        });
-        valid = false;
+        })
+        valid = false
       }
       if (!meta.address) {
         setValidationError({
           ...validationError,
           address: "Enter your address ",
-        });
-        valid = false;
+        })
+        valid = false
       }
       if (!meta.name) {
         setValidationError({
           ...validationError,
           name: "Enter your name ",
-        });
-        valid = false;
+        })
+        valid = false
       }
       if (!meta.phone) {
         setValidationError({
           ...validationError,
           phone: "Enter a valid phone number ",
-        });
-        valid = false;
+        })
+        valid = false
       }
     }
 
     if (valid) {
-      submitHandler();
+      submitHandler()
     }
-  };
+  }
 
-  console.log(item);
+  console.log(item)
 
   return (
     <div className="m-[30px]">
@@ -356,10 +356,10 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
                         ...meta,
                         "delivery Option": e.target.value,
                         cost: x.value,
-                      });
-                      setDeliveryOption(e.target.value);
-                      setValue(x.value);
-                      setMeta({});
+                      })
+                      setDeliveryOption(e.target.value)
+                      setValue(x.value)
+                      setMeta({})
                     }}
                   />
                   <label className="mx-2.5 capitalize" htmlFor={x.name}>
@@ -444,18 +444,19 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
                       <div className="flex items-stretch flex-col justify-center mx-0 my-[15px]">
                         <label className="mx-2.5 capitalize">Province</label>
 
-                        <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-full border border-light-ev4 dark:border-dark-ev4">
+                        <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 border border-light-ev4 dark:border-dark-ev4">
                           <select
                             value={meta.province}
                             onChange={(e) => {
-                              setMeta({ ...meta, province: e.target.value });
+                              setMeta({ ...meta, province: e.target.value })
                               setValidationError({
                                 ...validationError,
                                 province: "",
-                              });
+                              })
                             }}
-                            className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-4/5 appearance-none text-black-color dark:text-white-color"
+                            className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                           >
+                            <option>-- Select ---</option>
                             {region === "NG"
                               ? states.Nigeria.map((x) => (
                                   <option value={x}>{x}</option>
@@ -485,18 +486,19 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
                           Pick Up Locker
                         </label>
 
-                        <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-full border border-light-ev4 dark:border-dark-ev4">
+                        <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 border border-light-ev4 dark:border-dark-ev4">
                           <select
                             value={meta.shortName}
                             onChange={(e) => {
-                              setMeta({ ...meta, shortName: e.target.value });
+                              setMeta({ ...meta, shortName: e.target.value })
                               setValidationError({
                                 ...validationError,
                                 shortName: "",
-                              });
+                              })
                             }}
-                            className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-4/5 appearance-none text-black-color dark:text-white-color"
+                            className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                           >
+                            <option>-- Select ---</option>
                             {meta.province &&
                               pudo[meta.province as keyof typeof pudo]?.map(
                                 (x) => <option value={x}>{x}</option>
@@ -602,18 +604,19 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
                       <div className="flex items-stretch flex-col justify-center mx-0 my-[15px]">
                         <label className="mx-2.5 capitalize">Province</label>
 
-                        <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-full border border-light-ev4 dark:border-dark-ev4">
+                        <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 border border-light-ev4 dark:border-dark-ev4">
                           <select
                             value={meta.province}
                             onChange={(e) => {
-                              setMeta({ ...meta, province: e.target.value });
+                              setMeta({ ...meta, province: e.target.value })
                               setValidationError({
                                 ...validationError,
                                 province: "",
-                              });
+                              })
                             }}
-                            className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-4/5 appearance-none text-black-color dark:text-white-color"
+                            className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                           >
+                            <option>-- Select ---</option>
                             {region === "NG"
                               ? states.Nigeria.map((x) => (
                                   <option value={x}>{x}</option>
@@ -676,18 +679,19 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
                     <div className="border m-[5px] p-2.5 rounded-[0.2rem] border-light-ev3 dark:border-dark-ev3">
                       <div className="flex items-stretch flex-col justify-center mx-0 my-[15px]">
                         <label className="mx-2.5 capitalize">Province</label>
-                        <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-full border border-light-ev4 dark:border-dark-ev4">
+                        <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 border border-light-ev4 dark:border-dark-ev4">
                           <select
                             value={meta.province}
                             onChange={(e) => {
-                              setMeta({ ...meta, province: e.target.value });
+                              setMeta({ ...meta, province: e.target.value })
                               setValidationError({
                                 ...validationError,
                                 province: "",
-                              });
+                              })
                             }}
-                            className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-4/5 appearance-none text-black-color dark:text-white-color"
+                            className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                           >
+                            <option>-- Select ---</option>
                             {region === "NG"
                               ? states.Nigeria.map((x) => (
                                   <option value={x}>{x}</option>
@@ -717,18 +721,19 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
                           Pick Up Locker
                         </label>
 
-                        <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-full border border-light-ev4 dark:border-dark-ev4">
+                        <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 border border-light-ev4 dark:border-dark-ev4">
                           <select
                             value={meta.pickUp}
                             onChange={(e) => {
-                              setMeta({ ...meta, pickUp: e.target.value });
+                              setMeta({ ...meta, pickUp: e.target.value })
                               setValidationError({
                                 ...validationError,
                                 pickUp: "",
-                              });
+                              })
                             }}
-                            className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-4/5 appearance-none text-black-color dark:text-white-color"
+                            className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                           >
+                            <option>-- Select ---</option>
                             {meta.province &&
                               postnet[
                                 meta.province as keyof typeof postnet
@@ -956,18 +961,19 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
 
                       <div className="flex items-stretch flex-col justify-center mx-0 my-[15px]">
                         <label className="mx-2.5 capitalize">Province</label>
-                        <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-full border border-light-ev4 dark:border-dark-ev4">
+                        <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 border border-light-ev4 dark:border-dark-ev4">
                           <select
                             value={meta.province}
                             onChange={(e) => {
-                              setMeta({ ...meta, province: e.target.value });
+                              setMeta({ ...meta, province: e.target.value })
                               setValidationError({
                                 ...validationError,
                                 province: "",
-                              });
+                              })
                             }}
-                            className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-4/5 appearance-none text-black-color dark:text-white-color"
+                            className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                           >
+                            <option>-- Select ---</option>
                             {region === "NG"
                               ? states.Nigeria.map((x) => (
                                   <option value={x}>{x}</option>
@@ -1070,26 +1076,29 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
                           Select Station
                         </div>
 
-                        <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 w-[150px] border border-light-ev4 dark:border-dark-ev4">
+                        <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none bg-light-ev1 overflow-hidden rounded-[0.2rem] ml-5 border border-light-ev4 dark:border-dark-ev4">
                           <select
                             value={meta.stationId}
                             onChange={(e) => {
-                              setMeta({ ...meta, stationId: e.target.value });
+                              setMeta({ ...meta, stationId: e.target.value })
                               setValidationError({
                                 ...validationError,
                                 stationId: "",
-                              });
+                              })
                             }}
-                            className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-4/5 appearance-none text-black-color dark:text-white-color"
+                            className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                           >
                             {loadingStations ? (
                               <option value="">Loading...</option>
                             ) : (
-                              stations.map((station) => (
-                                <option value={station.stationId}>
-                                  {station.StateName}
-                                </option>
-                              ))
+                              <>
+                                <option>-- Select ---</option>
+                                {stations.map((station) => (
+                                  <option value={station.stationId}>
+                                    {station.StateName}
+                                  </option>
+                                ))}
+                              </>
                             )}
                           </select>
                         </div>
@@ -1142,7 +1151,7 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DeliveryOptionScreen;
+export default DeliveryOptionScreen
