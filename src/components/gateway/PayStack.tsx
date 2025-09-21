@@ -29,7 +29,7 @@ const PayStack = ({ amount, onApprove }: Props) => {
   const onSuccess = (reference: PaystackResponse) => {
     // Implementation for whatever you want to do with reference and after success call.
     console.log(reference);
-    onApprove({ transaction_id: reference.reference, type: "paystack" });
+    onApprove({ transaction_id: reference.reference, type: "Paystack" });
   };
 
   // you can call this function anything

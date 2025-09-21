@@ -70,7 +70,7 @@ const AddFund = ({
   ) => {
     const { error, result } = await fundWalletFlutter({
       amount,
-      paymentProvider: "Flutterwave",
+      paymentProvider: val.type,
       transactionId: val.transaction_id.toString(),
     });
 
@@ -124,7 +124,7 @@ const AddFund = ({
               handleFlutterPayment({
                 callback: async (response) => {
                   console.log(response);
-                  onApprove({ ...response, type: "flutterwave" });
+                  onApprove({ ...response, type: "Flutterwave" });
                   closePaymentModal(); // this will close the modal programmatically
                 },
                 onClose: () => {},

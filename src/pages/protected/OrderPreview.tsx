@@ -40,7 +40,7 @@ const OrderPreview = () => {
 
   const handleCoupon = () => {};
 
-  const WalletSuccess = () => {};
+  const WalletSuccess = async () => {};
 
   const onApprove = (val: PayStackCallback) => {
     console.log(val);

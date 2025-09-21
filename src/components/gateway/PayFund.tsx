@@ -8,18 +8,23 @@ import useRegion from "../../hooks/useRegion";
 
 type Props = {
   amount: number;
-  onApprove: (val: PayStackCallback) => void;
+  onApprove: (val: PayStackCallback) => Promise<void>;
   setShowModel: (val: boolean) => void;
 };
 
-const PayFund = ({ amount }: Props) => {
+const PayFund = ({ amount, onApprove, setShowModel }: Props) => {
   const { isDarkMode } = useTheme();
   const { region } = useRegion();
 
   const error = null;
   const loading = false;
 
-  const handlePayment = () => {};
+  const handlePayment = async () => {
+    try {
+      await onApprove({ transaction_id: "no id required", type: "Wallet" });
+      setShowModel(false);
+    } catch (error) {}
+  };
 
   return (
     <div className="mt-[30px]">

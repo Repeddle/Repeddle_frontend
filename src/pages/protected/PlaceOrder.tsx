@@ -301,21 +301,16 @@ const PlaceOrder = () => {
                       onApprove={(res) => onApprove(res, "Paystack")}
                     />
                   ) : (
-                    <FlutterWave
+                    <PayStack
                       amount={total}
-                      currency={cart[0].region ? "NGN" : "ZAR"}
-                      user={
-                        user ?? undefined
-                        // ? user
-                        // : {
-                        //     email: cart.shippingAddress.email,
-                        //     name: cart.shippingAddress.fullName,
-                        //     phone: cart.shippingAddress.phone,
-                        //   }
-                      }
-                      onApprove={(res) => onApprove(res, "Flutterwave")}
-                      // method={cart.paymentMethod}
+                      onApprove={(res) => onApprove(res, "Paystack")}
                     />
+                    // <FlutterWave
+                    //   amount={total}
+                    //   currency={cart[0].region ? "NGN" : "ZAR"}
+                    //   user={user ?? undefined}
+                    //   onApprove={(res) => onApprove(res, "Flutterwave")}
+                    // />
                   )}
                 </div>
 

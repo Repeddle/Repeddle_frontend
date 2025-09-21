@@ -54,7 +54,7 @@ const FlutterWave = ({
             callback: async (response) => {
               onApprove({
                 transaction_id: response.transaction_id.toString(),
-                type: "flutterwave",
+                type: "Flutterwave",
               });
               closePaymentModal(); // this will close the modal programmatically
             },
