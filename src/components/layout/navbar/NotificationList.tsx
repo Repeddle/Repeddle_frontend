@@ -2,12 +2,19 @@ import moment from "moment"
 import { Link } from "react-router-dom"
 import { Notification } from "../../../types/conversation"
 import { imageUrl } from "../../../services/api"
+import useNotification from "../../../hooks/useNotification"
 
 type Props = {
   notifications: Notification[]
 }
 
 const NotificationList = ({ notifications }: Props) => {
+  const { markNotification } = useNotification()
+
+  const onClick = async (not: Notification) => {
+    await markNotification(not._id)
+  }
+
   return (
     <div
       className={`w-[320px] max-h-[70vh] overflow-auto absolute z-[9] -translate-x-2/4 p-2.5 rounded-[0.2rem] left-2/4 top-[50px] dark:bg-black 
@@ -22,7 +29,7 @@ const NotificationList = ({ notifications }: Props) => {
         </b>
       ) : (
         notifications.map((not) => (
-          <Link to={not.link}>
+          <Link to={not.link} onClick={() => onClick(not)} key={not._id}>
             <div
               className="flex items-center relative mb-[5px] p-[3px] dark:hover:bg-dark-ev1 hover:bg-light-ev1"
               key={not._id}

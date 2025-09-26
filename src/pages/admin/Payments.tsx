@@ -102,7 +102,7 @@ const Payments = () => {
             ID: pay._id,
             User: (
               <Link
-                to={`/seller/${pay.userId._id}`}
+                to={`/seller/${pay.userId.username}`}
                 className="w-[60px] whitespace-nowrap overflow-hidden text-ellipsis hover:underline"
               >
                 {pay.userId.username}

@@ -1,36 +1,36 @@
-import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import useArticle from "../../../hooks/useArticle";
-import { Article } from "../../../types/article";
-import { FaSearch } from "react-icons/fa";
+import React, { useState, useEffect } from "react"
+import { useParams, Link } from "react-router-dom"
+import useArticle from "../../../hooks/useArticle"
+import { Article } from "../../../types/article"
+import { FaSearch } from "react-icons/fa"
 
 const ArticleContent: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const { fetchArticleById } = useArticle();
-  const [article, setArticle] = useState<Article | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
+  const { id } = useParams<{ id: string }>()
+  const { fetchArticleById } = useArticle()
+  const [article, setArticle] = useState<Article | null>(null)
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<string>("")
 
   useEffect(() => {
     const fetchArticle = async () => {
       if (!id) {
-        setError("No article ID provided");
-        setLoading(false);
-        return;
+        setError("No article ID provided")
+        setLoading(false)
+        return
       }
       try {
-        setLoading(true);
-        const article = await fetchArticleById(id);
-        setArticle(article);
-        setLoading(false);
+        setLoading(true)
+        const article = await fetchArticleById(id)
+        setArticle(article)
+        setLoading(false)
       } catch (error) {
-        setLoading(false);
-        setError("Error fetching article.");
+        setLoading(false)
+        setError("Error fetching article.")
       }
-    };
+    }
 
-    fetchArticle();
-  }, [id]);
+    fetchArticle()
+  }, [id])
 
   return (
     <div className="container mx-auto p-4 max-w-5xl text-justify">
@@ -63,13 +63,13 @@ const ArticleContent: React.FC = () => {
             {article.topic}
           </h1>
           <div
-            className="article-content text-justify"
+            className="article-content text-justify break-words hyphens-auto "
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default ArticleContent;
+export default ArticleContent

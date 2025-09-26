@@ -273,7 +273,7 @@ function ContactUs() {
         </form>
       </div>
       <Modal isOpen={success} onClose={() => setSuccess(false)}>
-        <div>Message submitted successfully</div>
+        <div className="text-center p-5">Message submitted successfully</div>
       </Modal>
 
       <Modal
