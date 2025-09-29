@@ -6,11 +6,9 @@ import { Helmet } from "react-helmet-async";
 import LoadingBox from "../../components/LoadingBox";
 import { couponDiscount, currency } from "../../utils/common";
 import PayStack from "../../components/gateway/PayStack";
-import FlutterWave from "../../components/gateway/FlutterWave";
 import Modal from "../../components/ui/Modal";
 import PayFund from "../../components/gateway/PayFund";
 import { FaTimes } from "react-icons/fa";
-import useAuth from "../../hooks/useAuth";
 import { Coupon } from "../../types/product";
 import { PayStackCallback } from "../../types/gateway";
 import useOrder from "../../hooks/useOrder";
@@ -21,7 +19,6 @@ import useRegion from "../../hooks/useRegion";
 const PlaceOrder = () => {
   const { cart, subtotal, total, paymentMethod, clearCart } = useCart();
   const { createOrder, error } = useOrder();
-  const { user } = useAuth();
   const { addNotification } = useToastNotification();
   const { region } = useRegion();
 

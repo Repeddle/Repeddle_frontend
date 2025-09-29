@@ -1,13 +1,13 @@
-import SearchBrands from "./SearchBrands"
-import SearchPrice from "./SearchPrice"
-import SearchDeals from "./SearchDeals"
-import SearchDropDown from "./SearchDropDown"
-import { SearchOptions, SearchOptionsKey } from "../../../types/search"
-import SearchRatings from "./SearchRatings"
-import SearchColor from "./SearchColor"
-import SearchSizes from "./SearchSizes"
-import { useSearchParams } from "react-router-dom"
-import { ICategory } from "../../../types/category"
+import SearchBrands from "./SearchBrands";
+import SearchPrice from "./SearchPrice";
+import SearchDeals from "./SearchDeals";
+import SearchDropDown from "./SearchDropDown";
+import { SearchOptions, SearchOptionsKey } from "../../../types/search";
+import SearchRatings from "./SearchRatings";
+import SearchColor from "./SearchColor";
+import SearchSizes from "./SearchSizes";
+import { useSearchParams } from "react-router-dom";
+import { ICategory } from "../../../types/category";
 import {
   availabilitylist,
   conditionlist,
@@ -17,19 +17,19 @@ import {
   shippinglist,
   sizelist,
   typelist,
-} from "../../../utils/constants"
-import { useCallback, useEffect, useState } from "react"
+} from "../../../utils/constants";
+import { useCallback, useEffect, useState } from "react";
 
 type Props = {
-  setShowFilter: (val: boolean) => void
-  showFilter: boolean
-  queryBrand: string
-  categories: ICategory[]
-  rating: { rating: number; id: string }[]
-  brands: { name: string; _id: string }[]
-  minPrice: number
-  maxPrice: number
-}
+  setShowFilter: (val: boolean) => void;
+  showFilter: boolean;
+  queryBrand: string;
+  categories: ICategory[];
+  rating: { rating: number; id: string }[];
+  brands: { name: string; _id: string }[];
+  minPrice: number;
+  maxPrice: number;
+};
 
 const SearchFilter = ({
   setShowFilter,
@@ -40,92 +40,92 @@ const SearchFilter = ({
   maxPrice,
   minPrice,
 }: Props) => {
-  const countProducts = 0
+  const countProducts = 0;
 
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [params, setParams] = useState<SearchOptions>({})
+  const [params, setParams] = useState<SearchOptions>({});
 
-  const getParam = (key: SearchOptionsKey) => params[key]?.toString() ?? "all"
+  const getParam = (key: SearchOptionsKey) => params[key]?.toString() ?? "all";
 
   const changeFilterParam = (key: SearchOptionsKey, val: string | number) => {
-    if (val === "all") return removeFilterParam(key)
-    const filterParam = getFilterParamObj()
-    filterParam[key] = val.toString()
+    if (val === "all") return removeFilterParam(key);
+    const filterParam = getFilterParamObj();
+    filterParam[key] = val.toString();
 
-    const param = joinFilterParm(filterParam)
+    const param = joinFilterParm(filterParam);
 
     setSearchParams((prev) => {
-      prev.set("filter", param)
-      prev.delete("page")
+      prev.set("filter", param);
+      prev.delete("page");
 
-      return prev
-    })
-  }
+      return prev;
+    });
+  };
 
   const getFilterParamObj = useCallback(() => {
-    const param = searchParams.get("filter")
-    const paramObj: { [key: string]: string } = {}
+    const param = searchParams.get("filter");
+    const paramObj: { [key: string]: string } = {};
     if (param) {
-      const paramArray = param.split(",")
+      const paramArray = param.split(",");
 
       paramArray.map((val) => {
-        const paramSplit = val.split(":")
+        const paramSplit = val.split(":");
         if (paramSplit.length === 2) {
-          paramObj[paramSplit[0]] = paramSplit[1]
+          paramObj[paramSplit[0]] = paramSplit[1];
         }
-      })
+      });
     }
-    return paramObj
-  }, [searchParams])
+    return paramObj;
+  }, [searchParams]);
 
   const joinFilterParm = (param: { [key: string]: string }) => {
     const params = Object.keys(param)
       .map((obj) => `${obj}:${param[obj]}`)
-      .join(",")
-    return params
-  }
+      .join(",");
+    return params;
+  };
 
   const removeFilterParam = (key: SearchOptionsKey) => {
-    const filterParam = getFilterParamObj()
+    const filterParam = getFilterParamObj();
 
-    delete filterParam[key]
+    delete filterParam[key];
 
     if (Object.keys(filterParam).length === 0) {
       setSearchParams((prev) => {
-        prev.delete("filter")
-        return prev
-      })
-      return
+        prev.delete("filter");
+        return prev;
+      });
+      return;
     }
 
-    const param = joinFilterParm(filterParam)
+    const param = joinFilterParm(filterParam);
 
     setSearchParams((prev) => {
-      prev.set("filter", param)
-      return prev
-    })
-  }
+      prev.set("filter", param);
+      return prev;
+    });
+  };
 
   useEffect(() => {
-    const val = getFilterParamObj()
-    setParams(val)
-  }, [getFilterParamObj])
+    const val = getFilterParamObj();
+    setParams(val);
+  }, [getFilterParamObj]);
 
   return (
     <div
-      className={`flex-1 lg:block lg:z-0 lg:transition-none pt-20 pb-20 lg:pt-0 lg:sticky mb-5 rounded-[0.2rem] lg:top-[168px] lg:h-auto 
+      className={`flex-1 lg:block lg:z-0 lg:transition-none pt-20 pb-20 lg:pt-0 lg:sticky mb-5 rounded-[0.2rem] scrollbar-hide lg:h-auto 
       dark:bg-dark-ev1 bg-light-ev1 transition-[left] duration-[2s] z-[10] fixed screen
-      lg:overflow-visible overflow-auto lg:w-auto w-screen top-0 ${
-        showFilter ? "left-0 block" : "hidden -left-[100vw]"
-      }`}
+       overflow-auto lg:w-auto w-screen top-0 ${
+         showFilter ? "left-0 block" : "hidden -left-[100vw]"
+       }`}
     >
       {showFilter && (
         <div
           className="fixed lg:hidden bg-orange-color text-center z-[9] text-white-color rounded-[0.2rem] px-[7px] py-[5px] left-0 right-0 bottom-0"
           onClick={() => {
-            setShowFilter(false)
-            window.scrollTo(0, 0)
+            setShowFilter(false);
+            window.scrollTo(0, 0);
           }}
         >
           Apply Filter ({countProducts ? countProducts : 0})
@@ -256,7 +256,7 @@ const SearchFilter = ({
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SearchFilter
+export default SearchFilter;
