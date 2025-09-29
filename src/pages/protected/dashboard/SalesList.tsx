@@ -37,7 +37,7 @@ const SalesList = () => {
                       <img
                         src={imageUrl + order.items[0].product.images[0]}
                         alt={order.items[0].product.name}
-                        className="aspect-square h-[104px]"
+                        className="aspect-square h-[250px] sm:h-[300px] object-cover md:h-[104px]"
                       />
                       <div className="flex-1 flex flex-col gap-3">
                         <div>
