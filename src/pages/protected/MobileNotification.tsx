@@ -1,27 +1,27 @@
-import moment from "moment";
-import { useNavigate } from "react-router";
-import useNotification from "../../hooks/useNotification";
-import { useEffect } from "react";
-import { Notification } from "../../types/conversation";
-import { imageUrl } from "../../services/api";
-import useAuth from "../../hooks/useAuth";
+import moment from "moment"
+import { useNavigate } from "react-router"
+import useNotification from "../../hooks/useNotification"
+import { useEffect } from "react"
+import { Notification } from "../../types/conversation"
+import { imageUrl } from "../../services/api"
+import useAuth from "../../hooks/useAuth"
 
 const MobileNotification = () => {
-  const navigate = useNavigate();
-  const { fetchNotifications, notifications } = useNotification();
-  const { user } = useAuth();
+  const navigate = useNavigate()
+  const { fetchNotifications, notifications } = useNotification()
+  const { user } = useAuth()
 
   useEffect(() => {
     if (user) {
-      fetchNotifications();
+      fetchNotifications()
     }
-  }, [user]);
+  }, [user])
 
   const handleOnClick = (not: Notification) => {
     // console.log("not", not)
     // socket.emit("remove_id_notifications", not._id)
-    navigate(not.link);
-  };
+    navigate(not.link)
+  }
 
   return (
     <div>
@@ -50,14 +50,14 @@ const MobileNotification = () => {
                 </div>
               </div>
               {!not.read && (
-                <div className="w-3 h-3 bg-orange-color flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-1/2 -translate-y-1/2 top-0" />
+                <div className="w-3 h-3 bg-orange-color flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-[2%] -translate-y-1/2 top-0" />
               )}
             </div>
           ))
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MobileNotification;
+export default MobileNotification

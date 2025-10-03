@@ -2,7 +2,7 @@ import SellerLeft from "../../section/seller/SellerLeft"
 import SellerRight from "../../section/seller/SellerRight"
 import { useParams } from "react-router-dom"
 import useUser from "../../hooks/useUser"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { UserByUsername } from "../../types/user"
 import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
 import useToastNotification from "../../hooks/useToastNotification"
@@ -17,20 +17,19 @@ const Seller = () => {
   const { getUserByUsername, loading, error } = useUser()
   const { addNotification } = useToastNotification()
 
-  useEffect(() => {
-    const fetUser = async () => {
-      if (slug) {
-        const user = await getUserByUsername(slug)
-
-        if (typeof user === "string") {
-          return addNotification(user)
-        }
-
-        setUser(user)
+  const refetchUser = useCallback(async () => {
+    if (slug) {
+      const user = await getUserByUsername(slug)
+      if (typeof user === "string") {
+        return addNotification(user)
       }
+      setUser(user)
     }
-    fetUser()
   }, [slug])
+
+  useEffect(() => {
+    refetchUser()
+  }, [refetchUser, slug])
 
   const addReview = (review: IReview) => {
     if (user) {
@@ -52,6 +51,7 @@ const Seller = () => {
           loadingUser={loading}
           error={error}
           usernameData={user}
+          refetchUser={refetchUser}
         />
 
         <SellerRight usernameData={user} loading={loading} error={error} />
