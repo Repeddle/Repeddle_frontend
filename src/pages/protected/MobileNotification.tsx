@@ -8,7 +8,8 @@ import useAuth from "../../hooks/useAuth"
 
 const MobileNotification = () => {
   const navigate = useNavigate()
-  const { fetchNotifications, notifications } = useNotification()
+  const { fetchNotifications, notifications, markNotification } =
+    useNotification()
   const { user } = useAuth()
 
   useEffect(() => {
@@ -20,6 +21,7 @@ const MobileNotification = () => {
   const handleOnClick = (not: Notification) => {
     // console.log("not", not)
     // socket.emit("remove_id_notifications", not._id)
+    markNotification(not._id)
     navigate(not.link)
   }
 
