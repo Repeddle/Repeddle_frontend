@@ -1,85 +1,87 @@
-import { PropsWithChildren, createContext, useEffect, useState } from "react";
-import { Notification } from "../types/conversation";
-import useAuth from "../hooks/useAuth";
+import { PropsWithChildren, createContext, useEffect, useState } from "react"
+import { Notification } from "../types/conversation"
+import useAuth from "../hooks/useAuth"
 import {
   fetchNotificationsService,
   markNotificationService,
-} from "../services/notification";
-import socket from "../socket";
+} from "../services/notification"
+import socket from "../socket"
 
 type ContextType = {
-  notifications: Notification[];
-  loading: boolean;
-  error: string;
-  fetchNotifications: (filter?: "all" | "read" | "unread") => Promise<boolean>;
-  markNotification: (id: string) => Promise<boolean>;
-};
+  notifications: Notification[]
+  loading: boolean
+  error: string
+  fetchNotifications: (filter?: "all" | "read" | "unread") => Promise<boolean>
+  markNotification: (id: string) => Promise<boolean>
+}
 
 // Create notification context
 export const NotificationContext = createContext<ContextType | undefined>(
   undefined
-);
+)
 
 export const NotificationProvider = ({ children }: PropsWithChildren) => {
-  const { setAuthErrorModalOpen } = useAuth();
+  const { setAuthErrorModalOpen } = useAuth()
 
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const [notifications, setNotifications] = useState<Notification[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleError = (error: any) => {
-    setLoading(false);
+    setLoading(false)
 
     // Check if the error indicates an invalid or expired token
     if (error === "Token expired" || error === "Invalid token") {
-      setError("");
+      setError("")
       // Set the state to open the auth error modal
-      setAuthErrorModalOpen(true);
+      setAuthErrorModalOpen(true)
     } else {
-      setError(error || "An error occurred.");
+      setError(error || "An error occurred.")
     }
-  };
+  }
 
   // Function to fetch notifications
   const fetchNotifications = async (filter?: "all" | "read" | "unread") => {
     try {
-      setError("");
-      setLoading(true);
-      const result = await fetchNotificationsService(filter);
-      setNotifications(result);
-      setLoading(false);
-      return true;
+      setError("")
+      setLoading(true)
+      const result = await fetchNotificationsService(filter)
+      setNotifications(result)
+      setLoading(false)
+      return true
     } catch (error) {
-      handleError(error as string);
-      setLoading(false);
-      return false;
+      handleError(error as string)
+      setLoading(false)
+      return false
     }
-  };
+  }
 
   // Function to fetch notifications
   const markNotification = async (id: string) => {
     try {
-      setError("");
-      setLoading(true);
-      await markNotificationService(id);
-      setLoading(false);
-      return true;
+      setError("")
+      setLoading(true)
+      await markNotificationService(id)
+      const result = await fetchNotificationsService()
+      setNotifications(result)
+      setLoading(false)
+      return true
     } catch (error) {
-      handleError(error as string);
-      setLoading(false);
-      return false;
+      handleError(error as string)
+      setLoading(false)
+      return false
     }
-  };
+  }
 
   useEffect(() => {
     socket.on("newNotification", (notification) => {
       setNotifications((prevNotifications) => [
         notification,
         ...prevNotifications,
-      ]);
-    });
-  }, []);
+      ])
+    })
+  }, [])
 
   return (
     <NotificationContext.Provider
@@ -93,5 +95,5 @@ export const NotificationProvider = ({ children }: PropsWithChildren) => {
     >
       {children}
     </NotificationContext.Provider>
-  );
-};
+  )
+}
