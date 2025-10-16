@@ -17,6 +17,7 @@ import useMessage from "../../hooks/useMessage"
 import useUser from "../../hooks/useUser"
 import { imageUrl } from "../../services/api"
 import { IReview } from "../../types/product"
+import { checkSellerReviewEligibility } from "../../utils/reviewUtils"
 
 type Props = {
   loadingUser: boolean
@@ -50,6 +51,12 @@ const SellerLeft = ({
   const [showModel, setShowModel] = useState(false)
   const [showReport, setShowReport] = useState(false)
   const [showWriteReview, setShowWriteReview] = useState(false)
+
+  const [rating, setRating] = useState("")
+  const [comment, setComment] = useState("")
+  const [like, setLike] = useState<boolean | undefined>()
+  const [editReview, setEditReview] = useState<IReview | null>(null)
+  const [isEditMode, setIsEditMode] = useState(false)
 
   const toggleFollow = async () => {
     if (!usernameData) return
@@ -120,6 +127,24 @@ const SellerLeft = ({
     setMessageLoading(false)
   }
 
+  const handleEditReview = (review: IReview) => {
+    setEditReview(review)
+    setIsEditMode(true)
+    setComment(review.comment)
+    setRating(review.rating.toString())
+    setLike(review.like)
+    setShowWriteReview(true)
+  }
+
+  const handleCancelEdit = () => {
+    setEditReview(null)
+    setIsEditMode(false)
+    setComment("")
+    setRating("")
+    setLike(undefined)
+    setShowWriteReview(false)
+  }
+
   const isFollowing = useMemo(
     () =>
       !!(
@@ -128,6 +153,17 @@ const SellerLeft = ({
       ),
     [userInfo?._id, usernameData?.user.followers]
   )
+
+  const reviewEligibility = useMemo(() => {
+    if (!usernameData?.user) {
+      return { canReview: false, hasReviewed: false }
+    }
+    return checkSellerReviewEligibility(
+      userInfo,
+      usernameData.user,
+      usernameData.user.reviews
+    )
+  }, [userInfo, usernameData?.user])
 
   return (
     <div className="flex-[2]">
@@ -200,38 +236,64 @@ const SellerLeft = ({
                     </button>
                   ))}
               </div>
-              <div
-                className="cursor-pointer"
-                onClick={() => setShowModel(!showModel)}
-              >
-                <Rating
-                  rating={usernameData.user.rating ?? 0}
-                  numReviews={usernameData.user.numReviews}
-                />
-              </div>
-              {userInfo && usernameData.user.buyers?.includes(userInfo._id) && (
+              <div className="flex flex-col items-center">
                 <div
                   className="cursor-pointer"
+                  onClick={() => setShowModel(!showModel)}
+                >
+                  <Rating
+                    rating={usernameData.user.rating ?? 0}
+                    numReviews={usernameData.user.numReviews}
+                  />
+                </div>
+                <button
+                  className="text-orange-color hover:text-malon-color text-sm underline mt-1"
+                  onClick={() => setShowModel(true)}
+                >
+                  View All Reviews
+                </button>
+              </div>
+              {reviewEligibility.canReview && (
+                <button
+                  className="bg-orange-color text-white px-4 py-2 rounded-lg hover:bg-malon-color transition-colors mt-2"
                   onClick={() => setShowWriteReview(true)}
                 >
-                  Leave a review
-                </div>
+                  Leave a Review
+                </button>
               )}
+              {/* {!reviewEligibility.canReview && userInfo && (
+                <div className="text-sm text-gray-600 dark:text-gray-400 mt-2 text-center">
+                  {getReviewEligibilityMessage(reviewEligibility)}
+                </div>
+              )} */}
 
               <Modal isOpen={showModel} onClose={() => setShowModel(false)}>
                 <ReviewLists
                   setShowModel={setShowModel}
                   reviews={usernameData.user.reviews}
+                  onEditReview={handleEditReview}
                 />
               </Modal>
               <Modal
                 isOpen={showWriteReview}
-                onClose={() => setShowWriteReview(false)}
+                onClose={
+                  isEditMode
+                    ? handleCancelEdit
+                    : () => setShowWriteReview(false)
+                }
               >
                 <WriteReview
                   userId={usernameData.user._id}
                   setShowModel={setShowWriteReview}
                   addReview={addReview}
+                  comment={comment}
+                  rating={rating}
+                  setComment={setComment}
+                  setRating={setRating}
+                  setLike={setLike}
+                  like={like}
+                  editReview={editReview ?? undefined}
+                  isEditMode={isEditMode}
                 />
               </Modal>
               <button

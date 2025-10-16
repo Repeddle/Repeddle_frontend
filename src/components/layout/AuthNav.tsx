@@ -15,7 +15,7 @@ function AuthNav() {
           className="text-black dark:text-white text-base cursor-pointer"
         />
       </div>
-      <Link to={"/"} className="h-8 sm:h-10 cursor-pointer">
+      <Link to={"/"} className="h-6 md:h-8 sm:h-10 cursor-pointer">
         <img
           src={
             isDarkMode
