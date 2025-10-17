@@ -205,11 +205,13 @@ const IsSeller = ({
       <hr />
       <div className="flex justify-center flex-col lg:flex-row mb-2.5 lg:mb-0">
         <div className="flex mb-2.5 flex-[8]">
-          <img
-            className="object-cover object-top w-[100px] h-[130px]"
-            src={imageUrl + orderItem.product.images[0]}
-            alt={orderItem.product.name}
-          />
+          <Link to={`/product/${orderItem.product.slug}`}>
+            <img
+              className="object-cover object-top w-[100px] h-[130px]"
+              src={imageUrl + orderItem.product.images[0]}
+              alt={orderItem.product.name}
+            />
+          </Link>
           <div className="flex flex-col justify-center px-5 py-0">
             <div className="capitalize font-semibold mb-2.5">
               {orderItem.product.name}

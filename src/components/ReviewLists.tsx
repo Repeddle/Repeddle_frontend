@@ -9,6 +9,7 @@ import moment from "moment"
 import { imageUrl } from "../services/api"
 import useReviews from "../hooks/useReviews"
 import useToastNotification from "../hooks/useToastNotification"
+import Button from "./ui/Button"
 
 type Props = {
   setShowModel: (val: boolean) => void
@@ -27,9 +28,12 @@ const ReviewLists = ({
     <div className="p-[30px]">
       <div className="text-3xl font-bold mb-5">Reviews</div>
       {linkToSeller && (
-        <div className="text-sm text-gray-500 mb-5">
-          <Link to={linkToSeller}>Leave a Review</Link>
-        </div>
+        <Link to={linkToSeller} className="my-6">
+          <Button text="Write a Review" />
+        </Link>
+
+        // <div className="text-sm text-gray-500 mb-5">
+        // </div>
       )}
       <div className="mb-5">
         {!reviews || reviews.length === 0 ? (

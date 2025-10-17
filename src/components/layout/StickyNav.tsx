@@ -2,12 +2,18 @@ import { NavLink } from "react-router-dom"
 import useAuth from "../../hooks/useAuth"
 import Search from "../../assets/icons/search.svg"
 import { FaEnvelope, FaHouse, FaUser } from "react-icons/fa6"
+import useNotification from "../../hooks/useNotification"
 
 const StickyNav = () => {
   const { user } = useAuth()
 
+  const { dotNotifications } = useNotification()
+
+  const messageDot = dotNotifications.filter(
+    (notification) => notification.type === "message"
+  )
+
   // TODO:
-  const messageNotification = []
   const purchaseNotification: never[] = []
   const soldNotification: never[] = []
 
@@ -66,9 +72,9 @@ const StickyNav = () => {
         >
           <FaEnvelope size={24} />
           <div className="text-[11px] leading-normal">Message</div>
-          {messageNotification.length > 0 && (
+          {messageDot.length > 0 && (
             <div className="w-3 h-3 flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-5 top-[5px] bg-orange-color">
-              <span>{messageNotification.length}</span>
+              <span>{messageDot.length}</span>
             </div>
           )}
         </NavLink>
