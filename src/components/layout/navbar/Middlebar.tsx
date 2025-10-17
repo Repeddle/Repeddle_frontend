@@ -1,46 +1,53 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import LoggedInBar from "./LoggedInBar";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import SearchBox from "../../SearchBox";
-import { FaBell } from "react-icons/fa";
-import useAuth from "../../../hooks/useAuth";
-import useCart from "../../../hooks/useCart";
-import IconsTooltips from "../../IconsTooltips";
-import NotificationList from "./NotificationList";
-import useTheme from "../../../hooks/useTheme";
-import MessageIcon from "../../../assets/icons/MessageIcon.svg";
-import CartIcon from "../../../assets/icons/CartIcon.svg";
-import useNotification from "../../../hooks/useNotification";
+import { useEffect, useMemo, useRef, useState } from "react"
+import LoggedInBar from "./LoggedInBar"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import SearchBox from "../../SearchBox"
+import { FaBell } from "react-icons/fa"
+import useAuth from "../../../hooks/useAuth"
+import useCart from "../../../hooks/useCart"
+import IconsTooltips from "../../IconsTooltips"
+import NotificationList from "./NotificationList"
+import useTheme from "../../../hooks/useTheme"
+import MessageIcon from "../../../assets/icons/MessageIcon.svg"
+import CartIcon from "../../../assets/icons/CartIcon.svg"
+import useNotification from "../../../hooks/useNotification"
 
 function Middlebar() {
-  const modelRef2 = useRef(null);
-  const { isDarkMode } = useTheme();
-  const { user } = useAuth();
-  const { cart } = useCart();
-  const [showNotification, setShowNotification] = useState(false);
-  const { fetchNotifications, notifications } = useNotification();
+  const modelRef2 = useRef(null)
+  const { isDarkMode } = useTheme()
+  const { user } = useAuth()
+  const { cart } = useCart()
+  const [showNotification, setShowNotification] = useState(false)
+  const { fetchNotifications, notifications, dotNotifications } =
+    useNotification()
 
-  const location = useLocation();
+  const location = useLocation()
 
-  const navigate = useNavigate();
-  const messageNotification: unknown[] = [];
+  const navigate = useNavigate()
+  const messageDot = dotNotifications.filter(
+    (notification) => notification.type === "message"
+  )
 
-  const purchaseNotification: unknown[] = [];
-  const productNotification: unknown[] = [];
-  const soldNotification: unknown[] = [];
+  const purchaseNotification: unknown[] = []
+  const productNotification: unknown[] = []
+  const soldNotification: unknown[] = []
 
-  const notAllowedRoutes = ["/admin", "/dashboard"];
+  const notAllowedRoutes = ["/admin", "/dashboard"]
 
   const hide = useMemo(
     () => !notAllowedRoutes.every((val) => !location.pathname.startsWith(val)),
     []
-  );
+  )
+
+  const unreadNotifications = useMemo(() => {
+    return notifications.filter((notification) => !notification.read)
+  }, [notifications])
 
   useEffect(() => {
     if (user) {
-      fetchNotifications();
+      fetchNotifications()
     }
-  }, [user]);
+  }, [user])
 
   return (
     <div className="flex justify-center items-center px-5 pb-2.5 pt-0 lg:py-0">
@@ -75,9 +82,9 @@ function Middlebar() {
               classNames="group-hover:opacity-100"
               tips="Messages"
             />
-            {messageNotification.length > 0 && (
+            {messageDot.length > 0 && (
               <span className="w-3 h-3 flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-0 top-0 bg-orange-color">
-                <span>{messageNotification.length}</span>
+                <span>{messageDot.length}</span>
               </span>
             )}
           </Link>
@@ -86,7 +93,7 @@ function Middlebar() {
           <div className="text-xl relative mx-2.5 my-0 hover:text-orange-color hidden md:block group">
             <div
               onClick={() => {
-                setShowNotification(!showNotification);
+                setShowNotification(!showNotification)
               }}
               className="group-hover:opacity-100 relative"
             >
@@ -102,9 +109,9 @@ function Middlebar() {
               tips="Notifications"
             />
 
-            {notifications.length > 0 && (
+            {unreadNotifications.length > 0 && (
               <span className="w-3 h-3 flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-0 top-0 bg-orange-color">
-                <span>{notifications.length}</span>
+                <span>{unreadNotifications.length}</span>
               </span>
             )}
 
@@ -135,9 +142,9 @@ function Middlebar() {
               size={25}
               onClick={() => navigate("/notifications")}
             />
-            {notifications.length > 0 && (
+            {unreadNotifications.length > 0 && (
               <span className="w-3 h-3 flex items-center justify-center text-white text-[8px] absolute cursor-default rounded-[50%] right-0 top-0 bg-orange-color">
-                <span>{notifications.length}</span>
+                <span>{unreadNotifications.length}</span>
               </span>
             )}
           </div>
@@ -158,7 +165,7 @@ function Middlebar() {
         )}
       </div>
     </div>
-  );
+  )
 }
 
-export default Middlebar;
+export default Middlebar

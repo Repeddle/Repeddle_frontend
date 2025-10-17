@@ -18,12 +18,21 @@ function AuthNav() {
       <Link to={"/"} className="h-6 md:h-8 sm:h-10 cursor-pointer">
         <img
           src={
+            // isDarkMode              ? "https://res.cloudinary.com/emirace/image/upload/v1661147636/Logo_White_3_ii3edm.gif"
+            // :
+            "https://res.cloudinary.com/emirace/image/upload/v1661147778/Logo_Black_1_ampttc.gif"
+          }
+          alt="logo"
+          className="h-full lg:hidden"
+        />
+        <img
+          src={
             isDarkMode
               ? "https://res.cloudinary.com/emirace/image/upload/v1661147636/Logo_White_3_ii3edm.gif"
               : "https://res.cloudinary.com/emirace/image/upload/v1661147778/Logo_Black_1_ampttc.gif"
           }
           alt="logo"
-          className="h-full"
+          className="h-full lg:block hidden"
         />
       </Link>
     </div>

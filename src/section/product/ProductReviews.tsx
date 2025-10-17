@@ -94,6 +94,8 @@ const ProductReviews = ({ product, setProduct }: Props) => {
       }
     }
 
+    clearForm()
+
     setLoadingCreateReview(false)
   }
 
@@ -169,34 +171,35 @@ const ProductReviews = ({ product, setProduct }: Props) => {
               key={review._id}
             >
               <strong>{review.user.username}</strong>{" "}
-              {review.like ? (
-                <FaThumbsUp color="#eb9f40" className="text-lg ml-2.5" />
-              ) : review.like === false ? (
-                <FaThumbsDown color="red" className="text-lg ml-2.5" />
-              ) : (
-                <FaFaceSmile color="grey" className="text-lg ml-2.5" />
-              )}
-              <Rating rating={review.rating} caption=" " />
+              <div className="flex items-center gap-4">
+                {review.like ? (
+                  <FaThumbsUp color="#eb9f40" className="text-lg ml-2.5" />
+                ) : review.like === false ? (
+                  <FaThumbsDown color="red" className="text-lg ml-2.5" />
+                ) : (
+                  <FaFaceSmile color="grey" className="text-lg ml-2.5" />
+                )}
+                <Rating rating={review.rating} caption=" " />
+              </div>
               <p>{review.createdAt.substring(0, 10)}</p>
               <p className="mb-2">{review.comment}</p>
-              {user?.role === "Admin" ||
-                (user?._id === review.user._id && (
-                  <div className="flex items-center gap-3 mt-2">
-                    <div
-                      className="text-orange-color hover:text-malon-color text-sm underline"
-                      onClick={() => editReview(review)}
-                    >
-                      Edit
-                    </div>
-
-                    <div
-                      className="text-[red] cursor-pointer"
-                      onClick={() => deleteReview(review._id)}
-                    >
-                      {loadingDeleteReview ? "Deleting..." : "Delete"}
-                    </div>
+              {(user?.role === "Admin" || user?._id === review.user._id) && (
+                <div className="flex items-center gap-3 mt-2">
+                  <div
+                    className="text-orange-color hover:text-malon-color text-sm underline"
+                    onClick={() => editReview(review)}
+                  >
+                    Edit
                   </div>
-                ))}
+
+                  <div
+                    className="text-[red] cursor-pointer"
+                    onClick={() => deleteReview(review._id)}
+                  >
+                    {loadingDeleteReview ? "Deleting..." : "Delete"}
+                  </div>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -206,7 +209,7 @@ const ProductReviews = ({ product, setProduct }: Props) => {
               <div className="bg-light-ev1 dark:bg-dark-ev1 p-6 rounded-lg border">
                 <form onSubmit={submitHandler}>
                   <h2 className="text-xl font-bold mb-4">
-                    Write a customer review
+                    Write a product review
                   </h2>
                   <div className="my-4">
                     <label htmlFor="rating">Rating</label>
@@ -215,7 +218,7 @@ const ProductReviews = ({ product, setProduct }: Props) => {
                       aria-label="Rating"
                       value={rating}
                       onChange={(e) => setRating(e.target.value)}
-                      className="text-base ml-2.5 pl-2.5 pr-6 text-ellipsis whitespace-nowrap leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color appearance-none text-black-color dark:text-white-color"
+                      className="text-base border rounded-md ml-2.5 pl-2.5 pr-6 text-ellipsis whitespace-nowrap leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color appearance-none text-black-color dark:text-white-color"
                     >
                       <option value="">Select...</option>
                       <option value="1">1- Poor</option>
@@ -255,7 +258,7 @@ const ProductReviews = ({ product, setProduct }: Props) => {
                       />
                     </div>
                   </div>
-                  <div className="my-3">
+                  <div className="my-3 space-x-2">
                     <Button
                       text="Submit"
                       type="submit"
@@ -266,7 +269,7 @@ const ProductReviews = ({ product, setProduct }: Props) => {
                         text="Cancel"
                         type="button"
                         onClick={clearForm}
-                        className="bg-secondary-color text-white"
+                        className="!bg-malon-color text-white"
                       />
                     ) : null}
                     {loadingCreateReview && <LoadingBox></LoadingBox>}
