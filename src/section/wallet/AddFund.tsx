@@ -1,21 +1,21 @@
 import { useState } from "react";
 import PayStack from "../../components/gateway/PayStack";
 import { FaWallet } from "react-icons/fa";
-import { closePaymentModal, useFlutterwave } from "flutterwave-react-v3";
-import useAuth from "../../hooks/useAuth";
+// import { closePaymentModal, useFlutterwave } from "flutterwave-react-v3";
+// import useAuth from "../../hooks/useAuth";
 import {
   FlutterWaveResponse,
-  FlutterwaveConfig,
+  // FlutterwaveConfig,
 } from "flutterwave-react-v3/dist/types";
 import { PayStackCallback } from "../../types/gateway";
 import useWallet from "../../hooks/useWallet";
 import useToastNotification from "../../hooks/useToastNotification";
 import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal";
-import useRegion from "../../hooks/useRegion";
+// import useRegion from "../../hooks/useRegion";
 
 // TODO: ask about this, fetching in one part and in env in another part
 // const BASE_KEY = process.env.REACT_APP_FLUTTERWAVE_KEY
-const BASE_KEY = "FLWPUBK-e318a10dae010442ff930a20890f6379-X";
+// const BASE_KEY = "FLWPUBK-e318a10dae010442ff930a20890f6379-X";
 
 type Props = {
   setShowModel: (val: boolean) => void;
@@ -25,45 +25,40 @@ type Props = {
   currency: "NGN" | "ZAR";
 };
 
-const AddFund = ({
-  currency,
-  setShowSuccess,
-  setRefresh,
-  setShowModel,
-}: Props) => {
+const AddFund = ({ setShowSuccess, setRefresh, setShowModel }: Props) => {
   const { fundWalletFlutter, loading } = useWallet();
-  const { region } = useRegion();
+  // const { region } = useRegion();
 
   const [loadingPay, setLoadingPay] = useState(false);
   const { addNotification } = useToastNotification();
 
   const [amount, setAmount] = useState(0);
 
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
-  const config: FlutterwaveConfig = {
-    public_key: BASE_KEY!,
-    // tx_ref: v4(),
-    // TODO: used uuid in previous code
-    tx_ref: Date.now().toString(),
-    amount,
-    currency,
-    //currency: "ZA",
-    //country: "ZA",
-    payment_options: "card,mobilemoney,ussd",
-    customer: {
-      email: user?.email ?? "",
-      phone_number: user?.phone ?? "",
-      name: `${user?.firstName} ${user?.lastName}`,
-    },
-    customizations: {
-      title: "Repeddle",
-      description: "Funding Repeddle Wallet",
-      logo: "https://res.cloudinary.com/emirace/image/upload/v1669632933/qepvcjzw8pfl3q8cw9xf.png",
-    },
-  };
+  // const config: FlutterwaveConfig = {
+  //   public_key: BASE_KEY!,
+  //   // tx_ref: v4(),
+  //   // TODO: used uuid in previous code
+  //   tx_ref: Date.now().toString(),
+  //   amount,
+  //   currency,
+  //   //currency: "ZA",
+  //   //country: "ZA",
+  //   payment_options: "card,mobilemoney,ussd",
+  //   customer: {
+  //     email: user?.email ?? "",
+  //     phone_number: user?.phone ?? "",
+  //     name: `${user?.firstName} ${user?.lastName}`,
+  //   },
+  //   customizations: {
+  //     title: "Repeddle",
+  //     description: "Funding Repeddle Wallet",
+  //     logo: "https://res.cloudinary.com/emirace/image/upload/v1669632933/qepvcjzw8pfl3q8cw9xf.png",
+  //   },
+  // };
 
-  const handleFlutterPayment = useFlutterwave(config);
+  // const handleFlutterPayment = useFlutterwave(config);
 
   const onApprove = async (
     val: (FlutterWaveResponse & { type: string }) | PayStackCallback
@@ -106,7 +101,7 @@ const AddFund = ({
           setAmount(parsedValue ? parseFloat(parsedValue) : 0);
         }}
       />
-      {region === "NG" ? (
+      {/* {region === "NG" ? (
         loadingPay ? (
           <div className="flex items-center justify-center">
             <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-orange-color"></div>
@@ -134,14 +129,14 @@ const AddFund = ({
             Continue
           </div>
         )
-      ) : (
-        <PayStack
-          amount={amount}
-          onApprove={onApprove}
-          isLoading={loadingPay}
-          setIsLoading={setLoadingPay}
-        />
-      )}
+      ) : ( */}
+      <PayStack
+        amount={amount}
+        onApprove={onApprove}
+        isLoading={loadingPay}
+        setIsLoading={setLoadingPay}
+      />
+      {/* )} */}
     </div>
   );
 };
