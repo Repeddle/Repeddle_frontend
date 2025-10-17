@@ -1,4 +1,4 @@
-import { FaCopyright } from "react-icons/fa";
+import { FaCopyright } from "react-icons/fa"
 
 const ReserveAndCopyright = () => {
   return (
@@ -11,11 +11,11 @@ const ReserveAndCopyright = () => {
         platforms.
       </div>
       <div className="flex justify-center  lg:mb-0 dark:text-black bg-black dark:bg-white font-bold text-white h-[50px] items-center text-sm">
-        <FaCopyright className="text-xl mr-2.5" /> 2023 Repeddle. All Right
-        Reserved.
+        <FaCopyright className="text-xl mr-2.5" /> {new Date().getFullYear()}{" "}
+        Repeddle. All Right Reserved.
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ReserveAndCopyright;
+export default ReserveAndCopyright

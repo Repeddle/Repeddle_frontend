@@ -513,7 +513,11 @@ const Product = () => {
                     />
                   </div>
                   <Modal isOpen={showModel} onClose={() => setShowModel(false)}>
-                    <ReviewLists setShowModel={setShowModel} />
+                    <ReviewLists
+                      setShowModel={setShowModel}
+                      reviews={product.seller.reviews}
+                      linkToSeller={`/seller/${product.seller.username}`}
+                    />
                   </Modal>
 
                   {!isUser && (

@@ -4,25 +4,43 @@ import Rating from "./Rating"
 import useAuth from "../hooks/useAuth"
 import { IReview } from "../types/product"
 import MessageBox from "./MessageBox"
-import { FaThumbsDown, FaThumbsUp } from "react-icons/fa"
+import { FaThumbsDown, FaThumbsUp, FaEdit, FaTrash } from "react-icons/fa"
 import moment from "moment"
 import { imageUrl } from "../services/api"
+import useReviews from "../hooks/useReviews"
+import useToastNotification from "../hooks/useToastNotification"
 
 type Props = {
   setShowModel: (val: boolean) => void
   reviews?: IReview[]
+  onEditReview?: (review: IReview) => void
+  linkToSeller?: string
 }
 
-const ReviewLists = ({ setShowModel, reviews }: Props) => {
+const ReviewLists = ({
+  setShowModel,
+  reviews,
+  onEditReview,
+  linkToSeller,
+}: Props) => {
   return (
     <div className="p-[30px]">
       <div className="text-3xl font-bold mb-5">Reviews</div>
+      {linkToSeller && (
+        <div className="text-sm text-gray-500 mb-5">
+          <Link to={linkToSeller}>Leave a Review</Link>
+        </div>
+      )}
       <div className="mb-5">
         {!reviews || reviews.length === 0 ? (
           <MessageBox>There is no reviews</MessageBox>
         ) : (
           reviews.map((item) => (
-            <ReviewItem item={item} setShowModel={setShowModel} />
+            <ReviewItem
+              item={item}
+              setShowModel={setShowModel}
+              onEditReview={onEditReview}
+            />
           ))
         )}
       </div>
@@ -33,80 +51,76 @@ const ReviewLists = ({ setShowModel, reviews }: Props) => {
 type ReviewItemProps = {
   setShowModel: (val: boolean) => void
   item: IReview
+  onEditReview?: (review: IReview) => void
 }
 
-const ReviewItem = ({ setShowModel, item }: ReviewItemProps) => {
+const ReviewItem = ({
+  setShowModel,
+  item: currentReview,
+  onEditReview,
+}: ReviewItemProps) => {
   const { user } = useAuth()
-  // const { replyProductComment } = useProducts()
-  // const { addNotification } = useToastNotification()
+  const { deleteUserReview } = useReviews()
+  const { addNotification } = useToastNotification()
 
-  const [replyText, setReplyText] = useState("")
-  const [replyVisible, setReplyVisible] = useState(false)
-  const [currentReview] = useState(item)
-  const [loading, setLoading] = useState(false)
+  // const [replyText, setReplyText] = useState("")
+  // const [replyVisible, setReplyVisible] = useState(false)
+  // const [currentReview, setCurrentReview] = useState(item)
+  const [deleting, setDeleting] = useState(false)
 
-  const handleReply = () => {
-    setReplyVisible(true)
-  }
+  // const handleReply = () => {
+  //   setReplyVisible(true)
+  // }
 
-  const handleReplySubmit = async () => {
+  // const handleReplySubmit = async () => {
+  //   try {
+  //     if (!replyText) {
+  //       addNotification("Enter a reply", undefined, true)
+  //       return
+  //     }
+
+  //     setLoading(true)
+  //     // TODO: Implement reply functionality
+  //     addNotification("Reply functionality coming soon")
+  //     setReplyText("")
+  //     setReplyVisible(false)
+  //     setLoading(false)
+  //   } catch (error) {
+  //     addNotification("Failed to submit reply", undefined, true)
+  //     setLoading(false)
+  //   }
+  // }
+
+  const handleDeleteReview = async () => {
+    if (!confirm("Are you sure you want to delete this review?")) {
+      return
+    }
+
+    setDeleting(true)
     try {
-      // if (!replyText) {
-      //   addNotification("Enter a reply",)
-      //   return
-      // }
-
-      setLoading(true)
-
-      //   const { data } = await axios.put(
-      //     `/api/reviews/${item._id}`,
-      //     { comment: replyText },
-      //     {
-      //       headers: { Authorization: `Bearer ${userInfo.token}` },
-      //     }
-      //   )
-      //   setCurrentReview(data)
-      //   setReplyText("")
-      //   setReplyVisible(false)
-      //   ctxDispatch({
-      //     type: "SHOW_TOAST",
-      //     payload: {
-      //       message: "Reply submitted successfully",
-      //       showStatus: true,
-      //       state1: "visible1 success",
-      //     },
-      //   })
-      //   socket.emit("post_data", {
-      //     userId: currentReview.buyerId._id,
-      //     itemId: currentReview._id,
-      //     notifyType: "review",
-      //     msg: `${userInfo.username} responded to your review`,
-      //     mobile: { path: "MyAccount", id: currentReview.sellerId._id },
-      //     link: `/seller/${currentReview.sellerId._id}`,
-      //     userImage: userInfo.image,
-      //   })
-      //   setLoading(false)
+      const result = await deleteUserReview(currentReview._id)
+      if (typeof result === "string") {
+        addNotification(result, undefined, true)
+      } else {
+        addNotification("Review deleted successfully")
+        setShowModel(false)
+      }
     } catch (error) {
-      //   ctxDispatch({
-      //     type: "SHOW_TOAST",
-      //     payload: {
-      //       message: getError(error),
-      //       showStatus: true,
-      //       state1: "visible1 error",
-      //     },
-      //   })
+      addNotification("Failed to delete review", undefined, true)
+    } finally {
+      setDeleting(false)
     }
   }
 
   return (
-    <div className="flex items-start mb-5 p-4">
+    <div className="flex items-center mb-5 p-4">
       <div className="flex items-center flex-col justify-center mr-2.5">
         <Link
           to={`/seller/${currentReview?.user?.username}`}
           onClick={() => setShowModel(false)}
         >
           <img
-            className="w-[50px] h-[50px] mr-0 rounded-[25px]"
+            className="w-[40px] h-[40px] mr-0 rounded-full"
             src={imageUrl + currentReview?.user?.image}
             alt="Reviewer"
           />
@@ -116,7 +130,7 @@ const ReviewItem = ({ setShowModel, item }: ReviewItemProps) => {
             to={`/seller/${currentReview?.user?.username}`}
             onClick={() => setShowModel(false)}
           >
-            <div className="font-bold text-base text-malon-color">
+            <div className="font-bold text-sm text-malon-color">
               {currentReview?.user?.username}
             </div>
           </Link>
@@ -129,39 +143,36 @@ const ReviewItem = ({ setShowModel, item }: ReviewItemProps) => {
         <div className="flex items-center">
           <Rating rating={currentReview.rating} caption=" " />
           {currentReview.like ? (
-            <FaThumbsUp className="ml-[30px]" color="#eb9f40" size={"lg"} />
+            <FaThumbsUp className="ml-[30px]" color="#eb9f40" size={24} />
           ) : (
-            <FaThumbsDown className="ml-[30px]" color="red" size={"lg"} />
+            <FaThumbsDown className="ml-[30px]" color="red" size={24} />
           )}
         </div>
         <div className="text-sm mb-2">{currentReview.comment}</div>
-        // TODO:
-        {/* {currentReview.sellerReply && ( */}
-        {currentReview.user && (
-          <div className=" mb-2 p-2 rounded-[5px] bg-light-ev2 dark:bg-dark-ev2">
-            <div
-              className="flex items-center mb-[5px]"
-              onClick={() => setShowModel(false)}
+        {/* Edit and Delete buttons for review owner */}
+        {user?._id === currentReview.user._id && (
+          <div className="flex items-center gap-3 mb-2">
+            <button
+              className="text-orange-color hover:text-malon-color text-sm underline flex items-center gap-1"
+              onClick={() => {
+                onEditReview?.(currentReview)
+              }}
             >
-              <img
-                className="w-5 h-5 mr-2.5 rounded-[25px]"
-                // TODO:
-                // src={currentReview?.sellerId?.image}
-                src={imageUrl + currentReview?.user?.image}
-                alt="Reviewer"
-              />
-              <div className="text-xs text-malon-color">
-                // TODO:
-                {/* {currentReview?.sellerId?.username} */}
-                {currentReview?.user?.username}
-              </div>
-            </div>
-            // TODO:
-            {/* {currentReview.sellerReply} */}
-            {currentReview.comment}
+              <FaEdit size={12} />
+              Edit
+            </button>
+            <button
+              className="text-red-500 hover:text-red-700 text-sm underline flex items-center gap-1"
+              onClick={handleDeleteReview}
+              disabled={deleting}
+            >
+              <FaTrash size={12} />
+              {deleting ? "Deleting..." : "Delete"}
+            </button>
           </div>
         )}
-        {!replyVisible &&
+
+        {/* {!replyVisible &&
           // TODO:
           //   !currentReview.sellerReply &&
           //   user?._id === currentReview?.sellerId?._id && (
@@ -190,7 +201,7 @@ const ReviewItem = ({ setShowModel, item }: ReviewItemProps) => {
               Submit
             </button>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   )
