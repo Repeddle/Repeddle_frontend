@@ -9,7 +9,7 @@ function GoogleLoginButton() {
   const [searchParams] = useSearchParams();
   const { getUser } = useAuth();
   const { addNotification } = useToastNotification();
-  const redirectUri = `${window.location.origin}${window.location.pathname}?provider=google`;
+  const redirectUri = `${window.location.origin}${window.location.pathname}`;
   const provider = searchParams.get("provider");
   const code = searchParams.get("code");
 
@@ -17,7 +17,7 @@ function GoogleLoginButton() {
     if (provider !== "google" || !code) return;
 
     api
-      .get(`/auth/google/callback?code=${code}&redirect=${redirectUri}`)
+      .get(`/auth/google/callback?code=${code}`)
       .then((response: any) => {
         localStorage.setItem("authToken", response.token);
         getUser();
@@ -26,13 +26,13 @@ function GoogleLoginButton() {
       .catch((error) => {
         console.log(error ? error : "An error occurred");
       });
-  }, [searchParams, redirectUri]);
+  }, [searchParams]);
 
   const signIn = async () => {
     try {
-      console.log("Redirect URI:", redirectUri);
-      const res: any = await api.get(`/auth/google?redirect=${redirectUri}`);
-      window.location.href = `${res.authUrl}`;
+      await api.get(
+        `/auth/authorize?redirect_uri=${redirectUri}&client_id=google&scope=profile,email`
+      );
     } catch (error) {
       addNotification("An error occurred");
       console.log(error);
