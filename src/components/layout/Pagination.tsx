@@ -77,9 +77,9 @@ const Pagination = ({
 
   return (
     <div className="flex mr-4">
-      <div className="flex w-auto ml-auto items-center self-end justify-end bg-white dark:bg-black  mt-8 px-[15px] py-2.5 rounded-[5px]">
+      <div className="flex w-auto ml-auto items-center self-end justify-end bg-white dark:bg-black  mt-8 px-0 sm:px-[15px] py-2.5 rounded-[5px]">
         <button
-          className="bg-transparent border-none text-black disabled:text-[#aaadc7] dark:text-white px-3 py-1.5"
+          className="bg-transparent border-none hidden sm:block text-black disabled:text-[#aaadc7] dark:text-white px-3 py-1.5"
           disabled={currentPage === 1}
           onClick={() => newPage(1)}
         >
@@ -97,7 +97,7 @@ const Pagination = ({
             typeof pag !== "string" ? (
               <li
                 key={pag}
-                className={`cursor-pointer overflow-hidden mx-[3px] px-[13px] py-1.5 hover:bg-orange-color hover:text-white my-0 rounded-[5px] ${
+                className={`cursor-pointer overflow-hidden mx-[1px] sm:mx-[3px] px-[13px] py-1.5 hover:bg-orange-color hover:text-white my-0 rounded-[5px] ${
                   currentPage === pag
                     ? "bg-orange-color text-white"
                     : "text-black dark:text-white"
@@ -109,7 +109,7 @@ const Pagination = ({
             ) : (
               <li
                 key={pag}
-                className={`overflow-hidden mx-[3px] px-[13px] text-black dark:text-white py-1.5 my-0 rounded-[5px]`}
+                className={`overflow-hidden mx-[1px] sm:mx-[3px] px-[13px] text-black dark:text-white py-1.5 my-0 rounded-[5px]`}
               >
                 {pag}
               </li>
@@ -124,7 +124,7 @@ const Pagination = ({
           <FaAngleRight className="text-lg" />
         </button>
         <button
-          className="bg-transparent border-none text-black disabled:text-[#aaadc7] dark:text-white px-3 py-1.5"
+          className="bg-transparent border-none hidden sm:block text-black disabled:text-[#aaadc7] dark:text-white px-3 py-1.5"
           disabled={currentPage === totalPages}
           onClick={() => newPage(totalPages)}
         >
