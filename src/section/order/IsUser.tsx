@@ -256,7 +256,7 @@ const IsUser = ({
                   paySeller(orderItem)
                   deliverOrderHandler("Payment To Seller Initiated", orderItem)
                 }}
-                className="w-full px-3 py-[0.375rem] text-base leading-normal border-none bg-malon-color mt-2.5"
+                className="inline-block bg-malon-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
               >
                 Pay Seller
               </button>

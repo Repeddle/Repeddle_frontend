@@ -14,6 +14,7 @@ import { IoMdClose } from "react-icons/io"
 import { imageUrl } from "../../services/api"
 import LoadingBox from "../LoadingBox"
 import useAuth from "../../hooks/useAuth"
+import ImageModal from "../ImageModal"
 
 interface ChatProps {
   user: IUser | null
@@ -41,6 +42,8 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
   const [loading, setLoading] = useState(true)
   const [image, setImage] = useState<string>("")
   const [uploading, setUploading] = useState(false)
+  const [modalImage, setModalImage] = useState<string>("")
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     const getConversations = async () => {
@@ -108,6 +111,16 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
     }
   }
 
+  const handleImageClick = (imageSrc: string) => {
+    setModalImage(imageSrc)
+    setIsModalOpen(true)
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+    setModalImage("")
+  }
+
   return (
     <div className="h-full flex flex-col overflow-hidden   text-black">
       <div
@@ -139,7 +152,8 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
                 {sending.image && (
                   <img
                     src={imageUrl + sending.image}
-                    className="object-contain max-w-full h-auto "
+                    className="object-contain max-w-full h-auto cursor-pointer hover:opacity-90 transition-opacity"
+                    onClick={() => handleImageClick(imageUrl + sending.image)}
                   />
                 )}
                 {sending.message}
@@ -208,7 +222,11 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
                       {message.image && (
                         <img
                           src={imageUrl + message.image}
-                          className="object-contain max-w-full h-auto "
+                          className="object-contain max-w-full h-auto cursor-pointer hover:opacity-90 transition-opacity"
+                          onClick={() => {
+                            console.log("clicked")
+                            handleImageClick(imageUrl + message.image)
+                          }}
                         />
                       )}
                       {message.content}
@@ -268,6 +286,14 @@ const Chat: React.FC<ChatProps> = ({ user }) => {
           </button>
         </div>
       </form>
+
+      {/* Image Modal */}
+      <ImageModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        imageUrl={modalImage}
+        alt="Chat image"
+      />
     </div>
   )
 }
