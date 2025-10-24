@@ -254,7 +254,6 @@ const IsUser = ({
               <button
                 onClick={() => {
                   paySeller(orderItem)
-                  deliverOrderHandler("Payment To Seller Initiated", orderItem)
                 }}
                 className="inline-block bg-malon-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
               >
