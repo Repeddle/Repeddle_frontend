@@ -1,5 +1,5 @@
 import {
-  FaArrowDown,
+  // FaArrowDown,
   FaMoneyBill,
   FaShoppingBasket,
   FaUser,
@@ -33,13 +33,24 @@ const featureTypes = {
     ),
   },
   earning: {
-    title: " TOTAL EARNINGS",
+    title: " TOTAL USERS EARNINGS",
     isMoney: true,
     to: "/admin/transactionlist",
     link: "view all net earning",
     icon: (
       <div className="bg-[#d6f5dc] dark:bg-[#1d3b23] self-end p-[5px] rounded-[0.2rem]">
         <FaMoneyBill className="text-lg text-green-color" />
+      </div>
+    ),
+  },
+  comission: {
+    title: " TOTAL REPEDDLE EARNINGS",
+    isMoney: true,
+    to: "/admin/payments",
+    link: "view all payments",
+    icon: (
+      <div className="bg-[#f5d6d6] dark:bg-[#3b1d1d] self-end p-[5px] rounded-[0.2rem]">
+        <FaMoneyBill className="text-lg text-red-color" />
       </div>
     ),
   },
@@ -96,8 +107,8 @@ const FeatureInfo = ({ number, type }: Props) => {
         </div>
         <div className="flex flex-col justify-between">
           <div className="flex items-center">
-            {<FaArrowDown className="text-xs mr-[5px] text-[red]" />}
-            20 %
+            {/* {<FaArrowDown className="text-xs mr-[5px] text-[red]" />}
+            20 % */}
           </div>
           {featureTypes[type].icon}
         </div>

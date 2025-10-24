@@ -8,12 +8,10 @@ import useToastNotification from "../../hooks/useToastNotification";
 import { currency } from "../../utils/common";
 import Button from "../../components/ui/Button";
 import { imageUrl } from "../../services/api";
-import useRegion from "../../hooks/useRegion";
 
 const PaymentScreen = () => {
   const params = useParams();
   const { id } = params;
-  const { region } = useRegion();
 
   const [loading, setLoading] = useState(false);
   const [payment, setPayment] = useState<PaymentResponse>();
@@ -62,15 +60,15 @@ const PaymentScreen = () => {
     <div className="m-0 p-2.5 bg-light-ev1 dark:bg-dark-ev1 flex-[4] lg:mx-[10vw] lg:my-0 lg:p-5 rounded-[0.2rem]">
       <h1 className="text-[28px]">Confirm Payment</h1>
       <div className="px-[15px] py-2.5 h-full mb-[15px] lg:px-5 lg:py-[15px] rounded-[5px] bg-light-ev2 dark:bg-dark-ev2">
-        <div className="capitalize font-semibold mb-2.5">ID</div>{" "}
+        <div className="capitalize font-semibold mt-2.5">ID</div>{" "}
         <div className="flex">{payment._id}</div>
         <hr />
-        <div className="capitalize font-semibold mb-2.5">Date</div>
+        <div className="capitalize font-semibold mt-2.5">Date</div>
         <div className="flex">
           {moment(payment.createdAt).format("MMM DD YY, h:mm a")}
         </div>
         <hr />
-        <div className="capitalize font-semibold mb-2.5">User</div>
+        <div className="capitalize font-semibold mt-2.5">User</div>
         <img
           className="w-[50px] h-[50px] rounded-[50%]"
           src={imageUrl + payment.userId.image}
@@ -78,7 +76,7 @@ const PaymentScreen = () => {
         />
         <div className="flex">{payment.userId.username}</div>
         <hr />
-        <div className="capitalize font-semibold mb-2.5">Type</div>
+        <div className="capitalize font-semibold mt-2.5">Type</div>
         <div className="flex">{payment.reason}</div>
         {/* <div className="flex text-malon-color">
           <span className="mr-5">
@@ -87,21 +85,31 @@ const PaymentScreen = () => {
           <Link to={`/order/${payment.meta.id}`}>{payment.meta.id}</Link>
         </div> */}
         <hr />
-        <div className="capitalize font-semibold mb-2.5">Amount</div>
+        <div className="capitalize font-semibold mt-2.5">Amount</div>
         <div className="flex">
-          {currency(region)}
+          {currency(payment.region)}
           {payment.amount}
         </div>
         <hr />
-        <div className="capitalize font-semibold mb-2.5">From</div>
+        {payment.fee > 0 && (
+          <>
+            <div className="capitalize font-semibold mt-2.5">Commision</div>
+            <div className="flex">
+              {currency(payment.region)}
+              {payment.fee}
+            </div>
+          </>
+        )}
+        <hr />
+        <div className="capitalize font-semibold mt-2.5">From</div>
         <div className="flex">{payment.userId.username}</div>
         <hr />
-        <div className="capitalize font-semibold mb-2.5">To</div>
+        <div className="capitalize font-semibold mt-2.5">To</div>
         <div className="flex">{payment.to}</div>
         <hr />
-        {payment.to.toLowerCase() !== "account" && (
+        {payment.to.toLowerCase() === "account" && (
           <>
-            <div className="capitalize font-semibold mb-2.5">
+            <div className="capitalize font-semibold mt-2.5">
               Bank Account Details
             </div>
             <div className="flex capitalize text-[13px]">
@@ -126,7 +134,7 @@ const PaymentScreen = () => {
         {payment.status !== "Pending" ? (
           <>
             <div
-              className="capitalize font-semibold mb-2.5"
+              className="capitalize font-semibold mt-2.5"
               style={{ color: "var(--orange-color)" }}
             >
               Status

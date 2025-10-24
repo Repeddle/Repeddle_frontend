@@ -1,26 +1,26 @@
-import React, { ChangeEvent, useState } from "react"
-import moment from "moment"
-import { SkeletonMessageLoading } from "../../components/message/skeletonLoading"
-import useMessage from "../../hooks/useMessage"
-import useAuth from "../../hooks/useAuth"
-import { FaShieldAlt } from "react-icons/fa"
-import { RiImageAddFill } from "react-icons/ri"
-import { IoSend } from "react-icons/io5"
-import socket from "../../socket"
-import { CgChevronLeft } from "react-icons/cg"
-import { getDayLabel } from "../../utils/chat"
-import { compressImageUpload } from "../../utils/common"
-import useToastNotification from "../../hooks/useToastNotification"
-import { baseURL, imageUrl } from "../../services/api"
-import LoadingBox from "../../components/LoadingBox"
-import { IoMdClose } from "react-icons/io"
-import ImageModal from "../../components/ImageModal"
+import React, { ChangeEvent, useState } from "react";
+import moment from "moment";
+import { SkeletonMessageLoading } from "../../components/message/skeletonLoading";
+import useMessage from "../../hooks/useMessage";
+import useAuth from "../../hooks/useAuth";
+import { FaShieldAlt } from "react-icons/fa";
+import { RiImageAddFill } from "react-icons/ri";
+import { IoSend } from "react-icons/io5";
+import socket from "../../socket";
+import { CgChevronLeft } from "react-icons/cg";
+import { getDayLabel } from "../../utils/chat";
+import { compressImageUpload } from "../../utils/common";
+import useToastNotification from "../../hooks/useToastNotification";
+import { baseURL, imageUrl } from "../../services/api";
+import LoadingBox from "../../components/LoadingBox";
+import { IoMdClose } from "react-icons/io";
+import ImageModal from "../../components/ImageModal";
 
 interface Props {
-  setIsSidebarOpen: (value: boolean) => void
+  setIsSidebarOpen: (value: boolean) => void;
 }
 const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
-  const { user } = useAuth()
+  const { user } = useAuth();
   const {
     loadingMessage,
     messages,
@@ -29,97 +29,97 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
     setCurrentConversation,
     isAnimating,
     sendMessage,
-  } = useMessage()
-  const { addNotification } = useToastNotification()
-  const [messageInput, setMessageInput] = useState<string>("")
+  } = useMessage();
+  const { addNotification } = useToastNotification();
+  const [messageInput, setMessageInput] = useState<string>("");
   const [sending, setSending] = useState({
     value: false,
     image: "",
     message: "",
     failed: false,
-  })
-  const [image, setImage] = useState<string>("")
-  const [uploading, setUploading] = useState(false)
-  const [modalImage, setModalImage] = useState<string>("")
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  });
+  const [image, setImage] = useState<string>("");
+  const [uploading, setUploading] = useState(false);
+  const [modalImage, setModalImage] = useState<string>("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Function to emit startTyping event
   const startTyping = () => {
     socket.emit("typing", {
       conversationId: currentConversation?._id,
       userId: user?._id,
-    })
-  }
+    });
+  };
 
   // Function to emit stopTyping event
   const stopTyping = () => {
     socket.emit("stopTyping", {
       conversationId: currentConversation?._id,
       userId: user?._id,
-    })
-  }
+    });
+  };
 
   const handleMessageSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     // Handle sending message logic
-    if (!currentConversation) return
-    if (!messageInput && !image) return
+    if (!currentConversation) return;
+    if (!messageInput && !image) return;
     try {
-      setSending({ value: true, image, message: messageInput, failed: false })
-      setMessageInput("")
-      setImage("")
+      setSending({ value: true, image, message: messageInput, failed: false });
+      setMessageInput("");
+      setImage("");
       await sendMessage({
         image: image,
         content: messageInput,
         type: "Chat",
         conversationId: currentConversation._id,
-      })
-      setSending({ value: false, image: "", message: "", failed: false })
+      });
+      setSending({ value: false, image: "", message: "", failed: false });
     } catch (error) {
-      console.log(error)
-      setSending((prev) => ({ ...prev, value: true, failed: true }))
+      console.log(error);
+      setSending((prev) => ({ ...prev, value: true, failed: true }));
     }
-  }
+  };
 
   const handleRetry = () => {
-    setMessageInput(sending.message)
-    setImage(sending.image)
+    setMessageInput(sending.message);
+    setImage(sending.image);
     setSending((prev) => ({
       ...prev,
       value: false,
       failed: false,
       message: "",
-    }))
-  }
+    }));
+  };
 
   const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     try {
-      setUploading(true)
+      setUploading(true);
 
-      const file = e.target.files?.[0]
-      if (!file) throw Error("No image found")
+      const file = e.target.files?.[0];
+      if (!file) throw Error("No image found");
 
-      const imageUrl = await compressImageUpload(file, 1024)
+      const imageUrl = await compressImageUpload(file, 1024);
 
-      setImage(imageUrl)
+      setImage(imageUrl);
 
-      addNotification("Image uploaded")
+      addNotification("Image uploaded");
     } catch (err) {
-      addNotification("Failed uploading image")
+      addNotification("Failed uploading image");
     } finally {
-      setUploading(false)
+      setUploading(false);
     }
-  }
+  };
 
   const handleImageClick = (imageSrc: string) => {
-    setModalImage(imageSrc)
-    setIsModalOpen(true)
-  }
+    setModalImage(imageSrc);
+    setIsModalOpen(true);
+  };
 
   const closeModal = () => {
-    setIsModalOpen(false)
-    setModalImage("")
-  }
+    setIsModalOpen(false);
+    setModalImage("");
+  };
 
   return currentConversation ? (
     <>
@@ -129,13 +129,17 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
           <CgChevronLeft
             size={30}
             onClick={() => {
-              setIsSidebarOpen(true)
-              setCurrentConversation(null)
+              setIsSidebarOpen(true);
+              setCurrentConversation(null);
             }}
             className="mr-4 md:hidden"
           />
           <div className="flex items-center ">
-            <div className="w-10 h-10 rounded-full bg-gray-300 mr-4"></div>
+            <img
+              className="w-10 h-10 rounded-full bg-gray-300 mr-4"
+              src={currentConversation.otherUser?.username}
+              alt={currentConversation.otherUser?.username}
+            />
             <div className="font-semibold">
               {currentConversation.otherUser?.username}
             </div>
@@ -221,11 +225,11 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
               .slice()
               .reverse()
               .map((message, index, array) => {
-                const prevMessage = array[index + 1]
+                const prevMessage = array[index + 1];
                 const showDayLabel =
                   !prevMessage ||
                   getDayLabel(message.createdAt) !==
-                    getDayLabel(prevMessage.createdAt)
+                    getDayLabel(prevMessage.createdAt);
 
                 return (
                   <div key={message._id}>
@@ -245,7 +249,11 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
                     >
                       <div className="flex mb-1">
                         {message.sender !== user?._id && (
-                          <div className="w-8 h-8 rounded-full bg-gray-300 mr-2"></div>
+                          <img
+                            className="w-8 h-8 rounded-full bg-gray-300 mr-2"
+                            src={currentConversation.otherUser?.username}
+                            alt={currentConversation.otherUser?.username}
+                          />
                         )}
                       </div>
                       <div
@@ -271,7 +279,7 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
                       </div>
                     </div>
                   </div>
-                )
+                );
               })
           )}
         </div>
@@ -313,8 +321,8 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
             type="text"
             value={messageInput}
             onChange={(e) => {
-              setMessageInput(e.target.value)
-              startTyping()
+              setMessageInput(e.target.value);
+              startTyping();
             }}
             placeholder="Type a message..."
             className="border border-opacity-50 flex-1 dark:bg-black rounded-lg p-3 border-gray-300  focus:outline-none focus:border-orange-color"
@@ -337,7 +345,7 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
     <div className="flex-1 flex justify-center items-center bg-light-ev1 dark:bg-dark-ev1 font-bold text-5xl opacity-30">
       Select a conversation to start a chat
     </div>
-  )
-}
+  );
+};
 
-export default MainChatArea
+export default MainChatArea;

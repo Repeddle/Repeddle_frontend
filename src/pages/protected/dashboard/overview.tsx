@@ -63,7 +63,7 @@ function Overview() {
             <div className="flex gap-5 flex-wrap lg:flex-nowrap">
               <FeaturedInfoOverview
                 type="earning"
-                number={orderSummary ? orderSummary.soldOrders.numSales : 0}
+                number={orderSummary ? orderSummary.earnings?.net : 0}
               />
               <FeaturedInfoOverview
                 type="order"
@@ -136,10 +136,10 @@ function Overview() {
                 title="Earning"
                 total={`${currency(
                   region
-                )} ${orderSummary?.soldOrders.numSales.toFixed(2)}`}
+                )} ${orderSummary?.earnings.net.toFixed(2)}`}
                 data={
-                  orderSummary?.dailySoldOrders.map((x) => {
-                    return { name: `${x._id}`, order: x.sales };
+                  orderSummary?.earnings.data.map((x) => {
+                    return { name: `${x.date}`, order: x.net };
                   }) ?? []
                 }
                 dataKey="order"

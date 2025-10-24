@@ -1,40 +1,40 @@
-import useAuth from "../../hooks/useAuth"
-import { Link } from "react-router-dom"
-import moment from "moment"
-import { FaEye, FaPen } from "react-icons/fa"
-import FeatureInfo from "../../components/FeatureInfo"
-import { useEffect, useState } from "react"
-import { Analytics as AnalyticsType } from "../../types/user"
-import useUser from "../../hooks/useUser"
-import useToastNotification from "../../hooks/useToastNotification"
-import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
-import { imageUrl } from "../../services/api"
+import useAuth from "../../hooks/useAuth";
+import { Link } from "react-router-dom";
+import moment from "moment";
+import { FaEye, FaPen } from "react-icons/fa";
+import FeatureInfo from "../../components/FeatureInfo";
+import { useEffect, useState } from "react";
+import { Analytics as AnalyticsType } from "../../types/user";
+import useUser from "../../hooks/useUser";
+import useToastNotification from "../../hooks/useToastNotification";
+import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal";
+import { imageUrl } from "../../services/api";
 
 const Analytics = () => {
-  const { user } = useAuth()
-  const { addNotification } = useToastNotification()
-  const { fetchAnalytics } = useUser()
+  const { user } = useAuth();
+  const { addNotification } = useToastNotification();
+  const { fetchAnalytics } = useUser();
 
-  const [analytics, setAnalytics] = useState<AnalyticsType>()
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState("")
+  const [analytics, setAnalytics] = useState<AnalyticsType>();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true)
-      const res = await fetchAnalytics()
+      setLoading(true);
+      const res = await fetchAnalytics();
       if (typeof res !== "string") {
-        console.log(res)
-        setAnalytics(res)
+        console.log(res);
+        setAnalytics(res);
       } else {
-        addNotification(res, undefined, true)
-        setError(res)
+        addNotification(res, undefined, true);
+        setError(res);
       }
-      setLoading(false)
-    }
+      setLoading(false);
+    };
 
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   return (
     <div className="flex-[4] min-w-0 lg:px-5 py-0">
@@ -52,6 +52,7 @@ const Analytics = () => {
           <FeatureInfo type="order" number={analytics.totalOrders} />
           <FeatureInfo type="product" number={analytics.totalProducts} />
           <FeatureInfo type="earning" number={analytics.totalEarnings} />
+          <FeatureInfo type="comission" number={analytics.comissions} />
         </div>
       )}
       <div className="min-w-0 flex-1 mb-5 p-5 rounded-[0.2rem] w-full lg:w-auto mr-0 bg-light-ev1 dark:bg-dark-ev1">
@@ -298,7 +299,7 @@ const Analytics = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Analytics
+export default Analytics;
