@@ -1,10 +1,10 @@
-import { useNavigate } from "react-router-dom";
-import { IProduct } from "../../types/product";
+import { useNavigate } from "react-router-dom"
+import { IProduct } from "../../types/product"
 // import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
-import MessageBox from "../../components/MessageBox";
-import useProducts from "../../hooks/useProducts";
-import { imageUrl } from "../../services/api";
-import { currency } from "../../utils/common";
+import MessageBox from "../../components/MessageBox"
+import useProducts from "../../hooks/useProducts"
+import { imageUrl } from "../../services/api"
+import { currency } from "../../utils/common"
 
 const SkeletonProduct = () => (
   <div className="flex-[0_0_calc(33%_-_10px)] bg-light-ev1 dark:bg-dark-ev1 p-2.5 md:max-w-[240px]">
@@ -13,12 +13,12 @@ const SkeletonProduct = () => (
     <div className="w-3/5 h-4 bg-light-ev2 dark:bg-dark-ev2 animate-[skeletonPulse_1.5s_infinite] mt-[5px]" />
     <div className="w-10 h-3.5 bg-light-ev2 dark:bg-dark-ev2 animate-[skeletonPulse_1.5s_infinite] mt-[5px]" />
   </div>
-);
+)
 
 const TheThrill = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  const { products, loading, error } = useProducts();
+  const { products, loading, error } = useProducts()
 
   // const sliderHandler = (direction: "right" | "left") => {
   //   const slider = document.getElementById("slider")
@@ -33,26 +33,26 @@ const TheThrill = () => {
   // }
 
   const handleViewMore = () => {
-    navigate("/search");
-  };
+    navigate("/search")
+  }
 
   const handleClick = (slug: string) => {
-    navigate(`/product/${slug}`);
-  };
+    navigate(`/product/${slug}`)
+  }
 
   const discount = (product: IProduct) => {
-    const price = product.sellingPrice;
-    const actualPrice = product.costPrice;
+    const price = product.sellingPrice
+    const actualPrice = product.costPrice
 
-    if (!actualPrice) return null;
+    if (!actualPrice) return null
 
     if (price <= actualPrice) {
-      return null; // No discount
+      return null // No discount
     }
 
-    const discountPercentage = ((price - actualPrice) / price) * 100;
-    return discountPercentage.toFixed(); // Return with 2 decimal places
-  };
+    const discountPercentage = ((price - actualPrice) / price) * 100
+    return discountPercentage.toFixed() // Return with 2 decimal places
+  }
 
   return (
     <div className="mt-5 relative">
@@ -98,7 +98,7 @@ const TheThrill = () => {
               onClick={() => handleClick(product.slug)}
             >
               <img
-                className="w-full"
+                className="w-full aspect-[0.65] object-cover"
                 src={imageUrl + product.images[0]}
                 alt={product.name}
               />
@@ -131,7 +131,7 @@ const TheThrill = () => {
         View More
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default TheThrill;
+export default TheThrill
