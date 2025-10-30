@@ -11,7 +11,7 @@ function FacebookLoginButton() {
   const { addNotification } = useToastNotification();
   const provider = searchParams.get("provider");
   const code = searchParams.get("code");
-  const redirectUri = `${window.location.origin}${window.location.pathname}?provider=facebook`;
+  const redirectUri = `${window.location.origin}${window.location.pathname}`;
 
   useEffect(() => {
     if (provider !== "facebook" || !code) return;
@@ -31,9 +31,7 @@ function FacebookLoginButton() {
 
   const signIn = async () => {
     try {
-      console.log("Redirect URI:", redirectUri);
-      const res: any = await api.get(`/auth/facebook?redirect=${redirectUri}`);
-      window.location.href = `${res.authUrl}`;
+      window.location.href = `/api/auth/authorize?redirect_uri=${redirectUri}&client_id=facebook&scope=email,public_profile`;
     } catch (error) {
       console.log(error);
       addNotification("An error occurred");

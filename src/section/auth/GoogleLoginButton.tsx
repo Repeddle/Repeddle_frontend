@@ -30,9 +30,7 @@ function GoogleLoginButton() {
 
   const signIn = async () => {
     try {
-      await api.get(
-        `/auth/authorize?redirect_uri=${redirectUri}&client_id=google&scope=profile,email`
-      );
+      window.location.href = `/api/auth/authorize?redirect_uri=${redirectUri}&client_id=google&scope=profile email`;
     } catch (error) {
       addNotification("An error occurred");
       console.log(error);

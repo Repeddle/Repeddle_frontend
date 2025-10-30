@@ -15,6 +15,7 @@ import { baseURL, imageUrl } from "../../services/api";
 import LoadingBox from "../../components/LoadingBox";
 import { IoMdClose } from "react-icons/io";
 import ImageModal from "../../components/ImageModal";
+import Button from "../../components/ui/Button";
 
 interface Props {
   setIsSidebarOpen: (value: boolean) => void;
@@ -29,6 +30,8 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
     setCurrentConversation,
     isAnimating,
     sendMessage,
+    joinConversation,
+    leaveConversation,
   } = useMessage();
   const { addNotification } = useToastNotification();
   const [messageInput, setMessageInput] = useState<string>("");
@@ -75,8 +78,9 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
         conversationId: currentConversation._id,
       });
       setSending({ value: false, image: "", message: "", failed: false });
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      addNotification(error, undefined, true);
       setSending((prev) => ({ ...prev, value: true, failed: true }));
     }
   };
@@ -121,29 +125,64 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
     setModalImage("");
   };
 
+  const [joining, setJoining] = useState(false);
+  const handleJoin = async () => {
+    try {
+      if (!currentConversation) return;
+      setJoining(true);
+      await joinConversation(currentConversation?._id);
+    } catch (error: any) {
+      addNotification(error, undefined, true);
+    } finally {
+      setJoining(false);
+    }
+  };
+
+  const handleLeave = async () => {
+    try {
+      if (!currentConversation) return;
+      setJoining(true);
+      await leaveConversation(currentConversation?._id);
+    } catch (error: any) {
+      addNotification(error, undefined, true);
+    } finally {
+      setJoining(false);
+    }
+  };
+
   return currentConversation ? (
     <>
       <div className=" relative flex-1 w-screen overflow-x-hidden flex flex-col bg-light-ev1 dark:bg-dark-ev1">
         {/* Header */}
-        <div className="bg-light-ev4 dark:bg-dark-ev4 px-4 py-2 flex items-center">
-          <CgChevronLeft
-            size={30}
-            onClick={() => {
-              setIsSidebarOpen(true);
-              setCurrentConversation(null);
-            }}
-            className="mr-4 md:hidden"
-          />
-          <div className="flex items-center ">
-            <img
-              className="w-10 h-10 rounded-full bg-gray-300 mr-4"
-              src={currentConversation.otherUser?.username}
-              alt={currentConversation.otherUser?.username}
+        <div className="bg-light-ev4 dark:bg-dark-ev4 px-4 py-2 flex items-center justify-between">
+          <div className="flex items-center">
+            <CgChevronLeft
+              size={30}
+              onClick={() => {
+                setIsSidebarOpen(true);
+                setCurrentConversation(null);
+              }}
+              className="mr-4 md:hidden"
             />
-            <div className="font-semibold">
-              {currentConversation.otherUser?.username}
+            <div className="flex items-center ">
+              <img
+                className="w-10 h-10 rounded-full bg-gray-300 mr-4"
+                src={currentConversation.otherUser?.image}
+                alt={currentConversation.otherUser?.username}
+              />
+              <div className="font-semibold">
+                {currentConversation.otherUser?.username}
+              </div>
             </div>
           </div>
+          {user?.role === "Admin" &&
+            (currentConversation.type === "Support" ||
+              currentConversation.type === "Report") &&
+            (currentConversation.participants.includes(user._id) ? (
+              <Button text="leave" onClick={handleLeave} isLoading={joining} />
+            ) : (
+              <Button text="Join" onClick={handleJoin} isLoading={joining} />
+            ))}
         </div>
 
         <div className="absolute z-0 flex items-center justify-center top-16 opacity-40 gap-5 px-10 md:px-20">
@@ -240,44 +279,50 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
                         </div>
                       </div>
                     )}
-                    <div
-                      className={`flex  mb-4 ${
-                        message.sender === user?._id
-                          ? "justify-end"
-                          : "justify-start"
-                      }`}
-                    >
-                      <div className="flex mb-1">
-                        {message.sender !== user?._id && (
-                          <img
-                            className="w-8 h-8 rounded-full bg-gray-300 mr-2"
-                            src={currentConversation.otherUser?.username}
-                            alt={currentConversation.otherUser?.username}
-                          />
-                        )}
+                    {message.isInfo ? (
+                      <div className="text-sm py-2 text-center opacity-70">
+                        {message.content}
                       </div>
+                    ) : (
                       <div
-                        className={`p-1 rounded-lg  max-w-[80%]  ${
+                        className={`flex  mb-4 ${
                           message.sender === user?._id
-                            ? "bg-orange-color text-white self-end"
-                            : "bg-malon-color text-white self-start"
+                            ? "justify-end"
+                            : "justify-start"
                         }`}
                       >
-                        {message.image && (
-                          <img
-                            src={imageUrl + message.image}
-                            className="object-contain max-w-full h-auto "
-                            onClick={() =>
-                              handleImageClick(imageUrl + message.image)
-                            }
-                          />
-                        )}
-                        <div className="break-words">{message.content}</div>
-                        <span className="text-white text-opacity-75 w-full text-xs text-end">
-                          <div>{moment(message.createdAt).format("LT")}</div>
-                        </span>
+                        <div className="flex mb-1">
+                          {message.sender !== user?._id && (
+                            <img
+                              className="w-8 h-8 rounded-full bg-gray-300 mr-2"
+                              src={currentConversation.otherUser?.image}
+                              alt={currentConversation.otherUser?.username}
+                            />
+                          )}
+                        </div>
+                        <div
+                          className={`p-1 rounded-lg  max-w-[80%]  ${
+                            message.sender === user?._id
+                              ? "bg-orange-color text-white self-end"
+                              : "bg-malon-color text-white self-start"
+                          }`}
+                        >
+                          {message.image && (
+                            <img
+                              src={imageUrl + message.image}
+                              className="object-contain max-w-full h-auto "
+                              onClick={() =>
+                                handleImageClick(imageUrl + message.image)
+                              }
+                            />
+                          )}
+                          <div className="break-words">{message.content}</div>
+                          <span className="text-white text-opacity-75 w-full text-xs text-end">
+                            <div>{moment(message.createdAt).format("LT")}</div>
+                          </span>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 );
               })

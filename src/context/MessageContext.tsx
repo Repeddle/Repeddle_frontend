@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, ReactNode } from "react"
+import React, { createContext, useState, useEffect, ReactNode } from "react";
 import {
   ForwardData,
   IConversation,
@@ -7,224 +7,261 @@ import {
   MessageStart,
   MessageStartResponse,
   ReplyData,
-} from "../types/message"
+} from "../types/message";
 import {
   createMessageService,
   forwardMessageService,
   getConversationsService,
   getMessagesService,
+  joinConversationService,
+  leaveConversationService,
   replyToMessageService,
   sendMessageService,
-} from "../services/message"
-import useAuth from "../hooks/useAuth"
-import socket from "../socket"
-import { markMessagesAsRead } from "../utils/socket"
+} from "../services/message";
+import useAuth from "../hooks/useAuth";
+import socket from "../socket";
+import { markMessagesAsRead } from "../utils/socket";
 
 interface Props {
-  children?: ReactNode
+  children?: ReactNode;
 }
 
 interface MessageContextType {
-  loading: boolean
-  loadingMessage: boolean
-  isTypingList: { value: boolean; id: string }[]
-  error: string
-  messages: IMessage[]
-  conversations: IConversation[]
-  currentConversation: IConversation | null
-  currentTab: string
-  isAnimating: boolean
-  setIsAnimating: (conversation: boolean) => void
-  handleTabChange: (conversation: string) => void
-  setCurrentConversation: (conversation: IConversation | null) => void
-  createMessage: (message: MessageStart) => Promise<MessageStartResponse>
-  sendMessage: (message: MessageData) => Promise<void>
-  getMessages: (receiver: string) => Promise<void>
-  forwardMessage: (message: ForwardData) => Promise<void>
-  replyToMessage: (message: ReplyData) => Promise<void>
-  getConversations: (type: string) => Promise<void>
+  loading: boolean;
+  loadingMessage: boolean;
+  isTypingList: { value: boolean; id: string }[];
+  error: string;
+  messages: IMessage[];
+  conversations: IConversation[];
+  currentConversation: IConversation | null;
+  currentTab: string;
+  isAnimating: boolean;
+  setIsAnimating: (conversation: boolean) => void;
+  handleTabChange: (conversation: string) => void;
+  setCurrentConversation: (conversation: IConversation | null) => void;
+  createMessage: (message: MessageStart) => Promise<MessageStartResponse>;
+  sendMessage: (message: MessageData) => Promise<void>;
+  getMessages: (receiver: string) => Promise<void>;
+  forwardMessage: (message: ForwardData) => Promise<void>;
+  replyToMessage: (message: ReplyData) => Promise<void>;
+  getConversations: (type: string) => Promise<void>;
+  joinConversation: (id: string) => Promise<void>;
+  leaveConversation: (id: string) => Promise<void>;
 }
 
 export const MessageContext = createContext<MessageContextType | undefined>(
   undefined
-)
+);
 
 export const MessageProvider: React.FC<Props> = ({ children }) => {
-  const { setAuthErrorModalOpen, user } = useAuth()
-  const [messages, setMessages] = useState<IMessage[]>([])
-  const [conversations, setConversations] = useState<IConversation[]>([])
-  const [error, setError] = useState<string>("")
-  const [loading, setLoading] = useState<boolean>(true)
-  const [loadingMessage, setLoadingMessage] = useState<boolean>(false)
+  const { setAuthErrorModalOpen, user } = useAuth();
+  const [messages, setMessages] = useState<IMessage[]>([]);
+  const [conversations, setConversations] = useState<IConversation[]>([]);
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [loadingMessage, setLoadingMessage] = useState<boolean>(false);
   const [currentConversation, setCurrentConversation] =
-    useState<IConversation | null>(null)
-  const [currentTab, setCurrentTab] = useState<string>("Chat")
+    useState<IConversation | null>(null);
+  const [currentTab, setCurrentTab] = useState<string>("Chat");
   const [isTypingList, setIsTypingList] = useState<
     { value: boolean; id: string }[]
-  >([])
-  const [isAnimating, setIsAnimating] = useState(false)
+  >([]);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       if (currentConversation) {
-        await getMessages(currentConversation._id)
+        await getMessages(currentConversation._id);
       } else {
-        setMessages([])
+        setMessages([]);
       }
-    }
-    fetchData()
-  }, [currentConversation])
+    };
+    fetchData();
+  }, [currentConversation]);
 
   useEffect(() => {
     const handleTyping = ({
       conversationId,
       isTyping,
     }: {
-      conversationId: string
-      isTyping: boolean
+      conversationId: string;
+      isTyping: boolean;
     }) => {
-      clearTimeout(typingTimeout)
+      clearTimeout(typingTimeout);
       if (isTyping) {
         setIsTypingList((prev) => [
           ...prev,
           { value: isTyping, id: conversationId },
-        ])
+        ]);
         typingTimeout = setTimeout(() => {
           setIsTypingList((prev) =>
             prev.filter((type) => type.id !== conversationId)
-          )
-        }, 3000)
+          );
+        }, 3000);
       } else {
         setIsTypingList((prev) =>
           prev.filter((type) => type.id !== conversationId)
-        )
-        clearTimeout(typingTimeout)
+        );
+        clearTimeout(typingTimeout);
       }
-    }
+    };
 
-    let typingTimeout: NodeJS.Timeout
+    let typingTimeout: NodeJS.Timeout;
 
-    socket.on("typing", handleTyping)
+    socket.on("typing", handleTyping);
 
     return () => {
-      socket.off("typing", handleTyping)
-    }
-  }, [])
+      socket.off("typing", handleTyping);
+    };
+  }, []);
 
   useEffect(() => {
     const handleMessage = (message: IMessage, type: string) => {
       if (message.conversationId === currentConversation?._id) {
         if (!messages.find((msg) => msg._id === message._id)) {
-          setIsAnimating(true)
+          setIsAnimating(true);
           setTimeout(() => {
-            setIsAnimating(false)
-          }, 500)
-          setMessages((prevMessages) => [...prevMessages, message])
-          markMessagesAsRead(currentConversation._id, user!._id)
+            setIsAnimating(false);
+          }, 500);
+          setMessages((prevMessages) => [...prevMessages, message]);
+          markMessagesAsRead(currentConversation._id, user!._id);
         }
       } else {
-        reloadConversation(type)
+        reloadConversation(type);
       }
-    }
+    };
 
-    socket.on("message", handleMessage)
+    socket.on("message", handleMessage);
 
     return () => {
-      socket.off("message", handleMessage)
-    }
-  }, [currentConversation, messages, user])
+      socket.off("message", handleMessage);
+    };
+  }, [currentConversation, messages, user]);
 
   useEffect(() => {
     socket.on("messagesRead", () => {
-      reloadConversation(currentConversation?.type || currentTab)
-    })
+      reloadConversation(currentConversation?.type || currentTab);
+    });
 
     return () => {
-      socket.off("messagesRead")
-    }
-  }, [])
+      socket.off("messagesRead");
+    };
+  }, []);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleError = (error: any) => {
-    setLoading(false)
+    setLoading(false);
     if (error === "Token expired" || error === "Invalid token") {
-      setError("")
-      setAuthErrorModalOpen(true)
+      setError("");
+      setAuthErrorModalOpen(true);
     } else {
-      setError(error || "An error occurred.")
+      setError(error || "An error occurred.");
     }
-  }
+  };
 
   const createMessage = async (message: MessageStart) => {
     try {
-      const res = await createMessageService(message)
-      return res
+      const res = await createMessageService(message);
+      return res;
     } catch (error) {
-      handleError(error)
-      throw error
+      handleError(error);
+      throw error;
     }
-  }
+  };
   const sendMessage = async (message: MessageData) => {
     try {
-      const res = await sendMessageService(message)
-      setMessages((prevMessages) => [...prevMessages, res])
-      reloadConversation(currentConversation?.type || currentTab)
+      const res = await sendMessageService(message);
+      setMessages((prevMessages) => [...prevMessages, res]);
+      reloadConversation(currentConversation?.type || currentTab);
     } catch (error) {
-      handleError(error)
-      throw error
+      handleError(error);
+      throw error;
     }
-  }
+  };
 
   const getMessages = async (receiver: string) => {
     try {
-      setLoadingMessage(true)
-      const receivedMessages = await getMessagesService(receiver)
-      setMessages(receivedMessages)
-      setLoadingMessage(false)
+      setLoadingMessage(true);
+      const receivedMessages = await getMessagesService(receiver);
+      setMessages(receivedMessages);
+      setLoadingMessage(false);
     } catch (error) {
-      setLoadingMessage(false)
-      handleError(error)
+      setLoadingMessage(false);
+      handleError(error);
     }
-  }
+  };
 
   const forwardMessage = async (message: ForwardData) => {
     try {
-      const res = await forwardMessageService(message)
-      setMessages((prevMessages) => [...prevMessages, res])
+      const res = await forwardMessageService(message);
+      setMessages((prevMessages) => [...prevMessages, res]);
     } catch (error) {
-      handleError(error)
+      handleError(error);
     }
-  }
+  };
 
   const replyToMessage = async (message: ReplyData) => {
     try {
-      const res = await replyToMessageService(message)
-      setMessages((prevMessages) => [...prevMessages, res])
+      const res = await replyToMessageService(message);
+      setMessages((prevMessages) => [...prevMessages, res]);
     } catch (error) {
-      handleError(error)
+      handleError(error);
     }
-  }
+  };
 
   const getConversations = async (type: string) => {
     try {
-      setLoading(true)
-      const res = await getConversationsService(type)
-      setConversations(res)
-      setLoading(false)
+      setLoading(true);
+      const res = await getConversationsService(type);
+      setConversations(res);
+      setLoading(false);
     } catch (error) {
-      handleError(error)
+      handleError(error);
     }
-  }
+  };
+
+  const joinConversation = async (id: string) => {
+    try {
+      const res = await joinConversationService(id);
+      setMessages((prevMessages) => [...prevMessages, res]);
+      const conversations = await getConversationsService(
+        currentConversation?.type || currentTab
+      );
+      const current = conversations.find((con) => con._id.toString() === id);
+      if (current) {
+        setCurrentConversation(current);
+      }
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
+  const leaveConversation = async (id: string) => {
+    try {
+      const res = await leaveConversationService(id);
+      setMessages((prevMessages) => [...prevMessages, res]);
+      const conversations = await getConversationsService(
+        currentConversation?.type || currentTab
+      );
+      const current = conversations.find((con) => con._id.toString() === id);
+      console.log(current, conversations, id, currentConversation);
+      if (current) {
+        setCurrentConversation(current);
+      }
+    } catch (error) {
+      handleError(error);
+    }
+  };
 
   const reloadConversation = async (tab: string) => {
-    console.log("currentRab", currentTab)
-    const res = await getConversationsService(tab)
-    setConversations(res)
-  }
+    console.log("currentRab", currentTab);
+    const res = await getConversationsService(tab);
+    setConversations(res);
+  };
 
   const handleTabChange = (type: string) => {
-    setCurrentTab(type)
-  }
+    setCurrentTab(type);
+  };
 
   return (
     <MessageContext.Provider
@@ -247,11 +284,13 @@ export const MessageProvider: React.FC<Props> = ({ children }) => {
         replyToMessage,
         getConversations,
         createMessage,
+        joinConversation,
+        leaveConversation,
       }}
     >
       {children}
     </MessageContext.Provider>
-  )
-}
+  );
+};
 
-export default MessageProvider
+export default MessageProvider;
