@@ -1,0 +1,47 @@
+import { FaApple } from "react-icons/fa";
+import api, { baseURL } from "../../services/api";
+import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
+import useAuth from "../../hooks/useAuth";
+import useToastNotification from "../../hooks/useToastNotification";
+
+function AppleLoginButton() {
+  const [searchParams] = useSearchParams();
+  const { getUser } = useAuth();
+  const { addNotification } = useToastNotification();
+  const redirectUri = `${window.location.origin}${window.location.pathname}`;
+  const provider = searchParams.get("provider");
+  const code = searchParams.get("code");
+
+  useEffect(() => {
+    if (provider !== "apple" || !code) return;
+
+    api
+      .post(`/auth/apple/token`, { code })
+      .then(async (response: any) => {
+        localStorage.setItem("authToken", response.token);
+        await getUser();
+        window.location.href = "/";
+      })
+      .catch((error) => {
+        console.log(error ? error : "An error occurred");
+      });
+  }, [searchParams]);
+
+  const signIn = async () => {
+    try {
+      window.location.href = `${baseURL}/api/auth/authorize?redirect_uri=${redirectUri}&client_id=apple&scope=name email`;
+    } catch (error) {
+      addNotification("An error occurred");
+      console.log(error);
+    }
+  };
+  return (
+    <FaApple
+      onClick={() => signIn()}
+      className="text-4xl cursor-pointer hover:bg-malon-color/10 transition-all duration-300 hover:text-malon-color bg-orange-color text-orange-color bg-opacity-10 p-1.5 rounded "
+    />
+  );
+}
+
+export default AppleLoginButton;

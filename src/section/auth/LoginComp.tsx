@@ -6,6 +6,7 @@ import useAuth from "../../hooks/useAuth";
 import useToastNotification from "../../hooks/useToastNotification";
 import GoogleLoginButton from "./GoogleLoginButton";
 import FacebookLoginButton from "./FacebookLoginButton";
+import AppleLoginButton from "./AppleLoginButton";
 
 const LoginComp = () => {
   const [email, setEmail] = useState("");
@@ -95,6 +96,7 @@ const LoginComp = () => {
         <div className="flex justify-center items-center gap-6">
           <GoogleLoginButton />
           <FacebookLoginButton />
+          <AppleLoginButton />
         </div>
       </div>
     </div>
