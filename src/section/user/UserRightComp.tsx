@@ -20,6 +20,7 @@ import Modal from "../../components/ui/Modal";
 import { deleteAccount } from "../../services/user";
 import useToastNotification from "../../hooks/useToastNotification";
 import useCart from "../../hooks/useCart";
+import { useModeration } from "../../hooks/useModeration";
 
 type Props = {
   user: IUser;
@@ -65,6 +66,9 @@ const UserRightComp = ({
   const { user: userInfo, logout } = useAuth();
   const { addNotification } = useToastNotification();
   const { clearCart } = useCart();
+
+  const { checkRestricted } = useModeration();
+  const foundRestricted = userForm.about ? checkRestricted(userForm.about) : [];
 
   const [passwordType, setPasswordType] = useState("password");
   const [isOpen, setIsOpen] = useState(false);
@@ -182,6 +186,12 @@ const UserRightComp = ({
             >
               {user.about}
             </textarea>
+            {foundRestricted.length > 0 && (
+              <div className="text-[10px] text-orange-500 font-semibold mt-1">
+                Warning: Restricted words found: {foundRestricted.join(", ")}.
+                Profile will be flagged for review.
+              </div>
+            )}
           </div>
         </div>
         <div className="flex flex-col justify-between">

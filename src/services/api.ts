@@ -4,7 +4,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
-export const baseURL = "";
+export const baseURL = "https://repeddle.com";
 
 export const imageUrl = baseURL;
 const api = axios.create({
@@ -17,7 +17,6 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    // You can modify the request config here (e.g., add authentication headers)
     const token = localStorage.getItem("authToken");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

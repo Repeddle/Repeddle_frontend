@@ -112,5 +112,6 @@ export interface IConversation {
   otherUser?: {
     username: string;
     image: string;
+    _id: string;
   };
 }

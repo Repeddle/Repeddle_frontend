@@ -1,5 +1,5 @@
 import { FaGoogle } from "react-icons/fa";
-import api from "../../services/api";
+import api, { baseURL } from "../../services/api";
 import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
@@ -30,7 +30,7 @@ function GoogleLoginButton() {
 
   const signIn = async () => {
     try {
-      window.location.href = `/api/auth/authorize?redirect_uri=${redirectUri}&client_id=google&scope=profile email`;
+      window.location.href = `${baseURL}/api/auth/authorize?redirect_uri=${redirectUri}&client_id=google&scope=profile email`;
     } catch (error) {
       addNotification("An error occurred");
       console.log(error);

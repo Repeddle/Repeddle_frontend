@@ -1,58 +1,62 @@
-import { FormEvent, useMemo, useRef, useState } from "react"
-import { Link } from "react-router-dom"
-import LoadingBox from "../../components/LoadingBox"
-import { IProduct, IReview } from "../../types/product"
-import MessageBox from "../../components/MessageBox"
-import useAuth from "../../hooks/useAuth"
-import { FaThumbsDown, FaThumbsUp } from "react-icons/fa"
-import Button from "../../components/ui/Button"
-import Rating from "../../components/Rating"
-import { FaFaceSmile } from "react-icons/fa6"
-import useToastNotification from "../../hooks/useToastNotification"
-import useProducts from "../../hooks/useProducts"
-import useReviews from "../../hooks/useReviews"
-import { checkProductReviewEligibility } from "../../utils/reviewUtils"
+import { FormEvent, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import LoadingBox from "../../components/LoadingBox";
+import { IProduct, IReview } from "../../types/product";
+import MessageBox from "../../components/MessageBox";
+import useAuth from "../../hooks/useAuth";
+import { FaThumbsDown, FaThumbsUp } from "react-icons/fa";
+import Button from "../../components/ui/Button";
+import Rating from "../../components/Rating";
+import { FaFaceSmile } from "react-icons/fa6";
+import useToastNotification from "../../hooks/useToastNotification";
+import useProducts from "../../hooks/useProducts";
+import useReviews from "../../hooks/useReviews";
+import { checkProductReviewEligibility } from "../../utils/reviewUtils";
+import { useModeration } from "../../hooks/useModeration";
 
 type Props = {
-  product: IProduct
-  setProduct: (val: IProduct) => void
-}
+  product: IProduct;
+  setProduct: (val: IProduct) => void;
+};
 
 const ProductReviews = ({ product, setProduct }: Props) => {
-  const { user } = useAuth()
-  const { addNotification } = useToastNotification()
-  const { createProductReview, error } = useProducts()
-  const { deleteProductReview, editProductReview } = useReviews()
+  const { user } = useAuth();
+  const { addNotification } = useToastNotification();
+  const { createProductReview, error } = useProducts();
+  const { deleteProductReview, editProductReview } = useReviews();
 
-  const [editReviewItem, setEditReviewItem] = useState<IReview | null>(null)
-  const [comment, setComment] = useState("")
-  const [like, setLike] = useState<boolean>()
-  const [rating, setRating] = useState("")
-  const [loadingCreateReview, setLoadingCreateReview] = useState(false)
-  const [loadingDeleteReview, setLoadingDeleteReview] = useState(false)
-  const [showForm, setShowForm] = useState(false)
+  const [editReviewItem, setEditReviewItem] = useState<IReview | null>(null);
+  const [comment, setComment] = useState("");
+  const [like, setLike] = useState<boolean>();
+  const [rating, setRating] = useState("");
+  const [loadingCreateReview, setLoadingCreateReview] = useState(false);
+  const [loadingDeleteReview, setLoadingDeleteReview] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
-  const reviewRef = useRef(null)
+  const { checkRestricted } = useModeration();
+  const foundRestricted = comment ? checkRestricted(comment) : [];
+
+  const reviewRef = useRef(null);
 
   const submitHandler = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!comment) {
-      addNotification("Please enter review")
-      return
+      addNotification("Please enter review");
+      return;
     }
 
     if (!rating) {
-      addNotification("Please select rating")
-      return
+      addNotification("Please select rating");
+      return;
     }
 
     if (!like) {
-      addNotification("Give review a thumb up or thumb down")
-      return
+      addNotification("Give review a thumb up or thumb down");
+      return;
     }
 
-    setLoadingCreateReview(true)
+    setLoadingCreateReview(true);
 
     if (!showForm) {
       const res = await editProductReview(product._id, {
@@ -61,9 +65,9 @@ const ProductReviews = ({ product, setProduct }: Props) => {
         rating: +rating,
         _id: editReviewItem?._id || "",
         itemType: "Product",
-      })
+      });
       if (res) {
-        const newProd = product
+        const newProd = product;
         newProd.reviews = newProd.reviews.map((review) =>
           review._id === editReviewItem?._id
             ? {
@@ -73,70 +77,70 @@ const ProductReviews = ({ product, setProduct }: Props) => {
                 rating: +rating,
               }
             : review
-        )
-        setProduct(newProd)
+        );
+        setProduct(newProd);
       } else {
-        addNotification(error)
+        addNotification(error);
       }
     } else {
       const res = await createProductReview(product._id, {
         comment,
         like: like,
         rating: +rating,
-      })
+      });
 
       if (res) {
-        const newProd = product
-        newProd.reviews = [...newProd.reviews, res.review]
-        setProduct(newProd)
+        const newProd = product;
+        newProd.reviews = [...newProd.reviews, res.review];
+        setProduct(newProd);
       } else {
-        addNotification(error)
+        addNotification(error);
       }
     }
 
-    clearForm()
+    clearForm();
 
-    setLoadingCreateReview(false)
-  }
+    setLoadingCreateReview(false);
+  };
 
   const editReview = async (review: IReview) => {
-    setComment(review.comment)
-    setLike(review.like)
-    setRating(review.rating.toString())
-    setEditReviewItem(review)
-    setShowForm(true)
-  }
+    setComment(review.comment);
+    setLike(review.like);
+    setRating(review.rating.toString());
+    setEditReviewItem(review);
+    setShowForm(true);
+  };
 
   const deleteReview = async (id: string) => {
-    if (loadingDeleteReview) return
+    if (loadingDeleteReview) return;
 
-    setLoadingDeleteReview(true)
-    const res = await deleteProductReview(id)
+    setLoadingDeleteReview(true);
+    const res = await deleteProductReview(id);
     if (res) {
-      const newProd = product
-      newProd.reviews = newProd.reviews.filter((review) => review._id !== id)
-      setProduct(newProd)
+      const newProd = product;
+      newProd.reviews = newProd.reviews.filter((review) => review._id !== id);
+      setProduct(newProd);
     } else {
-      addNotification(error)
+      addNotification(error);
     }
-    setLoadingDeleteReview(false)
-  }
+    setLoadingDeleteReview(false);
+  };
 
   const reviewEligibility = useMemo(() => {
-    return checkProductReviewEligibility(user, product)
-  }, [user, product])
+    return checkProductReviewEligibility(user, product);
+  }, [user, product]);
 
   const showReviewForm = useMemo(() => {
-    if (showForm) return true
-    return reviewEligibility.canReview
-  }, [showForm, reviewEligibility])
+    if (showForm) return true;
+    return reviewEligibility.canReview;
+  }, [showForm, reviewEligibility]);
 
   const clearForm = () => {
-    setComment("")
-    setLike(undefined)
-    setRating("")
-    setShowForm(false)
-  }
+    setComment("");
+    setLike(undefined);
+    setRating("");
+    setShowForm(false);
+  };
 
   return (
     <>
@@ -241,6 +245,13 @@ const ProductReviews = ({ product, setProduct }: Props) => {
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
                     />
+                    {foundRestricted.length > 0 && (
+                      <div className="text-xs text-orange-500 font-semibold mt-1">
+                        Warning: Restricted words found:{" "}
+                        {foundRestricted.join(", ")}. Item will be review before
+                        publishing
+                      </div>
+                    )}
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="flex items-center gap-1">
@@ -292,7 +303,7 @@ const ProductReviews = ({ product, setProduct }: Props) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ProductReviews
+export default ProductReviews;

@@ -1,23 +1,28 @@
 // AdminSidebar.tsx
-import React from "react"
-import { AiOutlineArrowRight, AiOutlineQuestionCircle } from "react-icons/ai"
-import { NavLink } from "react-router-dom"
-import { Link } from "react-router-dom"
-import useAuth from "../../hooks/useAuth"
-import useTheme from "../../hooks/useTheme"
-import { BiChart } from "react-icons/bi"
+import React from "react";
+import {
+  AiOutlineArrowRight,
+  AiOutlineQuestionCircle,
+  AiOutlineWarning,
+} from "react-icons/ai";
+import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import useTheme from "../../hooks/useTheme";
+import { BiChart } from "react-icons/bi";
 import {
   FaChartBar,
   FaEnvelope,
   FaQuestionCircle,
+  FaShieldAlt,
   FaUser,
-} from "react-icons/fa"
+} from "react-icons/fa";
 import {
   FaArrowRotateLeft,
   FaBasketShopping,
   FaListCheck,
   FaMoneyBill,
-} from "react-icons/fa6"
+} from "react-icons/fa6";
 
 const sidebarLinks = [
   {
@@ -41,6 +46,11 @@ const sidebarLinks = [
     path: "/admin/allorders",
     text: "All Orders",
     icon: <FaChartBar />,
+  },
+  {
+    path: "/admin/reports",
+    text: "Report",
+    icon: <AiOutlineWarning />,
   },
   {
     path: "/messages",
@@ -83,22 +93,27 @@ const sidebarLinks = [
     text: "Contact Us",
     icon: <FaEnvelope />,
   },
-]
+  {
+    path: "/admin/moderation",
+    text: "Moderation",
+    icon: <FaShieldAlt />,
+  },
+];
 
 interface SideBarProps {
-  isOpen: boolean
-  setSidebarOpen: (value: boolean) => void
+  isOpen: boolean;
+  setSidebarOpen: (value: boolean) => void;
 }
 
 const AdminSidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
-  const { user } = useAuth()
-  const { isDarkMode } = useTheme()
+  const { user } = useAuth();
+  const { isDarkMode } = useTheme();
   const sidebarClasses = `fixed inset-y-0 left-0 z-[80] bg-orange-color bg-opacity-10 text-white w-64 h-screen transition-transform transform ${
     isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
-  }`
+  }`;
 
   const listItemClasses =
-    "mb-4 text-base hover:bg-orange-color hover:bg-opacity-10 text-malon-color transition-colors duration-300 px-4"
+    "mb-4 text-base hover:bg-orange-color hover:bg-opacity-10 text-malon-color transition-colors duration-300 px-4";
 
   return (
     <div className={sidebarClasses}>
@@ -161,7 +176,7 @@ const AdminSidebar: React.FC<SideBarProps> = ({ isOpen, setSidebarOpen }) => {
         <p className="text-xs text-white">© 2024 Repeddle</p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AdminSidebar
+export default AdminSidebar;

@@ -1,66 +1,70 @@
-import { ChangeEvent, FormEvent, useRef, useState } from "react"
-import MessageBox from "../../components/MessageBox"
-import useAuth from "../../hooks/useAuth"
-import LoadingBox from "../../components/LoadingBox"
-import { IComment, IProduct } from "../../types/product"
-import { Link } from "react-router-dom"
-import Comment from "./Comment"
-import useProducts from "../../hooks/useProducts"
-import useToastNotification from "../../hooks/useToastNotification"
-import { compressImageUpload } from "../../utils/common"
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import MessageBox from "../../components/MessageBox";
+import useAuth from "../../hooks/useAuth";
+import LoadingBox from "../../components/LoadingBox";
+import { IComment, IProduct } from "../../types/product";
+import { Link } from "react-router-dom";
+import Comment from "./Comment";
+import useProducts from "../../hooks/useProducts";
+import useToastNotification from "../../hooks/useToastNotification";
+import { compressImageUpload } from "../../utils/common";
+import { useModeration } from "../../hooks/useModeration";
 
 type Props = {
-  comments?: IComment[]
-  product: IProduct
-  setProduct: (val: IProduct) => void
-}
+  comments?: IComment[];
+  product: IProduct;
+  setProduct: (val: IProduct) => void;
+};
 
 const ProductComment = ({ comments, product, setProduct }: Props) => {
-  const { user } = useAuth()
-  const { commentProduct, error } = useProducts()
-  const { addNotification } = useToastNotification()
+  const { user } = useAuth();
+  const { commentProduct, error } = useProducts();
+  const { addNotification } = useToastNotification();
 
-  const [comment, setComment] = useState("")
-  const [imageUrl, setImageUrl] = useState("")
-  const [loadingCreateReview, setLoadingCreateReview] = useState(false)
+  const [comment, setComment] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [loadingCreateReview, setLoadingCreateReview] = useState(false);
 
-  const reviewRef = useRef(null)
+  const { checkRestricted } = useModeration();
+  const foundRestricted = comment ? checkRestricted(comment) : [];
+
+  const reviewRef = useRef(null);
 
   const submitCommentHandler = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!comment) {
-      addNotification("Enter a comment")
-      return
+      addNotification("Enter a comment");
+      return;
     }
 
-    const data: { comment: string; image?: string } = { comment }
+    const data: { comment: string; image?: string } = { comment };
 
     if (imageUrl) {
-      data["image"] = imageUrl
+      data["image"] = imageUrl;
     }
 
-    setLoadingCreateReview(true)
+    setLoadingCreateReview(true);
 
-    const res = await commentProduct(product._id, data)
+    const res = await commentProduct(product._id, data);
 
     if (res) {
-      const newProd = product
-      newProd.comments = [...(newProd.comments ?? []), res.comment]
-      setProduct(newProd)
-      addNotification("Comment added to product")
-    } else addNotification(error)
+      const newProd = product;
+      newProd.comments = [...(newProd.comments ?? []), res.comment];
+      setProduct(newProd);
+      addNotification("Comment added to product");
+    } else addNotification(error);
 
-    setLoadingCreateReview(false)
-  }
+    setLoadingCreateReview(false);
+  };
 
   const uploadImageHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) throw Error("No image found")
+    const file = e.target.files?.[0];
+    if (!file) throw Error("No image found");
 
-    const imageUrl = await compressImageUpload(file, 1024)
-    setImageUrl(imageUrl)
-  }
+    const imageUrl = await compressImageUpload(file, 1024);
+    setImageUrl(imageUrl);
+  };
 
   return (
     <>
@@ -99,6 +103,13 @@ const ProductComment = ({ comments, product, setProduct }: Props) => {
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
                 />
+                {foundRestricted.length > 0 && (
+                  <div className="text-xs text-orange-500 font-semibold mt-1">
+                    Warning: Restricted words found:{" "}
+                    {foundRestricted.join(", ")}. Item will be review before
+                    publishing
+                  </div>
+                )}
                 <input
                   className="mt-[5px]"
                   type="file"
@@ -133,7 +144,7 @@ const ProductComment = ({ comments, product, setProduct }: Props) => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ProductComment
+export default ProductComment;

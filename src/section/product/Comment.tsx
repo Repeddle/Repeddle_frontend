@@ -1,191 +1,249 @@
-import { FormEvent, useMemo, useState } from "react"
-import { FaHeart, FaTrash } from "react-icons/fa"
-import useAuth from "../../hooks/useAuth"
-import moment from "moment"
-import { IComment, ICommentReply, IProduct } from "../../types/product"
-import useProducts from "../../hooks/useProducts"
-import useToastNotification from "../../hooks/useToastNotification"
-import { imageUrl } from "../../services/api"
+import { FormEvent, useMemo, useState } from "react";
+import { FaFlag, FaHeart, FaTrash } from "react-icons/fa";
+import useAuth from "../../hooks/useAuth";
+import moment from "moment";
+import { IComment, ICommentReply, IProduct } from "../../types/product";
+import useProducts from "../../hooks/useProducts";
+import useToastNotification from "../../hooks/useToastNotification";
+import { imageUrl } from "../../services/api";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../../components/ui/dropdown-menu";
+import { BiDotsHorizontal } from "react-icons/bi";
+import Report from "./Report";
+import MessageImage from "../../components/ui/MessageImage";
+import { useModeration } from "../../hooks/useModeration";
 
 type Props = {
-  comment: IComment
-  product: IProduct
-  setProduct: (val: IProduct) => void
-}
+  comment: IComment;
+  product: IProduct;
+  setProduct: (val: IProduct) => void;
+};
 
 const Comment = ({ comment, product, setProduct }: Props) => {
-  const { user } = useAuth()
+  const { user } = useAuth();
   const {
     likeProductComment,
     unlikeProductComment,
     replyProductComment,
     likeProductCommentReply,
     unlikeProductCommentReply,
+    deleteProductComment,
     error,
-  } = useProducts()
-  const { addNotification } = useToastNotification()
+  } = useProducts();
+  const { addNotification } = useToastNotification();
 
-  const [reply, setReply] = useState("")
-  const [replyArea, setReplyArea] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [reply, setReply] = useState("");
+  const [replyArea, setReplyArea] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showReport, setShowReport] = useState(false);
+
+  const { checkRestricted } = useModeration();
+  const foundRestricted = reply ? checkRestricted(reply) : [];
 
   const liked = useMemo(
     () => !!comment.likes.find((like) => like === user?._id),
     [comment.likes, user?._id]
-  )
+  );
 
   const likeComment = async () => {
-    if (!user) return
+    if (!user) return;
 
     if (comment.userId._id === user._id) {
-      addNotification("You can't like your comment")
-      return
+      addNotification("You can't like your comment");
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
 
     if (liked) {
-      const res = await unlikeProductComment(product._id, comment._id)
+      const res = await unlikeProductComment(product._id, comment._id);
 
       if (res) {
-        const newProd = product
+        const newProd = product;
         newProd.comments = newProd.comments?.map((com) =>
           com._id === res.comment._id ? res.comment : com
-        )
-        setProduct(newProd)
-        addNotification(res.message)
-      } else addNotification(error)
+        );
+        setProduct(newProd);
+        addNotification(res.message);
+      } else addNotification(error);
     } else {
-      const res = await likeProductComment(product._id, comment._id)
+      const res = await likeProductComment(product._id, comment._id);
 
       if (res) {
-        const newProd = product
+        const newProd = product;
         newProd.comments = newProd.comments?.map((com) =>
           com._id === res.comment._id ? res.comment : com
-        )
-        setProduct(newProd)
-        addNotification(res.message)
-      } else addNotification(error)
+        );
+        setProduct(newProd);
+        addNotification(res.message);
+      } else addNotification(error);
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   const likeReplyHandler = async (reply: ICommentReply) => {
-    if (!user) return
+    if (!user) return;
 
     if (reply.userId._id === user._id) {
-      addNotification("You can't like your reply")
-      return
+      addNotification("You can't like your reply");
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
 
     if (reply.likes.find((x) => x === user._id)) {
       const res = await unlikeProductCommentReply(
         product._id,
         comment._id,
         reply._id
-      )
+      );
 
       if (res) {
-        const newProd = product
+        const newProd = product;
         newProd.comments = newProd.comments?.map((com) => {
           if (com._id === comment._id) {
-            const newComment = com
+            const newComment = com;
             com.replies = com.replies.map((rep) =>
               rep._id === res.reply._id ? res.reply : rep
-            )
-            return newComment
+            );
+            return newComment;
           }
-          return com
-        })
-        setProduct(newProd)
-        addNotification(res.message)
-      } else addNotification(error)
+          return com;
+        });
+        setProduct(newProd);
+        addNotification(res.message);
+      } else addNotification(error);
     } else {
       const res = await likeProductCommentReply(
         product._id,
         comment._id,
         reply._id
-      )
+      );
 
       if (res) {
-        const newProd = product
+        const newProd = product;
         newProd.comments = newProd.comments?.map((com) => {
           if (com._id === comment._id) {
-            const newComment = com
+            const newComment = com;
             com.replies = com.replies.map((rep) =>
               rep._id === res.reply._id ? res.reply : rep
-            )
-            return newComment
+            );
+            return newComment;
           }
-          return com
-        })
-        setProduct(newProd)
-        addNotification(res.message)
-      } else addNotification(error)
+          return com;
+        });
+        setProduct(newProd);
+        addNotification(res.message);
+      } else addNotification(error);
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   const submitReplyHandler = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!reply) {
-      addNotification("Enter a reply")
-      return
+      addNotification("Enter a reply");
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
 
-    const res = await replyProductComment(product._id, comment._id, reply)
+    const res = await replyProductComment(product._id, comment._id, reply);
 
     if (res) {
-      const newProd = product
+      const newProd = product;
       newProd.comments = newProd.comments?.map((com) => {
         if (com._id === comment._id) {
-          const newComment = com
-          com.replies = [...com.replies, res.comment]
-          return newComment
+          const newComment = com;
+          com.replies = [...com.replies, res.comment];
+          return newComment;
         }
-        return com
-      })
-      setProduct(newProd)
-      setReply("")
-    } else addNotification(error)
+        return com;
+      });
+      setProduct(newProd);
+      setReply("");
+    } else addNotification(error);
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
-  const deleteComment = () => {}
+  const deleteComment = async () => {
+    try {
+      await deleteProductComment(comment._id);
+      const newProd: IProduct = {
+        ...product,
+        comments: (product?.comments ?? []).filter(
+          (c: IComment) => c._id !== comment._id
+        ),
+      };
+      setProduct(newProd);
+      addNotification("Comment deleted successfully");
+    } catch (error: any) {
+      addNotification(error, "", true);
+    }
+  };
 
   return (
     <>
-      <div className="flex mt-[15px] p-2.5 lg:p-5 rounded-[0.2rem] dark:bg-dark-ev1 bg-light-ev1">
+      <div className="flex mt-[15px] p-2.5 lg:p-5 rounded-[0.2rem] dark:bg-dark-ev1 bg-light-ev1 w-full">
         <img
           className="w-[50px] h-[50px] object-cover rounded-[50%]"
           src={imageUrl + comment.userId.image}
           alt="pimage"
         />
-        <div className="ml-5">
+        <div className="ml-5 flex-1">
           <div>
             <div className="flex items-center">
               <div className="font-bold mr-2.5">{comment.userId.username}</div>
               <div className="text-xs">
                 {moment(comment.createdAt).fromNow()}
               </div>
-              {user && user.role === "Admin" && (
-                <div
-                  className="text-red-500 ml-2.5 cursor-pointer"
-                  onClick={deleteComment}
-                >
-                  <FaTrash />
-                </div>
-              )}
+              <div className="ml-auto">
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <BiDotsHorizontal />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    className="bg-white-color dark:bg-black-color"
+                    align="start"
+                  >
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem onClick={() => setShowReport(true)}>
+                        <FaFlag /> Report
+                      </DropdownMenuItem>
+                      {user && user.role === "Admin" && (
+                        <DropdownMenuItem
+                          className="text-red-500"
+                          onClick={deleteComment}
+                        >
+                          <FaTrash /> Delete
+                        </DropdownMenuItem>
+                      )}
+                    </DropdownMenuGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
+            <Report
+              reportItem={{
+                id: comment._id,
+                image: comment.image,
+                name: comment.comment,
+              }}
+              refs="comment"
+              setShowModel={setShowReport}
+              showModel={showReport}
+            />
             <div className="mb-2.5">{comment.comment}</div>
+            <div>{comment.image && <MessageImage url={comment.image} />}</div>
             <div className="flex justify-between items-center w-[125px]">
               <div
                 className="text-[13px] cursor-pointer underline hover:text-malon-color"
@@ -199,10 +257,6 @@ const Comment = ({ comment, product, setProduct }: Props) => {
                 onClick={() => !loading && likeComment()}
               />
             </div>
-          </div>
-          <div>
-            {/* {comment.image && <MessageImage url={comment.image} />} */}
-            {/* {comment.image && <CommentImg src={imageUrl +comment.image} alt="d" />}*/}
           </div>
         </div>
       </div>
@@ -244,6 +298,12 @@ const Comment = ({ comment, product, setProduct }: Props) => {
               value={reply}
               onChange={(e) => setReply(e.target.value)}
             />
+            {foundRestricted.length > 0 && (
+              <div className="text-xs text-orange-500 font-semibold mb-2 lg:ml-[90px]">
+                Warning: Restricted words found: {foundRestricted.join(", ")}.
+                Item will be review before publishing
+              </div>
+            )}
             <div>
               <button
                 className="m-0 text-white-color bg-orange-color text-xs lg:ml-[90px] px-[7px] py-[5px] rounded-[0.2rem] border-0"
@@ -257,7 +317,7 @@ const Comment = ({ comment, product, setProduct }: Props) => {
         </>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Comment
+export default Comment;

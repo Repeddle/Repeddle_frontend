@@ -3,11 +3,11 @@ import moment from "moment";
 import { SkeletonMessageLoading } from "../../components/message/skeletonLoading";
 import useMessage from "../../hooks/useMessage";
 import useAuth from "../../hooks/useAuth";
-import { FaShieldAlt } from "react-icons/fa";
+import { FaFlag, FaShieldAlt } from "react-icons/fa";
 import { RiImageAddFill } from "react-icons/ri";
 import { IoSend } from "react-icons/io5";
 import socket from "../../socket";
-import { CgChevronLeft } from "react-icons/cg";
+import { CgChevronLeft, CgUnblock } from "react-icons/cg";
 import { getDayLabel } from "../../utils/chat";
 import { compressImageUpload } from "../../utils/common";
 import useToastNotification from "../../hooks/useToastNotification";
@@ -16,6 +16,17 @@ import LoadingBox from "../../components/LoadingBox";
 import { IoMdClose } from "react-icons/io";
 import ImageModal from "../../components/ImageModal";
 import Button from "../../components/ui/Button";
+import Report from "../product/Report";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../../components/ui/dropdown-menu";
+import { BiDotsHorizontal } from "react-icons/bi";
+import { MdBlock } from "react-icons/md";
+import { useModeration } from "../../hooks/useModeration";
 
 interface Props {
   setIsSidebarOpen: (value: boolean) => void;
@@ -32,6 +43,8 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
     sendMessage,
     joinConversation,
     leaveConversation,
+    blockUser,
+    unblockUser,
   } = useMessage();
   const { addNotification } = useToastNotification();
   const [messageInput, setMessageInput] = useState<string>("");
@@ -41,10 +54,21 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
     message: "",
     failed: false,
   });
+
+  const { checkRestricted } = useModeration();
+  const foundRestricted = messageInput ? checkRestricted(messageInput) : [];
+
   const [image, setImage] = useState<string>("");
   const [uploading, setUploading] = useState(false);
   const [modalImage, setModalImage] = useState<string>("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showReport, setShowReport] = useState(false);
+  const [reportItem, setReportItem] = useState({
+    id: "",
+    image: "",
+    name: "",
+    refs: "conversation" as any,
+  });
 
   // Function to emit startTyping event
   const startTyping = () => {
@@ -150,6 +174,26 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
     }
   };
 
+  const handleBlock = async (id: string) => {
+    try {
+      if (!currentConversation) return;
+      await blockUser(id);
+      addNotification("User blocked");
+    } catch (error: any) {
+      addNotification(error, undefined, true);
+    }
+  };
+
+  const handleUnblock = async (id: string) => {
+    try {
+      if (!currentConversation) return;
+      await unblockUser(id);
+      addNotification("User unblocked");
+    } catch (error: any) {
+      addNotification(error, undefined, true);
+    }
+  };
+
   return currentConversation ? (
     <>
       <div className=" relative flex-1 w-screen overflow-x-hidden flex flex-col bg-light-ev1 dark:bg-dark-ev1">
@@ -175,14 +219,65 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
               </div>
             </div>
           </div>
-          {user?.role === "Admin" &&
-            (currentConversation.type === "Support" ||
-              currentConversation.type === "Report") &&
-            (currentConversation.participants.includes(user._id) ? (
-              <Button text="leave" onClick={handleLeave} isLoading={joining} />
-            ) : (
-              <Button text="Join" onClick={handleJoin} isLoading={joining} />
-            ))}
+          <div className="flex items-center gap-10">
+            {user?.role === "Admin" &&
+              (currentConversation.type === "Support" ||
+                currentConversation.type === "Report") &&
+              (currentConversation.participants.includes(user._id) ? (
+                <Button
+                  text="leave"
+                  onClick={handleLeave}
+                  isLoading={joining}
+                />
+              ) : (
+                <Button text="Join" onClick={handleJoin} isLoading={joining} />
+              ))}
+
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <BiDotsHorizontal />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className="bg-white-color dark:bg-black-color"
+                align="start"
+              >
+                <DropdownMenuGroup>
+                  {user?.blockedUsers.includes(
+                    currentConversation.otherUser?._id || ""
+                  ) ? (
+                    <DropdownMenuItem
+                      onClick={() =>
+                        handleUnblock(currentConversation.otherUser?._id || "")
+                      }
+                    >
+                      <CgUnblock /> Unblock
+                    </DropdownMenuItem>
+                  ) : (
+                    <DropdownMenuItem
+                      onClick={() =>
+                        handleBlock(currentConversation.otherUser?._id || "")
+                      }
+                    >
+                      <MdBlock /> Block
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuItem
+                    onClick={() => {
+                      setShowReport(true);
+                      setReportItem({
+                        id: currentConversation._id,
+                        image: currentConversation.otherUser?.image || "",
+                        name: currentConversation.otherUser?.username || "",
+                        refs: "conversation",
+                      });
+                    }}
+                  >
+                    <FaFlag /> Report
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
 
         <div className="absolute z-0 flex items-center justify-center top-16 opacity-40 gap-5 px-10 md:px-20">
@@ -374,6 +469,12 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
             onFocus={startTyping}
             onBlur={stopTyping}
           />
+          {foundRestricted.length > 0 && (
+            <div className="absolute top-[-25px] left-[60px] text-[10px] text-orange-500 font-semibold">
+              Warning: Restricted words found: {foundRestricted.join(", ")}.
+              Message will be flagged for review.
+            </div>
+          )}
           <button type="submit" className="">
             <IoSend size={30} />
           </button>
@@ -384,6 +485,12 @@ const MainChatArea: React.FC<Props> = ({ setIsSidebarOpen }) => {
         onClose={closeModal}
         imageUrl={modalImage}
         alt="Chat image"
+      />
+      <Report
+        reportItem={reportItem}
+        refs={reportItem.refs}
+        setShowModel={setShowReport}
+        showModel={showReport}
       />
     </>
   ) : (

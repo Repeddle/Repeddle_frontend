@@ -24,6 +24,7 @@ import { ReturnProvider } from "./context/ReturnContext.tsx";
 import { PaymentProvider } from "./context/PaymentContext.tsx";
 import { ReviewProvider } from "./context/ReviewContext.tsx";
 import { RegionProvider } from "./context/RegionContext.tsx";
+import { ReportProvider } from "./context/ReportContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -49,9 +50,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                                           <PaymentProvider>
                                             <NotificationProvider>
                                               <ReturnProvider>
-                                                <RouterProvider
-                                                  router={router}
-                                                />
+                                                <ReportProvider>
+                                                  <RouterProvider
+                                                    router={router}
+                                                  />
+                                                </ReportProvider>
                                               </ReturnProvider>
                                             </NotificationProvider>
                                           </PaymentProvider>

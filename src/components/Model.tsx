@@ -1,22 +1,22 @@
-import { MouseEvent, PropsWithChildren, useContext, useRef } from "react"
-import ThemeContext from "../context/ThemeContext"
-import { FaTimes } from "react-icons/fa"
+import { MouseEvent, PropsWithChildren, useContext, useRef } from "react";
+import ThemeContext from "../context/ThemeContext";
+import { FaTimes } from "react-icons/fa";
 
 type Props = PropsWithChildren & {
-  showModel: boolean
-  setShowModel: (val: boolean) => void
-}
+  showModel: boolean;
+  setShowModel: (val: boolean) => void;
+};
 
 const Model = ({ setShowModel, showModel, children }: Props) => {
-  const theme = useContext(ThemeContext)
+  const theme = useContext(ThemeContext);
 
-  const modelRef = useRef(null)
+  const modelRef = useRef(null);
 
   const closeModel = (e: MouseEvent) => {
     if (modelRef.current === e.target) {
-      setShowModel(false)
+      setShowModel(false);
     }
-  }
+  };
 
   return (
     <>
@@ -45,7 +45,7 @@ const Model = ({ setShowModel, showModel, children }: Props) => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Model
+export default Model;

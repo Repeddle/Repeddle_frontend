@@ -28,6 +28,8 @@ import {
   unlikeProductCommentService,
   unlikeProductService,
   updateProductService,
+  deleteProductCommentReplyService,
+  deleteProductCommentService,
 } from "../services/product";
 
 type ContextType = {
@@ -106,6 +108,17 @@ type ContextType = {
     message: string;
     reply: ICommentReply;
   } | null>;
+  deleteProductCommentReply: (
+    id: string,
+    commentId: string,
+    replyId: string
+  ) => Promise<{
+    message: string;
+    reply: ICommentReply;
+  } | null>;
+  deleteProductComment: (commentId: string) => Promise<{
+    message: string;
+  } | null>;
 
   createProductReview: (
     id: string,
@@ -119,13 +132,13 @@ type ContextType = {
     review: IReview;
   } | null>;
 
-  addProductViewCount: (id: string, hashed: string) => Promise<void>
+  addProductViewCount: (id: string, hashed: string) => Promise<void>;
   addProductShareCount: (
     id: string,
     userId: string,
     hashed: string
-  ) => Promise<void>
-}
+  ) => Promise<void>;
+};
 
 // Create product context
 export const ProductContext = createContext<ContextType | undefined>(undefined);
@@ -378,7 +391,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
     try {
       setError("");
       // setLoading(true)
-      const result = await likeProductCommentService(id, commentId);
+      const result = await likeProductCommentService(commentId);
       setProducts((prevProducts) => {
         const updatedProducts = prevProducts.products.map((prod) => {
           if (prod._id === id) {
@@ -403,7 +416,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
     try {
       setError("");
       // setLoading(true)
-      const result = await unlikeProductCommentService(id, commentId);
+      const result = await unlikeProductCommentService(commentId);
       setProducts((prevProducts) => {
         const updatedProducts = prevProducts.products.map((prod) => {
           if (prod._id === id) {
@@ -424,6 +437,16 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
     }
   };
 
+  const deleteProductComment = async (commentId: string) => {
+    try {
+      setError("");
+      const result = await deleteProductCommentService(commentId);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  };
+
   const replyProductComment = async (
     id: string,
     commentId: string,
@@ -432,7 +455,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
     try {
       setError("");
       // setLoading(true)
-      const result = await replyProductCommentService(id, commentId, comment);
+      const result = await replyProductCommentService(commentId, comment);
       setProducts((prevProducts) => {
         const updatedProducts = prevProducts.products.map((prod) => {
           if (prod._id === id) {
@@ -461,11 +484,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
     try {
       setError("");
       // setLoading(true)
-      const result = await likeProductCommentReplyService(
-        id,
-        commentId,
-        replyId
-      );
+      const result = await likeProductCommentReplyService(replyId);
       setProducts((prevProducts) => {
         const updatedProducts = prevProducts.products.map((prod) => {
           if (prod._id === id) {
@@ -505,11 +524,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
     try {
       setError("");
       // setLoading(true)
-      const result = await unlikeProductCommentReplyService(
-        id,
-        commentId,
-        replyId
-      );
+      const result = await unlikeProductCommentReplyService(replyId);
       setProducts((prevProducts) => {
         const updatedProducts = prevProducts.products.map((prod) => {
           if (prod._id === id) {
@@ -519,6 +534,46 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
                 if (comm._id === commentId) {
                   comm.replies = comm.replies.map((rep) =>
                     rep._id == replyId ? result.reply : rep
+                  );
+                }
+
+                return comm;
+              });
+              prod.comments = newComment;
+            }
+          }
+          return prod;
+        });
+        const newProd = { ...prevProducts, products: updatedProducts };
+        return newProd;
+      });
+      // setLoading(false)
+      return result;
+    } catch (error) {
+      handleError(error as string);
+      // setLoading(false)
+      return null;
+    }
+  };
+
+  const deleteProductCommentReply = async (
+    id: string,
+    commentId: string,
+    replyId: string
+  ) => {
+    try {
+      setError("");
+      // setLoading(true)
+      const result = await deleteProductCommentReplyService(replyId);
+      setProducts((prevProducts) => {
+        const updatedProducts = prevProducts.products.map((prod) => {
+          if (prod._id === id) {
+            const comments = prod.comments ?? [];
+            if (comments.length > 0) {
+              const newComment = comments.map((comm) => {
+                if (comm._id === commentId) {
+                  comm.replies = comm.replies.filter(
+                    (rep) => rep._id !== replyId
                   );
                 }
 
@@ -579,7 +634,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
     hashed: string
   ) => {
     try {
-      await addProductShareCountService(id, userId, hashed)
+      await addProductShareCountService(id, userId, hashed);
     } catch (error) {
       console.log(error);
     }
@@ -617,6 +672,8 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         unlikeProductCommentReply,
         addProductShareCount,
         addProductViewCount,
+        deleteProductComment,
+        deleteProductCommentReply,
       }}
     >
       {children}

@@ -58,6 +58,7 @@ export interface IUser {
   rebundle?: IRebundle;
   earnings?: number;
   balance?: number;
+  blockedUsers: string[];
 }
 
 export type Wishlist = IProduct;

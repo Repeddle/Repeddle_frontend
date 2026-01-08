@@ -1,30 +1,31 @@
-import { useEffect, useMemo, useRef, useState } from "react"
-import useAuth from "../../hooks/useAuth"
-import { useNavigate, useSearchParams } from "react-router-dom"
-import useCategory from "../../hooks/useCategory"
-import Details from "../../section/newProduct/Details"
-import { Helmet } from "react-helmet-async"
-import Button from "../../components/ui/Button"
-import InverseButton from "../../components/ui/InverseButton"
-import Media from "../../section/newProduct/Media"
-import useToastNotification from "../../hooks/useToastNotification"
-import Price from "../../section/newProduct/Price"
+import { useEffect, useMemo, useRef, useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import useCategory from "../../hooks/useCategory";
+import Details from "../../section/newProduct/Details";
+import { Helmet } from "react-helmet-async";
+import Button from "../../components/ui/Button";
+import InverseButton from "../../components/ui/InverseButton";
+import Media from "../../section/newProduct/Media";
+import useToastNotification from "../../hooks/useToastNotification";
+import Price from "../../section/newProduct/Price";
 import {
   IDeliveryOption,
   IProduct,
   ISize,
   ProductMeta,
-} from "../../types/product"
-import useProducts from "../../hooks/useProducts"
-import { currency } from "../../utils/common"
-import MessageBox from "../../components/MessageBox"
-import Description from "../../section/newProduct/Description"
-import Features from "../../section/newProduct/Features"
-import Modal from "../../components/ui/Modal"
-import { FaArrowRight, FaRegCheckCircle } from "react-icons/fa"
-import { Link } from "react-router-dom"
-import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal"
-import useRegion from "../../hooks/useRegion"
+} from "../../types/product";
+import useProducts from "../../hooks/useProducts";
+import { currency } from "../../utils/common";
+import MessageBox from "../../components/MessageBox";
+import Description from "../../section/newProduct/Description";
+import Features from "../../section/newProduct/Features";
+import Modal from "../../components/ui/Modal";
+import { FaArrowRight, FaRegCheckCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal";
+import useRegion from "../../hooks/useRegion";
+import { useModeration } from "../../hooks/useModeration";
 
 const stepsItems = [
   {
@@ -47,67 +48,67 @@ const stepsItems = [
     id: 5,
     name: "Features",
   },
-]
+];
 
 type InputData = {
-  name: string
-  product: string
-  category: string
-  subCategory: string
-  condition: string
-  material: string
-  description: string
-  price: string
-  color: string[]
-  keyFeatures: string
-  image: string
-  selectedSize: string
-  specification: string
-  brand: string
-  tag: string
-}
+  name: string;
+  product: string;
+  category: string;
+  subCategory: string;
+  condition: string;
+  material: string;
+  description: string;
+  price: string;
+  color: string[];
+  keyFeatures: string;
+  image: string;
+  selectedSize: string;
+  specification: string;
+  brand: string;
+  tag: string;
+};
 
 const NewProduct = () => {
-  const [params] = useSearchParams()
+  const [params] = useSearchParams();
 
-  const { user } = useAuth()
-  const { addNotification } = useToastNotification()
-  const { fetchProductBySlug } = useProducts()
-  const { region } = useRegion()
+  const { user } = useAuth();
+  const { addNotification } = useToastNotification();
+  const { fetchProductBySlug } = useProducts();
+  const { region } = useRegion();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user?.accountNumber) {
-      return navigate("/verifyaccount")
+      return navigate("/verifyaccount");
     }
 
     if (!user?.address) {
-      return navigate("/verifyaddress")
+      return navigate("/verifyaddress");
     }
-  }, [navigate, user?.accountNumber, user?.address])
+  }, [navigate, user?.accountNumber, user?.address]);
 
-  const { categories, fetchCategories } = useCategory()
-  const { createProduct, error } = useProducts()
-  const [newProduct, setNewProduct] = useState<IProduct>()
+  const { categories, fetchCategories } = useCategory();
+  const { createProduct, error } = useProducts();
+  const [newProduct, setNewProduct] = useState<IProduct>();
 
-  const topRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    fetchCategories()
-  }, [])
+  const topRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const slug = params.get("slug")
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    const slug = params.get("slug");
     const fetchProduct = async () => {
       if (slug) {
-        setIsLoadingProduct(true)
+        setIsLoadingProduct(true);
 
-        const product = await fetchProductBySlug(slug)
+        const product = await fetchProductBySlug(slug);
 
         if (!product) {
-          addNotification("Failed to get product details", undefined, true)
-          return
+          addNotification("Failed to get product details", undefined, true);
+          return;
         }
 
         setInput({
@@ -126,7 +127,7 @@ const NewProduct = () => {
           subCategory: product.subCategory || "",
           selectedSize: "",
           tag: "",
-        })
+        });
 
         setMediaInput({
           image1: product.images[0] || "",
@@ -137,29 +138,29 @@ const NewProduct = () => {
           luxuryImage: product.luxuryImage || "",
           video: product.video || "",
           vintage: product.vintage || false,
-        })
+        });
 
         setPriceInput({
           costPrice: product.costPrice?.toString() || "",
           deliveryOption: "",
           sellingPrice: product.sellingPrice.toString(),
           discount: "",
-        })
+        });
 
-        setTags(product.tags)
-        setSizes(product.sizes)
-        setCountInStock(product.countInStock)
+        setTags(product.tags);
+        setSizes(product.sizes);
+        setCountInStock(product.countInStock);
 
-        setIsLoadingProduct(false)
+        setIsLoadingProduct(false);
       }
-    }
+    };
 
-    fetchProduct()
-  }, [params])
+    fetchProduct();
+  }, [params]);
 
-  const [showModal, setShowModal] = useState(false)
-  const [isLoadingProduct, setIsLoadingProduct] = useState(false)
-  const [createProductLoading, setCreateProductLoading] = useState(false)
+  const [showModal, setShowModal] = useState(false);
+  const [isLoadingProduct, setIsLoadingProduct] = useState(false);
+  const [createProductLoading, setCreateProductLoading] = useState(false);
   const [validationError, setValidationError] = useState({
     name: "",
     product: "",
@@ -176,8 +177,8 @@ const NewProduct = () => {
     specification: "",
     keyFeatures: "",
     image: "",
-  })
-  const [meta, setMeta] = useState<ProductMeta>({})
+  });
+  const [meta, setMeta] = useState<ProductMeta>({});
 
   const [input, setInput] = useState<InputData>({
     name: "",
@@ -195,7 +196,44 @@ const NewProduct = () => {
     specification: "",
     keyFeatures: "",
     image: "",
-  })
+  });
+
+  const [tags, setTags] = useState<string[]>([]);
+  const [addSize, setAddSize] = useState(false);
+
+  const { checkRestricted } = useModeration();
+  const [moderationWarnings, setModerationWarnings] = useState<{
+    [key: string]: string[];
+  }>({});
+
+  useEffect(() => {
+    const fieldsToCheck = [
+      "name",
+      "description",
+      "keyFeatures",
+      "specification",
+      "tag",
+    ];
+    const newWarnings: { [key: string]: string[] } = {};
+
+    fieldsToCheck.forEach((field) => {
+      const value = input[field as keyof InputData];
+      if (typeof value === "string") {
+        const found = checkRestricted(value);
+        if (found.length > 0) {
+          newWarnings[field] = found;
+        }
+      }
+    });
+
+    // Check tags array as well
+    const tagWarnings = tags.flatMap((tag) => checkRestricted(tag));
+    if (tagWarnings.length > 0) {
+      newWarnings["tags"] = [...new Set(tagWarnings)];
+    }
+
+    setModerationWarnings(newWarnings);
+  }, [input, tags, checkRestricted]);
 
   const [mediaInput, setMediaInput] = useState({
     image1: "",
@@ -206,49 +244,47 @@ const NewProduct = () => {
     luxury: false,
     luxuryImage: "",
     vintage: false,
-  })
+  });
 
   const [priceInput, setPriceInput] = useState({
     costPrice: "",
     sellingPrice: "",
     discount: "",
     deliveryOption: "",
-  })
+  });
 
   const [priceValidation, setPriceValidation] = useState({
     costPrice: "",
     sellingPrice: "",
     discount: "",
     deliveryOption: "",
-  })
-  const [deliveryOption, setDeliveryOption] = useState<IDeliveryOption[]>([])
-  const [video, setVideo] = useState("")
-  const [sizes, setSizes] = useState<ISize[]>([])
-  const [countInStock, setCountInStock] = useState(1)
-  const [tags, setTags] = useState<string[]>([])
-  const [addSize, setAddSize] = useState(false)
+  });
+  const [deliveryOption, setDeliveryOption] = useState<IDeliveryOption[]>([]);
+  const [video, setVideo] = useState("");
+  const [sizes, setSizes] = useState<ISize[]>([]);
+  const [countInStock, setCountInStock] = useState(1);
 
   const handleTags = (tag: string) => {
     if (tag.includes(" ")) {
-      addNotification("Please remove space")
-      return
+      addNotification("Please remove space");
+      return;
     }
 
     if (tags.length > 5) {
-      addNotification("You can't add more five tags ")
+      addNotification("You can't add more five tags ");
 
-      return
+      return;
     }
     if (tag.length > 0) {
-      setTags([...tags, tag])
-      setInput({ ...input, tag: "" })
+      setTags([...tags, tag]);
+      setInput({ ...input, tag: "" });
     }
-  }
+  };
 
   const removeTags = (tag: string) => {
-    const newtags = tags.filter((data) => data != tag)
-    setTags(newtags)
-  }
+    const newtags = tags.filter((data) => data != tag);
+    setTags(newtags);
+  };
 
   const handleError = (
     errorMessage: string,
@@ -257,8 +293,8 @@ const NewProduct = () => {
     setValidationError((prevState) => ({
       ...prevState,
       [input]: errorMessage,
-    }))
-  }
+    }));
+  };
 
   const handlePriceError = (
     errorMessage: string,
@@ -267,51 +303,51 @@ const NewProduct = () => {
     setPriceValidation((prevState) => ({
       ...prevState,
       [input]: errorMessage,
-    }))
-  }
+    }));
+  };
 
-  const [showTopInfo, setShowTopInfo] = useState(false)
+  const [showTopInfo, setShowTopInfo] = useState(false);
 
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(1);
 
   const jumpStep = (val: number) => {
     if (step > val) {
-      setStep(val)
-      topRef.current?.scrollIntoView({ behavior: "smooth" })
-      return
+      setStep(val);
+      topRef.current?.scrollIntoView({ behavior: "smooth" });
+      return;
     }
 
     if (val > 1 && !validateDetails()) {
-      return
+      return;
     }
 
     if (val > 2 && !validateMedia()) {
-      return
+      return;
     }
 
     if (val > 3 && !validatePrice()) {
-      return
+      return;
     }
     if (val > 4 && !validateDescription()) {
-      return
+      return;
     }
 
-    setStep(val)
-    topRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
+    setStep(val);
+    topRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const discount = useMemo(() => {
     if (
       parseInt(priceInput.costPrice) < parseInt(priceInput?.sellingPrice ?? "0")
     )
-      return 0
+      return 0;
     return (
       ((parseInt(priceInput.costPrice) -
         parseInt(priceInput?.sellingPrice ?? "0")) /
         parseInt(priceInput.costPrice)) *
       100
-    )
-  }, [priceInput.costPrice, priceInput?.sellingPrice])
+    );
+  }, [priceInput.costPrice, priceInput?.sellingPrice]);
 
   const costPrice = useMemo(
     () =>
@@ -321,7 +357,7 @@ const NewProduct = () => {
           : null
         : null,
     [priceInput.costPrice, priceInput.sellingPrice]
-  )
+  );
 
   const costPriceNumber = useMemo(
     () =>
@@ -331,7 +367,7 @@ const NewProduct = () => {
           : parseInt(priceInput.sellingPrice)
         : parseInt(priceInput.costPrice),
     [priceInput.costPrice, priceInput.sellingPrice]
-  )
+  );
 
   const sellingPrice = useMemo(
     () =>
@@ -339,105 +375,108 @@ const NewProduct = () => {
         ? parseInt(priceInput.sellingPrice)
         : parseInt(priceInput.costPrice),
     [priceInput.costPrice, priceInput.sellingPrice]
-  )
+  );
 
   const validateDetails = () => {
     if (input.name.length === 0) {
-      handleError("Name is required", "name")
-      return false
+      handleError("Name is required", "name");
+      return false;
     }
 
     if (input.name.length < 3) {
-      handleError("Name must be at least 3 characters", "name")
-      return false
+      handleError("Name must be at least 3 characters", "name");
+      return false;
     }
 
     if (input.product === "") {
-      handleError("Main category is required", "product")
-      return false
+      handleError("Main category is required", "product");
+      return false;
     }
 
-    return true
-  }
+    return true;
+  };
 
   const validateMedia = () => {
     if (
       Object.values(mediaInput).every((val) => {
         if (typeof val === "string") {
-          return val === ""
+          return val === "";
         }
-        return true
+        return true;
       })
     ) {
-      step === 2 && addNotification("At least one image is required")
-      return false
+      step === 2 && addNotification("At least one image is required");
+      return false;
     }
 
-    return true
-  }
+    return true;
+  };
 
   const validatePrice = () => {
     if (sellingPrice < 1) {
-      handlePriceError("price must be greater than 1", "costPrice")
-      return false
+      handlePriceError("price must be greater than 1", "costPrice");
+      return false;
     }
 
     if (deliveryOption.length === 0) {
-      handlePriceError("Delivery option is required", "deliveryOption")
-      return false
+      handlePriceError("Delivery option is required", "deliveryOption");
+      return false;
     }
 
-    return true
-  }
+    return true;
+  };
 
   const validateDescription = () => {
     if (!input.brand) {
-      handleError("Select brand", "brand")
-      return false
+      handleError("Select brand", "brand");
+      return false;
     }
 
     if (!input.description) {
-      handleError("Enter description", "description")
-      return false
+      handleError("Enter description", "description");
+      return false;
     }
 
     if (addSize) {
       if (countInStock < 1) {
-        handleError("Enter count in stock", "selectedSize")
-        return false
+        handleError("Enter count in stock", "selectedSize");
+        return false;
       }
     } else {
       if (!sizes.length || sizes.some((obj) => !obj.quantity)) {
-        handleError("Enter a valid size and quantity available", "selectedSize")
-        return false
+        handleError(
+          "Enter a valid size and quantity available",
+          "selectedSize"
+        );
+        return false;
       }
     }
-    return true
-  }
+    return true;
+  };
   const validateFeatures = () => {
     if (!input.condition) {
-      handleError("Select condition", "condition")
-      return false
+      handleError("Select condition", "condition");
+      return false;
     }
 
     if (!input.color) {
-      handleError("Select color", "color")
-      return false
+      handleError("Select color", "color");
+      return false;
     }
 
-    return true
-  }
+    return true;
+  };
 
   const handleCreate = async () => {
-    if (!validateFeatures()) return
+    if (!validateFeatures()) return;
 
-    const images: string[] = []
-    if (mediaInput.image1) images.push(mediaInput.image1)
-    if (mediaInput.image2) images.push(mediaInput.image2)
-    if (mediaInput.image3) images.push(mediaInput.image3)
-    if (mediaInput.image4) images.push(mediaInput.image4)
+    const images: string[] = [];
+    if (mediaInput.image1) images.push(mediaInput.image1);
+    if (mediaInput.image2) images.push(mediaInput.image2);
+    if (mediaInput.image3) images.push(mediaInput.image3);
+    if (mediaInput.image4) images.push(mediaInput.image4);
 
-    setCreateProductLoading(true)
+    setCreateProductLoading(true);
 
     const res = await createProduct({
       name: input.name,
@@ -464,22 +503,22 @@ const NewProduct = () => {
       luxuryImage: mediaInput.luxuryImage,
       // addSize,
       countInStock,
-    })
+    });
 
     if (res) {
-      setNewProduct(res)
-      setShowModal(true)
+      setNewProduct(res);
+      setShowModal(true);
     } else {
-      addNotification(error)
+      addNotification(error);
     }
 
-    setCreateProductLoading(false)
-  }
+    setCreateProductLoading(false);
+  };
 
   const addAnother = () => {
-    setShowModal(false)
-    setNewProduct(undefined)
-    setStep(1)
+    setShowModal(false);
+    setNewProduct(undefined);
+    setStep(1);
     setInput({
       brand: "",
       category: "",
@@ -496,7 +535,7 @@ const NewProduct = () => {
       specification: "",
       subCategory: "",
       tag: "",
-    })
+    });
     setMediaInput({
       image1: "",
       image2: "",
@@ -506,21 +545,21 @@ const NewProduct = () => {
       luxuryImage: "",
       video: "",
       vintage: false,
-    })
+    });
     setPriceInput({
       costPrice: "",
       discount: "",
       sellingPrice: "",
       deliveryOption: "",
-    })
-    setMeta({})
-    setDeliveryOption([])
-    setVideo("")
-    setSizes([])
-    setCountInStock(1)
-    setTags([])
-    setAddSize(true)
-  }
+    });
+    setMeta({});
+    setDeliveryOption([]);
+    setVideo("");
+    setSizes([]);
+    setCountInStock(1);
+    setTags([]);
+    setAddSize(true);
+  };
 
   return (
     <>
@@ -609,6 +648,7 @@ const NewProduct = () => {
                 setInput={setInput}
                 validationError={validationError}
                 handleError={handleError}
+                moderationWarnings={moderationWarnings}
               />
             )}
 
@@ -652,6 +692,7 @@ const NewProduct = () => {
                 tags={tags}
                 addSize={addSize}
                 setAddSize={setAddSize}
+                moderationWarnings={moderationWarnings}
               />
             )}
 
@@ -660,6 +701,7 @@ const NewProduct = () => {
                 input={input}
                 setInput={setInput}
                 validationError={validationError}
+                moderationWarnings={moderationWarnings}
               />
             )}
           </div>
@@ -725,7 +767,7 @@ const NewProduct = () => {
         </div>
       </Modal>
     </>
-  )
-}
+  );
+};
 
-export default NewProduct
+export default NewProduct;

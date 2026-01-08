@@ -9,6 +9,7 @@ import {
   ReplyData,
 } from "../types/message";
 import {
+  blockUserService,
   createMessageService,
   forwardMessageService,
   getConversationsService,
@@ -17,6 +18,7 @@ import {
   leaveConversationService,
   replyToMessageService,
   sendMessageService,
+  unblockUserService,
 } from "../services/message";
 import useAuth from "../hooks/useAuth";
 import socket from "../socket";
@@ -47,6 +49,8 @@ interface MessageContextType {
   getConversations: (type: string) => Promise<void>;
   joinConversation: (id: string) => Promise<void>;
   leaveConversation: (id: string) => Promise<void>;
+  blockUser: (id: string) => Promise<void>;
+  unblockUser: (id: string) => Promise<void>;
 }
 
 export const MessageContext = createContext<MessageContextType | undefined>(
@@ -54,7 +58,7 @@ export const MessageContext = createContext<MessageContextType | undefined>(
 );
 
 export const MessageProvider: React.FC<Props> = ({ children }) => {
-  const { setAuthErrorModalOpen, user } = useAuth();
+  const { setAuthErrorModalOpen, user, getUser } = useAuth();
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [conversations, setConversations] = useState<IConversation[]>([]);
   const [error, setError] = useState<string>("");
@@ -253,6 +257,24 @@ export const MessageProvider: React.FC<Props> = ({ children }) => {
     }
   };
 
+  const blockUser = async (id: string) => {
+    try {
+      await blockUserService(id);
+      getUser();
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
+  const unblockUser = async (id: string) => {
+    try {
+      await unblockUserService(id);
+      getUser();
+    } catch (error) {
+      handleError(error);
+    }
+  };
+
   const reloadConversation = async (tab: string) => {
     console.log("currentRab", currentTab);
     const res = await getConversationsService(tab);
@@ -286,6 +308,8 @@ export const MessageProvider: React.FC<Props> = ({ children }) => {
         createMessage,
         joinConversation,
         leaveConversation,
+        blockUser,
+        unblockUser,
       }}
     >
       {children}

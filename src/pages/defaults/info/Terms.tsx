@@ -9,17 +9,17 @@ const Terms = () => {
       </h1>
       <section className="mb-8">
         <p className="text-justify -mt-5">
-          Welcome! You are entering into this agreement with Tyslane Limited,
-          Trading as “Repeddle”. These Terms of use (“Terms”) regulates the use
-          and access to the entire Service provided on the App and Website,
-          order and supply through this App and Website hereto known as
-          (“Repeddle Platform” The Service) under which you may use the App
-          (IOS; Android) or Website www.repeddle.com and www.repeddle.co.za BY
-          using this Platforms, you expressly agree to be bound by the Terms of
-          use, Privacy Policies, Return Policies, Guide, Instructions and every
-          other legal binding contain throughout this website “The service”. In
-          the case you have any objection against any of this Terms, you may not
-          use or/may discontinue in the use of this service.
+          Welcome! You are entering into this agreement with Repeddle (PTY) LTD
+          & Repeddle LTD, Trading as “Repeddle”. These Terms of use (“Terms”)
+          regulates the use and access to the entire Service provided on the App
+          and Website, order and supply through this App and Website hereto
+          known as (“Repeddle Platform” The Service) under which you may use the
+          App (IOS & Android) or Website www.repeddle.com BY using this
+          Platforms, you expressly agree to be bound by the Terms of use,
+          Privacy Policies, Return Policies, Guide, Instructions and every other
+          legal binding contain throughout this website “The service”. In the
+          case you have any objection against any of this Terms, you may not use
+          or/may discontinue in the use of this service.
         </p>
       </section>
       <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
@@ -27,17 +27,17 @@ const Terms = () => {
       </h1>
       <section className="mb-8">
         <p className="text-justify -mt-5">
-          Tyslane is a Company incorporated and registered under CAC as “Tyslane
-          Limited” with registration number: RC1381794, trading as Repeddle on
-          the App and Website www.repeddle.com and www.repeddle.co.za.
-          Throughout the Platform, the terms “we”, “us” and “our” refer to
-          Repeddle and the terms “items”, “goods” “products” “service” refer to
-          the order listed, placed, purchase or service from this website.
-          Repeddle offers this App and Website, including all information, tools
-          and services available from this website to you, refer to as “the
-          user” an individual or an entity you represent, conditioned and
-          legally bound upon your acceptance of all terms, conditions, policies
-          and notices stated herein.
+          Repeddle is a Limited Liability Company incorporated and registered
+          under CIPC with registration number: 2024/493037/07 and under CAC as
+          “Repeddle Limited”, trading as Repeddle on the App and Website
+          www.repeddle.com throughout the Platform, the terms “we”, “us” and
+          “our” refer to Repeddle and the terms “items”, “goods” “products”
+          “service” refer to the order listed, placed, purchase or service from
+          this website. Repeddle offers this App and Website, including all
+          information, tools and services available from this website to you,
+          refer to as “the user” an individual or an entity you represent,
+          conditioned and legally bound upon your acceptance of all terms,
+          conditions, policies and notices stated herein.
         </p>
         <p className="text-justify mt-5">
           By visiting the website and/ or purchasing something from us, you
@@ -77,15 +77,14 @@ const Terms = () => {
         <p className="text-justify -mt-5">
           This Agreement applies to all Repeddle services, including the
           Repeddle mobile app (made accessible on all and any formats or
-          devices), and the websites accessible at www.repeddle.com and
-          www.repeddle.co.za (collectively, the “Service(s)”). The Service
-          provides an online social marketplace where Users can list and sell
-          product (“products”). Users who purchase products are called “Buyers”,
-          and Users who sell products are called “Sellers”. Users may be both
-          Buyers and Sellers on the Service. In using the Service Buyers and
-          Sellers enter into a contract for the sale and purchase of products
-          directly between themselves, and Repeddle is not a party to such sale
-          or purchase.
+          devices), and the websites accessible at www.repeddle.com
+          (collectively, the “Service(s)”). The Service provides an online
+          social marketplace where Users can list and sell product (“products”).
+          Users who purchase products are called “Buyers”, and Users who sell
+          products are called “Sellers”. Users may be both Buyers and Sellers on
+          the Service. In using the Service Buyers and Sellers enter into a
+          contract for the sale and purchase of products directly between
+          themselves, and Repeddle is not a party to such sale or purchase.
         </p>
         <p className="text-justify mt-5">
           There are risks that you assume when dealing with others, and these
@@ -118,14 +117,13 @@ const Terms = () => {
           copyright law including but not limited to trade mark law. No interest
           of acquisition/right to the content of these Sevice or its third
           party, is granted without compliance (permission). You must not
-          transmit to these service, “The App and Website” www.repeddle.com and
-          www.repeddle.co.za any worms or viruses or any code of a destructive
-          nature, nor are you permitted to automatically or manually modify,
-          copy, use, monitor, distribute any information on this platform
-          (including but not limited to direct use or search engine technology)
-          without prior written permission from Repeddle. A breach or violation
-          of any of these Terms of Use will result to an immediate termination
-          and or legal actions.
+          transmit to these service, “The App and Website” www.repeddle.com any
+          worms or viruses or any code of a destructive nature, nor are you
+          permitted to automatically or manually modify, copy, use, monitor,
+          distribute any information on this platform (including but not limited
+          to direct use or search engine technology) without prior written
+          permission from Repeddle. A breach or violation of any of these Terms
+          of Use will result to an immediate termination and or legal actions.
         </p>
       </section>
       <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
@@ -150,19 +148,19 @@ const Terms = () => {
           details to any party whatsoever. We advise you use strong passwords
           that contains (Capital letter, special characters and numbers) when
           creating a password, and should you suspect any unauthorized access
-          into your profile, you are advised to immediately report this to
-          Repeddle support team by writing at support@repeddle.com or
-          support@repeddle.co.za respectively. While Repeddle allow users to
-          shop as guest users, any user willing to sell on Repeddle’s platform
-          is required to register and have an account. Registering and owning
-          user’s account on Repeddle App and Website is absolutely free and have
-          no time bound. For sellers, Repeddle will only charge a small
-          percentage for successful sale as set out in fees/commission section
-          below. The registration process for the Services must be initiated
-          directly by the user on the App or Website. Repeddle is entitled to
-          decide in its sole discretion, whether or not to allow a potential
-          seller to register for its services. Registration is complete when the
-          user log-in to the Portal for the first time.
+          into your profile, you are advised to immediately report this to into
+          your profile, you are advised to immediately report this to Repeddle
+          support team by writing at support@repeddle.com respectively. While
+          Repeddle allow users to shop as guest users, any user willing to sell
+          on Repeddle’s platform is required to register and have an account.
+          Registering and owning user’s account on Repeddle App and Website is
+          absolutely free and have no time bound. For sellers, Repeddle will
+          only charge a small percentage for successful sale as set out in
+          fees/commission section below. The registration process for the
+          Services must be initiated directly by the user on the App or Website.
+          Repeddle is entitled to decide in its sole discretion, whether or not
+          to allow a potential seller to register for its services. Registration
+          is complete when the user log-in to the Portal for the first time.
         </p>
         <p className="text-justify mt-5">
           User must not in any way transfer account or profile created by you
@@ -363,7 +361,7 @@ const Terms = () => {
           Repeddle, or the promotion, advertising or marketing thereof, in any
           form, medium or technology now known or later developed (including
           without limitation publishing your User Content on the Internet or on
-          Third Party Services such as Istagram, TikTok, Facebook, sharing it
+          Third Party Services such as Instagram, TikTok, Facebook, sharing it
           with blogs, etc., and allowing other users to share listings that
           include your User Content). Furthermore, you warrant and represent
           that the Content does not infringe on the intellectual property
@@ -565,7 +563,7 @@ const Terms = () => {
           through our email according to the applicable process: <br />
           Repeddle <br />
           Attention: Copyrights Infringement Notice <br />
-          Email: support@repeddle.com or support@repeddle.co.za
+          Email: support@repeddle.com
         </p>
         <p className="text-justify mt-5">
           When submitting a Notice of Alleged Infringement, please provide us
@@ -763,13 +761,16 @@ const Terms = () => {
           customer’s payments for a successful product(s) sold prior to paying
           over funds to seller. Repeddle’s commission is set at a percentage of
           the Recommended Rate Price (RRP) including delivery charge, without
-          hidden charges and are laid out below:-
+          hidden charges and are laid out below:
         </p>
+        <ul className="list-disc pl-6 mb-4 mt-2">
+          <li>Repeddle Commission: 2.9%</li>
+          <li>Third Party Payment Transaction Fee: 5%</li>
+          <li>
+            Total commission chargeable per product upon successful sale = 7.9%
+          </li>
+        </ul>
         <p className="text-justify mt-5">
-          Repeddle Commission: 2.9%, <br />
-          Third Party Payment Transaction Fee: 5% <br />
-          Total commission chargeable per product upon successful sale = 7.9%.{" "}
-          <br />
           These commission will be applied to each product purchased by a Buyer
           and we will less the due percentage from the payout of the Seller. We
           may change or discontinue, temporarily or permanently, some or all
@@ -819,7 +820,7 @@ const Terms = () => {
           the seller. For the purpose of reaping the benefit of free delivery on
           some selected stores/products, we encourage buyers to look out for
           “Re:Bundle” and make the best of the 2hours window opportunity of free
-          delivery after the 1 st purchase on the store that activates
+          delivery after the 1st purchase on the store that activates
           “Re:Bundle”. Product that falls under standard delivery may take
           lesser time to be delivered than some other products. As delivery
           estimated time varies, delivery estimated time may be allocated to
@@ -829,11 +830,19 @@ const Terms = () => {
         </p>
         <p className="text-justify mt-5">
           Depending on Product, chosen Payment method and Cleared payment, below
-          are our possible delivery time structures: <br />
-          We expect that Delivery may take within 3-5 or 5-9 working days
-          between 8am -5pm depending on delivery choice and carriers. <br />
-          Some delivery partners may offer same day delivery if available (at a
-          cost) and if offered by a seller. <br />
+          are our possible delivery time structures:
+        </p>
+        <ul className="list-disc pl-6 mb-4 mt-2">
+          <li>
+            We expect that Delivery may take within 3-5 or 5-9 working days
+            between 8am -5pm depending on delivery choice and carriers.
+          </li>
+          <li>
+            Some delivery partners may offer same day delivery if available (at
+            a cost) and if offered by a seller.
+          </li>
+        </ul>
+        <p className="text-justify mt-5">
           Repeddle offers several delivery options for user’s convenience
           through our third party delivery partner(s). We only deliver to
           physical addresses. Please ensure to provide your choice of delivery
@@ -855,75 +864,101 @@ const Terms = () => {
           loss, expense, damages, cost or liabilities. Be aware that some goods
           are heavier, larger or weighs more than others, products of this
           volumes may be subject to delivery charges according to the weight and
-          guideline of our third party delivery partner(s). <br />
-          On a successful delivery, we require you to collect your receipt,
-          inspect your goods for damages, errors or defects and communicate to
-          us within 48hrs in the case of any defect, we require you to keep the
-          goods in its current delivered condition for the seller or our
-          representative (where apply) to inspect and confirm. If you do not
-          inspect and communicate with us within 48hrs, you agree that we will
-          not be liable to you. To an extended permitted by law, we will not be
-          liable for any cost, losses, damages, liabilities, expenses or charges
-          as a result of tear and wear after delivery. <br />
-          We may require you to provide us with substantial information or
-          evidence regarding rectifying a product to help us reach a reasonable
-          decision and agreement, we may also require that you pay for service,
-          delivery, refund or replacement fees in line with Repeddle current
-          charges and/or we may directly charge the reasonable amount to your
-          card or the provided payment details at the point you place your order
-          or sell a product if that be the case, should we at our own reasonable
-          discretion decide to refund, repair or replace your product. <br />
-          We urge you to sign for your delivery when receiving and advise that
-          you keep your receipt for future references. <br />
-          You accept to adhere to manufacturers instruction reflected on product
-          pamphlet, you also agree to adhere to strict usage according to those
-          instructions. We will not be liable to you for not following
-          instruction or using product in accordance with product usage. <br />
-          In the case that we are unable to deliver to some certain areas or
-          location due to accessibility or safety, the delivery company, the
-          seller or we will contact you through the contact information provided
-          at the time you place your order, then you can reschedule to deliver
-          to an alternative location if the delivery company accepts such
-          alternative. Please be sure to be available to receive your delivery
-          in timely manner and in a safe and accessible location that you have
-          provided. In the case you are not available to receive the delivery as
-          scheduled, you are advised to inform the delivery company through
-          their contact details or the seller within 24hours of scheduled
-          delivery, should you not reach any of this contacts only then you can
-          contact Repeddle support for assistance, afterwards then you can
-          reschedule or we may require you to assign a trusted representative to
-          receive your delivery with a valid Identification, Invoice/Proof of
-          payment and purchase ID. Please understand that the delivery company
-          may not deliver your goods to this representative if they don’t have
-          this documents or don’t meet these requirements. <br />
-          We encouraged you to take adequate measures when opening your package
-          so as to avoid damage. <br />
-          Lookout for instruction on the package or instruction pamphlet if
-          available to help you avoid any damages. <br />
-          Your order may be packaged by our third party delivery partner(s) with
-          standard delivery packages, any specifics or customized packaging you
-          require may be subjected to extra cost. <br />
-          Upon delivery of purchased goods, you agree that all risk is wholly
-          transferred to you, or in the case of delay of delivery due to your
-          own circumstances, negligence or breach of contract, transfer of risk
-          still stands to you from the date delivery should have taken place,
-          hence, we are not liable for damages or loss of goods from the
-          date/time when risk is transferred to you. You also accepts that the
-          risk of loss for all products you order is expressly transferred to
-          you upon the delivery to the carrier and not Repeddle except stated
-          otherwise. <br />
-          In the course of delivery, if delivery is not successfully received by
-          you or your qualified representative due to negligence on your part in
-          our first attempt, or within the stipulated period of delivery
-          allocated to your order, we may exercise rights that are legally bound
-          to us. You agree that we reserve the right to discontinue with this
-          agreement and withdraw from delivery or providing you with this
-          product. We will communicate our decision to you via the provided
-          contact details and cancel, hence, a refund will be made through your
-          selected payment method, less our processing fee and administration
-          charges which may include but not limited to (storage fees, returning
-          fee and any charges incurred for delivery attempts).
+          guideline of our third party delivery partner(s).
         </p>
+        <ul className="list-disc pl-6 mb-4 mt-2 space-y-2">
+          <li>
+            On a successful delivery, we require you to collect your receipt,
+            inspect your goods for damages, errors or defects and communicate to
+            us within 48hrs in the case of any defect, we require you to keep
+            the goods in its current delivered condition for the seller or our
+            representative (where apply) to inspect and confirm. If you do not
+            inspect and communicate with us within 48hrs, you agree that we will
+            not be liable to you. To an extended permitted by law, we will not
+            be liable for any cost, losses, damages, liabilities, expenses or
+            charges as a result of tear and wear after delivery.
+          </li>
+          <li>
+            We may require you to provide us with substantial information or
+            evidence regarding rectifying a product to help us reach a
+            reasonable decision and agreement, we may also require that you pay
+            for service, delivery, refund or replacement fees in line with
+            Repeddle current charges and/or we may directly charge the
+            reasonable amount to your card or the provided payment details at
+            the point you place your order or sell a product if that be the
+            case, should we at our own reasonable discretion decide to refund,
+            repair or replace your product.
+          </li>
+          <li>
+            We urge you to sign for your delivery when receiving and advise that
+            you keep your receipt for future references.
+          </li>
+          <li>
+            You accept to adhere to manufacturers instruction reflected on
+            product pamphlet, you also agree to adhere to strict usage according
+            to those instructions. We will not be liable to you for not
+            following instruction or using product in accordance with product
+            usage.
+          </li>
+          <li>
+            In the case that we are unable to deliver to some certain areas or
+            location due to accessibility or safety, the delivery company, the
+            seller or we will contact you through the contact information
+            provided at the time you place your order, then you can reschedule
+            to deliver to an alternative location if the delivery company
+            accepts such alternative. Please be sure to be available to receive
+            your delivery in timely manner and in a safe and accessible location
+            that you have provided. In the case you are not available to receive
+            the delivery as scheduled, you are advised to inform the delivery
+            company through their contact details or the seller within 24hours
+            of scheduled delivery, should you not reach any of this contacts
+            only then you can contact Repeddle support for assistance,
+            afterwards then you can reschedule or we may require you to assign a
+            trusted representative to receive your delivery with a valid
+            Identification, Invoice/Proof of payment and purchase ID. Please
+            understand that the delivery company may not deliver your goods to
+            this representative if they don’t have this documents or don’t meet
+            these requirements.
+          </li>
+          <li>
+            We encouraged you to take adequate measures when opening your
+            package so as to avoid damage.
+          </li>
+          <li>
+            Lookout for instruction on the package or instruction pamphlet if
+            available to help you avoid any damages.
+          </li>
+          <li>
+            Your order may be packaged by our third party delivery partner(s)
+            with standard delivery packages, any specifics or customized
+            packaging you require may be subjected to extra cost.
+          </li>
+          <li>
+            Upon delivery of purchased goods, you agree that all risk is wholly
+            transferred to you, or in the case of delay of delivery due to your
+            own circumstances, negligence or breach of contract, transfer of
+            risk still stands to you from the date delivery should have taken
+            place, hence, we are not liable for damages or loss of goods from
+            the date/time when risk is transferred to you. You also accepts that
+            the risk of loss for all products you order is expressly transferred
+            to you upon the delivery to the carrier and not Repeddle except
+            stated otherwise.
+          </li>
+          <li>
+            In the course of delivery, if delivery is not successfully received
+            by you or your qualified representative due to negligence on your
+            part in our first attempt, or within the stipulated period of
+            delivery allocated to your order, we may exercise rights that are
+            legally bound to us. You agree that we reserve the right to
+            discontinue with this agreement and withdraw from delivery or
+            providing you with this product. We will communicate our decision to
+            you via the provided contact details and cancel, hence, a refund
+            will be made through your selected payment method, less our
+            processing fee and administration charges which may include but not
+            limited to (storage fees, returning fee and any charges incurred for
+            delivery attempts).
+          </li>
+        </ul>
       </section>
       <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
         8.1 Cancellation:
@@ -934,10 +969,12 @@ const Terms = () => {
           your goods as quickly reasonable as possible. We reserve the right to
           cancel, refuse to honor or fulfill an order in any case of suspected
           fraud which include but not limited to (Credit/Debit Card, User
-          Account or Seller Profile). <br />
-          Any return as a result of damage from a buyer will be declined. <br />
+          Account or Seller Profile).
+          <br />
+          Any return as a result of damage from a buyer will be declined.
+          <br />
           You accept that in the event we do not receive authorization and
-          payment verification, your order may be canceled. <br />
+          payment verification, your order may be canceled.
         </p>
       </section>
       <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
@@ -1055,8 +1092,12 @@ const Terms = () => {
       <section className="mb-8">
         <p className="text-justify -mt-5">
           In addition to other prohibitions as set forth in these Terms of Use,
-          you are prohibited from using the Service, App or Website and its
-          content as follows: <br />
+          by using Repeddle and any part of our infrastructure, you agree to our
+          “(EULA) End-User Licence Agreement” stating that; in no shape or form,
+          will Repeddle tolerate any objectionable content or abusive users as
+          clearly indicated in this section (12.e) below. You are also
+          prohibited from using these Service, App or Website and its content as
+          follows: <br />
           (a) For any unlawful purpose; <br />
           (b) To solicit others to perform or participate in any unlawful acts;{" "}
           <br />
@@ -1129,31 +1170,37 @@ const Terms = () => {
         <p className="text-justify -mt-5">
           Furthermore, we prohibit the listing of certain products on our
           service that may contravene the rules of law. In general, secondhand
-          or pre-owned products that are in great, good and clean condition are
+          or preowned products that are in great, good and clean condition are
           totally allowed to be listed on Repeddle. However, all products must
           be accurately, clearly describe and represented. Any liquid products
           must be well packaged to avoid damage and must be new in their
           original package and sealed. Makeup and personal care products must be
           new, alcohol and aerosol free. Below are some of the prohibit product
-          that you are not allowed to list: <br />
-          Tobacco <br />
-          Alcohol and Food <br />
-          Motor Vehicles <br />
-          Medicines, Healthcare Products and Medical Devices <br />
-          Weapons, Firearms and Military Equipment <br />
-          Fakes, Replicas and Unauthorized Goods <br />
-          Any illegal and Law Contradicting Products <br />
-          Nudity, Pornography and Adult Content Materials <br />
-          Digital and Non Tangible Products <br />
-          Advertisements <br />
-          Non Repeddle Gift cards and Vouchers <br />
-          Drugs and toxic substances such as: Arsenic; Beryllium; Cyanide;
-          Fluorine; Hydrogen Selenide; Infectious Substances containing
-          Micro-Organisms or their Toxins which are known to cause (or are
-          suspected of causing) disease: Mercury; Mercury Salts; Mustard Gas;
-          Nitrobenzene; Nitrogen Dioxide; Pesticides; Serum and Vaccines <br />
-          Any Explosive Material or Chemicals <br />
-          Radioactive Materials <br />
+          that you are not allowed to list:
+        </p>
+        <ul className="list-disc pl-6 mb-4 mt-2">
+          <li>Tobacco</li>
+          <li>Alcohol and Food</li>
+          <li>Motor Vehicles</li>
+          <li>Medicines, Healthcare Products and Medical Devices</li>
+          <li>Weapons, Firearms and Military Equipment</li>
+          <li>Fakes, Replicas and Unauthorized Goods</li>
+          <li>Any illegal and Law Contradicting Products</li>
+          <li>Nudity, Pornography and Adult Content Materials</li>
+          <li>Digital and Non Tangible Products</li>
+          <li>Advertisements</li>
+          <li>Non Repeddle Gift cards and Vouchers</li>
+          <li>
+            Drugs and toxic substances such as: Arsenic; Beryllium; Cyanide;
+            Fluorine; Hydrogen Selenide; Infectious Substances containing
+            Micro-Organisms or their Toxins which are known to cause (or are
+            suspected of causing) disease: Mercury; Mercury Salts; Mustard Gas;
+            Nitrobenzene; Nitrogen Dioxide; Pesticides; Serum and Vaccines
+          </li>
+          <li>Any Explosive Material or Chemicals</li>
+          <li>Radioactive Materials</li>
+        </ul>
+        <p className="text-justify mt-5">
           Please be advised not list any prohibited products mentioned here. You
           accept that listing any of the above mentioned product is a breach of
           our Terms of Use and may lead to temporal account suspension or
@@ -1172,14 +1219,14 @@ const Terms = () => {
           Repeddle in its reasonable capacity will strive to ensure the
           availability of its services, and accuracy of the contents and
           information on the App and Website. You may report to us in writing
-          via email at support@repeddle.com or support@repeddle.co.za of any
-          related errors or malfunctions. Repeddle do not make warrant that the
-          results obtained from the use of the service will be; (A) accurate,
-          reliable, uninterrupted, timely, secure or error-free, (B) the quality
-          of any goods, services, information, or other material purchased or
-          obtained by you through the service will meet your expectations, (C)
-          you will be able to sell or purchase any items through the service or
-          that the service will otherwise meet your requirements.
+          via email at support@repeddle.com of any related errors or
+          malfunctions. Repeddle do not make warrant that the results obtained
+          from the use of the service will be; (A) accurate, reliable,
+          uninterrupted, timely, secure or error-free, (B) the quality of any
+          goods, services, information, or other material purchased or obtained
+          by you through the service will meet your expectations, (C) you will
+          be able to sell or purchase any items through the service or that the
+          service will otherwise meet your requirements.
         </p>
         <p className="text-justify mt-4">
           You agree that from time to time we may remove the service for
@@ -1247,8 +1294,8 @@ const Terms = () => {
           your breach of these Terms of Use, use or (misuse) of, reliance upon,
           linked third party, unlawful activity, inability or ability to use Our
           service, or the documents they incorporate by reference, or your
-          violation of any law, account infringement or the rights of a third-
-          party.
+          violation of any law, account infringement or the rights of a
+          third-party.
         </p>
         <p className="text-justify mt-4">
           Repeddle shall not be held responsible or suffer any cost or expense
@@ -1416,9 +1463,16 @@ const Terms = () => {
           the seat of the arbitration. If there is an inconsistency between the
           Arbitration Agreement and the Act, the Arbitration Agreement will
           prevail. These Terms shall be governed by the laws of the Republic of
-          South Africa 19.2. Language of Terms. The language of these Terms
-          shall be English and the parties waive any right to use and rely upon
-          any other language or translations.
+          South Africa.
+        </p>
+      </section>
+      <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
+        19.2. Language of Terms
+      </h1>
+      <section className="mb-8">
+        <p className="text-justify -mt-5">
+          The language of these Terms shall be English and the parties waive any
+          right to use and rely upon any other language or translations.
         </p>
       </section>
       <h1 className="font-medium text-xl mb-8 lg:text-2xl text-malon-color">
@@ -1444,12 +1498,11 @@ const Terms = () => {
       <section className="mb-8">
         <p className="text-justify -mt-5">
           Questions and concerns about this Terms of Use should be sent to us
-          according to your respective region at “Nigeria” regions:
-          support@repeddle.com “South Africa” regions support@repeddle.co.za
+          at: support@repeddle.com
         </p>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default Terms
+export default Terms;

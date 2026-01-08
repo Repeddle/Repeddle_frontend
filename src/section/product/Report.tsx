@@ -1,60 +1,85 @@
-import { ChangeEvent, FormEvent, useState } from "react"
-import Modal from "../../components/ui/Modal"
-import useMessage from "../../hooks/useMessage"
-import Button from "../../components/ui/Button"
-import { MessageData } from "../../types/message"
-import { compressImageUpload } from "../../utils/common"
-import useToastNotification from "../../hooks/useToastNotification"
-import LoadingBox from "../../components/LoadingBox"
-import { imageUrl } from "../../services/api"
+import { ChangeEvent, FormEvent, useState } from "react";
+import Modal from "../../components/ui/Modal";
+import Button from "../../components/ui/Button";
+import { compressImageUpload } from "../../utils/common";
+import useToastNotification from "../../hooks/useToastNotification";
+import LoadingBox from "../../components/LoadingBox";
+import { imageUrl } from "../../services/api";
+import { createReport } from "../../services/report";
 
 type Props = {
-  reportItem: { name: string; id: string; image?: string }
-  refs: "user" | "product"
-  showModel: boolean
-  setShowModel: (val: boolean) => void
-}
+  reportItem: { name: string; id: string; image?: string };
+  refs: "user" | "product" | "comment" | "conversation";
+  showModel: boolean;
+  setShowModel: (val: boolean) => void;
+};
+
+export const reportReasons = [
+  { label: "Fraud / Scam", value: "fraud" },
+  { label: "Fake or Misleading Information", value: "misleading" },
+  { label: "Inappropriate Content", value: "inappropriate" },
+  { label: "Harassment or Abuse", value: "harassment" },
+  { label: "Spam or Advertising", value: "spam" },
+  { label: "Privacy Violation", value: "privacy" },
+  { label: "Copyright or Intellectual Property Issue", value: "copyright" },
+  { label: "Dangerous or Illegal Activity", value: "illegal" },
+  { label: "Offensive Language", value: "offensive" },
+  { label: "Hate Speech", value: "hate_speech" },
+  { label: "Impersonation", value: "impersonation" },
+  { label: "Fake Product", value: "fake_product" },
+  { label: "Wrong Category / Misplaced Item", value: "wrong_category" },
+  { label: "Poor Quality or Defective Item", value: "defective" },
+  { label: "Other", value: "other" },
+];
 
 const Report = ({ reportItem, refs, setShowModel, showModel }: Props) => {
-  const [isReporting, setIsReporting] = useState(false)
-  const [content, setContent] = useState("")
-  const [image, setImage] = useState("")
-  const [isUploading, setIsUploading] = useState(false)
+  const [isReporting, setIsReporting] = useState(false);
+  const [content, setContent] = useState("");
+  const [image, setImage] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const [reason, setReason] = useState("");
 
-  const { sendMessage } = useMessage()
-  const { addNotification } = useToastNotification()
+  const { addNotification } = useToastNotification();
 
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    if (!content) return
-    setIsReporting(true)
-    const data: MessageData = { content, type: "Report" }
+    e.preventDefault();
+    if (!reason) return addNotification("select reason", "", false);
+    try {
+      setIsReporting(true);
 
-    if (refs === "user") data.referencedUser = reportItem.id
-    else data.referencedProduct = reportItem.id
+      await createReport({
+        reason,
+        targetId: reportItem.id,
+        targetType: refs,
+        description: content,
+        image,
+      });
 
-    if (image) data.image = image
-
-    await sendMessage(data)
-    setIsReporting(false)
-  }
+      addNotification("Report submitted successfully");
+      setShowModel(false);
+    } catch (error: any) {
+      addNotification(error, "", false);
+    } finally {
+      setIsReporting(false);
+    }
+  };
 
   const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     try {
-      setIsUploading(true)
+      setIsUploading(true);
 
-      const file = e.target.files?.[0]
-      if (!file) throw Error("No image found")
+      const file = e.target.files?.[0];
+      if (!file) throw Error("No image found");
 
-      const imageUrl = await compressImageUpload(file, 1024)
+      const imageUrl = await compressImageUpload(file, 1024);
 
-      setImage(imageUrl)
+      setImage(imageUrl);
     } catch (err) {
-      addNotification("Failed uploading image")
+      addNotification("Failed uploading image");
     } finally {
-      setIsUploading(false)
+      setIsUploading(false);
     }
-  }
+  };
 
   return (
     <Modal isOpen={showModel} size="lg" onClose={() => setShowModel(false)}>
@@ -77,24 +102,6 @@ const Report = ({ reportItem, refs, setShowModel, showModel }: Props) => {
               ) : null}
               <span className="text-lg font-semibold">{reportItem.name}</span>
             </div>
-            {/* <div className="flex flex-col gap-2">
-              <label htmlFor="report-type" className="font-medium">
-                Report Type
-              </label>
-              <select
-                id="report-type"
-                className=" p-2 border bg-transparent border-gray-300 rounded"
-                required
-                disabled
-              >
-                <option selected={refs === "user"} value="user">
-                  User
-                </option>
-                <option selected={refs === "product"} value="product">
-                  Product
-                </option>
-              </select>
-            </div> */}
             {image ? (
               <img
                 src={imageUrl + image}
@@ -104,7 +111,7 @@ const Report = ({ reportItem, refs, setShowModel, showModel }: Props) => {
             ) : null}
             <div className="flex flex-col gap-2">
               <label htmlFor="image" className="font-medium">
-                Image
+                Image <span className="opacity-50">(Optional)</span>
               </label>
               <div className="flex gap-2">
                 <input
@@ -118,9 +125,29 @@ const Report = ({ reportItem, refs, setShowModel, showModel }: Props) => {
                 {isUploading && <LoadingBox />}
               </div>
             </div>
+
+            <div className="relative flex flex-col mr-5 w-full">
+              <label className="text-sm  mb-2.5">Reason</label>
+
+              <div className="block relative after:content-['\25BC'] after:text-xs after:absolute after:right-2 after:top-3 after:pointer-events-none overflow-hidden rounded-[0.2rem] border border-light-ev4 dark:border-dark-ev4">
+                <select
+                  value={reason}
+                  onChange={(e) => {
+                    setReason(e.target.value);
+                  }}
+                  className="text-base m-0 pl-2.5 dark:bg-black border-light-ev4 dark:border-light-ev4 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
+                >
+                  <option>---Select reason---</option>
+                  {reportReasons.map((r) => (
+                    <option value={r.value}>{r.label}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
             <div className="flex flex-col gap-2">
               <label htmlFor="content" className="font-medium">
-                Content
+                Description <span className="opacity-50">(Optional)</span>
               </label>
               <textarea
                 id="content"
@@ -128,7 +155,6 @@ const Report = ({ reportItem, refs, setShowModel, showModel }: Props) => {
                 className="p-2 border bg-transparent border-gray-300 rounded resize-none"
                 rows={5}
                 placeholder="Describe the issue you're reporting..."
-                required
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
               />
@@ -139,7 +165,7 @@ const Report = ({ reportItem, refs, setShowModel, showModel }: Props) => {
             <Button
               text="Submit"
               type="submit"
-              disabled={isUploading || isReporting}
+              disabled={isUploading || isReporting || !reason}
               isLoading={isReporting}
             />
           </div>
@@ -153,10 +179,10 @@ const Report = ({ reportItem, refs, setShowModel, showModel }: Props) => {
         </div>
       </div>
     </Modal>
-  )
-}
+  );
+};
 
-export default Report
+export default Report;
 
 // return (
 //   <Modal isOpen={showModel} onClose={() => setShowModel(false)}>

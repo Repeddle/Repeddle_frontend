@@ -1,47 +1,48 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import { FaQuestionCircle, FaTimes } from "react-icons/fa"
-import Modal from "../../components/ui/Modal"
-import AddOtherBrand from "../../components/AddOtherBrand"
-import useBrands from "../../hooks/useBrand"
-import { ISize } from "../../types/product"
-import useToastNotification from "../../hooks/useToastNotification"
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { FaQuestionCircle, FaTimes } from "react-icons/fa";
+import Modal from "../../components/ui/Modal";
+import AddOtherBrand from "../../components/AddOtherBrand";
+import useBrands from "../../hooks/useBrand";
+import { ISize } from "../../types/product";
+import useToastNotification from "../../hooks/useToastNotification";
 
 type InputProps = {
-  selectedSize: string
-  specification: string
-  brand: string
-  tag: string
-  description: string
-}
+  selectedSize: string;
+  specification: string;
+  brand: string;
+  tag: string;
+  description: string;
+};
 
 type InputData = InputProps & {
-  name: string
-  product: string
-  category: string
-  subCategory: string
-  condition: string
-  material: string
-  price: string
-  color: string[]
-  keyFeatures: string
-  image: string
-}
+  name: string;
+  product: string;
+  category: string;
+  subCategory: string;
+  condition: string;
+  material: string;
+  price: string;
+  color: string[];
+  keyFeatures: string;
+  image: string;
+};
 
 type Props = {
-  input: InputProps
-  validationError: InputProps
-  setInput: Dispatch<SetStateAction<InputData>>
-  handleError: (text: string, key: keyof InputProps) => void
-  sizes: ISize[]
-  setSizes: Dispatch<SetStateAction<ISize[]>>
-  countInStock: number
-  setCountInStock: (val: number) => void
-  tags: string[]
-  handleTags: (tag: string) => void
-  removeTags: (tag: string) => void
-  addSize: boolean
-  setAddSize: (val: boolean) => void
-}
+  input: InputProps;
+  validationError: InputProps;
+  setInput: Dispatch<SetStateAction<InputData>>;
+  handleError: (text: string, key: keyof InputProps) => void;
+  sizes: ISize[];
+  setSizes: Dispatch<SetStateAction<ISize[]>>;
+  countInStock: number;
+  setCountInStock: (val: number) => void;
+  tags: string[];
+  handleTags: (tag: string) => void;
+  removeTags: (tag: string) => void;
+  addSize: boolean;
+  setAddSize: (val: boolean) => void;
+  moderationWarnings: { [key: string]: string[] };
+};
 
 const Description = ({
   input,
@@ -57,63 +58,64 @@ const Description = ({
   tags,
   addSize,
   setAddSize,
+  moderationWarnings,
 }: Props) => {
-  const { brands: searchBrand, fetchBrands } = useBrands()
-  const { addNotification } = useToastNotification()
+  const { brands: searchBrand, fetchBrands } = useBrands();
+  const { addNotification } = useToastNotification();
 
-  const [showOtherBrand, setShowOtherBrand] = useState(false)
-  const [showSize, setShowSize] = useState(false)
-  const [brandQuery, setBrandQuery] = useState("")
+  const [showOtherBrand, setShowOtherBrand] = useState(false);
+  const [showSize, setShowSize] = useState(false);
+  const [brandQuery, setBrandQuery] = useState("");
 
   useEffect(() => {
     const getFilterBrand = async () => {
-      const params: string[][] = [["search", brandQuery]]
+      const params: string[][] = [["search", brandQuery]];
 
-      const string = new URLSearchParams(params).toString()
+      const string = new URLSearchParams(params).toString();
 
-      await fetchBrands(string)
-    }
+      await fetchBrands(string);
+    };
 
-    if (brandQuery) getFilterBrand()
-  }, [brandQuery])
+    if (brandQuery) getFilterBrand();
+  }, [brandQuery]);
 
   const handleOnChange = (text: string, inputVal: keyof typeof input) => {
-    setInput((prevState) => ({ ...prevState, [inputVal]: text }))
-  }
+    setInput((prevState) => ({ ...prevState, [inputVal]: text }));
+  };
 
   const smallSizeHandler = (label: string, value: string) => {
     setSizes((prevSizes) => {
-      const sizeIndex = prevSizes.findIndex((x) => x.size === label)
+      const sizeIndex = prevSizes.findIndex((x) => x.size === label);
       if (sizeIndex !== -1) {
-        const updatedSizes = [...prevSizes]
-        updatedSizes[sizeIndex].quantity = parseInt(value)
-        return updatedSizes
+        const updatedSizes = [...prevSizes];
+        updatedSizes[sizeIndex].quantity = parseInt(value);
+        return updatedSizes;
       }
-      return prevSizes
-    })
-  }
+      return prevSizes;
+    });
+  };
 
   const removeSize = (label: string) => {
-    setSizes((prev) => prev.filter((val) => val.size !== label))
-  }
+    setSizes((prev) => prev.filter((val) => val.size !== label));
+  };
 
   const sizeHandler = (sizenow: string) => {
     if (!sizenow) {
-      addNotification("Please enter size")
-      return
+      addNotification("Please enter size");
+      return;
     }
 
-    const exist = sizes.some((s) => s.size === sizenow)
+    const exist = sizes.some((s) => s.size === sizenow);
 
     if (exist) {
-      const newSizes = sizes.filter((s) => s.size !== sizenow)
-      setSizes(newSizes)
+      const newSizes = sizes.filter((s) => s.size !== sizenow);
+      setSizes(newSizes);
     } else {
-      setSizes((prevSizes) => [...prevSizes, { size: sizenow, quantity: 1 }])
+      setSizes((prevSizes) => [...prevSizes, { size: sizenow, quantity: 1 }]);
     }
 
-    setInput((prev) => ({ ...prev, selectedSize: "" }))
-  }
+    setInput((prev) => ({ ...prev, selectedSize: "" }));
+  };
 
   return (
     <div className="flex flex-col gap-3">
@@ -128,8 +130,8 @@ const Description = ({
           type="search"
           value={input.brand.length > 0 ? input.brand : brandQuery}
           onChange={(e) => {
-            handleOnChange("", "brand")
-            setBrandQuery(e.target.value)
+            handleOnChange("", "brand");
+            setBrandQuery(e.target.value);
           }}
           onBlur={() => input.brand.length > 0 && setBrandQuery("")}
         />
@@ -141,11 +143,11 @@ const Description = ({
                 key={b._id}
                 onClick={() => {
                   if (b.name === "Other") {
-                    setShowOtherBrand(true)
+                    setShowOtherBrand(true);
                   } else {
-                    handleOnChange(b.name, "brand")
+                    handleOnChange(b.name, "brand");
                   }
-                  setBrandQuery("")
+                  setBrandQuery("");
                 }}
               >
                 {b.name}
@@ -174,6 +176,13 @@ const Description = ({
               type="text"
               onChange={(e) => handleOnChange(e.target.value, "tag")}
             />
+            {moderationWarnings.tag && (
+              <div className="absolute top-[40px] left-0 text-[10px] text-orange-500 font-semibold">
+                Warning: Restricted words found:{" "}
+                {moderationWarnings.tag.join(", ")}. Item will be review before
+                publishing
+              </div>
+            )}
             <div
               className="text-white cursor-pointer mx-[5px] my-0 px-[5px] py-0.5 bg-malon-color"
               onClick={() => handleTags(input.tag)}
@@ -181,6 +190,13 @@ const Description = ({
               Add
             </div>
           </div>
+          {moderationWarnings.tags && (
+            <div className="text-[11px] text-orange-500 font-semibold mt-1">
+              Warning: Existing tags contain restricted words:{" "}
+              {moderationWarnings.tags.join(", ")}. Item will be review before
+              publishing
+            </div>
+          )}
           <div className="flex flex-wrap">
             {tags.map((t, i) => (
               <div
@@ -231,8 +247,8 @@ const Description = ({
           appearance-none bg-[#d4d4d4] outline-0 checked:before:bg-orange-color before:bg-[grey] dark:checked:bg-dark-ev4 checked:bg-[#fcf0e0]`}
               checked={addSize}
               onChange={(e) => {
-                setSizes([])
-                setAddSize(e.target.checked)
+                setSizes([]);
+                setAddSize(e.target.checked);
               }}
             />
           </div>
@@ -252,8 +268,8 @@ const Description = ({
                         handleOnChange(
                           e.target.value.slice(0, 4),
                           "selectedSize"
-                        )
-                        handleError("", "selectedSize")
+                        );
+                        handleError("", "selectedSize");
                       }}
                     />
                     <div
@@ -280,8 +296,8 @@ const Description = ({
                         type="number"
                         value={s.quantity}
                         onChange={(e) => {
-                          smallSizeHandler(s.size, e.target.value.slice(0, 4))
-                          handleError("", "selectedSize")
+                          smallSizeHandler(s.size, e.target.value.slice(0, 4));
+                          handleError("", "selectedSize");
                         }}
                       />
                       <FaTimes
@@ -317,6 +333,13 @@ const Description = ({
           placeholder="Describe your product by giving buyers more information. Start with Headline, Condition, Material, Style & Size. Be concise and only use relevant keywords."
           onChange={(e) => handleOnChange(e.target.value, "description")}
         />
+        {moderationWarnings.description && (
+          <div className="text-xs text-orange-500 font-semibold">
+            Warning: Restricted words found in description:{" "}
+            {moderationWarnings.description.join(", ")}. Item will be review
+            before publishing
+          </div>
+        )}
         {validationError.description && (
           <div className="text-[red] text-xs">
             {validationError.description}
@@ -331,9 +354,16 @@ const Description = ({
           placeholder="FOR CHILDREN'S WEAR/SH0ES, Please manually enter the Size/Age brackets as shown on the label of clothes/shoes"
           onChange={(e) => handleOnChange(e.target.value, "specification")}
         />
+        {moderationWarnings.specification && (
+          <div className="text-xs text-orange-500 font-semibold mt-1">
+            Warning: Restricted words found in specification:{" "}
+            {moderationWarnings.specification.join(", ")}. Item will be review
+            before publishing
+          </div>
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Description
+export default Description;

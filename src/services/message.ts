@@ -141,3 +141,27 @@ export const leaveConversationService = async (
     throw getBackendErrorMessage(error);
   }
 };
+
+export const blockUserService = async (userId: string): Promise<IMessage> => {
+  try {
+    const res: { message: IMessage } = await api.post(`/messages/block`, {
+      userId,
+    });
+    return res.message;
+  } catch (error) {
+    console.log("Error blocking user:", getBackendErrorMessage(error));
+    throw getBackendErrorMessage(error);
+  }
+};
+
+export const unblockUserService = async (userId: string): Promise<IMessage> => {
+  try {
+    const res: { message: IMessage } = await api.post(`/messages/unblock`, {
+      userId,
+    });
+    return res.message;
+  } catch (error) {
+    console.log("Error unblocking user:", getBackendErrorMessage(error));
+    throw getBackendErrorMessage(error);
+  }
+};
