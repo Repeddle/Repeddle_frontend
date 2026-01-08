@@ -38,6 +38,35 @@ export const fetchProductsService = async (
   }
 };
 
+export const fetchProductsAdminService = async (
+  params?: string
+): Promise<ProductWithPagination> => {
+  try {
+    let url = "/products/admin";
+
+    if (params && params.length) {
+      url = url + `?${params}`;
+    }
+
+    const resp: { data: ProductWithPagination; status: boolean } =
+      await api.get(url);
+
+    if (!resp.status) {
+      // Handle Fetch products error, e.g., display an error message to the user
+      throw new Error("Fetch products failed: " + getBackendErrorMessage(resp));
+    }
+
+    return resp.data;
+  } catch (error) {
+    // Handle network errors or other exceptions
+    // You can log the error or perform other error-handling actions
+    console.error("Fetch products error:", getBackendErrorMessage(error));
+
+    // Re-throw the error to propagate it up the call stack if needed
+    throw getBackendErrorMessage(error);
+  }
+};
+
 export const fetchUserProductsService = async (
   params?: string
 ): Promise<ProductWithPagination> => {

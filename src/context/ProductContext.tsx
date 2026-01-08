@@ -30,6 +30,7 @@ import {
   updateProductService,
   deleteProductCommentReplyService,
   deleteProductCommentService,
+  fetchProductsAdminService,
 } from "../services/product";
 
 type ContextType = {
@@ -37,6 +38,7 @@ type ContextType = {
   loading: boolean;
   error: string;
   fetchProducts: (params?: string) => Promise<boolean>;
+  fetchProductsAdmin: (params?: string) => Promise<boolean>;
   fetchUserProducts: (params?: string) => Promise<boolean>;
   fetchProductBySlug: (slug: string) => Promise<IProduct | null>;
   fetchProductById: (id: string) => Promise<IProduct | string>;
@@ -174,6 +176,21 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
       setError("");
       setLoading(true);
       const result = await fetchProductsService(params);
+      setProducts(result);
+      setLoading(false);
+      return true;
+    } catch (error) {
+      handleError(error as string);
+      setLoading(false);
+      return false;
+    }
+  };
+
+  const fetchProductsAdmin = async (params?: string) => {
+    try {
+      setError("");
+      setLoading(true);
+      const result = await fetchProductsAdminService(params);
       setProducts(result);
       setLoading(false);
       return true;
@@ -674,6 +691,7 @@ export const ProductProvider = ({ children }: PropsWithChildren) => {
         addProductViewCount,
         deleteProductComment,
         deleteProductCommentReply,
+        fetchProductsAdmin,
       }}
     >
       {children}
