@@ -1,33 +1,33 @@
-import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaTrash } from "react-icons/fa"
-import { FiImage } from "react-icons/fi"
-import useContact from "../../hooks/useContact"
-import { ChangeEvent, FormEvent, useState } from "react"
-import { compressImageUpload } from "../../utils/common"
-import useAuth from "../../hooks/useAuth"
-import useToastNotification from "../../hooks/useToastNotification"
-import { imageUrl } from "../../services/api"
-import LoadingBox from "../../components/LoadingBox"
-import Modal from "../../components/ui/Modal"
-import { deleteImageService } from "../../services/image"
+import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaTrash } from "react-icons/fa";
+import { FiImage } from "react-icons/fi";
+import useContact from "../../hooks/useContact";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { compressImageUpload } from "../../utils/common";
+import useAuth from "../../hooks/useAuth";
+import useToastNotification from "../../hooks/useToastNotification";
+import { imageUrl } from "../../services/api";
+import LoadingBox from "../../components/LoadingBox";
+import Modal from "../../components/ui/Modal";
+import { deleteImageService } from "../../services/image";
 
 function ContactUs() {
-  const { createContact } = useContact()
-  const { user } = useAuth()
-  const { addNotification } = useToastNotification()
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [subject, setSubject] = useState("")
-  const [category, setCategory] = useState("")
-  const [message, setMessage] = useState("")
-  const [image, setImage] = useState("")
-  const [success, setSuccess] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [uploading, setUploading] = useState(false)
-  const [showImageModal, setShowImageModal] = useState(false)
+  const { createContact } = useContact();
+  const { user } = useAuth();
+  const { addNotification } = useToastNotification();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
+  const [category, setCategory] = useState("");
+  const [message, setMessage] = useState("");
+  const [image, setImage] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
 
   const handleSend = async (e: FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
     try {
       const response = await createContact({
         name,
@@ -36,67 +36,67 @@ function ContactUs() {
         message,
         file: [image],
         category,
-      })
+      });
       if (response) {
-        setSuccess(true)
+        setSuccess(true);
         addNotification(
           "Message has been sent and you will receive a reply soon"
-        )
-        setName("")
-        setCategory("")
-        setEmail("")
-        setMessage("")
-        setSubject("")
-        setImage("")
+        );
+        setName("");
+        setCategory("");
+        setEmail("");
+        setMessage("");
+        setSubject("");
+        setImage("");
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      console.log(error)
-      addNotification(error || "Failed to send message", undefined, true)
+      console.log(error);
+      addNotification(error || "Failed to send message", undefined, true);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const uploadHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-    const bodyFormData = new FormData()
-    bodyFormData.append("file", file)
-    setUploading(true)
+    const bodyFormData = new FormData();
+    bodyFormData.append("file", file);
+    setUploading(true);
     try {
-      const compressImage = await compressImageUpload(file, 1024, image)
+      const compressImage = await compressImageUpload(file, 1024, image);
 
-      setImage(compressImage)
+      setImage(compressImage);
 
-      addNotification("Image Uploaded")
+      addNotification("Image Uploaded");
     } catch (err) {
-      addNotification("Failed uploading image")
+      addNotification("Failed uploading image");
     }
 
-    setUploading(false)
-  }
+    setUploading(false);
+  };
 
   const deleteImage = async (url: string) => {
-    if (!url) return
+    if (!url) return;
 
-    setLoading(true)
+    setLoading(true);
 
     try {
-      const names = url.split("/")
+      const names = url.split("/");
 
-      const name = names[names.length - 1]
+      const name = names[names.length - 1];
 
-      const res = await deleteImageService(name)
-      console.log(res)
-      setImage("")
+      const res = await deleteImageService(name);
+      console.log(res);
+      setImage("");
     } catch (error) {
-      addNotification("Failed to delete image", undefined, true)
+      addNotification("Failed to delete image", undefined, true);
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <div className="container mx-auto max-w-7xl w-full flex-col md:gap-24 lg:flex-row  lg:mt-14 flex p-8 lg:rounded-xl mb-10">
@@ -139,7 +139,9 @@ function ContactUs() {
             </div>
             <div className="ml-4">
               <h4 className="font- text-lg">Our Location</h4>
-              <p className="text-sm text-gray-500">Nigeria & South Africa</p>
+              <p className="text-sm text-gray-500">
+                137 9th Road Carlsward Midrand, South Africa
+              </p>
             </div>
           </div>
         </div>
@@ -290,7 +292,7 @@ function ContactUs() {
         </div>
       </Modal>
     </div>
-  )
+  );
 }
 
-export default ContactUs
+export default ContactUs;

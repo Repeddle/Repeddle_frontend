@@ -6,7 +6,7 @@ import { FaTimes } from "react-icons/fa";
 import { useMemo, useState } from "react";
 import WalletModel from "../../components/WalletModel";
 import { currency } from "../../utils/common";
-import PayStack from "../../components/gateway/PayStack";
+// import PayStack from "../../components/gateway/PayStack";
 import { PayStackCallback } from "../../types/gateway";
 import FlutterWave from "../../components/gateway/FlutterWave";
 import PayFund from "../../components/gateway/PayFund";
@@ -256,29 +256,13 @@ const OrderPreview = () => {
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">
                   {loadingPay ? (
                     <LoadingBox />
-                  ) : // eslint-disable-next-line no-constant-condition
-                  true ? (
-                    // TODO:
-                    // ) : cart.paymentMethod === "Wallet" ? (
+                  ) : paymentMethod === "Wallet" ? (
                     <div
                       className="cursor-pointer text-white-color bg-orange-color w-full uppercase flex items-center justify-center h-10 rounded-[0.2rem]"
                       onClick={() => setShowModel(true)}
                     >
                       Proceed to Payment
                     </div>
-                  ) : region === "ZA" ? (
-                    // Did not write this
-                    // <PayFast
-                    //   user={user}
-                    //   placeOrderHandler={placeOrderHandler}
-                    //   totalPrice={cart.totalPrice}
-                    // />
-                    <PayStack
-                      amount={total}
-                      onApprove={onApprove}
-                      isLoading={loadingPay}
-                      setIsLoading={setLoadingPay}
-                    />
                   ) : (
                     <FlutterWave
                       amount={total}

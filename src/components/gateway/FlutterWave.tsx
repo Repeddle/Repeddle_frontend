@@ -3,6 +3,9 @@ import useAuth from "../../hooks/useAuth";
 import { FlutterwaveConfig } from "flutterwave-react-v3/dist/types";
 import { IUser } from "../../types/user";
 
+const nigerianFlutterwaveKey = "FLWPUBK-31cf11f493d975fb1607f21f6499b416-X";
+const southAfricanFlutterwaveKey = "FLWPUBK-31cf11f493d975fb1607f21f6499b416-X";
+
 type Props = {
   amount: number;
   currency: "ZAR" | "NGN";
@@ -22,7 +25,8 @@ const FlutterWave = ({
 
   //   TODO: Take customer info from shipping address ??
   const config: FlutterwaveConfig = {
-    public_key: "FLWPUBK-77eeceda5d0c57d39a5458b8701f6798-X",
+    public_key:
+      currency === "NGN" ? nigerianFlutterwaveKey : southAfricanFlutterwaveKey,
     tx_ref: Date.now().toString(),
     amount,
     currency,
@@ -38,8 +42,8 @@ const FlutterWave = ({
     },
     customizations: {
       title: "Repeddle",
-      description: "Payment for items in cart",
-      logo: "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
+      description: "Payment",
+      logo: "https://res.cloudinary.com/emirace/image/upload/v1666953838/Repeddle_Logo-02_ztvmtx.png",
     },
   };
 
@@ -48,7 +52,7 @@ const FlutterWave = ({
   return (
     <div className="App">
       <div
-        className="cursor-pointer text-white-color w-full uppercase flex items-center justify-center h-10 mt-2.5 rounded-[0.2rem] bg-orange-color hover:bg-malon-color"
+        className="cursor-pointer px-4 rounded-md text-white-color w-full uppercase flex items-center justify-center h-10 mt-2.5 bg-orange-color hover:bg-malon-color"
         onClick={() => {
           handleFlutterPayment({
             callback: async (response) => {

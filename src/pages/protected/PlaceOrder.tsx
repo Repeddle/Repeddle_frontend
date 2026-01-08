@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import LoadingBox from "../../components/LoadingBox";
 import { couponDiscount, currency } from "../../utils/common";
-import PayStack from "../../components/gateway/PayStack";
+// import PayStack from "../../components/gateway/PayStack";
 import Modal from "../../components/ui/Modal";
 import PayFund from "../../components/gateway/PayFund";
 import { FaTimes } from "react-icons/fa";
@@ -15,12 +15,15 @@ import useOrder from "../../hooks/useOrder";
 import useToastNotification from "../../hooks/useToastNotification";
 import { imageUrl } from "../../services/api";
 import useRegion from "../../hooks/useRegion";
+import FlutterWave from "../../components/gateway/FlutterWave";
+import useAuth from "../../hooks/useAuth";
 
 const PlaceOrder = () => {
   const { cart, subtotal, total, paymentMethod, clearCart } = useCart();
   const { createOrder, error } = useOrder();
   const { addNotification } = useToastNotification();
   const { region } = useRegion();
+  const { user } = useAuth();
 
   const navigate = useNavigate();
 
@@ -287,31 +290,21 @@ const PlaceOrder = () => {
                     >
                       Place Order
                     </div>
-                  ) : region === "ZA" ? (
-                    // <PayFast
-                    //   user={user}
-                    //   placeOrderHandler={placeOrderHandler}
-                    //   totalPrice={cart.totalPrice}
-                    // />
-                    <PayStack
-                      amount={total}
-                      onApprove={(res) => onApprove(res, "Paystack")}
-                      isLoading={loadingPay}
-                      setIsLoading={setLoadingPay}
-                    />
                   ) : (
-                    <PayStack
+                    //  : region === "ZA" ? (
+                    //   <PayStack
+                    //     amount={total}
+                    //     onApprove={(res) => onApprove(res, "Paystack")}
+                    //     isLoading={loadingPay}
+                    //     setIsLoading={setLoadingPay}
+                    //   />
+                    // )
+                    <FlutterWave
                       amount={total}
-                      onApprove={(res) => onApprove(res, "Paystack")}
-                      isLoading={loadingPay}
-                      setIsLoading={setLoadingPay}
+                      currency={region === "NG" ? "NGN" : "ZAR"}
+                      user={user ?? undefined}
+                      onApprove={(res) => onApprove(res, "Flutterwave")}
                     />
-                    // <FlutterWave
-                    //   amount={total}
-                    //   currency={cart[0].region ? "NGN" : "ZAR"}
-                    //   user={user ?? undefined}
-                    //   onApprove={(res) => onApprove(res, "Flutterwave")}
-                    // />
                   )}
                 </div>
 

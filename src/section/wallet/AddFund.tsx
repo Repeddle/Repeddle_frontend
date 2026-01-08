@@ -1,21 +1,14 @@
 import { useState } from "react";
-import PayStack from "../../components/gateway/PayStack";
+// import PayStack from "../../components/gateway/PayStack";
 import { FaWallet } from "react-icons/fa";
-// import { closePaymentModal, useFlutterwave } from "flutterwave-react-v3";
-// import useAuth from "../../hooks/useAuth";
-import {
-  FlutterWaveResponse,
-  // FlutterwaveConfig,
-} from "flutterwave-react-v3/dist/types";
+import useAuth from "../../hooks/useAuth";
+import { FlutterWaveResponse } from "flutterwave-react-v3/dist/types";
 import { PayStackCallback } from "../../types/gateway";
 import useWallet from "../../hooks/useWallet";
 import useToastNotification from "../../hooks/useToastNotification";
 import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal";
-// import useRegion from "../../hooks/useRegion";
-
-// TODO: ask about this, fetching in one part and in env in another part
-// const BASE_KEY = process.env.REACT_APP_FLUTTERWAVE_KEY
-// const BASE_KEY = "FLWPUBK-e318a10dae010442ff930a20890f6379-X";
+import FlutterWave from "../../components/gateway/FlutterWave";
+import useRegion from "../../hooks/useRegion";
 
 type Props = {
   setShowModel: (val: boolean) => void;
@@ -27,38 +20,14 @@ type Props = {
 
 const AddFund = ({ setShowSuccess, setRefresh, setShowModel }: Props) => {
   const { fundWalletFlutter, loading } = useWallet();
-  // const { region } = useRegion();
+  const { region } = useRegion();
 
-  const [loadingPay, setLoadingPay] = useState(false);
+  // const [loadingPay, setLoadingPay] = useState(false);
   const { addNotification } = useToastNotification();
 
   const [amount, setAmount] = useState(0);
 
-  // const { user } = useAuth();
-
-  // const config: FlutterwaveConfig = {
-  //   public_key: BASE_KEY!,
-  //   // tx_ref: v4(),
-  //   // TODO: used uuid in previous code
-  //   tx_ref: Date.now().toString(),
-  //   amount,
-  //   currency,
-  //   //currency: "ZA",
-  //   //country: "ZA",
-  //   payment_options: "card,mobilemoney,ussd",
-  //   customer: {
-  //     email: user?.email ?? "",
-  //     phone_number: user?.phone ?? "",
-  //     name: `${user?.firstName} ${user?.lastName}`,
-  //   },
-  //   customizations: {
-  //     title: "Repeddle",
-  //     description: "Funding Repeddle Wallet",
-  //     logo: "https://res.cloudinary.com/emirace/image/upload/v1669632933/qepvcjzw8pfl3q8cw9xf.png",
-  //   },
-  // };
-
-  // const handleFlutterPayment = useFlutterwave(config);
+  const { user } = useAuth();
 
   const onApprove = async (
     val: (FlutterWaveResponse & { type: string }) | PayStackCallback
@@ -101,42 +70,21 @@ const AddFund = ({ setShowSuccess, setRefresh, setShowModel }: Props) => {
           setAmount(parsedValue ? parseFloat(parsedValue) : 0);
         }}
       />
-      {/* {region === "NG" ? (
-        loadingPay ? (
-          <div className="flex items-center justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-orange-color"></div>
-          </div>
-        ) : (
-          <div
-            className="flex items-center cursor-pointer font-bold hover:bg-malon-color bg-orange-color text-white-color mt-2.5 px-[50px] py-2.5 rounded-[0.2rem]"
-            onClick={() => {
-              if (!amount) {
-                addNotification("Please enter an amount", undefined, true);
-                return;
-              }
-              if (loadingPay) return;
-              setLoadingPay(true);
-              handleFlutterPayment({
-                callback: async (response) => {
-                  console.log(response);
-                  onApprove({ ...response, type: "Flutterwave" });
-                  closePaymentModal(); // this will close the modal programmatically
-                },
-                onClose: () => {},
-              });
-            }}
-          >
-            Continue
-          </div>
-        )
-      ) : ( */}
-      <PayStack
+
+      {/* <PayStack
         amount={amount}
         onApprove={onApprove}
         isLoading={loadingPay}
         setIsLoading={setLoadingPay}
+      /> */}
+      <FlutterWave
+        amount={amount}
+        currency={region === "NG" ? "NGN" : "ZAR"}
+        user={user ?? undefined}
+        onApprove={(res) =>
+          onApprove({ type: "Flutterwave", transaction_id: res.transaction_id })
+        }
       />
-      {/* )} */}
     </div>
   );
 };
