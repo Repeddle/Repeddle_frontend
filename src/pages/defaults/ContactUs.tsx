@@ -139,9 +139,10 @@ function ContactUs() {
             </div>
             <div className="ml-4">
               <h4 className="font- text-lg">Our Location</h4>
-              <p className="text-sm text-gray-500">
-                137 9th Road Carlsward Midrand, South Africa
-              </p>
+              <div className="text-sm text-gray-500 space-y-1">
+                <p>SOUTH AFRICA: 137 9th Road Carlsward Midrand.</p>
+                <p>NIGERIA: 39 Folarin Street, Alimosho, Lagos State.</p>
+              </div>
             </div>
           </div>
         </div>
