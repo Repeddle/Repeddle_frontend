@@ -1,14 +1,12 @@
 import { useState } from "react";
 // import PayStack from "../../components/gateway/PayStack";
 import { FaWallet } from "react-icons/fa";
-import useAuth from "../../hooks/useAuth";
 import { FlutterWaveResponse } from "flutterwave-react-v3/dist/types";
 import { PayStackCallback } from "../../types/gateway";
 import useWallet from "../../hooks/useWallet";
 import useToastNotification from "../../hooks/useToastNotification";
 import LoadingLogoModal from "../../components/ui/loadin/LoadingLogoModal";
-import FlutterWave from "../../components/gateway/FlutterWave";
-import useRegion from "../../hooks/useRegion";
+import PaymentModal from "../../components/ui/payment/PaymentModal";
 
 type Props = {
   setShowModel: (val: boolean) => void;
@@ -19,18 +17,15 @@ type Props = {
 };
 
 const AddFund = ({ setShowSuccess, setRefresh, setShowModel }: Props) => {
-  const { fundWalletFlutter, loading } = useWallet();
-  const { region } = useRegion();
+  const { fundWalletFlutter, loading: loadingWallet } = useWallet();
 
-  // const [loadingPay, setLoadingPay] = useState(false);
   const { addNotification } = useToastNotification();
 
   const [amount, setAmount] = useState(0);
-
-  const { user } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onApprove = async (
-    val: (FlutterWaveResponse & { type: string }) | PayStackCallback
+    val: (FlutterWaveResponse & { type: string }) | PayStackCallback,
   ) => {
     const { error, result } = await fundWalletFlutter({
       amount,
@@ -51,7 +46,7 @@ const AddFund = ({ setShowSuccess, setRefresh, setShowModel }: Props) => {
 
   return (
     <div className="flex flex-col items-center mt-[30px] p-5">
-      {loading && <LoadingLogoModal />}
+      {loadingWallet && <LoadingLogoModal />}
       <FaWallet size={64} className="text-orange-color" />
       <div className="font-bold mt-2.5 capitalize">Fund your Wallet</div>
       <input
@@ -71,19 +66,23 @@ const AddFund = ({ setShowSuccess, setRefresh, setShowModel }: Props) => {
         }}
       />
 
-      {/* <PayStack
+      <button
+        disabled={!amount || amount <= 0}
+        onClick={() => setIsModalOpen(true)}
+        className={`w-full h-11 flex items-center justify-center rounded-lg font-bold text-white uppercase transition-all ${
+          !amount || amount <= 0
+            ? "bg-gray-300 cursor-not-allowed"
+            : "bg-orange-color hover:bg-malon-color shadow-md active:scale-[0.98]"
+        }`}
+      >
+        Proceed to Payment
+      </button>
+
+      <PaymentModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
         amount={amount}
         onApprove={onApprove}
-        isLoading={loadingPay}
-        setIsLoading={setLoadingPay}
-      /> */}
-      <FlutterWave
-        amount={amount}
-        currency={region === "NG" ? "NGN" : "ZAR"}
-        user={user ?? undefined}
-        onApprove={(res) =>
-          onApprove({ type: "Flutterwave", transaction_id: res.transaction_id })
-        }
       />
     </div>
   );

@@ -13,17 +13,13 @@ import { Coupon } from "../../types/product";
 import { PayStackCallback } from "../../types/gateway";
 import useOrder from "../../hooks/useOrder";
 import useToastNotification from "../../hooks/useToastNotification";
+import PaymentModal from "../../components/ui/payment/PaymentModal";
 import { imageUrl } from "../../services/api";
-import useRegion from "../../hooks/useRegion";
-import FlutterWave from "../../components/gateway/FlutterWave";
-import useAuth from "../../hooks/useAuth";
 
 const PlaceOrder = () => {
   const { cart, subtotal, total, paymentMethod, clearCart } = useCart();
   const { createOrder, error } = useOrder();
   const { addNotification } = useToastNotification();
-  const { region } = useRegion();
-  const { user } = useAuth();
 
   const navigate = useNavigate();
 
@@ -31,6 +27,7 @@ const PlaceOrder = () => {
   const [coupon, setCoupon] = useState<Coupon | null>(null);
   const [showModel, setShowModel] = useState(false);
   const [loadingPay, setLoadingPay] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   const handleCoupon = async () => {
     console.log(code);
@@ -42,7 +39,7 @@ const PlaceOrder = () => {
 
   const discount = useMemo(
     () => (coupon ? couponDiscount(coupon, total) : 0),
-    [coupon]
+    [coupon],
   );
 
   const placeOrderHandler = async (paymentMet: string, transId?: string) => {
@@ -67,7 +64,7 @@ const PlaceOrder = () => {
 
   const WalletSuccess = async (
     response: PayStackCallback,
-    paymentMethod: string
+    paymentMethod: string,
   ) => {
     console.log(response);
     await placeOrderHandler(paymentMethod, response.transaction_id);
@@ -78,7 +75,7 @@ const PlaceOrder = () => {
       transaction_id: string;
       type: string;
     },
-    paymentMethod: string
+    paymentMethod: string,
   ) => {
     console.log(response);
     await placeOrderHandler(paymentMethod, response.transaction_id);
@@ -145,7 +142,7 @@ const PlaceOrder = () => {
                               <div className="flex-[5]">{value}</div>
                             )}
                           </div>
-                        )
+                        ),
                       )}
                   </div>
                 ))}
@@ -291,20 +288,20 @@ const PlaceOrder = () => {
                       Place Order
                     </div>
                   ) : (
-                    //  : region === "ZA" ? (
-                    //   <PayStack
-                    //     amount={total}
-                    //     onApprove={(res) => onApprove(res, "Paystack")}
-                    //     isLoading={loadingPay}
-                    //     setIsLoading={setLoadingPay}
-                    //   />
-                    // )
-                    <FlutterWave
-                      amount={total}
-                      currency={region === "NG" ? "NGN" : "ZAR"}
-                      user={user ?? undefined}
-                      onApprove={(res) => onApprove(res, "Flutterwave")}
-                    />
+                    <>
+                      <div
+                        className="cursor-pointer text-white w-full uppercase flex items-center justify-center h-10 rounded-[0.2rem] bg-orange-color hover:bg-malon-color transition-colors shadow-md"
+                        onClick={() => setIsPaymentModalOpen(true)}
+                      >
+                        Proceed to Payment
+                      </div>
+                      <PaymentModal
+                        isOpen={isPaymentModalOpen}
+                        onClose={() => setIsPaymentModalOpen(false)}
+                        amount={total - discount}
+                        onApprove={(res) => onApprove(res, res.type)}
+                      />
+                    </>
                   )}
                 </div>
 

@@ -4,7 +4,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
-export const baseURL = "";
+export const baseURL = "http://localhost:5000";
 
 export const imageUrl = baseURL;
 const api = axios.create({
@@ -25,7 +25,7 @@ api.interceptors.request.use(
   (error: AxiosError) => {
     // Handle request errors here
     return Promise.reject(error);
-  }
+  },
 );
 
 api.interceptors.response.use(
@@ -46,7 +46,7 @@ api.interceptors.response.use(
       console.error("API Request Error:", error.message);
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default api;
