@@ -18,7 +18,7 @@ export type PaymentMethod = "paystack" | "flutterwave" | "payfast";
 const nigerianFlutterwaveKey = "FLWPUBK-31cf11f493d975fb1607f21f6499b416-X";
 const southAfricanFlutterwaveKey = "FLWPUBK-31cf11f493d975fb1607f21f6499b416-X";
 
-const nigerianPaystackKey = "pk_live_96998e69a31a4a9d1afc9ec874dec535657ce0ad";
+const nigerianPaystackKey = "pk_live_2bfc97de7257e01817c882ad874486227cebd17d";
 const southAfricanPaystackKey =
   "pk_live_96998e69a31a4a9d1afc9ec874dec535657ce0ad";
 
