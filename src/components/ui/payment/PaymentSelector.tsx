@@ -7,8 +7,13 @@ import useRegion from "../../../hooks/useRegion";
 import { HookConfig as PaystackHookConfig } from "react-paystack/dist/types";
 import { FlutterwaveConfig } from "flutterwave-react-v3/dist/types";
 import { PaystackResponse } from "../../../types/gateway";
+import { FaShieldAlt } from "react-icons/fa";
+import {
+  generatePayfastSignatureService,
+  initPayFastOnsiteService,
+} from "../../../services/payment";
 
-export type PaymentMethod = "paystack" | "flutterwave";
+export type PaymentMethod = "paystack" | "flutterwave" | "payfast";
 
 const nigerianFlutterwaveKey = "FLWPUBK-31cf11f493d975fb1607f21f6499b416-X";
 const southAfricanFlutterwaveKey = "FLWPUBK-31cf11f493d975fb1607f21f6499b416-X";
@@ -34,12 +39,14 @@ const PaymentSelector: React.FC<PaymentSelectorProps> = ({
     null,
   );
 
+  const reference =
+    "REP_" +
+    Math.floor(Math.random() * 1000 + 1) +
+    new Date().getTime().toString();
+
   // Paystack Configuration
   const paystackConfig: PaystackHookConfig = {
-    reference:
-      "REP_" +
-      Math.floor(Math.random() * 1000 + 1) +
-      new Date().getTime().toString(),
+    reference,
     email: user?.email ?? "",
     amount: amount * 100,
     publicKey: region === "NG" ? nigerianPaystackKey : southAfricanPaystackKey,
@@ -52,7 +59,7 @@ const PaymentSelector: React.FC<PaymentSelectorProps> = ({
   const flutterwaveConfig: FlutterwaveConfig = {
     public_key:
       region === "NG" ? nigerianFlutterwaveKey : southAfricanFlutterwaveKey,
-    tx_ref: Date.now().toString(),
+    tx_ref: reference,
     amount,
     currency: region === "NG" ? "NGN" : "ZAR",
     payment_options:
@@ -102,6 +109,46 @@ const PaymentSelector: React.FC<PaymentSelectorProps> = ({
           console.log("Flutterwave closed");
         },
       });
+    } else if (method === "payfast") {
+      const handlePayFast = async () => {
+        try {
+          const merchantId = "21331397";
+          const merchantKey = "f6dtd8f8khb4m";
+
+          const myData: Record<string, string> = {
+            merchant_id: merchantId,
+            merchant_key: merchantKey,
+            return_url: "https://www.repeddle.com/success",
+            cancel_url: "https://www.repeddle.com/cancel",
+            notify_url: "https://www.repeddle.com/api/payments/payfast-notify",
+            name_first: user?.firstName || "User",
+            name_last: user?.lastName || "",
+            email_address: user?.email || "",
+            m_payment_id: reference,
+            amount: String(amount),
+            item_name: `Payment`,
+          };
+
+          const signature = await generatePayfastSignatureService(myData);
+
+          myData["signature"] = signature.signature;
+
+          const uuid = await initPayFastOnsiteService(myData);
+          console.log("uuid", uuid);
+          window.payfast_do_onsite_payment({ uuid }, (result: boolean) => {
+            setLoadingMethod(null);
+            console.log(result);
+            if (result) {
+              onApprove({ transaction_id: reference, type: "Payfast" });
+              onClose();
+            }
+          });
+        } catch (error) {
+          setLoadingMethod(null);
+          console.error("PayFast error:", error);
+        }
+      };
+      handlePayFast();
     }
   };
 
@@ -120,6 +167,17 @@ const PaymentSelector: React.FC<PaymentSelectorProps> = ({
       icon: <FaMoneyBillWave className="text-green-500" size={24} />,
       color: "border-green-500",
     },
+    ...(region === "ZA"
+      ? [
+          {
+            id: "payfast" as PaymentMethod,
+            name: "PayFast Onsite",
+            description: "Secure checkout via PayFast",
+            icon: <FaShieldAlt className="text-red-500" size={24} />,
+            color: "border-red-500",
+          },
+        ]
+      : []),
   ];
 
   return (
