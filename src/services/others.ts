@@ -1,8 +1,8 @@
-import { DeliveryMeta, Stations } from "./../types/product"
-import axios from "axios"
-import api from "./api"
-import { CartItem } from "../context/CartContext"
-import { getBackendErrorMessage } from "../utils/error"
+import { DeliveryMeta, Stations } from "./../types/product";
+import axios from "axios";
+import api from "./api";
+import { CartItem } from "../context/CartContext";
+import { getBackendErrorMessage } from "../utils/error";
 
 export const loginGig = async () => {
   const { data } = await api.post(
@@ -11,37 +11,37 @@ export const loginGig = async () => {
       username: "IND1109425",
       Password: "RBUVBi9EZs_7t_q@6019",
       SessionObj: "",
-    }
-  )
+    },
+  );
   return {
     token: data.Object.access_token,
     username: data.Object.UserName,
     userId: data.Object.UserId,
-  }
-}
+  };
+};
 
 export const fetchStations = async () => {
   try {
-    const token = await loginGig()
+    const token = await loginGig();
 
     const { data }: { data: { Object: Stations[] } } = await axios.get(
       "https://thirdparty.gigl-go.com/api/thirdparty/localStations",
       {
         headers: { Authorization: `Bearer ${token.token}` },
-      }
-    )
+      },
+    );
 
-    return { stations: data.Object, token }
+    return { stations: data.Object, token };
   } catch (error) {
-    throw new Error(error as string)
+    throw new Error(error as string);
   }
-}
+};
 
 export const getGigPrice = async (
   item: CartItem,
   meta: DeliveryMeta,
   coordinates: { lat: string; lng: string },
-  token: { userId: string; token: string; username: string }
+  token: { userId: string; token: string; username: string },
 ) => {
   try {
     const { data } = await axios.post(
@@ -83,27 +83,27 @@ export const getGigPrice = async (
       },
       {
         headers: { Authorization: `Bearer ${token.token}` },
-      }
-    )
+      },
+    );
 
-    return data.Object
+    return data.Object;
   } catch (error) {
     throw new Error(
-      "Error selecting delivery method, try again later or try other delivery method"
-    )
+      "Error selecting delivery method, try again later or try other delivery method",
+    );
   }
-}
+};
 
 export const makePayFastPaymentService = async (myData: {
-  [val: string]: string | number
+  [val: string]: string | number;
 }) => {
   try {
     const { data } = await axios.post("https://www.payfast.co.za/eng/process", {
       myData,
-    })
-    console.log(data)
+    });
+    console.log(data);
   } catch (err) {
     // Re-throw the error to propagate it up the call stack if needed
-    throw getBackendErrorMessage(err)
+    throw getBackendErrorMessage(err);
   }
-}
+};

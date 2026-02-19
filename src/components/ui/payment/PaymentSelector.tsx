@@ -15,8 +15,8 @@ import {
 
 export type PaymentMethod = "paystack" | "flutterwave" | "payfast";
 
-const nigerianFlutterwaveKey = "FLWPUBK-31cf11f493d975fb1607f21f6499b416-X";
-const southAfricanFlutterwaveKey = "FLWPUBK-31cf11f493d975fb1607f21f6499b416-X";
+const nigerianFlutterwaveKey = "FLWPUBK-cf034dade9abf6a7ffa687a732fc7fe1-X";
+const southAfricanFlutterwaveKey = "FLWPUBK-cf034dade9abf6a7ffa687a732fc7fe1-X";
 
 const nigerianPaystackKey = "pk_live_2bfc97de7257e01817c882ad874486227cebd17d";
 const southAfricanPaystackKey =
@@ -152,33 +152,33 @@ const PaymentSelector: React.FC<PaymentSelectorProps> = ({
     }
   };
 
-  const methods = [
-    {
-      id: "paystack" as PaymentMethod,
-      name: "Paystack",
-      description: "Fast and secure checkout",
-      icon: <FaCreditCard className="text-blue-500" size={24} />,
-      color: "border-blue-500",
-    },
-    {
-      id: "flutterwave" as PaymentMethod,
-      name: "Flutterwave",
-      description: "Pay with card or bank transfer",
-      icon: <FaMoneyBillWave className="text-green-500" size={24} />,
-      color: "border-green-500",
-    },
-    ...(region === "ZA"
+  const methods =
+    region === "ZA"
       ? [
           {
             id: "payfast" as PaymentMethod,
-            name: "PayFast Onsite",
+            name: "PayFast",
             description: "Secure checkout via PayFast",
             icon: <FaShieldAlt className="text-red-500" size={24} />,
             color: "border-red-500",
           },
         ]
-      : []),
-  ];
+      : [
+          {
+            id: "paystack" as PaymentMethod,
+            name: "Paystack",
+            description: "Fast and secure checkout",
+            icon: <FaCreditCard className="text-blue-500" size={24} />,
+            color: "border-blue-500",
+          },
+          {
+            id: "flutterwave" as PaymentMethod,
+            name: "Flutterwave",
+            description: "Pay with card or bank transfer",
+            icon: <FaMoneyBillWave className="text-green-500" size={24} />,
+            color: "border-green-500",
+          },
+        ];
 
   return (
     <div className="w-full space-y-4 my-6">
