@@ -120,7 +120,7 @@ const PaymentSelector: React.FC<PaymentSelectorProps> = ({
             merchant_key: merchantKey,
             return_url: "https://www.repeddle.com/success",
             cancel_url: "https://www.repeddle.com/cancel",
-            notify_url: "https://www.repeddle.com/api/payments/payfast-notify",
+            notify_url: "https://repeddle-webhook.vercel.app/api/webhook",
             name_first: user?.firstName || "User",
             name_last: user?.lastName || "",
             email_address: user?.email || "",
