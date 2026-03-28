@@ -9,7 +9,7 @@ function Default() {
 
   const notAllowedRoutes = ["/messages", "/categories"];
   const notAllowedRoutesNav = ["/messages"];
-  const notAllowedRoutesSupport = ["/brands"];
+  const notAllowedRoutesSupport = ["/brands", "/cart"];
   return (
     <main className="">
       <Navbar />

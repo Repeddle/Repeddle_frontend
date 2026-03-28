@@ -1,8 +1,8 @@
 //import React from "react";
-import { Link } from "react-router-dom"
-import Leaf from "../../../assets/icons/Leaf.svg"
-import Globe from "../../../assets/icons/Globe.svg"
-import House from "../../../assets/icons/House.svg"
+import { Link } from "react-router-dom";
+import Leaf from "../../../assets/icons/Leaf.svg";
+import Globe from "../../../assets/icons/Globe.svg";
+import House from "../../../assets/icons/House.svg";
 
 const About = () => {
   return (
@@ -107,13 +107,15 @@ const About = () => {
               alt="img"
               className="w-full"
             />
-            <img
-              src="https://repeddle.com/images/as.png"
-              alt="appstore"
-              className="mr-7 float-right relative lg:bottom-20 w-24 lg:w-48 bottom-8 left-6"
-            />
+            <Link to="https://apps.apple.com/ng/app/repeddle/id6753876406">
+              <img
+                src="/images/mobile/as.png"
+                alt="appstore"
+                className="mr-7 float-right relative lg:bottom-20 w-24 lg:w-48 bottom-8 left-6"
+              />
+            </Link>
           </div>
-          <h3
+          {/* <h3
             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
           font-bold text-white text-5xl text-center whitespace-nowrap z-10
           md:text-2xl lg:text-6xl xl:text-7xl 2xl:text-8xl sm:text-lg
@@ -124,7 +126,7 @@ const About = () => {
             }}
           >
             COMING SOON
-          </h3>
+          </h3> */}
 
           <div className="w-1/2 sm:w-1/2 mb-4 mx-auto relative">
             <img
@@ -132,11 +134,13 @@ const About = () => {
               alt="img"
               className="w-full"
             />
-            <img
-              src="https://repeddle.com/images/gp.png"
-              alt="playstore"
-              className="mr-7 float-right relative lg:bottom-20 w-24 lg:w-48 bottom-8 left-6"
-            />
+            <Link to="https://play.google.com/store/apps/details?id=com.emirace.Repeddle_App&pcampaignid=web_share">
+              <img
+                src="/images/mobile/gp.png"
+                alt="playstore"
+                className="mr-7 float-right relative lg:bottom-20 w-24 lg:w-48 bottom-8 left-6"
+              />
+            </Link>
           </div>
         </div>
         <p className="text-center -mt-8">
@@ -282,7 +286,7 @@ const About = () => {
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default About
+export default About;

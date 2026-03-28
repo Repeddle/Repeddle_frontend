@@ -31,12 +31,12 @@ const Modal: React.FC<{
   return (
     <>
       <div
-        className={`fixed inset-0 z-[100] flex justify-center items-end md:items-center backdrop-blur-md transition-opacity ${
+        className={`fixed inset-0 z-[1] flex justify-center items-end md:items-center backdrop-blur-md transition-opacity ${
           modalOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
         <div
-          className={`relative max-h-[93svh] lg:max-h-[96vh] py-6 overflow-y-auto scrollbar-hide drop-shadow-primary bg-white-color dark:bg-black-color rounded-lg lg:p-6 w-[95%]  ${
+          className={`relative max-h-[93svh] lg:max-h-[96vh] py-6 overflow-y-auto scrollbar-hide drop-shadow-primary bg-white-color dark:bg-black-color rounded-lg lg:p-6 w-[95%] pb-20 md:pb-6 ${
             size === "lg" ? "md:w-3/5" : "md:w-[28rem]"
           } transform transition-transform duration-500 ease-in-out ${
             modalOpen

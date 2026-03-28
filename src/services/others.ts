@@ -1,7 +1,7 @@
 import { DeliveryMeta, Stations } from "./../types/product";
 import axios from "axios";
 import api from "./api";
-import { CartItem } from "../context/CartContext";
+import { ICartItem } from "../types/cart";
 import { getBackendErrorMessage } from "../utils/error";
 
 export const loginGig = async () => {
@@ -38,7 +38,7 @@ export const fetchStations = async () => {
 };
 
 export const getGigPrice = async (
-  item: CartItem,
+  item: ICartItem,
   meta: DeliveryMeta,
   coordinates: { lat: string; lng: string },
   token: { userId: string; token: string; username: string },
@@ -73,11 +73,11 @@ export const getGigPrice = async (
             Quantity: item.quantity,
             Weight: 1,
             ItemType: "Normal",
-            ItemName: item.name,
-            Value: item.sellingPrice,
+            ItemName: item.product.name,
+            Value: item.product.sellingPrice,
             ShipmentType: "Regular",
-            Description: item.description,
-            ImageUrl: item.images[0],
+            Description: item.product.description,
+            ImageUrl: item.product.images[0],
           },
         ],
       },

@@ -4,102 +4,106 @@ import {
   SetStateAction,
   useEffect,
   useState,
-} from "react"
-import { FaImage, FaQuestionCircle, FaTimes, FaVideo } from "react-icons/fa"
-import CropImage from "../../components/cropImage/CropImage"
-import Modal from "../../components/ui/Modal"
-import LoadingBox from "../../components/LoadingBox"
-import { resizeImage, uploadImage } from "../../utils/common"
-import useToastNotification from "../../hooks/useToastNotification"
-import { imageUrl } from "../../services/api"
+} from "react";
+import { FaImage, FaQuestionCircle, FaTimes, FaVideo } from "react-icons/fa";
+import CropImage from "../../components/cropImage/CropImage";
+import Modal from "../../components/ui/Modal";
+import LoadingBox from "../../components/LoadingBox";
+import { resizeImage, uploadImage } from "../../utils/common";
+import useToastNotification from "../../hooks/useToastNotification";
+import { imageUrl } from "../../services/api";
+import { saveVideoService } from "../../services/image";
 
 type InputProps = {
-  image1: string
-  image2: string
-  image3: string
-  image4: string
-  video: string
-  luxury: boolean
-  luxuryImage: string
-  vintage: boolean
-}
+  image1: string;
+  image2: string;
+  image3: string;
+  image4: string;
+  video: string;
+  luxury: boolean;
+  luxuryImage: string;
+  vintage: boolean;
+};
 
 type Props = {
-  input: InputProps
-  setInput: Dispatch<SetStateAction<InputProps>>
-  video: string
-  setVideo: (val: string) => void
-}
+  input: InputProps;
+  setInput: Dispatch<SetStateAction<InputProps>>;
+  video: string;
+  setVideo: (val: string) => void;
+};
 
 const Media = ({ input, setInput, setVideo, video }: Props) => {
-  const { addNotification } = useToastNotification()
+  const { addNotification } = useToastNotification();
 
-  const [loadingUpload, setLoadingUpload] = useState(false)
-  const [loadingVideo, setLoadingVideo] = useState(false)
-  const [showUploadingImage, setShowUploadingImage] = useState(false)
-  const [invalidImage, setInvalidImage] = useState("")
-  const [currentImage, setCurrentImage] = useState("")
+  const [loadingUpload, setLoadingUpload] = useState(false);
+  const [loadingVideo, setLoadingVideo] = useState(false);
+  const [showUploadingImage, setShowUploadingImage] = useState(false);
+  const [invalidImage, setInvalidImage] = useState("");
+  const [currentImage, setCurrentImage] = useState("");
 
   const [resizeImage1, setResizeImage] = useState<{
-    file: File | null
-    filepreview: string
+    file: File | null;
+    filepreview: string;
   }>({
     file: null,
     filepreview: "",
-  })
+  });
 
   useEffect(() => {
     const uploadImage = async () => {
-      console.log("files", invalidImage, resizeImage1)
+      console.log("files", invalidImage, resizeImage1);
 
       if (!invalidImage && resizeImage1.filepreview && resizeImage1.file) {
-        await uploadHandler(resizeImage1.file, "luxury")
+        await uploadHandler(resizeImage1.file, "luxury");
         // setLuxuryImage(resizeImage1.filepreview);
       }
-    }
-    uploadImage()
-  }, [resizeImage1])
+    };
+    uploadImage();
+  }, [resizeImage1]);
 
   const handleOnChange = (text: string | boolean, input: keyof InputProps) => {
-    setInput((prevState) => ({ ...prevState, [input]: text }))
-  }
+    setInput((prevState) => ({ ...prevState, [input]: text }));
+  };
 
   const videouploadHandler = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    const maxSize = 8 * 1024 * 1024 // 8MB
+    const file = e.target.files?.[0];
+    const maxSize = 8 * 1024 * 1024; // 8MB
 
-    if (!file) return
+    if (!file) return;
 
     // Check if the file size exceeds the maximum allowed size
     if (file.size > maxSize) {
       // Show an error message or perform any necessary action
-      addNotification("Request Failed: Video shouldn't be more than 8mb")
-      return
+      addNotification("Request Failed: Video shouldn't be more than 8mb");
+      return;
     }
-
-    console.log(setVideo, setLoadingVideo)
-
+    setLoadingVideo(true);
     // TODO: video upload route
-  }
+    const formData = new FormData();
+    formData.append("video", file);
+    const res = await saveVideoService(formData);
+    setVideo(res);
+    setLoadingVideo(false);
+  };
 
   const uploadHandler = async (file: File, fileType: string) => {
-    setLoadingUpload(true)
+    setLoadingUpload(true);
     try {
-      const res = await uploadImage(file)
-      handleOnChange(res, fileType as keyof InputProps)
+      const res = await uploadImage(file);
+      handleOnChange(res, fileType as keyof InputProps);
     } catch (error) {
-      addNotification(error as string)
+      addNotification(error as string);
     }
 
-    setLoadingUpload(false)
-  }
+    setLoadingUpload(false);
+  };
 
   const handleLuxury = async (e: ChangeEvent<HTMLInputElement>) => {
     e.target.files?.length &&
-      resizeImage([e.target.files[0]], setInvalidImage, setResizeImage)
-  }
+      resizeImage([e.target.files[0]], setInvalidImage, setResizeImage);
+  };
 
-  const removeVideo = () => {}
+  const removeVideo = () => {};
 
   return (
     <div className="flex flex-col gap-3 ">
@@ -135,8 +139,8 @@ const Media = ({ input, setInput, setVideo, video }: Props) => {
             <label
               className="cursor-pointer flex flex-col items-center justify-center w-full h-full text-center text-xs"
               onClick={() => {
-                setCurrentImage("image1")
-                setShowUploadingImage(true)
+                setCurrentImage("image1");
+                setShowUploadingImage(true);
               }}
             >
               {loadingUpload ? (
@@ -171,8 +175,8 @@ const Media = ({ input, setInput, setVideo, video }: Props) => {
             <label
               className="cursor-pointer flex flex-col items-center justify-center w-full h-full text-center text-xs"
               onClick={() => {
-                setCurrentImage("image2")
-                setShowUploadingImage(true)
+                setCurrentImage("image2");
+                setShowUploadingImage(true);
               }}
             >
               {loadingUpload ? (
@@ -208,8 +212,8 @@ const Media = ({ input, setInput, setVideo, video }: Props) => {
               <label
                 className="cursor-pointer flex flex-col items-center justify-center w-full h-full text-center text-xs"
                 onClick={() => {
-                  setCurrentImage("image3")
-                  setShowUploadingImage(true)
+                  setCurrentImage("image3");
+                  setShowUploadingImage(true);
                 }}
               >
                 {loadingUpload ? (
@@ -244,8 +248,8 @@ const Media = ({ input, setInput, setVideo, video }: Props) => {
               <label
                 className="cursor-pointer flex flex-col items-center justify-center w-full h-full text-center text-xs"
                 onClick={() => {
-                  setCurrentImage("image4")
-                  setShowUploadingImage(true)
+                  setCurrentImage("image4");
+                  setShowUploadingImage(true);
                 }}
               >
                 {loadingUpload ? (
@@ -300,7 +304,7 @@ const Media = ({ input, setInput, setVideo, video }: Props) => {
       <input
         type="file"
         onChange={(e) => {
-          videouploadHandler(e)
+          videouploadHandler(e);
           // setShowUploadingVideo(true);
         }}
         id="video"
@@ -412,7 +416,7 @@ const Media = ({ input, setInput, setVideo, video }: Props) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Media
+export default Media;

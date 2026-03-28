@@ -15,11 +15,15 @@ import useOrder from "../../hooks/useOrder";
 import useToastNotification from "../../hooks/useToastNotification";
 import PaymentModal from "../../components/ui/payment/PaymentModal";
 import { imageUrl } from "../../services/api";
+import { useGetCart } from "../../querry/cart";
+import { useQueryClient } from "@tanstack/react-query";
 
 const PlaceOrder = () => {
-  const { cart, subtotal, total, paymentMethod, clearCart } = useCart();
+  const { paymentMethod, clearCart } = useCart();
+  const { data: cart } = useGetCart();
   const { createOrder, error } = useOrder();
   const { addNotification } = useToastNotification();
+  const queryClient = useQueryClient();
 
   const navigate = useNavigate();
 
@@ -38,16 +42,16 @@ const PlaceOrder = () => {
   };
 
   const discount = useMemo(
-    () => (coupon ? couponDiscount(coupon, total) : 0),
+    () => (coupon ? couponDiscount(coupon, cart?.total || 0) : 0),
     [coupon],
   );
 
   const placeOrderHandler = async (paymentMet: string, transId?: string) => {
     setLoadingPay(true);
     const res = await createOrder({
-      items: cart,
+      cartId: cart?._id || "",
       paymentMethod: paymentMet,
-      totalAmount: total,
+      totalAmount: cart?.total || 0,
       transactionId: transId,
     });
 
@@ -55,6 +59,7 @@ const PlaceOrder = () => {
       addNotification(res.message);
       setLoadingPay(false);
       clearCart();
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
       navigate(`/order/${res.order._id}`);
       return res.order;
     } else {
@@ -93,27 +98,27 @@ const PlaceOrder = () => {
             <div className="p-5">
               <div className="text-xl mb-3">Items</div>
               <div className="flex flex-col mb-0 pl-0">
-                {cart.map((item) => (
+                {cart?.items.map((item) => (
                   <div
                     className="relative block px-5 py-3 border-0 border-[1px_solid_rgba(0,0,0,0.125)] last:rounded-br-[inherit] last:rounded-bl-[inherit] last:border-b-0 first:rounded-t-[inherit]"
-                    key={item._id}
+                    key={item.product._id}
                   >
                     <div className="flex flex-wrap mr-[-15px] ml-[-15px]">
                       <div className="flex-[0_0_58.333333%] max-w-[58.333333%] flex items-center mb-2.5 relative w-full px-[15px]">
                         <img
-                          src={imageUrl + item.images[0]}
-                          alt={item.name}
+                          src={imageUrl + item.product.images[0]}
+                          alt={item.product.name}
                           className="rounded bg-white border max-w-full h-auto max-h-[100px] p-1 border-solid border-[#dee2e6]"
                         />
                         <div className="ml-5">
                           <div>
-                            <Link to={`/product/${item.slug}`}>
-                              {item.name}
+                            <Link to={`/product/${item.product.slug}`}>
+                              {item.product.name}
                             </Link>
                           </div>
                           <div>
-                            {currency(item.region)}
-                            {item.sellingPrice}
+                            {currency(item.product.region)}
+                            {item.product.sellingPrice}
                           </div>
                           <div>Size: {item.selectedSize}</div>
                         </div>
@@ -122,8 +127,8 @@ const PlaceOrder = () => {
                         <span>x {item.quantity}</span>
                       </div>
                       <div className="relative w-full flex-[0_0_25%] max-w-[25%] px-[15px]">
-                        {currency(item.region)}
-                        {item.sellingPrice * item.quantity}
+                        {currency(item.product.region)}
+                        {item.product.sellingPrice * item.quantity}
                       </div>
                     </div>
                     {item.deliverySelect &&
@@ -135,7 +140,7 @@ const PlaceOrder = () => {
                             <div className="flex-[3] lg:flex-1">{key}:</div>
                             {key === "fee" ? (
                               <div className="flex-[5]">
-                                {currency(item.region)}
+                                {currency(item.product.region)}
                                 {value}
                               </div>
                             ) : (
@@ -182,20 +187,20 @@ const PlaceOrder = () => {
                   <div className="flex flex-wrap mr-[-15px] ml-[-15px]">
                     <div className="col-3">Items</div>
                     <div className="col-9">
-                      {cart.map((c) => (
+                      {cart?.items.map((c) => (
                         <>
                           <div className="flex">
                             <div className="flex flex-[5]">
                               <div className="flex-1">{c.quantity} </div>
                               <div className="flex-1">x </div>
                               <div className="flex-[2]">
-                                {currency(c.region)}
-                                {c.sellingPrice}
+                                {currency(c.product.region)}
+                                {c.product.sellingPrice}
                               </div>
                             </div>
                             <div className="flex-[3]">
-                              {` =  ${currency(c.region)}` +
-                                c.quantity * c.sellingPrice}
+                              {` =  ${currency(c.product.region)}` +
+                                c.quantity * c.product.sellingPrice}
                             </div>
                           </div>
                         </>
@@ -207,8 +212,8 @@ const PlaceOrder = () => {
                   <div className="flex flex-wrap mr-[-15px] ml-[-15px]">
                     <div className="basis-0 grow max-w-full">Subtotal</div>
                     <div className="basis-0 grow max-w-full">
-                      {currency(cart[0].region)}
-                      {subtotal.toFixed(2)}
+                      {currency(cart?.items[0].product.region || "ZA")}
+                      {cart?.subtotal.toFixed(2)}
                     </div>
                   </div>
                 </div>
@@ -216,7 +221,8 @@ const PlaceOrder = () => {
                   <div className="flex flex-wrap mr-[-15px] ml-[-15px]">
                     <div className="basis-0 grow max-w-full">Shipping</div>
                     <div className="basis-0 grow max-w-full">
-                      {currency(cart[0].region)} 0{/* TODO:  */}
+                      {currency(cart?.items[0].product.region || "ZA")} 0
+                      {/* TODO:  */}
                       {/* {cart.shippingPrice.toFixed(2)} */}
                     </div>
                   </div>
@@ -226,7 +232,8 @@ const PlaceOrder = () => {
                   <div className="flex flex-wrap mr-[-15px] ml-[-15px]">
                     <div className="basis-0 grow max-w-full">Tax</div>
                     <div className="basis-0 grow max-w-full">
-                      {currency(cart[0].region)} 0{/* TODO:  */}
+                      {currency(cart?.items[0].product.region || "ZA")} 0
+                      {/* TODO:  */}
                       {/* {cart.taxPrice.toFixed(2)} */}
                     </div>
                   </div>
@@ -242,7 +249,7 @@ const PlaceOrder = () => {
                       )}
                     </div>
                     <div className="basis-0 grow max-w-full">
-                      - {currency(cart[0].region)}
+                      - {currency(cart?.items[0].product.region || "ZA")}
                       {discount}
                     </div>
                   </div>
@@ -254,8 +261,8 @@ const PlaceOrder = () => {
                     </div>
                     <div className="basis-0 grow max-w-full">
                       <b>
-                        {currency(cart[0].region)}
-                        {(total - discount).toFixed(2)}
+                        {currency(cart?.items[0].product.region || "ZA")}
+                        {((cart?.total || 0) - discount).toFixed(2)}
                       </b>
                     </div>
                   </div>
@@ -298,7 +305,7 @@ const PlaceOrder = () => {
                       <PaymentModal
                         isOpen={isPaymentModalOpen}
                         onClose={() => setIsPaymentModalOpen(false)}
-                        amount={total - discount}
+                        amount={(cart?.total || 0) - discount}
                         onApprove={(res) => onApprove(res, res.type)}
                       />
                     </>
@@ -309,7 +316,7 @@ const PlaceOrder = () => {
                   <PayFund
                     onApprove={(res) => WalletSuccess(res, "Payfund")}
                     setShowModel={setShowModel}
-                    amount={total}
+                    amount={cart?.total || 0}
                   />
                 </Modal>
               </div>

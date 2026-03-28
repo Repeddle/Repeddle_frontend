@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import Table from "../../../components/table/Table";
 import { currency } from "../../../utils/common";
-import useCart from "../../../hooks/useCart";
 import useProducts from "../../../hooks/useProducts";
 import { IProduct, Pagination } from "../../../types/product";
 import useToastNotification from "../../../hooks/useToastNotification";
@@ -13,6 +12,7 @@ import { Link } from "react-router-dom";
 import { FaCartPlus, FaTrash } from "react-icons/fa";
 import { imageUrl } from "../../../services/api";
 import useRegion from "../../../hooks/useRegion";
+import { useAddToCart, useGetCart } from "../../../querry/cart";
 
 const headers = [
   // { title: "ID", hide: true },
@@ -23,7 +23,8 @@ const headers = [
 
 const Wishlist = () => {
   const { removeFromWishlist, user, error, getWishlist } = useAuth();
-  const { addToCart, cart } = useCart();
+  const { data: cart } = useGetCart();
+  const { mutate: addToCart } = useAddToCart();
   const { fetchProductBySlug } = useProducts();
   const { addNotification } = useToastNotification();
   const { region } = useRegion();
@@ -84,7 +85,7 @@ const Wishlist = () => {
   };
 
   const addToCartHandler = async (product: IProduct) => {
-    const existItem = cart.find((x) => x._id === product._id);
+    const existItem = cart?.items.find((x) => x.product._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
 
     if (user && product.seller._id === user._id) {
@@ -107,14 +108,14 @@ const Wishlist = () => {
     }
 
     addToCart({
-      ...product,
+      productId: product._id,
       quantity,
       selectedSize: selectSize,
       // selectedColor?: string;
     });
 
     addNotification("Item added to Cart", "View Cart", false, () =>
-      navigate("/cart")
+      navigate("/cart"),
     );
 
     const res = await removeFromWishlist(product._id);
@@ -126,7 +127,7 @@ const Wishlist = () => {
       addNotification(
         error ? error : "Failed to remove from wishlist",
         undefined,
-        true
+        true,
       );
 
     closeShowSize();
@@ -146,7 +147,7 @@ const Wishlist = () => {
       addNotification(
         error ? error : "Failed to remove from wishlist",
         undefined,
-        true
+        true,
       );
 
     setRemoveFromWish(false);
@@ -271,7 +272,7 @@ const Wishlist = () => {
                       {size.size}
                     </label>
                   </span>
-                )
+                ),
             )}
           </div>
           <div className="flex w-full gap-2.5 justify-end">

@@ -1,4 +1,4 @@
-import { CartItem } from "../context/CartContext";
+import { ICartItem } from "../types/cart";
 import { saveImageService } from "../services/image";
 import { Coupon, IProduct } from "../types/product";
 
@@ -57,13 +57,16 @@ export function getMonday(d: Date) {
   return new Date(d.setDate(diff));
 }
 
-export const checkDeliverySelect = (cart: CartItem[]) => {
+export const checkDeliverySelect = (cart?: ICartItem[]) => {
+  if (!cart) return false;
   let success = true;
-  cart.map((x) => {
-    if (!x.deliverySelect) {
-      success = false;
-    }
-  });
+  cart
+    .filter((x) => x.selected)
+    .map((x) => {
+      if (!x.deliverySelect) {
+        success = false;
+      }
+    });
   return success;
 };
 
@@ -80,7 +83,7 @@ export const couponDiscount = (coupon: Coupon, price: number) => {
 export const compressImageUpload = async (
   file: File,
   maxSize: number,
-  image?: string
+  image?: string,
 ) => {
   // Create an HTMLImageElement to get the original dimensions of the image
 
@@ -122,7 +125,7 @@ export const compressImageUpload = async (
           }
         },
         file.type,
-        0.9
+        0.9,
       );
     });
 
@@ -160,7 +163,7 @@ export const uploadImage = async (file: File, image?: string) => {
 export const resizeImage = (
   files: File[],
   setinvalidImage: (val: string) => void,
-  setuserInfo: (val: { file: File | null; filepreview: string }) => void
+  setuserInfo: (val: { file: File | null; filepreview: string }) => void,
 ) => {
   const reader = new FileReader();
   const imageFile = files[0];
@@ -210,7 +213,7 @@ export const resizeImage = (
           console.log(file);
         },
         "image/jpeg",
-        1
+        1,
       );
       setinvalidImage("");
     };

@@ -6,9 +6,11 @@ import Button from "../../components/ui/Button";
 import { currency } from "../../utils/common";
 import useWallet from "../../hooks/useWallet";
 import useRegion from "../../hooks/useRegion";
+import { useGetCart } from "../../querry/cart";
 
 const PaymentMethod = () => {
-  const { total, paymentMethod, changePaymentMethod } = useCart();
+  const { paymentMethod, changePaymentMethod } = useCart();
+  const { data: cart } = useGetCart();
   const navigate = useNavigate();
   const { region } = useRegion();
 
@@ -48,7 +50,9 @@ const PaymentMethod = () => {
         <div className="mb-4">
           <div className="flex items-center gap-2.5 min-h-[1.5rem] mb-4 pl-[1.5em]">
             <input
-              disabled={wallet.balance === 0 || wallet.balance <= total}
+              disabled={
+                wallet.balance === 0 || wallet.balance <= (cart?.total || 0)
+              }
               type="radio"
               id="wallet"
               value="Wallet"
@@ -59,7 +63,7 @@ const PaymentMethod = () => {
               {`Wallet (${currency(region)} ${wallet.balance.toFixed(2)})`}
             </label>
           </div>
-          {wallet.balance <= total && (
+          {wallet.balance <= (cart?.total || 0) && (
             <div className="text-[red] text-[13px] pl-[2em]">
               Insufficient balance{" "}
               <Link

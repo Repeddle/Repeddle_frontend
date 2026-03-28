@@ -12,19 +12,23 @@ const MobileApp = () => {
             Repeat. Anywhere, Anytime.
           </div>
           <div className="flex justify-start lg:justify-between">
-            <img
-              src="/images/mobile/as.png"
-              className="w-[100px] sm:w-[140px] mr-2.5 cursor-pointer lg:w-[20vw] lg:mr-[5px]"
-              alt="playstore"
-            />
-            <img
-              src="/images/mobile/gp.png"
-              className="w-[100px] sm:w-[140px] mr-2.5 cursor-pointer lg:w-[20vw] lg:mr-[5px]"
-              alt="playstore"
-            />
+            <a href="https://apps.apple.com/ng/app/repeddle/id6753876406">
+              <img
+                src="/images/mobile/as.png"
+                className="w-[100px] sm:w-[140px] mr-2.5 cursor-pointer lg:w-[20vw] lg:mr-[5px]"
+                alt="playstore"
+              />
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.emirace.Repeddle_App&pcampaignid=web_share">
+              <img
+                src="/images/mobile/gp.png"
+                className="w-[100px] sm:w-[140px] mr-2.5 cursor-pointer lg:w-[20vw] lg:mr-[5px]"
+                alt="playstore"
+              />
+            </a>
           </div>
         </div>
-        <div className="items-center flex flex-1 justify-center relative">
+        <div className="items-center flex flex-1 gap-4 justify-center relative">
           <img
             src="/images/mobile/phonescreen.png"
             className="w-[150px] lg:w-auto"
@@ -35,13 +39,13 @@ const MobileApp = () => {
             src="/images/mobile/phonescreen.png"
             alt="app"
           />
-          <h3 className="text-3xl text-shadow1 -translate-x-2/4 translate-y-[-80%] absolute font-bold text-black lg:text-[50px] lg:-translate-x-2/4 lg:-translate-y-2/4 text-center whitespace-nowrap left-2/4 top-2/4">
+          {/* <h3 className="text-3xl text-shadow1 -translate-x-2/4 translate-y-[-80%] absolute font-bold text-black lg:text-[50px] lg:-translate-x-2/4 lg:-translate-y-2/4 text-center whitespace-nowrap left-2/4 top-2/4">
             COMING SOON
-          </h3>
+          </h3> */}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MobileApp
+export default MobileApp;

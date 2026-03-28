@@ -1,4 +1,4 @@
-import { IDeliveryOption, IProduct } from "./product";
+import { IProduct } from "./product";
 import { IUser } from "./user";
 
 export type DeliverStatus =
@@ -52,13 +52,7 @@ export type IOrder = {
 };
 
 export type ICreateOrder = {
-  items: {
-    _id: string;
-    quantity: number;
-    selectedSize?: string;
-    selectedColor?: string;
-    deliveryOption?: IDeliveryOption[];
-  }[];
+  cartId: string;
   totalAmount: number;
   paymentMethod: string;
   transactionId?: string;

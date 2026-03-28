@@ -15,6 +15,7 @@ import useRegion from "../../hooks/useRegion";
 import { FlutterWaveResponse } from "flutterwave-react-v3/dist/types";
 import useWallet from "../../hooks/useWallet";
 import useToastNotification from "../../hooks/useToastNotification";
+import { useGetCart } from "../../querry/cart";
 
 const OrderPreview = () => {
   const [code, setCode] = useState("");
@@ -26,7 +27,8 @@ const OrderPreview = () => {
   const { fundWalletFlutter } = useWallet();
   const { addNotification } = useToastNotification();
 
-  const { cart, total, subtotal, paymentMethod } = useCart();
+  const { paymentMethod } = useCart();
+  const { data: cart } = useGetCart();
 
   const removeCoupon = () => {
     setCoupon({ code: "" });
@@ -39,8 +41,8 @@ const OrderPreview = () => {
   };
 
   const discount = useMemo(
-    () => (coupon ? couponDiscount(coupon, total) : 0),
-    [coupon, total]
+    () => (coupon ? couponDiscount(coupon, cart?.total || 0) : 0),
+    [coupon, cart?.total],
   );
 
   const handleCoupon = () => {};
@@ -48,10 +50,10 @@ const OrderPreview = () => {
   const WalletSuccess = async () => {};
 
   const onApprove = async (
-    val: (FlutterWaveResponse & { type: string }) | PayStackCallback
+    val: (FlutterWaveResponse & { type: string }) | PayStackCallback,
   ) => {
     const { error, result } = await fundWalletFlutter({
-      amount: total,
+      amount: cart?.total || 0,
       paymentProvider: "Flutterwave",
       transactionId: val.transaction_id.toString(),
     });
@@ -77,26 +79,27 @@ const OrderPreview = () => {
             <div className="p-4 flex-1">
               <div className="text-xl font-medium leading-[1.2]">Items</div>
               <div className="flex flex-col mb-0 pl-0">
-                {cart.map((item) => (
+                {cart?.items.map((item) => (
                   <div
                     className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b"
-                    key={item._id}
+                    key={item.product._id}
                   >
                     <div className="flex flex-wrap gap-4 items-center">
                       <div className="mb-2.5 flex items-center flex-[7]">
                         <img
-                          src={imageUrl + item.images[0]}
-                          alt={item.name}
+                          src={imageUrl + item.product.images[0]}
+                          alt={item.product.name}
                           className="max-w-full bg-white border rounded h-[100px] p-1 border-[#dee2e6]"
                         />
                         <div className="ml-5">
                           <div>
-                            <Link to={`/product/${item.slug}`}>
-                              {item.name}
+                            <Link to={`/product/${item.product.slug}`}>
+                              {item.product.name}
                             </Link>
                           </div>
                           <div>
-                            {currency(item.region)} {item.sellingPrice}
+                            {currency(item.product.region)}{" "}
+                            {item.product.sellingPrice}
                           </div>
                           <div>Size: {item.selectedSize}</div>
                         </div>
@@ -105,8 +108,8 @@ const OrderPreview = () => {
                         <span>x {item.quantity}</span>
                       </div>
                       <div className="flex-[3]">
-                        {currency(item.region)}
-                        {item.sellingPrice * item.quantity}
+                        {currency(item.product.region)}
+                        {item.product.sellingPrice * item.quantity}
                       </div>
                     </div>
                     {item.deliverySelect &&
@@ -118,13 +121,13 @@ const OrderPreview = () => {
                             <div className="flex-[3] lg:flex-1">{key}:</div>
                             {key === "cost" ? (
                               <div className="flex-[5]">
-                                {currency(item.region)} {value}
+                                {currency(item.product.region)} {value}
                               </div>
                             ) : (
                               <div className="flex-[5]">{value}</div>
                             )}
                           </div>
-                        )
+                        ),
                       )}
                   </div>
                 ))}
@@ -167,20 +170,20 @@ const OrderPreview = () => {
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-[3]">Items</div>
                     <div className="flex-[9]">
-                      {cart.map((c) => (
+                      {cart?.items.map((c) => (
                         <>
                           <div className="flex">
                             <div className="flex flex-[5]">
                               <div className="flex-1">{c.quantity} </div>
                               <div className="flex-1">x </div>
                               <div className="flex-[2]">
-                                {currency(c.region)}
-                                {c.sellingPrice}
+                                {currency(c.product.region)}
+                                {c.product.sellingPrice}
                               </div>
                             </div>
                             <div className="flex-[3]">
-                              {` =  ${currency(c.region)} ` +
-                                c.quantity * c.sellingPrice}
+                              {` =  ${currency(c.product.region)} ` +
+                                c.quantity * c.product.sellingPrice}
                             </div>
                           </div>
                         </>
@@ -192,21 +195,23 @@ const OrderPreview = () => {
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">Subtotal</div>
                     <div className="flex-1">
-                      {currency(region)} {subtotal.toFixed(2)}
+                      {currency(region)} {cart?.subtotal.toFixed(2)}
                     </div>
                   </div>
                 </div>
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">Shipping</div>
-                    <div className="flex-1">{currency(region)} N 0.00</div>
+                    <div className="flex-1">
+                      {currency(region)} {cart?.deliveryFee || 0}
+                    </div>
                   </div>
                 </div>
 
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">Tax</div>
-                    <div className="flex-1">{currency(region)} N 0.00</div>
+                    <div className="flex-1">{currency(region)} 0.00</div>
                   </div>
                 </div>
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">
@@ -232,7 +237,8 @@ const OrderPreview = () => {
                     </div>
                     <div className="flex-1">
                       <b>
-                        {currency(region)} {(total - discount).toFixed(2)}
+                        {currency(region)}{" "}
+                        {((cart?.total || 0) - discount).toFixed(2)}
                       </b>
                     </div>
                   </div>
@@ -265,7 +271,7 @@ const OrderPreview = () => {
                     </div>
                   ) : (
                     <FlutterWave
-                      amount={total}
+                      amount={cart?.total || 0}
                       currency={region === "NG" ? "NGN" : "ZAR"}
                       onApprove={onApprove}
                     />
@@ -276,7 +282,7 @@ const OrderPreview = () => {
                   <PayFund
                     onApprove={WalletSuccess}
                     setShowModel={setShowModel}
-                    amount={total}
+                    amount={cart?.total || 0}
                   />
                 </WalletModel>
               </div>

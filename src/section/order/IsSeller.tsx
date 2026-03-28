@@ -1,37 +1,37 @@
-import moment from "moment"
-import { DeliverStatus, OrderItem } from "../../types/order"
-import LoadingBox from "../../components/LoadingBox"
-import useAuth from "../../hooks/useAuth"
-import { Link } from "react-router-dom"
-import { FaCheck } from "react-icons/fa"
-import { useState } from "react"
-import { IUser } from "../../types/user"
+import moment from "moment";
+import { DeliverStatus, OrderItem } from "../../types/order";
+import LoadingBox from "../../components/LoadingBox";
+import useAuth from "../../hooks/useAuth";
+import { Link } from "react-router-dom";
+import { FaCheck } from "react-icons/fa";
+import { useState } from "react";
+import { IUser } from "../../types/user";
 import {
   currency,
   daydiff,
   deliveryNumber,
   deliveryStatusMap,
-} from "../../utils/common"
-import DeliveryStatus from "../../components/DeliveryStatus"
-import { imageUrl } from "../../services/api"
-import useRegion from "../../hooks/useRegion"
+} from "../../utils/common";
+import DeliveryStatus from "../../components/DeliveryStatus";
+import { imageUrl } from "../../services/api";
+import useRegion from "../../hooks/useRegion";
 
 type Props = {
-  orderItem: OrderItem
-  userOrdered: IUser
-  setShowDeliveryHistory: (val: boolean) => void
-  setCurrentDeliveryHistory: (val: number) => void
-  handleCancelOrder: (val: OrderItem) => void
-  refund: (val: OrderItem) => void
-  paySeller: (val: OrderItem) => void
+  orderItem: OrderItem;
+  userOrdered: IUser;
+  setShowDeliveryHistory: (val: boolean) => void;
+  setCurrentDeliveryHistory: (val: number) => void;
+  handleCancelOrder: (val: OrderItem) => void;
+  refund: (val: OrderItem) => void;
+  paySeller: (val: OrderItem) => void;
   deliverOrderHandler: (
     deliveryStatus: string,
     orderItem: OrderItem,
-    trackingNumber?: string
-  ) => Promise<void>
-  updatingStatus: boolean
-  toggleOrderHoldStatus: (item: OrderItem) => Promise<void>
-}
+    trackingNumber?: string,
+  ) => Promise<void>;
+  updatingStatus: boolean;
+  toggleOrderHoldStatus: (item: OrderItem) => Promise<void>;
+};
 
 const IsSeller = ({
   orderItem,
@@ -45,45 +45,45 @@ const IsSeller = ({
   updatingStatus,
   toggleOrderHoldStatus,
 }: Props) => {
-  const { user } = useAuth()
-  const { region } = useRegion()
+  const { user } = useAuth();
+  const { region } = useRegion();
 
-  const [trackingNumber, setTrackingNumber] = useState("")
-  const [showTracking, setShowTracking] = useState(false)
+  const [trackingNumber, setTrackingNumber] = useState("");
+  const [showTracking, setShowTracking] = useState(false);
 
-  const loadingWaybill = false
+  const loadingWaybill = false;
 
   const comfirmWaybill = async () => {
-    if (!trackingNumber) return
+    if (!trackingNumber) return;
 
-    await updateTracking()
-    setShowTracking(false)
-  }
+    await updateTracking();
+    setShowTracking(false);
+  };
 
   const showNextStatus = (status: string) => {
-    const entries = Object.entries(deliveryStatusMap)
-    const currentNumber = deliveryNumber(status)
+    const entries = Object.entries(deliveryStatusMap);
+    const currentNumber = deliveryNumber(status);
 
-    return entries[currentNumber]
-  }
+    return entries[currentNumber];
+  };
 
   const updateTracking = async () => {
-    if (updatingStatus) return
+    if (updatingStatus) return;
 
     const nextStatus = showNextStatus(
-      orderItem.deliveryTracking.currentStatus.status
-    )
+      orderItem.deliveryTracking.currentStatus.status,
+    );
 
     if (nextStatus[1] === 2 && !trackingNumber) {
-      setShowTracking(true)
+      setShowTracking(true);
     } else {
       await deliverOrderHandler(
         orderItem.deliveryTracking.currentStatus.status,
         orderItem,
-        trackingNumber
-      )
+        trackingNumber,
+      );
     }
-  }
+  };
 
   return (
     <div
@@ -108,12 +108,12 @@ const IsSeller = ({
             <div
               className="text-orange-color cursor-pointer text-center ml-[15px]"
               onClick={() => {
-                setShowDeliveryHistory(true)
+                setShowDeliveryHistory(true);
                 setCurrentDeliveryHistory(
                   deliveryNumber(
-                    orderItem.deliveryTracking.currentStatus.status
-                  )
-                )
+                    orderItem.deliveryTracking.currentStatus.status,
+                  ),
+                );
               }}
             >
               Track Order
@@ -122,7 +122,7 @@ const IsSeller = ({
           <div className="capitalize font-semibold mb-2.5">
             On{" "}
             {moment(orderItem.deliveryTracking.currentStatus.timestamp).format(
-              "MMMM Do YYYY, h:mm:ss a"
+              "MMMM Do YYYY, h:mm:ss a",
             )}
           </div>
         </div>
@@ -146,7 +146,7 @@ const IsSeller = ({
               ) : (
                 <div className="flex items-center">
                   <input
-                    className={`border h-10 ml-5 p-2.5 rounded-[0.2rem]  border-[grey] text-black-color
+                    className={`border h-10 ml-5 p-2.5 rounded-[0.2rem] bg-transparent border-[grey] text-black-color
                     dark:text-white-color focus-visible:outline focus-visible:outline-orange-color`}
                     placeholder="Enter Tracking number"
                     value={trackingNumber}
@@ -170,7 +170,7 @@ const IsSeller = ({
                 )}
 
                 {deliveryNumber(
-                  orderItem.deliveryTracking.currentStatus.status
+                  orderItem.deliveryTracking.currentStatus.status,
                 ) < 4 &&
                   !orderItem.isHold &&
                   (!updatingStatus ? (
@@ -180,7 +180,7 @@ const IsSeller = ({
                     >
                       {`Mark as ${
                         showNextStatus(
-                          orderItem.deliveryTracking.currentStatus.status
+                          orderItem.deliveryTracking.currentStatus.status,
                         )[0]
                       }`}
                     </div>
@@ -262,16 +262,16 @@ const IsSeller = ({
             ((daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) <=
               0 &&
               deliveryNumber(
-                orderItem.deliveryTracking.currentStatus.status
+                orderItem.deliveryTracking.currentStatus.status,
               ) === 4) ||
               deliveryNumber(
-                orderItem.deliveryTracking.currentStatus.status
+                orderItem.deliveryTracking.currentStatus.status,
               ) === 5) &&
             !orderItem.isHold && (
               <button
                 onClick={() => {
                   if (!updatingStatus) {
-                    paySeller(orderItem)
+                    paySeller(orderItem);
                   }
                 }}
                 className="inline-block bg-malon-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
@@ -295,7 +295,7 @@ const IsSeller = ({
               <div>{value}</div>
             )}
           </div>
-        )
+        ),
       )}
       <div className="mt-2.5">
         <div>Buyer Information</div>
@@ -352,7 +352,7 @@ const IsSeller = ({
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default IsSeller
+export default IsSeller;

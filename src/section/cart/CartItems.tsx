@@ -1,17 +1,17 @@
-import { Link } from "react-router-dom"
-import { CartItem } from "../../context/CartContext"
-import { FaMinus, FaPlus, FaTrash } from "react-icons/fa"
-import useCart from "../../hooks/useCart"
-import { currency } from "../../utils/common"
-import useToastNotification from "../../hooks/useToastNotification"
-import { imageUrl } from "../../services/api"
+import { Link } from "react-router-dom";
+import { FaMinus, FaPlus, FaTrash } from "react-icons/fa";
+import { currency } from "../../utils/common";
+import useToastNotification from "../../hooks/useToastNotification";
+import { imageUrl } from "../../services/api";
+import { ICartItem } from "../../types/cart";
+import { useUpdateCart } from "../../querry/cart";
 
 type Props = {
-  item: CartItem
-  setCurrentItem: (val: CartItem) => void
-  setRemove: (val: boolean) => void
-  setShowModel: (val: boolean) => void
-}
+  item: ICartItem;
+  setCurrentItem: (val: ICartItem) => void;
+  setRemove: (val: boolean) => void;
+  setShowModel: (val: boolean) => void;
+};
 
 const CartItems = ({
   item,
@@ -19,40 +19,56 @@ const CartItems = ({
   setRemove,
   setShowModel,
 }: Props) => {
-  const { addToCart } = useCart()
+  const { mutate: updateCart } = useUpdateCart();
 
-  const { addNotification } = useToastNotification()
+  const { addNotification } = useToastNotification();
 
   return (
     <div className="lg:mt-0 lg:mb-5 lg:mx-2.5 p-5 rounded-[0.2rem] mx-0 my-2.5 bg-light-ev1 dark:bg-dark-ev1">
-      <div className="flex items-center mb-5">
+      <div className="flex items-center mb-4">
+        <div className="mr-3.5 h-5 w-5 accent-orange-color cursor-pointer" />
         <img
           className="flex w-10 h-10 object-cover rounded-[50%]"
-          src={imageUrl + item.seller.image}
+          src={imageUrl + item.product.seller.image}
           alt="img"
         />
         <div className="font-bold mx-5 my-0 text-malon-color cursor-pointer">
-          <Link to={`/seller/${item.seller.username}`}>
-            {item.seller.username}
+          <Link to={`/seller/${item.product.seller.username}`}>
+            {item.product.seller.username}
           </Link>
         </div>
       </div>
-      <hr />
-      {item.sold && <div className="text-[red]">Product out stock</div>}
+      <hr className="mb-2" />
+      {item.product.sold && <div className="text-[red]">Product out stock</div>}
       <div className="flex md:hidden">
+        <div className="flex items-center mr-3">
+          <input
+            type="checkbox"
+            checked={item.selected}
+            className="h-4 w-4 accent-orange-color cursor-pointer"
+            onChange={() =>
+              updateCart({
+                productId: item.product._id,
+                selected: !item.selected,
+              })
+            }
+          />
+        </div>
         <img
-          src={imageUrl + item.images[0]}
-          alt={item.name}
+          src={imageUrl + item.product.images[0]}
+          alt={item.product.name}
           className={`max-w-full bg-white border rounded h-[100px] p-1 border-[#dee2e6] ${
-            item.sold ? "opacity-50" : ""
+            item.product.sold ? "opacity-50" : ""
           }`}
         />
         <div className="flex flex-col capitalize ml-5 justify-between">
-          <div className={`${item.sold ? "opacity-50" : ""}`}>
-            <Link to={`/product/${item.slug}`}>{item.name}</Link>
+          <div className={`${item.product.sold ? "opacity-50" : ""}`}>
+            <Link to={`/product/${item.product.slug}`}>
+              {item.product.name}
+            </Link>
 
             <div>
-              {currency(item.region)} {item.sellingPrice}
+              {currency(item.product.region)} {item.product.sellingPrice}
             </div>
             <span>Size: {item?.selectedSize}</span>
           </div>
@@ -60,9 +76,12 @@ const CartItems = ({
             <button
               className={`text-black dark:text-white text-[0.8rem] rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
               onClick={() =>
-                addToCart({ ...item, quantity: item.quantity - 1 })
+                updateCart({
+                  productId: item.product._id,
+                  quantity: item.quantity - 1,
+                })
               }
-              disabled={item.quantity === 1 || item.sold}
+              disabled={item.quantity === 1 || item.product.sold}
             >
               <FaMinus />
             </button>{" "}
@@ -70,9 +89,14 @@ const CartItems = ({
             <button
               className={`text-black dark:text-white text-[0.8rem] rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
               onClick={() =>
-                addToCart({ ...item, quantity: item.quantity + 1 })
+                updateCart({
+                  productId: item.product._id,
+                  quantity: item.quantity + 1,
+                })
               }
-              disabled={item.quantity === item.countInStock || item.sold}
+              disabled={
+                item.quantity === item.product.countInStock || item.product.sold
+              }
             >
               <FaPlus />
             </button>
@@ -80,8 +104,8 @@ const CartItems = ({
               <button
                 className={`text-black dark:text-white text-[0.8rem] rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
                 onClick={() => {
-                  setCurrentItem(item)
-                  setRemove(true)
+                  setCurrentItem(item);
+                  setRemove(true);
                 }}
               >
                 <FaTrash />
@@ -92,22 +116,35 @@ const CartItems = ({
       </div>
       <div className="items-center hidden md:flex justify-between">
         <div className="col-5 flex flex-[5] items-center">
+          <input
+            type="checkbox"
+            checked={item.selected}
+            className="mr-5 h-5 w-5 accent-orange-color cursor-pointer"
+            onChange={() =>
+              updateCart({
+                productId: item.product._id,
+                selected: !item.selected,
+              })
+            }
+          />
           <img
-            src={imageUrl + item.images[0]}
-            alt={item.name}
+            src={imageUrl + item.product.images[0]}
+            alt={item.product.name}
             className={`max-w-full bg-white border rounded h-[100px] p-1 border-[#dee2e6] ${
-              item.sold ? "opacity-50" : ""
+              item.product.sold ? "opacity-50" : ""
             }`}
           />
           <div
             className={`className="flex flex-col capitalize ml-5 justify-between ${
-              item.sold ? "opacity-50" : ""
+              item.product.sold ? "opacity-50" : ""
             }`}
           >
-            <Link to={`/product/${item.slug}`}>{item.name}</Link>
+            <Link to={`/product/${item.product.slug}`}>
+              {item.product.name}
+            </Link>
 
             <div>
-              {currency(item.region)} {item.sellingPrice}
+              {currency(item.product.region)} {item.product.sellingPrice}
             </div>
             <span>Size: {item.selectedSize}</span>
           </div>
@@ -115,16 +152,28 @@ const CartItems = ({
         <div className="col-3 d-flex align-items-center">
           <button
             className={`text-[0.8rem] text-orange-color rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
-            onClick={() => addToCart({ ...item, quantity: item.quantity - 1 })}
-            disabled={item.quantity === 1 || item.sold}
+            onClick={() =>
+              updateCart({
+                productId: item.product._id,
+                quantity: item.quantity - 1,
+              })
+            }
+            disabled={item.quantity === 1 || item.product.sold}
           >
             <FaMinus />
           </button>{" "}
           <span>{item.quantity}</span>{" "}
           <button
             className={`text-[0.8rem] text-orange-color rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
-            onClick={() => addToCart({ ...item, quantity: item.quantity + 1 })}
-            disabled={item.quantity === item.countInStock || item.sold}
+            onClick={() =>
+              updateCart({
+                productId: item.product._id,
+                quantity: item.quantity + 1,
+              })
+            }
+            disabled={
+              item.quantity === item.product.countInStock || item.product.sold
+            }
           >
             <FaPlus />
           </button>
@@ -133,20 +182,21 @@ const CartItems = ({
           <button
             className={`text-malon-color text-[0.8rem] rounded cursor-pointer inline-block font-normal leading-normal text-center no-underline mx-[5px] my-0 px-3 py-1.5 border-none disabled:opacity-50 disabled:pointer-events-none`}
             onClick={() => {
-              setCurrentItem(item)
-              setRemove(true)
+              setCurrentItem(item);
+              setRemove(true);
             }}
           >
             <FaTrash />
           </button>
         </div>
       </div>
-      <div className={`mt-5 flex ${item.sold ? "opacity-50" : ""}`}>
-        <div>
+      <div className={`mt-5 flex ${item.product.sold ? "opacity-50" : ""}`}>
+        <div className="ml-0 md:ml-10">
           Delivery:
           {item.deliverySelect ? (
             <span className="ml-5">
-              {item.deliverySelect["delivery Option"]} + {currency(item.region)}
+              {item.deliverySelect["delivery Option"]} +{" "}
+              {currency(item.product.region)}
               {item.deliverySelect.cost}
             </span>
           ) : (
@@ -156,12 +206,12 @@ const CartItems = ({
         <div
           className="text-orange-color text-[15px] cursor-pointer ml-5 border-0 hover:text-malon-color"
           onClick={() => {
-            if (item.sold) {
-              addNotification("out of stock")
-              return
+            if (item.product.sold) {
+              addNotification("out of stock");
+              return;
             }
-            setCurrentItem(item)
-            setShowModel(true)
+            setCurrentItem(item);
+            setShowModel(true);
           }}
         >
           {!item.deliverySelect ? (
@@ -174,7 +224,7 @@ const CartItems = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CartItems
+export default CartItems;

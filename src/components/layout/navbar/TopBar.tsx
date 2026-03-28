@@ -1,9 +1,9 @@
-import Switch from "./switch"
-import { Link } from "react-router-dom"
-import useAuth from "../../../hooks/useAuth"
+import Switch from "./switch";
+import { Link } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
 
 const TopBar = () => {
-  const { user } = useAuth()
+  const { user } = useAuth();
 
   return (
     <div className="flex justify-center items-center mb-2.5 px-5 py-0 bg-black">
@@ -38,13 +38,19 @@ const TopBar = () => {
           <span className="flex w-full shrink-0 box-border justify-center text-[11px] lg:text-base">
             {" "}
             Explore Repeddle on{" "}
-            <span className="text-orange-color group underline relative cursor-pointer mx-[5px] my-0">
+            <a
+              href="https://apps.apple.com/ng/app/repeddle/id6753876406"
+              className="text-orange-color group underline relative cursor-pointer mx-[5px] my-0"
+            >
               IOS
-            </span>{" "}
+            </a>{" "}
             and{" "}
-            <span className="text-orange-color underline relative cursor-pointer mx-[5px] my-0">
+            <a
+              href="https://play.google.com/store/apps/details?id=com.emirace.Repeddle_App&pcampaignid=web_share"
+              className="text-orange-color underline relative cursor-pointer mx-[5px] my-0"
+            >
               ANDRIOD
-            </span>{" "}
+            </a>{" "}
             - Coming soon.
           </span>
         </div>
@@ -58,7 +64,7 @@ const TopBar = () => {
         </Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TopBar
+export default TopBar;

@@ -25,57 +25,62 @@ import { PaymentProvider } from "./context/PaymentContext.tsx";
 import { ReviewProvider } from "./context/ReviewContext.tsx";
 import { RegionProvider } from "./context/RegionContext.tsx";
 import { ReportProvider } from "./context/ReportContext.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <HelmetProvider>
-      <ToastNotificationProvider>
-        <ThemeProvider>
-          <AuthProvider>
-            <RegionProvider>
-              <CategoryProvider>
-                <ProductProvider>
-                  <BrandProvider>
-                    <CategoryProvider>
-                      <NewsletterProvider>
-                        <TransactionProvider>
-                          <ContactProvider>
-                            <OrderProvider>
-                              <CartProvider>
-                                <ArticleProvider>
-                                  <UserProvider>
-                                    <WalletProvider>
-                                      <ReviewProvider>
-                                        <MessageProvider>
-                                          <PaymentProvider>
-                                            <NotificationProvider>
-                                              <ReturnProvider>
-                                                <ReportProvider>
-                                                  <RouterProvider
-                                                    router={router}
-                                                  />
-                                                </ReportProvider>
-                                              </ReturnProvider>
-                                            </NotificationProvider>
-                                          </PaymentProvider>
-                                        </MessageProvider>
-                                      </ReviewProvider>
-                                    </WalletProvider>
-                                  </UserProvider>
-                                </ArticleProvider>
-                              </CartProvider>
-                            </OrderProvider>
-                          </ContactProvider>
-                        </TransactionProvider>
-                      </NewsletterProvider>
-                    </CategoryProvider>
-                  </BrandProvider>
-                </ProductProvider>
-              </CategoryProvider>
-            </RegionProvider>
-          </AuthProvider>
-        </ThemeProvider>
-      </ToastNotificationProvider>
+      <QueryClientProvider client={queryClient}>
+        <ToastNotificationProvider>
+          <ThemeProvider>
+            <AuthProvider>
+              <RegionProvider>
+                <CategoryProvider>
+                  <ProductProvider>
+                    <BrandProvider>
+                      <CategoryProvider>
+                        <NewsletterProvider>
+                          <TransactionProvider>
+                            <ContactProvider>
+                              <OrderProvider>
+                                <CartProvider>
+                                  <ArticleProvider>
+                                    <UserProvider>
+                                      <WalletProvider>
+                                        <ReviewProvider>
+                                          <MessageProvider>
+                                            <PaymentProvider>
+                                              <NotificationProvider>
+                                                <ReturnProvider>
+                                                  <ReportProvider>
+                                                    <RouterProvider
+                                                      router={router}
+                                                    />
+                                                  </ReportProvider>
+                                                </ReturnProvider>
+                                              </NotificationProvider>
+                                            </PaymentProvider>
+                                          </MessageProvider>
+                                        </ReviewProvider>
+                                      </WalletProvider>
+                                    </UserProvider>
+                                  </ArticleProvider>
+                                </CartProvider>
+                              </OrderProvider>
+                            </ContactProvider>
+                          </TransactionProvider>
+                        </NewsletterProvider>
+                      </CategoryProvider>
+                    </BrandProvider>
+                  </ProductProvider>
+                </CategoryProvider>
+              </RegionProvider>
+            </AuthProvider>
+          </ThemeProvider>
+        </ToastNotificationProvider>
+      </QueryClientProvider>
     </HelmetProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

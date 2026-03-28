@@ -1,33 +1,33 @@
-import moment from "moment"
-import { Link } from "react-router-dom"
-import useAuth from "../../hooks/useAuth"
-import { DeliverStatus, OrderItem } from "../../types/order"
-import { useState } from "react"
-import { IUser } from "../../types/user"
-import { currency, daydiff, deliveryNumber } from "../../utils/common"
-import Modal from "../../components/ui/Modal"
-import DeliveryStatus from "../../components/DeliveryStatus"
-import LoadingBox from "../../components/LoadingBox"
-import useToastNotification from "../../hooks/useToastNotification"
-import { imageUrl } from "../../services/api"
-import useRegion from "../../hooks/useRegion"
+import moment from "moment";
+import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { DeliverStatus, OrderItem } from "../../types/order";
+import { useState } from "react";
+import { IUser } from "../../types/user";
+import { currency, daydiff, deliveryNumber } from "../../utils/common";
+import Modal from "../../components/ui/Modal";
+import DeliveryStatus from "../../components/DeliveryStatus";
+import LoadingBox from "../../components/LoadingBox";
+import useToastNotification from "../../hooks/useToastNotification";
+import { imageUrl } from "../../services/api";
+import useRegion from "../../hooks/useRegion";
 
 type Props = {
-  orderItem: OrderItem
-  userOrdered: IUser
-  setShowDeliveryHistory: (val: boolean) => void
-  setShowReturn: (val: boolean) => void
-  setCurrentDeliveryHistory: (val: number) => void
-  handleCancelOrder: (val: OrderItem) => void
-  refund: (val: OrderItem) => void
-  paySeller: (val: OrderItem) => void
+  orderItem: OrderItem;
+  userOrdered: IUser;
+  setShowDeliveryHistory: (val: boolean) => void;
+  setShowReturn: (val: boolean) => void;
+  setCurrentDeliveryHistory: (val: number) => void;
+  handleCancelOrder: (val: OrderItem) => void;
+  refund: (val: OrderItem) => void;
+  paySeller: (val: OrderItem) => void;
   deliverOrderHandler: (
     deliveryStatus: string,
-    orderItem: OrderItem
-  ) => Promise<void>
-  updatingStatus: boolean
-  toggleOrderHoldStatus: (item: OrderItem) => Promise<void>
-}
+    orderItem: OrderItem,
+  ) => Promise<void>;
+  updatingStatus: boolean;
+  toggleOrderHoldStatus: (item: OrderItem) => Promise<void>;
+};
 
 const IsUser = ({
   orderItem,
@@ -42,21 +42,21 @@ const IsUser = ({
   updatingStatus,
   toggleOrderHoldStatus,
 }: Props) => {
-  const { user } = useAuth()
-  const { addNotification } = useToastNotification()
-  const { region } = useRegion()
+  const { user } = useAuth();
+  const { addNotification } = useToastNotification();
+  const { region } = useRegion();
 
-  const [afterAction, setAfterAction] = useState(true)
+  const [afterAction, setAfterAction] = useState(true);
 
   const placeOrderOnHold = () => {
-    addNotification("Order placed on Hold", undefined, true)
-  }
+    addNotification("Order placed on Hold", undefined, true);
+  };
 
   const paymentRequest = async () => {
     // the below function accepts the current status then uses the next function to update
-    await deliverOrderHandler("Delivered", orderItem)
-    setAfterAction(false)
-  }
+    await deliverOrderHandler("Delivered", orderItem);
+    setAfterAction(false);
+  };
 
   return (
     <div
@@ -78,12 +78,12 @@ const IsUser = ({
             <div
               className="text-orange-color cursor-pointer text-center ml-[15px]"
               onClick={() => {
-                setShowDeliveryHistory(true)
+                setShowDeliveryHistory(true);
                 setCurrentDeliveryHistory(
                   deliveryNumber(
-                    orderItem.deliveryTracking.currentStatus.status
-                  )
-                )
+                    orderItem.deliveryTracking.currentStatus.status,
+                  ),
+                );
               }}
             >
               Track Order
@@ -92,7 +92,7 @@ const IsUser = ({
           <div className="capitalize font-semibold mb-2.5">
             On{" "}
             {moment(orderItem.deliveryTracking.currentStatus.timestamp).format(
-              "MMMM Do YYYY, h:mm:ss a"
+              "MMMM Do YYYY, h:mm:ss a",
             )}
           </div>
         </div>
@@ -110,10 +110,24 @@ const IsUser = ({
                 <div
                   className="cursor-pointer text-white-color bg-orange-color hover:bg-malon-color h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
                   onClick={() => {
-                    orderItem.isHold ? placeOrderOnHold() : setAfterAction(true)
+                    orderItem.isHold
+                      ? placeOrderOnHold()
+                      : setAfterAction(true);
                   }}
                 >
                   Confirm you have received your order
+                </div>
+                <div className="text-[12px]  mt-1 italic">
+                  You have{" "}
+                  {daydiff(
+                    orderItem.deliveryTracking.currentStatus.timestamp,
+                    3,
+                  )}{" "}
+                  days from the last update (
+                  {moment(
+                    orderItem.deliveryTracking.currentStatus.timestamp,
+                  ).format("MMM Do YYYY")}
+                  ) to confirm receipt or log a return.
                 </div>
                 <Modal
                   isOpen={afterAction}
@@ -142,8 +156,8 @@ const IsUser = ({
                             className="cursor-pointer bg-malon-color hover:bg-orange-color text-white-color sm:h-[30px] px-[7px] py-[3px] rounded-[0.2rem]"
                             onClick={() => {
                               if (!updatingStatus) {
-                                setShowReturn(true)
-                                setAfterAction(false)
+                                setShowReturn(true);
+                                setAfterAction(false);
                               }
                             }}
                           >
@@ -242,10 +256,10 @@ const IsUser = ({
             ((daydiff(orderItem.deliveryTracking.currentStatus.timestamp, 3) <=
               0 &&
               deliveryNumber(
-                orderItem.deliveryTracking.currentStatus.status
+                orderItem.deliveryTracking.currentStatus.status,
               ) === 4) ||
               deliveryNumber(
-                orderItem.deliveryTracking.currentStatus.status
+                orderItem.deliveryTracking.currentStatus.status,
               ) === 5) &&
             !orderItem.isHold &&
             (updatingStatus ? (
@@ -253,7 +267,7 @@ const IsUser = ({
             ) : (
               <button
                 onClick={() => {
-                  paySeller(orderItem)
+                  paySeller(orderItem);
                 }}
                 className="inline-block bg-malon-color mt-2.5 text-center whitespace-no-wrap rounded py-1 px-3 leading-normal text-white w-full"
               >
@@ -276,7 +290,7 @@ const IsUser = ({
               <div className="flex-1 lg:flex-[5]">{value}</div>
             )}
           </div>
-        )
+        ),
       )}
       <div className="mt-2.5">
         <div>Seller Information</div>
@@ -331,7 +345,7 @@ const IsUser = ({
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default IsUser
+export default IsUser;

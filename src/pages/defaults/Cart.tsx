@@ -1,23 +1,24 @@
 import { useState } from "react";
 import LoadingBox from "../../components/LoadingBox";
 import { Helmet } from "react-helmet-async";
-import useCart from "../../hooks/useCart";
 import MessageBox from "../../components/MessageBox";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import Button from "../../components/ui/Button";
 import { IProduct } from "../../types/product";
 import CartItems from "../../section/cart/CartItems";
-import { CartItem } from "../../context/CartContext";
+import { ICartItem } from "../../types/cart";
 import AlertComponent from "../../section/cart/AlertComponent";
 import Modal from "../../components/ui/Modal";
 import { checkDeliverySelect, currency } from "../../utils/common";
 import DeliveryOptionScreen from "../../components/DeliveryOptionScreen";
 import useToastNotification from "../../hooks/useToastNotification";
 import useRegion from "../../hooks/useRegion";
+import { useGetCart, useRemoveFromCart } from "../../querry/cart";
 
 function Cart() {
-  const { cart, removeFromCart, subtotal, total } = useCart();
+  const { data: cart } = useGetCart();
+  const { mutate: removeFromCart } = useRemoveFromCart();
   const { user, addToWishlist, error } = useAuth();
   const { addNotification } = useToastNotification();
   const { region } = useRegion();
@@ -27,7 +28,7 @@ function Cart() {
   const loading = false;
 
   const [showModel, setShowModel] = useState(false);
-  const [currentItem, setCurrentItem] = useState<CartItem | null>(null);
+  const [currentItem, setCurrentItem] = useState<ICartItem | null>(null);
   const [remove, setRemove] = useState(false);
   const [addToWish, setAddToWish] = useState(false);
 
@@ -38,7 +39,7 @@ function Cart() {
       addNotification(
         "Sign In/ Sign Up to add an item to wishlist",
         undefined,
-        true
+        true,
       );
       return;
     }
@@ -47,7 +48,7 @@ function Cart() {
       addNotification(
         "You can't add your product to wishlist",
         undefined,
-        true
+        true,
       );
       return;
     }
@@ -57,13 +58,13 @@ function Cart() {
     const res = await addToWishlist(product._id);
     if (res) {
       addNotification(res);
-      removeFromCart(product._id);
+      removeFromCart({ productId: product._id });
       setRemove(false);
     } else
       addNotification(
         error ? error : "Failed to add to wishlist",
         undefined,
-        true
+        true,
       );
 
     setAddToWish(false);
@@ -76,22 +77,22 @@ function Cart() {
       return;
     }
 
-    if (!checkDeliverySelect(cart)) {
-      addNotification("Select delivery method");
+    const selectedItems = cart?.items.filter((item) => item.selected) || [];
+
+    if (selectedItems.length === 0) {
+      return addNotification("Please select at least one item to checkout");
+    }
+
+    if (!checkDeliverySelect(cart?.items)) {
+      addNotification("Select delivery method for all selected items");
       return;
     }
 
-    if (cart.length === 0) {
-      return addNotification("Cart is empty");
+    if (user.isVerifiedEmail) {
+      navigate("/payment");
     } else {
-      if (user.isVerifiedEmail) {
-        navigate("/payment");
-      } else {
-        navigate("/verifyemail");
-      }
+      navigate("/verifyemail");
     }
-
-    navigate("/payment");
   };
 
   return loading ? (
@@ -114,7 +115,7 @@ function Cart() {
               received.
             </div>
             <div className="mt-0 mb-5 mx-0">
-              {cart.length === 0 ? (
+              {cart?.items?.length === 0 ? (
                 <MessageBox>
                   <div>
                     Cart is empty.{" "}
@@ -128,9 +129,9 @@ function Cart() {
                 </MessageBox>
               ) : (
                 <>
-                  {cart.map((item) => (
+                  {cart?.items?.map((item) => (
                     <CartItems
-                      key={item._id}
+                      key={item.product._id}
                       item={item}
                       setCurrentItem={setCurrentItem}
                       setRemove={setRemove}
@@ -154,12 +155,18 @@ function Cart() {
                   message="Are you sure you want to remove item from cart?"
                   onConfirm={() => {
                     if (currentItem && !addToWish) {
-                      removeFromCart(currentItem?._id);
-                      setRemove(false);
+                      removeFromCart(
+                        { productId: currentItem?.product._id },
+                        {
+                          onSuccess: () => {
+                            setRemove(false);
+                          },
+                        },
+                      );
                     }
                   }}
                   onWishlist={() =>
-                    currentItem && !addToWish && saveItem(currentItem)
+                    currentItem && !addToWish && saveItem(currentItem.product)
                   }
                 />
               </Modal>
@@ -239,23 +246,24 @@ function Cart() {
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-[3]">Items</div>
                     <div className="flex-[9]">
-                      {cart.map((c) => (
-                        <>
-                          <div className="flex">
+                      {cart?.items
+                        ?.filter((c) => c.selected)
+                        .map((c) => (
+                          <div key={c.product._id} className="flex">
                             <div className="flex flex-[5]">
                               <div className="flex-1">{c.quantity} </div>
                               <div className="flex-1">x </div>
                               <div className="flex-[2]">
-                                {currency(c.region)} {c.sellingPrice}
+                                {currency(c.product.region)}{" "}
+                                {c.product.sellingPrice}
                               </div>
                             </div>
                             <div className="flex-[3]">
-                              {` =  ${currency(c.region)} ` +
-                                c.quantity * c.sellingPrice}
+                              {` =  ${currency(c.product.region)} ` +
+                                c.quantity * c.product.sellingPrice}
                             </div>
                           </div>
-                        </>
-                      ))}
+                        ))}
                     </div>
                   </div>
                 </div>
@@ -263,14 +271,16 @@ function Cart() {
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">SubTotal</div>
                     <div className="flex-1">
-                      {currency(region)} {subtotal}
+                      {currency(region)} {cart?.subtotal}
                     </div>
                   </div>
                 </div>
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">
                   <div className="flex flex-wrap gap-4">
                     <div className="flex-1">Shipping</div>
-                    <div className="flex-1">{currency(region)} 0.00</div>
+                    <div className="flex-1">
+                      {currency(region)} {cart?.deliveryFee || 0}
+                    </div>
                   </div>
                 </div>
                 <div className="block relative mb-2.5 px-4 py-2 border-[rgba(99,91,91,0.2)] border-b">
@@ -280,7 +290,7 @@ function Cart() {
                     </div>
                     <div className="flex-1">
                       <b>
-                        {currency(region)}N {total}.00
+                        {currency(region)}N {cart?.total}.00
                       </b>
                     </div>
                   </div>
