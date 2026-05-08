@@ -4,6 +4,12 @@ export interface RestrictedWord {
   createdAt: string;
 }
 
+export interface WhitelistedWord {
+  _id: string;
+  word: string;
+  createdAt: string;
+}
+
 export interface ModerationStatusUpdate {
   targetType: "product" | "review" | "comment" | "reply";
   targetId: string;
@@ -13,4 +19,10 @@ export interface ModerationStatusUpdate {
 export interface ModerationResponse<T> {
   status: boolean;
   data: T;
+  pagination?: {
+    currentPage: number;
+    totalPages: number;
+    totalItems: number;
+    limit: number;
+  };
 }

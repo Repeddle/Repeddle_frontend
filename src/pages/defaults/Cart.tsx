@@ -88,11 +88,7 @@ function Cart() {
       return;
     }
 
-    if (user.isVerifiedEmail) {
-      navigate("/payment");
-    } else {
-      navigate("/verifyemail");
-    }
+    navigate("/payment");
   };
 
   return loading ? (

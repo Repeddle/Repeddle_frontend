@@ -617,12 +617,12 @@ const Product = () => {
               </div>
               <div className="items-center flex mt-2.5">
                 <div className="text-[25px] font-bold mr-5">
-                  {currency(product.region)} {product?.costPrice}
+                  {currency(product.region)} {product?.sellingPrice}
                 </div>
                 {product.costPrice &&
-                product.costPrice < product.sellingPrice ? (
+                product.costPrice > product.sellingPrice ? (
                   <div className="line-through text-xl text-[#5b5b5b] mr-5">
-                    {currency(product.region)} {product.sellingPrice}
+                    {currency(product.region)} {product.costPrice}
                   </div>
                 ) : null}
                 {discount ? (

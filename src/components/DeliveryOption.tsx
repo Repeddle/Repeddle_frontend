@@ -1,47 +1,47 @@
-import { ChangeEvent, useCallback, useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-import { FaCheck, FaPen, FaQuestionCircle, FaTruck } from "react-icons/fa"
-import LoadingBox from "./LoadingBox"
-import { IDeliveryOption, ProductMeta, Stations } from "../types/product"
-import { getBackendErrorMessage } from "../utils/error"
-import useGeoLocation from "../hooks/useGeoLocation"
-import { pudoOptions } from "../utils/constants"
-import { fetchStations } from "../services/others"
-import useRegion from "../hooks/useRegion"
-import useAuth from "../hooks/useAuth"
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { FaCheck, FaPen, FaQuestionCircle, FaTruck } from "react-icons/fa";
+import LoadingBox from "./LoadingBox";
+import { IDeliveryOption, ProductMeta, Stations } from "../types/product";
+import { getBackendErrorMessage } from "../utils/error";
+import useGeoLocation from "../hooks/useGeoLocation";
+import { pudoOptions } from "../utils/constants";
+import { fetchStations } from "../services/others";
+import useRegion from "../hooks/useRegion";
+import useAuth from "../hooks/useAuth";
 
 type InputProps = {
-  costPrice: string
-  sellingPrice: string
-  discount: string
-  deliveryOption: string
-}
+  costPrice: string;
+  sellingPrice: string;
+  discount: string;
+  deliveryOption: string;
+};
 
 type Props = {
-  paxi: boolean
-  setPaxi: (val: boolean) => void
-  pudoLocker: boolean
-  setPudoLocker: (val: boolean) => void
-  pudoDoor: boolean
-  setPudoDoor: (val: boolean) => void
-  postnet: boolean
-  setPostnet: (val: boolean) => void
-  aramex: boolean
-  setAramex: (val: boolean) => void
-  gig: boolean
-  setGig: (val: boolean) => void
-  pickup: boolean
-  setPickup: (val: boolean) => void
-  bundle: boolean
-  setBundle: (val: boolean) => void
-  deliveryOption: IDeliveryOption[]
-  setDeliveryOption: (val: IDeliveryOption[]) => void
-  setShowModel: (val: boolean) => void
-  meta: ProductMeta
-  setMeta: (val: ProductMeta) => void
-  handleError?: (text: string, key: keyof InputProps) => void
-  rebundleValue?: { status: boolean; count: number }
-}
+  paxi: boolean;
+  setPaxi: (val: boolean) => void;
+  pudoLocker: boolean;
+  setPudoLocker: (val: boolean) => void;
+  pudoDoor: boolean;
+  setPudoDoor: (val: boolean) => void;
+  postnet: boolean;
+  setPostnet: (val: boolean) => void;
+  aramex: boolean;
+  setAramex: (val: boolean) => void;
+  gig: boolean;
+  setGig: (val: boolean) => void;
+  pickup: boolean;
+  setPickup: (val: boolean) => void;
+  bundle: boolean;
+  setBundle: (val: boolean) => void;
+  deliveryOption: IDeliveryOption[];
+  setDeliveryOption: (val: IDeliveryOption[]) => void;
+  setShowModel: (val: boolean) => void;
+  meta: ProductMeta;
+  setMeta: (val: ProductMeta) => void;
+  handleError?: (text: string, key: keyof InputProps) => void;
+  rebundleValue?: { status: boolean; count: number };
+};
 
 const DeliveryOption = ({
   paxi,
@@ -68,170 +68,170 @@ const DeliveryOption = ({
   handleError,
   rebundleValue,
 }: Props) => {
-  const { region } = useRegion()
-  const [error1, setError1] = useState("")
+  const { region } = useRegion();
+  const [error1, setError1] = useState("");
   const [rebundleStatus, setRebundleStatus] = useState(
-    rebundleValue?.status || false
-  )
-  const [rebundleCount, setRebundleCount] = useState(rebundleValue?.count || 0)
-  const [loadingRebundle, setLoadingRebundle] = useState(false)
-  const [rebundleError, setRebundleError] = useState("")
-  const [loadingStations, setLoadingStations] = useState(false)
-  const [isEditRebundle, setIsEditRebundle] = useState(false)
-  const [locationerror, setLocationerror] = useState("")
-  const [stations, setStations] = useState<Stations[]>([])
+    rebundleValue?.status || false,
+  );
+  const [rebundleCount, setRebundleCount] = useState(rebundleValue?.count || 0);
+  const [loadingRebundle, setLoadingRebundle] = useState(false);
+  const [rebundleError, setRebundleError] = useState("");
+  const [loadingStations, setLoadingStations] = useState(false);
+  const [isEditRebundle, setIsEditRebundle] = useState(false);
+  const [locationerror, setLocationerror] = useState("");
+  const [stations, setStations] = useState<Stations[]>([]);
 
-  const { updateUser } = useAuth()
+  const { updateUser } = useAuth();
 
-  const location = useGeoLocation(gig)
+  const location = useGeoLocation(gig);
 
   const setLocation = useCallback(() => {
     if (gig) {
       if (location.error) {
-        setLocationerror("Location is require for proper delivery")
+        setLocationerror("Location is require for proper delivery");
       } else if (location.coordinates) {
         setMeta({
           ...meta,
           lat: location.coordinates.lat,
           lng: location.coordinates.lng,
-        })
+        });
       }
     }
-  }, [gig, location])
+  }, [gig, location]);
 
   useEffect(() => {
-    setLocation()
-  }, [setLocation])
+    setLocation();
+  }, [setLocation]);
 
   useEffect(() => {
     const getStations = async () => {
-      setLoadingStations(true)
-      const data = await fetchStations()
-      if (data) setStations(data.stations)
+      setLoadingStations(true);
+      const data = await fetchStations();
+      if (data) setStations(data.stations);
 
-      setLoadingStations(false)
-    }
+      setLoadingStations(false);
+    };
 
-    getStations()
-  }, [])
+    getStations();
+  }, []);
 
-  type HandleChange = { name: string; value: number | string; gig?: boolean }
+  type HandleChange = { name: string; value: number | string; gig?: boolean };
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement>["target"] | HandleChange
+    e: ChangeEvent<HTMLInputElement>["target"] | HandleChange,
   ) => {
-    const { name, value } = e
-    const exist = deliveryOption.filter((x) => x.name === name)
+    const { name, value } = e;
+    const exist = deliveryOption.filter((x) => x.name === name);
 
     if ("gig" in e && e?.gig) {
-      setLocation()
-      if (location.error) return
+      setLocation();
+      if (location.error) return;
     }
 
-    const intValue = typeof value === "string" ? parseInt(value) : value
+    const intValue = typeof value === "string" ? parseInt(value) : value;
     if (exist) {
-      const newArray = deliveryOption.filter((x) => x.name !== name)
-      setDeliveryOption([...newArray, { name, value: intValue }])
+      const newArray = deliveryOption.filter((x) => x.name !== name);
+      setDeliveryOption([...newArray, { name, value: intValue }]);
     } else {
-      setDeliveryOption([...deliveryOption, { name, value: intValue }])
+      setDeliveryOption([...deliveryOption, { name, value: intValue }]);
     }
-  }
+  };
 
   const handleClose = () => {
     if (rebundleStatus && !bundle) {
-      setRebundleError("Click activate to make Rebundle active ")
-      return
+      setRebundleError("Click activate to make Rebundle active ");
+      return;
     }
 
     if (paxi) {
-      const exist = deliveryOption.filter((x) => x.name === "Paxi PEP store")
+      const exist = deliveryOption.filter((x) => x.name === "Paxi PEP store");
       if (exist.length === 0) {
-        setError1("Select a delivery price option for Paxi PEP store ")
-        return
+        setError1("Select a delivery price option for Paxi PEP store ");
+        return;
       }
     }
     if (pudoLocker) {
       const exist = deliveryOption.filter(
-        (x) => x.name === "PUDO Locker-to-Locker"
-      )
+        (x) => x.name === "PUDO Locker-to-Locker",
+      );
       if (exist.length === 0) {
-        setError1("Select a delivery price option for PUDO Locker-to-Locker ")
-        return
+        setError1("Select a delivery price option for PUDO Locker-to-Locker ");
+        return;
       }
     }
 
     if (pudoDoor) {
       const exist = deliveryOption.filter(
-        (x) => x.name === "PUDO Locker-to-Door"
-      )
+        (x) => x.name === "PUDO Locker-to-Door",
+      );
       if (exist.length === 0) {
-        setError1("Select a delivery price option for PUDO Locker-to-Door ")
-        return
+        setError1("Select a delivery price option for PUDO Locker-to-Door ");
+        return;
       }
     }
 
     if (postnet) {
       const exist = deliveryOption.filter(
-        (x) => x.name === "PostNet-to-PostNet"
-      )
+        (x) => x.name === "PostNet-to-PostNet",
+      );
       if (exist.length === 0) {
-        setError1("Select a delivery price option for PostNet-to-PostNet ")
-        return
+        setError1("Select a delivery price option for PostNet-to-PostNet ");
+        return;
       }
     }
     if (aramex) {
       const exist = deliveryOption.filter(
-        (x) => x.name === "Aramex Store-to-Door"
-      )
+        (x) => x.name === "Aramex Store-to-Door",
+      );
       if (exist.length === 0) {
-        setError1("Select a delivery price option for Aramex Store-to-Door ")
-        return
+        setError1("Select a delivery price option for Aramex Store-to-Door ");
+        return;
       }
     }
 
     if (gig) {
       if (!meta.name) {
-        setError1("Enter a valid name")
-        return
+        setError1("Enter a valid name");
+        return;
       }
       if (!meta.address) {
-        setError1("Enter a valid address")
-        return
+        setError1("Enter a valid address");
+        return;
       }
       if (!meta.phone) {
-        setError1("Enter a valid phone")
-        return
+        setError1("Enter a valid phone");
+        return;
       }
       if (!meta.stationId) {
-        setError1("Select station")
-        return
+        setError1("Select station");
+        return;
       }
     }
 
-    setShowModel(false)
-  }
+    setShowModel(false);
+  };
 
   const handleRebundle = async (value?: { status: boolean; count: number }) => {
     if (!rebundleCount) {
-      setRebundleError("Enter the quantity of item(s) for Rebundle")
-      return
+      setRebundleError("Enter the quantity of item(s) for Rebundle");
+      return;
     }
     try {
-      setLoadingRebundle(true)
+      setLoadingRebundle(true);
       await updateUser({
         rebundle: {
           status: value ? value.status : rebundleStatus || false,
           count: value ? value.count : rebundleStatus ? rebundleCount : 0,
         },
-      })
-      setBundle(rebundleStatus)
-      setIsEditRebundle(false)
-      setLoadingRebundle(false)
+      });
+      setBundle(rebundleStatus);
+      setIsEditRebundle(false);
+      setLoadingRebundle(false);
     } catch (err) {
-      setLoadingRebundle(false)
-      console.log(getBackendErrorMessage(err))
+      setLoadingRebundle(false);
+      console.log(getBackendErrorMessage(err));
     }
-  }
+  };
 
   return (
     <div className="px-[9vw] py-[30px]">
@@ -243,7 +243,7 @@ const DeliveryOption = ({
       {region === "ZA" ? (
         <>
           <div className="mx-0 my-2.5">
-            <div className="flex justify-between mx-0 my-2">
+            <div className="flex justify-between mx-0 my-2 opacity-40">
               <div className="flex items-center">
                 <FaTruck className="mr-2.5" />
                 <div className="mr-2.5">Paxi PEP store</div>
@@ -262,13 +262,14 @@ const DeliveryOption = ({
                 before:content-[""] before:absolute before:-translate-y-2/4 before:transition-[0.5s] before:rounded-[50%] before:left-0 before:top-2/4
                 appearance-none bg-[#d4d4d4] outline-0 checked:before:bg-orange-color before:bg-[grey] dark:checked:bg-dark-ev4 checked:bg-[#fcf0e0]`}
                 checked={paxi}
+                disabled
                 onChange={(e) => {
-                  handleError?.("", "deliveryOption")
-                  setPaxi(e.target.checked)
+                  handleError?.("", "deliveryOption");
+                  setPaxi(e.target.checked);
                   if (!e.target.checked) {
                     setDeliveryOption(
-                      deliveryOption.filter((x) => x.name !== "Paxi PEP store")
-                    )
+                      deliveryOption.filter((x) => x.name !== "Paxi PEP store"),
+                    );
                   }
                 }}
                 type="checkbox"
@@ -286,8 +287,8 @@ const DeliveryOption = ({
                     type="radio"
                     name="Paxi PEP store"
                     onChange={(e) => {
-                      handleChange(e.target)
-                      handleError?.("", "deliveryOption")
+                      handleChange(e.target);
+                      handleError?.("", "deliveryOption");
                     }}
                     id="free"
                     value={0}
@@ -302,8 +303,8 @@ const DeliveryOption = ({
                     type="radio"
                     name="Paxi PEP store"
                     onChange={(e) => {
-                      handleChange(e.target)
-                      handleError?.("", "deliveryOption")
+                      handleChange(e.target);
+                      handleError?.("", "deliveryOption");
                     }}
                     value={59.95}
                     id="standard"
@@ -318,8 +319,8 @@ const DeliveryOption = ({
                     type="radio"
                     name="Paxi PEP store"
                     onChange={(e) => {
-                      handleChange(e.target)
-                      handleError?.("", "deliveryOption")
+                      handleChange(e.target);
+                      handleError?.("", "deliveryOption");
                     }}
                     value={99.95}
                     id="Large"
@@ -357,14 +358,14 @@ const DeliveryOption = ({
                 appearance-none bg-[#d4d4d4] outline-0 checked:before:bg-orange-color before:bg-[grey] dark:checked:bg-dark-ev4 checked:bg-[#fcf0e0]`}
                 checked={pudoLocker}
                 onChange={(e) => {
-                  handleError?.("", "deliveryOption")
-                  setPudoLocker(e.target.checked)
+                  handleError?.("", "deliveryOption");
+                  setPudoLocker(e.target.checked);
                   if (!e.target.checked) {
                     setDeliveryOption(
                       deliveryOption.filter(
-                        (x) => x.name !== "PUDO Locker-to-Locker"
-                      )
-                    )
+                        (x) => x.name !== "PUDO Locker-to-Locker",
+                      ),
+                    );
                   }
                 }}
                 type="checkbox"
@@ -382,8 +383,8 @@ const DeliveryOption = ({
                     type="radio"
                     name="PUDO Locker-to-Locker"
                     onChange={(e) => {
-                      handleChange(e.target)
-                      handleError?.("", "deliveryOption")
+                      handleChange(e.target);
+                      handleError?.("", "deliveryOption");
                     }}
                     id="free"
                     value={0}
@@ -398,8 +399,8 @@ const DeliveryOption = ({
                     type="radio"
                     name="PUDO Locker-to-Locker"
                     onChange={(e) => {
-                      handleChange(e.target)
-                      handleError?.("", "deliveryOption")
+                      handleChange(e.target);
+                      handleError?.("", "deliveryOption");
                     }}
                     value={50}
                     id="standard"
@@ -414,8 +415,8 @@ const DeliveryOption = ({
                     type="radio"
                     name="PUDO Locker-to-Locker"
                     onChange={(e) => {
-                      handleChange(e.target)
-                      handleError?.("", "deliveryOption")
+                      handleChange(e.target);
+                      handleError?.("", "deliveryOption");
                     }}
                     value={60}
                     id="Large"
@@ -430,8 +431,8 @@ const DeliveryOption = ({
                     type="radio"
                     name="PUDO Locker-to-Locker"
                     onChange={(e) => {
-                      handleChange(e.target)
-                      handleError?.("", "deliveryOption")
+                      handleChange(e.target);
+                      handleError?.("", "deliveryOption");
                     }}
                     value={60}
                     id="Large"
@@ -446,8 +447,8 @@ const DeliveryOption = ({
                     type="radio"
                     name="PUDO Locker-to-Locker"
                     onChange={(e) => {
-                      handleChange(e.target)
-                      handleError?.("", "deliveryOption")
+                      handleChange(e.target);
+                      handleError?.("", "deliveryOption");
                     }}
                     value={60}
                     id="Large"
@@ -485,14 +486,14 @@ const DeliveryOption = ({
                 appearance-none bg-[#d4d4d4] outline-0 checked:before:bg-orange-color before:bg-[grey] dark:checked:bg-dark-ev4 checked:bg-[#fcf0e0]`}
                 checked={pudoDoor}
                 onChange={(e) => {
-                  setPudoDoor(e.target.checked)
-                  handleError?.("", "deliveryOption")
+                  setPudoDoor(e.target.checked);
+                  handleError?.("", "deliveryOption");
                   if (!e.target.checked) {
                     setDeliveryOption(
                       deliveryOption.filter(
-                        (x) => x.name !== "PUDO Locker-to-Door"
-                      )
-                    )
+                        (x) => x.name !== "PUDO Locker-to-Door",
+                      ),
+                    );
                   }
                 }}
                 type="checkbox"
@@ -509,8 +510,8 @@ const DeliveryOption = ({
                       type="radio"
                       name="PUDO Locker-to-Door"
                       onChange={(e) => {
-                        handleChange(e.target)
-                        handleError?.("", "deliveryOption")
+                        handleChange(e.target);
+                        handleError?.("", "deliveryOption");
                       }}
                       value={opt.value}
                       id="standard"
@@ -550,14 +551,14 @@ const DeliveryOption = ({
                 appearance-none bg-[#d4d4d4] outline-0 checked:before:bg-orange-color before:bg-[grey] dark:checked:bg-dark-ev4 checked:bg-[#fcf0e0]`}
                 checked={postnet}
                 onChange={(e) => {
-                  setPostnet(e.target.checked)
-                  handleError?.("", "deliveryOption")
+                  setPostnet(e.target.checked);
+                  handleError?.("", "deliveryOption");
                   if (!e.target.checked) {
                     setDeliveryOption(
                       deliveryOption.filter(
-                        (x) => x.name !== "PostNet-to-PostNet"
-                      )
-                    )
+                        (x) => x.name !== "PostNet-to-PostNet",
+                      ),
+                    );
                   }
                 }}
                 type="checkbox"
@@ -575,8 +576,8 @@ const DeliveryOption = ({
                     type="radio"
                     name="PostNet-to-PostNet"
                     onChange={(e) => {
-                      handleChange(e.target)
-                      handleError?.("", "deliveryOption")
+                      handleChange(e.target);
+                      handleError?.("", "deliveryOption");
                     }}
                     id="free"
                     value={0}
@@ -591,8 +592,8 @@ const DeliveryOption = ({
                     type="radio"
                     name="PostNet-to-PostNet"
                     onChange={(e) => {
-                      handleChange(e.target)
-                      handleError?.("", "deliveryOption")
+                      handleChange(e.target);
+                      handleError?.("", "deliveryOption");
                     }}
                     value={99.99}
                     id="standard"
@@ -607,8 +608,8 @@ const DeliveryOption = ({
                     type="radio"
                     name="PostNet-to-PostNet"
                     onChange={(e) => {
-                      handleChange(e.target)
-                      handleError?.("", "deliveryOption")
+                      handleChange(e.target);
+                      handleError?.("", "deliveryOption");
                     }}
                     value={99.99}
                     id="standard"
@@ -646,14 +647,14 @@ const DeliveryOption = ({
                 appearance-none bg-[#d4d4d4] outline-0 checked:before:bg-orange-color before:bg-[grey] dark:checked:bg-dark-ev4 checked:bg-[#fcf0e0]`}
                 checked={aramex}
                 onChange={(e) => {
-                  setAramex(e.target.checked)
-                  handleError?.("", "deliveryOption")
+                  setAramex(e.target.checked);
+                  handleError?.("", "deliveryOption");
                   if (!e.target.checked) {
                     setDeliveryOption(
                       deliveryOption.filter(
-                        (x) => x.name !== "Aramex Store-to-Door"
-                      )
-                    )
+                        (x) => x.name !== "Aramex Store-to-Door",
+                      ),
+                    );
                   }
                 }}
                 type="checkbox"
@@ -671,8 +672,8 @@ const DeliveryOption = ({
                     type="radio"
                     name="Aramex Store-to-Door"
                     onChange={(e) => {
-                      handleChange(e.target)
-                      handleError?.("", "deliveryOption")
+                      handleChange(e.target);
+                      handleError?.("", "deliveryOption");
                     }}
                     id="free"
                     value={0}
@@ -687,8 +688,8 @@ const DeliveryOption = ({
                     type="radio"
                     name="Aramex Store-to-Door"
                     onChange={(e) => {
-                      handleChange(e.target)
-                      handleError?.("", "deliveryOption")
+                      handleChange(e.target);
+                      handleError?.("", "deliveryOption");
                     }}
                     value={99.99}
                     id="standard"
@@ -710,7 +711,7 @@ const DeliveryOption = ({
         <>
           <div className="my-2.5 mx-0">
             <div className="flex justify-between mx-0 my-2">
-              <div className="flex items-center">
+              <div className="flex items-center opacity-40">
                 <FaTruck className="mr-2.5" />
                 <div className="mr-2.5">GIG Logistics</div>
                 <div
@@ -726,21 +727,22 @@ const DeliveryOption = ({
               <input
                 className={`relative w-10 h-[15px] transition-[0.5s] rounded-[20px] checked:before:left-[25px] before:w-[15px] before:h-[15px]
                 before:content-[""] before:absolute before:-translate-y-2/4 before:transition-[0.5s] before:rounded-[50%] before:left-0 before:top-2/4
-                appearance-none bg-[#d4d4d4] outline-0 checked:before:bg-orange-color before:bg-[grey] dark:checked:bg-dark-ev4 checked:bg-[#fcf0e0]`}
+                appearance-none bg-[#d4d4d4] outline-0 checked:before:bg-orange-color before:bg-[grey] dark:checked:bg-dark-ev4 checked:bg-[#fcf0e0] disabled:opacity-40`}
                 checked={gig}
                 type="checkbox"
+                disabled
                 onChange={(e) => {
-                  setGig(e.target.checked)
-                  handleError?.("", "deliveryOption")
+                  setGig(e.target.checked);
+                  handleError?.("", "deliveryOption");
                   handleChange({
                     name: "GIG Logistics",
                     value: 0,
                     gig: e.target.checked,
-                  })
+                  });
                   if (!e.target.checked) {
                     setDeliveryOption(
-                      deliveryOption.filter((x) => x.name !== "GIG Logistics")
-                    )
+                      deliveryOption.filter((x) => x.name !== "GIG Logistics"),
+                    );
                   }
                 }}
               />
@@ -765,8 +767,8 @@ const DeliveryOption = ({
                     className="w-full h-[30px] pl-2.5 text-black dark:text-white bg-transparent border-b-light-ev3 dark:border-b-[grey] focus:outline-0 placeholder:text-sm border-b focus:border-b-orange-color focus:border-b"
                     type="text"
                     onChange={(e) => {
-                      setMeta({ ...meta, address: e.target.value })
-                      handleError?.("", "deliveryOption")
+                      setMeta({ ...meta, address: e.target.value });
+                      handleError?.("", "deliveryOption");
                     }}
                     placeholder="Address"
                     value={meta?.address}
@@ -777,8 +779,8 @@ const DeliveryOption = ({
                     className="w-full h-[30px] pl-2.5 text-black dark:text-white bg-transparent border-b-light-ev3 dark:border-b-[grey] focus:outline-0 placeholder:text-sm border-b focus:border-b-orange-color focus:border-b"
                     type="text"
                     onChange={(e) => {
-                      setMeta({ ...meta, phone: e.target.value })
-                      handleError?.("", "deliveryOption")
+                      setMeta({ ...meta, phone: e.target.value });
+                      handleError?.("", "deliveryOption");
                     }}
                     placeholder="Phone"
                     value={meta?.phone}
@@ -790,8 +792,8 @@ const DeliveryOption = ({
                     <select
                       value={meta.stationId}
                       onChange={(e) => {
-                        setMeta({ ...meta, stationId: e.target.value })
-                        handleError?.("", "deliveryOption")
+                        setMeta({ ...meta, stationId: e.target.value });
+                        handleError?.("", "deliveryOption");
                       }}
                       className="text-base m-0 pl-2.5 pr-6 text-ellipsis whitespace-nowrap py-[8.5px] leading-normal bg-light-ev1 dark:bg-dark-ev1 focus-within:outline-orange-color w-full appearance-none text-black-color dark:text-white-color"
                     >
@@ -842,13 +844,15 @@ const DeliveryOption = ({
             checked={pickup}
             type="checkbox"
             onChange={(e) => {
-              setPickup(e.target.checked)
-              handleError?.("", "deliveryOption")
-              handleChange({ name: "Pick up from Seller", value: "0" })
+              setPickup(e.target.checked);
+              handleError?.("", "deliveryOption");
+              handleChange({ name: "Pick up from Seller", value: "0" });
               if (!e.target.checked) {
                 setDeliveryOption(
-                  deliveryOption.filter((x) => x.name !== "Pick up from Seller")
-                )
+                  deliveryOption.filter(
+                    (x) => x.name !== "Pick up from Seller",
+                  ),
+                );
               }
             }}
           />
@@ -877,12 +881,12 @@ const DeliveryOption = ({
             checked={rebundleStatus}
             type="checkbox"
             onChange={(e) => {
-              handleError?.("", "deliveryOption")
+              handleError?.("", "deliveryOption");
               if (e.target.checked) {
-                setRebundleStatus(e.target.checked)
+                setRebundleStatus(e.target.checked);
               } else {
-                setRebundleStatus(e.target.checked)
-                handleRebundle({ status: false, count: 0 })
+                setRebundleStatus(e.target.checked);
+                handleRebundle({ status: false, count: 0 });
               }
             }}
           />
@@ -915,8 +919,8 @@ const DeliveryOption = ({
                     className="w-full h-[30px] pl-2.5 text-black dark:text-white bg-transparent border-b-light-ev3 dark:border-b-[grey] focus:outline-0 placeholder:text-sm border-b focus:border-b-orange-color focus:border-b"
                     type="number"
                     onChange={(e) => {
-                      handleError?.("", "deliveryOption")
-                      setRebundleCount(Number(e.target.value))
+                      handleError?.("", "deliveryOption");
+                      setRebundleCount(Number(e.target.value));
                     }}
                     onFocus={() => setRebundleError("")}
                     value={rebundleCount}
@@ -965,7 +969,7 @@ const DeliveryOption = ({
         Continue
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default DeliveryOption
+export default DeliveryOption;

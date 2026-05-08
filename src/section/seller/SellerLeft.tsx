@@ -1,31 +1,31 @@
-import { useMemo, useState } from "react"
-import LoadingBox from "../../components/LoadingBox"
-import MessageBox from "../../components/MessageBox"
-import { Link, useNavigate } from "react-router-dom"
-import { FaGlobe, FaLink, FaPen, FaTag, FaUser } from "react-icons/fa"
-import ReviewLists from "../../components/ReviewLists"
-import WriteReview from "./WriteReview"
-import RebundlePoster from "../../components/RebundlePoster"
-import { FaLocationDot } from "react-icons/fa6"
-import Report from "../product/Report"
-import Rating from "../../components/Rating"
-import { UserByUsername } from "../../types/user"
-import Modal from "../../components/ui/Modal"
-import useAuth from "../../hooks/useAuth"
-import useToastNotification from "../../hooks/useToastNotification"
-import useMessage from "../../hooks/useMessage"
-import useUser from "../../hooks/useUser"
-import { imageUrl } from "../../services/api"
-import { IReview } from "../../types/product"
-import { checkSellerReviewEligibility } from "../../utils/reviewUtils"
+import { useMemo, useState } from "react";
+import LoadingBox from "../../components/LoadingBox";
+import MessageBox from "../../components/MessageBox";
+import { Link, useNavigate } from "react-router-dom";
+import { FaGlobe, FaLink, FaPen, FaTag, FaUser } from "react-icons/fa";
+import ReviewLists from "../../components/ReviewLists";
+import WriteReview from "./WriteReview";
+import RebundlePoster from "../../components/RebundlePoster";
+import { FaLocationDot } from "react-icons/fa6";
+import Report from "../product/Report";
+import Rating from "../../components/Rating";
+import { UserByUsername } from "../../types/user";
+import Modal from "../../components/ui/Modal";
+import useAuth from "../../hooks/useAuth";
+import useToastNotification from "../../hooks/useToastNotification";
+import useMessage from "../../hooks/useMessage";
+import useUser from "../../hooks/useUser";
+import { imageUrl } from "../../services/api";
+import { IReview } from "../../types/product";
+import { checkSellerReviewEligibility } from "../../utils/reviewUtils";
 
 type Props = {
-  loadingUser: boolean
-  error?: string | null
-  usernameData?: UserByUsername
-  addReview: (review: IReview) => void
-  refetchUser: () => void
-}
+  loadingUser: boolean;
+  error?: string | null;
+  usernameData?: UserByUsername;
+  addReview: (review: IReview) => void;
+  refetchUser: () => void;
+};
 
 const SellerLeft = ({
   loadingUser,
@@ -39,111 +39,107 @@ const SellerLeft = ({
     followUser,
     unFollowUser,
     error: followError,
-  } = useAuth()
-  const { addNotification } = useToastNotification()
-  const { createMessage, error: messageError } = useMessage()
-  const navigate = useNavigate()
-  const { user } = useAuth()
-  const { isOnline } = useUser()
+  } = useAuth();
+  const { addNotification } = useToastNotification();
+  const { createMessage, error: messageError } = useMessage();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { isOnline } = useUser();
 
-  const [messageLoading, setMessageLoading] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [showModel, setShowModel] = useState(false)
-  const [showReport, setShowReport] = useState(false)
-  const [showWriteReview, setShowWriteReview] = useState(false)
+  const [messageLoading, setMessageLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showModel, setShowModel] = useState(false);
+  const [showReport, setShowReport] = useState(false);
+  const [showWriteReview, setShowWriteReview] = useState(false);
 
-  const [rating, setRating] = useState("")
-  const [comment, setComment] = useState("")
-  const [like, setLike] = useState<boolean | undefined>()
-  const [editReview, setEditReview] = useState<IReview | null>(null)
-  const [isEditMode, setIsEditMode] = useState(false)
+  const [rating, setRating] = useState("");
+  const [comment, setComment] = useState("");
+  const [like, setLike] = useState<boolean | undefined>();
+  const [editReview, setEditReview] = useState<IReview | null>(null);
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const toggleFollow = async () => {
-    if (!usernameData) return
+    if (!usernameData) return;
     if (usernameData.user.username === userInfo?.username) {
-      addNotification("You can't follow yourself")
-      return
+      addNotification("You can't follow yourself");
+      return;
     }
 
     if (!userInfo) {
-      addNotification("Login to follow")
-      return
+      addNotification("Login to follow");
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
     if (isFollowing) {
-      const res = await unFollowUser(usernameData.user._id)
+      const res = await unFollowUser(usernameData.user._id);
 
       if (res) {
-        addNotification(res)
-        refetchUser()
-      } else addNotification(followError ? followError : "")
+        addNotification(res);
+        refetchUser();
+      } else addNotification(followError ? followError : "");
     } else {
-      const res = await followUser(usernameData.user._id)
+      const res = await followUser(usernameData.user._id);
 
       if (res) {
-        addNotification(res)
-        refetchUser()
-      } else addNotification(followError ? followError : "")
+        addNotification(res);
+        refetchUser();
+      } else addNotification(followError ? followError : "");
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   const handleReport = (id: string) => {
-    console.log(id)
-  }
+    console.log(id);
+  };
 
   const handleShare = async () => {
     try {
       await navigator.share({
         title: "Repeddle",
-        text: ` ${window.location.protocol}//${window.location.hostname}${
-          usernameData?.user.region === "NGN" ? "/ng/" : "/za/"
-        }${usernameData?.user.username}`,
-        url: ` ${window.location.protocol}//${window.location.hostname}${
-          usernameData?.user.region === "NGN" ? "/ng/" : "/za/"
-        }${usernameData?.user.username}`,
-      })
-      console.log("Shared successfully")
+        text: ` ${window.location.protocol}//${window.location.hostname}/seller/${usernameData?.user.username}`,
+        url: ` ${window.location.protocol}//${window.location.hostname}/seller/${usernameData?.user.username}`,
+      });
+      console.log("Shared successfully");
     } catch (error) {
-      console.error("Error sharing:", error)
+      console.error("Error sharing:", error);
     }
-  }
+  };
 
   const addConversation = async (sellerId?: string, userId?: string) => {
-    if (!sellerId || !userId) return
+    if (!sellerId || !userId) return;
 
-    setMessageLoading(true)
+    setMessageLoading(true);
     try {
       const convo = await createMessage({
         participantId: sellerId,
         type: "Chat",
-      })
-      navigate(`/messages?conversation=${convo._id}`)
+      });
+      navigate(`/messages?conversation=${convo._id}`);
     } catch (error) {
-      addNotification(messageError || (error as string))
+      addNotification(messageError || (error as string));
     }
 
-    setMessageLoading(false)
-  }
+    setMessageLoading(false);
+  };
 
   const handleEditReview = (review: IReview) => {
-    setEditReview(review)
-    setIsEditMode(true)
-    setComment(review.comment)
-    setRating(review.rating.toString())
-    setLike(review.like)
-    setShowWriteReview(true)
-  }
+    setEditReview(review);
+    setIsEditMode(true);
+    setComment(review.comment);
+    setRating(review.rating.toString());
+    setLike(review.like);
+    setShowWriteReview(true);
+  };
 
   const handleCancelEdit = () => {
-    setEditReview(null)
-    setIsEditMode(false)
-    setComment("")
-    setRating("")
-    setLike(undefined)
-    setShowWriteReview(false)
-  }
+    setEditReview(null);
+    setIsEditMode(false);
+    setComment("");
+    setRating("");
+    setLike(undefined);
+    setShowWriteReview(false);
+  };
 
   const isFollowing = useMemo(
     () =>
@@ -151,19 +147,19 @@ const SellerLeft = ({
         usernameData?.user.followers &&
         usernameData.user.followers.find((x) => x === userInfo?._id)
       ),
-    [userInfo?._id, usernameData?.user.followers]
-  )
+    [userInfo?._id, usernameData?.user.followers],
+  );
 
   const reviewEligibility = useMemo(() => {
     if (!usernameData?.user) {
-      return { canReview: false, hasReviewed: false }
+      return { canReview: false, hasReviewed: false };
     }
     return checkSellerReviewEligibility(
       userInfo,
       usernameData.user,
-      usernameData.user.reviews
-    )
-  }, [userInfo, usernameData?.user])
+      usernameData.user.reviews,
+    );
+  }, [userInfo, usernameData?.user]);
 
   return (
     <div className="flex-[2]">
@@ -301,8 +297,7 @@ const SellerLeft = ({
                 onClick={handleShare}
               >
                 <div className="cursor-pointer underline text-malon-color">
-                  {window.location.hostname}
-                  {usernameData.user.region === "NGN" ? "/ng/" : "/za/"}
+                  {window.location.hostname}/seller/
                   {usernameData.user.username}
                 </div>
                 <FaLink className="ml-[5px] text-base cursor-pointer text-malon-color" />
@@ -389,7 +384,7 @@ const SellerLeft = ({
         )
       )}
     </div>
-  )
-}
+  );
+};
 
-export default SellerLeft
+export default SellerLeft;

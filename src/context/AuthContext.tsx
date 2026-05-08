@@ -20,6 +20,7 @@ import {
 import { IUser, UpdateUser, Wishlist } from "../types/user";
 import socket from "../socket";
 import { Pagination } from "../types/product";
+import { useClearCart } from "../querry/cart";
 
 interface Props {
   children?: ReactNode;
@@ -68,6 +69,7 @@ export const AuthContext = createContext<{
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<IUser | null>(null);
+  const { mutateAsync: clearCart } = useClearCart();
   const [authToken, setAuthToken] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -328,6 +330,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     // await logoutUser()
     setUser(null);
     localStorage.removeItem("authToken");
+    clearCart();
   };
 
   useEffect(() => {

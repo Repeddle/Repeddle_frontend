@@ -27,10 +27,10 @@ const PaymentDelivery = ({
         >
           <div className="capitalize font-semibold mb-2.5">Payment Status</div>
           <div className="flex">
-            {order.paymentMethod ? (
+            {order.isPaid ? (
               <div className="text-orange-color">Paid</div>
             ) : (
-              <div className="text-malon-color">Not Paid</div>
+              <div className="text-malon-color">Processing</div>
             )}
           </div>
           <hr />
@@ -57,7 +57,7 @@ const PaymentDelivery = ({
                     ? shippingPrice
                     : order.items.reduce(
                         (prev, curr) => prev + curr.deliveryOption.fee,
-                        0
+                        0,
                       )}
                 </div>
               </div>
@@ -70,7 +70,7 @@ const PaymentDelivery = ({
                       ? itemsPrice +
                         order.items.reduce(
                           (prev, curr) => prev + curr.deliveryOption.fee,
-                          0
+                          0,
                         )
                       : order.totalAmount}
                   </div>
@@ -88,7 +88,7 @@ const PaymentDelivery = ({
                       {itemsPrice +
                         order.items.reduce(
                           (prev, curr) => prev + curr.deliveryOption.fee,
-                          0
+                          0,
                         )}
                     </div>
                   </div>
@@ -103,7 +103,7 @@ const PaymentDelivery = ({
                         (itemsPrice +
                           order.items.reduce(
                             (prev, curr) => prev + curr.deliveryOption.fee,
-                            0
+                            0,
                           ))
                       ).toFixed(2)}
                     </div>
@@ -116,13 +116,13 @@ const PaymentDelivery = ({
                         itemsPrice +
                         order.items.reduce(
                           (prev, curr) => prev + curr.deliveryOption.fee,
-                          0
+                          0,
                         ) -
                         (7.9 / 100) *
                           (itemsPrice +
                             order.items.reduce(
                               (prev, curr) => prev + curr.deliveryOption.fee,
-                              0
+                              0,
                             ))
                       ).toFixed(2)}
                     </div>

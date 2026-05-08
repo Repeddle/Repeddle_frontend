@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import ThemeContext from "../../context/ThemeContext";
 import moderationService from "../../services/moderation";
-import { RestrictedWord } from "../../types/moderation";
+import { RestrictedWord, WhitelistedWord } from "../../types/moderation";
 import {
   FaTrash,
   FaPlus,
@@ -9,6 +9,8 @@ import {
   FaCheck,
   FaBan,
   FaSearch,
+  FaChevronLeft,
+  FaChevronRight,
 } from "react-icons/fa";
 import useToastNotification from "../../hooks/useToastNotification";
 import moment from "moment";
@@ -17,10 +19,17 @@ const Moderation = () => {
   const theme = useContext(ThemeContext);
   const { addNotification } = useToastNotification();
   const [activeTab, setActiveTab] = useState<
-    "restricted-words" | "content-moderation"
+    "restricted-words" | "whitelisted-words" | "content-moderation"
   >("restricted-words");
   const [restrictedWords, setRestrictedWords] = useState<RestrictedWord[]>([]);
+  const [whitelistedWords, setWhitelistedWords] = useState<WhitelistedWord[]>(
+    []
+  );
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
+  const itemsPerPage = 20;
   const [newWord, setNewWord] = useState("");
   const [bulkWords, setBulkWords] = useState("");
   const [showBulkModal, setShowBulkModal] = useState(false);
@@ -35,21 +44,56 @@ const Moderation = () => {
   >("approved");
 
   useEffect(() => {
-    if (activeTab === "restricted-words") {
-      loadRestrictedWords();
-    }
+    setCurrentPage(1);
   }, [activeTab]);
 
-  const loadRestrictedWords = async () => {
+  useEffect(() => {
+    if (activeTab === "restricted-words") {
+      loadRestrictedWords(currentPage);
+    } else if (activeTab === "whitelisted-words") {
+      loadWhitelistedWords(currentPage);
+    }
+  }, [activeTab, currentPage]);
+
+  const loadRestrictedWords = async (page: number = 1) => {
     try {
       setLoading(true);
-      const response = await moderationService.getRestrictedWords();
+      const response = await moderationService.getRestrictedWords(
+        page,
+        itemsPerPage
+      );
       if (response.status) {
         setRestrictedWords(response.data);
+        if (response.pagination) {
+          setTotalPages(response.pagination.totalPages);
+          setTotalItems(response.pagination.totalItems);
+        }
       }
     } catch (error) {
       console.error("Failed to load restricted words", error);
       addNotification("Failed to load restricted words", undefined, true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const loadWhitelistedWords = async (page: number = 1) => {
+    try {
+      setLoading(true);
+      const response = await moderationService.getWhitelistedWords(
+        page,
+        itemsPerPage
+      );
+      if (response.status) {
+        setWhitelistedWords(response.data);
+        if (response.pagination) {
+          setTotalPages(response.pagination.totalPages);
+          setTotalItems(response.pagination.totalItems);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to load whitelisted words", error);
+      addNotification("Failed to load whitelisted words", undefined, true);
     } finally {
       setLoading(false);
     }
@@ -64,9 +108,31 @@ const Moderation = () => {
         newWord.trim()
       );
       if (response.status) {
-        addNotification("Word added successfully");
+        addNotification("Restricted word added successfully");
         setNewWord("");
-        loadRestrictedWords();
+        loadRestrictedWords(currentPage);
+      }
+    } catch (error: any) {
+      addNotification(
+        error.response?.data?.message || "Failed to add word",
+        undefined,
+        true
+      );
+    }
+  };
+
+  const handleAddWhitelistedWord = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newWord.trim()) return;
+
+    try {
+      const response = await moderationService.addWhitelistedWord(
+        newWord.trim()
+      );
+      if (response.status) {
+        addNotification("Whitelisted word added successfully");
+        setNewWord("");
+        loadWhitelistedWords(currentPage);
       }
     } catch (error: any) {
       addNotification(
@@ -86,12 +152,17 @@ const Moderation = () => {
     if (words.length === 0) return;
 
     try {
-      const response = await moderationService.bulkAddRestrictedWords(words);
+      const response =
+        activeTab === "restricted-words"
+          ? await moderationService.bulkAddRestrictedWords(words)
+          : await moderationService.bulkAddWhitelistedWords(words);
+
       if (response.status) {
         addNotification(`${response.insertedCount} words added successfully`);
         setBulkWords("");
         setShowBulkModal(false);
-        loadRestrictedWords();
+        if (activeTab === "restricted-words") loadRestrictedWords(currentPage);
+        else loadWhitelistedWords(currentPage);
       }
     } catch (error: any) {
       console.error("Failed to bulk add words", error);
@@ -104,13 +175,31 @@ const Moderation = () => {
   };
 
   const handleRemoveWord = async (id: string) => {
-    if (!window.confirm("Are you sure you want to remove this word?")) return;
+    if (!window.confirm("Are you sure you want to remove this restricted word?"))
+      return;
 
     try {
       const response = await moderationService.removeRestrictedWord(id);
       if (response.status) {
-        addNotification("Word removed successfully");
-        loadRestrictedWords();
+        addNotification("Restricted word removed successfully");
+        loadRestrictedWords(currentPage);
+      }
+    } catch (error) {
+      addNotification("Failed to remove word", undefined, true);
+    }
+  };
+
+  const handleRemoveWhitelistedWord = async (id: string) => {
+    if (
+      !window.confirm("Are you sure you want to remove this whitelisted word?")
+    )
+      return;
+
+    try {
+      const response = await moderationService.removeWhitelistedWord(id);
+      if (response.status) {
+        addNotification("Whitelisted word removed successfully");
+        loadWhitelistedWords(currentPage);
       }
     } catch (error) {
       addNotification("Failed to remove word", undefined, true);
@@ -145,6 +234,67 @@ const Moderation = () => {
     }
   };
 
+  const PaginationUI = () => {
+    if (totalPages <= 1) return null;
+
+    return (
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6 px-4">
+        <p className="text-sm text-gray-500">
+          Showing <span className="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span> to{" "}
+          <span className="font-medium">
+            {Math.min(currentPage * itemsPerPage, totalItems)}
+          </span>{" "}
+          of <span className="font-medium">{totalItems}</span> results
+        </p>
+        <div className="flex gap-2 flex-wrap justify-center">
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className="p-2 rounded border border-gray-300 dark:border-gray-700 disabled:opacity-50 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            <FaChevronLeft />
+          </button>
+          {[...Array(totalPages)].map((_, i) => {
+            const pageNum = i + 1;
+            // Show first, last, and pages around current
+            if (
+              pageNum === 1 ||
+              pageNum === totalPages ||
+              (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
+            ) {
+              return (
+                <button
+                  key={pageNum}
+                  onClick={() => setCurrentPage(pageNum)}
+                  className={`min-w-[40px] px-3 py-2 rounded border ${
+                    currentPage === pageNum
+                      ? "bg-malon-color text-white border-malon-color"
+                      : "border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  } transition-colors`}
+                >
+                  {pageNum}
+                </button>
+              );
+            } else if (
+              pageNum === currentPage - 2 ||
+              pageNum === currentPage + 2
+            ) {
+              return <span key={pageNum} className="px-1 flex items-end pb-2">...</span>;
+            }
+            return null;
+          })}
+          <button
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className="p-2 rounded border border-gray-300 dark:border-gray-700 disabled:opacity-50 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            <FaChevronRight />
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div
       className={`p-6 min-h-[85vh] ${
@@ -167,6 +317,16 @@ const Moderation = () => {
         </button>
         <button
           className={`pb-2 px-4 font-semibold transition-colors ${
+            activeTab === "whitelisted-words"
+              ? "border-b-2 border-malon-color text-malon-color"
+              : "text-gray-500 hover:text-malon-color"
+          }`}
+          onClick={() => setActiveTab("whitelisted-words")}
+        >
+          Whitelisted Words
+        </button>
+        <button
+          className={`pb-2 px-4 font-semibold transition-colors ${
             activeTab === "content-moderation"
               ? "border-b-2 border-malon-color text-malon-color"
               : "text-gray-500 hover:text-malon-color"
@@ -179,7 +339,7 @@ const Moderation = () => {
 
       {activeTab === "restricted-words" ? (
         <div className="space-y-8">
-          {/* Add Word Form */}
+          {/* Add Restricted Word Form */}
           <div
             className={`p-6 rounded-lg shadow-md border ${
               theme?.isDarkMode
@@ -221,7 +381,7 @@ const Moderation = () => {
             </form>
           </div>
 
-          {/* Words Table */}
+          {/* Restricted Words Table */}
           <div
             className={`rounded-lg shadow-md border overflow-hidden ${
               theme?.isDarkMode
@@ -282,6 +442,115 @@ const Moderation = () => {
                 </tbody>
               </table>
             </div>
+            <PaginationUI />
+          </div>
+        </div>
+      ) : activeTab === "whitelisted-words" ? (
+        <div className="space-y-8">
+          {/* Add Whitelisted Word Form */}
+          <div
+            className={`p-6 rounded-lg shadow-md border ${
+              theme?.isDarkMode
+                ? "bg-dark-ev1 border-gray-700"
+                : "bg-white border-gray-200"
+            }`}
+          >
+            <h2 className="text-xl font-bold mb-4">Add Whitelisted Word</h2>
+            <form
+              onSubmit={handleAddWhitelistedWord}
+              className="flex flex-col sm:flex-row gap-4"
+            >
+              <input
+                type="text"
+                value={newWord}
+                onChange={(e) => setNewWord(e.target.value)}
+                placeholder="Enter word or phrase"
+                className={`flex-1 p-3 rounded border ${
+                  theme?.isDarkMode
+                    ? "bg-gray-800 border-gray-700"
+                    : "bg-white border-gray-300"
+                } focus:outline-none focus:ring-2 focus:ring-malon-color`}
+              />
+              <div className="flex gap-2">
+                <button
+                  type="submit"
+                  className="bg-malon-color text-white px-6 py-3 rounded hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                >
+                  <FaPlus /> Add Word
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowBulkModal(true)}
+                  className="border border-malon-color text-malon-color px-6 py-3 rounded hover:bg-malon-color hover:text-white transition-all flex items-center justify-center gap-2"
+                >
+                  <FaUpload /> Bulk Add
+                </button>
+              </div>
+            </form>
+          </div>
+
+          {/* Whitelisted Words Table */}
+          <div
+            className={`rounded-lg shadow-md border overflow-hidden ${
+              theme?.isDarkMode
+                ? "bg-dark-ev1 border-gray-700"
+                : "bg-white border-gray-200"
+            }`}
+          >
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead
+                  className={`bg-opacity-10 ${
+                    theme?.isDarkMode
+                      ? "bg-white text-gray-300"
+                      : "bg-gray-100 text-gray-700"
+                  }`}
+                >
+                  <tr>
+                    <th className="p-4">Word</th>
+                    <th className="p-4">Created At</th>
+                    <th className="p-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {loading ? (
+                    <tr>
+                      <td colSpan={3} className="p-8 text-center">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-malon-color mx-auto"></div>
+                      </td>
+                    </tr>
+                  ) : whitelistedWords.length === 0 ? (
+                    <tr>
+                      <td colSpan={3} className="p-8 text-center text-gray-500">
+                        No whitelisted words found
+                      </td>
+                    </tr>
+                  ) : (
+                    whitelistedWords.map((word) => (
+                      <tr
+                        key={word._id}
+                        className="border-t border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                      >
+                        <td className="p-4 font-medium">{word.word}</td>
+                        <td className="p-4 text-gray-500">
+                          {moment(word.createdAt).format("MMM DD, YYYY h:mm A")}
+                        </td>
+                        <td className="p-4 text-right">
+                          <button
+                            onClick={() => handleRemoveWhitelistedWord(word._id)}
+                            className="text-red-500 hover:text-red-700 p-2 transition-colors"
+                            title="Delete Word"
+                          >
+                            <FaTrash />
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+            <PaginationUI />
           </div>
         </div>
       ) : (
@@ -404,7 +673,7 @@ const Moderation = () => {
             }`}
           >
             <h2 className="text-xl font-bold mb-4">
-              Bulk Add Restricted Words
+              Bulk Add {activeTab === "restricted-words" ? "Restricted" : "Whitelisted"} Words
             </h2>
             <p className="text-sm text-gray-500 mb-4">
               Enter words separated by commas or new lines. Duplicate words will

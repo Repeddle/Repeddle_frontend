@@ -100,10 +100,10 @@ function Report() {
                   report.status === "open"
                     ? "text-green-color"
                     : report.status === "pending"
-                    ? "text-orange-color"
-                    : report.status === "on hold"
-                    ? "text-purple-500"
-                    : "text-blue-600"
+                      ? "text-orange-color"
+                      : report.status === "on hold"
+                        ? "text-purple-500"
+                        : "text-blue-600"
                 }
               >
                 {report.status.charAt(0).toUpperCase() + report.status.slice(1)}
@@ -113,6 +113,7 @@ function Report() {
           },
           action: (
             <FaArrowRight
+              className="cursor-pointer"
               onClick={() => {
                 setCurrentReportId(report._id);
               }}

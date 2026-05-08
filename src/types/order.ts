@@ -49,6 +49,7 @@ export type IOrder = {
   _id: string;
   createdAt: string;
   updatedAt: string;
+  isPaid: boolean;
 };
 
 export type ICreateOrder = {
