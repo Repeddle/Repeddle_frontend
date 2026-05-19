@@ -1,22 +1,28 @@
-import moment from "moment"
-import { useEffect, useState } from "react"
-import { FaCheckCircle, FaTrash } from "react-icons/fa"
-import { INewsletter } from "../../types/message"
-import useNewsletter from "../../hooks/useNewsletter"
-import useToastNotification from "../../hooks/useToastNotification"
-import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo"
-import LoadingBox from "../../components/LoadingBox"
+import moment from "moment";
+import { useEffect, useState } from "react";
+import { FaCheckCircle, FaTrash } from "react-icons/fa";
+import { INewsletter } from "../../types/message";
+import useNewsletter from "../../hooks/useNewsletter";
+import useToastNotification from "../../hooks/useToastNotification";
+import LoadingControlModal from "../../components/ui/loadin/LoadingControlLogo";
+import LoadingBox from "../../components/LoadingBox";
+import {
+  useGetNewsletterTypes,
+  useSendNewsletter,
+} from "../../querry/newsletter";
 
 const NewsletterList = () => {
-  const [inputEmail, setInputEmail] = useState("")
-  const [emailName, setEmailName] = useState("")
-  const [selectAll, setSelectAll] = useState(false)
-  const [selectedEmails, setSelectedEmails] = useState<string[]>([])
+  const { data: newsletterTypes } = useGetNewsletterTypes();
+  const { mutate: sendNews, isPending: isPendingSendNewsletter } =
+    useSendNewsletter();
+  const [inputEmail, setInputEmail] = useState("");
+  const [emailName, setEmailName] = useState("");
+  const [selectAll, setSelectAll] = useState(false);
+  const [selectedEmails, setSelectedEmails] = useState<string[]>([]);
 
-  const [loadingSend] = useState(false)
-  const [loadingAdd, setLoadingAdd] = useState(false)
-  const [loadingRebatch] = useState(false)
-  const [loadingNewsletters, setLoadingNewsletters] = useState(false)
+  const [loadingAdd, setLoadingAdd] = useState(false);
+  const [loadingRebatch] = useState(false);
+  const [loadingNewsletters, setLoadingNewsletters] = useState(false);
 
   const {
     newsletters,
@@ -24,42 +30,41 @@ const NewsletterList = () => {
     error,
     createNewsletter,
     deleteNewsletter,
-  } = useNewsletter()
-  const { addNotification } = useToastNotification()
+  } = useNewsletter();
+  const { addNotification } = useToastNotification();
 
   useEffect(() => {
     const fetchLetter = async () => {
-      setLoadingNewsletters(true)
-      await fetchNewsletter()
-      setLoadingNewsletters(false)
-    }
+      setLoadingNewsletters(true);
+      await fetchNewsletter();
+      setLoadingNewsletters(false);
+    };
 
-    fetchLetter()
-  }, [])
+    fetchLetter();
+  }, []);
 
   useEffect(() => {
-    if (error) addNotification(error)
-  }, [error])
+    if (error) addNotification(error);
+  }, [error]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const rebatchs: any[] = []
-  const [emailLists] = useState<{ name: string }[]>([])
+  const rebatchs: any[] = [];
 
   const deleteHandler = async (id: string) => {
     if (window.confirm("Are you sure to delete")) {
-      const data = await deleteNewsletter(id)
+      const data = await deleteNewsletter(id);
 
       if (data.success) {
-        addNotification(data.message ?? "Newsletter deleted Successfully")
+        addNotification(data.message ?? "Newsletter deleted Successfully");
       }
     }
-  }
+  };
 
   const hasMatchingEmailName = (newsletter: INewsletter) => {
     return (
       emailName && newsletter.sent.some((obj) => obj.emailName === emailName)
-    )
-  }
+    );
+  };
 
   const handleSelectAll = () => {
     if (!selectAll) {
@@ -67,43 +72,69 @@ const NewsletterList = () => {
         newsletters
           .filter(
             (newsletter) =>
-              !newsletter.isDeleted && !hasMatchingEmailName(newsletter)
+              !newsletter.isDeleted && !hasMatchingEmailName(newsletter),
           )
-          .map((newsletter) => newsletter.email)
-      )
-      setSelectedEmails([...selectedEmailSet])
-      setSelectAll(true)
+          .map((newsletter) => newsletter.email),
+      );
+      setSelectedEmails([...selectedEmailSet]);
+      setSelectAll(true);
     } else {
-      setSelectedEmails([])
-      setSelectAll(false)
+      setSelectedEmails([]);
+      setSelectAll(false);
     }
-  }
+  };
 
   const handleEmailSelection = (newsletter: INewsletter) => {
     if (newsletter.isDeleted) {
-      return
+      return;
     }
     if (selectedEmails.includes(newsletter.email)) {
-      setSelectedEmails(selectedEmails.filter((e) => e !== newsletter.email))
+      setSelectedEmails(selectedEmails.filter((e) => e !== newsletter.email));
     } else {
-      setSelectedEmails([...selectedEmails, newsletter.email])
+      setSelectedEmails([...selectedEmails, newsletter.email]);
     }
-  }
+  };
 
-  const sendEmails = async () => {}
+  const sendEmails = async () => {
+    if (!emailName) {
+      return addNotification("Please select a newsletter type", undefined, true);
+    }
+    if (selectedEmails.length === 0) {
+      return addNotification("Please select at least one email", undefined, true);
+    }
+
+    sendNews(
+      {
+        newsletterType: emailName,
+        emails: selectedEmails,
+      },
+      {
+        onSuccess: async (data) => {
+          addNotification(data.message || "Newsletter sent successfully");
+          setSelectedEmails([]);
+          setSelectAll(false);
+          await fetchNewsletter();
+        },
+        onError: (err: any) => {
+          addNotification(err || "Failed to send newsletter", undefined, true);
+        },
+      }
+    );
+  };
+
 
   const handleAddEmail = async () => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const isValid = emailRegex.test(inputEmail)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isValid = emailRegex.test(inputEmail);
 
     if (!isValid)
-      return addNotification("Please enter a valid email", undefined, true)
-    setLoadingAdd(true)
-    const data = await createNewsletter(inputEmail)
-    if (data) addNotification("Emails added successfully")
+      return addNotification("Please enter a valid email", undefined, true);
+    setLoadingAdd(true);
+    const data = await createNewsletter(inputEmail);
+    if (data) addNotification("Emails added successfully");
 
-    setLoadingAdd(false)
-  }
+    setLoadingAdd(false);
+  };
 
   return (
     <div className="flex-[4] mb-5 px-5 py-0 min-h-[85vh] bg-light-ev1 dark:bg-dark-ev1">
@@ -130,15 +161,15 @@ const NewsletterList = () => {
               >
                 <option value="">-- select --</option>
 
-                {emailLists.map((emailList) => (
-                  <option key={emailList.name} value={emailList.name}>
-                    {emailList.name}
+                {newsletterTypes?.types.map((type) => (
+                  <option key={type.type} value={type.type}>
+                    {type.subject}
                   </option>
                 ))}
               </select>
             </div>
           </li>
-          {loadingSend ? (
+          {isPendingSendNewsletter ? (
             <LoadingControlModal />
           ) : (
             <button
@@ -195,7 +226,7 @@ const NewsletterList = () => {
                   </div>
                   {emailName &&
                     newsletter?.sent.some(
-                      (obj) => obj.emailName === emailName
+                      (obj) => obj.emailName === emailName,
                     ) && (
                       <FaCheckCircle className="text-green-color bg-white rounded-full ml-2.5" />
                     )}
@@ -243,7 +274,7 @@ const NewsletterList = () => {
         </ul>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default NewsletterList
+export default NewsletterList;

@@ -1,3 +1,4 @@
+import { IRegion } from "./region";
 import { IUser } from "./user";
 
 export interface IReview {
@@ -122,6 +123,7 @@ export interface Seller {
   updatedAt: string;
   rating: number;
   reviews: IReview[];
+  region: IRegion;
 }
 
 export interface Pagination {

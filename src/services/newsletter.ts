@@ -1,119 +1,143 @@
-import { INewsletter } from "../types/message"
-import { getBackendErrorMessage } from "../utils/error"
-import api from "./api"
+import { INewsletter } from "../types/message";
+import { getBackendErrorMessage } from "../utils/error";
+import api from "./api";
 
 export const fetchNewsletterService = async (
-  params?: string
+  params?: string,
 ): Promise<INewsletter[]> => {
   try {
-    let url = "/newsletters"
+    let url = "/newsletters";
 
     if (params && params.length) {
-      url = url + `?${params}`
+      url = url + `?${params}`;
     }
 
-    const resp: { newsletters: INewsletter[]; status: boolean } = await api.get(
-      url
-    )
-    console.log(resp)
+    const resp: { newsletters: INewsletter[]; status: boolean } =
+      await api.get(url);
+    console.log(resp);
 
     if (!resp.status) {
       // Handle Fetch newsletters error, e.g., display an error message to the user
       throw new Error(
-        "Fetch newsletters failed: " + getBackendErrorMessage(resp)
-      )
+        "Fetch newsletters failed: " + getBackendErrorMessage(resp),
+      );
     }
 
-    return resp.newsletters
+    return resp.newsletters;
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions
-    console.error("Fetch newsletters error:", getBackendErrorMessage(error))
+    console.error("Fetch newsletters error:", getBackendErrorMessage(error));
 
     // Re-throw the error to propagate it up the call stack if needed
-    throw getBackendErrorMessage(error)
+    throw getBackendErrorMessage(error);
   }
-}
+};
 
 export const createNewsLetterService = async (
-  email: string
+  email: string,
 ): Promise<INewsletter> => {
   try {
     const data: {
-      status: boolean
-      newsletter: INewsletter
-    } = await api.post("/newsletters", { email })
+      status: boolean;
+      newsletter: INewsletter;
+    } = await api.post("/newsletters", { email });
 
     if (!data.status) {
       // Handle Create newsletter error, e.g., display an error message to the user
       throw new Error(
-        "Create newsletter failed: " + getBackendErrorMessage(data)
-      )
+        "Create newsletter failed: " + getBackendErrorMessage(data),
+      );
     }
 
-    return data.newsletter
+    return data.newsletter;
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions
-    console.error("Create newsletter error:", getBackendErrorMessage(error))
+    console.error("Create newsletter error:", getBackendErrorMessage(error));
 
     // Re-throw the error to propagate it up the call stack if needed
-    throw getBackendErrorMessage(error)
+    throw getBackendErrorMessage(error);
   }
-}
+};
 
 export const deleteNewsLetterService = async (
-  id: string
+  id: string,
 ): Promise<{ status: boolean; message: string }> => {
   try {
     const data: { status: boolean; message: string } = await api.delete(
-      `/newsletters/${id}`
-    )
+      `/newsletters/${id}`,
+    );
 
     if (!data.status) {
       // Handle Delete newsletter error, e.g., display an error message to the user
       throw new Error(
-        "Delete newsletter failed: " + getBackendErrorMessage(data)
-      )
+        "Delete newsletter failed: " + getBackendErrorMessage(data),
+      );
     }
 
-    return { status: true, message: data.message }
+    return { status: true, message: data.message };
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions
-    console.error("Delete newsletter error:", getBackendErrorMessage(error))
+    console.error("Delete newsletter error:", getBackendErrorMessage(error));
 
     // Re-throw the error to propagate it up the call stack if needed
-    throw getBackendErrorMessage(error)
+    throw getBackendErrorMessage(error);
   }
-}
+};
 
 export const unsubscribeNewsLetterService = async (): Promise<{
-  status: boolean
-  message: string
+  status: boolean;
+  message: string;
 }> => {
   try {
     const data: { status: boolean; message: string } = await api.delete(
-      `/newsletters/unsubscribe`
-    )
+      `/newsletters/unsubscribe`,
+    );
 
     if (!data.status) {
       // Handle unsubscribe newsletter error, e.g., display an error message to the user
       throw new Error(
-        "unsubscribe newsletter failed: " + getBackendErrorMessage(data)
-      )
+        "unsubscribe newsletter failed: " + getBackendErrorMessage(data),
+      );
     }
 
-    return { status: true, message: data.message }
+    return { status: true, message: data.message };
   } catch (error) {
     // Handle network errors or other exceptions
     // You can log the error or perform other error-handling actions
     console.error(
       "Unsubscribe newsletter error:",
-      getBackendErrorMessage(error)
-    )
+      getBackendErrorMessage(error),
+    );
 
     // Re-throw the error to propagate it up the call stack if needed
-    throw getBackendErrorMessage(error)
+    throw getBackendErrorMessage(error);
   }
-}
+};
+
+export const getNewsletterTypesService = async (): Promise<{
+  status: boolean;
+  types: { type: string; subject: string }[];
+}> => {
+  const data: { status: boolean; types: { type: string; subject: string }[] } =
+    await api.get(`/newsletters/types`);
+  return data;
+};
+
+export const sendNewsletterService = async (
+  newsletterType: string,
+  emails: string[],
+  customData?: Record<string, any>,
+): Promise<{ status: boolean; message: string }> => {
+  try {
+    const data: { status: boolean; message: string } = await api.post(
+      `/newsletters/send`,
+      { newsletterType, emails, customData },
+    );
+    return data;
+  } catch (error) {
+    throw getBackendErrorMessage(error);
+  }
+};

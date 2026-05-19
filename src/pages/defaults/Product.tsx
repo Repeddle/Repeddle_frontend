@@ -506,7 +506,7 @@ const Product = () => {
                   </div>
                   <div>
                     {product.seller?.address?.state},{" "}
-                    {product.seller?.address?.region === "NGN"
+                    {product.seller?.region === "NG"
                       ? "Nigeria"
                       : "South Africa"}
                   </div>

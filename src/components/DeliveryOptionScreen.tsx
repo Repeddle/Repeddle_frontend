@@ -338,13 +338,16 @@ const DeliveryOptionScreen = ({ setShowModel, item }: Props) => {
           {item.product.deliveryOption.map((x) => (
             <div className="mb-3" key={x.name}>
               <div className="my-2.5 mx-0">
-                <div className="flex items-center">
+                <div
+                  className={`flex items-center ${x.name === "Paxi PEP store" ? "opacity-50" : "opacity-100"}`}
+                >
                   <input
                     className="checked:after:w-[20px] checked:after:h-[20px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[20px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
                     type="radio"
                     id={x.name}
                     value={x.name}
                     checked={deliveryOption === x.name}
+                    disabled={x.name === "Paxi PEP store"}
                     onChange={(e) => {
                       setMeta({
                         ...meta,

@@ -4,6 +4,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 
+// export const baseURL = "http://localhost:5000";
 export const baseURL = "";
 
 export const imageUrl = baseURL;
