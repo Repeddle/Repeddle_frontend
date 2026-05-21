@@ -21,6 +21,7 @@ import {
   FaMessage,
   FaMoneyBillTransfer,
   FaRightFromBracket,
+  FaShield,
 } from "react-icons/fa6";
 import useTheme from "../../hooks/useTheme";
 import useAuth from "../../hooks/useAuth";
@@ -289,6 +290,12 @@ const MobileProfile = () => {
                   <span>{contactNotification.length}</span>
                 </span>
               )}
+            </div>
+          </Link>
+          <Link to="/admin/moderation">
+            <div className="relative p-2.5 rounded-[0.2rem] border-b-[rgba(99,91,91,0.2)] border-b flex items-center hover:bg-orange-color">
+              <FaShield className="mr-2.5" />
+              Moderation
             </div>
           </Link>
         </>
