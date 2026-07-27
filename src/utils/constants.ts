@@ -1,5 +1,5 @@
 export const emailRegex =
-  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export const colors = [
   "red",
@@ -26,7 +26,7 @@ export const colors = [
   "white",
   "yellow",
   "other",
-]
+];
 export const color1 = [
   { name: "red", id: 1 },
   { name: "%23383e42", id: 2 },
@@ -51,7 +51,7 @@ export const color1 = [
   { name: "turquoise", id: 21 },
   { name: "white", id: 22 },
   { name: "yellow", id: 23 },
-]
+];
 
 export const ratings = [
   {
@@ -70,7 +70,7 @@ export const ratings = [
     name: "1star & up",
     rating: 1,
   },
-]
+];
 
 export const sizelist = [
   { id: 1, name: "XS" },
@@ -79,19 +79,19 @@ export const sizelist = [
   { id: 3, name: "L" },
   { id: 4, name: "XL" },
   { id: 5, name: "XXL" },
-]
+];
 
 export const shippinglist = [
   { _id: 2, name: "Free" },
   { _id: 3, name: "Discount + Free" },
-]
+];
 export const conditionlist = [
   { _id: 2, name: "New with Tags" },
   { _id: 3, name: "New with No Tags" },
   { _id: 4, name: "Excellent Condition" },
   { _id: 5, name: "Good Condition" },
   { _id: 6, name: "Fair Condition" },
-]
+];
 
 export const availabilitylist = [
   { _id: 2, name: "In Someone's cart" },
@@ -100,7 +100,7 @@ export const availabilitylist = [
   { _id: 5, name: "Dropping Soon" },
   { _id: 6, name: "Sold Items" },
   { _id: 7, name: "Trending" },
-]
+];
 
 export const patternlist = [
   { _id: 1, name: "Acrylic" },
@@ -124,12 +124,12 @@ export const patternlist = [
   { _id: 19, name: "Vegan leather" },
   { _id: 20, name: "Velvet" },
   { _id: 21, name: "Wool" },
-]
+];
 
 export const typelist = [
   { _id: 2, name: "ReCurated" },
   { _id: 3, name: "Bulk n Slot" },
-]
+];
 
 export const deals = [
   {
@@ -142,31 +142,31 @@ export const deals = [
     id: 2,
     value: "50",
   },
-]
+];
 
 export const pudoOptions = [
   { name: "Offer free shipping to buyer + R 0.00", value: 0 },
   {
-    name: "Extra-Small | 600x170x80 mm (MAX 2kg) + R 60.00",
-    value: 60,
-  },
-  // {
-  //   name: "Small | 600x410x80 mm (MAX 5kg) + R 70.00",
-  //   value: 70,
-  // },
-  {
-    name: " Medium | 600x410x190 mm (MAX 10kg) + R 100.00",
-    value: 100,
+    name: "Extra-Small | 600x170x80 mm (MAX 2kg) + R 72.97",
+    value: 72.97,
   },
   {
-    name: " Large | 600x410x410 mm (MAX 15kg) + R 150.00",
-    value: 150,
+    name: "Small | 600x410x80 mm (MAX 5kg) + R 83.54",
+    value: 83.54,
   },
   {
-    name: " Extra-Large | 600x410x690 mm (MAX 20kg) + R 200.00",
-    value: 200,
+    name: " Medium | 600x410x190 mm (MAX 10kg) + R 115.27",
+    value: 115.27,
   },
-]
+  {
+    name: " Large | 600x410x410 mm (MAX 15kg) + R 164.97",
+    value: 164.97,
+  },
+  {
+    name: " Extra-Large | 600x410x690 mm (MAX 20kg) + R 221.02",
+    value: 221.02,
+  },
+];
 
 export const states = {
   Nigeria: [
@@ -245,7 +245,7 @@ export const states = {
     "North West",
     "Western Cape",
   ],
-}
+};
 
 export const banks = {
   Nigeria: [
@@ -281,7 +281,7 @@ export const banks = {
     { name: "Ubank", code: "Ubank" },
     { name: "TymeBank", code: "TymeBank" },
   ],
-}
+};
 
 export const pudo = {
   "Eastern Cape": [
@@ -1407,7 +1407,7 @@ export const pudo = {
     "Wilderness Motors",
     "Woodmill Lane Shopping centre",
   ],
-}
+};
 
 export const postnet = {
   "Eastern Cape": [
@@ -1839,7 +1839,7 @@ export const postnet = {
     "Woodstock ",
     "Worcester",
   ],
-}
+};
 
 export const brandnumbers = [
   "& Other Stories",
@@ -1901,7 +1901,7 @@ export const brandnumbers = [
   "32 Degrees",
   "337 Brand",
   "36 Point 5",
-]
+];
 
 export const brandA = [
   "A Classy Chic Boutique",
@@ -1963,7 +1963,7 @@ export const brandA = [
   "Absolutely",
   "Absolutely Creative Worldwide",
   "Absolutely Famous",
-]
+];
 
 export const brandB = [
   " B Brian Atwood",
@@ -2025,7 +2025,7 @@ export const brandB = [
   "Baggallini",
   "BAGGU",
   "Bagutta",
-]
+];
 export const brandC = [
   "C de C",
   "C Label",
@@ -2086,7 +2086,7 @@ export const brandC = [
   "Camo",
   "Campana Brothers",
   "Camper",
-]
+];
 export const brandD = [
   "D Celli",
   "D&G",
@@ -2147,7 +2147,7 @@ export const brandD = [
   "Danny Kaplan",
   "Dansk",
   "Danskin",
-]
+];
 export const brandE = [
   "E-Land Kids",
   "E.Kammeyer Accessories",
@@ -2208,7 +2208,7 @@ export const brandE = [
   "Egara",
   "Egg Collective",
   "EGO",
-]
+];
 export const brandF = [
   "F&F",
   "FA",
@@ -2269,7 +2269,7 @@ export const brandF = [
   "FAVLUX",
   "Favorite Characters",
   "Fawn Design",
-]
+];
 
 export const brandG = [
   "G by Giuliana",
@@ -2331,7 +2331,7 @@ export const brandG = [
   "GENERRA",
   "Genetic Denim",
   "Geneva",
-]
+];
 export const brandH = [
   "H by Bordeaux",
   "H by Halston",
@@ -2392,7 +2392,7 @@ export const brandH = [
   "Hard Candy",
   "Hard Rock Café",
   "Hard Tail",
-]
+];
 export const brandI = [
   "I Heart Ronson",
   "I jeans by Buffalo",
@@ -2453,7 +2453,7 @@ export const brandI = [
   "Imps & Elfs",
   "In Bloom",
   "In2",
-]
+];
 export const brandJ = [
   "J Brand",
   "J for Justify",
@@ -2514,7 +2514,7 @@ export const brandJ = [
   "Jaime Hayon",
   "Jaipur",
   "Jamaica Jaxx",
-]
+];
 export const brandK = [
   "K&K Interiors",
   "K-DEER",
@@ -2575,7 +2575,7 @@ export const brandK = [
   "Kat Von D",
   "Kate & Mallory",
   "Kate and Laurel",
-]
+];
 export const brandL = [
   "L&B",
   "L'Academie",
@@ -2636,7 +2636,7 @@ export const brandL = [
   "LACAUSA",
   "Lacey Ryan",
   "Lack Of Color",
-]
+];
 export const brandM = [
   "M by Missoni",
   "M&M'S",
@@ -2697,7 +2697,7 @@ export const brandM = [
   "Maggie Sottero",
   "Maggy London",
   "Magic",
-]
+];
 export const brandN = [
   "N.d.c.",
   "N.Y.L.A.",
@@ -2758,7 +2758,7 @@ export const brandN = [
   "NARS",
   "Nascar",
   "Nashelle",
-]
+];
 
 export const brandO = [
   "O'2nd",
@@ -2820,7 +2820,7 @@ export const brandO = [
   "Oilily",
   "Oilo Studio",
   "OiOi Austral",
-]
+];
 export const brandP = [
   "P L Designs and More",
   "P&Y Denim",
@@ -2881,7 +2881,7 @@ export const brandP = [
   "Panini",
   "Paniz",
   "Panoply",
-]
+];
 export const brandQ = [
   "Q by Pasquale",
   "Q-T Intimates",
@@ -2900,7 +2900,7 @@ export const brandQ = [
   "Quoddy",
   "Qupid",
   "QVC",
-]
+];
 export const brandR = [
   "R & M Richards",
   "R 13",
@@ -2961,7 +2961,7 @@ export const brandR = [
   "Ralph Lauren",
   "Ralph Lauren Black Label",
   "Ralph Lauren Blue La",
-]
+];
 export const brandS = [
   "S by Serena",
   "S&D",
@@ -3022,7 +3022,7 @@ export const brandS = [
   "Salt Lake Clothing",
   "Salt Life",
   "Salt Swimwear",
-]
+];
 export const brandT = [
   "T by Alexander Wang",
   "T Party Fashion",
@@ -3083,7 +3083,7 @@ export const brandT = [
   "Tanah Folk",
   "Tangerine",
   "Tangerine NYC",
-]
+];
 export const brandU = [
   "U Pak N Ship",
   "U-Boat",
@@ -3144,7 +3144,7 @@ export const brandU = [
   "Unique Vintage",
   "Unique Zone",
   "Unisa",
-]
+];
 export const brandV = [
   "V By Eva",
   "V Cristina",
@@ -3205,7 +3205,7 @@ export const brandV = [
   "Vaute Couture",
   "Vava by Joy Han",
   "Vavvoune",
-]
+];
 export const brandW = [
   "W by Worth",
   "W for Women",
@@ -3266,7 +3266,7 @@ export const brandW = [
   "WD.NY",
   "We Over Me",
   "We The Free",
-]
+];
 export const brandX = [
   "X-appeal",
   "X2",
@@ -3288,7 +3288,7 @@ export const brandX = [
   "Xtreme Lashes by Jo Mousselli",
   "XTRONS",
   "XYD",
-]
+];
 // Brands starting with Y
 export const brandY = [
   "Y&S Handbags",
@@ -3350,7 +3350,7 @@ export const brandY = [
   "Younique",
   "Yours Clothing",
   "Youswim",
-]
+];
 
 // Brands starting with Z
 export const brandZ = [
@@ -3413,4 +3413,4 @@ export const brandZ = [
   "Zeta Ville",
   "Zeugari",
   "Zhenzi",
-]
+];

@@ -392,7 +392,7 @@ const DeliveryOption = ({
                 </div>
                 <div className="flex items-center justify-between mx-0 my-2">
                   <div className="text-sm">
-                    Extra-Small | 600x170x80 mm (MAX 2kg) + R 50.00
+                    Extra-Small | 600x170x80 mm (MAX 2kg) + R 49.00
                   </div>
                   <input
                     className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
@@ -402,13 +402,13 @@ const DeliveryOption = ({
                       handleChange(e.target);
                       handleError?.("", "deliveryOption");
                     }}
-                    value={50}
+                    value={49}
                     id="standard"
                   />
                 </div>
                 <div className="flex items-center justify-between mx-0 my-2">
                   <div className="text-sm">
-                    Medium | 600x410x190 mm (MAX 10kg) + R 60.00
+                    Medium | 600x410x80 mm (MAX 5kg) + R 59.00
                   </div>
                   <input
                     className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
@@ -418,13 +418,13 @@ const DeliveryOption = ({
                       handleChange(e.target);
                       handleError?.("", "deliveryOption");
                     }}
-                    value={60}
+                    value={69}
                     id="Large"
                   />
                 </div>
                 <div className="flex items-center justify-between mx-0 my-2">
                   <div className="text-sm">
-                    Large | 600x410x410 mm (MAX 15kg) + R 60.00
+                    Medium | 600x410x190 mm (MAX 10kg) + R 69.00
                   </div>
                   <input
                     className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
@@ -434,13 +434,13 @@ const DeliveryOption = ({
                       handleChange(e.target);
                       handleError?.("", "deliveryOption");
                     }}
-                    value={60}
+                    value={69}
                     id="Large"
                   />
                 </div>
                 <div className="flex items-center justify-between mx-0 my-2">
                   <div className="text-sm">
-                    Extra-Large | 600x410x690 mm (MAX 20kg) + R 60.00
+                    Large | 600x410x410 mm (MAX 15kg) + R 89.00
                   </div>
                   <input
                     className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
@@ -450,7 +450,23 @@ const DeliveryOption = ({
                       handleChange(e.target);
                       handleError?.("", "deliveryOption");
                     }}
-                    value={60}
+                    value={89}
+                    id="Large"
+                  />
+                </div>
+                <div className="flex items-center justify-between mx-0 my-2">
+                  <div className="text-sm">
+                    Extra-Large | 600x410x690 mm (MAX 20kg) + R 119.00
+                  </div>
+                  <input
+                    className="checked:after:w-[15px] checked:after:h-[15px] checked:after:relative checked:after:bg-orange-color checked:after:content-[''] checked:after:inline-block checked:after:visible checked:after:border-white checked:after:rounded-[15px] checked:after:border-2 checked:after:-left-px checked:after:-top-0.5"
+                    type="radio"
+                    name="PUDO Locker-to-Locker"
+                    onChange={(e) => {
+                      handleChange(e.target);
+                      handleError?.("", "deliveryOption");
+                    }}
+                    value={119}
                     id="Large"
                   />
                 </div>
