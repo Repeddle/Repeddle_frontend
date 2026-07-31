@@ -1,7 +1,6 @@
 import MessageBox from "../../components/MessageBox";
 import { Helmet } from "react-helmet-async";
 import { useEffect, useMemo, useState } from "react";
-import ReactImageMagnify from "react-image-magnify";
 import { FaEye, FaFlag, FaHeart, FaPlay, FaTag } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Rating from "../../components/Rating";
@@ -19,6 +18,7 @@ import ReviewLists from "../../components/ReviewLists";
 import RebundlePoster from "../../components/RebundlePoster";
 import ShareModal from "../../section/product/ShareModal";
 import CustomCarousel from "../../section/product/CustomCarousel";
+import ImageMagnifier from "../../section/product/ImageMagnifier";
 import RecentlyViewedProducts from "../../section/product/RecentlyViewedProducts";
 import Modal from "../../components/ui/Modal";
 import useProducts from "../../hooks/useProducts";
@@ -452,25 +452,16 @@ const Product = () => {
                   )}
               </CustomCarousel>
             </div>
-            <div className="flex-[3] z-[9] hidden lg:block">
+            <div className="relative flex-[3] z-[9] hidden lg:block">
               {selectedImage === "video" ? (
                 <video width="100%" controls muted autoPlay>
                   <source src={product.video} type="video/mp4" />
                 </video>
               ) : (
-                <ReactImageMagnify
-                  {...{
-                    smallImage: {
-                      alt: "Wristwatch by Ted Baker London",
-                      isFluidWidth: true,
-                      src: imageUrl + (selectedImage || product.images[0]),
-                    },
-                    largeImage: {
-                      src: imageUrl + (selectedImage || product.images[0]),
-                      width: 1200,
-                      height: 1800,
-                    },
-                  }}
+                <ImageMagnifier
+                  src={imageUrl + (selectedImage || product.images[0])}
+                  alt={product.name}
+                  zoom={2.5}
                 />
               )}
             </div>

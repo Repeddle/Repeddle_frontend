@@ -195,16 +195,16 @@ const LeftEditProduct = ({
           <LoadingBox />
         ) : (
           <div
-            className={`w-6/12 flex items-center justify-center mx-0 my-2.5 p-[5px] rounded-[0.2rem]
+            className={`w-6/12 flex items-center justify-center mx-0 my-2.5 p-[5px] rounded-[0.2rem] cursor-pointer
   ${
     product.sold
-      ? "text-white bg-malon-color cursor-not-allowed"
-      : "text-white bg-orange-color cursor-pointer"
+      ? "text-white bg-malon-color"
+      : "text-white bg-orange-color"
   }`}
             onClick={handleSold}
           >
-            <FaCheckCircle className="mr-[5px]" /> Mark
-            {product.sold ? "ed" : ""} as sold
+            <FaCheckCircle className="mr-[5px]" /> Mark as
+            {product.sold ? " unsold" : " sold"}
           </div>
         ))}
       <div className="relative flex flex-col lg:w-[400px] mr-5 mt-2.5 w-full">

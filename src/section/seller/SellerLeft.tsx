@@ -343,7 +343,7 @@ const SellerLeft = ({
                     <FaLocationDot className="mr-2.5 text-[15px]" /> From
                   </div>
                   <div className="font-bold">
-                    {usernameData.user.region === "NGN"
+                    {usernameData.user.region === "NG"
                       ? "Nigeria"
                       : "South Africa"}
                   </div>

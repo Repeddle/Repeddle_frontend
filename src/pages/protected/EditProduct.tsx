@@ -371,7 +371,7 @@ const EditProduct = () => {
     if (!product) return;
     setSoldLoading(true);
 
-    const sold = product.sold !== true ? false : true;
+    const sold = !product.sold;
 
     const res = await updateProduct(product._id, { sold });
     if (typeof res !== "string") {
