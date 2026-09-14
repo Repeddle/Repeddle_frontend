@@ -19,7 +19,7 @@ const Header: React.FC<HeaderProps> = ({ screen, setScreen, user }) => (
       )}
       <img
         className="w-[40%]"
-        src="https://res.cloudinary.com/emirace/image/upload/v1661147636/Logo_White_3_ii3edm.gif"
+        src="/images/logo/Logo_White_full.gif"
         alt="logo"
       />
     </div>

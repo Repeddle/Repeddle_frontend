@@ -58,8 +58,8 @@ function Middlebar() {
               className="w-4/5"
               src={
                 isDarkMode
-                  ? "https://res.cloudinary.com/emirace/image/upload/v1661147636/Logo_White_3_ii3edm.gif"
-                  : "https://res.cloudinary.com/emirace/image/upload/v1661147778/Logo_Black_1_ampttc.gif"
+                  ? "/images/logo/Logo_White_full.gif"
+                  : "/images/logo/Logo_Black_full.gif"
               }
             />
           </Link>

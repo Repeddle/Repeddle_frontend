@@ -11,7 +11,7 @@ const HowRepeddleWork = () => {
         <div className="mt-8 flex lg:flex-row flex-col items-center justify-center gap-2">
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-end mb-4 lg:mb-0">
             <img
-              src="https://res.cloudinary.com/emirace/image/upload/v1691621393/ntblm7mnigoa2pr273g6.png"
+              src="/images/howRepeddleWorks/step_1.png"
               alt="Step-1"
               className="lg:w-3/4"
             />
@@ -49,7 +49,7 @@ const HowRepeddleWork = () => {
           </div>
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-start mt-4 mb-4 lg:mb-0 lg:mt-0">
             <img
-              src="https://res.cloudinary.com/emirace/image/upload/v1691621285/doyhrechq04fnfckki96.png"
+              src="/images/howRepeddleWorks/step_2.png"
               alt="Step-2"
               className="lg:w-3/4"
             />
@@ -61,7 +61,7 @@ const HowRepeddleWork = () => {
         <div className="mt-8 flex flex-col lg:flex-row items-center justify-center">
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-end mb-4 lg:mb-0">
             <img
-              src="https://res.cloudinary.com/emirace/image/upload/v1691621379/x7wilble1b3muoqsyi6n.png"
+              src="/images/howRepeddleWorks/step_3.png"
               alt="Step-1"
               className="lg:w-3/4"
             />
@@ -89,7 +89,7 @@ const HowRepeddleWork = () => {
         <div className="mt-8 flex lg:flex-row flex-col items-center justify-center">
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-end mb-4 lg:mb-0">
             <img
-              src="https://res.cloudinary.com/emirace/image/upload/v1691621421/fidhkhbzohm4svjzhdmb.png"
+              src="/images/howRepeddleWorks/step_4.png"
               alt="Step-1"
               className="lg:w-3/4"
             />
@@ -145,7 +145,7 @@ const HowRepeddleWork = () => {
           </div>
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-start mb-4 lg:mb-0 mt-4 lg:mt-0">
             <img
-              src="https://res.cloudinary.com/emirace/image/upload/v1691621408/odn3kjxjksaptotxjdxg.png"
+              src="/images/howRepeddleWorks/step_5.png"
               alt="Step-2"
               className="lg:w-3/4"
             />
@@ -157,7 +157,7 @@ const HowRepeddleWork = () => {
         <div className="mt-8 flex lg:flex-row flex-col items-center justify-center">
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-end mb-4 lg:mb-0">
             <img
-              src="https://res.cloudinary.com/emirace/image/upload/v1691621436/ce53bpnuya8btoby5er3.png"
+              src="/images/howRepeddleWorks/step_6.png"
               alt="Step-1"
               className="lg:w-3/4"
             />

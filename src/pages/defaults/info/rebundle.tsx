@@ -109,7 +109,7 @@ const rebundle = () => {
         <div className="flex flex-col lg:flex-row lg:gap-24 items-center justify-center">
           <div className="flex flex-col items-center">
             <img
-              src="https://res.cloudinary.com/emirace/image/upload/v1660107093/phonescreen_opkx9a.png"
+              src="/images/mobile/phonescreen.png"
               alt="image"
               className="mb-5 mt-6 lg:w-96"
             />
@@ -122,7 +122,7 @@ const rebundle = () => {
 
           <div className="flex flex-col items-center lg:mt-0 lg:ml-32">
             <img
-              src="https://res.cloudinary.com/emirace/image/upload/v1660107093/phonescreen_opkx9a.png"
+              src="/images/mobile/phonescreen.png"
               alt="image"
               className="mb-5 mt-6 lg:w-96"
             />

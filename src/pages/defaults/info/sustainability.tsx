@@ -168,7 +168,7 @@ const sustainability = () => {
             <b className="text-malon-color"> More </b>{" "}
           </p>
           <img
-            src="https://res.cloudinary.com/emirace/image/upload/v1661221992/cherie-birkner-J6MJPuJiDPo-unsplash_cclo31.webp"
+            src="/images/sustainability/less-is-more.jpeg"
             alt="img"
             className="mx-auto lg:max-w-xl"
             style={{ width: "100%", maxWidth: "460px" }}

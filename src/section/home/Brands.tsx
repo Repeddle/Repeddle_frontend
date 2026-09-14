@@ -23,7 +23,7 @@ const Brands = () => {
       </div>
       <div className="flex flex-[4_1] pb-[10px] scrollbar-hide h-[250px] overflow-x-auto ml-5 lg:ml-auto">
         <CategoryListing
-          image="https://res.cloudinary.com/emirace/image/upload/v1692426674/usljgmtg7fb5wi0m5o4r.jpg"
+          image="/images/brands/puma.jpg"
           title="PUMA"
           link={`/search?${param("filter", "brand:puma")}`}
         />

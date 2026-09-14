@@ -9,8 +9,8 @@ const LoadingLogoModal = () => {
         className="w-[15%] md:w-[10%] lg:w-[7%] min-w-20 rounded-[0.2rem]"
         src={
           isDarkMode
-            ? "https://res.cloudinary.com/emirace/image/upload/v1666000558/Icon_White_xpdmum.gif"
-            : "https://res.cloudinary.com/emirace/image/upload/v1666000541/Icon_Black_g8wcdj.gif"
+            ? "/images/logo/white_anime_logo.gif"
+            : "/images/logo/black_anime_logo.gif"
         }
         alt="loading"
       />

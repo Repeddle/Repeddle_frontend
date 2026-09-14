@@ -34,7 +34,7 @@ const SellSteps = () => {
         <div className="flex-1 flex flex-col items-center mx-0 my-2.5">
           <img
             className="w-[200px] mb-2.5 lg:w-[350px] lg:mb-5"
-            src="https://res.cloudinary.com/emirace/image/upload/v1660107093/phonescreen_opkx9a.png"
+            src="/images/mobile/phonescreen.png"
             alt="imag"
           />
         </div>

@@ -60,7 +60,7 @@ const About = () => {
           </div>
           <div className="w-full sm:w-1/2 mb-4 mx-auto">
             <img
-              src="https://res.cloudinary.com/emirace/image/upload/v1666953838/Repeddle_Logo-02_ztvmtx.png"
+              src="/images/logo/logo2.png"
               alt="img"
               className="w-full"
             />

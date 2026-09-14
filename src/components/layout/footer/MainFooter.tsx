@@ -1,15 +1,15 @@
-import { Link } from "react-router-dom"
-import useTheme from "../../../hooks/useTheme"
-import FacebookIcon from "../../../assets/icons/facebook-icon.svg"
-import InstagramIcon from "../../../assets/icons/instagram-icon.svg"
-import TwitterIcon from "../../../assets/icons/twitter-icon.svg"
-import LargeFooterLinkItems from "./LargeFooterLinkItems"
-import SmallFooterLinkItem from "./SmallFooterLinkItem"
+import { Link } from "react-router-dom";
+import useTheme from "../../../hooks/useTheme";
+import FacebookIcon from "../../../assets/icons/facebook-icon.svg";
+import InstagramIcon from "../../../assets/icons/instagram-icon.svg";
+import TwitterIcon from "../../../assets/icons/twitter-icon.svg";
+import LargeFooterLinkItems from "./LargeFooterLinkItems";
+import SmallFooterLinkItem from "./SmallFooterLinkItem";
 
 type FooterLinks = {
-  heading: string
-  linkItems: { name: string; href: string }[]
-}[]
+  heading: string;
+  linkItems: { name: string; href: string }[];
+}[];
 
 const footerLinks: FooterLinks = [
   {
@@ -53,10 +53,10 @@ const footerLinks: FooterLinks = [
       { href: "/search?query=patagonia", name: "Patagonia" },
     ],
   },
-]
+];
 
 const MainFooter = () => {
-  const { isDarkMode } = useTheme()
+  const { isDarkMode } = useTheme();
 
   return (
     <div className="flex flex-col lg:flex-row border-t border-orange-color">
@@ -64,11 +64,11 @@ const MainFooter = () => {
         <div className="w-full">
           <Link to="/" className="flex justify-center items-center lg:block">
             <img
-              className="w-[45%]"
+              className="w-[20%]"
               src={
                 isDarkMode
-                  ? "https://res.cloudinary.com/emirace/image/upload/v1659377710/Repeddle-White_pani6a.gif"
-                  : "https://res.cloudinary.com/emirace/image/upload/v1659377672/Repeddle-Black_eko2g5.gif"
+                  ? "/images/logo/white_anime_logo.gif"
+                  : "/images/logo/black_anime_logo.gif"
               }
             />
           </Link>
@@ -137,7 +137,7 @@ const MainFooter = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MainFooter
+export default MainFooter;

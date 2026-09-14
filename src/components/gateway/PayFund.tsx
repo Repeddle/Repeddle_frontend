@@ -32,8 +32,8 @@ const PayFund = ({ amount, onApprove, setShowModel }: Props) => {
         className="h-[15px]"
         src={
           isDarkMode
-            ? "https://res.cloudinary.com/emirace/image/upload/v1661147636/Logo_White_3_ii3edm.gif"
-            : "https://res.cloudinary.com/emirace/image/upload/v1661147778/Logo_Black_1_ampttc.gif"
+            ? "/images/logo/Logo_White_full.gif"
+            : "/images/logo/Logo_Black_full.gif"
         }
       />
       <div className="flex flex-col items-center">

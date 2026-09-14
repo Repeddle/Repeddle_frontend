@@ -181,7 +181,7 @@ const SellerLeft = ({
                   {usernameData.user.badge && (
                     <img
                       className="w-5 object-cover"
-                      src="https://res.cloudinary.com/emirace/image/upload/v1661148671/Icons-28_hfzerc.png"
+                      src="/images/iconImages/badge.png"
                     />
                   )}
                 </div>

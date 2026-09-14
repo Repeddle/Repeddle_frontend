@@ -481,7 +481,7 @@ const Product = () => {
                     <div className="absolute rounded-[50%] right-0 bottom-0">
                       <img
                         className="w-5 h-[23px] object-cover rounded-none"
-                        src="https://res.cloudinary.com/emirace/image/upload/v1661148671/Icons-28_hfzerc.png"
+                        src="/images/iconImages/badge.png"
                       />
                     </div>
                   )}

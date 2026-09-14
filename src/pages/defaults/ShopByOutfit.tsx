@@ -17,7 +17,7 @@ const ShopByOutfit = () => {
         <div className="flex flex-col lg:flex-row">
           <img
             className="h-[600px]"
-            src="https://res.cloudinary.com/emirace/image/upload/v1671258906/Picture2_gkly49.png"
+            src="/images/recurated.png"
             alt=""
           />
           <div className="flex-1 text-center text-xl lg:text-[50px] font-bold m-auto">

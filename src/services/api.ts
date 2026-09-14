@@ -5,7 +5,7 @@ import axios, {
 } from "axios";
 
 // export const baseURL = "http://localhost:5000";
-export const baseURL = "";
+export const baseURL = "https://repeddle.com";
 
 export const imageUrl = baseURL;
 const api = axios.create({

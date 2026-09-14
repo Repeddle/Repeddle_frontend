@@ -43,7 +43,7 @@ const FlutterWave = ({
     customizations: {
       title: "Repeddle",
       description: "Payment",
-      logo: "https://res.cloudinary.com/emirace/image/upload/v1666953838/Repeddle_Logo-02_ztvmtx.png",
+      logo: "/images/logo/logo2.png",
     },
   };
 
